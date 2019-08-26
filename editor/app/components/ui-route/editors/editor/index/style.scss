@@ -11,10 +11,12 @@
     }
   }
   > .sidebar {
+    border-left: 1px solid darken(#fff, 15%);
+    background: darken(#fff, 2%);
     width: 200px;
     overflow-x: hidden;
-    padding: 15px;
     > .section {
+      margin: 5px 5px 10px 5px;
       > .row {
         margin: 0 0 5px 0;
       }
