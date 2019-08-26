@@ -1,4 +1,4 @@
-import Node from '../component';
+import Node from '../-node';
 
 export default Node.extend({
 

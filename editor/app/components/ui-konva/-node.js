@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import Parent from '../-parent';
+import Parent from './-parent';
 import { computed } from '@ember/object';
 import Konva from 'konva';
 
@@ -37,11 +37,11 @@ export default Component.extend(Parent, {
 
   didInsertElement() {
     this._super(...arguments);
-    this.parent.registerChildComponent(this);
+    this.parentView.registerChildComponent(this);
   },
 
   willDestroyElement() {
-    this.parent.unregisterChildComponent(this);
+    this.parentView.unregisterChildComponent(this);
     this.destroyNode();
     this._super(...arguments);
   }
