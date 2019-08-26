@@ -1,15 +1,31 @@
-html, body {
-  padding: 0;
+body {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: optimizeLegibility;
   margin: 0;
+  cursor: default;
+  font-family: $font-family;
+  font-size: $font-size;
+  line-height: normal;
+  user-select: none;
 }
 
-body {
-  font-family: 'Menlo';
-  font-size: 14px;
+* {
+  box-sizing: border-box;
+}
+
+[role="button"] {
   cursor: default;
-  -webkit-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a {
+  color: #000;
+  cursor: default;
+}
+
+img {
+  max-width: 100%;
 }
 
 html {
@@ -26,8 +42,4 @@ body {
     display: flex;
     flex-direction: column;
   }
-}
-
-* {
-  box-sizing: border-box;
 }

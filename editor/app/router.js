@@ -7,6 +7,12 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+
+  this.route('editors', function() {
+    this.route('editor', { path: '/:editor_id' }, function() {
+    });
+  });
+
 });
 
 export default Router;

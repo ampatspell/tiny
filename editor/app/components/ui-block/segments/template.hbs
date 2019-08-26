@@ -1,0 +1,6 @@
+{{#each items as |item|}}
+  {{yield (hash
+    item=item
+    component=(component "ui-block/segments/segment" item=item selected=selected select=(action "select" item))
+  )}}
+{{/each}}

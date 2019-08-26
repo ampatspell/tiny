@@ -1,0 +1,23 @@
+.ui-route-editors-editor-index {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  > .editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    > .autosized {
+      flex: 1;
+    }
+  }
+  > .sidebar {
+    width: 200px;
+    overflow-x: hidden;
+    padding: 15px;
+    > .section {
+      > .row {
+        margin: 0 0 5px 0;
+      }
+    }
+  }
+}

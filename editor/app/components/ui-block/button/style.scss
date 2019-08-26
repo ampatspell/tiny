@@ -1,0 +1,22 @@
+@mixin ui-block-button() {
+  -webkit-appearance: none;
+  background: #222;
+  color: #fff;
+  border: 1px solid #222;
+  outline: none;
+  border-radius: 3px;
+  font-family: $font-family;
+  font-size: $font-size;
+  line-height: 1;
+  padding: 6px 7px 4px 7px;
+  transition: color 0.3s ease-in-out;
+  text-decoration: none;
+  &:disabled,
+  &.disabled {
+    color: fade-out(#fff, 0.6);
+  }
+}
+
+.ui-block-button {
+  @include ui-block-button();
+}

@@ -17,15 +17,15 @@ export default Component.extend(Parent, {
     node.setAttrs(props);
   },
 
-  drawParent() {
-    let { node } = this;
-    node.parent && node.parent.draw();
+  drawLayer() {
+    let layer = this.node.getLayer();
+    layer && layer.batchDraw();
   },
 
   didReceiveAttrs() {
     this._super(...arguments);
     this.updateNodeAttributes();
-    this.drawParent();
+    this.drawLayer();
   },
 
   didInsertElement() {

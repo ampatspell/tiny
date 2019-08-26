@@ -1,0 +1,16 @@
+.ui-block-segments {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 1px;
+  > .segment {
+    padding: 5px 7px 3px 7px;
+    border-radius: 3px;
+    text-align: center;
+    &.selected {
+      background: #222;
+      color: #fff;
+    }
+  }
+}
