@@ -22,6 +22,13 @@ export default Component.extend(Parent, {
     layer && layer.batchDraw();
   },
 
+  createNode() {
+  },
+
+  destroyNode() {
+    this.node.destroy();
+  },
+
   didReceiveAttrs() {
     this._super(...arguments);
     this.updateNodeAttributes();
@@ -35,6 +42,7 @@ export default Component.extend(Parent, {
 
   willDestroyElement() {
     this.parent.unregisterChildComponent(this);
+    this.destroyNode();
     this._super(...arguments);
   }
 
