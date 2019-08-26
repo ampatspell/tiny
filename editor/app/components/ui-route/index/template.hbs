@@ -1,0 +1,35 @@
+{{#ui-block/konva/autosized class="autosized" as |size|}}
+  {{#ui-block/konva/stage class="stage" size=size as |parent|}}
+
+    {{#parent.layer as |parent|}}
+
+      {{#parent.group props=(hash x=50.5 y=50.5) as |parent|}}
+
+        {{parent.rect
+          props=(hash
+            x=0
+            y=0
+            width=50
+            height=50
+            fill="rgba(255,0,0,0.2)"
+            stroke="rgba(0,0,0,0.5)"
+            strokeWidth=1
+        )}}
+
+        {{parent.rect
+          props=(hash
+            x=5
+            y=5
+            width=50
+            height=50
+            fill="rgba(255,0,0,0.2)"
+            stroke="rgba(0,0,0,0.5)"
+            strokeWidth=1
+        )}}
+
+      {{/parent.group}}
+
+    {{/parent.layer}}
+
+  {{/ui-block/konva/stage}}
+{{/ui-block/konva/autosized}}
