@@ -1,0 +1,33 @@
+{{#if isDark}}
+
+  {{ui-konva/rect
+    props=(hash
+      x=0
+      y=0
+      width=width
+      height=height
+      fill=fill
+      stroke="rgba(0,0,0,0.5)"
+      strokeWidth=1
+  )}}
+
+{{else}}
+
+  {{ui-konva/rect
+    props=(hash
+      x=0
+      y=0
+      width=width
+      height=height
+      fill=fill
+      stroke="rgba(0,0,0,0.1)"
+      strokeWidth=2
+  )}}
+
+{{/if}}
+
+{{ui-konva/text props=(hash
+  fontFamily='Ubuntu Mono'
+  fontSize=11
+  text=description
+)}}
