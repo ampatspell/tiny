@@ -14,7 +14,7 @@ export default Component.extend(Parent, {
 
   updateNodeAttributes() {
     let { node, props } = this;
-    node.setAttrs(props);
+    props && node.setAttrs(props);
   },
 
   drawLayer() {
