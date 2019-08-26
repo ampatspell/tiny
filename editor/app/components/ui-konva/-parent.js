@@ -1,10 +1,19 @@
 import Mixin from '@ember/object/mixin';
 
+const indexOf = (arr, item) => Array.prototype.indexOf.call(arr, item);
+
 export default Mixin.create({
 
-  registerChildComponent(component) {
+  didAddNodeForComponent(component) {
     let { node } = component;
-    this.node.add(node);
+    let el = component.element;
+    let idx = indexOf(el.parentElement.children, el);
+    node.zIndex(idx);
+  },
+
+  registerChildComponent(component) {
+    this.node.add(component.node);
+    this.didAddNodeForComponent(component);
   },
 
   unregisterChildComponent(component) {

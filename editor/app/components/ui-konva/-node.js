@@ -4,7 +4,8 @@ import { computed } from '@ember/object';
 import Konva from 'konva';
 
 export default Component.extend(Parent, {
-  tagName: '',
+  // needs element because of -parent.js node.zIndex
+  // tagName: '',
 
   props: null,
 
