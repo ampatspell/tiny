@@ -16,7 +16,7 @@ const isSizeValid = size => {
 }
 
 export default Component.extend(Parent, {
-  classNameBindings: [ ':ui-block-konva-stage' ],
+  classNameBindings: [ ':ui-konva-stage' ],
 
   size: null,
   node: null, // Konva.Stage

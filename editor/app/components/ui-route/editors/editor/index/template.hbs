@@ -1,6 +1,6 @@
 <div class="editor">
-  {{#ui-block/konva/autosized class="autosized" as |size|}}
-    {{#ui-block/konva/stage class="stage" size=size as |parent|}}
+  {{#ui-konva/autosized class="autosized" as |size|}}
+    {{#ui-konva/stage class="stage" size=size as |parent|}}
 
       {{#parent.layer as |parent|}}
 
@@ -32,8 +32,8 @@
 
       {{/parent.layer}}
 
-    {{/ui-block/konva/stage}}
-  {{/ui-block/konva/autosized}}
+    {{/ui-konva/stage}}
+  {{/ui-konva/autosized}}
 </div>
 
 <div class="sidebar">

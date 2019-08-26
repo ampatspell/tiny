@@ -17,7 +17,7 @@ const withWindow = cb => {
 }
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-konva-autosized' ],
+  classNameBindings: [ ':ui-konva-autosized' ],
 
   size: null,
 
