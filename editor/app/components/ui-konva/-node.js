@@ -22,9 +22,24 @@ export default Component.extend(Parent, Events, {
     return node.getAttrs();
   },
 
+  nodeAttributesChanged(current, props) {
+    return !!Object.keys(props).find(key => current[key] !== props[key]);
+  },
+
   updateNodeAttributes() {
     let { node, props } = this;
-    props && node.setAttrs(props);
+    if(!props) {
+      return false;
+    }
+
+    let current = node.getAttrs();
+    if(!this.nodeAttributesChanged(current, props)) {
+      return false;
+    }
+
+    node.setAttrs(props);
+
+    return true;
   },
 
   drawLayer() {
@@ -41,8 +56,9 @@ export default Component.extend(Parent, Events, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.updateNodeAttributes();
-    this.drawLayer();
+    if(this.updateNodeAttributes()) {
+      this.drawLayer();
+    }
   },
 
   didInsertElement() {
