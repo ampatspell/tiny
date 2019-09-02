@@ -1,64 +1,19 @@
 import Component from '@ember/component';
 import Parent from './-parent';
+import Events from './-events';
 import { computed } from '@ember/object';
 import Konva from 'konva';
-import { action } from '../../utils/runloop';
-import { capitalize } from '@ember/string';
 
-const {
-  keys
-} = Object;
-
-const _events = [
-  'mouseover',
-  'mouseout',
-  'mouseenter',
-  'mouseleave',
-  'mousemove',
-  'mousedown',
-  'mouseup',
-  'wheel',
-  'click',
-  'dblclick',
-  'dragstart',
-  'dragmove',
-  'dragend'
-];
-
-const events = _events.reduce((hash, name) => {
-  hash[`on${capitalize(name)}`] = name;
-  return hash;
-}, {});
-
-export default Component.extend(Parent, {
+export default Component.extend(Parent, Events, {
   // needs element because of -parent.js node.zIndex
   // tagName: '',
 
   props: null,
 
-  eventHandlers: computed(function() {
-    return keys(events).reduce((hash, f) => {
-      let fn = this[f];
-      if(fn) {
-        hash[events[f]] = (...args) => action(() => fn.call(this, ...args));
-      }
-      return hash;
-    }, {});
-  }).readOnly(),
-
-  addEventHandlers(node) {
-    let { eventHandlers } = this;
-    keys(eventHandlers).map(name => node.on(name, eventHandlers[name]));
-  },
-
-  // removeEventHandlers(node) {
-  //   let { eventHandlers } = this;
-  //   keys(eventHandlers).map(name => node.off(name));
-  // },
-
   node: computed(function() {
     let node = this.createNode(Konva);
-    this.addEventHandlers(node);
+    node.component = this;
+    this.addNodeEventListeners(node);
     return node;
   }).readOnly(),
 

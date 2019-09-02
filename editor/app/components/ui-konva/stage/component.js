@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import Parent from '../-parent';
+import StageEvents from '../-events';
 import Konva from 'konva';
 
 const isSizeValid = size => {
@@ -15,7 +16,7 @@ const isSizeValid = size => {
   return true;
 }
 
-export default Component.extend(Parent, {
+export default Component.extend(Parent, StageEvents, {
   classNameBindings: [ ':ui-konva-stage' ],
 
   size: null,
@@ -61,7 +62,15 @@ export default Component.extend(Parent, {
       height
     });
 
+    node.component = this;
+
     setGlobal({ stage: node });
+
+    this.addNodeEventListeners(node);
+
+    let _container = node.container();
+    _container.tabIndex = 1;
+    _container.focus();
 
     this.set('node', node);
   },

@@ -1,6 +1,6 @@
 <div class="editor">
   {{#ui-konva/autosized class="autosized" as |size|}}
-    {{#ui-konva/stage class="stage" size=size}}
+    {{#ui-konva/stage class="stage" onClick=(action 'log' 'stage.click') size=size}}
 
       {{#ui-konva/layer}}
 

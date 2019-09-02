@@ -14,6 +14,9 @@ export default Component.extend({
   },
 
   actions: {
+    log(...args) {
+      console.log(...args);
+    },
     select(sender) {
       console.log(sender+'');
     },
