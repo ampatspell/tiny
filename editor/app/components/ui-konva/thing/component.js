@@ -39,7 +39,7 @@ export default Node.extend({
     if(e.target.component !== this) {
       return;
     }
-    let { x, y } = this.getNodeAttributes();
+    let { x, y } = this.nodeAttributes();
     this.update && this.update({ x, y });
   },
 

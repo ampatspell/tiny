@@ -17,7 +17,7 @@ export default Component.extend(Parent, Events, {
     return node;
   }).readOnly(),
 
-  getNodeAttributes() {
+  nodeAttributes() {
     let { node } = this;
     return node.getAttrs();
   },

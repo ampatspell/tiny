@@ -17,8 +17,8 @@ export default Component.extend({
     log(...args) {
       console.log(...args);
     },
-    select(sender) {
-      console.log(sender+'');
+    select(stage, node) {
+      console.log(stage+'', node+'');
     },
     reset() {
       this.setProperties({

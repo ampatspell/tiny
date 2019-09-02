@@ -1,6 +1,6 @@
 <div class="editor">
   {{#ui-konva/autosized class="autosized" as |size|}}
-    {{#ui-konva/stage class="stage" onClick=(action 'log' 'stage.click') size=size}}
+    {{#ui-konva/stage class="stage" size=size as |stage|}}
 
       {{#ui-konva/layer}}
 
@@ -9,12 +9,12 @@
             y=y
             width=width
             height=height
-            click=(action 'select')
+            click=(action 'select' stage.component)
             update=(action 'updateProps')
         }}
 
-        {{ui-konva/thing x=(add x 100) y=y width=width height=height click=(action 'select')}}
-        {{ui-konva/thing x=x y=(add y 100) width=width height=height click=(action 'select')}}
+        {{ui-konva/thing x=(add x 100) y=y width=width height=height click=(action 'select' stage.component)}}
+        {{ui-konva/thing x=x y=(add y 100) width=width height=height click=(action 'select' stage.component)}}
 
         {{ui-konva/thing
             x=(add x 100)
