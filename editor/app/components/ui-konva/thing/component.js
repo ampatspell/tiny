@@ -16,7 +16,7 @@ export default Node.extend({
   over: false,
 
   props: computed('x', 'y', function() {
-    return this.getProperties('x', 'y');
+    return Object.assign({ draggable: true }, this.getProperties('x', 'y'));
   }).readOnly(),
 
   isDark: gt('width', 75),
