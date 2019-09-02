@@ -9,7 +9,11 @@
       fill=fill
       stroke="rgba(0,0,0,0.5)"
       strokeWidth=1
-  )}}
+    )
+    onMouseover=(action 'over' true)
+    onMouseout=(action 'over' false)
+    onClick=(action 'click')
+  }}
 
 {{else}}
 
@@ -22,7 +26,11 @@
       fill=fill
       stroke="rgba(0,0,0,0.1)"
       strokeWidth=2
-  )}}
+    )
+    onMouseover=(action 'over' true)
+    onMouseout=(action 'over' false)
+    onClick=(action 'click')
+  }}
 
 {{/if}}
 
@@ -32,4 +40,5 @@
   fontFamily="Ubuntu Mono"
   fontSize=11
   text=description
+  listening=false
 )}}

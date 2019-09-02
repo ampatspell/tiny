@@ -3,8 +3,8 @@ import Component from '@ember/component';
 export default Component.extend({
   classNameBindings: [ ':ui-route-editors-editor-index' ],
 
-  x: 20.5,
-  y: 20.5,
+  x: 50.5,
+  y: 50.5,
   width: 50,
   height: 50,
 
@@ -14,6 +14,9 @@ export default Component.extend({
   },
 
   actions: {
+    select(sender) {
+      console.log(sender+'');
+    },
     reset() {
       this.setProperties({
         x: 20.5,
