@@ -35,6 +35,14 @@ export default Node.extend({
     return `${x},${y},${width},${height}`;
   }).readOnly(),
 
+  onDragmove(e) {
+    if(e.target.component !== this) {
+      return;
+    }
+    let { x, y } = this.getNodeAttributes();
+    this.update && this.update({ x, y });
+  },
+
   actions: {
     over(over) {
       this.setProperties({ over });

@@ -28,6 +28,9 @@ export default Component.extend({
         height: 50
       });
     },
+    updateProps(hash) {
+      this.setProperties(hash);
+    },
     update(key, value) {
       this.setProperties({ [key]: value });
     }
