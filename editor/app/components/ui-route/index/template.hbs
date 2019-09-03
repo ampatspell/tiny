@@ -1,1 +1,10 @@
-{{link-to "wip/foobar" "wip.foobar"}}
+<div class="row">
+  {{#if store.user}}
+    {{store.user.email}}
+  {{else}}
+    {{link-to "sign in" "session.new"}}
+  {{/if}}
+</div>
+<div class="row">
+  {{link-to "wip/foobar" "wip.foobar"}}
+</div>

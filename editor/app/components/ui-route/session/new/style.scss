@@ -1,0 +1,14 @@
+.ui-route-session-new {
+  margin: 15px;
+  > .content {
+    > .row {
+      margin-bottom: 10px;
+      > .label {
+        font-weight: 600;
+      }
+      &.error {
+        font-weight: 600;
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import Store from 'ember-cli-zuglet/store';
+import { later } from './utils/runloop';
 
 const options = {
   firebase: {
@@ -15,6 +16,28 @@ const options = {
 
 export default Store.extend({
 
-  options
+  options,
+
+  user: null,
+
+  async restoreUser(user) {
+    let current = this.user;
+    let next = null;
+
+    this.set('user', null);
+
+    if(user) {
+      // temp workaround
+      await later(1000);
+      next = this.models.create('user', { user });
+      await next.restore();
+      this.set('user', next);
+    }
+
+    if(current) {
+      current.destroy();
+    }
+  }
+
 
 });
