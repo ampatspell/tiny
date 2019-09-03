@@ -87,6 +87,11 @@ export default EmberObject.extend(ScheduleSave, {
       }
       bytes[index] = value === 1 ? 2 : 1;
     }));
+  },
+
+  pixelAt(x, y) {
+    let col = this.columns.objectAt(y);
+    return col && col.rows.objectAt(x);
   }
 
 });

@@ -2,6 +2,8 @@ import Mixin from '@ember/object/mixin';
 import { later, cancel } from '@ember/runloop';
 import alive from '../utils/alive';
 
+const delay = 300;
+
 export default Mixin.create({
 
   cancelScheduledSave() {
@@ -14,7 +16,7 @@ export default Mixin.create({
 
   scheduleSave() {
     this.cancelScheduledSave();
-    this._scheduledSave = later(() => this.performScheduledSave(), 150);
+    this._scheduledSave = later(() => this.performScheduledSave(), delay);
   },
 
   willDestroy() {

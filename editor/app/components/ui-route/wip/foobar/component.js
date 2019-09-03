@@ -14,16 +14,8 @@ export default Component.extend({
   }).readOnly(),
 
   actions: {
-    update(pixel, opts) {
-      if(opts.shift) {
-        pixel.update(Pixel.transparent);
-      } else {
-        if(pixel.value === Pixel.black) {
-          pixel.update(Pixel.white);
-        } else {
-          pixel.update(Pixel.black);
-        }
-      }
+    update(pixel, value) {
+      pixel.update(value);
     },
     fill(value) {
       this.pixels.fill(value);
@@ -39,48 +31,5 @@ export default Component.extend({
       this.pixels.invert();
     }
   }
-
-  // didInsertElement() {
-  //   this._super(...arguments);
-  //   //remove
-  //   window.addEventListener('mousedown', e => run(() => this.windowMouseDown(e)));
-  //   window.addEventListener('mouseup', e => run(() => this.windowMouseUp(e)));
-  //   window.addEventListener('mousemove', e => run(() => this.windowMouseMove(e)));
-  //   //cancel
-  //   next(() => this.setProperties({ ready: true }));
-  // },
-
-  // windowMouseDown() {
-  //   // e.target is child of this
-  //   this.set('down', true);
-  // },
-
-  // windowMouseUp() {
-  //   this.set('down', false);
-  // },
-
-  // windowMouseMove(e) {
-  //   if(!this.down) {
-  //     return;
-  //   }
-
-  //   let { clientX, clientY } = e;
-  //   let el = document.elementFromPoint(clientX, clientY);
-  //   if(!el) {
-  //     return;
-  //   }
-
-  //   let { type, x, y } = el.dataset;
-  //   // ancestor
-  //   if(type !== 'pixel') {
-  //     return;
-  //   }
-
-  //   x = parseInt(x);
-  //   y = parseInt(y);
-
-  //   let pixel = this.rows.objectAt(y).objectAt(x);
-  //   pixel.set('value', 1);
-  // }
 
 });

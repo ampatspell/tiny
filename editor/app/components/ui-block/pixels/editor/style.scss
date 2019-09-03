@@ -1,8 +1,8 @@
 .ui-block-pixels-editor {
+  display: inline-flex;
   > .content {
-    display: inline-block;
     border: 1px solid fade-out(#000, 0.9);
-    background-color: fade-out(#000, 0.9);
+    background-color: fade-out(#000, 0.8);
     border-radius: 2px;
     padding: 1px;
     overflow: hidden;
