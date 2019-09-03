@@ -1,4 +1,4 @@
-import Node from '../-node';
+import Node from '../../../ui-konva/-node';
 import { computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
 

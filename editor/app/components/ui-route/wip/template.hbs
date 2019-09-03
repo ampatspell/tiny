@@ -4,7 +4,7 @@
 
       {{#ui-konva/layer}}
 
-        {{ui-konva/thing
+        {{ui-route/wip/thing
             x=x
             y=y
             width=width
@@ -13,10 +13,10 @@
             update=(action 'updateProps')
         }}
 
-        {{ui-konva/thing x=(add x 100) y=y width=width height=height click=(action 'select' stage.component)}}
-        {{ui-konva/thing x=x y=(add y 100) width=width height=height click=(action 'select' stage.component)}}
+        {{ui-route/wip/thing x=(add x 100) y=y width=width height=height click=(action 'select' stage.component)}}
+        {{ui-route/wip/thing x=x y=(add y 100) width=width height=height click=(action 'select' stage.component)}}
 
-        {{ui-konva/thing
+        {{ui-route/wip/thing
             x=(add x 100)
             y=(add y 100)
             width=width
