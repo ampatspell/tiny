@@ -81,7 +81,7 @@ export default Mixin.create({
     x = parseInt(x);
     y = parseInt(y);
 
-    return this.pixels.pixelAt(x, y);
+    return this.frame.pixelAt(x, y);
   },
 
   onWindowMouseMove(e) {

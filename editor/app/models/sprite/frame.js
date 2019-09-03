@@ -1,7 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
-import ScheduleSave from './-schedule-save';
+import ScheduleSave from '../-schedule-save';
 
 export const Pixel = {
   transparent: 0,
@@ -42,7 +42,7 @@ export default EmberObject.extend(ScheduleSave, {
   _columns: size('height'),
   _rows:    size('width'),
 
-  columns: models('_columns').named('pixels/column').mapping((y, pixels) => ({ y, pixels })),
+  columns: models('_columns').named('sprite/frame/column').mapping((y, pixels) => ({ y, pixels })),
 
   async load() {
     await resolveObservers(this.doc);

@@ -9,7 +9,7 @@ export default EmberObject.extend({
 
   _rows: readOnly('pixels._rows'),
 
-  rows: models('_rows').named('pixels/pixel').mapping((x, column) => ({ x, column })),
+  rows: models('_rows').named('sprite/frame/pixel').mapping((x, column) => ({ x, column })),
 
   toStringExtension() {
     return this.y;

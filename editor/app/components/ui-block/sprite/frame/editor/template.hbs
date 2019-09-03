@@ -1,4 +1,4 @@
-{{#if pixels.isLoading}}
+{{#if frame.isLoading}}
 
   <div class="placeholder">Loading…</div>
 
@@ -6,10 +6,10 @@
 
   <div class="content">
     <div class="rows">
-      {{#each pixels.columns as |col|}}
+      {{#each frame.columns as |col|}}
         <div class="row">
           {{#each col.rows as |pixel|}}
-            {{ui-block/pixels/editor/pixel pixel=pixel}}
+            {{ui-block/sprite/frame/editor/pixel pixel=pixel}}
           {{/each}}
         </div>
       {{/each}}

@@ -4,10 +4,8 @@ import { computed } from '@ember/object';
 export default Component.extend({
   classNameBindings: [ ':ui-route-wip-foobar' ],
 
-  ready: false,
-
-  pixels: computed(function() {
-    let model = this.store.models.create('pixels', { path: 'pixels/one' });
+  frame: computed(function() {
+    let model = this.store.models.create('sprite/frame', { path: 'pixels/one' });
     model.load();
     return model;
   }).readOnly(),
@@ -20,17 +18,17 @@ export default Component.extend({
       pixel.update(value);
     },
     fill(value) {
-      this.pixels.fill(value);
+      this.frame.fill(value);
     },
     shuffle() {
       let random = () => Math.round(Math.random());
-      this.pixels.columns.forEach(column => column.rows.forEach(pixel => {
+      this.frame.columns.forEach(column => column.rows.forEach(pixel => {
         let value = random();
         pixel.update(value ? 2 : 0);
       }));
     },
     invert() {
-      this.pixels.invert();
+      this.frame.invert();
     }
   }
 

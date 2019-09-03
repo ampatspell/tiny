@@ -1,12 +1,12 @@
-{{#if pixels.isLoading}}
+{{#if frame.isLoading}}
 
   <div>Loading…</div>
 
 {{else}}
 
-  <div>{{pixels.size.width}}x{{pixels.size.height}}px</div>
+  <div>{{frame.size.width}}x{{frame.size.height}}px</div>
 
-  {{ui-block/pixels/editor pixels=pixels size=size update=(action "update") class="editor"}}
+  {{ui-block/sprite/frame/editor frame=frame size=size update=(action "update") class="editor"}}
 
   <div class="actions">
     {{ui-block/button value="Large" action=(action "size" "large")}}
