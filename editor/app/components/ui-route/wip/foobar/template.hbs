@@ -1,0 +1,30 @@
+<div class="rows">
+  {{#each rows as |row|}}
+    <div class="row">
+      {{#each row as |item|}}
+        {{#ui-block/div class=(if (eq item.value 0) 'pixel black' 'pixel') click=(action 'toggle' item)}}{{/ui-block/div}}
+      {{/each}}
+    </div>
+  {{/each}}
+</div>
+
+{{!--
+<div class="editor">
+  {{#ui-konva/autosized class="autosized" as |size|}}
+    {{#ui-konva/stage class="stage" size=size as |stage|}}
+
+      {{#ui-konva/layer}}
+
+        {{#each rows as |row|}}
+          {{#each row as |pixel|}}
+
+            {{ui-route/wip/foobar/pixel pixel=pixel}}
+
+          {{/each}}
+        {{/each}}
+
+      {{/ui-konva/layer}}
+
+    {{/ui-konva/stage}}
+  {{/ui-konva/autosized}}
+</div> --}}

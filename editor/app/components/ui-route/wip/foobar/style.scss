@@ -1,0 +1,25 @@
+.ui-route-wip-foobar {
+  margin: 15px;
+  > .rows {
+    display: inline-block;
+    border: 1px solid fade-out(#000, 0.1);
+    padding: 1px;
+    border-radius: 2px;
+    > .row {
+      display: flex;
+      flex-direction: row;
+      > .pixel {
+        $s: 8px;
+        min-width: $s;
+        width: $s;
+        height: $s;
+        background: fade-out(#000, 0.95);
+        margin: 0 1px 1px 0;
+        border-radius: 2px;
+        &.black {
+          background: fade-out(#000, 0.1);
+        }
+      }
+    }
+  }
+}
