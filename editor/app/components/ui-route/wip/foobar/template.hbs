@@ -1,12 +1,19 @@
-<div class="rows">
-  {{#each rows as |row|}}
-    <div class="row">
-      {{#each row as |item|}}
-        {{#ui-block/div class=(if (eq item.value 0) 'pixel black' 'pixel') click=(action 'toggle' item)}}{{/ui-block/div}}
-      {{/each}}
-    </div>
-  {{/each}}
-</div>
+{{#if ready}}
+  <div class="rows">
+    {{#each rows as |row|}}
+      <div class="row">
+        {{#each row as |pixel|}}
+          {{ui-route/wip/foobar/pixel pixel=pixel click=(action 'toggle' pixel)}}
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="actions">
+    {{ui-block/button value="Shuffle" action=(action 'shuffle')}}
+  </div>
+{{else}}
+  Rendering…
+{{/if}}
 
 {{!--
 <div class="editor">

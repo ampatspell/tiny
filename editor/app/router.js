@@ -10,7 +10,6 @@ Router.map(function() {
 
   this.route('wip', function() {
     this.route('foobar');
-    this.route('editor');
   });
 
 });

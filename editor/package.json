@@ -47,8 +47,5 @@
   },
   "engines": {
     "node": "8.* || >= 10.*"
-  },
-  "dependencies": {
-    "konva": "^4.0.5"
   }
 }
