@@ -19,3 +19,4 @@
 * preview 1x, 2x, 4x
 * sprite has 1 or more frames
 * animation preview. fixed and walk
+* generate preview gifs (still and animated)
