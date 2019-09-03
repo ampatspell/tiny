@@ -4,9 +4,11 @@ import { gt } from '@ember/object/computed';
 
 export default Node.extend({
 
-  createNode(Konva) {
-    return new Konva.Group();
-  },
+  nodeClassName: 'group',
+
+  // createNode(Konva) {
+  //   return new Konva.Group();
+  // },
 
   x: null,
   y: null,

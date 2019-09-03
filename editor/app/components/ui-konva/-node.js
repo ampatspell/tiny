@@ -2,13 +2,25 @@ import Component from '@ember/component';
 import Parent from './-parent';
 import Events from './-events';
 import { computed } from '@ember/object';
+import { capitalize } from '@ember/string';
+import { assert } from '@ember/debug';
 import Konva from 'konva';
 
 export default Component.extend(Parent, Events, {
   // needs element because of -parent.js node.zIndex
   // tagName: '',
 
+  nodeClassName: null,
   props: null,
+
+  createNode(Konva) {
+    let className = this.nodeClassName;
+    assert(`provide 'className' or override createNode method`, !!className);
+    className = capitalize(className);
+    let factory = Konva[className];
+    assert(`${className} must be valid Konva class`, !!factory)
+    return new factory();
+  },
 
   node: computed(function() {
     let node = this.createNode(Konva);
@@ -45,9 +57,6 @@ export default Component.extend(Parent, Events, {
   drawLayer() {
     let layer = this.node.getLayer();
     layer && layer.batchDraw();
-  },
-
-  createNode() {
   },
 
   destroyNode() {
