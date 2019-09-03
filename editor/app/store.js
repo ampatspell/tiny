@@ -28,7 +28,7 @@ export default Store.extend({
 
     if(user) {
       // temp workaround
-      await later(1000);
+      await later(100);
       next = this.models.create('user', { user });
       await next.restore();
       this.set('user', next);
