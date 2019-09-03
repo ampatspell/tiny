@@ -3,6 +3,12 @@ import { readOnly } from '@ember/object/computed';
 import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
 import ScheduleSave from './-schedule-save';
 
+export const Pixel = {
+  transparent: 0,
+  white: 1,
+  black: 2
+};
+
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
 
@@ -76,7 +82,10 @@ export default EmberObject.extend(ScheduleSave, {
 
   invert() {
     this._withBytes(bytes => bytes.forEach((value, index) => {
-      bytes[index] = !value;
+      if(value === 0) {
+        return;
+      }
+      bytes[index] = value === 1 ? 2 : 1;
     }));
   }
 

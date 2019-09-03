@@ -1,35 +1,27 @@
 .ui-block-pixels-editor {
-  > .rows {
-    // background: fade-out(#000, 0.5);
+  > .content {
     display: inline-block;
-    border: 1px solid fade-out(#000, 0.8);
-    padding: 1px;
+    border: 1px solid fade-out(#000, 0.9);
+    background-color: fade-out(#000, 0.9);
     border-radius: 2px;
-    > .row {
-      display: flex;
-      flex-direction: row;
-      > .pixel {
-        $s: 15px;
-        min-width: $s;
-        width: $s;
-        height: $s;
-        background: fade-out(#000, 0.95);
-        overflow: hidden;
-        border-radius: 2px;
-        margin: 0 1px 1px 0;
-        &:last-child {
-          margin-right: 0;
-        }
-        &.white {
-          // background: #fff;
-        }
-        &.black {
-          background: fade-out(#000, 0.1);
-        }
-      }
-      &:last-child {
+    padding: 1px;
+    overflow: hidden;
+    > .rows {
+      > .row {
+        display: flex;
+        flex-direction: row;
         > .pixel {
-          margin-bottom: 0;
+          $s: 16px;
+          min-width: $s;
+          width: $s;
+          height: $s;
+          &.white {
+            background: #fff;
+          }
+          &.black {
+            background: fade-out(#000, 0.1);
+            color: #fff;
+          }
         }
       }
     }

@@ -4,14 +4,16 @@
 
 {{else}}
 
-  <div class="rows">
-    {{#each pixels.columns as |col|}}
-      <div class="row">
-        {{#each col.rows as |pixel|}}
-          {{ui-block/pixels/editor/pixel pixel=pixel click=(action "click" pixel)}}
-        {{/each}}
-      </div>
-    {{/each}}
+  <div class="content">
+    <div class="rows">
+      {{#each pixels.columns as |col|}}
+        <div class="row">
+          {{#each col.rows as |pixel|}}
+            {{ui-block/pixels/editor/pixel pixel=pixel click=(action "click" pixel)}}
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
   </div>
 
 {{/if}}

@@ -1,12 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
+import { Pixel } from '../../../../../models/pixels';
 
-const mapping = {
-  0: 'transparent',
-  1: 'black',
-  2: 'white'
-};
+const mapping = Object.keys(Pixel).reduce((hash, name) => {
+  hash[Pixel[name]] = name;
+  return hash;
+}, {});
 
 export default Component.extend({
   classNameBindings: [ ':pixel', 'type' ],

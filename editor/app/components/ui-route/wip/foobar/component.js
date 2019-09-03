@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { Pixel } from '../../../../models/pixels';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-wip-foobar' ],
@@ -15,9 +16,13 @@ export default Component.extend({
   actions: {
     update(pixel, opts) {
       if(opts.shift) {
-        pixel.update(0);
+        pixel.update(Pixel.transparent);
       } else {
-        pixel.update(!pixel.value);
+        if(pixel.value === Pixel.black) {
+          pixel.update(Pixel.white);
+        } else {
+          pixel.update(Pixel.black);
+        }
       }
     },
     fill(value) {
@@ -25,7 +30,10 @@ export default Component.extend({
     },
     shuffle() {
       let random = () => Math.round(Math.random());
-      this.pixels.columns.forEach(column => column.rows.forEach(pixel => pixel.update(random())));
+      this.pixels.columns.forEach(column => column.rows.forEach(pixel => {
+        let value = random();
+        pixel.update(value ? 2 : 0);
+      }));
     },
     invert() {
       this.pixels.invert();
