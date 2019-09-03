@@ -1,16 +1,23 @@
-{{#if ready}}
+{{#if pixels.isLoading}}
+
+  <div>Loading…</div>
+
+{{else}}
+
+  <div>{{pixels.size.width}}x{{pixels.size.height}}px</div>
+
   <div class="rows">
-    {{#each rows as |row|}}
+    {{#each pixels.columns as |col|}}
       <div class="row">
-        {{#each row as |pixel|}}
+        {{#each col.rows as |pixel|}}
           {{ui-route/wip/foobar/pixel pixel=pixel click=(action "toggle" pixel)}}
         {{/each}}
       </div>
     {{/each}}
   </div>
+
   <div class="actions">
     {{ui-block/button value="Shuffle" action=(action "shuffle")}}
   </div>
-{{else}}
-  Rendering…
+
 {{/if}}
