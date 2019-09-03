@@ -36,19 +36,24 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    window.addEventListener('mousemove', e => run(() => this.move(e)));
+    //remove
+    window.addEventListener('mousedown', e => run(() => this.windowMouseDown(e)));
+    window.addEventListener('mouseup', e => run(() => this.windowMouseUp(e)));
+    window.addEventListener('mousemove', e => run(() => this.windowMouseMove(e)));
+    //cancel
     next(() => this.setProperties({ ready: true }));
   },
 
-  mouseDown() {
+  windowMouseDown() {
+    // e.target is child of this
     this.set('down', true);
   },
 
-  mouseUp() {
+  windowMouseUp() {
     this.set('down', false);
   },
 
-  move(e) {
+  windowMouseMove(e) {
     if(!this.down) {
       return;
     }
@@ -59,8 +64,9 @@ export default Component.extend({
       return;
     }
 
-    let { x, y } = el.dataset;
-    if(!x || !y) {
+    let { type, x, y } = el.dataset;
+    // ancestor
+    if(type !== 'pixel') {
       return;
     }
 
