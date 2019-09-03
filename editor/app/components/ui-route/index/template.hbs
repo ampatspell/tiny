@@ -1,6 +1,6 @@
 <div class="row">
   {{#if store.user}}
-    {{store.user.email}}
+    {{store.user.email}} {{link-to "sign out" "session.delete"}}
   {{else}}
     {{link-to "sign in" "session.new"}}
   {{/if}}
