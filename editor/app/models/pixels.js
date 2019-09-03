@@ -52,6 +52,10 @@ export default EmberObject.extend(ScheduleSave, {
     await this.doc.save({ token: true });
   },
 
+  _didUpdateBytes() {
+    this.notifyPropertyChange('bytes');
+  },
+
   _withBytes(cb) {
     let { bytes } = this;
     if(!bytes) {
@@ -69,12 +73,13 @@ export default EmberObject.extend(ScheduleSave, {
         return;
       }
       bytes[index] = value;
-      pixel.notifyPropertyChange('value');
+      pixel.didUpdate();
     });
   },
 
   fill(value) {
     this._withBytes(bytes => bytes.fill(value));
+    this._didUpdateBytes();
   },
 
   invert() {
@@ -84,6 +89,7 @@ export default EmberObject.extend(ScheduleSave, {
       }
       bytes[index] = value === 1 ? 2 : 1;
     }));
+    this._didUpdateBytes();
   },
 
   pixelAt(x, y) {

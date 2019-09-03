@@ -30,6 +30,10 @@ export default EmberObject.extend({
     this.column.pixels.setByte(x, y, value);
   },
 
+  didUpdate() {
+    this.notifyPropertyChange('value');
+  },
+
   toStringExtension() {
     return `${this.x},${this.y}`;
   }
