@@ -9,7 +9,7 @@
       {{#each pixels.columns as |col|}}
         <div class="row">
           {{#each col.rows as |pixel|}}
-            {{ui-block/pixels/editor/pixel pixel=pixel click=(action "click" pixel)}}
+            {{ui-block/pixels/editor/pixel pixel=pixel}}
           {{/each}}
         </div>
       {{/each}}

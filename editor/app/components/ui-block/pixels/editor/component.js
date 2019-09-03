@@ -10,12 +10,6 @@ export default Component.extend(DrawMixin, {
 
   pixels: null,
 
-  actions: {
-    click(pixel, e) {
-      this._update(pixel, this.targetValueFromEvent(pixel, e));
-    }
-  },
-
   targetValueFromEvent(pixel, e) {
     let { shiftKey, metaKey } = e;
     if(shiftKey) {
@@ -23,16 +17,13 @@ export default Component.extend(DrawMixin, {
     } else if(metaKey) {
       return Pixel.white;
     } else {
-      if(pixel.value === Pixel.black) {
-        return Pixel.white;
-      } else {
-        return Pixel.black;
-      }
+      return Pixel.black;
     }
   },
 
   onDrawStart(pixel, e) {
     let value = this.targetValueFromEvent(pixel, e);
+    this._update(pixel, value);
     return pixel => this._update(pixel, value);
   },
 
