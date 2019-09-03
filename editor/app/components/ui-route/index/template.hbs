@@ -1,10 +1,8 @@
-<div class="row">
-  {{#if store.user}}
+{{#if store.user}}
+  <div class="row">
     {{store.user.email}} {{link-to "sign out" "session.delete"}}
-  {{else}}
-    {{link-to "sign in" "session.new"}}
-  {{/if}}
-</div>
+  </div>
+{{/if}}
 <div class="row">
   {{link-to "wip/foobar" "wip.foobar"}}
 </div>
