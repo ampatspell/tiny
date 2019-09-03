@@ -20,3 +20,31 @@
 * sprite has 1 or more frames
 * animation preview. fixed and walk
 * generate preview gifs (still and animated)
+* pixel values are `0, 1, 2`
+
+``` javascript
+// /users/{uid}/games/{game-id}/sprites/{sprite-id}
+{
+  name: 'hello',
+  dimensions: {
+    width: 16,
+    height: 16
+  },
+  derived: {
+    frames
+  },
+  thumbnail: {
+    url
+  }
+}
+```
+
+``` javascript
+// /users/{uid}/games/{game-id}/sprites/{sprite-id}/frames/0
+{
+  pixels: [
+    // 16 * 16
+    'b', 'w', 't', ...
+  ]
+}
+```
