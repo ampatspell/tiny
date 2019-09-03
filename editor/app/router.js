@@ -13,6 +13,12 @@ Router.map(function() {
     this.route('delete');
   });
 
+  this.route('projects', function() {
+    this.route('new');
+    this.route('project', { path: ':project_id' }, function() {
+    });
+  });
+
   this.route('wip', function() {
     this.route('foobar');
   });
