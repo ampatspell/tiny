@@ -1,0 +1,5 @@
+{{#if user}}
+  <div class="user">{{email}}</div>
+{{else}}
+  {{link-to 'Sign in' 'session.new' class="anon"}}
+{{/if}}

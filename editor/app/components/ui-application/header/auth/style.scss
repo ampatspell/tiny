@@ -1,0 +1,12 @@
+.ui-application-header-auth {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  > .user {
+    padding: 4px 10px;
+    background: fade-out(#000, 0.95);
+    border: 1px solid fade-out(#000, 0.93);
+    color: #000;
+    border-radius: 25px;
+  }
+}
