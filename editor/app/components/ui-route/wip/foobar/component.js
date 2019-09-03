@@ -13,20 +13,24 @@ export default Component.extend({
   }).readOnly(),
 
   actions: {
-    toggle(pixel) {
-      pixel.update(!pixel.value);
+    update(pixel, opts) {
+      if(opts.shift) {
+        pixel.update(0);
+      } else {
+        pixel.update(!pixel.value);
+      }
+    },
+    fill(value) {
+      this.pixels.fill(value);
     },
     shuffle() {
       let random = () => Math.round(Math.random());
       this.pixels.columns.forEach(column => column.rows.forEach(pixel => pixel.update(random())));
+    },
+    invert() {
+      this.pixels.invert();
     }
   }
-
-  // actions: {
-  //   toggle(pixel) {
-  //     pixel.set('value', pixel.value === 0 ? 1 : 0);
-  //   },
-  // },
 
   // didInsertElement() {
   //   this._super(...arguments);

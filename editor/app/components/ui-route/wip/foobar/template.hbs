@@ -6,18 +6,13 @@
 
   <div>{{pixels.size.width}}x{{pixels.size.height}}px</div>
 
-  <div class="rows">
-    {{#each pixels.columns as |col|}}
-      <div class="row">
-        {{#each col.rows as |pixel|}}
-          {{ui-route/wip/foobar/pixel pixel=pixel click=(action "toggle" pixel)}}
-        {{/each}}
-      </div>
-    {{/each}}
-  </div>
+  {{ui-block/pixels/editor pixels=pixels update=(action "update") class="editor"}}
 
   <div class="actions">
     {{ui-block/button value="Shuffle" action=(action "shuffle")}}
+    {{ui-block/button value="Clear" action=(action "fill" 0)}}
+    {{ui-block/button value="Fill" action=(action "fill" 1)}}
+    {{ui-block/button value="Invert" action=(action "invert")}}
   </div>
 
 {{/if}}

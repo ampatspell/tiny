@@ -52,13 +52,32 @@ export default EmberObject.extend(ScheduleSave, {
     this.scheduleSave();
   },
 
-  setByte(index, value) {
+  _withBytes(cb) {
     let { bytes } = this;
-    if(bytes[index] === value) {
+    if(!bytes) {
       return;
     }
-    bytes[index] = value;
+    cb(bytes);
     this._didUpdateBytes();
+  },
+
+  setByte(index, value) {
+    this._withBytes(bytes => {
+      if(bytes[index] === value) {
+        return;
+      }
+      bytes[index] = value;
+    });
+  },
+
+  fill(value) {
+    this._withBytes(bytes => bytes.fill(value));
+  },
+
+  invert() {
+    this._withBytes(bytes => bytes.forEach((value, index) => {
+      bytes[index] = !value;
+    }));
   }
 
 });

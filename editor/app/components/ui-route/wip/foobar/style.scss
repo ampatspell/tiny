@@ -1,35 +1,7 @@
 .ui-route-wip-foobar {
   margin: 15px;
-  > .rows {
-    display: inline-block;
-    border: 1px solid fade-out(#000, 0.8);
-    padding: 1px;
-    border-radius: 2px;
-    > .row {
-      display: flex;
-      flex-direction: row;
-      > .pixel {
-        $s: 15px;
-        min-width: $s;
-        width: $s;
-        height: $s;
-        background: fade-out(#000, 0.95);
-        overflow: hidden;
-        border-radius: 2px;
-        margin: 0 1px 1px 0;
-        &:last-child {
-          margin-right: 0;
-        }
-        &.black {
-          background: fade-out(#000, 0.1);
-        }
-      }
-      &:last-child {
-        > .pixel {
-          margin-bottom: 0;
-        }
-      }
-    }
+  > .editor {
+    margin-top: 10px;
   }
   > .actions {
     margin-top: 10px;
