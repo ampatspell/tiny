@@ -18,6 +18,6 @@ export default Route.extend(RequirementsMixin, {
 
   didSignOut: alive(function() {
     this.transitionTo('index');
-  }),
+  })
 
 });
