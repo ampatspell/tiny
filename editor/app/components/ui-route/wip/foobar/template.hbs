@@ -3,35 +3,14 @@
     {{#each rows as |row|}}
       <div class="row">
         {{#each row as |pixel|}}
-          {{ui-route/wip/foobar/pixel pixel=pixel click=(action 'toggle' pixel)}}
+          {{ui-route/wip/foobar/pixel pixel=pixel click=(action "toggle" pixel)}}
         {{/each}}
       </div>
     {{/each}}
   </div>
   <div class="actions">
-    {{ui-block/button value="Shuffle" action=(action 'shuffle')}}
+    {{ui-block/button value="Shuffle" action=(action "shuffle")}}
   </div>
 {{else}}
   Rendering…
 {{/if}}
-
-{{!--
-<div class="editor">
-  {{#ui-konva/autosized class="autosized" as |size|}}
-    {{#ui-konva/stage class="stage" size=size as |stage|}}
-
-      {{#ui-konva/layer}}
-
-        {{#each rows as |row|}}
-          {{#each row as |pixel|}}
-
-            {{ui-route/wip/foobar/pixel pixel=pixel}}
-
-          {{/each}}
-        {{/each}}
-
-      {{/ui-konva/layer}}
-
-    {{/ui-konva/stage}}
-  {{/ui-konva/autosized}}
-</div> --}}
