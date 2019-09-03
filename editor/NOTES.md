@@ -23,9 +23,10 @@
 * pixel values are `0, 1, 2`
 
 ``` javascript
-// /users/{uid}/games/{game-id}/sprites/{sprite-id}
+// /games/{game-id}/sprites/{sprite-id}
 {
   name: 'hello',
+  owner: uid,
   dimensions: {
     width: 16,
     height: 16
