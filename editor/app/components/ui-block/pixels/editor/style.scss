@@ -37,10 +37,13 @@
     }
   }
 
-  &.size-regular {
+  &.size-large {
     @include size(16px);
   }
+  &.size-regular {
+    @include size(12px);
+  }
   &.size-small {
-    @include size(10px);
+    @include size(8px);
   }
 }

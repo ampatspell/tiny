@@ -13,6 +13,9 @@ export default Component.extend({
   }).readOnly(),
 
   actions: {
+    size(size) {
+      this.setProperties({ size });
+    },
     update(pixel, value) {
       pixel.update(value);
     },

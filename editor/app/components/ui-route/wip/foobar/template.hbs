@@ -6,7 +6,13 @@
 
   <div>{{pixels.size.width}}x{{pixels.size.height}}px</div>
 
-  {{ui-block/pixels/editor pixels=pixels update=(action "update") class="editor"}}
+  {{ui-block/pixels/editor pixels=pixels size=size update=(action "update") class="editor"}}
+
+  <div class="actions">
+    {{ui-block/button value="Large" action=(action "size" "large")}}
+    {{ui-block/button value="Regular" action=(action "size" "regular")}}
+    {{ui-block/button value="Small" action=(action "size" "small")}}
+  </div>
 
   <div class="actions">
     {{ui-block/button value="Shuffle" action=(action "shuffle")}}
