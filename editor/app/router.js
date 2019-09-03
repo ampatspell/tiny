@@ -8,7 +8,9 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
 
-  this.route('wip');
+  this.route('wip', function() {
+    this.route('editor');
+  });
 
 });
 

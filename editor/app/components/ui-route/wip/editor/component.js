@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-route-wip' ],
+  classNameBindings: [ ':ui-route-wip-editor' ],
 
   x: 50.5,
   y: 50.5,
