@@ -26,7 +26,8 @@ export default EmberObject.extend({
   }).readOnly(),
 
   update(value) {
-    this.column.pixels.setByte(this.index, value);
+    let { x, y } = this;
+    this.column.pixels.setByte(x, y, value);
   },
 
   toStringExtension() {

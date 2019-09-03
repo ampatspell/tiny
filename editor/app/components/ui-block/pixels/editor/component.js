@@ -1,9 +1,12 @@
 import Component from '@ember/component';
 import DrawMixin from './-draw';
 import { Pixel } from '../../../../models/pixels';
+import { className } from '../../../../utils/computed';
 
 export default Component.extend(DrawMixin, {
-  classNameBindings: [ ':ui-block-pixels-editor' ],
+  classNameBindings: [ ':ui-block-pixels-editor', '_size' ],
+
+  _size: className({ key: 'size', value: 'regular' }),
 
   pixels: null,
 
@@ -14,9 +17,11 @@ export default Component.extend(DrawMixin, {
   },
 
   targetValueFromEvent(pixel, e) {
-    let { shiftKey: shift } = e;
-    if(shift) {
+    let { shiftKey, metaKey } = e;
+    if(shiftKey) {
       return Pixel.transparent;
+    } else if(metaKey) {
+      return Pixel.white;
     } else {
       if(pixel.value === Pixel.black) {
         return Pixel.white;

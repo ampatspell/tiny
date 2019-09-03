@@ -11,10 +11,6 @@
         display: flex;
         flex-direction: row;
         > .pixel {
-          $s: 16px;
-          min-width: $s;
-          width: $s;
-          height: $s;
           &.white {
             background: #fff;
           }
@@ -25,5 +21,26 @@
         }
       }
     }
+  }
+
+  @mixin size($s) {
+    > .content {
+      > .rows {
+        > .row {
+          > .pixel {
+            min-width: $s;
+            width: $s;
+            height: $s;
+          }
+        }
+      }
+    }
+  }
+
+  &.size-regular {
+    @include size(16px);
+  }
+  &.size-small {
+    @include size(10px);
   }
 }

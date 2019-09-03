@@ -52,27 +52,24 @@ export default EmberObject.extend(ScheduleSave, {
     await this.doc.save({ token: true });
   },
 
-  _didUpdateBytes() {
-    // zuglet has no idea bytes has changed
-    this.doc.data.notifyPropertyChange('bytes');
-    this.scheduleSave();
-  },
-
   _withBytes(cb) {
     let { bytes } = this;
     if(!bytes) {
       return;
     }
     cb(bytes);
-    this._didUpdateBytes();
+    this.scheduleSave();
   },
 
-  setByte(index, value) {
+  setByte(x, y, value) {
+    let pixel = this.pixelAt(x, y);
+    let index = pixel.index;
     this._withBytes(bytes => {
       if(bytes[index] === value) {
         return;
       }
       bytes[index] = value;
+      pixel.notifyPropertyChange('value');
     });
   },
 

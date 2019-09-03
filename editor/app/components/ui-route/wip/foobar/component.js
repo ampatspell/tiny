@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { Pixel } from '../../../../models/pixels';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-wip-foobar' ],

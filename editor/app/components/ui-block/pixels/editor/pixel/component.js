@@ -23,6 +23,6 @@ export default Component.extend({
   type: computed('value', function() {
     let { value } = this;
     return mapping[value];
-  }).readOnly(),
+  }).readOnly()
 
 });
