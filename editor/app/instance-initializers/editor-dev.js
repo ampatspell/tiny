@@ -19,7 +19,7 @@ export default {
       });
 
       let frame = index => {
-        let random = () => Math.round(Math.random());
+        let random = () => Math.floor(Math.random() * 3);
         let arr = [];
         for(let i = 0; i < (width * height); i++) {
           arr.push(random());
