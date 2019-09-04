@@ -27,11 +27,6 @@
     }}
   </div>
 
-  <div class="row frames">
-    {{ui-block/button value="Prev" disabled=(not prev) action=(action "frame" prev)}}
-    {{ui-block/button value="Next" disabled=(not next) action=(action "frame" next)}}
-  </div>
-
   <div class="row sizes">
     {{ui-block/slider class="slider" min=1 max=32 value=pixel update=(action "pixel")}}
     {{ui-block/input class="input" value=pixel enter=(action "pixel") delayed=true}}
@@ -41,6 +36,11 @@
     {{ui-block/button value="Clear" action=(action "fill" 0)}}
     {{ui-block/button value="Fill" action=(action "fill" 2)}}
     {{ui-block/button value="Invert" action=(action "invert")}}
+  </div>
+
+  <div class="row frames">
+    {{ui-block/button value="Prev" disabled=(not prev) action=(action "frame" prev)}}
+    {{ui-block/button value="Next" disabled=(not next) action=(action "frame" next)}}
   </div>
 
 </div>
