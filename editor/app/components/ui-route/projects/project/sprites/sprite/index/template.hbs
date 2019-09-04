@@ -22,10 +22,15 @@
   </div>
 
   <div class="row sizes">
-    <div class="prefix">Editor size</div>
     {{#ui-block/segments class="sizes" items=sizes selected=size select=(action "size") as |hash|}}
       {{hash.component value=hash.item.label}}
     {{/ui-block/segments}}
+  </div>
+
+  <div class="row actions">
+    {{ui-block/button value="Clear" action=(action 'fill' 0)}}
+    {{ui-block/button value="Fill" action=(action 'fill' 2)}}
+    {{ui-block/button value="Invert" action=(action 'invert')}}
   </div>
 
 </div>

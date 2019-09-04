@@ -30,7 +30,8 @@
       &.title,
       &.frame,
       &.sizes,
-      &.frames {
+      &.frames,
+      &.actions {
         margin-left: 10px;
         margin-right: 10px;
       }
@@ -44,7 +45,8 @@
           font-weight: 600;
         }
       }
-      &.frames {
+      &.frames,
+      &.actions {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
         grid-gap: 5px;

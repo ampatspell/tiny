@@ -32,6 +32,12 @@ export default Component.extend(KeyboardMixin, {
     },
     size(size) {
       this.setProperties({ size });
+    },
+    fill(value) {
+      this.frame.fill(value);
+    },
+    invert() {
+      this.frame.invert();
     }
   },
 
