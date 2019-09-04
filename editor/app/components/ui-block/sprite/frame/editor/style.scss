@@ -1,30 +1,34 @@
 .ui-block-sprite-frame-editor {
   display: inline-flex;
-  background-color: fade-out(#000, 0.8);
-  border: 1px solid fade-out(#000, 0.9);
-  > .rows {
-    > .row {
-      display: flex;
-      flex-direction: row;
-      > .pixel {
-        &.white {
-          background: #fff;
-        }
-        &.black {
-          background: fade-out(#000, 0.1);
-          color: #fff;
+  > .content {
+    border: 1px solid fade-out(#000, 0.9);
+    padding: 1px;
+    > .rows {
+      background-color: fade-out(#000, 0.8);
+      > .row {
+        display: flex;
+        flex-direction: row;
+        > .pixel {
+          &.white {
+            background: #fff;
+          }
+          &.black {
+            background: fade-out(#000, 0.1);
+            color: #fff;
+          }
         }
       }
     }
   }
-
   @mixin size($s) {
-    > .rows {
-      > .row {
-        > .pixel {
-          min-width: $s;
-          width: $s;
-          height: $s;
+    > .content {
+      > .rows {
+        > .row {
+          > .pixel {
+            min-width: $s;
+            width: $s;
+            height: $s;
+          }
         }
       }
     }

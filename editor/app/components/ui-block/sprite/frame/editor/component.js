@@ -2,12 +2,15 @@ import Component from '@ember/component';
 import DrawMixin from './-draw';
 import { Pixel } from 'editor/utils/pixel';
 import { className } from 'editor/utils/computed';
+import { next } from '@ember/runloop';
+import alive from 'editor/utils/alive';
 
 export default Component.extend(DrawMixin, {
   classNameBindings: [ ':ui-block-sprite-frame-editor', '_size' ],
 
   _size: className({ key: 'size', value: 'regular' }),
 
+  isReady: false,
   frame: null,
 
   targetValueFromEvent(pixel, e) {
@@ -19,6 +22,15 @@ export default Component.extend(DrawMixin, {
     } else {
       return Pixel.black;
     }
+  },
+
+  setReady: alive(function(isReady) {
+    this.setProperties({ isReady });
+  }),
+
+  didReceiveAttrs() {
+    this.setReady(false);
+    next(() => this.setReady(true));
   },
 
   onDrawStart(pixel, e) {
