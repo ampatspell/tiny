@@ -46,6 +46,13 @@
         grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
         grid-gap: 5px;
       }
+      &.preview {
+        overflow-x: scroll;
+        > .image {
+          background-size: contain;
+          image-rendering: pixelated;
+        }
+      }
     }
   }
 }

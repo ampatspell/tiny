@@ -24,7 +24,6 @@ export default EmberObject.extend(ScheduleSave, {
 
   _didUpdateBytes() {
     this.notifyPropertyChange('bytes');
-    this.preview.create();
   },
 
   _withBytes(cb) {

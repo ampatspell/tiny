@@ -15,7 +15,14 @@
   </div>
 
   <div class="row preview">
-    {{frame.preview.canvas}}
+    {{ui-block/background-image
+        url=frame.preview.url
+        size=(hash
+          width=(mul frame.preview.size.width 2)
+          height=(mul frame.preview.size.height 2)
+        )
+        class="image"
+    }}
   </div>
 
   <div class="row frames">
