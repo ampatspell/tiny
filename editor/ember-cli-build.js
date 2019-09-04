@@ -12,5 +12,8 @@ module.exports = function(defaults) {
     },
   });
 
+  app.import('node_modules/konva/konva.js');
+  app.import('vendor/konva-shim.js');
+
   return app.toTree();
 };

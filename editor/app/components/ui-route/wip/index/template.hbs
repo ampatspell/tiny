@@ -1,1 +1,17 @@
-{{frame}}
+{{#ui-konva/autosized class="autosized" as |size|}}
+  {{#ui-konva/stage class="stage" size=size}}
+
+    {{#ui-konva/layer}}
+
+      {{ui-konva/rect props=(hash
+        x=10
+        y=10
+        width=50
+        height=50
+        fill="red"
+      )}}
+
+    {{/ui-konva/layer}}
+
+  {{/ui-konva/stage}}
+{{/ui-konva/autosized}}
