@@ -1,15 +1,45 @@
 {{ui-konva/rect props=(hash
-  x=(add bounds.x -0.5)
-  y=(add bounds.y -0.5)
-  width=(add bounds.width 1)
-  height=(add bounds.height 1)
-  stroke=color
-  strokeWidth=1
-  visible=(not disabled)
+    x=(add bounds.x -0.5)
+    y=(add bounds.y -0.5)
+    width=(add bounds.width 1)
+    height=(add bounds.height 1)
+    stroke=color
+    strokeWidth=1
+    visible=(not disabled)
 )}}
 
-{{ui-konva/pixel/resize/handle x=position.x.mid y=position.y.min disabled=disabled color=color clamp=(action 'clamp' 'top')}}
-{{ui-konva/pixel/resize/handle x=position.x.mid y=position.y.max disabled=disabled color=color clamp=(action 'clamp' 'bottom')}}
+{{ui-konva/pixel/resize/handle
+    x=position.x.mid
+    y=position.y.min
+    disabled=disabled
+    color=color
+    clamp=(action 'clamp' 'top')
+    commit=(action 'commit' 'top')
+}}
 
-{{ui-konva/pixel/resize/handle x=position.x.min y=position.y.mid disabled=disabled color=color clamp=(action 'clamp' 'left')}}
-{{ui-konva/pixel/resize/handle x=position.x.max y=position.y.mid disabled=disabled color=color clamp=(action 'clamp' 'right')}}
+{{ui-konva/pixel/resize/handle
+    x=position.x.mid
+    y=position.y.max
+    disabled=disabled
+    color=color
+    clamp=(action 'clamp' 'bottom')
+    commit=(action 'commit' 'bottom')
+}}
+
+{{ui-konva/pixel/resize/handle
+    x=position.x.min
+    y=position.y.mid
+    disabled=disabled
+    color=color
+    clamp=(action 'clamp' 'left')
+    commit=(action 'commit' 'left')
+}}
+
+{{ui-konva/pixel/resize/handle
+    x=position.x.max
+    y=position.y.mid
+    disabled=disabled
+    color=color
+    clamp=(action 'clamp' 'right')
+    commit=(action 'commit' 'right')
+}}

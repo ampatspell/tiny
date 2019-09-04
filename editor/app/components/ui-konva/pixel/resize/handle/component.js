@@ -17,15 +17,27 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  props: computed('frame', 'disabled', 'color', function() {
-    let { frame, color, disabled } = this;
+  hitFunc: computed(function() {
+    let o = 20;
+    let ho = o / 2;
+    return (ctx, node) => {
+      ctx.beginPath();
+      ctx.rect(-ho, -ho, node.width() + o, node.height() + o);
+      ctx.closePath();
+      ctx.fillStrokeShape(node);
+    }
+  }).readOnly(),
+
+  props: computed('frame', 'disabled', 'color', 'hitFunc', function() {
+    let { frame, color, disabled, hitFunc } = this;
     return {
       ...frame,
       fill: '#fff',
       stroke: color,
       strokeWidth: 1,
       visible: !disabled,
-      draggable: true
+      draggable: true,
+      hitFunc
     };
   }).readOnly(),
 
@@ -52,6 +64,11 @@ export default Node.extend({
     let delta = this.clamp(this.toDelta());
     let props = this.fromDelta(delta);
     this.node.setAttrs(props);
+  },
+
+  onDragend() {
+    let delta = this.toDelta();
+    this.commit(delta);
   }
 
 });

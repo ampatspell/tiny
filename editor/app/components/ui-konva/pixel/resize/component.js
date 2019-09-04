@@ -40,9 +40,7 @@ export default Node.extend({
   actions: {
     clamp(id, delta) {
       let { pixel } = this;
-
       let calc = key => (Math.floor(delta[key] / pixel) * pixel);
-
       if(id === 'right' || id === 'left') {
         return {
           x: calc('x'),
@@ -54,6 +52,20 @@ export default Node.extend({
           y: calc('y')
         };
       }
+    },
+    commit(id, delta) {
+      let { pixel } = this;
+      let calc = key => (delta[key] / pixel);
+      let diff = {
+        x: calc('x'),
+        y: calc('y'),
+      };
+      if(id === 'left') {
+        diff.x = -diff.x;
+      } else if(id === 'top') {
+        diff.y = -diff.y;
+      }
+      console.log(diff);
     }
   }
 
