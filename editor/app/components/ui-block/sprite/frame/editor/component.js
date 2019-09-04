@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import DrawMixin from './-draw';
 import { Pixel } from 'editor/utils/pixel';
 import { className } from 'editor/utils/computed';
-import { next } from '@ember/runloop';
+import { next, cancel } from '@ember/runloop';
 import alive from 'editor/utils/alive';
 
 export default Component.extend(DrawMixin, {
@@ -30,7 +30,8 @@ export default Component.extend(DrawMixin, {
 
   didReceiveAttrs() {
     this.setReady(false);
-    next(() => this.setReady(true));
+    cancel(this._ready);
+    this._ready = next(() => this.setReady(true));
   },
 
   onDrawStart(pixel, e) {

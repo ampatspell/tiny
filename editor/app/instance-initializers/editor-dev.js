@@ -33,7 +33,10 @@ export default {
 
       let frames = [
         frame(0),
-        frame(1)
+        frame(1),
+        frame(2),
+        frame(3),
+        frame(4)
       ];
 
       await Promise.all([
