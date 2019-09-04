@@ -32,7 +32,7 @@ export default Service.extend({
 
   validateIsNotAuthenticated(user) {
     if(user) {
-      return false;
+      return 'denied';
     }
     return true;
   },
