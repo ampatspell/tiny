@@ -31,8 +31,13 @@
         margin-right: 10px;
       }
       &.title {
-        > .identifier {
-          font-weight: 600;
+        > .row {
+          display: flex;
+          flex-direction: row;
+          > .identifier {
+            font-weight: 600;
+            margin-right: 5px;
+          }
         }
       }
       &.frame {
@@ -45,6 +50,17 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
         grid-gap: 5px;
+      }
+      &.sizes {
+        display: flex;
+        flex-direction: row;
+        > .slider {
+          flex: 1;
+          margin-right: 5px;
+        }
+        > .input {
+          width: 40px;
+        }
       }
       &.preview {
         overflow-x: scroll;

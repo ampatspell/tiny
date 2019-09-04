@@ -3,12 +3,6 @@ import { readOnly } from '@ember/object/computed';
 import { delta, current } from 'editor/utils/computed';
 import KeyboardMixin from 'editor/utils/keyboard';
 
-const sizes = [
-  { label: 'Small',   value: 8 },
-  { label: 'Regular', value: 16 },
-  { label: 'Large',   value: 24 }
-];
-
 export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-route-projects-project-sprites-sprite-index' ],
 
@@ -20,8 +14,7 @@ export default Component.extend(KeyboardMixin, {
 
   frame: current('frames', 0),
 
-  sizes,
-  size: sizes[1],
+  pixel: 16,
 
   actions: {
     frame(frame) {
@@ -30,8 +23,8 @@ export default Component.extend(KeyboardMixin, {
     update(pixel, value) {
       pixel.update(value);
     },
-    size(size) {
-      this.setProperties({ size });
+    pixel(pixel) {
+      this.setProperties({ pixel });
     },
     fill(value) {
       this.frame.fill(value);
