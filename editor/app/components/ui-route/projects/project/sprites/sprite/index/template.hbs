@@ -1,7 +1,5 @@
 <div class="content">
-  <div class="absolute">
-    {{ui-block/sprite/frame/editor class="editor" size=size.id frame=frame update=(action 'update')}}
-  </div>
+  {{ui-block/sprite/frame/editor class="editor" pixel=size.value frame=frame update=(action 'update')}}
 </div>
 <div class="sidebar">
 
@@ -17,7 +15,14 @@
   </div>
 
   <div class="row preview">
-    {{frame.preview.canvas}}
+    {{ui-block/background-image
+        url=frame.preview.url
+        size=(hash
+          width=(mul frame.preview.size.width 2)
+          height=(mul frame.preview.size.height 2)
+        )
+        class="image"
+    }}
   </div>
 
   <div class="row frames">

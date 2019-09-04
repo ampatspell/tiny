@@ -17,14 +17,12 @@ export default EmberObject.extend({
     let { width, height } = size;
     let canvas = document.createElement('canvas');
     canvas.style.imageRendering = 'pixelated';
-    canvas.style.width = `${width * 2}px`;
-    canvas.style.height = `${height * 2}px`;
     canvas.width = width;
     canvas.height = height;
     return canvas;
   }).readOnly(),
 
-  render() {
+  rendered: computed('canvas', 'bytes', function() {
     let { canvas, bytes } = this;
     if(!canvas || !bytes) {
       return;
@@ -58,10 +56,12 @@ export default EmberObject.extend({
     });
 
     ctx.putImageData(image, 0, 0);
-  },
 
-  create() {
-    this.render();
-  }
+    return canvas;
+  }).readOnly(),
+
+  url: computed('rendered', function() {
+    return this.rendered.toDataURL();
+  }).readOnly(),
 
 });
