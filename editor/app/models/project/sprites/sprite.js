@@ -22,12 +22,13 @@ const size = key => computed(`size.${key}`, function() {
 
 export default EmberObject.extend({
 
-  path: null,
+  sprites: null,
+  doc: null,
+  path: readOnly('doc.path'),
 
-  doc: path(({ store, path }) => store.doc(path).existing()),
   framesQuery: path(({ store, path }) => store.collection(`${path}/frames`).orderBy('index').query()),
 
-  frames: models('framesQuery.content').named('sprite/frame').mapping((doc, sprite) => ({ doc, sprite })),
+  frames: models('framesQuery.content').named('project/sprites/sprite/frame').mapping((doc, sprite) => ({ doc, sprite })),
 
   isLoading: or('doc.isLoading', 'framesQuery.isLoading'),
 
@@ -38,8 +39,8 @@ export default EmberObject.extend({
 
   async load() {
     setGlobal({ sprite: this });
-    let { doc, framesQuery } = this;
-    await resolveObservers(doc, framesQuery);
+    let { framesQuery } = this;
+    await resolveObservers(framesQuery);
   }
 
 });

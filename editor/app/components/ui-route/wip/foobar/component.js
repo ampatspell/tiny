@@ -7,7 +7,9 @@ export default Component.extend({
   classNameBindings: [ ':ui-route-wip-foobar' ],
 
   sprite: computed(function() {
-    let model = this.store.models.create('sprite', { path: 'sprites/one' });
+    let doc = this.store.doc('sprites/one').existing();
+    doc.load();
+    let model = this.store.models.create('project/sprites/sprite', { doc });
     model.load();
     return model;
   }).readOnly(),

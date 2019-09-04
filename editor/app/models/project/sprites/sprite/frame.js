@@ -1,13 +1,7 @@
-import EmberObject, { computed } from '@ember/object';
+import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { models } from 'ember-cli-zuglet/lifecycle';
-import ScheduleSave from '../-schedule-save';
-
-export const Pixel = {
-  transparent: 0,
-  white: 1,
-  black: 2
-};
+import ScheduleSave from 'editor/models/-schedule-save';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
@@ -25,7 +19,7 @@ export default EmberObject.extend(ScheduleSave, {
   index: data('index'),
   bytes: data('bytes'),
 
-  columns: models('_columns').named('sprite/frame/column').mapping((y, pixels) => ({ y, pixels })),
+  columns: models('_columns').named('project/sprites/sprite/frame/column').mapping((y, pixels) => ({ y, pixels })),
 
   async save() {
     await this.doc.save({ token: true });

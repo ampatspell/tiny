@@ -1,6 +1,7 @@
 import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { observed, resolveObservers } from 'ember-cli-zuglet/lifecycle';
+import { observed, resolveObservers, model } from 'ember-cli-zuglet/lifecycle';
+import { all } from 'rsvp';
 
 const data = key => readOnly(`doc.data.${key}`);
 
@@ -11,9 +12,14 @@ export default EmberObject.extend({
 
   title: data('title'),
 
+  sprites: model().named('project/sprites').mapping(project => ({ project })),
+
   async load() {
-    let { doc } = this;
-    await resolveObservers(doc);
+    let { doc, sprites } = this;
+    await all([
+      resolveObservers(doc),
+      sprites.load()
+    ]);
   }
 
 });

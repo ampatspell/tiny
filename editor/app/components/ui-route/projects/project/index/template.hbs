@@ -1,1 +1,5 @@
 <div class="title">{{project.title}}</div>
+
+{{#each project.sprites.models as |sprite|}}
+  <div>{{sprite}}</div>
+{{/each}}

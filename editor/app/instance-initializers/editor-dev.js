@@ -10,6 +10,7 @@ export default {
 
     window.save = async (path, width, height) => {
       let sprite = store.doc(path).new({
+        name: 'hello',
         size: {
           width,
           height

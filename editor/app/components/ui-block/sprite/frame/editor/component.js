@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import DrawMixin from './-draw';
-import { Pixel } from 'editor/models/sprite/frame';
+import { Pixel } from 'editor/utils/pixel';
 import { className } from 'editor/utils/computed';
 
 export default Component.extend(DrawMixin, {

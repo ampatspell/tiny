@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { Pixel } from 'editor/models/sprite/frame';
+import { Pixel } from 'editor/utils/pixel';
 
 const mapping = Object.keys(Pixel).reduce((hash, name) => {
   hash[Pixel[name]] = name;
