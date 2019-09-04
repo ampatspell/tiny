@@ -4,9 +4,9 @@ import { delta, current } from 'editor/utils/computed';
 import KeyboardMixin from 'editor/utils/keyboard';
 
 const sizes = [
-  { label: 'Small', id: 'small' },
-  { label: 'Regular', id: 'regular' },
-  { label: 'Large', id: 'large' }
+  { label: 'Small', id: 'small', value: 4 },
+  { label: 'Regular', id: 'regular', value: 8 },
+  { label: 'Large', id: 'large', value: 16 }
 ];
 
 export default Component.extend(KeyboardMixin, {

@@ -3,52 +3,45 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { Pixel } from 'editor/utils/pixel';
 
-const pixel = {
-  width: 16,
-  height: 16
-};
-
 export default Node.extend({
 
   nodeClassName: 'shape',
 
-  pixel,
+  pixel: 16,
   size: readOnly('frame.size'),
   bytes: readOnly('frame.bytes'),
 
   sceneFunc: computed('size', 'pixel', 'bytes', function() {
     let { size, pixel, bytes } = this;
-    let width = size.width * pixel.width;
-    let height = size.height * pixel.height;
     return ctx => {
+      ctx.fillStyle = 'rgba(255,0,0,0.1)';
+      ctx.fillRect(0, 0, size.width * pixel, size.height * pixel);
+
       bytes.forEach((byte, idx) => {
-        let c;
-        let a;
         if(byte === Pixel.transparent) {
-          a = 255;
-          c = 204;
-        } else {
-          a = 255;
-          if(byte === Pixel.black) {
-            c = 0;
-          } else {
-            c = 255;
-          }
+          return;
         }
 
-        let x = 0;
-        let y = 0;
+        let c;
+        if(byte === Pixel.black) {
+          c = '#000';
+        } else {
+          c = '#fff';
+        }
 
-        ctx.fill = `rgba(${c},${c},${c},${a})`;
-        ctx.fillRect(x, y, size.width, size.height);
+        let y = Math.floor(idx / size.width);
+        let x = idx - (y * size.width);
+
+        ctx.fillStyle = c;
+        ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
       });
     }
   }).readOnly(),
 
   props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', function() {
     let { x, y, pixel, size, sceneFunc } = this;
-    let width = size.width * pixel.width;
-    let height = size.height * pixel.height;
+    let width = size.width * pixel;
+    let height = size.height * pixel;
     return { x, y, width, height, sceneFunc, draggable: true };
   }).readOnly(),
 
