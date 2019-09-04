@@ -16,6 +16,9 @@ export default Component.extend(KeyboardMixin, {
     },
     update(index, value) {
       this.frame.setPixel(index, value);
+    },
+    resize(id, diff) {
+      this.frame.resize(id, diff);
     }
   }
 

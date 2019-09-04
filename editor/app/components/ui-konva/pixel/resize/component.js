@@ -60,12 +60,15 @@ export default Node.extend({
         x: calc('x'),
         y: calc('y'),
       };
+      if(diff.x === 0 && diff.y === 0) {
+        return;
+      }
       if(id === 'left') {
         diff.x = -diff.x;
       } else if(id === 'top') {
         diff.y = -diff.y;
       }
-      console.log(diff);
+      this.commit(id, diff);
     }
   }
 

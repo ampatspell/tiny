@@ -59,6 +59,10 @@ export default EmberObject.extend(ScheduleSave, {
       }
       bytes[index] = value === 1 ? 2 : 1;
     }));
+  },
+
+  resize(handle, diff) {
+    console.log(handle, diff);
   }
 
 });
