@@ -9,6 +9,7 @@ export default Route.extend(RequirementsMixin, {
     let project = this.store.models.create('project', { id: 'N01uqaf8XakLdobq4zFZ' });
     await project.load();
     let sprite = project.sprites.sprite('lkTlgQiLXXZ0Nj18deOy');
+    await sprite.load();
     return sprite;
   }
 
