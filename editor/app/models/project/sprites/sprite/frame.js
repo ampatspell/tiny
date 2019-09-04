@@ -1,6 +1,6 @@
 import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { models, model } from 'ember-cli-zuglet/lifecycle';
+import { model } from 'ember-cli-zuglet/lifecycle';
 import ScheduleSave from 'editor/models/-schedule-save';
 
 const doc = path => readOnly(`doc.${path}`);
@@ -12,14 +12,9 @@ export default EmberObject.extend(ScheduleSave, {
   sprite: null,
   doc: null,
 
-  size: sprite('size'),
-  _columns: sprite('_columns'),
-  _rows:    sprite('_rows'),
-
+  size:  sprite('size'),
   index: data('index'),
   bytes: data('bytes'),
-
-  columns: models('_columns').named('project/sprites/sprite/frame/column').mapping((y, pixels) => ({ y, pixels })),
 
   preview: model().named('project/sprites/sprite/frame/preview').mapping(frame => ({ frame })),
 
@@ -27,10 +22,8 @@ export default EmberObject.extend(ScheduleSave, {
     await this.doc.save({ token: true });
   },
 
-  _didUpdateBytes(notify) {
-    if(notify) {
-      this.notifyPropertyChange('bytes');
-    }
+  _didUpdateBytes() {
+    this.notifyPropertyChange('bytes');
     this.preview.create();
   },
 
@@ -39,7 +32,11 @@ export default EmberObject.extend(ScheduleSave, {
     if(!bytes) {
       return;
     }
-    cb(bytes);
+    let mutated = cb(bytes);
+    if(mutated === false) {
+      return;
+    }
+    this._didUpdateBytes();
     this.scheduleSave();
   },
 
@@ -47,17 +44,14 @@ export default EmberObject.extend(ScheduleSave, {
     let index = pixel.index;
     this._withBytes(bytes => {
       if(bytes[index] === value) {
-        return;
+        return false;
       }
       bytes[index] = value;
-      pixel._didUpdate();
-      this._didUpdateBytes(false);
     });
   },
 
   fill(value) {
     this._withBytes(bytes => bytes.fill(value));
-    this._didUpdateBytes(true);
   },
 
   invert() {
@@ -67,12 +61,6 @@ export default EmberObject.extend(ScheduleSave, {
       }
       bytes[index] = value === 1 ? 2 : 1;
     }));
-    this._didUpdateBytes(true);
-  },
-
-  pixelAt(x, y) {
-    let col = this.columns.objectAt(y);
-    return col && col.rows.objectAt(x);
   }
 
 });

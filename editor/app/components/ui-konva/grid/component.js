@@ -1,6 +1,5 @@
 import Node from '../-node';
 import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import { Pixel } from 'editor/utils/pixel';
 
 export default Node.extend({
@@ -8,14 +7,14 @@ export default Node.extend({
   nodeClassName: 'shape',
 
   pixel: 16,
-  size: readOnly('frame.size'),
-  bytes: readOnly('frame.bytes'),
+  size: null,
+  bytes: null,
 
   sceneFunc: computed('size', 'pixel', 'bytes', function() {
     let { size, pixel, bytes } = this;
     return ctx => {
-      ctx.fillStyle = 'rgba(255,0,0,0.1)';
-      ctx.fillRect(0, 0, size.width * pixel, size.height * pixel);
+      ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+      ctx.strokeRect(-0.5, -0.5, (size.width * pixel) + 1, (size.height * pixel) + 1);
 
       bytes.forEach((byte, idx) => {
         if(byte === Pixel.transparent) {
@@ -44,5 +43,9 @@ export default Node.extend({
     let height = size.height * pixel;
     return { x, y, width, height, sceneFunc, draggable: true };
   }).readOnly(),
+
+  nodeAttributesChanged() {
+    return true;
+  },
 
 });
