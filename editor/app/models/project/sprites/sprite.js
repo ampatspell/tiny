@@ -25,7 +25,6 @@ export default EmberObject.extend({
   size: readOnly('doc.data.size.serialized'),
 
   async load() {
-    setGlobal({ sprite: this });
     let { framesQuery } = this;
     await resolveObservers(framesQuery);
   },
