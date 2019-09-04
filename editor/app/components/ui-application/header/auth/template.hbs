@@ -1,5 +1,5 @@
 {{#if user}}
-  <div class="user">{{email}}</div>
+  {{link-to email "session" class="user"}}
 {{else}}
   {{link-to "Sign In" "session.new" class="anon"}}
 {{/if}}
