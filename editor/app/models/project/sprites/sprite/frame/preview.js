@@ -38,8 +38,8 @@ export default EmberObject.extend({
       let c;
       let a;
       if(byte === Pixel.transparent) {
-        a = 255;
-        c = 204;
+        a = 0;
+        c = 0;
       } else {
         a = 255;
         if(byte === Pixel.black) {
