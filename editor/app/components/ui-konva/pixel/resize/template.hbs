@@ -8,8 +8,8 @@
   visible=(not disabled)
 )}}
 
-{{ui-konva/pixel/resize/handle x=position.x.mid y=position.y.min disabled=disabled color=color}}
-{{ui-konva/pixel/resize/handle x=position.x.mid y=position.y.max disabled=disabled color=color}}
+{{ui-konva/pixel/resize/handle x=position.x.mid y=position.y.min disabled=disabled color=color clamp=(action 'clamp' 'top')}}
+{{ui-konva/pixel/resize/handle x=position.x.mid y=position.y.max disabled=disabled color=color clamp=(action 'clamp' 'bottom')}}
 
-{{ui-konva/pixel/resize/handle x=position.x.min y=position.y.mid disabled=disabled color=color}}
-{{ui-konva/pixel/resize/handle x=position.x.max y=position.y.mid disabled=disabled color=color}}
+{{ui-konva/pixel/resize/handle x=position.x.min y=position.y.mid disabled=disabled color=color clamp=(action 'clamp' 'left')}}
+{{ui-konva/pixel/resize/handle x=position.x.max y=position.y.mid disabled=disabled color=color clamp=(action 'clamp' 'right')}}

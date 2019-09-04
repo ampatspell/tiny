@@ -37,62 +37,24 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  // props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', 'hitFunc', function() {
-  //   return { x, y, width, height, sceneFunc, hitFunc, listening: true };
-  // }).readOnly(),
+  actions: {
+    clamp(id, delta) {
+      let { pixel } = this;
 
-  // nodeAttributesChanged() {
-  //   return true;
-  // },
+      let calc = key => (Math.floor(delta[key] / pixel) * pixel);
 
-  // isDrawing: false,
-
-  // pixelForRelativePointerPosition() {
-  //   let pos = this.getRelativePointerPosition();
-  //   let { pixel, size } = this;
-  //   let x = Math.floor(pos.x / pixel);
-  //   let y = Math.floor(pos.y / pixel);
-  //   let index = (y * size.width) + x;
-  //   return { x, y, index };
-  // },
-
-  // targetPixelValueForEvent({ evt }) {
-  //   let { shiftKey, metaKey } = evt;
-  //   if(shiftKey) {
-  //     return Pixel.transparent;
-  //   } else if(metaKey) {
-  //     return Pixel.white;
-  //   } else {
-  //     return Pixel.black;
-  //   }
-  // },
-
-  // updatePixelForEvent(e) {
-  //   let { index } = this.pixelForRelativePointerPosition();
-  //   let value = this.targetPixelValueForEvent(e);
-  //   this.update && this.update(index, value);
-  // },
-
-  // onMousedown(e) {
-  //   if(this.disabled) {
-  //     return;
-  //   }
-  //   e.cancelBubble = true;
-  //   this.setProperties({ isDrawing: true });
-  //   this.updatePixelForEvent(e);
-  // },
-
-  // onMouseup(e) {
-  //   e.cancelBubble = true;
-  //   this.setProperties({ isDrawing: false });
-  // },
-
-  // onMousemove(e) {
-  //   if(!this.isDrawing) {
-  //     return;
-  //   }
-  //   e.cancelBubble = true;
-  //   this.updatePixelForEvent(e);
-  // },
+      if(id === 'right' || id === 'left') {
+        return {
+          x: calc('x'),
+          y: 0
+        };
+      } else if(id === 'top' || id === 'bottom') {
+        return {
+          x: 0,
+          y: calc('y')
+        };
+      }
+    }
+  }
 
 });
