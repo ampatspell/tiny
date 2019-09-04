@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { delta } from 'editor/utils/computed';
+import { delta, current } from 'editor/utils/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-wip-foobar' ],
@@ -17,11 +17,7 @@ export default Component.extend({
   prev: delta('frames', 'frame', -1),
   next: delta('frames', 'frame', +1),
 
-  index: 0,
-
-  frame: computed('index', 'frames.[]', function() {
-    return this.frames.objectAt(this.index);
-  }).readOnly(),
+  frame: current('frames', 0),
 
   didInsertElement() {
     this._super(...arguments);
@@ -30,18 +26,10 @@ export default Component.extend({
 
   actions: {
     prev() {
-      let next = this.prev;
-      if(!next) {
-        return;
-      }
-      this.set('index', this.frames.indexOf(next));
+      this.set('frame', this.prev);
     },
     next() {
-      let next = this.next;
-      if(!next) {
-        return;
-      }
-      this.set('index', this.frames.indexOf(next));
+      this.set('frame', this.next);
     },
     size(size) {
       this.setProperties({ size });

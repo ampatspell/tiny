@@ -39,3 +39,26 @@ export const delta = (arrayKey, currentKey, value) => computed(`${arrayKey}.[]`,
   }
   return array.objectAt(index);
 }).readOnly();
+
+export const current = (arrayKey, defaultIndex=0) => {
+  let getIndexKey = key => `_${key}_index`
+  return computed(`${arrayKey}.[]`, {
+    get(key) {
+      let array = this[arrayKey];
+      let indexKey = getIndexKey(key);
+      let index = this[indexKey];
+      let value = array.objectAt(index);
+      return value || array.objectAt(defaultIndex);
+    },
+    set(key, value) {
+      let array = this[arrayKey];
+      let index = array.indexOf(value);
+      if(index == -1) {
+        index = defaultIndex;
+        value = array.objectAt(defaultIndex);
+      }
+      this[getIndexKey(key)] = index;
+      return value;
+    }
+  });
+}
