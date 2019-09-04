@@ -1,15 +1,9 @@
-{{#if isReady}}
-  <div class="content">
-    <div class="rows">
-      {{#each frame.columns as |col|}}
-        <div class="row">
-          {{#each col.rows as |pixel|}}
-            {{ui-block/sprite/frame/editor/pixel pixel=pixel}}
-          {{/each}}
-        </div>
-      {{/each}}
-    </div>
-  </div>
-{{else}}
-  <div class="placeholder">Loading…</div>
-{{/if}}
+{{#ui-konva/autosized class="autosized" as |autosized|}}
+  {{#ui-konva/stage class="stage" size=autosized}}
+    {{#ui-konva/layer}}
+
+      {{ui-konva/grid pixel=pixel size=size bytes=bytes}}
+
+    {{/ui-konva/layer}}
+  {{/ui-konva/stage}}
+{{/ui-konva/autosized}}

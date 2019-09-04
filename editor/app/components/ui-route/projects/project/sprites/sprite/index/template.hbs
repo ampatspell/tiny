@@ -1,20 +1,5 @@
 <div class="content">
-  <div class="absolute">
-    {{!-- {{ui-block/sprite/frame/editor class="editor" size=size.id frame=frame update=(action 'update')}} --}}
-
-    {{#ui-konva/autosized class="autosized" as |autosized|}}
-      {{#ui-konva/stage class="stage" size=autosized}}
-
-        {{#ui-konva/layer}}
-
-          {{ui-konva/grid pixel=size.value size=frame.size bytes=frame.bytes}}
-
-        {{/ui-konva/layer}}
-
-      {{/ui-konva/stage}}
-    {{/ui-konva/autosized}}
-
-  </div>
+  {{ui-block/sprite/frame/editor class="editor" pixel=size.value frame=frame update=(action 'update')}}
 </div>
 <div class="sidebar">
 

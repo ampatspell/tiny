@@ -37,15 +37,40 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', function() {
-    let { x, y, pixel, size, sceneFunc } = this;
+  hitFunc: computed(function() {
+    return (ctx, node) => {
+      ctx.beginPath();
+      ctx.rect(0, 0, node.width(), node.height());
+      ctx.closePath();
+      ctx.fillStrokeShape(node);
+    }
+  }).readOnly(),
+
+  props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', 'hitFunc', function() {
+    let { x, y, pixel, size, sceneFunc, hitFunc } = this;
     let width = size.width * pixel;
     let height = size.height * pixel;
-    return { x, y, width, height, sceneFunc, draggable: true };
+    return { x, y, width, height, sceneFunc, hitFunc, listening: true };
   }).readOnly(),
 
   nodeAttributesChanged() {
     return true;
+  },
+
+  onMouseover(e) {
+    console.log('over');
+  },
+
+  onMousedown(e) {
+    console.log('down', e);
+  },
+
+  onMouseup(e) {
+    console.log('up', e);
+  },
+
+  onMousemove(e) {
+    console.log('move', e);
   },
 
 });

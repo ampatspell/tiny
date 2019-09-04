@@ -56,7 +56,10 @@ export default Component.extend(Parent, Events, {
 
   drawLayer() {
     let layer = this.node.getLayer();
-    layer && layer.batchDraw();
+    if(layer) {
+      layer.drawHit();
+      layer.batchDraw();
+    }
   },
 
   destroyNode() {

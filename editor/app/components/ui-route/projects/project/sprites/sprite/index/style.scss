@@ -4,29 +4,10 @@
   flex-direction: row;
   > .content {
     flex: 1;
-    position: relative;
-    > .absolute {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      overflow: scroll;
-
-      display: flex;
-      flex-direction: column;
-      > .autosized {
-        flex: 1;
-        > .stage {
-          > .content {
-            background: rgba(0,0,0,0.15);
-          }
-        }
-      }
-
-      > .editor {
-        margin: 15px;
-      }
+    display: flex;
+    flex-direction: column;
+    > .editor {
+      flex: 1;
     }
   }
   > .sidebar {

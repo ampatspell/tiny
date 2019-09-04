@@ -1,7 +1,7 @@
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
-import { action } from '../../utils/runloop';
+import { run } from '@ember/runloop';
 
 const events = [
   'mouseover',
@@ -26,7 +26,7 @@ export default Mixin.create({
       let f = `on${capitalize(name)}`;
       let fn = this[f];
       if(fn) {
-        hash[name] = (...args) => action(() => fn.call(this, ...args));
+        hash[name] = (...args) => run(() => fn.call(this, ...args));
       }
       return hash;
     }, {});
