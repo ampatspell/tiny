@@ -1,10 +1,10 @@
-{{#if frame.isLoading}}
+{{#if sprite.isLoading}}
 
   <div>Loading…</div>
 
 {{else}}
 
-  <div>{{frame.size.width}}x{{frame.size.height}}px</div>
+  <div>#{{frame.index}} {{frame.size.width}}x{{frame.size.height}}px</div>
 
   {{ui-block/sprite/frame/editor frame=frame size=size update=(action "update") class="editor"}}
 

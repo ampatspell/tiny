@@ -1,6 +1,6 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
+import { models } from 'ember-cli-zuglet/lifecycle';
 import ScheduleSave from '../-schedule-save';
 
 export const Pixel = {
@@ -11,42 +11,21 @@ export const Pixel = {
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
-
-const size = key => computed(`size.${key}`, function() {
-  let size = this.size;
-  if(!size) {
-    return;
-  }
-  let value = size[key];
-  if(!value) {
-    return;
-  }
-  let indexes = [];
-  for(let i = 0; i < value; i++) {
-    indexes.push(i);
-  }
-  return indexes;
-}).readOnly();
+const sprite = path => readOnly(`sprite.${path}`);
 
 export default EmberObject.extend(ScheduleSave, {
 
-  path: null,
+  sprite: null,
+  doc: null,
 
-  doc: observed().owner('path').content(({ store, path }) => store.doc(path).existing()),
+  size: sprite('size'),
+  _columns: sprite('_columns'),
+  _rows:    sprite('_rows'),
 
-  isLoading: doc('isLoading'),
-
-  size:  data('size.serialized'),
+  index: data('index'),
   bytes: data('bytes'),
 
-  _columns: size('height'),
-  _rows:    size('width'),
-
   columns: models('_columns').named('sprite/frame/column').mapping((y, pixels) => ({ y, pixels })),
-
-  async load() {
-    await resolveObservers(this.doc);
-  },
 
   async save() {
     await this.doc.save({ token: true });

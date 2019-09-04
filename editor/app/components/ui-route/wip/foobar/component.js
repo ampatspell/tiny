@@ -1,14 +1,17 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-wip-foobar' ],
 
-  frame: computed(function() {
-    let model = this.store.models.create('sprite/frame', { path: 'pixels/one' });
+  sprite: computed(function() {
+    let model = this.store.models.create('sprite', { path: 'sprites/one' });
     model.load();
     return model;
   }).readOnly(),
+
+  frame: readOnly('sprite.frames.firstObject'),
 
   actions: {
     size(size) {

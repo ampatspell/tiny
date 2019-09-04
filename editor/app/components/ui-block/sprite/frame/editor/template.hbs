@@ -1,19 +1,9 @@
-{{#if frame.isLoading}}
-
-  <div class="placeholder">Loading…</div>
-
-{{else}}
-
-  <div class="content">
-    <div class="rows">
-      {{#each frame.columns as |col|}}
-        <div class="row">
-          {{#each col.rows as |pixel|}}
-            {{ui-block/sprite/frame/editor/pixel pixel=pixel}}
-          {{/each}}
-        </div>
+<div class="rows">
+  {{#each frame.columns as |col|}}
+    <div class="row">
+      {{#each col.rows as |pixel|}}
+        {{ui-block/sprite/frame/editor/pixel pixel=pixel}}
       {{/each}}
     </div>
-  </div>
-
-{{/if}}
+  {{/each}}
+</div>

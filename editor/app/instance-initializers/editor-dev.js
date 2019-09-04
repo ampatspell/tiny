@@ -9,25 +9,37 @@ export default {
     let store = app.lookup('service:store');
 
     window.save = async (path, width, height) => {
-      let random = () => Math.round(Math.random());
-
-      let arr = [];
-      for(let i = 0; i < (width * height); i++) {
-        arr.push(random());
-      }
-
-      let bytes = new Uint8Array(arr);
-
-      let doc = store.doc(path).new({
+      let sprite = store.doc(path).new({
         size: {
           width,
           height
-        },
-        bytes
+        }
       });
 
-      await doc.save();
-      return doc;
+      let frame = index => {
+        let random = () => Math.round(Math.random());
+        let arr = [];
+        for(let i = 0; i < (width * height); i++) {
+          arr.push(random());
+        }
+        let bytes = new Uint8Array(arr);
+        return store.doc(`${path}/frames/${index}`).new({
+          index,
+          bytes
+        });
+      }
+
+      let frames = [
+        frame(0),
+        frame(1)
+      ];
+
+      await Promise.all([
+        sprite.save(),
+        ...frames.map(frame => frame.save())
+      ]);
+
+      return { sprite, frames };
     }
 
   }
