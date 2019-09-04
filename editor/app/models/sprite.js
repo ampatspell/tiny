@@ -25,7 +25,7 @@ export default EmberObject.extend({
   path: null,
 
   doc: path(({ store, path }) => store.doc(path).existing()),
-  framesQuery: path(({ store, path }) => store.collection(`${path}/frames`).query()),
+  framesQuery: path(({ store, path }) => store.collection(`${path}/frames`).orderBy('index').query()),
 
   frames: models('framesQuery.content').named('sprite/frame').mapping((doc, sprite) => ({ doc, sprite })),
 
