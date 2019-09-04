@@ -29,3 +29,13 @@ export const className = opts => {
     return `${prefix}${string}`;
   }).readOnly();
 }
+
+export const delta = (arrayKey, currentKey, value) => computed(`${arrayKey}.[]`, currentKey, function() {
+  let array = this[arrayKey];
+  let current = this[currentKey];
+  let index = array.indexOf(current) + value;
+  if(index < 0 || index > array.length - 1) {
+    return;
+  }
+  return array.objectAt(index);
+}).readOnly();

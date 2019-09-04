@@ -6,6 +6,8 @@
 
   <div>#{{frame.index}} {{frame.size.width}}x{{frame.size.height}}px</div>
 
+  <div>{{prev}} / {{next}}</div>
+
   {{ui-block/sprite/frame/editor frame=frame size=size update=(action "update") class="editor"}}
 
   <div class="actions">
@@ -19,6 +21,11 @@
     {{ui-block/button value="Clear" action=(action "fill" 0)}}
     {{ui-block/button value="Fill" action=(action "fill" 2)}}
     {{ui-block/button value="Invert" action=(action "invert")}}
+  </div>
+
+  <div class="actions">
+    {{ui-block/button value="Prev" disabled=(not prev) action=(action "prev")}}
+    {{ui-block/button value="Next" disabled=(not next) action=(action "next")}}
   </div>
 
 {{/if}}
