@@ -1,17 +1,30 @@
-<div class="title">
-  <div class="name">{{sprite.name}}</div>
-  <div class="identifier">{{sprite.identifier}}</div>
-  <div class="frame">#{{frame.index}}</div>
+<div class="content">
+  <div class="absolute">
+    {{ui-block/sprite/frame/editor class="editor" size=size.id frame=frame update=(action 'update')}}
+  </div>
 </div>
+<div class="sidebar">
 
-{{ui-block/sprite/frame/editor class="editor" size=size.id frame=frame update=(action 'update')}}
+  <div class="row title">
+    <div class="prefix">Sprite</div>
+    <div class="name">{{sprite.name}}</div>
+    <div class="identifier">{{sprite.identifier}}</div>
+  </div>
 
-<div class="actions">
-  <div class="row">
-    {{ui-block/button value="Previous" disabled=(not prev) action=(action 'frame' prev)}}
+  <div class="row frame">
+    <div class="prefix">Frame</div>
+    <div class="number">#{{frame.index}}</div>
+  </div>
+
+  <div class="row sizes">
+    {{#ui-block/segments class="sizes" items=sizes selected=size select=(action "size") as |hash|}}
+      {{hash.component value=hash.item.label}}
+    {{/ui-block/segments}}
+  </div>
+
+  <div class="row frames">
+    {{ui-block/button value="Prev" disabled=(not prev) action=(action 'frame' prev)}}
     {{ui-block/button value="Next" disabled=(not next) action=(action 'frame' next)}}
   </div>
-  {{#ui-block/segments class="sizes" items=sizes selected=size select=(action "size") as |hash|}}
-    {{hash.component value=hash.item.label}}
-  {{/ui-block/segments}}
+
 </div>

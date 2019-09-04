@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
 import { delta, current } from 'editor/utils/computed';
+import KeyboardMixin from 'editor/utils/keyboard';
 
 const sizes = [
   { label: 'Small', id: 'small' },
@@ -8,7 +9,7 @@ const sizes = [
   { label: 'Large', id: 'large' }
 ];
 
-export default Component.extend({
+export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-route-projects-project-sprites-sprite-index' ],
 
   sprite: readOnly('model.sprite'),
@@ -20,7 +21,7 @@ export default Component.extend({
   frame: current('frames', 0),
 
   sizes,
-  size: sizes[0],
+  size: sizes[2],
 
   actions: {
     frame(frame) {
@@ -32,6 +33,20 @@ export default Component.extend({
     size(size) {
       this.setProperties({ size });
     }
+  },
+
+  onLeft() {
+    let frame = this.prev;
+    frame && this.setProperties({ frame });
+  },
+
+  onRight() {
+    let frame = this.next;
+    frame && this.setProperties({ frame });
+  },
+
+  onEscape() {
+    this.router.transitionTo('projects.project');
   }
 
 });
