@@ -3,5 +3,10 @@
   flex-direction: column;
   > .autosized {
     flex: 1;
+    > .stage {
+      > .content {
+        background: fade-out(#000, 0.9);
+      }
+    }
   }
 }

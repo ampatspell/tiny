@@ -40,8 +40,7 @@ export default EmberObject.extend(ScheduleSave, {
     this.scheduleSave();
   },
 
-  setPixel(pixel, value) {
-    let index = pixel.index;
+  setPixel(index, value) {
     this._withBytes(bytes => {
       if(bytes[index] === value) {
         return false;

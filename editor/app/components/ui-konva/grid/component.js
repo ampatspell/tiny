@@ -10,6 +10,8 @@ export default Node.extend({
   size: null,
   bytes: null,
 
+  disabled: false,
+
   sceneFunc: computed('size', 'pixel', 'bytes', function() {
     let { size, pixel, bytes } = this;
     return ctx => {
@@ -57,20 +59,54 @@ export default Node.extend({
     return true;
   },
 
-  onMouseover(e) {
-    console.log('over');
+  isDrawing: false,
+
+  pixelForEvent(e) {
+    let pos = this.getRelativePointerPosition();
+    let { pixel, size } = this;
+    let x = Math.floor(pos.x / pixel);
+    let y = Math.floor(pos.y / pixel);
+    let index = (y * size.width) + x;
+    return { x, y, index };
+  },
+
+  targetPixelValueForEvent({ evt }) {
+    let { shiftKey, metaKey } = evt;
+    if(shiftKey) {
+      return Pixel.transparent;
+    } else if(metaKey) {
+      return Pixel.white;
+    } else {
+      return Pixel.black;
+    }
+  },
+
+  updatePixelForEvent(e) {
+    let { index } = this.pixelForEvent(e);
+    let value = this.targetPixelValueForEvent(e);
+    this.update && this.update(index, value);
   },
 
   onMousedown(e) {
-    console.log('down', e);
+    if(this.disabled) {
+      return;
+    }
+    e.cancelBubble = true;
+    this.setProperties({ isDrawing: true });
+    this.updatePixelForEvent(e);
   },
 
   onMouseup(e) {
-    console.log('up', e);
+    e.cancelBubble = true;
+    this.setProperties({ isDrawing: false });
   },
 
   onMousemove(e) {
-    console.log('move', e);
+    if(!this.isDrawing) {
+      return;
+    }
+    e.cancelBubble = true;
+    this.updatePixelForEvent(e);
   },
 
 });

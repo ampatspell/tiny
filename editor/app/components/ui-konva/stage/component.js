@@ -65,15 +65,10 @@ export default Component.extend(Parent, StageEvents, {
 
     node.component = this;
 
-    setGlobal({ stage: node });
-
     this.addNodeEventListeners(node);
-
-    let _container = node.container();
-    _container.tabIndex = 1;
-    _container.focus();
-
     this.set('node', node);
+
+    this.created && this.created(this);
   },
 
   destroyNode() {

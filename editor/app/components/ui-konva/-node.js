@@ -82,6 +82,16 @@ export default Component.extend(Parent, Events, {
     this.parentView.unregisterChildComponent(this);
     this.destroyNode();
     this._super(...arguments);
-  }
+  },
+
+  //
+
+  getRelativePointerPosition() {
+    let { node } = this;
+    let pos = node.getStage().getPointerPosition();
+    let transform = node.getAbsoluteTransform().copy();
+    transform.invert();
+    return transform.point(pos);
+  },
 
 });
