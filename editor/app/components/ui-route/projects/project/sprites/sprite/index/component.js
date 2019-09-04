@@ -20,8 +20,11 @@ export default Component.extend(KeyboardMixin, {
     frame(frame) {
       this.setProperties({ frame });
     },
-    update(pixel, value) {
-      pixel.update(value);
+    setPixel(frame, index, value) {
+      frame.setPixel(index, value);
+    },
+    resize(handle, diff) {
+      this.sprite.resize(handle, diff);
     },
     pixel(pixel) {
       this.setProperties({ pixel });

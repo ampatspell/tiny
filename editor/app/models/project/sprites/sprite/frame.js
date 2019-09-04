@@ -2,6 +2,7 @@ import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import ScheduleSave from 'editor/models/-schedule-save';
+import { fromIndex, toIndex } from 'editor/utils/pixel';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
@@ -61,8 +62,29 @@ export default EmberObject.extend(ScheduleSave, {
     }));
   },
 
-  resize(handle, diff) {
-    console.log(handle, diff);
+  _resize(handle, size) {
+    this.cancelScheduledSave();
+
+    let source = {
+      bytes: new Uint8Array(this.bytes),
+      size: this.size
+    };
+
+    let target = {
+      bytes: new Uint8Array(size.width * size.height),
+      size
+    };
+
+    for(let y = 0; y < source.size.height; y++) {
+      for(let x = 0; x < source.size.width; x++) {
+        let value = source.bytes[toIndex(x, y, source.size)];
+        target.bytes[toIndex(x, y, target.size)] = value;
+      }
+    }
+
+    let { doc } = this;
+    doc.set('data.bytes', target.bytes);
+    return doc;
   }
 
 });

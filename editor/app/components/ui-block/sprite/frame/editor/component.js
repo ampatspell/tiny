@@ -15,10 +15,10 @@ export default Component.extend(KeyboardMixin, {
       stage.node.setAttrs({ x: 15, y: 15 });
     },
     update(index, value) {
-      this.frame.setPixel(index, value);
+      this.update(index, value);
     },
     resize(id, diff) {
-      this.frame.resize(id, diff);
+      this.resize(id, diff);
     }
   }
 
