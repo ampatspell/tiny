@@ -59,7 +59,8 @@ export default Component.extend(Parent, StageEvents, {
     node = new Konva.Stage({
       container,
       width,
-      height
+      height,
+      draggable: true
     });
 
     node.component = this;
