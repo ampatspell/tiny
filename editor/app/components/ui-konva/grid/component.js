@@ -61,7 +61,7 @@ export default Node.extend({
 
   isDrawing: false,
 
-  pixelForEvent(e) {
+  pixelForRelativePointerPosition() {
     let pos = this.getRelativePointerPosition();
     let { pixel, size } = this;
     let x = Math.floor(pos.x / pixel);
@@ -82,7 +82,7 @@ export default Node.extend({
   },
 
   updatePixelForEvent(e) {
-    let { index } = this.pixelForEvent(e);
+    let { index } = this.pixelForRelativePointerPosition();
     let value = this.targetPixelValueForEvent(e);
     this.update && this.update(index, value);
   },

@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { route, model } from 'ember-cli-zuglet/lifecycle';
+import { route } from 'ember-cli-zuglet/lifecycle';
 
 export default Route.extend({
 

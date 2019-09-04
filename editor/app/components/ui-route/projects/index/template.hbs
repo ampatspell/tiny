@@ -3,7 +3,7 @@
 {{#if projects}}
   <div class="projects">
     {{#each projects as |project|}}
-      <div class="project" {{action 'select' project}}>{{project.title}}</div>
+      <div class="project" {{action "select" project}} role="button">{{project.title}}</div>
     {{/each}}
   </div>
 {{else}}
@@ -11,5 +11,5 @@
 {{/if}}
 
 <div class="actions">
-  {{ui-block/button value='Add new project' action=(action 'add')}}
+  {{ui-block/button value="Add new project" action=(action "add")}}
 </div>

@@ -1,5 +1,5 @@
 <div class="content">
-  {{ui-block/sprite/frame/editor class="editor" pixel=size.value frame=frame update=(action 'update')}}
+  {{ui-block/sprite/frame/editor class="editor" pixel=size.value frame=frame update=(action "update")}}
 </div>
 <div class="sidebar">
 
@@ -26,8 +26,8 @@
   </div>
 
   <div class="row frames">
-    {{ui-block/button value="Prev" disabled=(not prev) action=(action 'frame' prev)}}
-    {{ui-block/button value="Next" disabled=(not next) action=(action 'frame' next)}}
+    {{ui-block/button value="Prev" disabled=(not prev) action=(action "frame" prev)}}
+    {{ui-block/button value="Next" disabled=(not next) action=(action "frame" next)}}
   </div>
 
   <div class="row sizes">
@@ -37,9 +37,9 @@
   </div>
 
   <div class="row actions">
-    {{ui-block/button value="Clear" action=(action 'fill' 0)}}
-    {{ui-block/button value="Fill" action=(action 'fill' 2)}}
-    {{ui-block/button value="Invert" action=(action 'invert')}}
+    {{ui-block/button value="Clear" action=(action "fill" 0)}}
+    {{ui-block/button value="Fill" action=(action "fill" 2)}}
+    {{ui-block/button value="Invert" action=(action "invert")}}
   </div>
 
 </div>

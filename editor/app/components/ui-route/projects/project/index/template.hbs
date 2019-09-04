@@ -2,7 +2,7 @@
 
 <div class="sprites">
   {{#each project.sprites.models as |sprite|}}
-    <div class="sprite" {{action "sprite" sprite}}>
+    <div class="sprite" {{action "sprite" sprite}} role="button">
       <div class="name">{{sprite.name}}</div>
       <div class="identifier">{{sprite.identifier}}</div>
     </div>
