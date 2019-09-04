@@ -1,0 +1,15 @@
+<div class="title">Your projects</div>
+
+{{#if projects}}
+  <div class="projects">
+    {{#each projects as |project|}}
+      <div class="project" {{action 'select' project}}>{{project.title}}</div>
+    {{/each}}
+  </div>
+{{else}}
+  <div class="placeholder">You don't have any projects yet</div>
+{{/if}}
+
+<div class="actions">
+  {{ui-block/button value='Add new project' action=(action 'add')}}
+</div>

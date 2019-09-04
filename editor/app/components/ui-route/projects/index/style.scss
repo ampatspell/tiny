@@ -1,0 +1,21 @@
+.ui-route-projects-index {
+  > .title {
+    margin: 15px;
+  }
+  > .projects {
+    > .project {
+      padding: 10px 15px;
+      font-weight: 600;
+      &:hover {
+        background: fade-out(#000, 0.95);
+      }
+    }
+  }
+  > .placeholder {
+    margin: 15px;
+    font-weight: 600;
+  }
+  > .actions {
+    margin: 15px;
+  }
+}
