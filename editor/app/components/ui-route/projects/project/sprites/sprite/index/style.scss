@@ -22,6 +22,7 @@
     min-width: 250px;
     background: darken(#fff, 0.7%);
     border-left: 1px solid darken(#fff, 15%);
+    overflow: hidden;
     > .row {
       margin-bottom: 10px;
       &:first-child {
@@ -29,6 +30,7 @@
       }
       &.title,
       &.frame,
+      &.preview,
       &.sizes,
       &.frames,
       &.actions {

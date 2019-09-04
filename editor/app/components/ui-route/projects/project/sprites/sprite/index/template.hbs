@@ -16,6 +16,10 @@
     <div class="number">#{{frame.index}}</div>
   </div>
 
+  <div class="row preview">
+    {{frame.preview.canvas}}
+  </div>
+
   <div class="row frames">
     {{ui-block/button value="Prev" disabled=(not prev) action=(action 'frame' prev)}}
     {{ui-block/button value="Next" disabled=(not next) action=(action 'frame' next)}}

@@ -1,6 +1,6 @@
 import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { models } from 'ember-cli-zuglet/lifecycle';
+import { models, model } from 'ember-cli-zuglet/lifecycle';
 import ScheduleSave from 'editor/models/-schedule-save';
 
 const doc = path => readOnly(`doc.${path}`);
@@ -21,12 +21,17 @@ export default EmberObject.extend(ScheduleSave, {
 
   columns: models('_columns').named('project/sprites/sprite/frame/column').mapping((y, pixels) => ({ y, pixels })),
 
+  preview: model().named('project/sprites/sprite/frame/preview').mapping(frame => ({ frame })),
+
   async save() {
     await this.doc.save({ token: true });
   },
 
-  _didUpdateBytes() {
-    this.notifyPropertyChange('bytes');
+  _didUpdateBytes(notify) {
+    if(notify) {
+      this.notifyPropertyChange('bytes');
+    }
+    this.preview.create();
   },
 
   _withBytes(cb) {
@@ -46,12 +51,13 @@ export default EmberObject.extend(ScheduleSave, {
       }
       bytes[index] = value;
       pixel._didUpdate();
+      this._didUpdateBytes(false);
     });
   },
 
   fill(value) {
     this._withBytes(bytes => bytes.fill(value));
-    this._didUpdateBytes();
+    this._didUpdateBytes(true);
   },
 
   invert() {
@@ -61,7 +67,7 @@ export default EmberObject.extend(ScheduleSave, {
       }
       bytes[index] = value === 1 ? 2 : 1;
     }));
-    this._didUpdateBytes();
+    this._didUpdateBytes(true);
   },
 
   pixelAt(x, y) {
