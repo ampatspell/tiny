@@ -11,7 +11,7 @@ export default EmberObject.extend({
   }).readOnly(),
 
   query: observed().owner('path').content(({ path, store }) => {
-    return store.collection(path).orderBy('name').query();
+    return store.collection(path).orderBy('identifier').query();
   }),
 
   models: models('query.content').named('project/sprites/sprite').mapping((doc, sprites) => ({ doc, sprites })),
@@ -19,6 +19,10 @@ export default EmberObject.extend({
   async load() {
     let { query } = this;
     await resolveObservers(query);
+  },
+
+  sprite(id) {
+    return this.models.findBy('id', id);
   }
 
 });

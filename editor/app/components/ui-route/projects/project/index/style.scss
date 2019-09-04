@@ -3,4 +3,15 @@
     margin: 15px;
     font-weight: 600;
   }
+  > .sprites {
+    > .sprite {
+      padding: 10px 15px;
+      > .identifier {
+        font-weight: 600;
+      }
+      &:hover {
+        background: fade-out(#000, 0.95);
+      }
+    }
+  }
 }

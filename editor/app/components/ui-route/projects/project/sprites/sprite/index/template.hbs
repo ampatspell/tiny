@@ -1,0 +1,17 @@
+<div class="title">
+  <div class="name">{{sprite.name}}</div>
+  <div class="identifier">{{sprite.identifier}}</div>
+  <div class="frame">#{{frame.index}}</div>
+</div>
+
+{{ui-block/sprite/frame/editor class="editor" size=size.id frame=frame update=(action 'update')}}
+
+<div class="actions">
+  <div class="row">
+    {{ui-block/button value="Previous" disabled=(not prev) action=(action 'frame' prev)}}
+    {{ui-block/button value="Next" disabled=(not next) action=(action 'frame' next)}}
+  </div>
+  {{#ui-block/segments class="sizes" items=sizes selected=size select=(action "size") as |hash|}}
+    {{hash.component value=hash.item.label}}
+  {{/ui-block/segments}}
+</div>

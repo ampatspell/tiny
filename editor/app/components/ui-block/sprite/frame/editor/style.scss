@@ -1,8 +1,7 @@
 .ui-block-sprite-frame-editor {
-
   display: inline-flex;
   background-color: fade-out(#000, 0.8);
-  overflow: hidden;
+  border: 1px solid fade-out(#000, 0.9);
   > .rows {
     > .row {
       display: flex;

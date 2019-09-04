@@ -6,4 +6,10 @@ export default Component.extend({
 
   project: readOnly('model.project'),
 
+  actions: {
+    sprite(sprite) {
+      this.router.transitionTo('projects.project.sprites.sprite', sprite.id);
+    }
+  }
+
 });

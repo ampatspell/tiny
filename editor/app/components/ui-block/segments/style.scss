@@ -4,8 +4,9 @@
   border: 1px solid #ddd;
   border-radius: 3px;
   padding: 1px;
+  line-height: 1;
   > .segment {
-    padding: 5px 7px 3px 7px;
+    padding: 5px 7px 6px 7px;
     border-radius: 3px;
     text-align: center;
     &.selected {

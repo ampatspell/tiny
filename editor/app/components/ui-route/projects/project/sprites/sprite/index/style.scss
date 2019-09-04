@@ -1,0 +1,20 @@
+.ui-route-projects-project-sprites-sprite-index {
+  > .title {
+    margin: 15px 15px 0 15px;
+    > .identifier {
+      font-weight: 600;
+    }
+  }
+  > .editor {
+    margin: 15px 15px 0 15px;
+  }
+  > .actions {
+    margin: 15px;
+    > .row {
+      margin-bottom: 5px;
+    }
+    > .sizes {
+      width: 220px;
+    }
+  }
+}
