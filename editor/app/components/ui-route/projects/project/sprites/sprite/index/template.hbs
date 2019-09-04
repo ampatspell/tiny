@@ -16,15 +16,16 @@
     <div class="number">#{{frame.index}}</div>
   </div>
 
-  <div class="row sizes">
-    {{#ui-block/segments class="sizes" items=sizes selected=size select=(action "size") as |hash|}}
-      {{hash.component value=hash.item.label}}
-    {{/ui-block/segments}}
-  </div>
-
   <div class="row frames">
     {{ui-block/button value="Prev" disabled=(not prev) action=(action 'frame' prev)}}
     {{ui-block/button value="Next" disabled=(not next) action=(action 'frame' next)}}
+  </div>
+
+  <div class="row sizes">
+    <div class="prefix">Editor size</div>
+    {{#ui-block/segments class="sizes" items=sizes selected=size select=(action "size") as |hash|}}
+      {{hash.component value=hash.item.label}}
+    {{/ui-block/segments}}
   </div>
 
 </div>
