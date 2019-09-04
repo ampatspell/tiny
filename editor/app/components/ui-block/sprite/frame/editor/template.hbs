@@ -3,7 +3,7 @@
     {{#ui-konva/stage class="stage" size=autosized created=(action "created")}}
       {{#ui-konva/layer}}
 
-        {{ui-konva/grid pixel=pixel size=size bytes=bytes update=(action "update") disabled=isSpacePressed}}
+        {{ui-konva/pixel/grid pixel=pixel size=size bytes=bytes update=(action "update") disabled=isSpacePressed}}
 
       {{/ui-konva/layer}}
     {{/ui-konva/stage}}
