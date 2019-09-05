@@ -26,6 +26,12 @@ export default Node.extend({
   actions: {
     update(state) {
       this.setProperties({ state });
+    },
+    begin(opts) {
+      this.set('move', this.begin(opts));
+    },
+    move(opts) {
+      this.move(opts);
     }
   }
 

@@ -32,9 +32,14 @@ export default Node.extend({
     }
   }).readOnly(),
 
+  onDragstart() {
+    let { state: { x, y, width, height } } = this;
+    this.begin({ x, y, width, height });
+  },
+
   onDragmove() {
     let { x, y } = this.nodeAttributes();
-    let { pixel, state } = this;
+    let { pixel } = this;
 
     let pos = {
       x: Math.round(x / pixel),
@@ -46,7 +51,13 @@ export default Node.extend({
 
     this.setNodeAttributes({ x, y });
 
-    console.log(state, pos);
+    let current = this.pos;
+    if(current && current.x === pos.x && current.y === pos.y) {
+      return;
+    }
+
+    this.set('pos', pos);
+    this.move(pos);
   }
 
 });
