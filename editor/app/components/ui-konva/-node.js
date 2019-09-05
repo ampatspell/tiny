@@ -54,8 +54,8 @@ export default Component.extend(Parent, Events, {
     return true;
   },
 
-  drawLayer() {
-    let layer = this.node.getLayer();
+  drawLayer(layer) {
+    layer = layer || this.node.getLayer();
     if(layer) {
       layer.drawHit();
       layer.batchDraw();
@@ -76,11 +76,14 @@ export default Component.extend(Parent, Events, {
   didInsertElement() {
     this._super(...arguments);
     this.parentView.registerChildComponent(this);
+    this.drawLayer();
   },
 
   willDestroyElement() {
+    let layer = this.node.getLayer();
     this.parentView.unregisterChildComponent(this);
     this.destroyNode();
+    this.drawLayer(layer);
     this._super(...arguments);
   },
 

@@ -1,6 +1,7 @@
 import EmberObject from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
+import { assign } from '@ember/polyfills';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -58,6 +59,35 @@ export default EmberObject.extend({
     });
 
     return true;
+  },
+
+  async reindexFrames() {
+    await this.store.batch(batch => {
+      this.frames.forEach((frame, idx) => {
+        let { doc } = frame;
+        doc.set('data.index', idx);
+        batch.save(doc);
+      });
+    });
+  },
+
+  async createFrame(opts) {
+    let { index, bytes } = assign({ index: 0 }, opts);
+    if(!bytes) {
+      let { size } = this;
+      bytes = new Uint8Array(size.width * size.height);
+    }
+    let doc = this.doc.ref.collection('frames').doc().new({
+      index,
+      bytes
+    });
+    await doc.save();
+  },
+
+  async duplicateFrame(frame) {
+    let { index, bytes } = frame;
+    await this.createFrame({ index, bytes });
+    await this.reindexFrames();
   },
 
   toStringExtension() {
