@@ -4,7 +4,6 @@ import { delta, current } from 'editor/utils/computed';
 import KeyboardMixin from 'editor/utils/keyboard';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import alive from 'editor/utils/alive';
-import { next } from '@ember/runloop';
 
 export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-route-projects-project-sprites-sprite-index' ],
