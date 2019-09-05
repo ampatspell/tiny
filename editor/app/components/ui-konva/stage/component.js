@@ -102,6 +102,34 @@ export default Component.extend(Parent, StageEvents, {
     if(height !== node.height()) {
       node.height(height);
     }
+  },
+
+  //
+
+  getLayerComponents() {
+    let { node } = this;
+    if(!node) {
+      return;
+    }
+    let layers = node.getLayers();
+    return layers.map(layer => layer.component);
+  },
+
+  center() {
+    let { node } = this;
+    let rect = node.getClientRect();
+    let position = node.position();
+    let size = node.size();
+
+    rect.x -= position.x;
+    rect.y -= position.y;
+
+    let calc = (p, s) => Math.floor((size[s] / 2) - (rect[s] / 2) - rect[p]);
+    let x = calc('x', 'width');
+    let y = calc('x', 'height');
+
+    node.position({ x, y });
+    node.batchDraw();
   }
 
 });
