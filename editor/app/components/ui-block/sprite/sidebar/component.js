@@ -18,6 +18,9 @@ export default Component.extend({
   }).readOnly(),
 
   actions: {
+    center() {
+      this.state.center();
+    },
     pixel(pixel) {
       this.state.update({ pixel });
     },

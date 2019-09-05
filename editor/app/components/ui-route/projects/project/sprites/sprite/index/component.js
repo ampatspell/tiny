@@ -4,6 +4,7 @@ import { delta, current } from 'editor/utils/computed';
 import KeyboardMixin from 'editor/utils/keyboard';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import alive from 'editor/utils/alive';
+import { next } from '@ember/runloop';
 
 export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-route-projects-project-sprites-sprite-index' ],
@@ -11,6 +12,8 @@ export default Component.extend(KeyboardMixin, {
   sprite: readOnly('model.sprite'),
 
   state: model().owner('sprite').inline({
+
+    editor: null,
 
     frames: readOnly('sprite.frames'),
 
@@ -21,9 +24,17 @@ export default Component.extend(KeyboardMixin, {
 
     pixel: 16,
 
+    onEditorCreated(editor) {
+      this.setProperties({ editor });
+    },
+
     update: alive(function(props) {
       this.setProperties(props);
     }),
+
+    center() {
+      this.editor.center();
+    },
 
     onLeft() {
       let frame = this.prev;
@@ -44,11 +55,14 @@ export default Component.extend(KeyboardMixin, {
       let { frame, prev } = this;
       this.update({ frame: prev });
       await frame.delete();
-    },
+    }
 
   }).mapping(({ sprite }) => ({ sprite })),
 
   actions: {
+    created(editor) {
+      this.state.onEditorCreated(editor);
+    },
     setPixel(frame, index, value) {
       frame.setPixel(index, value);
     },
