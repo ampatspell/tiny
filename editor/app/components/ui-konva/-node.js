@@ -63,7 +63,9 @@ export default Component.extend(Parent, Events, {
   },
 
   destroyNode() {
-    this.node.destroy();
+    let { node } = this;
+    this.removeNodeEventListeners(node);
+    node.destroy();
   },
 
   didReceiveAttrs() {
@@ -80,6 +82,7 @@ export default Component.extend(Parent, Events, {
   },
 
   willDestroyElement() {
+    console.log('destroy', this+'');
     let layer = this.node.getLayer();
     this.parentView.unregisterChildComponent(this);
     this.destroyNode();

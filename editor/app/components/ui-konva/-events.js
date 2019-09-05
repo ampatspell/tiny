@@ -42,9 +42,9 @@ export default Mixin.create({
     return node;
   },
 
-  // removeNodeEventListeners(node) {
-  //   this.withEventHandlers((name, fn) => node.off(name, fn));
-  //   return node;
-  // },
+  removeNodeEventListeners(node) {
+    this._withEventHandlers(name => node.off(name));
+    return node;
+  },
 
 });
