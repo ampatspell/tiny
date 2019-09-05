@@ -1,0 +1,13 @@
+<div class="content">
+  <div class="row">
+    <div class="label">Sprite name</div>
+    {{ui-block/input value=model.name disabled=model.isBusy update=(action "update" "name")}}
+  </div>
+  <div class="row">
+    <div class="label">Sprite identifier</div>
+    {{ui-block/input value=model.identifier disabled=model.isBusy update=(action "update" "identifier")}}
+  </div>
+  <div class="row">
+    {{ui-block/button value="Create" disabled=model.isDisabled action=(action "save")}}
+  </div>
+</div>

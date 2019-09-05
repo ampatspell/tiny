@@ -9,6 +9,9 @@ export default Component.extend({
   actions: {
     sprite(sprite) {
       this.router.transitionTo('projects.project.sprites.sprite', sprite.id);
+    },
+    newSprite() {
+      this.router.transitionTo('projects.project.sprites.new');
     }
   }
 
