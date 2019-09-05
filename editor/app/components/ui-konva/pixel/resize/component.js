@@ -11,6 +11,22 @@ export default Node.extend({
   size: null,
 
   color: '#60befd',
+  resize: null,
+
+  targetSizeString: computed('size', 'resize', 'pixel', function() {
+    let calc = (position, size) => {
+      let value = this.size[size];
+      let { resize, pixel } = this;
+      if(resize) {
+        // TODO: pixel
+        value += (resize[position] / pixel);
+      }
+      return value;
+    }
+    let x = calc('x', 'width');
+    let y = calc('y', 'height');
+    return `${x}×${y}px`;
+  }).readOnly(),
 
   bounds: computed('pixel', 'size', function() {
     let { pixel, size } = this;
@@ -21,6 +37,21 @@ export default Node.extend({
     let height = size.height * pixel;
     let x = 0;
     let y = 0;
+    return { x, y, width, height };
+  }).readOnly(),
+
+  rect: computed('bounds', 'resize', function() {
+    let { bounds, resize } = this;
+    let x = bounds.x - 0.5;
+    let y = bounds.y - 0.5;
+    let width = bounds.width + 1;
+    let height = bounds.height + 1;
+    if(resize) {
+      let { id } = resize;
+      if(id === 'right') {
+        width += resize.x;
+      }
+    }
     return { x, y, width, height };
   }).readOnly(),
 
@@ -39,37 +70,48 @@ export default Node.extend({
 
   actions: {
     clamp(id, delta) {
-      let { pixel } = this;
-      let calc = key => (Math.floor(delta[key] / pixel) * pixel);
-      if(id === 'right' || id === 'left') {
-        return {
-          x: calc('x'),
-          y: 0
-        };
-      } else if(id === 'top' || id === 'bottom') {
-        return {
-          x: 0,
-          y: calc('y')
-        };
-      }
+      let props = this._clamp(id, delta);
+      this.set('resize', { id, ...props });
+      return props;
     },
     commit(id, delta) {
-      let { pixel } = this;
-      let calc = key => (delta[key] / pixel);
-      let diff = {
-        x: calc('x'),
-        y: calc('y'),
-      };
-      if(diff.x === 0 && diff.y === 0) {
-        return;
-      }
-      if(id === 'left') {
-        diff.x = -diff.x;
-      } else if(id === 'top') {
-        diff.y = -diff.y;
-      }
-      this.commit(id, diff);
+      this.set('resize', null);
+      this._commit(id, delta);
     }
+  },
+
+  _clamp(id, delta) {
+    let { pixel } = this;
+    let calc = key => (Math.floor(delta[key] / pixel) * pixel);
+    if(id === 'right' || id === 'left') {
+      return {
+        x: calc('x'),
+        y: 0
+      };
+    } else if(id === 'top' || id === 'bottom') {
+      return {
+        x: 0,
+        y: calc('y')
+      };
+    }
+  },
+
+  _commit(id, delta) {
+    let { pixel } = this;
+    let calc = key => (delta[key] / pixel);
+    let diff = {
+      x: calc('x'),
+      y: calc('y'),
+    };
+    if(diff.x === 0 && diff.y === 0) {
+      return;
+    }
+    if(id === 'left') {
+      diff.x = -diff.x;
+    } else if(id === 'top') {
+      diff.y = -diff.y;
+    }
+    this.commit(id, diff);
   }
 
 });

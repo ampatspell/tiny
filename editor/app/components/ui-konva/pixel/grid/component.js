@@ -100,6 +100,10 @@ export default Node.extend({
     this.setProperties({ isDrawing: false });
   },
 
+  onMouseleave() {
+    this.setProperties({ isDrawing: false });
+  },
+
   onMousemove(e) {
     if(!this.isDrawing) {
       return;

@@ -1,10 +1,19 @@
 {{ui-konva/rect props=(hash
-    x=(add bounds.x -0.5)
-    y=(add bounds.y -0.5)
-    width=(add bounds.width 1)
-    height=(add bounds.height 1)
+    x=rect.x
+    y=rect.y
+    width=rect.width
+    height=rect.height
     stroke=color
     strokeWidth=1
+    visible=(not disabled)
+)}}
+
+{{ui-konva/text props=(hash
+    x=-1
+    y=-12
+    fontFamily="Roboto Mono"
+    fontSize=12
+    text=targetSizeString
     visible=(not disabled)
 )}}
 
