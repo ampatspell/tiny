@@ -6,8 +6,9 @@
         {{#if bytes}}
 
           {{#ui-konva/group props=(hash x=15 y=15)}}
-            {{ui-konva/pixel/grid pixel=pixel size=size bytes=bytes update=(action "update") disabled=isSpacePressed}}
+            {{ui-konva/pixel/grid pixel=pixel size=size bytes=bytes update=(action "update") disabled=(or isSpacePressed isAltPressed)}}
             {{ui-konva/pixel/resize pixel=pixel size=size disabled=(not isSpacePressed) commit=(action "resize")}}
+            {{ui-konva/pixel/select pixel=pixel size=size disabled=(not isAltPressed)}}
           {{/ui-konva/group}}
 
         {{/if}}

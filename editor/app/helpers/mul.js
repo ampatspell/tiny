@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
 
-export default helper(function add([ a, b ]/*, hash*/) {
+export default helper(function mul([ a, b ]/*, hash*/) {
   return a * b;
 });

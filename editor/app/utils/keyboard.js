@@ -32,11 +32,17 @@ export default Mixin.create({
   },
 
   isSpacePressed: false,
+  isAltPressed: false,
 
   onWindowKeyDown(e) {
-    let { code } = e;
+    let { code, key } = e;
+
     if(code === 'Space') {
       this.setProperties({ isSpacePressed: true });
+    }
+
+    if(key === 'Alt') {
+      this.setProperties({ isAltPressed: true });
     }
   },
 
@@ -45,6 +51,10 @@ export default Mixin.create({
 
     if(code === 'Space') {
       this.setProperties({ isSpacePressed: false });
+    }
+
+    if(key === 'Alt') {
+      this.setProperties({ isAltPressed: false });
     }
 
     if(key === 'ArrowRight') {
