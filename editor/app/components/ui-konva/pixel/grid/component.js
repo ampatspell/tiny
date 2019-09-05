@@ -47,11 +47,11 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', 'hitFunc', function() {
-    let { x, y, pixel, size, sceneFunc, hitFunc } = this;
+  props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', 'hitFunc', 'disabled', function() {
+    let { x, y, pixel, size, sceneFunc, hitFunc, disabled } = this;
     let width = size.width * pixel;
     let height = size.height * pixel;
-    return { x, y, width, height, sceneFunc, hitFunc, listening: true };
+    return { x, y, width, height, sceneFunc, hitFunc, listening: !disabled };
   }).readOnly(),
 
   nodeAttributesChanged() {

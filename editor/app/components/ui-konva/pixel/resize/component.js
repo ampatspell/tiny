@@ -19,7 +19,12 @@ export default Node.extend({
       let { resize, pixel } = this;
       if(resize) {
         // TODO: pixel
-        value += (resize[position] / pixel);
+        let _resize = (resize[position] / pixel);
+        if(resize.id === 'top' || resize.id === 'left') {
+          value -= _resize;
+        } else {
+          value += _resize;
+        }
       }
       return value;
     }
@@ -52,6 +57,7 @@ export default Node.extend({
         width += resize.x;
       } else if(id === 'left') {
         x += resize.x;
+        width -= resize.x;
       } else if(id === 'top') {
         y += resize.y;
         height -= resize.y;
