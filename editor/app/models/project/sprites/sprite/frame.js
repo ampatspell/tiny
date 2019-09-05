@@ -100,7 +100,7 @@ export default EmberObject.extend(ScheduleSave, {
   },
 
   async duplicate() {
-    await this.sprite.duplicateFrame(this);
+    return await this.sprite.duplicateFrame(this);
   },
 
   async delete() {

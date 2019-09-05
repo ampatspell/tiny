@@ -31,11 +31,11 @@ export default Component.extend({
       this.sprite.createFrame();
     },
     duplicate() {
-      this.frame.duplicate();
+      this.state.duplicate();
     },
     delete() {
-      this.frame.delete();
+      this.state.delete();
     }
-  }
+  },
 
 });
