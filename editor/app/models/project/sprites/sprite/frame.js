@@ -75,12 +75,14 @@ export default EmberObject.extend(ScheduleSave, {
       size
     };
 
-    // TODO: handle
-
     for(let y = 0; y < source.size.height; y++) {
       for(let x = 0; x < source.size.width; x++) {
         let value = source.bytes[toIndex(x, y, source.size)];
-        target.bytes[toIndex(x, y, target.size)] = value;
+
+        if(handle === 'right' || handle === 'bottom') {
+          target.bytes[toIndex(x, y, target.size)] = value;
+        }
+
       }
     }
 

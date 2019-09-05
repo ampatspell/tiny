@@ -50,6 +50,13 @@ export default Node.extend({
       let { id } = resize;
       if(id === 'right') {
         width += resize.x;
+      } else if(id === 'left') {
+        x += resize.x;
+      } else if(id === 'top') {
+        y += resize.y;
+        height -= resize.y;
+      } else if(id === 'bottom') {
+        height += resize.y;
       }
     }
     return { x, y, width, height };
