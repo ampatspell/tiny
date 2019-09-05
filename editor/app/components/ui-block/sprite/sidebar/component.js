@@ -26,6 +26,15 @@ export default Component.extend({
     },
     invert() {
       this.frame.invert();
+    },
+    create() {
+      this.sprite.createFrame();
+    },
+    duplicate() {
+      this.frame.duplicate();
+    },
+    delete() {
+      this.frame.delete();
     }
   }
 

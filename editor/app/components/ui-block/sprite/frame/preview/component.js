@@ -8,7 +8,11 @@ export default Component.extend({
   scale: 2,
 
   preview: computed('frame.preview.{url,size}', 'scale', function() {
-    let { scale, frame: { preview: { url, size: { width, height } } } } = this;
+    let { scale, frame } = this;
+    if(!frame) {
+      return;
+    }
+    let { preview: { url, size: { width, height } } } = frame;
     let calc = value => value * scale;
     let size = {
       width: calc(width),

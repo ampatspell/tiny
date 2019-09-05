@@ -97,6 +97,15 @@ export default EmberObject.extend(ScheduleSave, {
     let { doc } = this;
     doc.set('data.bytes', target.bytes);
     return doc;
+  },
+
+  async duplicate() {
+    await this.sprite.duplicateFrame(this);
+  },
+
+  async delete() {
+    await this.doc.delete();
+    await this.sprite.reindexFrames();
   }
 
 });

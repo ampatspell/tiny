@@ -1,23 +1,52 @@
-<div class="row title">
-  <div class="row">
-    <div class="identifier">{{sprite.identifier}}</div>
-    <div class="name">{{sprite.name}}</div>
+<div class="section">
+  <div class="row title">
+    <div class="row">
+      <div class="identifier">{{sprite.identifier}}</div>
+      <div class="name">{{sprite.name}}</div>
+    </div>
+    <div class="size">{{sprite.size.width}}×{{sprite.size.height}}px</div>
+    {{#if frame}}
+      <div class="frame">#{{frame.index}}</div>
+    {{/if}}
   </div>
-  <div class="size">{{sprite.size.width}}×{{sprite.size.height}}px</div>
-  <div class="frame">#{{frame.index}}</div>
+
+  {{#if frame}}
+    <div class="row preview">
+      {{ui-block/sprite/frame/preview frame=frame}}
+    </div>
+  {{/if}}
 </div>
 
-<div class="row preview">
-  {{ui-block/sprite/frame/preview frame=frame}}
-</div>
+{{#if frame}}
 
-<div class="row sizes">
-  {{ui-block/slider class="slider" min=1 max=32 value=state.pixel update=(action "pixel")}}
-  {{ui-block/input class="input" value=state.pixel enter=(action "pixel") delayed=true}}
-</div>
+  <div class="section">
+    <div class="row sizes">
+      {{ui-block/slider class="slider" min=1 max=32 value=state.pixel update=(action "pixel")}}
+      {{ui-block/input class="input" value=state.pixel enter=(action "pixel") delayed=true}}
+    </div>
 
-<div class="row actions">
-  {{ui-block/button value="Clear" action=(action "fill" 0)}}
-  {{ui-block/button value="Fill" action=(action "fill" 2)}}
-  {{ui-block/button value="Invert" action=(action "invert")}}
-</div>
+    <div class="row actions">
+      {{ui-block/button value="Clear" action=(action "fill" 0)}}
+      {{ui-block/button value="Fill" action=(action "fill" 2)}}
+      {{ui-block/button value="Invert" action=(action "invert")}}
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="row actions">
+      {{ui-block/button value="Duplicate" action=(action "duplicate")}}
+    </div>
+    <div class="row actions">
+      {{ui-block/button value="Delete" action=(action "delete")}}
+    </div>
+  </div>
+
+{{else}}
+
+  <div class="section">
+    <div class="row actions">
+      {{ui-block/button value="Create frame" action=(action "create")}}
+    </div>
+  </div>
+
+{{/if}}

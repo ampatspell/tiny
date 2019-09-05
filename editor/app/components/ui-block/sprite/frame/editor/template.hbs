@@ -3,10 +3,14 @@
     {{#ui-konva/stage class="stage" size=autosized created=(action "created")}}
       {{#ui-konva/layer}}
 
-        {{#ui-konva/group props=position}}
-          {{ui-konva/pixel/grid pixel=pixel size=size bytes=bytes update=(action "update") disabled=isSpacePressed}}
-          {{ui-konva/pixel/resize pixel=pixel size=size disabled=(not isSpacePressed) commit=(action "resize")}}
-        {{/ui-konva/group}}
+        {{#if bytes}}
+
+          {{#ui-konva/group props=position}}
+            {{ui-konva/pixel/grid pixel=pixel size=size bytes=bytes update=(action "update") disabled=isSpacePressed}}
+            {{ui-konva/pixel/resize pixel=pixel size=size disabled=(not isSpacePressed) commit=(action "resize")}}
+          {{/ui-konva/group}}
+
+        {{/if}}
 
       {{/ui-konva/layer}}
     {{/ui-konva/stage}}
