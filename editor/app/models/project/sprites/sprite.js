@@ -82,7 +82,9 @@ export default EmberObject.extend({
 
   async createFrame(opts) {
     let { index, bytes } = assign({ index: 0 }, opts);
-    if(!bytes) {
+    if(bytes) {
+      bytes = bytes.slice();
+    } else {
       let { size } = this;
       bytes = new Uint8Array(size.width * size.height);
     }
