@@ -21,37 +21,45 @@
 )}}
 
 {{ui-konva/pixel/resize/handle
+    key="top"
+    handle=handle
     x=position.x.mid
     y=position.y.min
     disabled=disabled
     color=color
-    clamp=(action "clamp" "top")
-    commit=(action "commit" "top")
+    clamp=(action "clamp")
+    commit=(action "commit")
 }}
 
 {{ui-konva/pixel/resize/handle
+    key="bottom"
+    handle=handle
     x=position.x.mid
     y=position.y.max
     disabled=disabled
     color=color
-    clamp=(action "clamp" "bottom")
-    commit=(action "commit" "bottom")
+    clamp=(action "clamp")
+    commit=(action "commit")
 }}
 
 {{ui-konva/pixel/resize/handle
+    key="left"
+    handle=handle
     x=position.x.min
     y=position.y.mid
     disabled=disabled
     color=color
-    clamp=(action "clamp" "left")
-    commit=(action "commit" "left")
+    clamp=(action "clamp")
+    commit=(action "commit")
 }}
 
 {{ui-konva/pixel/resize/handle
+    key="right"
+    handle=handle
     x=position.x.max
     y=position.y.mid
     disabled=disabled
     color=color
-    clamp=(action "clamp" "right")
-    commit=(action "commit" "right")
+    clamp=(action "clamp")
+    commit=(action "commit")
 }}

@@ -28,15 +28,16 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  props: computed('frame', 'disabled', 'color', 'hitFunc', function() {
-    let { frame, color, disabled, hitFunc } = this;
+  props: computed('frame', 'disabled', 'color', 'hitFunc', 'handle', 'key', function() {
+    let { frame, color, disabled, hitFunc, handle, key } = this;
+    let visible = !disabled && (!handle || handle === key);
     return {
       ...frame,
       fill: '#fff',
       stroke: color,
       strokeWidth: 1,
-      visible: !disabled,
       draggable: true,
+      visible,
       hitFunc
     };
   }).readOnly(),
@@ -61,14 +62,14 @@ export default Node.extend({
   },
 
   onDragmove() {
-    let delta = this.clamp(this.toDelta());
+    let delta = this.clamp(this.key, this.toDelta());
     let props = this.fromDelta(delta);
     this.node.setAttrs(props);
   },
 
   onDragend() {
     let delta = this.toDelta();
-    this.commit(delta);
+    this.commit(this.key, delta);
   }
 
 });

@@ -84,11 +84,11 @@ export default Node.extend({
   actions: {
     clamp(id, delta) {
       let props = this._clamp(id, delta);
-      this.set('resize', { id, ...props });
+      this.setProperties({ handle: id, resize: { id, ...props }});
       return props;
     },
     commit(id, delta) {
-      this.set('resize', null);
+      this.setProperties({ handle: null, resize: null });
       this._commit(id, delta);
     }
   },
