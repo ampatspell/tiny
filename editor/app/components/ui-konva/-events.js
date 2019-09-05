@@ -16,7 +16,8 @@ const events = [
   'dblclick',
   'dragstart',
   'dragmove',
-  'dragend'
+  'dragend',
+  'contentMouseup'
 ];
 
 export default Mixin.create({

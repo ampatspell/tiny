@@ -1,5 +1,6 @@
 import Node from '../../../-node';
 import { computed } from '@ember/object';
+import { assign } from '@ember/polyfills';
 
 export default Node.extend({
 
@@ -19,27 +20,46 @@ export default Node.extend({
     let { frame } = this;
     return {
       ...frame,
-      fill: 'rgba(255,0,0,0.1)'
+      fill: '#60befd',
+      opacity: 0.1
     }
   }).readOnly(),
 
   isDrawing: false,
+  state: null,
+
+  _update(isDrawing, state) {
+    state = assign({}, this.state, state);
+    this.setProperties({ isDrawing, state });
+    this.update(state);
+  },
+
+  pixelForRelativePointerPosition() {
+    let pos = this.getRelativePointerPosition();
+    let { pixel } = this;
+    let x = Math.round(pos.x / pixel);
+    let y = Math.round(pos.y / pixel);
+    return { x, y };
+  },
 
   onMousedown(e) {
     if(this.disabled) {
       return;
     }
     e.cancelBubble = true;
-    this.setProperties({ isDrawing: true });
+
+    let { x, y } = this.pixelForRelativePointerPosition();
+    this._update(true, { phase: 'drawing', x, y, width: 0, height: 0 });
+  },
+
+  onMouseleave(e) {
+    e.cancelBubble = true;
+    this._update(false, { phase: 'moving' });
   },
 
   onMouseup(e) {
     e.cancelBubble = true;
-    this.setProperties({ isDrawing: false });
-  },
-
-  onMouseleave() {
-    this.setProperties({ isDrawing: false });
+    this._update(false, { phase: 'moving' });
   },
 
   onMousemove(e) {
@@ -47,7 +67,15 @@ export default Node.extend({
       return;
     }
     e.cancelBubble = true;
-    console.log('draw');
+
+    let pixel = this.pixelForRelativePointerPosition();
+    let state = assign({}, this.state);
+
+    let calc = key => Math.max(pixel[key] - state[key], 0);
+    state.width = calc('x');
+    state.height = calc('y');
+
+    this._update(true, state);
   },
 
 });

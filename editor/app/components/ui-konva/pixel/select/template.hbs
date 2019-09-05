@@ -1,3 +1,6 @@
 {{#unless disabled}}
-  {{ui-konva/pixel/select/overlay pixel=pixel size=size}}
+  {{ui-konva/pixel/select/overlay pixel=pixel size=size update=(action 'update')}}
+  {{#if state}}
+    {{ui-konva/pixel/select/selection pixel=pixel size=size state=state}}
+  {{/if}}
 {{/unless}}

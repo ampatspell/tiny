@@ -34,6 +34,11 @@ export default Component.extend(Parent, Events, {
     return node.getAttrs();
   },
 
+  setNodeAttributes(props) {
+    let { node } = this;
+    return node.setAttrs(props);
+  },
+
   nodeAttributesChanged(current, props) {
     return !!Object.keys(props).find(key => current[key] !== props[key]);
   },
@@ -82,7 +87,6 @@ export default Component.extend(Parent, Events, {
   },
 
   willDestroyElement() {
-    console.log('destroy', this+'');
     let layer = this.node.getLayer();
     this.parentView.unregisterChildComponent(this);
     this.destroyNode();

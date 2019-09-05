@@ -1,4 +1,5 @@
 import Node from '../../-node';
+import { computed } from '@ember/object';
 
 export default Node.extend({
 
@@ -7,6 +8,25 @@ export default Node.extend({
   pixel: null,
   size: null,
 
-  disabled: false
+  disabled: computed({
+    get() {
+      return this._disabled;
+    },
+    set(key, value) {
+      this._disabled = value;
+      if(!value) {
+        this.set('state', null);
+      }
+      return value;
+    }
+  }),
+
+  state: null,
+
+  actions: {
+    update(state) {
+      this.setProperties({ state });
+    }
+  }
 
 });
