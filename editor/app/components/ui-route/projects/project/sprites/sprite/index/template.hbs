@@ -3,11 +3,11 @@
       class="editor"
       pixel=state.pixel
       frame=state.frame
-      update=(action "setPixel" frame)
+      update=(action "setPixel" state.frame)
       resize=(action "resize")
   }}
   {{ui-block/sprite/sidebar class="sidebar" state=state}}
 </div>
 <div class="footer">
-  {{state}}
+  {{ui-block/sprite/frames class="frames" state=state}}
 </div>

@@ -1,0 +1,8 @@
+.ui-block-sprite-frame-preview {
+  overflow-x: scroll;
+  > .image {
+    background-size: contain;
+    image-rendering: pixelated;
+    background-color: fade-out(#000, 0.9);
+  }
+}

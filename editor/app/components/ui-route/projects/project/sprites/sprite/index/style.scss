@@ -14,7 +14,7 @@
     }
   }
   > .footer {
-    border-top: 1px solid darken(#fff, 25%);
-    height: 100px;
+    display: flex;
+    flex-direction: column;
   }
 }

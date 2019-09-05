@@ -8,10 +8,8 @@
       margin-top: 10px;
     }
     &.title,
-    &.frame,
     &.preview,
     &.sizes,
-    &.frames,
     &.actions {
       margin-left: 10px;
       margin-right: 10px;
@@ -30,13 +28,10 @@
           }
         }
       }
-    }
-    &.frame {
-      > .number {
+      > .frame {
         font-weight: 600;
       }
     }
-    &.frames,
     &.actions {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
@@ -51,14 +46,6 @@
       }
       > .input {
         width: 40px;
-      }
-    }
-    &.preview {
-      overflow-x: scroll;
-      > .image {
-        background-size: contain;
-        image-rendering: pixelated;
-        background-color: fade-out(#000, 0.9);
       }
     }
   }

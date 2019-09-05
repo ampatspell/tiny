@@ -4,19 +4,11 @@
     <div class="name">{{sprite.name}}</div>
   </div>
   <div class="size">{{sprite.size.width}}×{{sprite.size.height}}px</div>
-</div>
-
-<div class="row frame">
-  <div class="prefix">Frame</div>
-  <div class="number">#{{frame.index}}</div>
+  <div class="frame">#{{frame.index}}</div>
 </div>
 
 <div class="row preview">
-  {{ui-block/background-image
-      url=preview.url
-      size=preview.size
-      class="image"
-  }}
+  {{ui-block/sprite/frame/preview frame=frame}}
 </div>
 
 <div class="row sizes">
@@ -28,9 +20,4 @@
   {{ui-block/button value="Clear" action=(action "fill" 0)}}
   {{ui-block/button value="Fill" action=(action "fill" 2)}}
   {{ui-block/button value="Invert" action=(action "invert")}}
-</div>
-
-<div class="row frames">
-  {{ui-block/button value="Prev" disabled=(not state.prev) action=(action "frame" state.prev)}}
-  {{ui-block/button value="Next" disabled=(not state.next) action=(action "frame" state.next)}}
 </div>
