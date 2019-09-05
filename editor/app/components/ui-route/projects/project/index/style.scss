@@ -6,8 +6,24 @@
   > .sprites {
     > .sprite {
       padding: 10px 15px;
-      > .identifier {
-        font-weight: 600;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      > .preview {
+        > .thumbnail {
+          width: 32px;
+          height: 32px;
+          background-size: contain;
+          image-rendering: pixelated;
+          background-color: fade-out(#000, 0.9);
+        }
+      }
+      > .details {
+        flex: 1;
+        margin-left: 10px;
+        > .identifier {
+          font-weight: 600;
+        }
       }
       &:hover {
         background: fade-out(#000, 0.95);

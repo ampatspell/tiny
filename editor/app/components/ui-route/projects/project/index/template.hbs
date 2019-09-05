@@ -3,8 +3,13 @@
 <div class="sprites">
   {{#each project.sprites.models as |sprite|}}
     <div class="sprite" {{action "sprite" sprite}} role="button">
-      <div class="name">{{sprite.name}}</div>
-      <div class="identifier">{{sprite.identifier}}</div>
+      <div class="preview">
+        {{ui-block/background-image url=sprite.thumbnail class="thumbnail"}}
+      </div>
+      <div class="details">
+        <div class="name">{{sprite.name}}</div>
+        <div class="identifier">{{sprite.identifier}}</div>
+      </div>
     </div>
   {{/each}}
 </div>

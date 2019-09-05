@@ -19,6 +19,11 @@ export default Route.extend({
 
     async load() {
       await this.sprite.load();
+    },
+
+    willDestroy() {
+      this.sprite.createThumbnail();
+      this._super(...arguments);
     }
 
   }),

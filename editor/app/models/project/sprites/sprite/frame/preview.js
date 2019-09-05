@@ -1,6 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { Pixel } from 'editor/utils/pixel';
+import { canvasToBlob } from 'editor/utils/canvas';
 
 export default EmberObject.extend({
 
@@ -63,5 +64,9 @@ export default EmberObject.extend({
   url: computed('rendered', function() {
     return this.rendered.toDataURL();
   }).readOnly(),
+
+  blob(contentType) {
+    return canvasToBlob(this.rendered, contentType);
+  }
 
 });

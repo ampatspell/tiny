@@ -18,6 +18,7 @@ export default EmberObject.extend({
 
   name: data('name'),
   identifier: data('identifier'),
+  thumbnail: data('thumbnail'),
 
   _adding: array(),
 
@@ -109,6 +110,38 @@ export default EmberObject.extend({
     await this.reindexFrames(index);
     return await this.createFrame({ index, bytes });
   },
+
+  //
+
+  async createThumbnail() {
+    let { store, doc, frames } = this;
+
+    let url = null;
+
+    let frame = frames.firstObject;
+    if(frame) {
+
+      let contentType = 'image/png';
+      let blob = await frame.preview.blob(contentType);
+
+      let ref = store.storage.ref(`${doc.ref.path}/thumbnail.png`);
+      await ref.put({
+        type: 'data',
+        data: blob,
+        metadata: {
+          contentType
+        }
+      });
+
+      let { value } = await ref.url.load();
+      url = value;
+    }
+
+    doc.data.setProperties({ thumbnail: url });
+    await doc.save();
+  },
+
+  //
 
   toStringExtension() {
     let { id, identifier } = this;
