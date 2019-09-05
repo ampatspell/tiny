@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import ScheduleSave from 'editor/models/-schedule-save';
-import { fromIndex, toIndex } from 'editor/utils/pixel';
+import { toIndex } from 'editor/utils/pixel';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
