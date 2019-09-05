@@ -95,6 +95,6 @@ export default Component.extend(Parent, Events, {
     let transform = node.getAbsoluteTransform().copy();
     transform.invert();
     return transform.point(pos);
-  },
+  }
 
 });

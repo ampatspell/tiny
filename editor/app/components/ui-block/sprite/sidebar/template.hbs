@@ -26,19 +26,25 @@
     </div>
 
     <div class="row actions">
+      {{ui-block/button value="Center" action=(action "center")}}
+    </div>
+
+  </div>
+  <div class="section">
+
+    <div class="row actions">
       {{ui-block/button value="Clear" action=(action "fill" 0)}}
       {{ui-block/button value="Fill" action=(action "fill" 2)}}
       {{ui-block/button value="Invert" action=(action "invert")}}
     </div>
-  </div>
 
-  <div class="section">
     <div class="row actions">
       {{ui-block/button value="Duplicate" action=(action "duplicate")}}
     </div>
     <div class="row actions">
       {{ui-block/button value="Delete" action=(action "delete")}}
     </div>
+
   </div>
 
 {{else}}
