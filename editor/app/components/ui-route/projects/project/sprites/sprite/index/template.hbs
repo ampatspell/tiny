@@ -1,13 +1,11 @@
 <div class="master">
-  <div class="content">
-    {{ui-block/sprite/frame/editor
-        class="editor"
-        pixel=state.pixel
-        frame=state.frame
-        update=(action "setPixel" frame)
-        resize=(action "resize")
-    }}
-  </div>
+  {{ui-block/sprite/frame/editor
+      class="editor"
+      pixel=state.pixel
+      frame=state.frame
+      update=(action "setPixel" frame)
+      resize=(action "resize")
+  }}
   {{ui-block/sprite/sidebar class="sidebar" state=state}}
 </div>
 <div class="footer">
