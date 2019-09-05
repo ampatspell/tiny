@@ -1,5 +1,11 @@
 <div class="content">
-  {{ui-block/sprite/frame/editor class="editor" pixel=pixel frame=frame update=(action "update")}}
+  {{ui-block/sprite/frame/editor
+      class="editor"
+      pixel=pixel
+      frame=frame
+      update=(action "setPixel" frame)
+      resize=(action "resize")
+  }}
 </div>
 <div class="sidebar">
 

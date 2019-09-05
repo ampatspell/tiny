@@ -1,6 +1,6 @@
-import Node from '../-node';
+import Node from '../../-node';
 import { computed } from '@ember/object';
-import { Pixel } from 'editor/utils/pixel';
+import { Pixel, fromIndex, toIndex } from 'editor/utils/pixel';
 
 export default Node.extend({
 
@@ -30,8 +30,7 @@ export default Node.extend({
           c = '#fff';
         }
 
-        let y = Math.floor(idx / size.width);
-        let x = idx - (y * size.width);
+        let { x, y } = fromIndex(idx, size);
 
         ctx.fillStyle = c;
         ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
@@ -48,11 +47,11 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', 'hitFunc', function() {
-    let { x, y, pixel, size, sceneFunc, hitFunc } = this;
+  props: computed('x', 'y', 'pixel', 'size', 'sceneFunc', 'hitFunc', 'disabled', function() {
+    let { x, y, pixel, size, sceneFunc, hitFunc, disabled } = this;
     let width = size.width * pixel;
     let height = size.height * pixel;
-    return { x, y, width, height, sceneFunc, hitFunc, listening: true };
+    return { x, y, width, height, sceneFunc, hitFunc, listening: !disabled };
   }).readOnly(),
 
   nodeAttributesChanged() {
@@ -66,7 +65,7 @@ export default Node.extend({
     let { pixel, size } = this;
     let x = Math.floor(pos.x / pixel);
     let y = Math.floor(pos.y / pixel);
-    let index = (y * size.width) + x;
+    let index = toIndex(x, y, size);
     return { x, y, index };
   },
 
@@ -98,6 +97,10 @@ export default Node.extend({
 
   onMouseup(e) {
     e.cancelBubble = true;
+    this.setProperties({ isDrawing: false });
+  },
+
+  onMouseleave() {
     this.setProperties({ isDrawing: false });
   },
 
