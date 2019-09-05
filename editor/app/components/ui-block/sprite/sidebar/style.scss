@@ -1,0 +1,65 @@
+.ui-block-sprite-sidebar {
+  background: darken(#fff, 0.7%);
+  border-left: 1px solid darken(#fff, 25%);
+  overflow: hidden;
+  > .row {
+    margin-bottom: 10px;
+    &:first-child {
+      margin-top: 10px;
+    }
+    &.title,
+    &.frame,
+    &.preview,
+    &.sizes,
+    &.frames,
+    &.actions {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    &.title {
+      > .row {
+        display: flex;
+        flex-direction: row;
+        > .identifier {
+          font-weight: 600;
+          margin-right: 5px;
+          &:after {
+            margin-left: 5px;
+            font-weight: 400;
+            content: '•';
+          }
+        }
+      }
+    }
+    &.frame {
+      > .number {
+        font-weight: 600;
+      }
+    }
+    &.frames,
+    &.actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+      grid-gap: 5px;
+    }
+    &.sizes {
+      display: flex;
+      flex-direction: row;
+      > .slider {
+        flex: 1;
+        margin-right: 5px;
+      }
+      > .input {
+        width: 40px;
+      }
+    }
+    &.preview {
+      overflow-x: scroll;
+      > .image {
+        background-size: contain;
+        image-rendering: pixelated;
+        background-color: fade-out(#000, 0.9);
+      }
+    }
+  }
+}

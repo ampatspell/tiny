@@ -1,52 +1,15 @@
-<div class="content">
-  {{ui-block/sprite/frame/editor
-      class="editor"
-      pixel=pixel
-      frame=frame
-      update=(action "setPixel" frame)
-      resize=(action "resize")
-  }}
-</div>
-<div class="sidebar">
-
-  <div class="row title">
-    <div class="row">
-      <div class="identifier">{{sprite.identifier}}</div>
-      <div class="name">{{sprite.name}}</div>
-    </div>
-    <div class="size">{{sprite.size.width}}×{{sprite.size.height}}px</div>
-  </div>
-
-  <div class="row frame">
-    <div class="prefix">Frame</div>
-    <div class="number">#{{frame.index}}</div>
-  </div>
-
-  <div class="row preview">
-    {{ui-block/background-image
-        url=frame.preview.url
-        size=(hash
-          width=(mul frame.preview.size.width 2)
-          height=(mul frame.preview.size.height 2)
-        )
-        class="image"
+<div class="master">
+  <div class="content">
+    {{ui-block/sprite/frame/editor
+        class="editor"
+        pixel=state.pixel
+        frame=state.frame
+        update=(action "setPixel" frame)
+        resize=(action "resize")
     }}
   </div>
-
-  <div class="row sizes">
-    {{ui-block/slider class="slider" min=1 max=32 value=pixel update=(action "pixel")}}
-    {{ui-block/input class="input" value=pixel enter=(action "pixel") delayed=true}}
-  </div>
-
-  <div class="row actions">
-    {{ui-block/button value="Clear" action=(action "fill" 0)}}
-    {{ui-block/button value="Fill" action=(action "fill" 2)}}
-    {{ui-block/button value="Invert" action=(action "invert")}}
-  </div>
-
-  <div class="row frames">
-    {{ui-block/button value="Prev" disabled=(not prev) action=(action "frame" prev)}}
-    {{ui-block/button value="Next" disabled=(not next) action=(action "frame" next)}}
-  </div>
-
+  {{ui-block/sprite/sidebar class="sidebar" state=state}}
+</div>
+<div class="footer">
+  {{state}}
 </div>
