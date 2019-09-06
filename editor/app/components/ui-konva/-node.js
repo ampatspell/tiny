@@ -5,7 +5,6 @@ import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
 import { assert } from '@ember/debug';
 import { A } from '@ember/array';
-import { addObserver } from '@ember/object/observers';
 import Konva from 'konva';
 
 export default Component.extend(Parent, Events, {
