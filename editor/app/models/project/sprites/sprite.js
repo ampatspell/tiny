@@ -119,6 +119,7 @@ export default EmberObject.extend({
   async duplicateFrame(frame) {
     let { index, bytes } = frame;
     index = index + 1;
+    // TODO: implement reindex and create in one batch
     await this.reindexFrames(index);
     return await this.createFrame({ index, bytes });
   },
