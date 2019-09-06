@@ -4,13 +4,7 @@
       {{#ui-konva/layer}}
 
         {{#each state.scenes as |scene|}}
-          {{ui-konva/rect props=(hash
-              x=0
-              y=0
-              width=scene.size.width
-              height=scene.size.height
-              fill="rgba(255,0,0,0.1)"
-          )}}
+          {{ui-konva/world/scene scene=scene}}
         {{/each}}
 
       {{/ui-konva/layer}}
