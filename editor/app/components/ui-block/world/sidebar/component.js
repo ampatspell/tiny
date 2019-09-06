@@ -12,6 +12,9 @@ export default Component.extend({
     locked(locked) {
       this.world.update({ locked });
     },
+    center() {
+      this.state.center();
+    }
   }
 
 });

@@ -14,14 +14,12 @@ export default Component.extend({
 
     onEditorCreated(editor) {
       this.setProperties({ editor });
+    },
+
+    center() {
+      this.editor && this.editor.center();
     }
 
-  }).mapping(({ world }) => ({ world })),
-
-  actions: {
-    created(editor) {
-      this.state.onEditorCreated(editor);
-    },
-  }
+  }).mapping(({ world }) => ({ world }))
 
 });
