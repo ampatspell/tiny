@@ -4,6 +4,8 @@ import KeyboardMixin from 'editor/utils/keyboard';
 
 const frame = key => readOnly(`frame.${key}`);
 
+const position = { x: 15, y: 15 };
+
 export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-block-sprite-frame-editor' ],
 
@@ -14,6 +16,8 @@ export default Component.extend(KeyboardMixin, {
   bytes: frame('bytes'),
 
   stage: null,
+
+  position,
 
   actions: {
     created(stage) {
