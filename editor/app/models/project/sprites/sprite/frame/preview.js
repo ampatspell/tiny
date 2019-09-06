@@ -61,6 +61,30 @@ export default EmberObject.extend({
     return canvas;
   }).readOnly(),
 
+  opaque: computed('rendered', function() {
+    let { rendered } = this;
+    if(!rendered) {
+      return;
+    }
+    let canvas = document.createElement('canvas');
+    canvas.width = rendered.width;
+    canvas.height = rendered.height;
+
+    let ctx = canvas.getContext('2d');
+
+    let fill = color => {
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
+
+    fill('#fff');
+    fill('rgba(0,0,0,0.1)');
+
+    ctx.drawImage(rendered, 0, 0);
+
+    return canvas;
+  }).readOnly(),
+
   url: computed('rendered', function() {
     return this.rendered.toDataURL();
   }).readOnly(),

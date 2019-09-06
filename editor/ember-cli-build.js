@@ -1,6 +1,7 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const Funnel = require('broccoli-funnel');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
@@ -15,5 +16,14 @@ module.exports = function(defaults) {
   app.import('node_modules/konva/konva.js');
   app.import('vendor/konva-shim.js');
 
-  return app.toTree();
+  app.import('node_modules/gif.js/dist/gif.js');
+  app.import('vendor/gif-shim.js');
+
+  let gif = new Funnel('node_modules/gif.js/dist', {
+    srcDir: '/',
+    destDir: 'assets',
+    include: [ 'gif.worker.js' ]
+  });
+
+  return app.toTree([ gif ]);
 };
