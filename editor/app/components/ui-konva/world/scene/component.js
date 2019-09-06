@@ -6,11 +6,13 @@ export default Node.extend({
   nodeClassName: 'group',
 
   scene: null,
+  pixel: null,
 
-  props: computed(function() {
+  props: computed('pixel', function() {
+    let { pixel } = this;
     return {
-      x: 10,
-      y: 10
+      x: 10 * pixel,
+      y: 10 * pixel
     };
   }),
 

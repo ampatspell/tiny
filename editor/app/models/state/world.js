@@ -6,6 +6,8 @@ export default EmberObject.extend({
   world: null,
   scenes: readOnly('world.scenes'),
 
+  pixel: 4,
+
   editor: null,
 
   onEditorCreated(editor) {
@@ -14,6 +16,12 @@ export default EmberObject.extend({
 
   center() {
     this.editor && this.editor.center();
+  },
+
+  //
+
+  update(props) {
+    this.setProperties(props);
   },
 
   //

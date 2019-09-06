@@ -65,7 +65,8 @@ export default EmberObject.extend({
       name,
       identifier,
       size,
-      grid
+      grid,
+      background: 'white'
     });
 
     try {

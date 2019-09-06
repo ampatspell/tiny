@@ -4,7 +4,7 @@
       {{#ui-konva/layer}}
 
         {{#each state.scenes as |scene|}}
-          {{ui-konva/world/scene scene=scene}}
+          {{ui-konva/world/scene scene=scene pixel=state.pixel}}
         {{/each}}
 
       {{/ui-konva/layer}}

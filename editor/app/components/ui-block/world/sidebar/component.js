@@ -12,6 +12,9 @@ export default Component.extend({
     locked(locked) {
       this.world.update({ locked });
     },
+    pixel(pixel) {
+      this.state.update({ pixel });
+    },
     center() {
       this.state.center();
     },
