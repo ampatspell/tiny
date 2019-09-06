@@ -3,6 +3,7 @@ import { readOnly, or } from '@ember/object/computed';
 import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 import { array } from 'editor/utils/computed';
+import gif from 'editor/utils/gif';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -113,23 +114,32 @@ export default EmberObject.extend({
 
   //
 
-  async createThumbnail() {
-    let { store, doc, frames } = this;
+  createThumbnailBlob() {
+    let { frames } = this;
+    if(frames.length === 0) {
+      return;
+    }
+    return gif(gif => {
+      frames.map(frame => {
+        let canvas = frame.preview.opaque;
+        gif.addFrame(canvas, { delay: 200 });
+      });
+    });
+  },
 
+  async createThumbnail() {
+    let { store, doc } = this;
+
+    let blob = await this.createThumbnailBlob();
     let url = null;
 
-    let frame = frames.firstObject;
-    if(frame) {
-
-      let contentType = 'image/png';
-      let blob = await frame.preview.blob(contentType);
-
-      let ref = store.storage.ref(`${doc.ref.path}/thumbnail.png`);
+    if(blob) {
+      let ref = store.storage.ref(`${doc.ref.path}/thumbnail.gif`);
       await ref.put({
         type: 'data',
         data: blob,
         metadata: {
-          contentType
+          contentType: 'image/gif'
         }
       });
 
@@ -138,6 +148,7 @@ export default EmberObject.extend({
     }
 
     doc.data.setProperties({ thumbnail: url });
+
     await doc.save();
   },
 
