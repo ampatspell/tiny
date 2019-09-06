@@ -6,6 +6,8 @@ export default Component.extend({
   classNameBindings: [ ':ui-application-breadcrumbs' ],
 
   breadcrumbs: service(),
+
   items: readOnly('breadcrumbs.items'),
+  last: readOnly('items.lastObject')
 
 });

@@ -1,4 +1,6 @@
 {{#each items as |item|}}
-  {{fa-icon "chevron-right" class="delimiter"}}
   {{ui-application/header/breadcrumbs/item item=item}}
+  {{#unless (eq item last)}}
+    {{fa-icon "chevron-right" class="delimiter"}}
+  {{/unless}}
 {{/each}}
