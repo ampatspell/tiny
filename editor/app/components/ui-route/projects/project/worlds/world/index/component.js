@@ -10,6 +10,8 @@ export default Component.extend({
   state: model().owner('sprite').inline({
 
     world: null,
+    scenes: readOnly('world.scenes'),
+
     editor: null,
 
     onEditorCreated(editor) {
