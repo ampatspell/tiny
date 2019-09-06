@@ -160,7 +160,7 @@ export default EmberObject.extend({
 
     doc.data.setProperties({ thumbnail: url });
 
-    await doc.save();
+    await this.save();
   },
 
   //
