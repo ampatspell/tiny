@@ -10,6 +10,7 @@ export default Component.extend({
   state: null,
   sprite: readOnly('state.sprite'),
   frame: readOnly('state.frame'),
+  locked: readOnly('sprite.locked'),
 
   style: computed('sprite.size.width', function() {
     let { sprite: { size: { width } } } = this;
@@ -20,6 +21,9 @@ export default Component.extend({
   actions: {
     center() {
       this.state.center();
+    },
+    locked(locked) {
+      this.sprite.update({ locked });
     },
     pixel(pixel) {
       this.state.update({ pixel });
