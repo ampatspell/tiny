@@ -17,6 +17,11 @@ export default EmberObject.extend(ScheduleSave, {
     await this.doc.save({ token: true });
   },
 
+  update(props) {
+    this.doc.data.setProperties(props);
+    this.scheduleSave();
+  },
+
   async delete() {
     await this.doc.delete();
   }
