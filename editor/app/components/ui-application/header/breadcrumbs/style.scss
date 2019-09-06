@@ -1,0 +1,20 @@
+.ui-application-breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  > .delimiter {
+    display: block;
+    margin-right: 10px;
+  }
+  > .item {
+    margin-right: 10px;
+    > .title {
+      font-weight: 600;
+    }
+    &.faded {
+      > .title {
+        font-weight: 400;
+      }
+    }
+  }
+}
