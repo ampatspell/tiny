@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import ScheduleSave from 'editor/models/-schedule-save';
-import { toIndex } from 'editor/utils/pixel';
+import { Pixel, toIndex } from 'editor/utils/pixel';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
@@ -25,6 +25,12 @@ export default EmberObject.extend(ScheduleSave, {
 
   _didUpdateBytes() {
     this.notifyPropertyChange('bytes');
+    this.scheduleSave();
+  },
+
+  _replaceBytes(bytes) {
+    this.doc.set('data.bytes', bytes);
+    this._didUpdateBytes();
   },
 
   _withBytes(cb) {
@@ -37,7 +43,6 @@ export default EmberObject.extend(ScheduleSave, {
       return;
     }
     this._didUpdateBytes();
-    this.scheduleSave();
   },
 
   setPixel(index, value) {
@@ -97,6 +102,64 @@ export default EmberObject.extend(ScheduleSave, {
     let { doc } = this;
     doc.set('data.bytes', target.bytes);
     return doc;
+  },
+
+  _select(bytes, frame) {
+    let { size } = this;
+    let cols = [];
+    for(let y = frame.y; y < frame.y + frame.height; y++) {
+      let row = [];
+      cols.push(row);
+      for(let x = frame.x; x < frame.x + frame.width; x++) {
+        let index = toIndex(x, y, size);
+        row.push(bytes[index]);
+      }
+    }
+    return cols;
+  },
+
+  _clear(bytes, frame) {
+    let { size } = this;
+    for(let y = frame.y; y < frame.y + frame.height; y++) {
+      for(let x = frame.x; x < frame.x + frame.width; x++) {
+        let index = toIndex(x, y, size);
+        bytes[index] = Pixel.transparent;
+      }
+    }
+  },
+
+  _write(bytes, target, selection) {
+    let { size } = this;
+    for(let y = 0; y < selection.length; y++) {
+      let ty = target.y + y;
+      if(ty < 0 || ty > size.height - 1) {
+        continue;
+      }
+      let row = selection[y];
+      for(let x = 0; x < row.length; x++) {
+        let tx = target.x + x;
+        if(tx < 0 || tx > size.width - 1) {
+          continue;
+        }
+        let value = row[x];
+        if(value === Pixel.transparent) {
+          continue;
+        }
+        let index = toIndex(tx, ty, size);
+        bytes[index] = value;
+      }
+    }
+  },
+
+  beginMove(source) {
+    let pristine = this.bytes.slice();
+    let selection = this._select(pristine, source);
+    return target => {
+      let bytes = pristine.slice();
+      this._clear(bytes, source);
+      this._write(bytes, target, selection);
+      this._replaceBytes(bytes);
+    }
   },
 
   async duplicate() {
