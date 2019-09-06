@@ -21,7 +21,6 @@ export default EmberObject.extend({
   prepare(route) {
     let { project } = route.modelFor('projects.project');
     this.setProperties({ project });
-    setGlobal({ project });
   },
 
   update(props) {
