@@ -11,6 +11,7 @@ export default Component.extend(KeyboardMixin, {
 
   frame: null,
   pixel: null,
+  disabled: false,
 
   size: frame('size'),
   bytes: frame('bytes'),

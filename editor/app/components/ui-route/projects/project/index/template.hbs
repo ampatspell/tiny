@@ -10,6 +10,11 @@
         <div class="name">{{sprite.name}}</div>
         <div class="identifier">{{sprite.identifier}}</div>
       </div>
+      <div class="accessories">
+        {{#if sprite.locked}}
+          {{fa-icon "lock"}}
+        {{/if}}
+      </div>
     </div>
   {{/each}}
 </div>
