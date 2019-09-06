@@ -33,7 +33,11 @@ export default Node.extend({
       this.set('state', { phase: 'drawing', x, y, width, height });
     },
     endDraw() {
-      let { state: { x, y, width, height } } = this;
+      let { state } = this;
+      if(!state) {
+        return;
+      }
+      let { x, y, width, height } = state;
       this.set('state', { phase: 'moving', x, y, width, height });
     },
     beginMove() {
