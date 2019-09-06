@@ -1,5 +1,6 @@
 import Node from '../../../-node';
 import { computed } from '@ember/object';
+import { equal } from '@ember/object/computed';
 
 export default Node.extend({
 
@@ -8,6 +9,7 @@ export default Node.extend({
   pixel: null,
   size: null,
   state: null,
+  isMoving: equal('state.phase', 'moving'),
 
   frame: computed('state', 'pixel', function() {
     let { state, pixel } = this;
@@ -19,22 +21,24 @@ export default Node.extend({
     return { x, y, width, height };
   }).readOnly(),
 
-  props: computed('frame', 'state', function() {
-    let { frame, state } = this;
-    let draggable = state && state.phase === 'moving';
+  props: computed('frame', 'isMoving', function() {
+    let { frame, isMoving } = this;
+    let strokeWidth = 1;
+    if(frame.width === 0 && frame.height === 0) {
+      strokeWidth = 0;
+    }
     return {
       ...frame,
       fill: 'rgba(96,190,253, 0.3)',
       stroke: 'rgba(96,190,253, 0.5)',
-      strokeWidth: 1,
-      listening: draggable,
-      draggable
+      strokeWidth,
+      listening: isMoving,
+      draggable: isMoving
     }
   }).readOnly(),
 
   onDragstart() {
-    let { state: { x, y, width, height } } = this;
-    this.begin({ x, y, width, height });
+    this.begin();
   },
 
   onDragmove() {
