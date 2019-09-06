@@ -1,0 +1,11 @@
+<div class="content">
+  {{#ui-konva/autosized class="autosized" as |autosized|}}
+    {{#ui-konva/stage class="stage" size=autosized created=(action "created")}}
+      {{#ui-konva/layer}}
+
+        {{ui-konva/rect props=(hash x=10 y=10 width=50 height=50 fill="rgba(255,0,0,0.1)")}}
+
+      {{/ui-konva/layer}}
+    {{/ui-konva/stage}}
+  {{/ui-konva/autosized}}
+</div>
