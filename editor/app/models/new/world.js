@@ -30,11 +30,7 @@ export default EmberObject.extend({
     this.setProperties({ isBusy: true });
     let { name, project: { doc: { ref } } } = this;
     let doc = ref.collection('worlds').doc().new({
-      name,
-      size: {
-        width: 16,
-        height: 8
-      }
+      name
     });
     await doc.save();
     this.didSave(doc.id);

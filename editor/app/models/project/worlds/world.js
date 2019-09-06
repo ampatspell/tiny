@@ -18,8 +18,8 @@ export default EmberObject.extend({
   path: doc('path'),
 
   name: data('name'),
-  thumbnail: data('thumbnail'),
   locked: data('locked'),
+  // thumbnail: data('thumbnail'),
 
   isLoading: or('doc.isLoading'),
   size: readOnly('doc.data.size.serialized'),

@@ -1,0 +1,16 @@
+<div class="section">
+  <div class="row title">
+    <div class="content">
+      <div class="row">
+        <div class="name">{{world.name}}</div>
+      </div>
+    </div>
+    <div class="accessories">
+      {{#if locked}}
+        <div class="icon" role="button" {{action (action "locked" false)}}>{{fa-icon "lock"}}</div>
+      {{else}}
+        <div class="icon" role="button" {{action (action "locked" true)}}>{{fa-icon "unlock"}}</div>
+      {{/if}}
+    </div>
+  </div>
+</div>
