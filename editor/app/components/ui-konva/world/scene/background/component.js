@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 
 const backgrounds = {
   'transparent': null,
-  'black':       '#000',
+  'black':       '#222',
   'white':       '#fff'
 };
 
@@ -17,11 +17,12 @@ export default Node.extend({
 
   nodeClassName: 'rect',
 
-  scene: null,
+  size: null,
+  background: null,
   pixel: null,
 
-  frame: computed('scene.size', 'pixel', function() {
-    let { pixel, scene: { size } } = this;
+  frame: computed('size', 'pixel', function() {
+    let { pixel, size } = this;
     return {
       x: -0.5,
       y: -0.5,
@@ -30,8 +31,8 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  style: computed('scene.background', function() {
-    let { scene: { background } } = this;
+  style: computed('background', function() {
+    let { background } = this;
     return {
       fill:  backgrounds[background],
       stroke: strokes[background],
