@@ -62,7 +62,8 @@ export default EmberObject.extend({
         batch.save(doc);
       });
 
-      doc.set('data.size', target);
+      doc.set('data.size', target)
+      batch.save(doc);
     });
 
     return true;
