@@ -4,6 +4,8 @@ import Events from './-events';
 import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
 import { assert } from '@ember/debug';
+import { A } from '@ember/array';
+import { addObserver } from '@ember/object/observers';
 import Konva from 'konva';
 
 export default Component.extend(Parent, Events, {
@@ -67,6 +69,12 @@ export default Component.extend(Parent, Events, {
     }
   },
 
+  updateNodeAttributesAndDraw() {
+    if(this.updateNodeAttributes()) {
+      this.drawLayer();
+    }
+  },
+
   destroyNode() {
     let { node } = this;
     this.removeNodeEventListeners(node);
@@ -75,18 +83,18 @@ export default Component.extend(Parent, Events, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    if(this.updateNodeAttributes()) {
-      this.drawLayer();
-    }
+    this.updateNodeAttributesAndDraw();
   },
 
   didInsertElement() {
     this._super(...arguments);
     this.parentView.registerChildComponent(this);
+    this.startObservingProperties();
     this.drawLayer();
   },
 
   willDestroyElement() {
+    this.stopObservingProperties();
     let layer = this.node.getLayer();
     this.parentView.unregisterChildComponent(this);
     this.destroyNode();
@@ -102,6 +110,20 @@ export default Component.extend(Parent, Events, {
     let transform = node.getAbsoluteTransform().copy();
     transform.invert();
     return transform.point(pos);
+  },
+
+  //
+
+  observedPropertyDidChange() {
+    this.updateNodeAttributesAndDraw();
+  },
+
+  startObservingProperties() {
+    A(this.observe).forEach(key => this.addObserver(key, this, this.observedPropertyDidChange));
+  },
+
+  stopObservingProperties() {
+    A(this.observe).forEach(key => this.removeObserver(key, this, this.observedPropertyDidChange));
   }
 
 });
