@@ -1,0 +1,18 @@
+{{#each sprites.models as |sprite|}}
+  <div class="sprite" {{action "select" sprite}} role="button">
+    <div class="preview">
+      {{ui-block/background-image url=sprite.thumbnail class="thumbnail"}}
+    </div>
+    <div class="details">
+      <div class="content">
+        <div class="name">{{sprite.name}}</div>
+        <div class="identifier">{{sprite.identifier}}</div>
+      </div>
+      <div class="lock">
+        {{#if sprite.locked}}
+          {{fa-icon "lock"}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/each}}

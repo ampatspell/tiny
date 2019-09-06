@@ -1,0 +1,48 @@
+.ui-block-project-sprites {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 140px);
+  gap: 10px;
+  > .sprite {
+    border: 1px solid darken(#fff, 20%);
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    > .preview {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      background-color: fade-out(#000, 0.9);
+      padding: 5px;
+      > .thumbnail {
+        width: 110px;
+        height: 64px;
+        background-size: contain;
+        image-rendering: pixelated;
+      }
+    }
+    > .details {
+      display: flex;
+      flex-direction: row;
+      padding: 2px 3px 2px 3px;
+      height: 100%;
+      align-items: flex-end;
+      > .content {
+        flex: 1;
+        margin-right: 5px;
+        > .identifier {
+          font-weight: 600;
+        }
+      }
+      > .lock {
+      }
+      transition: background-color 0.2s ease-in-out;
+    }
+    transition: border-color 0.2s ease-in-out;
+    &:hover {
+      > .details {
+        background: fade-out(#000, 0.99);
+      }
+      border: 1px solid darken(#fff, 30%);
+    }
+  }
+}

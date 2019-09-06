@@ -1,24 +1,9 @@
 <div class="title">{{project.title}}</div>
 
-<div class="sprites">
-  {{#each project.sprites.models as |sprite|}}
-    <div class="sprite" {{action "sprite" sprite}} role="button">
-      <div class="preview">
-        {{ui-block/background-image url=sprite.thumbnail class="thumbnail"}}
-      </div>
-      <div class="details">
-        <div class="name">{{sprite.name}}</div>
-        <div class="identifier">{{sprite.identifier}}</div>
-      </div>
-      <div class="accessories">
-        {{#if sprite.locked}}
-          {{fa-icon "lock"}}
-        {{/if}}
-      </div>
-    </div>
-  {{/each}}
-</div>
-
-<div class="actions">
-  {{ui-block/button value="Add new sprite" action=(action "newSprite")}}
+<div class="section">
+  <div class="title">Sprites</div>
+  {{ui-block/project/sprites sprites=project.sprites class="sprites" select=(action "sprite")}}
+  <div class="actions">
+    {{ui-block/button value="Add new sprite" action=(action "newSprite")}}
+  </div>
 </div>
