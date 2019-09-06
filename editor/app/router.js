@@ -21,6 +21,11 @@ Router.map(function() {
         this.route('sprite', { path: ':sprite_id' }, function() {
         });
       });
+      this.route('worlds', function() {
+        this.route('new');
+        this.route('world', { path: ':world_id' }, function() {
+        });
+      });
     });
   });
 
