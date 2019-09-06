@@ -58,6 +58,31 @@
           width: 40px;
         }
       }
+      &.scenes {
+        > .title {
+          padding: 0 10px 5px 10px;
+          border-bottom: 1px solid fade-out(#000, 0.95);
+        }
+        > .scene {
+          padding: 5px 10px;
+          border-bottom: 1px solid fade-out(#000, 0.95);
+          &:first-child {
+          }
+          display: flex;
+          flex-direction: row;
+          > .details {
+            flex: 1;
+            > .name {
+            }
+            > .identifier {
+              font-weight: 600;
+            }
+          }
+          > .accessories {
+            align-self: flex-end;
+          }
+        }
+      }
     }
   }
 }

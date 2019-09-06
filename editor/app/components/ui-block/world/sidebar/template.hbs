@@ -20,3 +20,23 @@
     {{ui-block/button value="Center" action=(action "center")}}
   </div>
 </div>
+
+<div class="section">
+  <div class="row scenes">
+    <div class="title">Scenes</div>
+    {{#each world.scenes as |scene|}}
+      <div class="scene">
+        <div class="details">
+          <div class="name">{{scene.name}}</div>
+          <div class="identifier">{{scene.identifier}}</div>
+        </div>
+        <div class="accessories">
+          <div class="delete" role="button" {{action "deleteScene" scene}}>{{fa-icon "trash-alt" prefix="far"}}</div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="row actions">
+    {{ui-block/button value="Add new scene" action=(action "createScene")}}
+  </div>
+</div>

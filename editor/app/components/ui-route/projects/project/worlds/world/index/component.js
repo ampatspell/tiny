@@ -18,6 +18,14 @@ export default Component.extend({
 
     center() {
       this.editor && this.editor.center();
+    },
+
+    async createScene(opts) {
+      await this.world.createScene(opts);
+    },
+
+    async deleteScene(scene) {
+      await scene.delete();
     }
 
   }).mapping(({ world }) => ({ world }))
