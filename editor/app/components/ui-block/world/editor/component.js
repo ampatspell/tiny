@@ -1,6 +1,7 @@
 import Component from '@ember/component';
+import KeyboardMixin from 'editor/utils/keyboard';
 
-export default Component.extend({
+export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-block-world-editor' ],
 
   state: null,

@@ -6,30 +6,6 @@ export default Component.extend({
   classNameBindings: [ ':ui-route-projects-project-worlds-world-index' ],
 
   world: readOnly('model.world'),
-
-  state: model().owner('sprite').inline({
-
-    world: null,
-    scenes: readOnly('world.scenes'),
-
-    editor: null,
-
-    onEditorCreated(editor) {
-      this.setProperties({ editor });
-    },
-
-    center() {
-      this.editor && this.editor.center();
-    },
-
-    async createScene(opts) {
-      await this.world.createScene(opts);
-    },
-
-    async deleteScene(scene) {
-      await scene.delete();
-    }
-
-  }).mapping(({ world }) => ({ world }))
+  state: model().owner('world').named('state/world').mapping(({ world }) => ({ world }))
 
 });
