@@ -34,11 +34,11 @@ export default Node.extend({
     this.update(state);
   },
 
-  pixelForRelativePointerPosition() {
+  pixelForRelativePointerPosition(round) {
     let pos = this.getRelativePointerPosition();
     let { pixel } = this;
-    let x = Math.round(pos.x / pixel);
-    let y = Math.round(pos.y / pixel);
+    let x = round(pos.x / pixel);
+    let y = round(pos.y / pixel);
     return { x, y };
   },
 
@@ -48,7 +48,7 @@ export default Node.extend({
     }
     e.cancelBubble = true;
 
-    let { x, y } = this.pixelForRelativePointerPosition();
+    let { x, y } = this.pixelForRelativePointerPosition(Math.floor);
     this._update(true, { phase: 'drawing', x, y, width: 0, height: 0 });
   },
 
@@ -68,7 +68,7 @@ export default Node.extend({
     }
     e.cancelBubble = true;
 
-    let pixel = this.pixelForRelativePointerPosition();
+    let pixel = this.pixelForRelativePointerPosition(Math.round);
     let state = assign({}, this.state);
 
     let calc = key => Math.max(pixel[key] - state[key], 0);

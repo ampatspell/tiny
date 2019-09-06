@@ -42,8 +42,8 @@ export default Node.extend({
     let { pixel } = this;
 
     let pos = {
-      x: Math.round(x / pixel),
-      y: Math.round(y / pixel)
+      x: Math.floor(x / pixel),
+      y: Math.floor(y / pixel)
     };
 
     x = pos.x * pixel;
@@ -58,6 +58,10 @@ export default Node.extend({
 
     this.set('pos', pos);
     this.move(pos);
+  },
+
+  onDragend() {
+    this.end();
   }
 
 });

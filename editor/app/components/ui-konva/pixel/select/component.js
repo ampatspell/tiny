@@ -1,5 +1,6 @@
 import Node from '../../-node';
 import { computed } from '@ember/object';
+import { assign } from '@ember/polyfills';
 
 export default Node.extend({
 
@@ -32,6 +33,8 @@ export default Node.extend({
     },
     move(opts) {
       this.move(opts);
+    },
+    end() {
     }
   }
 

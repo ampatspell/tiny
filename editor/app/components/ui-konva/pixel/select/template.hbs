@@ -1,6 +1,13 @@
 {{#unless disabled}}
   {{ui-konva/pixel/select/overlay pixel=pixel size=size update=(action 'update')}}
   {{#if state}}
-    {{ui-konva/pixel/select/selection pixel=pixel size=size state=state begin=(action 'begin') move=(action 'move')}}
+    {{ui-konva/pixel/select/selection
+        pixel=pixel
+        size=size
+        state=state
+        begin=(action 'begin')
+        move=(action 'move')
+        end=(action 'end')
+    }}
   {{/if}}
 {{/unless}}

@@ -28,10 +28,7 @@ export default Component.extend(KeyboardMixin, {
       this.didResize(id, diff);
     },
     move(opts) {
-      console.log('begin', opts);
-      return target => {
-        console.log('move', target);
-      }
+      return this.frame.beginMove(opts);
     }
   },
 
