@@ -8,7 +8,10 @@ export default Component.extend({
 
   actions: {
     addWorld() {
-
+      this.router.transitionTo('projects.project.worlds.new');
+    },
+    selectWorld(world) {
+      this.router.transitionTo('projects.project.worlds.world', world.id);
     },
     selectSprite(sprite) {
       this.router.transitionTo('projects.project.sprites.sprite', sprite.id);

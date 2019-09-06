@@ -2,6 +2,7 @@
 
 <div class="section">
   <div class="title">Worlds</div>
+  {{ui-block/project/worlds worlds=project.worlds select=(action "selectWorld")}}
   <div class="actions">
     {{ui-block/button value="Add new world" action=(action "addWorld")}}
   </div>

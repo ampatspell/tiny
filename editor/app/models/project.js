@@ -13,12 +13,14 @@ export default EmberObject.extend({
   title: data('title'),
 
   sprites: model().named('project/sprites').mapping(project => ({ project })),
+  worlds:  model().named('project/worlds').mapping(project => ({ project })),
 
   async load() {
-    let { doc, sprites } = this;
+    let { doc, sprites, worlds } = this;
     await all([
       resolveObservers(doc),
-      sprites.load()
+      sprites.load(),
+      worlds.load()
     ]);
   }
 

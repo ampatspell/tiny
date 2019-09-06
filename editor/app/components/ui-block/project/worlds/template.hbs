@@ -1,0 +1,7 @@
+{{#each worlds.models as |world|}}
+  <div class="world" {{action "select" world}} role="button">
+    <div class="details">
+      <div class="name">{{world.name}}</div>
+    </div>
+  </div>
+{{/each}}

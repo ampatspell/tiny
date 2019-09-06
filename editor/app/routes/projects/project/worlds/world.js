@@ -6,29 +6,29 @@ export default Route.extend(BreadcrumbsMixin, {
 
   model: route().inline({
 
-    breadcrumb: breadcrumb('sprite.name', {
-      title: model => model.sprite.name,
-      route: 'projects.project.sprites.sprite'
+    breadcrumb: breadcrumb('world.name', {
+      title: model => model.world.name,
+      route: 'projects.project.worlds.world'
     }),
 
-    prepare(route, { sprite_id: id }) {
+    prepare(route, { world_id: id }) {
       let { project } = route.modelFor('projects.project');
-      let sprite = project.sprites.sprite(id);
+      let world = project.worlds.world(id);
 
-      if(!sprite) {
+      if(!world) {
         this.router.transitionTo('projects.project');
         return;
       }
 
-      this.setProperties({ sprite });
+      this.setProperties({ world });
     },
 
     async load() {
-      await this.sprite.load();
+      await this.world.load();
     },
 
     willDestroy() {
-      this.sprite && this.sprite.createThumbnail();
+      this.world && this.world.createThumbnail();
       this._super(...arguments);
     }
 
