@@ -29,6 +29,7 @@
         <div class="details">
           <div class="name">{{scene.name}}</div>
           <div class="identifier">{{scene.identifier}}</div>
+          <div class="size">{{scene.grid.width}}×{{scene.grid.height}} @ {{scene.size.width}}×{{scene.size.height}}px</div>
         </div>
         <div class="accessories">
           <div class="delete" role="button" {{action "deleteScene" scene}}>{{fa-icon "trash-alt" prefix="far"}}</div>

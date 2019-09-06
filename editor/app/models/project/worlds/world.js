@@ -49,14 +49,23 @@ export default EmberObject.extend({
   //
 
   async createScene(opts) {
-    let { name, identifier } = assign({}, opts);
-
-    name = name || null;
-    identifier = identifier || null;
+    let {
+      name,
+      identifier,
+      size,
+      grid
+    } = assign({
+      name: null,
+      identifier: null,
+      size: { width: 128, height: 64 },
+      grid: { width: 8, height: 8 }
+    }, opts);
 
     let doc = this.doc.ref.collection('scenes').doc().new({
       name,
-      identifier
+      identifier,
+      size,
+      grid
     });
 
     try {

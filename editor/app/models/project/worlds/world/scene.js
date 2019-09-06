@@ -12,6 +12,8 @@ export default EmberObject.extend(ScheduleSave, {
 
   name: data('name'),
   identifier: data('identifier'),
+  size: data('size.serialized'),
+  grid: data('grid.serialized'),
 
   async save() {
     await this.doc.save({ token: true });
