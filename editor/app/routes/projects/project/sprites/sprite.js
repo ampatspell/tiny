@@ -1,9 +1,15 @@
 import Route from '@ember/routing/route';
 import { route } from 'ember-cli-zuglet/lifecycle';
+import { BreadcrumbsMixin, breadcrumb } from '../../../-breadcrumbs';
 
-export default Route.extend({
+export default Route.extend(BreadcrumbsMixin, {
 
   model: route().inline({
+
+    breadcrumb: breadcrumb('sprite.name', {
+      title: model => model.sprite.name,
+      route: 'projects.project.sprites.sprite'
+    }),
 
     prepare(route, { sprite_id: id }) {
       let { project } = route.modelFor('projects.project');
