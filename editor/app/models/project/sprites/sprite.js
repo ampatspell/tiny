@@ -20,6 +20,7 @@ export default EmberObject.extend({
   name: data('name'),
   identifier: data('identifier'),
   thumbnail: data('thumbnail'),
+  locked: data('locked'),
 
   _adding: array(),
 
@@ -32,6 +33,15 @@ export default EmberObject.extend({
   isLoading: or('doc.isLoading', 'framesQuery.isLoading'),
 
   size: readOnly('doc.data.size.serialized'),
+
+  async save() {
+    await this.doc.save({ token: true });
+  },
+
+  update(props) {
+    this.doc.data.setProperties(props);
+    this.save();
+  },
 
   async load() {
     let { framesQuery } = this;
