@@ -25,7 +25,8 @@ export default Node.extend({
     return {
       ...frame,
       stroke: "rgba(96,190,253,0.75)",
-      strokeWidth: 1
+      strokeWidth: 1,
+      listening: false
     };
   }),
 
