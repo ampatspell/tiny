@@ -19,10 +19,9 @@ export default Node.extend({
     };
   }),
 
-  actions: {
-    select() {
-      this.select();
-    }
+  onClick(e) {
+    e.cancelBubble = true;
+    this.select();
   }
 
 });
