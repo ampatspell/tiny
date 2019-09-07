@@ -81,6 +81,9 @@
           > .accessories {
             align-self: flex-end;
           }
+          &.selected {
+            background: fade-out(#000, 0.97);
+          }
         }
       }
     }

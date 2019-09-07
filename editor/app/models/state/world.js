@@ -9,6 +9,7 @@ export default EmberObject.extend({
   pixel: 3,
 
   editor: null,
+  scene: null,
 
   onEditorCreated(editor) {
     this.setProperties({ editor });
@@ -26,11 +27,18 @@ export default EmberObject.extend({
 
   //
 
+  async selectScene(scene) {
+    this.update({ scene });
+  },
+
   async createScene(opts) {
     await this.world.createScene(opts);
   },
 
   async deleteScene(scene) {
+    if(this.scene === scene) {
+      this.update({ scene: null });
+    }
     await scene.delete();
   }
 

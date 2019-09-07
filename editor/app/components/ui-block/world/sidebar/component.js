@@ -18,6 +18,9 @@ export default Component.extend({
     center() {
       this.state.center();
     },
+    selectScene(scene) {
+      this.state.selectScene(scene);
+    },
     createScene() {
       this.state.createScene({ name: 'New Scene', identifier: 'new-scene' });
     },

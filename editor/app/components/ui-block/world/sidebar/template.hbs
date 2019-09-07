@@ -29,7 +29,7 @@
   <div class="row scenes">
     <div class="title">Scenes</div>
     {{#each world.scenes as |scene|}}
-      <div class="scene">
+      <div class="scene{{if (eq state.scene scene) ' selected'}}" {{action 'selectScene' scene}} role="button">
         <div class="details">
           <div class="name">{{scene.name}}</div>
           <div class="identifier">{{scene.identifier}}</div>
