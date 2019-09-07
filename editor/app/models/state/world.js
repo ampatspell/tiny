@@ -6,7 +6,7 @@ export default EmberObject.extend({
   world: null,
   scenes: readOnly('world.scenes'),
 
-  pixel: 4,
+  pixel: 3,
 
   editor: null,
 

@@ -3,9 +3,13 @@
     {{#ui-konva/stage class="stage" size=autosized created=(action "created")}}
       {{#ui-konva/layer}}
 
-        {{#each state.scenes as |scene|}}
-          {{ui-konva/world/scene scene=scene pixel=state.pixel}}
-        {{/each}}
+        {{#ui-konva/group props=(hash x=15 y=15)}}
+
+          {{#each state.scenes as |scene|}}
+            {{ui-konva/world/scene scene=scene pixel=state.pixel}}
+          {{/each}}
+
+        {{/ui-konva/group}}
 
       {{/ui-konva/layer}}
     {{/ui-konva/stage}}
