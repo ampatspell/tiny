@@ -1,0 +1,8 @@
+<div class="pixel">
+  {{ui-block/slider class="slider" min=1 max=32 value=pixel update=(action "update")}}
+  {{ui-block/input class="input" value=pixel enter=(action "update") delayed=true}}
+</div>
+<div class="actions">
+  {{ui-block/button value="Center" action=(action "center")}}
+  {{ui-block/button value="Fit" disabled=true}}
+</div>

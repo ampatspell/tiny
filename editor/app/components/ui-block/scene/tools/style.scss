@@ -1,0 +1,17 @@
+.ui-block-scene-tools {
+  display: flex;
+  flex-direction: column;
+  > .pixel {
+    display: flex;
+    flex-direction: row;
+    > .input {
+      width: 40px;
+    }
+    margin-bottom: 5px;
+  }
+  > .actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    grid-gap: 5px;
+  }
+}

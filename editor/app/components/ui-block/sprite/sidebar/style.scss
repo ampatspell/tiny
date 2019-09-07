@@ -55,17 +55,6 @@
         grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
         grid-gap: 5px;
       }
-      &.sizes {
-        display: flex;
-        flex-direction: row;
-        > .slider {
-          flex: 1;
-          margin-right: 5px;
-        }
-        > .input {
-          width: 40px;
-        }
-      }
     }
   }
 }

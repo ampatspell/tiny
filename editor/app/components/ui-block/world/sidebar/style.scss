@@ -55,18 +55,6 @@
           }
         }
 
-        &.sizes {
-          display: flex;
-          flex-direction: row;
-          > .slider {
-            flex: 1;
-            margin-right: 5px;
-          }
-          > .input {
-            width: 40px;
-          }
-        }
-
       }
     }
   }
