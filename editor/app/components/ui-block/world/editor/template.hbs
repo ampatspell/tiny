@@ -1,6 +1,13 @@
 <div class="content">
   {{#ui-konva/autosized class="autosized" as |autosized|}}
-    {{#ui-konva/stage class="stage" size=autosized created=(action "created")}}
+
+    {{#ui-konva/stage
+        class="stage"
+        size=autosized
+        created=(action "created")
+        onClick=(action 'onStageClick')
+    }}
+
       {{#ui-konva/layer}}
 
         {{#ui-konva/group props=(hash x=15 y=15)}}

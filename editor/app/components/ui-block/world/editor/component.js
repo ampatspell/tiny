@@ -14,6 +14,9 @@ export default Component.extend(KeyboardMixin, {
     },
     selectScene(scene) {
       this.state.selectScene(scene);
+    },
+    onStageClick() {
+      this.state.selectScene(null);
     }
   },
 
