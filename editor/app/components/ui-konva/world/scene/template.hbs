@@ -19,3 +19,7 @@
     scene=scene
     pixel=pixel
 }}
+
+{{#unless selected}}
+  {{ui-konva/world/scene/select pixel=pixel size=scene.size select=(action 'select')}}
+{{/unless}}

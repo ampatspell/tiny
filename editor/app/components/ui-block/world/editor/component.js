@@ -11,6 +11,9 @@ export default Component.extend(KeyboardMixin, {
     created(stage) {
       this.setProperties({ stage });
       this.state.onEditorCreated(this);
+    },
+    selectScene(scene) {
+      this.state.selectScene(scene);
     }
   },
 

@@ -6,7 +6,12 @@
         {{#ui-konva/group props=(hash x=15 y=15)}}
 
           {{#each state.scenes as |scene|}}
-            {{ui-konva/world/scene scene=scene selected=(eq state.scene scene) pixel=state.pixel}}
+            {{ui-konva/world/scene
+                scene=scene
+                pixel=state.pixel
+                selected=(eq state.scene scene)
+                select=(action 'selectScene' scene)
+            }}
           {{/each}}
 
         {{/ui-konva/group}}

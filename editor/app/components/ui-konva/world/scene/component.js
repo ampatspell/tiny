@@ -19,4 +19,10 @@ export default Node.extend({
     };
   }),
 
+  actions: {
+    select() {
+      this.select();
+    }
+  }
+
 });
