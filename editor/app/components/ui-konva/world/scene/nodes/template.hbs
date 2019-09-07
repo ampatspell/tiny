@@ -1,0 +1,3 @@
+{{#each scene.nodes as |sceneNode|}}
+  {{component (concat 'ui-konva/world/scene/nodes/node/' sceneNode.type) scene=scene sceneNode=sceneNode pixel=pixel}}
+{{/each}}

@@ -3,7 +3,7 @@ import { readOnly, or } from '@ember/object/computed';
 import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 import { array } from 'editor/utils/computed';
-import gif from 'editor/utils/gif';
+import { all } from 'rsvp';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -42,8 +42,8 @@ export default EmberObject.extend({
 
   async load() {
     setGlobal({ world: this });
-    let { scenesQuery } = this;
-    await resolveObservers(scenesQuery);
+    await resolveObservers(this.scenesQuery);
+    await all(this.scenes.map(scene => scene.load()));
   },
 
   //
