@@ -3,87 +3,129 @@
   border-left: 1px solid darken(#fff, 25%);
   overflow: hidden;
   width: 200px;
-  > .section {
-    margin-top: 30px;
-    &:first-child {
-      margin-top: 0;
-    }
+
+  @mixin row() {
     > .row {
       margin-bottom: 10px;
-      &:first-child {
-        margin-top: 10px;
-      }
       &.title,
       &.sizes,
-      &.actions {
+      &.actions,
+      &.placeholder {
         margin-left: 10px;
         margin-right: 10px;
-      }
-      &.title {
-        display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        > .content {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          > .row {
-            display: flex;
-            flex-direction: row;
-            > .name {
-              font-weight: 600;
-            }
-          }
-        }
-        > .accessories {
-          margin-left: 5px;
-          > .icon {
-            font-size: 12px;
-          }
-        }
       }
       &.actions {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
         grid-gap: 5px;
       }
-      &.sizes {
-        display: flex;
-        flex-direction: row;
-        > .slider {
-          flex: 1;
-          margin-right: 5px;
-        }
-        > .input {
-          width: 40px;
-        }
+    }
+  }
+
+  @mixin section() {
+    > .section {
+      margin-top: 30px;
+      &:first-child {
+        margin-top: 0;
       }
-      &.scenes {
-        > .title {
-          padding: 0 10px 5px 10px;
-          border-bottom: 1px solid fade-out(#000, 0.95);
-        }
-        > .scene {
-          padding: 5px 10px;
-          border-bottom: 1px solid fade-out(#000, 0.95);
+      @include row;
+      > .row {
+
+        &.title {
           display: flex;
           flex-direction: row;
-          > .details {
+          align-items: baseline;
+          > .content {
             flex: 1;
-            > .name {
-            }
-            > .identifier {
-              font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            > .row {
+              display: flex;
+              flex-direction: row;
+              > .name {
+                font-weight: 600;
+              }
             }
           }
           > .accessories {
-            align-self: flex-end;
-          }
-          &.selected {
-            background: fade-out(#000, 0.97);
+            margin-left: 5px;
+            > .icon {
+              font-size: 12px;
+            }
           }
         }
+
+        &.sizes {
+          display: flex;
+          flex-direction: row;
+          > .slider {
+            flex: 1;
+            margin-right: 5px;
+          }
+          > .input {
+            width: 40px;
+          }
+        }
+
       }
     }
   }
+
+  @include section;
+
+  > .section {
+    > .row {
+      &.title {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  > .tabs {
+    > .content {
+
+      > .world {
+        @include row;
+        > .row {
+          &.scenes {
+            > .title {
+              padding: 0 10px 5px 10px;
+              border-bottom: 1px solid fade-out(#000, 0.95);
+            }
+            > .scene {
+              padding: 5px 10px;
+              border-bottom: 1px solid fade-out(#000, 0.95);
+              display: flex;
+              flex-direction: row;
+              > .details {
+                flex: 1;
+                > .identifier {
+                  font-weight: 600;
+                }
+              }
+              > .accessories {
+                align-self: flex-end;
+              }
+              &.selected {
+                background: fade-out(#000, 0.97);
+              }
+            }
+          }
+        }
+      }
+
+      > .scene {
+        @include section;
+        > .section {
+          > .row {
+            &.placeholder {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
 }

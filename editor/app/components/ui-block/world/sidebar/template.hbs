@@ -13,9 +13,7 @@
       {{/if}}
     </div>
   </div>
-</div>
 
-<div class="section">
   <div class="row sizes">
     {{ui-block/slider class="slider" min=1 max=32 value=state.pixel update=(action "pixel")}}
     {{ui-block/input class="input" value=state.pixel enter=(action "pixel") delayed=true}}
@@ -25,23 +23,8 @@
   </div>
 </div>
 
-<div class="section">
-  <div class="row scenes">
-    <div class="title">Scenes</div>
-    {{#each world.scenes as |scene|}}
-      <div class="scene{{if (eq state.scene scene) ' selected'}}" {{action 'selectScene' scene}} role="button">
-        <div class="details">
-          <div class="name">{{scene.name}}</div>
-          <div class="identifier">{{scene.identifier}}</div>
-          <div class="size">{{scene.grid.width}}×{{scene.grid.height}} @ {{scene.size.width}}×{{scene.size.height}}px</div>
-        </div>
-        <div class="accessories">
-          <div class="delete" role="button" {{action "deleteScene" scene}}>{{fa-icon "trash-alt" prefix="far"}}</div>
-        </div>
-      </div>
-    {{/each}}
-  </div>
-  <div class="row actions">
-    {{ui-block/button value="Add new scene" action=(action "createScene")}}
-  </div>
-</div>
+{{#ui-block/tabs class="tabs" selected=tab select=(action "select") as |tabs|}}
+  {{tabs.tab label="World" id="world" component=(component "ui-block/world/sidebar/world" state=state)}}
+  {{tabs.tab label="Scene" id="scene" component=(component "ui-block/world/sidebar/scene" state=state)}}
+  {{tabs.tab label="Node"  id="node"  component=(component "ui-block/world/sidebar/node"  state=state)}}
+{{/ui-block/tabs}}

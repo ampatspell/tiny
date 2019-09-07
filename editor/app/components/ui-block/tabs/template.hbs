@@ -1,0 +1,10 @@
+<div class="tabs">
+  {{yield (hash
+    tab=(component "ui-block/tabs/tab" selected=selected select=select)
+  )}}
+</div>
+<div class="content">
+  {{yield (hash
+    tab=(component "ui-block/tabs/content" selected=selected select=select)
+  )}}
+</div>
