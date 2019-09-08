@@ -23,7 +23,7 @@ export const className = opts => {
     if(recompute) {
       string = recompute.call(this, string);
     }
-    if(!string) {
+    if(string === undefined) {
       return;
     }
     return `${prefix}${string}`;

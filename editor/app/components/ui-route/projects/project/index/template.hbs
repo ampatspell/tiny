@@ -1,9 +1,17 @@
 <div class="title">{{project.title}}</div>
 
 <div class="section">
-  <div class="title">Sprites</div>
-  {{ui-block/project/sprites sprites=project.sprites class="sprites" select=(action "sprite")}}
+  <div class="title">Worlds</div>
+  {{ui-block/project/worlds worlds=project.worlds select=(action "selectWorld")}}
   <div class="actions">
-    {{ui-block/button value="Add new sprite" action=(action "newSprite")}}
+    {{ui-block/button value="Add new world" action=(action "addWorld")}}
+  </div>
+</div>
+
+<div class="section">
+  <div class="title">Sprites</div>
+  {{ui-block/project/sprites sprites=project.sprites select=(action "selectSprite")}}
+  <div class="actions">
+    {{ui-block/button value="Add new sprite" action=(action "addSprite")}}
   </div>
 </div>

@@ -7,10 +7,16 @@ export default Component.extend({
   project: readOnly('model.project'),
 
   actions: {
-    sprite(sprite) {
+    addWorld() {
+      this.router.transitionTo('projects.project.worlds.new');
+    },
+    selectWorld(world) {
+      this.router.transitionTo('projects.project.worlds.world', world.id);
+    },
+    selectSprite(sprite) {
       this.router.transitionTo('projects.project.sprites.sprite', sprite.id);
     },
-    newSprite() {
+    addSprite() {
       this.router.transitionTo('projects.project.sprites.new');
     }
   }

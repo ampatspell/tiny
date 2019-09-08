@@ -6,10 +6,23 @@
 @import "segments/style";
 @import "check-mark/style";
 @import "background-image/style";
+@import "tabs/style";
+@import "tree/style";
+@import "sidebar/section/style";
+
+@import "scene/tools/style";
 
 @import "project/sprites/style";
+@import "project/worlds/style";
 
 @import "sprite/sidebar/style";
+@import "sprite/sidebar/frame/style";
 @import "sprite/frames/style";
 @import "sprite/frame/preview/style";
 @import "sprite/frame/editor/style";
+
+@import "world/editor/style";
+@import "world/sidebar/style";
+@import "world/sidebar/selection/world/style";
+@import "world/sidebar/world/style";
+@import "world/tree/style"

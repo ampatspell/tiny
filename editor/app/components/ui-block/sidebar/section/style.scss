@@ -1,0 +1,72 @@
+.ui-block-sidebar-section {
+
+  margin-bottom: 15px;
+
+  border-bottom: 1px solid fade-out(#000, 0.9);
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @mixin row() {
+    border-bottom: 1px solid fade-out(#000, 0.9);
+    &:last-child {
+      border-bottom: 0;
+    }
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  @mixin padding() {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @mixin horizontal-grid() {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    grid-gap: 5px;
+  }
+
+  @mixin vertical-grid() {
+    display: grid;
+    grid-gap: 5px;
+  }
+
+  > .header {
+    @include row();
+    @include padding();
+    display: flex;
+    flex-direction: row;
+    > .content {
+      flex: 1;
+      > .type {
+        margin-bottom: 5px;
+      }
+      > .name {
+        font-weight: 600;
+      }
+    }
+  }
+
+  > .placeholder {
+    @include row();
+    @include padding();
+  }
+
+  > .actions {
+    @include row();
+    @include padding();
+    &.type-grid {
+      @include horizontal-grid();
+    }
+    &.type-regular {
+      @include vertical-grid();
+    }
+  }
+
+  > .padded {
+    @include row();
+    @include padding();
+  }
+
+}

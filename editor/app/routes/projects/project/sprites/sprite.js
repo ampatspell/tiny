@@ -16,7 +16,7 @@ export default Route.extend(BreadcrumbsMixin, {
       let sprite = project.sprites.sprite(id);
 
       if(!sprite) {
-        this.transitionTo('projects.project');
+        this.router.transitionTo('projects.project');
         return;
       }
 
@@ -28,7 +28,7 @@ export default Route.extend(BreadcrumbsMixin, {
     },
 
     willDestroy() {
-      this.sprite.createThumbnail();
+      this.sprite && this.sprite.createThumbnail();
       this._super(...arguments);
     }
 

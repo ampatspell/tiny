@@ -126,7 +126,7 @@ export default Component.extend(Parent, StageEvents, {
 
     let calc = (p, s) => Math.floor((size[s] / 2) - (rect[s] / 2) - rect[p]);
     let x = calc('x', 'width');
-    let y = calc('x', 'height');
+    let y = calc('y', 'height');
 
     node.position({ x, y });
     node.batchDraw();

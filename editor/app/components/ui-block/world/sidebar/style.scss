@@ -1,0 +1,16 @@
+.ui-block-world-sidebar {
+  background: darken(#fff, 0.7%);
+  border-left: 1px solid darken(#fff, 25%);
+  overflow: hidden;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  > .tabs {
+    flex: 1;
+  }
+  > .footer {
+    border-top: 1px solid fade-out(#000, 0.9);
+    padding: 10px;
+  }
+
+}

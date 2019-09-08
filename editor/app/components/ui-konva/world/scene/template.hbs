@@ -1,0 +1,21 @@
+{{#if selected}}
+  {{ui-konva/world/scene/selected pixel=pixel size=scene.size}}
+{{/if}}
+
+{{ui-konva/world/scene/background
+    size=scene.size
+    background=scene.background
+    pixel=pixel
+}}
+
+{{ui-konva/world/scene/grid
+    grid=scene.grid
+    size=scene.size
+    background=scene.background
+    pixel=pixel
+}}
+
+{{ui-konva/world/scene/layers
+    scene=scene
+    pixel=pixel
+}}

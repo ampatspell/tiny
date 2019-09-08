@@ -10,6 +10,7 @@ export default Component.extend(KeyboardMixin, {
 
   sprite: readOnly('model.sprite'),
 
+  // TODO: move to models/state/sprite
   state: model().owner('sprite').inline({
 
     editor: null,

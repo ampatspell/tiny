@@ -1,4 +1,5 @@
 import { isNone } from '@ember/utils';
+import { typeOf } from '@ember/utils';
 
 export const pluralize = (count, singular, plural) => {
   if(isNone(count)) {
@@ -24,4 +25,28 @@ export const isLowercase = value => {
 
 export const test = (value, regex) => {
   return isString(value) && regex.test(value);
+}
+
+export const widow = text => {
+  if(typeOf(text) !== 'string') {
+    return text;
+  }
+
+  text = text.trim();
+
+  if (text.length === 0) {
+    return text;
+  }
+
+  let words = text.split(' ');
+
+  if (words.length === 1) {
+    return words[0];
+  }
+
+  let last = words.pop();
+
+  words = words.join(' ').trim();
+
+  return `${words}\u00A0${last}`;
 }

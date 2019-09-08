@@ -1,0 +1,9 @@
+<div class="content">
+  <div class="row">
+    <div class="label">World name</div>
+    {{ui-block/input value=model.name disabled=model.isBusy update=(action "update" "name")}}
+  </div>
+  <div class="row">
+    {{ui-block/button value="Create" disabled=model.isDisabled action=(action "save")}}
+  </div>
+</div>

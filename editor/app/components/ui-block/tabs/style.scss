@@ -1,0 +1,27 @@
+.ui-block-tabs {
+  display: flex;
+  flex-direction: column;
+  > .tabs {
+    border-bottom: 1px solid darken(#fff, 15%);
+    display: flex;
+    flex-direction: row;
+    > .tab {
+      > .label {
+        padding: 10px 10px;
+        color: #999;
+      }
+      &.selected {
+        > .label {
+          color: #000;
+          font-weight: $font-bold;
+        }
+      }
+    }
+  }
+  > .content {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
