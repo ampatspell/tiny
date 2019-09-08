@@ -63,14 +63,16 @@ export default EmberObject.extend({
 
   async deleteNode(node) {
     if(this.selection === node) {
-      this.update({ selection: null });
+      let { layer } = node;
+      this.update({ selection: layer });
     }
     await node.delete();
   },
 
   async deleteLayer(layer) {
     if(this.selection === layer) {
-      this.update({ selection: null });
+      let { stage } = layer;
+      this.update({ selection: stage });
     }
     await layer.delete();
   }
