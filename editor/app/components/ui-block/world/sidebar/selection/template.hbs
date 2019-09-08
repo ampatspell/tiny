@@ -1,1 +1,11 @@
-{{yield}}
+{{#if selection}}
+  {{#if selection.isScene}}
+    scene
+  {{else if selection.isLayer}}
+    layer
+  {{else if selection.isNode}}
+    node
+  {{/if}}
+{{else}}
+  {{ui-block/world/sidebar/selection/world state=state}}
+{{/if}}

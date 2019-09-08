@@ -1,20 +1,3 @@
-{{#ui-block/sidebar/section class="header" as |section|}}
-
-  {{#section.padded class="title"}}
-    <div class="name">{{world.name}}</div>
-    <div class="accessories">
-      {{#if locked}}
-        <div class="icon" role="button" {{action (action "locked" false)}}>{{fa-icon "lock"}}</div>
-      {{else}}
-        <div class="icon" role="button" {{action (action "locked" true)}}>{{fa-icon "unlock"}}</div>
-      {{/if}}
-    </div>
-  {{/section.padded}}
-
-{{/ui-block/sidebar/section}}
-
-{{#ui-block/sidebar/section disabled=locked as |section|}}
-  {{#section.actions as |actions|}}
-    {{actions.button value="Add new scene" action=(action "createScene")}}
-  {{/section.actions}}
+{{#ui-block/sidebar/section as |section|}}
+  {{section.placeholder value="World editing is not done yet."}}
 {{/ui-block/sidebar/section}}

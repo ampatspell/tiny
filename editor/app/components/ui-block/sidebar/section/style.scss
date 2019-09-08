@@ -32,6 +32,22 @@
     grid-gap: 5px;
   }
 
+  > .header {
+    @include row();
+    @include padding();
+    display: flex;
+    flex-direction: row;
+    > .content {
+      flex: 1;
+      > .type {
+        margin-bottom: 5px;
+      }
+      > .name {
+        font-weight: 600;
+      }
+    }
+  }
+
   > .placeholder {
     @include row();
     @include padding();

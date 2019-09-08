@@ -1,0 +1,15 @@
+{{#ui-block/sidebar/section class="header" as |section|}}
+  {{#section.header as |header|}}
+    {{#header.content as |content|}}
+      {{content.type value="World"}}
+      {{content.name value=world.name}}
+    {{/header.content}}
+    {{header.lock locked=locked update=(action "locked")}}
+  {{/section.header}}
+{{/ui-block/sidebar/section}}
+
+{{#ui-block/sidebar/section disabled=locked as |section|}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Add new scene" action=(action "createScene")}}
+  {{/section.actions}}
+{{/ui-block/sidebar/section}}

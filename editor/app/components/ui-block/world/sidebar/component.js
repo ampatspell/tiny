@@ -4,7 +4,7 @@ export default Component.extend({
   classNameBindings: [ ':ui-block-world-sidebar' ],
 
   state: null,
-  selected: 'world',
+  selected: 'selection',
 
   actions: {
     select(selected) {
