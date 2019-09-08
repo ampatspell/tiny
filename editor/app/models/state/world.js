@@ -59,6 +59,20 @@ export default EmberObject.extend({
       this.update({ selection: null });
     }
     await scene.delete();
+  },
+
+  async deleteNode(node) {
+    if(this.selection === node) {
+      this.update({ selection: null });
+    }
+    await node.delete();
+  },
+
+  async deleteLayer(layer) {
+    if(this.selection === layer) {
+      this.update({ selection: null });
+    }
+    await layer.delete();
   }
 
 });

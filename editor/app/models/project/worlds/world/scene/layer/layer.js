@@ -1,6 +1,5 @@
 import EmberObject from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
-import ScheduleSave from 'editor/models/-schedule-save';
 import { models, observed, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { array } from 'editor/utils/computed';
 import { all } from 'rsvp';
@@ -12,7 +11,7 @@ const scene = path => readOnly(`scene.${path}`);
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
 
-export default EmberObject.extend(ScheduleSave, {
+export default EmberObject.extend({
 
   isLayer: true,
 
@@ -69,5 +68,9 @@ export default EmberObject.extend(ScheduleSave, {
       this._adding.removeObject(doc);
     }
   },
+
+  async delete() {
+    await this.doc.delete();
+  }
 
 });

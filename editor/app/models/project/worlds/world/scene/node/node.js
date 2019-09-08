@@ -21,6 +21,10 @@ export default EmberObject.extend({
   size: data('size.serialized'),
 
   async load() {
+  },
+
+  async delete() {
+    await this.doc.delete();
   }
 
 });

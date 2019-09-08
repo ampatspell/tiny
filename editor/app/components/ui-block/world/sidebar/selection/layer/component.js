@@ -8,6 +8,9 @@ export default Component.extend({
   locked: readOnly('state.locked'),
 
   actions: {
+    deleteLayer() {
+      this.state.deleteLayer(this.layer);
+    }
   }
 
 });

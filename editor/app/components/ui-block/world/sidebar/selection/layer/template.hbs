@@ -6,3 +6,9 @@
     {{/header.content}}
   {{/section.header}}
 {{/ui-block/sidebar/section}}
+
+{{#ui-block/sidebar/section disabled=locked as |section|}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Delete Layer" action=(action 'deleteLayer')}}
+  {{/section.actions}}
+{{/ui-block/sidebar/section}}
