@@ -16,7 +16,7 @@
             {{ui-konva/world/scene
                 scene=scene
                 pixel=state.pixel
-                selected=(eq state.scene scene)
+                selected=(eq selectedScene scene)
                 select=(action 'selectScene' scene)
             }}
           {{/each}}

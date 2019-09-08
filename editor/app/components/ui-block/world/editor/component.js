@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import KeyboardMixin from 'editor/utils/keyboard';
 
 export default Component.extend(KeyboardMixin, {
@@ -6,6 +7,17 @@ export default Component.extend(KeyboardMixin, {
 
   state: null,
   stage: null,
+
+  selectedScene: computed('state.selection', function() {
+    let { state: { selection } } = this;
+    if(!selection) {
+      return;
+    }
+    if(selection.isScene) {
+      return selection;
+    }
+    return selection.scene;
+  }).readOnly(),
 
   actions: {
     created(stage) {

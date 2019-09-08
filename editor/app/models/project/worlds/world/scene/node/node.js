@@ -3,11 +3,16 @@ import { readOnly } from '@ember/object/computed';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
+const layer = path => readOnly(`layer.${path}`);
 
 export default EmberObject.extend({
 
+  isNode: true,
+
   doc: null,
-  scene: null,
+  layer: null,
+  scene: layer('scene'),
+  world: layer('world'),
 
   id: doc('id'),
 

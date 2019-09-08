@@ -7,6 +7,8 @@ import { all } from 'rsvp';
 
 const path = fn => observed().owner('path').content(fn);
 
+const scene = path => readOnly(`scene.${path}`);
+
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
 
@@ -16,6 +18,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   doc: null,
   scene: null,
+  world: scene('world'),
 
   id: doc('id'),
   path: doc('path'),
