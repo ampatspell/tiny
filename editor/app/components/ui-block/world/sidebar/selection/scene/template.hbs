@@ -1,0 +1,9 @@
+{{#ui-block/sidebar/section class="header" as |section|}}
+  {{#section.header as |header|}}
+    {{#header.content as |content|}}
+      {{content.type value="Scene"}}
+      {{content.name value=scene.name}}
+      {{content.identifier value=scene.identifier}}
+    {{/header.content}}
+  {{/section.header}}
+{{/ui-block/sidebar/section}}

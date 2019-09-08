@@ -15,10 +15,7 @@ export default Component.extend({
     },
     center() {
       this.state.center();
-    },
-    // deleteScene(scene) {
-    //   this.state.deleteScene(scene);
-    // }
+    }
   }
 
 });

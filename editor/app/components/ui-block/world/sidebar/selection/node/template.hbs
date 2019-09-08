@@ -1,0 +1,8 @@
+{{#ui-block/sidebar/section class="header" as |section|}}
+  {{#section.header as |header|}}
+    {{#header.content as |content|}}
+      {{content.type value="Node"}}
+      {{content.name value=node.name}}
+    {{/header.content}}
+  {{/section.header}}
+{{/ui-block/sidebar/section}}

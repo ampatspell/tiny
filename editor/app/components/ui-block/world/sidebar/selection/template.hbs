@@ -1,10 +1,10 @@
 {{#if selection}}
   {{#if selection.isScene}}
-    scene
+    {{ui-block/world/sidebar/selection/scene state=state}}
   {{else if selection.isLayer}}
-    layer
+    {{ui-block/world/sidebar/selection/layer state=state}}
   {{else if selection.isNode}}
-    node
+    {{ui-block/world/sidebar/selection/node state=state}}
   {{/if}}
 {{else}}
   {{ui-block/world/sidebar/selection/world state=state}}
