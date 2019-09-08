@@ -54,6 +54,24 @@ export default EmberObject.extend({
     this.select(scene);
   },
 
+  async createLayer(opts) {
+    let { scene } = this;
+    if(!scene) {
+      return;
+    }
+    let layer = await scene.createLayer(opts);
+    this.select(layer);
+  },
+
+  async createNode(opts) {
+    let { layer } = this;
+    if(!layer) {
+      return;
+    }
+    let node = await layer.createNode(opts);
+    this.select(node);
+  },
+
   async deleteScene(scene) {
     if(this.selection === scene) {
       this.update({ selection: null });

@@ -8,6 +8,20 @@ export default Component.extend({
   locked: readOnly('state.locked'),
 
   actions: {
+    createNode() {
+      this.state.createNode({
+        type: 'fill',
+        position: {
+          x: 0,
+          y: 0,
+        },
+        size: {
+          width: 8,
+          height: 8
+        },
+        color: 'black'
+      });
+    },
     deleteLayer() {
       this.state.deleteLayer(this.layer);
     }

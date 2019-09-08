@@ -3,6 +3,7 @@ import { readOnly, or } from '@ember/object/computed';
 import { models, observed, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { array } from 'editor/utils/computed';
 import { all } from 'rsvp';
+import { assign } from '@ember/polyfills';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -47,18 +48,8 @@ export default EmberObject.extend({
   },
 
   async createNode(opts) {
-    let doc = this.doc.ref.collection('nodes').doc().new({
-      type: 'fill',
-      position: {
-        x: 3,
-        y: 3,
-      },
-      size: {
-        width: 8,
-        height: 8
-      },
-      color: 'black'
-    });
+    opts = assign({}, opts);
+    let doc = this.doc.ref.collection('nodes').doc().new(opts);
 
     try {
       this._adding.pushObject(doc);
