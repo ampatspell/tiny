@@ -5,7 +5,7 @@
         class="stage"
         size=autosized
         created=(action "created")
-        onClick=(action 'onStageClick')
+        onClick=(action "onStageClick")
     }}
 
       {{#ui-konva/layer}}
@@ -17,7 +17,7 @@
                 scene=scene
                 pixel=state.pixel
                 selected=(eq selectedScene scene)
-                select=(action 'selectScene' scene)
+                select=(action "selectScene" scene)
             }}
           {{/each}}
 

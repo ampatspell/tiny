@@ -13,7 +13,7 @@ export default Component.extend({
   }).readOnly(),
 
   actions: {
-    select(e) {
+    select() {
       this.select(this.model);
     }
   }

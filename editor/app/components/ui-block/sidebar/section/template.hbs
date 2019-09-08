@@ -1,10 +1,8 @@
-{{#let 'ui-block/sidebar/section/' as |prefix|}}
-
+{{#let "ui-block/sidebar/section/" as |prefix|}}
   {{yield (hash
     header=(component (concat prefix "header"))
     placeholder=(component (concat prefix "placeholder"))
     padded=(component (concat prefix "padded"))
     actions=(component (concat prefix "actions") disabled=disabled)
   )}}
-
 {{/let}}

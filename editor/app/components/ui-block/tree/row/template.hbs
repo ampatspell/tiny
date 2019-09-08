@@ -1,9 +1,9 @@
 {{#if content}}
-  <div class="content" {{action 'select' bubbles=false}} role="button">
+  <div class="content" {{action "select" bubbles=false}} role="button">
     {{content}}
   </div>
 {{/if}}
 
 <div class="rows">
-  {{yield (component 'ui-block/tree/row' select=select selected=selected level=(add level 1))}}
+  {{yield (component "ui-block/tree/row" select=select selected=selected level=(add level 1))}}
 </div>

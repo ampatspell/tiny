@@ -1,10 +1,10 @@
-{{#ui-block/tree class="tree" select=(action 'select') selected=state.selection as |row|}}
+{{#ui-block/tree class="tree" select=(action "select") selected=state.selection as |row|}}
   {{#each state.world.scenes as |scene|}}
-    {{#row model=scene class="scene" content=(component 'ui-block/world/tree/content/scene' state=state scene=scene) as |row|}}
+    {{#row model=scene class="scene" content=(component "ui-block/world/tree/content/scene" state=state scene=scene) as |row|}}
       {{#each scene.layers as |layer|}}
-        {{#row model=layer class="layer" content=(component 'ui-block/world/tree/content/layer' state=state layer=layer) as |row|}}
+        {{#row model=layer class="layer" content=(component "ui-block/world/tree/content/layer" state=state layer=layer) as |row|}}
           {{#each layer.nodes as |node|}}
-            {{row model=node class="node" content=(component 'ui-block/world/tree/content/node' state=state node=node)}}
+            {{row model=node class="node" content=(component "ui-block/world/tree/content/node" state=state node=node)}}
           {{/each}}
         {{/row}}
       {{/each}}
