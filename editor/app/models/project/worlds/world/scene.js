@@ -13,6 +13,8 @@ const data = path => doc(`data.${path}`);
 
 export default EmberObject.extend(ScheduleSave, {
 
+  isScene: true,
+
   world: null,
   doc: null,
   id: doc('id'),

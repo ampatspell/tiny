@@ -8,12 +8,7 @@ export default Component.extend({
   world: readOnly('state.world'),
   locked: readOnly('world.locked'),
 
-  tab: "world",
-
   actions: {
-    select(tab) {
-      this.setProperties({ tab });
-    },
     locked(locked) {
       this.world.update({ locked });
     },

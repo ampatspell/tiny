@@ -13,10 +13,10 @@ export default Component.extend(KeyboardMixin, {
       this.state.onEditorCreated(this);
     },
     selectScene(scene) {
-      this.state.selectScene(scene);
+      this.state.select(scene);
     },
     onStageClick() {
-      this.state.selectScene(null);
+      this.state.select(null);
     }
   },
 

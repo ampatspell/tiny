@@ -5,6 +5,14 @@
   border-right: 1px solid darken(#fff, 25%);
   overflow: hidden;
 
+  @mixin row() {
+    &.selected {
+      > .content {
+        background: fade-out(#000, 0.98);
+      }
+    }
+  }
+
   @mixin content($level) {
     padding: 7px 10px 7px 15px + ($level * 10px);
     border-bottom: 1px solid fade-out(#000, 0.95);
@@ -15,16 +23,19 @@
 
   > .scenes {
     > .scene {
+      @include row();
       > .content {
         @include content(0);
       }
       > .layers {
         > .layer {
+          @include row();
           > .content {
             @include content(1);
           }
           > .nodes {
             > .node {
+              @include row();
               > .content {
                 @include content(2);
               }

@@ -1,5 +1,16 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
+
+const selection = key => computed(`selection.${key}`, function() {
+  let { selection } = this;
+  if(!selection) {
+    return;
+  }
+  if(!selection[key]) {
+    return;
+  }
+  return selection;
+}).readOnly();
 
 export default EmberObject.extend({
 
@@ -9,7 +20,11 @@ export default EmberObject.extend({
   pixel: 3,
 
   editor: null,
-  scene: null,
+
+  selection: null,
+  scene: selection('isScene'),
+  layer: selection('isLayer'),
+  node:  selection('isNode'),
 
   onEditorCreated(editor) {
     this.setProperties({ editor });
@@ -27,9 +42,9 @@ export default EmberObject.extend({
 
   //
 
-  async selectScene(scene) {
-    setGlobal({ scene });
-    this.update({ scene });
+  async select(selection) {
+    setGlobal({ selection });
+    this.update({ selection });
   },
 
   async createScene(opts) {

@@ -1,5 +1,9 @@
-import Component from '@ember/component';
+import Row from '../../../-row';
+import { readOnly } from '@ember/object/computed';
 
-export default Component.extend({
-  classNameBindings: [ ':node' ]
+export default Row.extend({
+  classNameBindings: [ ':node' ],
+
+  subject: readOnly('node'),
+
 });

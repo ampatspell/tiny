@@ -12,6 +12,8 @@ const data = path => doc(`data.${path}`);
 
 export default EmberObject.extend(ScheduleSave, {
 
+  isLayer: true,
+
   doc: null,
   scene: null,
 
