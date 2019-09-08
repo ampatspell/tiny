@@ -18,7 +18,7 @@ export default EmberObject.extend({
   scenes: readOnly('world.scenes'),
   locked: readOnly('world.locked'),
 
-  pixel: 3,
+  pixel: 4,
 
   editor: null,
 
