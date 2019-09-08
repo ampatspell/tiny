@@ -12,7 +12,7 @@
 
         {{#ui-konva/group props=(hash x=15 y=15)}}
 
-          {{#each state.scenes as |scene|}}
+          {{#each state.world.scenes as |scene|}}
             {{ui-konva/world/scene
                 scene=scene
                 pixel=state.pixel
