@@ -1,9 +1,5 @@
-{{#each state.world.scenes as |scene|}}
-  <div>{{scene}}</div>
-  {{#each scene.layers as |layer|}}
-    <div>{{layer}}</div>
-    {{#each layer.nodes as |node|}}
-      <div>{{node}}</div>
-    {{/each}}
+<div class="scenes">
+  {{#each state.world.scenes as |scene|}}
+    {{ui-block/world/tree/scene state=state scene=scene}}
   {{/each}}
-{{/each}}
+</div>

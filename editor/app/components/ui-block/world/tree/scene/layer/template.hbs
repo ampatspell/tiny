@@ -1,0 +1,10 @@
+<div class="content">
+  <div>Layer</div>
+  <div class="strong">{{layer.name}}</div>
+</div>
+
+<div class="nodes">
+  {{#each layer.nodes as |node|}}
+    {{ui-block/world/tree/scene/layer/node state=state node=node}}
+  {{/each}}
+</div>

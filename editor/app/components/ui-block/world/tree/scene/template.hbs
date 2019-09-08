@@ -1,0 +1,11 @@
+<div class="content">
+  <div class="name">{{scene.name}}</div>
+  <div class="strong">{{scene.identifier}}</div>
+  <div class="size">{{size scene.size 'px'}}, {{size scene.grid}}</div>
+</div>
+
+<div class="layers">
+  {{#each scene.layers as |layer|}}
+    {{ui-block/world/tree/scene/layer state=state layer=layer}}
+  {{/each}}
+</div>

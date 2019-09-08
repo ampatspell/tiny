@@ -1,6 +1,37 @@
 .ui-block-world-tree {
   width: 200px;
+
   background: darken(#fff, 0.7%);
   border-right: 1px solid darken(#fff, 25%);
   overflow: hidden;
+
+  @mixin content($level) {
+    padding: 7px 10px 7px 15px + ($level * 10px);
+    border-bottom: 1px solid fade-out(#000, 0.95);
+    > .strong {
+      font-weight: 600;
+    }
+  }
+
+  > .scenes {
+    > .scene {
+      > .content {
+        @include content(0);
+      }
+      > .layers {
+        > .layer {
+          > .content {
+            @include content(1);
+          }
+          > .nodes {
+            > .node {
+              > .content {
+                @include content(2);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

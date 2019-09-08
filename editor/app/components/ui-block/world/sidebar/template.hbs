@@ -16,8 +16,8 @@
   {{ui-block/scene/tools class="row sizes" pixel=state.pixel update=(action 'pixel') center=(action 'center')}}
 </div>
 
-{{#ui-block/tabs class="tabs" selected=tab select=(action "select") as |tabs|}}
-  {{tabs.tab label="World" id="world" component=(component "ui-block/world/sidebar/world" state=state)}}
-  {{tabs.tab label="Scene" id="scene" component=(component "ui-block/world/sidebar/scene" state=state)}}
-  {{tabs.tab label="Node"  id="node"  component=(component "ui-block/world/sidebar/node"  state=state)}}
-{{/ui-block/tabs}}
+<div class="section">
+  <div class="row actions">
+    {{ui-block/button value="Add new scene" action=(action "createScene")}}
+  </div>
+</div>

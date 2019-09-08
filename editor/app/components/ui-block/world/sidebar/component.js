@@ -22,7 +22,13 @@ export default Component.extend({
     },
     center() {
       this.state.center();
-    }
+    },
+    createScene() {
+      this.state.createScene({ name: 'New Scene', identifier: 'new-scene' });
+    },
+    // deleteScene(scene) {
+    //   this.state.deleteScene(scene);
+    // }
   }
 
 });
