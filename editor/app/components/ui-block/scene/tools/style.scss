@@ -4,6 +4,9 @@
   > .pixel {
     display: flex;
     flex-direction: row;
+    > .slider {
+      margin-right: 5px;
+    }
     > .input {
       width: 40px;
     }
