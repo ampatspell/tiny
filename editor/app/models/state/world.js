@@ -43,6 +43,7 @@ export default EmberObject.extend({
   //
 
   async select(selection) {
+    selection = selection || null;
     setGlobal({ selection });
     this.update({ selection });
   },

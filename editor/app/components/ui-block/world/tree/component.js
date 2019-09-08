@@ -1,5 +1,10 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-world-tree' ]
+  classNameBindings: [ ':ui-block-world-tree' ],
+
+  click() {
+    this.state.select();
+  }
+
 });
