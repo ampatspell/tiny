@@ -1,48 +1,34 @@
 import Component from '@ember/component';
-import { readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-block-sprite-sidebar' ],
   attributeBindings: [ 'style' ],
 
   state: null,
-  sprite: readOnly('state.sprite'),
-  frame: readOnly('state.frame'),
-  locked: readOnly('sprite.locked'),
 
-  style: computed('sprite.size.width', function() {
-    let { sprite: { size: { width } } } = this;
+  width: readOnly('state.sprite.size.width'),
+
+  style: computed('width', function() {
+    let { width } = this;
     width = Math.max(200, (width * 2) + 21);
     return htmlSafe(`width: ${width}px`);
   }).readOnly(),
 
+  selected: 'frame',
+
   actions: {
-    center() {
-      this.state.center();
-    },
-    locked(locked) {
-      this.sprite.update({ locked });
+    select(selected) {
+      this.setProperties({ selected });
     },
     pixel(pixel) {
       this.state.update({ pixel });
     },
-    fill(value) {
-      this.frame.fill(value);
-    },
-    invert() {
-      this.frame.invert();
-    },
-    create() {
-      this.sprite.createFrame();
-    },
-    duplicate() {
-      this.state.duplicate();
-    },
-    delete() {
-      this.state.delete();
+    center() {
+      this.state.center();
     }
-  },
+  }
 
 });

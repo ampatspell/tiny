@@ -4,116 +4,14 @@
   overflow: hidden;
   width: 200px;
 
-  @mixin row() {
-    > .row {
-      margin-bottom: 10px;
-      &.title,
-      &.sizes,
-      &.actions,
-      &.placeholder {
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-      &.actions {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
-        grid-gap: 5px;
-      }
-    }
+  display: flex;
+  flex-direction: column;
+  > .content {
+    flex: 1;
   }
-
-  @mixin section() {
-    > .section {
-      margin-top: 30px;
-      &:first-child {
-        margin-top: 0;
-      }
-      @include row;
-      > .row {
-
-        &.title {
-          display: flex;
-          flex-direction: row;
-          align-items: baseline;
-          > .content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            > .row {
-              display: flex;
-              flex-direction: row;
-              > .name {
-                font-weight: 600;
-              }
-            }
-          }
-          > .accessories {
-            margin-left: 5px;
-            > .icon {
-              font-size: 12px;
-            }
-          }
-        }
-
-      }
-    }
-  }
-
-  @include section;
-
-  > .section {
-    > .row {
-      &.title {
-        margin-top: 10px;
-      }
-    }
-  }
-
-  > .tabs {
-    > .content {
-
-      > .world {
-        @include row;
-        > .row {
-          &.scenes {
-            > .title {
-              padding: 0 10px 5px 10px;
-              border-bottom: 1px solid fade-out(#000, 0.95);
-            }
-            > .scene {
-              padding: 5px 10px;
-              border-bottom: 1px solid fade-out(#000, 0.95);
-              display: flex;
-              flex-direction: row;
-              > .details {
-                flex: 1;
-                > .identifier {
-                  font-weight: 600;
-                }
-              }
-              > .accessories {
-                align-self: flex-end;
-              }
-              &.selected {
-                background: fade-out(#000, 0.97);
-              }
-            }
-          }
-        }
-      }
-
-      > .scene {
-        @include section;
-        > .section {
-          > .row {
-            &.placeholder {
-              margin-top: 10px;
-            }
-          }
-        }
-      }
-
-    }
+  > .footer {
+    border-top: 1px solid fade-out(#000, 0.9);
+    padding: 10px;
   }
 
 }

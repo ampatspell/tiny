@@ -2,59 +2,13 @@
   background: darken(#fff, 0.7%);
   border-left: 1px solid darken(#fff, 25%);
   overflow: hidden;
-  > .section {
-    margin-top: 30px;
-    &:first-child {
-      margin-top: 0;
-    }
-    > .row {
-      margin-bottom: 10px;
-      &:first-child {
-        margin-top: 10px;
-      }
-      &.title,
-      &.preview,
-      &.sizes,
-      &.actions {
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-      &.title {
-        display: flex;
-        flex-direction: row;
-        > .content {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          > .row {
-            display: flex;
-            flex-direction: row;
-            > .identifier {
-              font-weight: 600;
-              margin-right: 5px;
-              &:after {
-                margin-left: 5px;
-                font-weight: 400;
-                content: '•';
-              }
-            }
-          }
-          > .frame {
-            font-weight: 600;
-          }
-        }
-        > .accessories {
-          margin-left: 5px;
-          > .icon {
-            font-size: 12px;
-          }
-        }
-      }
-      &.actions {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
-        grid-gap: 5px;
-      }
-    }
+  display: flex;
+  flex-direction: column;
+  > .tabs {
+    flex: 1;
+  }
+  > .footer {
+    border-top: 1px solid fade-out(#000, 0.9);
+    padding: 10px;
   }
 }

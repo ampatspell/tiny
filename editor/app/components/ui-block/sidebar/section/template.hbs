@@ -1,0 +1,9 @@
+{{#let 'ui-block/sidebar/section/' as |prefix|}}
+
+  {{yield (hash
+    placeholder=(component (concat prefix 'placeholder'))
+    padded=(component (concat prefix 'padded'))
+    actions=(component (concat prefix 'actions') disabled=disabled)
+  )}}
+
+{{/let}}

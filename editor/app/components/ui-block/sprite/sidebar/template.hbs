@@ -1,59 +1,10 @@
-<div class="section">
-  <div class="row title">
-    <div class="content">
-      <div class="row">
-        <div class="identifier">{{sprite.identifier}}</div>
-        <div class="name">{{sprite.name}}</div>
-      </div>
-      <div class="size">{{sprite.size.width}}×{{sprite.size.height}}px</div>
-      {{#if frame}}
-        <div class="frame">#{{frame.index}}</div>
-      {{/if}}
-    </div>
-    <div class="accessories">
-      {{#if locked}}
-        <div class="icon" role="button" {{action (action "locked" false)}}>{{fa-icon "lock"}}</div>
-      {{else}}
-        <div class="icon" role="button" {{action (action "locked" true)}}>{{fa-icon "unlock"}}</div>
-      {{/if}}
-    </div>
+{{#ui-block/tabs class="tabs" selected=selected select=(action "select") as |tabs|}}
+  {{tabs.tab label="Frame"  id="frame"  component=(component "ui-block/sprite/sidebar/frame"  state=state)}}
+  {{tabs.tab label="Sprite" id="sprite" component=(component "ui-block/sprite/sidebar/sprite" state=state)}}
+{{/ui-block/tabs}}
+
+{{#if state.frame}}
+  <div class="footer">
+    {{ui-block/scene/tools pixel=state.pixel update=(action 'pixel') center=(action 'center')}}
   </div>
-
-  {{#if frame}}
-    <div class="row preview">
-      {{ui-block/sprite/frame/preview frame=frame}}
-    </div>
-  {{/if}}
-</div>
-
-{{#if frame}}
-
-  <div class="section">
-    {{ui-block/scene/tools class="row sizes" pixel=state.pixel update=(action 'pixel') center=(action 'center')}}
-  </div>
-  <div class="section">
-
-    <div class="row actions">
-      {{ui-block/button value="Clear" disabled=locked action=(action "fill" 0)}}
-      {{ui-block/button value="Fill" disabled=locked action=(action "fill" 2)}}
-      {{ui-block/button value="Invert" disabled=locked action=(action "invert")}}
-    </div>
-
-    <div class="row actions">
-      {{ui-block/button value="Duplicate" disabled=locked action=(action "duplicate")}}
-    </div>
-    <div class="row actions">
-      {{ui-block/button value="Delete" disabled=locked action=(action "delete")}}
-    </div>
-
-  </div>
-
-{{else}}
-
-  <div class="section">
-    <div class="row actions">
-      {{ui-block/button value="Create first frame" disabled=locked action=(action "create")}}
-    </div>
-  </div>
-
 {{/if}}
