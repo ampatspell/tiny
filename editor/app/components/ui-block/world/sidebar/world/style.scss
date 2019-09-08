@@ -1,0 +1,12 @@
+.ui-block-world-sidebar-world {
+  > .header {
+    > .title {
+      display: flex;
+      flex-direction: row;
+      > .name {
+        font-weight: 600;
+        flex: 1;
+      }
+    }
+  }
+}

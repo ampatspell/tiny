@@ -1,30 +1,8 @@
-<div class="content">
-</div>
+{{#ui-block/tabs class="tabs" selected=selected select=(action "select") as |tabs|}}
+  {{tabs.tab label="Selection" id="selection" component=(component "ui-block/world/sidebar/selection"  state=state)}}
+  {{tabs.tab label="World"     id="world"     component=(component "ui-block/world/sidebar/world" state=state)}}
+{{/ui-block/tabs}}
+
 <div class="footer">
   {{ui-block/scene/tools pixel=state.pixel update=(action 'pixel') center=(action 'center')}}
 </div>
-
-{{!--
-<div class="section">
-  <div class="row title">
-    <div class="content">
-      <div class="row">
-        <div class="name">{{world.name}}</div>
-      </div>
-    </div>
-    <div class="accessories">
-      {{#if locked}}
-        <div class="icon" role="button" {{action (action "locked" false)}}>{{fa-icon "lock"}}</div>
-      {{else}}
-        <div class="icon" role="button" {{action (action "locked" true)}}>{{fa-icon "unlock"}}</div>
-      {{/if}}
-    </div>
-  </div>
-  {{ui-block/scene/tools class="row sizes" pixel=state.pixel update=(action 'pixel') center=(action 'center')}}
-</div>
-
-<div class="section">
-  <div class="row actions">
-    {{ui-block/button value="Add new scene" action=(action "createScene")}}
-  </div>
-</div> --}}

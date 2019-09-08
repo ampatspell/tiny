@@ -49,7 +49,8 @@ export default EmberObject.extend({
   },
 
   async createScene(opts) {
-    await this.world.createScene(opts);
+    let scene = await this.world.createScene(opts);
+    this.select(scene);
   },
 
   async deleteScene(scene) {

@@ -3,10 +3,9 @@
   border-left: 1px solid darken(#fff, 25%);
   overflow: hidden;
   width: 200px;
-
   display: flex;
   flex-direction: column;
-  > .content {
+  > .tabs {
     flex: 1;
   }
   > .footer {
