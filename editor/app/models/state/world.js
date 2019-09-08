@@ -28,6 +28,7 @@ export default EmberObject.extend({
   //
 
   async selectScene(scene) {
+    setGlobal({ scene });
     this.update({ scene });
   },
 

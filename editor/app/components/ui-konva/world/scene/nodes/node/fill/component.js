@@ -5,8 +5,8 @@ export default Node.extend({
 
   nodeClassName: 'group',
 
-  fill: computed('sceneNode.color', function() {
-    let { sceneNode: { color } } = this;
+  fill: computed('layerNode.color', function() {
+    let { layerNode: { color } } = this;
     if(color === 'black') {
       return '#000';
     } else if(color === 'white') {

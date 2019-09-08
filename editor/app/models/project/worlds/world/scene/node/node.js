@@ -15,4 +15,7 @@ export default EmberObject.extend({
   position: data('position.serialized'),
   size: data('size.serialized'),
 
+  async load() {
+  }
+
 });

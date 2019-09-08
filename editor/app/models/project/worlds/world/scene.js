@@ -3,6 +3,8 @@ import { readOnly, or } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
 import { array } from 'editor/utils/computed';
 import { models, observed, resolveObservers } from 'ember-cli-zuglet/lifecycle';
+import { assign } from '@ember/polyfills';
+import { all } from 'rsvp';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -26,23 +28,24 @@ export default EmberObject.extend(ScheduleSave, {
 
   _adding: array(),
 
-  nodesQuery: path(({ store, path, _adding }) => store.collection(`${path}/nodes`).query({
+  layersQuery: path(({ store, path, _adding }) => store.collection(`${path}/layers`).query({
     doc: path => _adding.findBy('path', path)
   })),
 
-  nodes: models('nodesQuery.content')
+  layers: models('layersQuery.content')
     .object('data.type')
     .named(doc => {
       let type = doc.get('data.type');
-      return `project/worlds/world/scene/node/${type}`;
+      return `project/worlds/world/scene/layer/${type}`;
     })
     .mapping((doc, scene) => ({ doc, scene })),
 
-  isLoading: or('doc.isLoading', 'nodesQuery.isLoading'),
+  isLoading: or('doc.isLoading', 'layersQuery.isLoading'),
 
   async load() {
-    let { nodesQuery } = this;
-    await resolveObservers(nodesQuery);
+    let { layersQuery } = this;
+    await resolveObservers(layersQuery);
+    await all(this.layers.map(layer => layer.load()));
   },
 
   async save() {
@@ -60,24 +63,17 @@ export default EmberObject.extend(ScheduleSave, {
 
   //
 
-  async createNode(opts) {
-    let doc = this.doc.ref.collection('nodes').doc().new({
-      type: 'fill',
-      position: {
-        x: 8*8,
-        y: 4*8
-      },
-      size: {
-        width: 8,
-        height: 8
-      },
-      color: 'black'
+  async createLayer(opts) {
+    let { index } = assign({ index: 0 }, opts);
+    let doc = this.doc.ref.collection('layers').doc().new({
+      type: 'nodes',
+      index
     });
 
     try {
       this._adding.pushObject(doc);
       await doc.save();
-      return this.nodes.findBy('doc', doc);
+      return this.layers.findBy('doc', doc);
     } finally {
       this._adding.removeObject(doc);
     }
