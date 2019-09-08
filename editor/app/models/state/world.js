@@ -55,8 +55,8 @@ export default EmberObject.extend({
   },
 
   async deleteScene(scene) {
-    if(this.scene === scene) {
-      this.update({ scene: null });
+    if(this.selection === scene) {
+      this.update({ selection: null });
     }
     await scene.delete();
   }
