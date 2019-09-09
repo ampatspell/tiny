@@ -18,6 +18,7 @@ export default EmberObject.extend(ScheduleSave, {
   id: doc('id'),
 
   type: data('type'),
+  locked: data('locked'),
   position: data('position.serialized'),
   size: data('size.serialized'),
 
@@ -34,6 +35,7 @@ export default EmberObject.extend(ScheduleSave, {
   },
 
   async delete() {
+    this.cancelScheduleSave();
     await this.doc.delete();
   },
 

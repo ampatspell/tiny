@@ -22,6 +22,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   name: data('name'),
   identifier: data('identifier'),
+  locked: data('locked'),
   size: data('size.serialized'),
   grid: data('grid.serialized'),
   background: data('background'),
@@ -60,6 +61,7 @@ export default EmberObject.extend(ScheduleSave, {
   },
 
   async delete() {
+    this.cancelScheduleSave();
     await this.doc.delete();
   },
 

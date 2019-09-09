@@ -4,6 +4,7 @@ import { models, observed, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { array } from 'editor/utils/computed';
 import { all } from 'rsvp';
 import { assign } from '@ember/polyfills';
+import ScheduleSave from 'editor/models/-schedule-save';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -12,7 +13,7 @@ const scene = path => readOnly(`scene.${path}`);
 const doc = path => readOnly(`doc.${path}`);
 export const data = path => doc(`data.${path}`);
 
-export default EmberObject.extend({
+export default EmberObject.extend(ScheduleSave, {
 
   isLayer: true,
 
@@ -25,6 +26,7 @@ export default EmberObject.extend({
 
   type: data('type'),
   index: data('index'),
+  locked: data('locked'),
 
   _adding: array(),
 
@@ -47,6 +49,15 @@ export default EmberObject.extend({
     await all(this.nodes.map(node => node.load()));
   },
 
+  async save() {
+    await this.doc.save({ token: true });
+  },
+
+  update(props) {
+    this.doc.data.setProperties(props);
+    this.scheduleSave();
+  },
+
   async createNode(opts) {
     opts = assign({}, opts);
     let doc = this.doc.ref.collection('nodes').doc().new(opts);
@@ -61,6 +72,7 @@ export default EmberObject.extend({
   },
 
   async delete() {
+    this.cancelScheduleSave();
     await this.doc.delete();
   }
 
