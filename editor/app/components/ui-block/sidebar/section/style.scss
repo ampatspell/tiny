@@ -77,7 +77,8 @@
     }
   }
 
-  > .size {
+  > .size,
+  > .position {
     @include row();
     @include padding();
     > .label {

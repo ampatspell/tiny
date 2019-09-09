@@ -1,11 +1,12 @@
 import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
+import ScheduleSave from 'editor/models/-schedule-save';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
 const layer = path => readOnly(`layer.${path}`);
 
-export default EmberObject.extend({
+export default EmberObject.extend(ScheduleSave, {
 
   isNode: true,
 
@@ -19,6 +20,15 @@ export default EmberObject.extend({
   type: data('type'),
   position: data('position.serialized'),
   size: data('size.serialized'),
+
+  async save() {
+    await this.doc.save({ token: true });
+  },
+
+  update(props) {
+    this.doc.data.setProperties(props);
+    this.scheduleSave();
+  },
 
   async load() {
   },

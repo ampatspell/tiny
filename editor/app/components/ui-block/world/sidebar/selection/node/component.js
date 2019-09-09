@@ -8,6 +8,9 @@ export default Component.extend({
   locked: readOnly('state.locked'),
 
   actions: {
+    update(key, value) {
+      this.node.update({ [key]: value });
+    },
     deleteNode() {
       this.state.deleteNode(this.node);
     }

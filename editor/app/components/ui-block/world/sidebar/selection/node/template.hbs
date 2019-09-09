@@ -7,9 +7,13 @@
   {{/section.header}}
 {{/ui-block/sidebar/section}}
 
+{{#ui-block/sidebar/section disabled=locked as |section|}}
+  {{section.position label="Position" value=node.position update=(action "update" "position")}}
+  {{section.size label="Size" value=node.size update=(action "update" "size")}}
+{{/ui-block/sidebar/section}}
 
 {{#ui-block/sidebar/section disabled=locked as |section|}}
   {{#section.actions as |actions|}}
-    {{actions.button value="Delete Node" action=(action 'deleteNode')}}
+    {{actions.button value="Delete Node" action=(action "deleteNode")}}
   {{/section.actions}}
 {{/ui-block/sidebar/section}}
