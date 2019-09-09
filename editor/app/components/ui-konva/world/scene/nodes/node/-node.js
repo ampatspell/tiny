@@ -37,8 +37,8 @@ export default Node.extend({
 
   customProps: null,
 
-  props: computed('position', 'draggable', 'customProps', function() {
-    let { position, draggable, customProps } = this;
+  props: computed('position', 'disabled', 'customProps', function() {
+    let { position, disabled, customProps } = this;
     if(!position) {
       return;
     }
@@ -46,7 +46,8 @@ export default Node.extend({
     return {
       ...customProps,
       ...position,
-      draggable
+      listening: !disabled,
+      draggable: true
     };
   }).readOnly(),
 

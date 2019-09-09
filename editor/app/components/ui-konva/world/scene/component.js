@@ -11,12 +11,13 @@ export default Node.extend({
   scene: null,
   pixel: null,
 
-  props: computed('pixel', 'scene.position', 'draggable', function() {
-    let { pixel, scene: { position }, draggable } = this;
+  props: computed('pixel', 'scene.position', 'disabled', function() {
+    let { pixel, scene: { position }, disabled } = this;
     return {
       x: position.x * pixel,
       y: position.y * pixel,
-      draggable
+      listening: !disabled,
+      draggable: true,
     };
   }),
 
