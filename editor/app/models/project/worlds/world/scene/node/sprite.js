@@ -8,19 +8,19 @@ export default Node.extend({
 
   name: 'Sprite',
 
-  _id: data('sprite'),
+  _sprite: data('sprite'),
   _sprites: readOnly('layer.scene.world.worlds.project.sprites'),
 
   size: computed('sprite.size', 'layer.scene.grid', function() {
     return this.get('sprite.size') || this.get('layer.scene.grid');
   }).readOnly(),
 
-  sprite: computed('_id', '_sprites.models.@each.id', function() {
-    let { _id, _sprites } = this;
-    if(!_id) {
+  sprite: computed('_sprite', '_sprites.models.@each.identifier', function() {
+    let { _sprite, _sprites } = this;
+    if(!_sprite) {
       return;
     }
-    return _sprites.models.findBy('id', _id);
+    return _sprites.models.findBy('identifier', _sprite);
   }).readOnly(),
 
 });
