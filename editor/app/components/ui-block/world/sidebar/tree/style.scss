@@ -3,6 +3,21 @@
   flex-direction: column;
   > .tree {
     flex: 1;
+    .ui-block-world-sidebar-tree-row {
+      display: flex;
+      flex-direction: row;
+      > .accessories {
+        padding: 0 10px 0 0;
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        > .icon {
+          margin-right: 5px;
+        }
+      }
+    }
     .ui-block-world-sidebar-tree-row-content {
       padding: 5px 10px;
       > .strong {
