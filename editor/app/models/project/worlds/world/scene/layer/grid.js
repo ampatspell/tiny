@@ -7,10 +7,7 @@ export default Layer.extend({
   clampNodePosition(node, position) {
     let { scene: { grid } } = this;
 
-    let clamp = (p, s) => {
-      return Math.round(position[p] / grid[s]) * grid[s];
-    }
-
+    let clamp = (p, s) => Math.round(position[p] / grid[s]) * grid[s];
     let x = clamp('x', 'width');
     let y = clamp('y', 'height');
 
