@@ -7,7 +7,7 @@ export default Component.extend({
   actions: {
     update(key, value) {
       value = parseInt(value);
-      if(!value || isNaN(value)) {
+      if(isNaN(value)) {
         return;
       }
       let hash = assign({}, this.value, { [key]: value });
