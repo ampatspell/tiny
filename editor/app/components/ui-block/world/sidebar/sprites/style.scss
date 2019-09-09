@@ -28,6 +28,12 @@
         font-weight: 600;
       }
     }
+    > .drag-image {
+      position: fixed;
+      top: -10000px;
+      background-size: contain;
+      image-rendering: pixelated;
+    }
     &:hover {
       background: fade-out(#000, 0.98);
     }
