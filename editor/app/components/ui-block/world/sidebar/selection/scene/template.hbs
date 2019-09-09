@@ -23,6 +23,10 @@
 {{/ui-block/sidebar/section}}
 
 {{#ui-block/sidebar/section disabled=locked as |section|}}
+  {{section.segments label="Background" items=backgrounds selected=background update=(action "background")}}
+{{/ui-block/sidebar/section}}
+
+{{#ui-block/sidebar/section disabled=locked as |section|}}
   {{#section.actions as |actions|}}
     {{actions.button value="Add Layer" action=(action "createLayer")}}
     {{actions.button value="Delete Scene" action=(action "deleteScene")}}
