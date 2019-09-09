@@ -1,0 +1,4 @@
+{{#ui-block/tabs class="tabs" selected=tab select=(action "select") as |tabs|}}
+  {{tabs.tab label="Tree"    id="tree"    component=(component "ui-block/world/sidebar/tree" state=state)}}
+  {{tabs.tab label="Sprites" id="sprites" component=(component "ui-block/world/sidebar/sprites" state=state)}}
+{{/ui-block/tabs}}

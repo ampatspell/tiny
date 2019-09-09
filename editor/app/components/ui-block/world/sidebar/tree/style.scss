@@ -1,0 +1,13 @@
+.ui-block-world-sidebar-tree {
+  display: flex;
+  flex-direction: column;
+  > .tree {
+    flex: 1;
+    .ui-block-world-sidebar-tree-row-content {
+      padding: 5px 10px;
+      > .strong {
+        font-weight: 600;
+      }
+    }
+  }
+}
