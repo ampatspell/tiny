@@ -16,6 +16,7 @@ export default Node.extend({
   sceneFunc: computed('size', 'rendered', function() {
     let { size, rendered } = this;
     return ctx => {
+      this.disableImageSmoothing();
       ctx.drawImage(rendered, 0, 0, size.width, size.height);
     }
   }).readOnly(),

@@ -123,6 +123,21 @@ export default Component.extend(Parent, Events, {
 
   stopObservingProperties() {
     A(this.observe).forEach(key => this.removeObserver(key, this, this.observedPropertyDidChange));
+  },
+
+  //
+
+  disableImageSmoothing() {
+    let { node } = this;
+    if(!node) {
+      return;
+    }
+    let layer = node.getLayer();
+    if(!layer) {
+      return;
+    }
+    let native = layer.getContext()._context;
+    native.imageSmoothingEnabled = false;
   }
 
 });
