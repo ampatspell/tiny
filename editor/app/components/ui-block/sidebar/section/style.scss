@@ -32,6 +32,13 @@
     grid-gap: 5px;
   }
 
+  @mixin label($strong: true) {
+    margin-bottom: 2px;
+    @if $strong {
+      font-weight: 600;
+    }
+  }
+
   > .header {
     @include row();
     @include padding();
@@ -73,7 +80,7 @@
     @include row();
     @include padding();
     > .label {
-      margin-bottom: 2px;
+      @include label();
     }
   }
 
@@ -82,13 +89,13 @@
     @include row();
     @include padding();
     > .label {
-      margin-bottom: 2px;
+      @include label();
     }
     > .items {
       @include horizontal-grid();
       > .item {
         > .label {
-          margin-bottom: 2px;
+          @include label($strong: false);
         }
       }
     }

@@ -1,4 +1,4 @@
-{{#ui-block/sidebar/section class="header" as |section|}}
+{{#ui-block/sidebar/section disabled=locked class="header" as |section|}}
   {{#section.header as |header|}}
     {{#header.content as |content|}}
       {{content.type value="Scene"}}
@@ -11,6 +11,10 @@
 {{#ui-block/sidebar/section disabled=locked as |section|}}
   {{section.input label="Name" value=scene.name update=(action "update" "name")}}
   {{section.input label="Identifier" value=scene.identifier update=(action "update" "identifier")}}
+{{/ui-block/sidebar/section}}
+
+{{#ui-block/sidebar/section disabled=locked as |section|}}
+  {{section.position label="Position" value=scene.position update=(action "update" "position")}}
 {{/ui-block/sidebar/section}}
 
 {{#ui-block/sidebar/section disabled=locked as |section|}}
