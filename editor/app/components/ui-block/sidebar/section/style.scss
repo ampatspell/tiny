@@ -69,4 +69,28 @@
     @include padding();
   }
 
+  > .input {
+    @include row();
+    @include padding();
+    > .label {
+      margin-bottom: 2px;
+    }
+  }
+
+  > .size {
+    @include row();
+    @include padding();
+    > .label {
+      margin-bottom: 2px;
+    }
+    > .items {
+      @include horizontal-grid();
+      > .item {
+        > .label {
+          margin-bottom: 2px;
+        }
+      }
+    }
+  }
+
 }

@@ -8,6 +8,9 @@ export default Component.extend({
   locked: readOnly('state.locked'),
 
   actions: {
+    update(key, value) {
+      this.scene.update({ [key]: value });
+    },
     createLayer() {
       this.state.createLayer();
     },

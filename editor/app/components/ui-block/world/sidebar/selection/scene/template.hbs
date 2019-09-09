@@ -9,8 +9,15 @@
 {{/ui-block/sidebar/section}}
 
 {{#ui-block/sidebar/section disabled=locked as |section|}}
+  {{section.input label="Name" value=scene.name update=(action "update" "name")}}
+  {{section.input label="Identifier" value=scene.identifier update=(action "update" "identifier")}}
+  {{section.size label="Size" value=scene.size update=(action "update" "size")}}
+  {{section.size label="Grid" value=scene.grid update=(action "update" "grid")}}
+{{/ui-block/sidebar/section}}
+
+{{#ui-block/sidebar/section disabled=locked as |section|}}
   {{#section.actions as |actions|}}
-    {{actions.button value="Add Layer" action=(action 'createLayer')}}
-    {{actions.button value="Delete Scene" action=(action 'deleteScene')}}
+    {{actions.button value="Add Layer" action=(action "createLayer")}}
+    {{actions.button value="Delete Scene" action=(action "deleteScene")}}
   {{/section.actions}}
 {{/ui-block/sidebar/section}}
