@@ -106,6 +106,16 @@ export default Component.extend(Parent, StageEvents, {
 
   //
 
+  didAddNodeForComponent(component) {
+    this._super(...arguments);
+
+    let { node } = component;
+    let ctx = node.getContext()._context;
+    ctx.imageSmoothingEnabled = false;
+  },
+
+  //
+
   getLayerComponents() {
     let { node } = this;
     if(!node) {
