@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-world-sidebar-selection-layer' ],
+  classNameBindings: [ ':ui-block-world-inspector-selection-layer' ],
 
   layer: readOnly('state.selection'),
   locked: readOnly('state.locked'),

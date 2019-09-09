@@ -18,7 +18,7 @@ const choice = (arrayKey, valueKey) => computed(`arrayKey.@each.value`, valueKey
 }).readOnly();
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-world-sidebar-selection-scene' ],
+  classNameBindings: [ ':ui-block-world-inspector-selection-scene' ],
 
   scene: readOnly('state.selection'),
   locked: readOnly('state.locked'),

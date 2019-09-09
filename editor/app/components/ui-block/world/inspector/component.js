@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-world-sidebar' ],
+  classNameBindings: [ ':ui-block-world-inspector' ],
 
   state: null,
   selected: 'selection',
