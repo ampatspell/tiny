@@ -34,12 +34,16 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  props: computed('position', 'draggable', function() {
-    let { position, draggable } = this;
+  customProps: null,
+
+  props: computed('position', 'draggable', 'customProps', function() {
+    let { position, draggable, customProps } = this;
     if(!position) {
       return;
     }
+    customProps = customProps || {};
     return {
+      ...customProps,
       ...position,
       draggable
     };
