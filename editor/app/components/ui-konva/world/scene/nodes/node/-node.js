@@ -11,7 +11,11 @@ export default Node.extend({
   pixel: null,
 
   position: computed('pixel', 'layerNode.position', function() {
-    let { pixel, layerNode: { position: { x, y } } } = this;
+    let { pixel, layerNode: { position } } = this;
+    if(!position) {
+      return;
+    }
+    let { x, y } = position;
     return {
       x: x * pixel,
       y: y * pixel
@@ -19,7 +23,11 @@ export default Node.extend({
   }).readOnly(),
 
   size: computed('pixel', 'layerNode.size', function() {
-    let { pixel, layerNode: { size: { width, height } } } = this;
+    let { pixel, layerNode: { size } } = this;
+    if(!size) {
+      return;
+    }
+    let { width, height } = size;
     return {
       width: width * pixel,
       height: height * pixel,
@@ -28,6 +36,9 @@ export default Node.extend({
 
   props: computed('position', 'draggable', function() {
     let { position, draggable } = this;
+    if(!position) {
+      return;
+    }
     return {
       ...position,
       draggable

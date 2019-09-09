@@ -8,4 +8,10 @@ export default Component.extend({
   world: readOnly('state.world'),
   sprites: readOnly('state.sprites'),
 
+  actions: {
+    select(sprite) {
+      this.state.addSpriteNode(sprite);
+    }
+  }
+
 });

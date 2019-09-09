@@ -28,5 +28,8 @@
         font-weight: 600;
       }
     }
+    &:hover {
+      background: fade-out(#000, 0.98);
+    }
   }
 }

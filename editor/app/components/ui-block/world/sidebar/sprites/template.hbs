@@ -1,6 +1,6 @@
 {{#if sprites.models}}
   {{#each sprites.models as |sprite|}}
-    {{ui-block/world/sidebar/sprites/sprite state=state sprite=sprite}}
+    {{ui-block/world/sidebar/sprites/sprite state=state sprite=sprite select=(action 'select' sprite)}}
   {{/each}}
 {{else}}
   <div class="placeholder">No sprites</div>

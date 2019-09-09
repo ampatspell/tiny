@@ -6,4 +6,8 @@ export default Component.extend({
   state: null,
   sprite: null,
 
+  click() {
+    this.select();
+  }
+
 });
