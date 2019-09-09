@@ -1,5 +1,5 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  classNameBindings: [ ':sprite' ]
+  classNameBindings: [ ':ui-block-sprite-inspector-sprite' ]
 });

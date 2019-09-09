@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/string';
 import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-sprite-sidebar' ],
+  classNameBindings: [ ':ui-block-sprite-inspector' ],
   attributeBindings: [ 'style' ],
 
   state: null,

@@ -1,6 +1,6 @@
 {{#ui-block/tabs class="tabs" selected=selected select=(action "select") as |tabs|}}
-  {{tabs.tab label="Frame"  id="frame"  component=(component "ui-block/sprite/sidebar/frame"  state=state)}}
-  {{tabs.tab label="Sprite" id="sprite" component=(component "ui-block/sprite/sidebar/sprite" state=state)}}
+  {{tabs.tab label="Frame"  id="frame"  component=(component "ui-block/sprite/inspector/frame"  state=state)}}
+  {{tabs.tab label="Sprite" id="sprite" component=(component "ui-block/sprite/inspector/sprite" state=state)}}
 {{/ui-block/tabs}}
 
 {{#if state.frame}}

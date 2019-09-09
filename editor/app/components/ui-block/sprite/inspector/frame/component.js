@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-sprite-sidebar-frame' ],
+  classNameBindings: [ ':ui-block-sprite-inspector-frame' ],
 
   state: null,
   sprite: readOnly('state.sprite'),
