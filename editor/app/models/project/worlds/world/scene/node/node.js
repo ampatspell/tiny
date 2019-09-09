@@ -35,6 +35,21 @@ export default EmberObject.extend(ScheduleSave, {
 
   async delete() {
     await this.doc.delete();
+  },
+
+  //
+
+  clampPosition(position) {
+    let { size, scene: { size: scene } } = this;
+
+    let clamp = (p, s) => {
+      return Math.max(0, Math.min(position[p], scene[s] - size[s]));
+    }
+
+    let x = clamp('x', 'width');
+    let y = clamp('y', 'height');
+
+    return this.layer.clampNodePosition(this, { x, y });
   }
 
 });

@@ -68,14 +68,7 @@ export default Node.extend({
       y: Math.floor(y / pixel)
     };
 
-    let clamp = (p, s) => {
-      let self = this.layerNode.size;
-      let scene = this.scene.size;
-      position[p] = Math.max(0, Math.min(position[p], scene[s] - self[s]));
-    }
-
-    clamp('x', 'width');
-    clamp('y', 'height');
+    position = this.layerNode.clampPosition(position);
 
     x = position.x * pixel;
     y = position.y * pixel;
