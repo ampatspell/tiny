@@ -1,5 +1,6 @@
 import EmberObject, { computed } from '@ember/object';
 import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
+import { all } from 'rsvp';
 
 export default EmberObject.extend({
 
@@ -17,8 +18,8 @@ export default EmberObject.extend({
   models: models('query.content').named('project/sprites/sprite').mapping((doc, sprites) => ({ doc, sprites })),
 
   async load() {
-    let { query } = this;
-    await resolveObservers(query);
+    await resolveObservers(this.query);
+    await all(this.models.map(model => model.load()));
   },
 
   sprite(id) {

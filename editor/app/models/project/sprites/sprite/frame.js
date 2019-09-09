@@ -19,6 +19,9 @@ export default EmberObject.extend(ScheduleSave, {
 
   preview: model().named('project/sprites/sprite/frame/preview').mapping(frame => ({ frame })),
 
+  async load() {
+  },
+
   async save() {
     await this.doc.save({ token: true });
   },
