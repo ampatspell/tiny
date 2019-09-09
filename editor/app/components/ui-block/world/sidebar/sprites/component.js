@@ -5,7 +5,18 @@ export default Component.extend({
   classNameBindings: [ ':ui-block-world-sidebar-sprites' ],
 
   state: null,
-  world: readOnly('state.world'),
-  sprites: readOnly('state.sprites')
+
+  sprites: readOnly('state.sprites'),
+  selected: readOnly('state.sprite'),
+
+  actions: {
+    select(sprite) {
+      this.state.selectSprite(sprite);
+    }
+  },
+
+  click() {
+    this.state.selectSprite(null);
+  }
 
 });

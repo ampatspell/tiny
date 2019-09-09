@@ -23,13 +23,20 @@
     }
     > .details {
       flex: 1;
-      margin: 5px 10px;
+      padding: 5px 10px;
       > .identifier {
         font-weight: 600;
       }
     }
     &:hover {
-      background: fade-out(#000, 0.98);
+      > .details {
+        background: fade-out(#000, 0.98);
+      }
+    }
+    &.selected {
+      > .details {
+        background: fade-out(#000, 0.95);
+      }
     }
   }
 }

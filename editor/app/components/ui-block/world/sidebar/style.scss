@@ -3,4 +3,15 @@
   background: darken(#fff, 0.7%);
   border-right: 1px solid darken(#fff, 25%);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  > .tabs {
+    flex: 1;
+    > .content {
+      > .tree,
+      > .sprites {
+        flex: 1;
+      }
+    }
+  }
 }

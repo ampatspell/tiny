@@ -16,7 +16,6 @@ export default EmberObject.extend({
 
   world: null,
   project: readOnly('world.worlds.project'),
-  sprites: readOnly('project.sprites'),
 
   locked: readOnly('world.locked'),
 
@@ -28,6 +27,13 @@ export default EmberObject.extend({
   scene: selection('isScene'),
   layer: selection('isLayer'),
   node:  selection('isNode'),
+
+  //
+
+  sprites: readOnly('project.sprites'),
+  sprite: null,
+
+  //
 
   onEditorCreated(editor) {
     this.setProperties({ editor });
@@ -50,6 +56,14 @@ export default EmberObject.extend({
     setGlobal({ selection });
     this.update({ selection });
   },
+
+  selectSprite(sprite) {
+    sprite = sprite || null;
+    setGlobal({ sprite });
+    this.update({ sprite });
+  },
+
+  //
 
   async createScene(opts) {
     let scene = await this.world.createScene(opts);
