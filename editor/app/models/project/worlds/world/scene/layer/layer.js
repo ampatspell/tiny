@@ -10,7 +10,7 @@ const path = fn => observed().owner('path').content(fn);
 const scene = path => readOnly(`scene.${path}`);
 
 const doc = path => readOnly(`doc.${path}`);
-const data = path => doc(`data.${path}`);
+export const data = path => doc(`data.${path}`);
 
 export default EmberObject.extend({
 
