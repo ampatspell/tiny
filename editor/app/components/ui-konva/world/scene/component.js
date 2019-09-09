@@ -11,12 +11,12 @@ export default Node.extend({
   scene: null,
   pixel: null,
 
-  props: computed('pixel', 'scene.position', function() {
-    let { pixel, scene: { position } } = this;
+  props: computed('pixel', 'scene.position', 'draggable', function() {
+    let { pixel, scene: { position }, draggable } = this;
     return {
       x: position.x * pixel,
       y: position.y * pixel,
-      draggable: true
+      draggable
     };
   }),
 
@@ -56,17 +56,17 @@ export default Node.extend({
 
     this.setNodeAttributes({ x, y });
 
-    let current = this.pos;
+    let current = this._dragPosition;
     if(current && current.x === position.x && current.y === position.y) {
       return;
     }
 
-    this.set('pos', position);
+    this.set('_dragPosition', position);
     this.updateSelf({ position });
   },
 
   onDragend() {
-    this.setProperties({ isDragging: false, position: null });
+    this.setProperties({ isDragging: false, _dragPosition: null });
   }
 
 });
