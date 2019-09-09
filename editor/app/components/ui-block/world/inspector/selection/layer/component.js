@@ -8,7 +8,7 @@ export default Component.extend({
   locked: readOnly('state.locked'),
 
   actions: {
-    createNode() {
+    createFillNode() {
       this.state.createNode({
         type: 'fill',
         position: {
@@ -20,6 +20,15 @@ export default Component.extend({
           height: 8
         },
         color: 'black'
+      });
+    },
+    createSpriteNode() {
+      this.state.createNode({
+        type: 'sprite',
+        position: {
+          x: 0,
+          y: 0,
+        }
       });
     },
     deleteLayer() {

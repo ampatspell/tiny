@@ -11,7 +11,9 @@ export default Node.extend({
   _id: data('sprite'),
   _sprites: readOnly('layer.scene.world.worlds.project.sprites'),
 
-  size: readOnly('sprite.size'),
+  size: computed('sprite.size', 'layer.scene.grid', function() {
+    return this.get('sprite.size') || this.get('layer.scene.grid');
+  }).readOnly(),
 
   sprite: computed('_id', '_sprites.models.@each.id', function() {
     let { _id, _sprites } = this;

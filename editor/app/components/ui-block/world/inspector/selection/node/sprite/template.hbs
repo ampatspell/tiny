@@ -1,2 +1,3 @@
 {{#sidebar.section as |section|}}
+  {{section.position label="Position" value=node.position update=(action "update" "position")}}
 {{/sidebar.section}}

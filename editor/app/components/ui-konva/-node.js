@@ -11,6 +11,7 @@ export default Component.extend(Parent, Events, {
   // needs element because of -parent.js node.zIndex
   // tagName: '',
 
+  concatenatedProperties: Object.freeze([ 'observe' ]),
   nodeClassName: null,
   props: null,
 

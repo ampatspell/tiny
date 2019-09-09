@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 export default Node.extend({
 
   nodeClassName: 'group',
+  observe: Object.freeze([ 'layerNode.position', 'layerNode.size' ]),
 
   scene: null,
   layer: null,

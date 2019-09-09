@@ -95,24 +95,6 @@ export default EmberObject.extend({
       this.update({ selection: stage });
     }
     await layer.delete();
-  },
-
-  //
-
-  // TODO: remove
-  addSpriteNode(sprite) {
-    let { layer } = this;
-    if(!layer) {
-      return;
-    }
-    layer.createNode({
-      type: 'sprite',
-      position: {
-        x: 0,
-        y: 0
-      },
-      sprite: sprite.id
-    });
-  },
+  }
 
 });

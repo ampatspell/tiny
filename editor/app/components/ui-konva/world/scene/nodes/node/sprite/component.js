@@ -14,10 +14,15 @@ export default Node.extend({
   rendered: readOnly('frame.preview.rendered'),
 
   sceneFunc: computed('size', 'rendered', function() {
-    let { size, rendered } = this;
+    let { size: { width, height }, rendered } = this;
     return ctx => {
-      this.disableImageSmoothing();
-      ctx.drawImage(rendered, 0, 0, size.width, size.height);
+      if(rendered) {
+        this.disableImageSmoothing();
+        ctx.drawImage(rendered, 0, 0, width, height);
+      } else {
+        ctx.fillStyle = 'rgba(253,96,96,0.5)';
+        ctx.fillRect(0, 0, width, height);
+      }
     }
   }).readOnly(),
 
@@ -30,7 +35,7 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  customProps: computed('size', 'sceneFunc', 'hitFunc', function() {
+  customProps: computed('sprite', 'size', 'sceneFunc', 'hitFunc', function() {
     let { size: { width, height }, sceneFunc, hitFunc } = this;
     return {
       width,

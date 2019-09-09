@@ -6,12 +6,6 @@ export default Component.extend({
 
   state: null,
   world: readOnly('state.world'),
-  sprites: readOnly('state.sprites'),
-
-  actions: {
-    select(sprite) {
-      this.state.addSpriteNode(sprite);
-    }
-  }
+  sprites: readOnly('state.sprites')
 
 });

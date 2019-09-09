@@ -11,7 +11,8 @@
 
   {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
-      {{actions.button value="Add Fill Node" action=(action "createNode")}}
+      {{actions.button value="Add Fill Node" action=(action "createFillNode")}}
+      {{actions.button value="Add Sprite Node" action=(action "createSpriteNode")}}
       {{actions.button value="Delete Layer" action=(action "deleteLayer")}}
     {{/section.actions}}
   {{/sidebar.section}}
