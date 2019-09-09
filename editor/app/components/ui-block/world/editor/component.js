@@ -29,6 +29,9 @@ export default Component.extend(KeyboardMixin, {
     },
     onStageClick() {
       this.state.select(null);
+    },
+    update(model, props) {
+      model.update(props);
     }
   },
 
