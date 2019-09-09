@@ -40,7 +40,7 @@
     transition: border-color 0.2s ease-in-out;
     &:hover {
       > .details {
-        background: fade-out(#000, 0.99);
+        background: fade-out(#000, 0.98);
       }
       border: 1px solid darken(#fff, 30%);
     }

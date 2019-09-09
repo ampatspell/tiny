@@ -4,6 +4,7 @@ import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 import { array } from 'editor/utils/computed';
 import gif from 'editor/utils/gif';
+import { all } from 'rsvp';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -44,8 +45,8 @@ export default EmberObject.extend({
   },
 
   async load() {
-    let { framesQuery } = this;
-    await resolveObservers(framesQuery);
+    await resolveObservers(this.framesQuery);
+    await all(this.frames.map(frame => frame.load()));
   },
 
   async resize(handle, diff) {

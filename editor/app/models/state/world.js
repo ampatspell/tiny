@@ -15,6 +15,9 @@ const selection = key => computed(`selection.${key}`, function() {
 export default EmberObject.extend({
 
   world: null,
+  project: readOnly('world.worlds.project'),
+  sprites: readOnly('project.sprites'),
+
   locked: readOnly('world.locked'),
 
   pixel: 4,
@@ -92,6 +95,24 @@ export default EmberObject.extend({
       this.update({ selection: stage });
     }
     await layer.delete();
-  }
+  },
+
+  //
+
+  // TODO: remove
+  addSpriteNode(sprite) {
+    let { layer } = this;
+    if(!layer) {
+      return;
+    }
+    layer.createNode({
+      type: 'sprite',
+      position: {
+        x: 0,
+        y: 0
+      },
+      sprite: sprite.id
+    });
+  },
 
 });
