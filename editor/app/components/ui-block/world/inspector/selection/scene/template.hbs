@@ -1,34 +1,38 @@
-{{#ui-block/sidebar/section disabled=locked class="header" as |section|}}
-  {{#section.header as |header|}}
-    {{#header.content as |content|}}
-      {{content.type value="Scene"}}
-      {{content.name value=scene.name}}
-      {{content.identifier value=scene.identifier}}
-    {{/header.content}}
-  {{/section.header}}
-{{/ui-block/sidebar/section}}
+{{#ui-block/sidebar disabled=locked as |sidebar|}}
 
-{{#ui-block/sidebar/section disabled=locked as |section|}}
-  {{section.input label="Name" value=scene.name update=(action "update" "name")}}
-  {{section.input label="Identifier" value=scene.identifier update=(action "update" "identifier")}}
-{{/ui-block/sidebar/section}}
+  {{#sidebar.section class="header" as |section|}}
+    {{#section.header as |header|}}
+      {{#header.content as |content|}}
+        {{content.type value="Scene"}}
+        {{content.name value=scene.name}}
+        {{content.identifier value=scene.identifier}}
+      {{/header.content}}
+    {{/section.header}}
+  {{/sidebar.section}}
 
-{{#ui-block/sidebar/section disabled=locked as |section|}}
-  {{section.position label="Position" value=scene.position update=(action "update" "position")}}
-{{/ui-block/sidebar/section}}
+  {{#sidebar.section as |section|}}
+    {{section.input label="Name" value=scene.name update=(action "update" "name")}}
+    {{section.input label="Identifier" value=scene.identifier update=(action "update" "identifier")}}
+  {{/sidebar.section}}
 
-{{#ui-block/sidebar/section disabled=locked as |section|}}
-  {{section.size label="Size" value=scene.size update=(action "update" "size")}}
-  {{section.size label="Grid" value=scene.grid update=(action "update" "grid")}}
-{{/ui-block/sidebar/section}}
+  {{#sidebar.section as |section|}}
+    {{section.position label="Position" value=scene.position update=(action "update" "position")}}
+  {{/sidebar.section}}
 
-{{#ui-block/sidebar/section disabled=locked as |section|}}
-  {{section.segments label="Background" items=backgrounds selected=background update=(action "background")}}
-{{/ui-block/sidebar/section}}
+  {{#sidebar.section as |section|}}
+    {{section.size label="Size" value=scene.size update=(action "update" "size")}}
+    {{section.size label="Grid" value=scene.grid update=(action "update" "grid")}}
+  {{/sidebar.section}}
 
-{{#ui-block/sidebar/section disabled=locked as |section|}}
-  {{#section.actions as |actions|}}
-    {{actions.button value="Add Layer" action=(action "createLayer")}}
-    {{actions.button value="Delete Scene" action=(action "deleteScene")}}
-  {{/section.actions}}
-{{/ui-block/sidebar/section}}
+  {{#sidebar.section as |section|}}
+    {{section.segments label="Background" items=backgrounds selected=background update=(action "background")}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Add Layer" action=(action "createLayer")}}
+      {{actions.button value="Delete Scene" action=(action "deleteScene")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+{{/ui-block/sidebar}}

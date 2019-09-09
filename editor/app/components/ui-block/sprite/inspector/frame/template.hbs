@@ -1,56 +1,51 @@
-{{#ui-block/sidebar/section class="header" as |section|}}
+{{#ui-block/sidebar disabled=locked as |sidebar|}}
 
-  {{#section.header as |header|}}
-    {{#header.content as |content|}}
-      {{content.name value=sprite.name}}
-      {{content.identifier value=sprite.identifier}}
-      {{#content.footer}}
-        <div class="size">{{size sprite.size "px"}}</div>
-        {{#if frame}}
-          <div class="frame">#{{frame.index}}</div>
-        {{/if}}
-      {{/content.footer}}
-    {{/header.content}}
-    {{header.lock locked=locked update=(action "locked")}}
-  {{/section.header}}
+  {{#sidebar.section class="header" as |section|}}
+    {{#section.header as |header|}}
+      {{#header.content as |content|}}
+        {{content.name value=sprite.name}}
+        {{content.identifier value=sprite.identifier}}
+        {{#content.footer}}
+          <div class="size">{{size sprite.size "px"}}</div>
+          {{#if frame}}
+            <div class="frame">#{{frame.index}}</div>
+          {{/if}}
+        {{/content.footer}}
+      {{/header.content}}
+      {{header.lock locked=locked update=(action "locked")}}
+    {{/section.header}}
+    {{#if frame}}
+      {{#section.padded class="preview"}}
+        {{ui-block/sprite/frame/preview frame=frame}}
+      {{/section.padded}}
+    {{/if}}
+  {{/sidebar.section}}
 
   {{#if frame}}
-    {{#section.padded class="preview"}}
-      {{ui-block/sprite/frame/preview frame=frame}}
-    {{/section.padded}}
+
+    {{#sidebar.section as |section|}}
+      {{#section.actions type="grid" as |actions|}}
+        {{actions.button value="Clear" action=(action "fill" 0)}}
+        {{actions.button value="Fill" action=(action "fill" 2)}}
+        {{actions.button value="Invert" action=(action "invert")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section as |section|}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Duplicate" action=(action "duplicate")}}
+        {{actions.button value="Delete" action=(action "delete")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+  {{else}}
+
+    {{#sidebar.section as |section|}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Create first frame" action=(action "create")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
   {{/if}}
 
-{{/ui-block/sidebar/section}}
-
-{{#if frame}}
-
-  {{#ui-block/sidebar/section disabled=locked as |section|}}
-
-    {{#section.actions type="grid" as |actions|}}
-      {{actions.button value="Clear" action=(action "fill" 0)}}
-      {{actions.button value="Fill" action=(action "fill" 2)}}
-      {{actions.button value="Invert" action=(action "invert")}}
-    {{/section.actions}}
-
-  {{/ui-block/sidebar/section}}
-
-  {{#ui-block/sidebar/section disabled=locked as |section|}}
-
-    {{#section.actions as |actions|}}
-      {{actions.button value="Duplicate" action=(action "duplicate")}}
-      {{actions.button value="Delete" action=(action "delete")}}
-    {{/section.actions}}
-
-  {{/ui-block/sidebar/section}}
-
-{{else}}
-
-  {{#ui-block/sidebar/section disabled=locked as |section|}}
-
-    {{#section.actions as |actions|}}
-      {{actions.button value="Create first frame" action=(action "create")}}
-    {{/section.actions}}
-
-  {{/ui-block/sidebar/section}}
-
-{{/if}}
+{{/ui-block/sidebar}}

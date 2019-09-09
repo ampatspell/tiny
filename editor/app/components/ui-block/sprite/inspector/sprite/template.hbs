@@ -1,3 +1,5 @@
-{{#ui-block/sidebar/section as |section|}}
-  {{section.placeholder value="Sprite editing is not done yet."}}
-{{/ui-block/sidebar/section}}
+{{#ui-block/sidebar as |sidebar|}}
+  {{#sidebar.section as |section|}}
+    {{section.placeholder value="Sprite editing is not done yet."}}
+  {{/sidebar.section}}
+{{/ui-block/sidebar}}

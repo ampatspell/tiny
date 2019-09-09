@@ -1,15 +1,19 @@
-{{#ui-block/sidebar/section disabled=locked class="header" as |section|}}
-  {{#section.header as |header|}}
-    {{#header.content as |content|}}
-      {{content.type value="Layer"}}
-      {{content.name value=layer.name}}
-    {{/header.content}}
-  {{/section.header}}
-{{/ui-block/sidebar/section}}
+{{#ui-block/sidebar disabled=locked as |sidebar|}}
 
-{{#ui-block/sidebar/section disabled=locked as |section|}}
-  {{#section.actions as |actions|}}
-    {{actions.button value="Add Fill Node" action=(action "createNode")}}
-    {{actions.button value="Delete Layer" action=(action "deleteLayer")}}
-  {{/section.actions}}
-{{/ui-block/sidebar/section}}
+  {{#sidebar.section class="header" as |section|}}
+    {{#section.header as |header|}}
+      {{#header.content as |content|}}
+        {{content.type value="Layer"}}
+        {{content.name value=layer.name}}
+      {{/header.content}}
+    {{/section.header}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Add Fill Node" action=(action "createNode")}}
+      {{actions.button value="Delete Layer" action=(action "deleteLayer")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+{{/ui-block/sidebar}}
