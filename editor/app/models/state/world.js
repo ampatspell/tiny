@@ -15,6 +15,9 @@ const selection = key => computed(`selection.${key}`, function() {
 export default EmberObject.extend({
 
   world: null,
+  project: readOnly('world.worlds.project'),
+  sprites: readOnly('project.sprites'),
+
   locked: readOnly('world.locked'),
 
   pixel: 4,
