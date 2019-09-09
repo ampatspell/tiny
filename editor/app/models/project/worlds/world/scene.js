@@ -81,4 +81,10 @@ export default EmberObject.extend(ScheduleSave, {
     }
   },
 
+  //
+
+  clampPosition(position) {
+    return position;
+  },
+
 });
