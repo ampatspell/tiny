@@ -24,6 +24,11 @@ export default Node.extend({
       width: width * pixel,
       height: height * pixel
     };
-  }).readOnly()
+  }).readOnly(),
+
+  onClick(e) {
+    e.cancelBubble = true;
+    this.select(this.layerNode);
+  }
 
 });

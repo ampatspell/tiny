@@ -21,7 +21,7 @@ export default Node.extend({
 
   onClick(e) {
     e.cancelBubble = true;
-    this.select();
+    this.select(this.scene);
   }
 
 });
