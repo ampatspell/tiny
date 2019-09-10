@@ -35,6 +35,8 @@ export default EmberObject.extend(ScheduleSave, {
 
   _adding: array(),
 
+  frame: readOnly('scene.frame'),
+
   nodesQuery: path(({ store, path, _adding }) => store.collection(`${path}/nodes`).query({
     doc: path => _adding.findBy('path', path)
   })),

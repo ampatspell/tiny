@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
 
@@ -26,6 +26,16 @@ export default EmberObject.extend(ScheduleSave, {
   chainLocked: or('locked', 'layer.chainLocked'),
   hidden: data('hidden'),
   chainHidden: or('hidden', 'layer.chainHidden'),
+
+  frame: computed('layer.frame', 'position', 'size', function() {
+    let { layer: { frame }, position, size } = this;
+    return {
+      x: frame.x + position.x,
+      y: frame.y + position.y,
+      width: size.width,
+      height: size.height
+    };
+  }).readOnly(),
 
   async save() {
     await this.doc.save({ token: true });

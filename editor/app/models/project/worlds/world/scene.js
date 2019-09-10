@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
 import { array } from 'editor/utils/computed';
@@ -46,6 +46,11 @@ export default EmberObject.extend(ScheduleSave, {
     .mapping((doc, scene) => ({ doc, scene })),
 
   isLoading: or('doc.isLoading', 'layersQuery.isLoading'),
+
+  frame: computed('size', function() {
+    let { size } = this;
+    return { x: 0, y: 0, ...size };
+  }).readOnly(),
 
   async load() {
     let { layersQuery } = this;
