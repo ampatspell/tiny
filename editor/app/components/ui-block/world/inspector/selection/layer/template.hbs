@@ -9,11 +9,10 @@
     {{/section.header}}
   {{/sidebar.section}}
 
+  {{component (concat "ui-block/world/inspector/selection/layer/" layer.type) state=state layer=layer sidebar=sidebar update=(action "update")}}
+
   {{#sidebar.section as |section|}}
-    {{section.checkmark label="Constrain to grid" value=layer.grid update=(action "update" "grid")}}
     {{#section.actions as |actions|}}
-      {{actions.button value="Add Fill Node" action=(action "createFillNode")}}
-      {{actions.button value="Add Sprite Node" action=(action "createSpriteNode")}}
       {{actions.button value="Delete Layer" action=(action "deleteLayer")}}
     {{/section.actions}}
   {{/sidebar.section}}
