@@ -23,7 +23,7 @@ export default EmberObject.extend({
 
   _adding: array(),
 
-  scenesQuery: path(({ store, path, _adding }) => store.collection(`${path}/scenes`).query({
+  scenesQuery: path(({ store, path, _adding }) => store.collection(`${path}/scenes`).orderBy('index', 'asc').query({
     doc: path => _adding.findBy('path', path)
   })),
 
@@ -49,6 +49,12 @@ export default EmberObject.extend({
   //
 
   async createScene(opts) {
+    let last = this.scenes.lastObject;
+    let index = 0;
+    if(last) {
+      index = last.index + 1;
+    }
+
     let {
       name,
       identifier,
@@ -63,6 +69,7 @@ export default EmberObject.extend({
     }, opts);
 
     let doc = this.doc.ref.collection('scenes').doc().new({
+      index,
       name,
       identifier,
       position,
