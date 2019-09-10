@@ -79,10 +79,18 @@ export default EmberObject.extend({
     this.select(parent);
   },
 
+  onSpriteSelected(sprite) {
+    let { node } = this;
+    node && node.onSprite && node.onSprite(sprite);
+  },
+
   selectSprite(sprite) {
     sprite = sprite || null;
     setGlobal({ sprite });
     this.update({ sprite });
+    if(sprite) {
+      this.onSpriteSelected(sprite);
+    }
   },
 
   //
@@ -108,6 +116,18 @@ export default EmberObject.extend({
     }
     let node = await layer.createNode(opts);
     this.select(node);
+  },
+
+  async createSpriteNode() {
+    let sprite = this.sprite && this.sprite.identifier;
+    await this.createNode({
+      type: 'sprite',
+      position: {
+        x: 0,
+        y: 0,
+      },
+      sprite
+    });
   },
 
   async deleteScene(scene) {

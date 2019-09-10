@@ -29,13 +29,7 @@ export default Component.extend({
       });
     },
     createSpriteNode() {
-      this.state.createNode({
-        type: 'sprite',
-        position: {
-          x: 0,
-          y: 0,
-        }
-      });
+      this.state.createSpriteNode();
     },
   }
 

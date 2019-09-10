@@ -33,4 +33,11 @@ export default Node.extend({
     return _sprites.models.findBy('identifier', _sprite);
   }).readOnly(),
 
+  onSprite({ identifier: sprite }) {
+    if(!sprite) {
+      return;
+    }
+    this.update({ sprite });
+  }
+
 });
