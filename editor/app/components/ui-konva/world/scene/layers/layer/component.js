@@ -8,6 +8,7 @@ export default Node.extend({
   nodeClassName: 'group',
   observe,
 
+  // TODO: this should go to scene
   clipFunc: computed('scene.size', 'pixel', function() {
     let { scene: { size }, pixel } = this;
     let width = size.width * pixel;

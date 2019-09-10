@@ -23,7 +23,6 @@ export default EmberObject.extend(ScheduleSave, {
   name: data('name'),
   identifier: data('identifier'),
   size: data('size.serialized'),
-  grid: data('grid.serialized'),
   background: data('background'),
   position: data('position.serialized'),
 
