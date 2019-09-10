@@ -71,11 +71,9 @@ export default EmberObject.extend(ScheduleSave, {
   //
 
   async createLayer(opts) {
-    let { index } = assign({ index: 0 }, opts);
-    let doc = this.doc.ref.collection('layers').doc().new({
-      type: 'grid',
-      index
-    });
+    // TODO: layer order
+    opts = assign({ index: 0 }, opts);
+    let doc = this.doc.ref.collection('layers').doc().new(opts);
 
     try {
       this._adding.pushObject(doc);

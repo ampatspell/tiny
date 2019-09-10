@@ -13,6 +13,13 @@
 
   {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
+      {{actions.button value="Add Fill Node" action=(action "createFillNode")}}
+      {{actions.button value="Add Sprite Node" action=(action "createSpriteNode")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
       {{actions.button value="Delete Layer" action=(action "deleteLayer")}}
     {{/section.actions}}
   {{/sidebar.section}}

@@ -33,8 +33,16 @@ export default Component.extend({
     background({ value: background }) {
       this.scene.update({ background });
     },
-    createLayer() {
-      this.state.createLayer();
+    createGridLayer() {
+      this.state.createLayer({
+        type: 'grid',
+        grid: { width: 8, height: 8 }
+      });
+    },
+    createPixelLayer() {
+      this.state.createLayer({
+        type: 'pixel'
+      });
     },
     deleteScene() {
       this.state.deleteScene(this.scene);

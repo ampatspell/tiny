@@ -30,7 +30,8 @@
 
   {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
-      {{actions.button value="Add Layer" action=(action "createLayer")}}
+      {{actions.button value="Add Grid Layer" action=(action "createGridLayer")}}
+      {{actions.button value="Add Pixel Layer" action=(action "createPixelLayer")}}
       {{actions.button value="Delete Scene" action=(action "deleteScene")}}
     {{/section.actions}}
   {{/sidebar.section}}
