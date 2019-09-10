@@ -1,3 +1,12 @@
+{{ui-konva/text props=(hash
+    x=0
+    y=-13
+    fontFamily="Roboto Mono"
+    fontSize=11
+    fill="rgba(0,0,0,0.9)"
+    text=(concat scene.name ' (' scene.identifier ')')
+)}}
+
 {{#if selected}}
   {{ui-konva/world/scene/selected pixel=pixel size=scene.size}}
 {{/if}}
