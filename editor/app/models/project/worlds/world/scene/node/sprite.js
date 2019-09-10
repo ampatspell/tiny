@@ -11,8 +11,18 @@ export default Node.extend({
   _sprite: data('sprite'),
   _sprites: readOnly('layer.scene.world.worlds.project.sprites'),
 
-  size: computed('sprite.size', 'layer.scene.grid', function() {
-    return this.get('sprite.size') || this.get('layer.scene.grid');
+  size: computed('sprite.size', 'layer.grid', function() {
+    let { sprite, layer: { grid } } = this;
+    if(sprite) {
+      let { size } = sprite;
+      if(size) {
+        return size;
+      }
+    }
+    if(grid) {
+      return grid;
+    }
+    return { width: 8, height: 8 };
   }).readOnly(),
 
   sprite: computed('_sprite', '_sprites.models.@each.identifier', function() {
