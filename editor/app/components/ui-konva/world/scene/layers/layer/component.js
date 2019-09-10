@@ -19,11 +19,11 @@ export default Node.extend({
   }).readOnly(),
 
   props: computed('clipFunc', 'hidden', function() {
-    let { clipFunc, layer: { hidden } } = this;
+    let { clipFunc, hidden } = this;
     return {
       clipFunc,
-      visible: !hidden,
+      visible: !hidden
     }
-  }).readOnly(),
+  }).readOnly()
 
 });

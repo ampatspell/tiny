@@ -1,6 +1,6 @@
 {{component (concat "ui-konva/world/scene/layers/layer/" layer.type)
-  diabled=disabled
-  hidden=hidden
+  disabled=(or disabled layer.locked)
+  hidden=(or hidden layer.hidden)
   scene=scene
   layer=layer
   pixel=pixel
