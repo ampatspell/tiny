@@ -10,15 +10,15 @@
 
       {{#each state.world.scenes as |scene|}}
         {{#ui-konva/layer}}
-            {{ui-konva/world/scene
-                scene=scene
-                pixel=state.pixel
-                selected=(eq selectedScene scene)
-                select=(action "select")
-                update=(action "update")
-                disabled=(or isSpacePressed scene.chainLocked)
-                hidden=scene.hidden
-            }}
+          {{ui-konva/world/scene
+              scene=scene
+              pixel=state.pixel
+              selected=(eq selectedScene scene)
+              select=(action "select")
+              update=(action "update")
+              disabled=(or isSpacePressed scene.chainLocked)
+              hidden=scene.hidden
+          }}
         {{/ui-konva/layer}}
       {{/each}}
 

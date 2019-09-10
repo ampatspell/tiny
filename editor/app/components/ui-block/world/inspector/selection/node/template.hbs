@@ -9,7 +9,7 @@
     {{/section.header}}
   {{/sidebar.section}}
 
-  {{component (concat 'ui-block/world/inspector/selection/node/' node.type) state=state node=node sidebar=sidebar update=(action "update")}}
+  {{component (concat "ui-block/world/inspector/selection/node/" node.type) state=state node=node sidebar=sidebar update=(action "update")}}
 
   {{#sidebar.section disabled=locked as |section|}}
     {{#section.actions as |actions|}}
