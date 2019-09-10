@@ -21,7 +21,7 @@ export default Component.extend({
   classNameBindings: [ ':ui-block-world-inspector-selection-scene' ],
 
   scene: readOnly('state.selection'),
-  locked: readOnly('state.locked'),
+  locked: readOnly('scene.chainLocked'),
 
   backgrounds,
   background: choice('backgrounds', 'scene.background'),

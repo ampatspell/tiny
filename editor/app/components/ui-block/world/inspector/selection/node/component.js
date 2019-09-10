@@ -5,7 +5,7 @@ export default Component.extend({
   classNameBindings: [ ':ui-block-world-inspector-selection-node' ],
 
   node: readOnly('state.selection'),
-  locked: readOnly('state.locked'),
+  locked: readOnly('node.chainLocked'),
 
   actions: {
     update(key, value) {
