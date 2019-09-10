@@ -1,7 +1,9 @@
-{{#ui-block/sidebar as |sidebar|}}
+{{#ui-block/sidebar disabled=locked as |sidebar|}}
 
   {{#sidebar.section as |section|}}
-    {{section.placeholder value="World editing is not done yet."}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Delete world" action=(action 'delete')}}
+    {{/section.actions}}
   {{/sidebar.section}}
 
 {{/ui-block/sidebar}}

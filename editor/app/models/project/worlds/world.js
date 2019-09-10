@@ -86,6 +86,10 @@ export default EmberObject.extend({
   async createThumbnail() {
   },
 
+  async delete() {
+    await this.doc.delete();
+  },
+
   //
 
   toStringExtension() {

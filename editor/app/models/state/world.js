@@ -1,5 +1,6 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
+import alive from 'editor/utils/alive';
 
 const selection = key => computed(`selection.${key}`, function() {
   let { selection } = this;
@@ -109,6 +110,12 @@ export default EmberObject.extend({
       this.update({ selection: stage });
     }
     await layer.delete();
-  }
+  },
+
+  async deleteWorld() {
+    let promise = this.world.delete();
+    this.router.transitionTo('projects.project');
+    await promise;
+  },
 
 });
