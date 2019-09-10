@@ -1,7 +1,7 @@
 import Node from '../../../../-node';
 import { computed } from '@ember/object';
 
-const observe = [ 'scene.size' ];
+const observe = [ 'scene.size', 'layer.hidden' ];
 
 export default Node.extend({
 
@@ -17,10 +17,11 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  props: computed('clipFunc', function() {
-    let { clipFunc } = this;
+  props: computed('clipFunc', 'layer.hidden', function() {
+    let { clipFunc, layer: { hidden } } = this;
     return {
-      clipFunc
+      clipFunc,
+      visible: !hidden,
     }
   }).readOnly(),
 

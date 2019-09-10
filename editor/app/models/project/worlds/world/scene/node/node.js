@@ -36,7 +36,7 @@ export default EmberObject.extend(ScheduleSave, {
   },
 
   async delete() {
-    this.cancelScheduleSave();
+    this.cancelScheduledSave();
     await this.doc.delete();
   },
 

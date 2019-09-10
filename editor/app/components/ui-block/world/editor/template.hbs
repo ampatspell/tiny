@@ -8,11 +8,8 @@
         onClick=(action "onStageClick")
     }}
 
-      {{#ui-konva/layer}}
-
-        {{#ui-konva/group props=(hash x=15 y=15)}}
-
-          {{#each state.world.scenes as |scene|}}
+      {{#each state.world.scenes as |scene|}}
+        {{#ui-konva/layer}}
             {{ui-konva/world/scene
                 scene=scene
                 pixel=state.pixel
@@ -20,12 +17,11 @@
                 select=(action "select")
                 update=(action "update")
                 disabled=isSpacePressed
+                hidden=scene.hidden
             }}
-          {{/each}}
+        {{/ui-konva/layer}}
+      {{/each}}
 
-        {{/ui-konva/group}}
-
-      {{/ui-konva/layer}}
     {{/ui-konva/stage}}
   {{/ui-konva/autosized}}
 </div>

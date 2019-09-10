@@ -4,7 +4,7 @@ import { computed } from '@ember/object';
 export default Node.extend({
 
   nodeClassName: 'group',
-  observe: Object.freeze([ 'layerNode.position', 'layerNode.size' ]),
+  observe: Object.freeze([ 'layerNode.position', 'layerNode.hidden', 'layerNode.size', 'layerNode.locked' ]),
 
   scene: null,
   layer: null,
@@ -37,8 +37,8 @@ export default Node.extend({
 
   customProps: null,
 
-  props: computed('position', 'disabled', 'customProps', function() {
-    let { position, disabled, customProps } = this;
+  props: computed('position', 'disabled', 'customProps', 'layerNode.{hidden,locked}', function() {
+    let { position, disabled, customProps, layerNode: { hidden, locked } } = this;
     if(!position) {
       return;
     }
@@ -47,7 +47,8 @@ export default Node.extend({
       ...customProps,
       ...position,
       listening: !disabled,
-      draggable: true
+      draggable: !locked,
+      visible: !hidden
     };
   }).readOnly(),
 

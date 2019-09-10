@@ -58,7 +58,7 @@ export default EmberObject.extend({
     } = assign({
       name: null,
       identifier: null,
-      position: { x: 0, y: 0 },
+      position: { x: 2, y: 2 },
       size: { width: 128, height: 64 },
       grid: { width: 8, height: 8 }
     }, opts);
