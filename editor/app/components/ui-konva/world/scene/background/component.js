@@ -9,7 +9,7 @@ const backgrounds = {
 
 const strokes = {
   'transparent': 'rgba(0,0,0,0.1)',
-  'black':       'rgba(0,0,0,0)',
+  'black':       'rgba(255,255,255,0.7)',
   'white':       'rgba(0,0,0,0.1)',
 };
 
