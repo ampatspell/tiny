@@ -32,8 +32,10 @@
     grid-gap: 5px;
   }
 
-  @mixin label($strong: true) {
-    margin-bottom: 2px;
+  @mixin label($margin: true, $strong: true) {
+    @if $margin {
+      margin-bottom: 2px;
+    }
     @if $strong {
       font-weight: 600;
     }
@@ -106,6 +108,17 @@
     @include padding();
     > .label {
       @include label();
+    }
+  }
+
+  > .checkmark {
+    @include row();
+    @include padding();
+    display: flex;
+    flex-direction: row;
+    > .label {
+      margin-left: 5px;
+      @include label($margin: false);
     }
   }
 

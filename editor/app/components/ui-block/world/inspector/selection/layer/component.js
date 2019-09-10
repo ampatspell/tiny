@@ -8,6 +8,9 @@ export default Component.extend({
   locked: readOnly('state.locked'),
 
   actions: {
+    update(key, value) {
+      this.layer.update({ [key]: value });
+    },
     createFillNode() {
       this.state.createNode({
         type: 'fill',
