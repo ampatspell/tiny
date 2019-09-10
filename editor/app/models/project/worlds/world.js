@@ -59,8 +59,7 @@ export default EmberObject.extend({
       name: null,
       identifier: null,
       position: { x: 4, y: 6 },
-      size: { width: 128, height: 64 },
-      grid: { width: 8, height: 8 }
+      size: { width: 128, height: 64 }
     }, opts);
 
     let doc = this.doc.ref.collection('scenes').doc().new({
