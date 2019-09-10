@@ -26,13 +26,17 @@ export default Node.extend({
     this.select(this.scene);
   },
 
+  selectParentSelf() {
+    this.selectParent(this.scene);
+  },
+
   updateSelf(props) {
     this.update(this.scene, props);
   },
 
   onClick(e) {
     e.cancelBubble = true;
-    this.selectSelf();
+    this.selectParentSelf();
   },
 
   onDragstart() {

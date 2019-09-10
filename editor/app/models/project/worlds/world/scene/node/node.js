@@ -12,6 +12,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   doc: null,
   layer: null,
+  parent: readOnly('layer'),
   scene: layer('scene'),
   world: layer('world'),
 

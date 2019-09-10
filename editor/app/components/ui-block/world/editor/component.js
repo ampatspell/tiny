@@ -27,6 +27,9 @@ export default Component.extend(KeyboardMixin, {
     select(model) {
       this.state.select(model);
     },
+    selectParent(model) {
+      this.state.selectParent(model);
+    },
     onStageClick() {
       this.state.select(null);
     },

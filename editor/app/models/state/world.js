@@ -51,10 +51,32 @@ export default EmberObject.extend({
 
   //
 
-  async select(selection) {
+  select(selection) {
     selection = selection || null;
-    setGlobal({ selection });
     this.update({ selection });
+  },
+
+  selectParent(scene) {
+    let { selection } = this;
+
+    if(!selection) {
+      this.select(scene);
+      return;
+    }
+
+    if(selection.scene !== scene) {
+      this.select(scene);
+      return;
+    }
+
+    let { parent } = selection;
+
+    if(!parent) {
+      this.select(scene);
+      return;
+    }
+
+    this.select(parent);
   },
 
   selectSprite(sprite) {
