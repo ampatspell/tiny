@@ -20,6 +20,7 @@ export default Component.extend(Parent, StageEvents, {
   classNameBindings: [ ':ui-konva-stage' ],
 
   size: null,
+  draggable: true,
   node: null, // Konva.Stage
 
   didInsertElement() {
@@ -29,7 +30,7 @@ export default Component.extend(Parent, StageEvents, {
 
   didUpdateAttrs() {
     this._super(...arguments);
-    this.sizeDidChange();
+    this.propertiesDidChange();
   },
 
   willDestroyElement() {
@@ -38,7 +39,7 @@ export default Component.extend(Parent, StageEvents, {
   },
 
   createNode() {
-    let { size, node } = this;
+    let { size, draggable, node } = this;
 
     if(node) {
       return;
@@ -60,7 +61,7 @@ export default Component.extend(Parent, StageEvents, {
       container,
       width,
       height,
-      draggable: true
+      draggable
     });
 
     node.component = this;
@@ -81,27 +82,25 @@ export default Component.extend(Parent, StageEvents, {
 
   //
 
-  sizeDidChange() {
-    let { size, node } = this;
+  propertiesDidChange() {
+    let { size, draggable, node } = this;
 
     if(!node) {
       this.createNode();
       return;
     }
 
-    if(!isSizeValid(size)) {
-      return;
+    if(isSizeValid(size)) {
+      let { width, height } = size;
+      if(width !== node.width()) {
+        node.width(width);
+      }
+      if(height !== node.height()) {
+        node.height(height);
+      }
     }
 
-    let { width, height } = size;
-
-    if(width !== node.width()) {
-      node.width(width);
-    }
-
-    if(height !== node.height()) {
-      node.height(height);
-    }
+    node.draggable(draggable);
   },
 
   //
