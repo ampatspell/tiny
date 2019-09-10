@@ -1,5 +1,5 @@
 {{component content class="content"}}
 <div class="accessories">
-  <div class="icon" {{action 'hidden' bubbles=false}} role="button">{{fa-icon (if model.hidden "eye-slash" "eye") prefix="far"}}</div>
-  <div class="icon" {{action 'lock' bubbles=false}} role="button">{{fa-icon (if model.locked "lock" "unlock")}}</div>
+  <div class="icon hidden" {{action 'hidden' bubbles=false}} role="button">{{fa-icon (if model.chainHidden "eye-slash" "eye") prefix="far"}}</div>
+  <div class="icon lock" {{action 'lock' bubbles=false}} role="button">{{fa-icon (if model.chainLocked "lock" "lock-open")}}</div>
 </div>

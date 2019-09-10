@@ -1,3 +1,12 @@
 {{#each layer.nodes as |layerNode|}}
-  {{component (concat "ui-konva/world/scene/nodes/node/" layerNode.type) disabled=disabled scene=scene layer=layer layerNode=layerNode pixel=pixel select=select update=update}}
+  {{component (concat "ui-konva/world/scene/nodes/node/" layerNode.type)
+      disabled=(or disabled layerNode.locked)
+      hidden=(or hidden layerNode.hidden)
+      scene=scene
+      layer=layer
+      layerNode=layerNode
+      pixel=pixel
+      select=select
+      update=update
+  }}
 {{/each}}

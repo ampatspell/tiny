@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import { readOnly, or } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
 
 const doc = path => readOnly(`doc.${path}`);
@@ -18,10 +18,13 @@ export default EmberObject.extend(ScheduleSave, {
   id: doc('id'),
 
   type: data('type'),
-  locked: data('locked'),
-  hidden: data('hidden'),
   position: data('position.serialized'),
   size: data('size.serialized'),
+
+  locked: data('locked'),
+  chainLocked: or('locked', 'layer.chainLocked'),
+  hidden: data('hidden'),
+  chainHidden: or('hidden', 'layer.chainHidden'),
 
   async save() {
     await this.doc.save({ token: true });

@@ -26,8 +26,11 @@ export default EmberObject.extend(ScheduleSave, {
 
   type: data('type'),
   index: data('index'),
+
   locked: data('locked'),
+  chainLocked: or('locked', 'scene.locked'),
   hidden: data('hidden'),
+  chainHidden: or('hidden', 'scene.hidden'),
 
   _adding: array(),
 

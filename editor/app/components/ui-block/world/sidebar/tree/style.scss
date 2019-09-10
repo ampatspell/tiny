@@ -14,9 +14,38 @@
         align-items: center;
         justify-content: flex-end;
         > .icon {
-          margin-right: 7px;
+          margin-right: 5px;
+          width: 14px;
+          text-align: center;
           &:last-child {
             margin-right: 0;
+          }
+          &.lock {
+            opacity: 0.3;
+          }
+          &.hidden {
+            opacity: 0.2;
+          }
+          transition: opacity 0.2s ease-in-out;
+        }
+      }
+      transition: opacity 0.2s ease-in-out;
+      &.hidden {
+        opacity: 0.4;
+        > .accessories {
+          > .icon {
+            &.hidden {
+              opacity: 1;
+            }
+          }
+        }
+      }
+      &.locked {
+        > .accessories {
+          > .icon {
+            &.lock {
+              opacity: 1;
+            }
           }
         }
       }

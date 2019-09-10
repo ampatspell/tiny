@@ -1,3 +1,11 @@
 {{#each scene.layers as |layer|}}
-  {{ui-konva/world/scene/layers/layer disabled=disabled scene=scene pixel=pixel layer=layer select=select update=update}}
+  {{ui-konva/world/scene/layers/layer
+      disabled=(or disabled layer.locked)
+      hidden=(or hidden layer.hidden)
+      scene=scene
+      pixel=pixel
+      layer=layer
+      select=select
+      update=update
+    }}
 {{/each}}

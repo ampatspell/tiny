@@ -17,12 +17,11 @@ export default Node.extend({
     let { size: { width, height }, rendered } = this;
     return ctx => {
       if(rendered) {
+        this.disableImageSmoothing();
+        ctx.drawImage(rendered, 0, 0, width, height);
 
         ctx.strokeStyle = 'rgba(253, 96, 96, 0.3)';
         ctx.strokeRect(-0.5, -0.5, width + 1, height + 1);
-
-        this.disableImageSmoothing();
-        ctx.drawImage(rendered, 0, 0, width, height);
       } else {
         ctx.fillStyle = 'rgba(253, 96, 96, 0.5)';
         ctx.fillRect(0, 0, width, height);

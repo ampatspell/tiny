@@ -16,7 +16,7 @@
                 selected=(eq selectedScene scene)
                 select=(action "select")
                 update=(action "update")
-                disabled=isSpacePressed
+                disabled=(or isSpacePressed scene.chainLocked)
                 hidden=scene.hidden
             }}
         {{/ui-konva/layer}}

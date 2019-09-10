@@ -22,13 +22,15 @@ export default EmberObject.extend(ScheduleSave, {
 
   name: data('name'),
   identifier: data('identifier'),
-  locked: data('locked'),
-  hidden: data('hidden'),
   size: data('size.serialized'),
   grid: data('grid.serialized'),
   background: data('background'),
-
   position: data('position.serialized'),
+
+  locked: data('locked'),
+  chainLocked: or('locked', 'world.locked'),
+  hidden: data('hidden'),
+  chainHidden: readOnly('hidden'),
 
   _adding: array(),
 

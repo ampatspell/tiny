@@ -1,7 +1,7 @@
 import Node from '../../-node';
 import { computed } from '@ember/object';
 
-const observe = [ 'scene.position', 'scene.hidden' ];
+const observe = [ 'scene.position' ];
 
 export default Node.extend({
 
@@ -11,14 +11,14 @@ export default Node.extend({
   scene: null,
   pixel: null,
 
-  props: computed('pixel', 'scene.{position,hidden}', 'disabled', function() {
-    let { pixel, scene: { position, hidden }, disabled } = this;
+  props: computed('pixel', 'scene.position', 'disabled', 'hidden', function() {
+    let { pixel, scene: { position }, disabled, hidden } = this;
     return {
       x: position.x * pixel,
       y: position.y * pixel,
       visible: !hidden,
-      listening: !disabled,
-      draggable: true,
+      listening: true,
+      draggable: !disabled,
     };
   }),
 
