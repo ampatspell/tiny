@@ -3,15 +3,13 @@ import { computed } from '@ember/object';
 
 export default Layer.extend({
 
-  name: computed('grid', function() {
-    let { grid } = this;
-    if(grid) {
-      return `Grid`;
-    }
-    return `Free`;
-  }).readOnly(),
-
+  name: 'Nodes',
   grid: data('grid'),
+
+  description: computed('grid', function() {
+    let { grid } = this;
+    return grid ? 'Snaps to Grid' : 'Snaps to Pixel';
+  }).readOnly(),
 
   clampNodePosition(node, position) {
     if(!this.grid) {

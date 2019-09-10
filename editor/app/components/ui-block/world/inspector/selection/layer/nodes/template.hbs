@@ -1,5 +1,5 @@
 {{#sidebar.section as |section|}}
-  {{section.checkmark label="Constrain to grid" value=layer.grid update=(action "update" "grid")}}
+  {{section.segments label="Snap to" items=grids selected=grid update=(action "grid")}}
   {{#section.actions as |actions|}}
     {{actions.button value="Add Fill Node" action=(action "createFillNode")}}
     {{actions.button value="Add Sprite Node" action=(action "createSpriteNode")}}
