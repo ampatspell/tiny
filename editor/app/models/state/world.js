@@ -130,6 +130,21 @@ export default EmberObject.extend({
     });
   },
 
+  async createFillNode() {
+    await this.createNode({
+      type: 'fill',
+      position: {
+        x: 0,
+        y: 0,
+      },
+      size: {
+        width: 8,
+        height: 8
+      },
+      color: 'black'
+    });
+  },
+
   async deleteScene(scene) {
     if(this.selection === scene) {
       this.update({ selection: null });

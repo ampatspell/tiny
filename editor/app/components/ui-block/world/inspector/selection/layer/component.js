@@ -15,18 +15,7 @@ export default Component.extend({
       this.state.deleteLayer(this.layer);
     },
     createFillNode() {
-      this.state.createNode({
-        type: 'fill',
-        position: {
-          x: 0,
-          y: 0,
-        },
-        size: {
-          width: 8,
-          height: 8
-        },
-        color: 'black'
-      });
+      this.state.createFillNode();
     },
     createSpriteNode() {
       this.state.createSpriteNode();
