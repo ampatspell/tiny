@@ -2,27 +2,27 @@
   {{#ui-konva/autosized class="autosized" as |autosized|}}
 
     {{#ui-konva/stage
-        class="stage"
-        size=autosized
-        created=(action "created")
-        onClick=(action "onStageClick")
+      class="stage"
+      size=autosized
+      created=(action "created")
+      onClick=(action "onStageClick")
     }}
 
       {{#each state.world.scenes as |scene|}}
         {{#ui-konva/layer}}
           {{ui-konva/world/scene
-              scene=scene
-              pixel=state.pixel
-              selected=(eq selectedScene scene)
-              selection=state.selection
-              select=(action "select")
-              selectParent=(action "selectParent")
-              update=(action "update")
-              disabled=(or isSpacePressed scene.chainLocked)
-              hidden=scene.hidden
+            scene=scene
+            pixel=state.pixel
+            selected=(eq selectedScene scene)
+            selection=state.selection
+            select=(action "select")
+            selectParent=(action "selectParent")
+            update=(action "update")
+            disabled=(or isSpacePressed scene.chainLocked)
+            hidden=scene.hidden
           }}
         {{/ui-konva/layer}}
-      {{/each}}
+      }}
 
     {{/ui-konva/stage}}
   {{/ui-konva/autosized}}
