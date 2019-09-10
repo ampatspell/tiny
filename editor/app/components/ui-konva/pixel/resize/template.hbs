@@ -10,11 +10,11 @@
 )}}
 
 {{ui-konva/text props=(hash
-    x=(add rect.x -1)
-    y=(add rect.y -11)
+    x=rect.x
+    y=(add rect.y -13)
     fontFamily="Roboto Mono"
     fontSize=11
-    fontStyle="bold"
+    fill="rgba(0,0,0,0.9)"
     text=targetSizeString
     visible=(not disabled)
     listening=false

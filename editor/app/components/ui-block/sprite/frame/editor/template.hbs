@@ -1,6 +1,12 @@
 <div class="content">
   {{#ui-konva/autosized class="autosized" as |autosized|}}
-    {{#ui-konva/stage class="stage" size=autosized created=(action "created")}}
+    {{#ui-konva/stage
+      class="stage"
+      size=autosized
+      created=(action "created")
+      draggable=isSpacePressed
+    }}
+
       {{#ui-konva/layer}}
 
         {{#if bytes}}
@@ -8,25 +14,25 @@
           {{#ui-konva/group props=position}}
 
             {{ui-konva/pixel/grid
-                pixel=pixel
-                size=size
-                bytes=bytes
-                update=(action "update")
-                disabled=(or disabled isSpacePressed isAltPressed)
+              pixel=pixel
+              size=size
+              bytes=bytes
+              update=(action "update")
+              disabled=(or disabled isSpacePressed isAltPressed)
             }}
 
             {{ui-konva/pixel/resize
-                pixel=pixel
-                size=size
-                disabled=(or disabled (not isSpacePressed))
-                commit=(action "resize")
+              pixel=pixel
+              size=size
+              disabled=(or disabled (not isSpacePressed))
+              commit=(action "resize")
             }}
 
             {{ui-konva/pixel/select
-                pixel=pixel
-                size=size
-                disabled=(or disabled (not isAltPressed))
-                begin=(action "move")
+              pixel=pixel
+              size=size
+              disabled=(or disabled (not isAltPressed))
+              begin=(action "move")
             }}
 
           {{/ui-konva/group}}
