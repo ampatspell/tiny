@@ -1,5 +1,8 @@
 {{#sidebar.section as |section|}}
   {{section.position label="Position" value=node.position update=(action "update" "position")}}
   {{section.alignment label="Alignment" value=node.alignment update=(action "update" "alignment")}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
   {{section.input label="Sprite identifier" value=node._sprite update=(action "update" "sprite")}}
 {{/sidebar.section}}
