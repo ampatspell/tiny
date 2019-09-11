@@ -1,4 +1,6 @@
 {{#each scene.orderedLayers as |layer|}}
+  {{!-- TODO: __index madness --}}
+  {{!-- TODO: eq selection, eq selection.layer --}}
   {{ui-konva/world/scene/layers/layer
       __index=layer.index
       disabled=(or disabled layer.locked)
@@ -8,5 +10,6 @@
       layer=layer
       select=select
       update=update
+      selected=(or (eq selection layer) (eq selection.layer layer))
     }}
 {{/each}}

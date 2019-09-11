@@ -46,9 +46,9 @@ export default Node.extend({
     return {
       ...customProps,
       ...position,
-      listening: true,
-      draggable: !disabled,
-      visible: !hidden
+      draggable: true,
+      visible: !hidden,
+      listening: !disabled
     };
   }).readOnly(),
 
