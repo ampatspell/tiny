@@ -8,6 +8,9 @@ export default Layer.extend({
   clampNodePosition(node, position) {
     let { grid } = this;
 
+    let { size } = node;
+    console.log(size);
+
     let clamp = (p, s) => Math.round(position[p] / grid[s]) * grid[s];
     let x = clamp('x', 'width');
     let y = clamp('y', 'height');
