@@ -7,14 +7,18 @@
 
     {{#ui-block/tree class="tree" select=(action "select") selected=state.selection as |row|}}
       {{#each state.world.scenes as |scene|}}
-        {{#row model=scene class="scene" content=(component c.row content=(component (concat c.content "scene") state=state scene=scene) model=scene) as |row|}}
-          {{#each scene.layersReversed as |layer|}}
-            {{#row model=layer class="layer" content=(component c.row content=(component (concat c.content "layer") state=state layer=layer) model=layer) as |row|}}
-              {{#each layer.nodesReversed as |node|}}
-                {{row model=node class="node" content=(component c.row content=(component (concat c.content "node") state=state node=node) model=node)}}
-              {{/each}}
-            {{/row}}
-          {{/each}}
+        {{#row model=scene class="scene" content=(component c.row content=(component (concat c.content "scene") state=state scene=scene) model=scene collapsable=true) as |row|}}
+          {{#unless scene.collapsed}}
+            {{#each scene.layersReversed as |layer|}}
+              {{#row model=layer class="layer" content=(component c.row content=(component (concat c.content "layer") state=state layer=layer) model=layer collapsable=true) as |row|}}
+                {{#unless layer.collapsed}}
+                  {{#each layer.nodesReversed as |node|}}
+                    {{row model=node class="node" content=(component c.row content=(component (concat c.content "node") state=state node=node) model=node)}}
+                  {{/each}}
+                {{/unless}}
+              {{/row}}
+            {{/each}}
+          {{/unless}}
         {{/row}}
       {{/each}}
     {{/ui-block/tree}}

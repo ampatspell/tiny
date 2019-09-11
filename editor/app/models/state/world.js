@@ -57,9 +57,20 @@ export default EmberObject.extend({
 
   //
 
+  didSelect() {
+    let parent = this.selection.parent;
+    do {
+      parent.update({ collapsed: false });
+      parent = parent.parent;
+    } while(parent);
+  },
+
   select(selection) {
     selection = selection || null;
     this.update({ selection });
+    if(selection) {
+      this.didSelect(selection);
+    }
   },
 
   selectParent(scene) {
