@@ -9,6 +9,10 @@
     {{/section.header}}
   {{/sidebar.section}}
 
+  {{#sidebar.section as |section|}}
+    {{section.input label="Identifier" value=layer.identifier update=(action "update" "identifier")}}
+  {{/sidebar.section}}
+
   {{component (concat "ui-block/world/inspector/selection/layer/" layer.type) state=state layer=layer sidebar=sidebar update=(action "update")}}
 
   {{#sidebar.section as |section|}}
