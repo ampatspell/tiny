@@ -1,1 +1,13 @@
-{{yield}}
+<div class="loops">
+  {{#each state.sprite.loops as |loop|}}
+    <div>{{loop}}</div>
+  {{/each}}
+</div>
+
+{{#ui-block/sidebar class="actions" as |sidebar|}}
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Add loop" action=(action 'createLoop')}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+{{/ui-block/sidebar}}

@@ -183,6 +183,22 @@ export default EmberObject.extend({
 
   //
 
+  async createLoop() {
+    let doc = this.doc.ref.collection('loops').doc().new({
+      identifier: 'untitled'
+    });
+
+    try {
+      this._loopsAdding.pushObject(doc);
+      await doc.save();
+      return this.loops.findBy('doc', doc);
+    } finally {
+      this._loopsAdding.removeObject(doc);
+    }
+  },
+
+  //
+
   toStringExtension() {
     let { id, identifier } = this;
     return `${id}:${identifier}`;

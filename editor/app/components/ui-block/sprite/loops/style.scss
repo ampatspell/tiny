@@ -3,4 +3,10 @@
   background: darken(#fff, 0.7%);
   border-right: 1px solid darken(#fff, 25%);
   overflow: hidden;
+  > .loops {
+
+  }
+  > .actions {
+    margin-top: 10px;
+  }
 }
