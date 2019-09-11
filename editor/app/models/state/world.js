@@ -146,25 +146,17 @@ export default EmberObject.extend({
   },
 
   async deleteScene(scene) {
-    if(this.selection === scene) {
-      this.update({ selection: null });
-    }
+    this.update({ selection: null });
     await scene.delete();
   },
 
   async deleteNode(node) {
-    if(this.selection === node) {
-      let { layer } = node;
-      this.update({ selection: layer });
-    }
+    this.update({ selection: node.layer });
     await node.delete();
   },
 
   async deleteLayer(layer) {
-    if(this.selection === layer) {
-      let { stage } = layer;
-      this.update({ selection: stage });
-    }
+    this.select(layer.scene);
     await layer.delete();
   },
 
