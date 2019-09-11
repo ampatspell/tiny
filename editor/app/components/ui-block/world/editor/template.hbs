@@ -12,6 +12,7 @@
       {{#each state.world.scenes as |scene|}}
         {{#ui-konva/layer}}
           {{ui-konva/world/scene
+            __index=scene.index
             scene=scene
             pixel=state.pixel
             selected=(eq selectedScene scene)

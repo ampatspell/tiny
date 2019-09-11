@@ -37,7 +37,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   frame: readOnly('scene.frame'),
 
-  nodesQuery: path(({ store, path, _adding }) => store.collection(`${path}/nodes`).orderBy('index', 'asc').query({
+  nodesQuery: path(({ store, path, _adding }) => store.collection(`${path}/nodes`).query({
     doc: path => _adding.findBy('path', path)
   })),
 
@@ -49,8 +49,12 @@ export default EmberObject.extend(ScheduleSave, {
     })
     .mapping((doc, layer) => ({ doc, layer })),
 
-  nodesReversed: computed('nodes.@each.index', function() {
-    return this.nodes.slice().reverse();
+  orderedNodes: computed('nodes.@each.index', function() {
+    return this.nodes.sortBy('index');
+  }).readOnly(),
+
+  nodesReversed: computed('orderedNodes.@each.index', function() {
+    return this.orderedNodes.slice().reverse();
   }).readOnly(),
 
   isLoading: or('doc.isLoading', 'nodesQuery.isLoading'),
@@ -70,7 +74,7 @@ export default EmberObject.extend(ScheduleSave, {
   },
 
   async createNode(opts) {
-    let last = this.nodes.lastObject;
+    let last = this.orderedNodes.lastObject;
     let index = 0;
     if(last) {
       index = last.index + 1;
@@ -88,6 +92,46 @@ export default EmberObject.extend(ScheduleSave, {
     }
   },
 
+  //
+
+  async _moveNodeDelta(node, delta) {
+    let { orderedNodes } = this;
+    let idx = orderedNodes.indexOf(node);
+    if(idx === -1) {
+      return;
+    }
+
+    idx = idx + delta;
+    if(idx < 0 || idx > orderedNodes.length - 1) {
+      return;
+    }
+
+    let next = orderedNodes.objectAt(idx);
+    if(!next) {
+      return;
+    }
+
+    let { index } = node;
+
+    node.doc.data.setProperties({ index: next.index });
+    next.doc.data.setProperties({ index });
+
+    await this.store.batch(batch => {
+      batch.save(node.doc);
+      batch.save(next.doc);
+    });
+  },
+
+  async moveNodeUp(node) {
+    await this._moveNodeDelta(node, +1);
+  },
+
+  async moveNodeDown(node) {
+    await this._moveNodeDelta(node, -1);
+  },
+
+  //
+
   async moveUp() {
     await this.scene.moveLayerUp(this);
   },
@@ -95,6 +139,8 @@ export default EmberObject.extend(ScheduleSave, {
   async moveDown() {
     await this.scene.moveLayerDown(this);
   },
+
+  //
 
   async delete() {
     this.cancelScheduledSave();

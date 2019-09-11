@@ -1,4 +1,4 @@
-{{#each layer.nodes as |layerNode|}}
+{{#each layer.orderedNodes as |layerNode|}}
   {{component (concat "ui-konva/world/scene/nodes/node/" layerNode.type)
     __index=layerNode.index
     disabled=(or disabled layerNode.locked)

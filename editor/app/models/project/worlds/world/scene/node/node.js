@@ -65,6 +65,16 @@ export default EmberObject.extend(ScheduleSave, {
     let y = clamp('y', 'height');
 
     return this.layer.clampNodePosition(this, { x, y });
+  },
+
+  //
+
+  async moveUp() {
+    await this.layer.moveNodeUp(this);
+  },
+
+  async moveDown() {
+    await this.layer.moveNodeDown(this);
   }
 
 });

@@ -12,6 +12,10 @@
   {{component (concat "ui-block/world/inspector/selection/node/" node.type) state=state node=node sidebar=sidebar update=(action "update")}}
 
   {{#sidebar.section disabled=locked as |section|}}
+    {{#section.actions type="grid" as |actions|}}
+      {{actions.button value="Move Up" action=(action "moveUp")}}
+      {{actions.button value="Move Down" action=(action "moveDown")}}
+    {{/section.actions}}
     {{#section.actions as |actions|}}
       {{actions.button value="Delete Node" action=(action "deleteNode")}}
     {{/section.actions}}

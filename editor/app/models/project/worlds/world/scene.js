@@ -84,7 +84,7 @@ export default EmberObject.extend(ScheduleSave, {
   //
 
   async createLayer(opts) {
-    let last = this.layers.lastObject;
+    let last = this.orderedLayers.lastObject;
     let index = 0;
     if(last) {
       index = last.index + 1;

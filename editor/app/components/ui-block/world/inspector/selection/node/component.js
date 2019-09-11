@@ -13,6 +13,12 @@ export default Component.extend({
     },
     deleteNode() {
       this.state.deleteNode(this.node);
+    },
+    moveUp() {
+      this.node.moveUp();
+    },
+    moveDown() {
+      this.node.moveDown();
     }
   }
 
