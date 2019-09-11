@@ -4,6 +4,7 @@ import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 import { array } from 'editor/utils/computed';
 import { all } from 'rsvp';
+import { imageURLToBlob } from 'editor/utils/canvas';
 
 const path = fn => observed().owner('path').content(fn);
 
@@ -19,7 +20,7 @@ export default EmberObject.extend({
 
   name: data('name'),
   locked: data('locked'),
-  // thumbnail: data('thumbnail'),
+  thumbnail: data('thumbnail'),
 
   _adding: array(),
 
@@ -89,7 +90,29 @@ export default EmberObject.extend({
 
   //
 
-  async createThumbnail() {
+  async createThumbnailFromDataURL(dataURL) {
+    let { store, doc } = this;
+
+    let blob = await imageURLToBlob(dataURL);
+    let url = null;
+
+    if(blob) {
+      let ref = store.storage.ref(`${doc.ref.path}/thumbnail.png`);
+      await ref.put({
+        type: 'data',
+        data: blob,
+        metadata: {
+          contentType: 'image/png'
+        }
+      });
+
+      let { value } = await ref.url.load();
+      url = value;
+    }
+
+    doc.data.setProperties({ thumbnail: url });
+
+    await this.save();
   },
 
   async delete() {

@@ -24,6 +24,10 @@ export default Component.extend(KeyboardMixin, {
       this.setProperties({ stage });
       this.state.onEditorCreated(this);
     },
+    destroying() {
+      this.state.onEditorDestroying(this);
+      this.setProperties({ stage: null });
+    },
     select(model) {
       this.state.select(model);
     },
@@ -40,6 +44,10 @@ export default Component.extend(KeyboardMixin, {
 
   center() {
     this.stage.center();
+  },
+
+  toDataURL() {
+    return this.stage.toDataURL();
   }
 
 });

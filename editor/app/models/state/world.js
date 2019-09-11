@@ -39,6 +39,12 @@ export default EmberObject.extend({
     this.setProperties({ editor });
   },
 
+  onEditorDestroying(editor) {
+    let url = editor.toDataURL();
+    this.world.createThumbnailFromDataURL(url);
+    this.setProperties({ editor: null });
+  },
+
   center() {
     this.editor && this.editor.center();
   },

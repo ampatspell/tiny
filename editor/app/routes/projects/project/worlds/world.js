@@ -25,11 +25,6 @@ export default Route.extend(BreadcrumbsMixin, {
 
     async load() {
       await this.world.load();
-    },
-
-    willDestroy() {
-      this.world && this.world.createThumbnail();
-      this._super(...arguments);
     }
 
   }),

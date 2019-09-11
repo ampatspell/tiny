@@ -34,6 +34,7 @@ export default Component.extend(Parent, StageEvents, {
   },
 
   willDestroyElement() {
+    this.destroying && this.destroying(this);
     this.destroyNode();
     this._super(...arguments);
   },
@@ -129,6 +130,11 @@ export default Component.extend(Parent, StageEvents, {
 
     node.position({ x, y });
     node.batchDraw();
-  }
+  },
+
+  toDataURL() {
+    let { node } = this;
+    return node.toDataURL();
+  },
 
 });

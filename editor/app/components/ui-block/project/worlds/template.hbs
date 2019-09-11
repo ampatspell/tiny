@@ -1,5 +1,8 @@
 {{#each worlds.models as |world|}}
   <div class="world" {{action "select" world}} role="button">
+    <div class="preview">
+      {{ui-block/background-image class="thumbnail" url=world.thumbnail}}
+    </div>
     <div class="details">
       <div class="name">{{world.name}}</div>
     </div>
