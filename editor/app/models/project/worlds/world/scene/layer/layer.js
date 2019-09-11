@@ -88,6 +88,14 @@ export default EmberObject.extend(ScheduleSave, {
     }
   },
 
+  async moveUp() {
+    await this.scene.moveLayerUp(this);
+  },
+
+  async moveDown() {
+    await this.scene.moveLayerDown(this);
+  },
+
   async delete() {
     this.cancelScheduledSave();
     await this.doc.delete();

@@ -20,6 +20,12 @@ export default Component.extend({
     createSpriteNode() {
       this.state.createSpriteNode();
     },
+    moveUp() {
+      this.layer.moveUp();
+    },
+    moveDown() {
+      this.layer.moveDown();
+    }
   }
 
 });

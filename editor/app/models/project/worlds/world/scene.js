@@ -34,7 +34,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   _adding: array(),
 
-  layersQuery: path(({ store, path, _adding }) => store.collection(`${path}/layers`).orderBy('index', 'asc').query({
+  layersQuery: path(({ store, path, _adding }) => store.collection(`${path}/layers`).query({
     doc: path => _adding.findBy('path', path)
   })),
 
@@ -46,8 +46,12 @@ export default EmberObject.extend(ScheduleSave, {
     })
     .mapping((doc, scene) => ({ doc, scene })),
 
-  layersReversed: computed('layers.@each.index', function() {
-    return this.layers.slice().reverse();
+  orderedLayers: computed('layers.@each.index', function() {
+    return this.layers.sortBy('index');
+  }).readOnly(),
+
+  layersReversed: computed('orderedLayers', function() {
+    return this.orderedLayers.slice().reverse();
   }).readOnly(),
 
   isLoading: or('doc.isLoading', 'layersQuery.isLoading'),
@@ -96,6 +100,44 @@ export default EmberObject.extend(ScheduleSave, {
     } finally {
       this._adding.removeObject(doc);
     }
+  },
+
+  //
+
+  async _moveLayerDelta(layer, delta) {
+    let { orderedLayers } = this;
+    let idx = orderedLayers.indexOf(layer);
+    if(idx === -1) {
+      return;
+    }
+
+    idx = idx + delta;
+    if(idx < 0 || idx > orderedLayers.length - 1) {
+      return;
+    }
+
+    let next = orderedLayers.objectAt(idx);
+    if(!next) {
+      return;
+    }
+
+    let { index } = layer;
+
+    layer.doc.data.setProperties({ index: next.index });
+    next.doc.data.setProperties({ index });
+
+    await this.store.batch(batch => {
+      batch.save(layer.doc);
+      batch.save(next.doc);
+    });
+  },
+
+  async moveLayerUp(layer) {
+    await this._moveLayerDelta(layer, +1);
+  },
+
+  async moveLayerDown(layer) {
+    await this._moveLayerDelta(layer, -1);
   },
 
   //
