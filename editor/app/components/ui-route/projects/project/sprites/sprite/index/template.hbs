@@ -1,5 +1,6 @@
+{{ui-block/sprite/loops class="loops" state=state}}
 <div class="master">
-  {{ui-block/sprite/frame/editor
+    {{ui-block/sprite/frame/editor
       class="editor"
       pixel=state.pixel
       frame=state.frame
@@ -8,8 +9,6 @@
       update=(action "setPixel" state.frame)
       resize=(action "resize")
   }}
-  {{ui-block/sprite/inspector class="inspector" state=state}}
-</div>
-<div class="footer">
   {{ui-block/sprite/frames class="frames" state=state}}
 </div>
+{{ui-block/sprite/inspector class="inspector" state=state}}
