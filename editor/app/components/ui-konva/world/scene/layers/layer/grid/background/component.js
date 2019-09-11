@@ -40,13 +40,13 @@ export default Node.extend({
 
       let ph = size.height * pixel;
       for(let x = grid.width; x < size.width; x += grid.width) {
-        let px = x * pixel - 0.5;
+        let px = x * pixel + 0.5;
         line(px, 0, px, ph);
       }
 
       let pw = size.width * pixel;
       for(let y = grid.height; y < size.height; y += grid.height) {
-        let py = y * pixel - 0.5;
+        let py = y * pixel + 0.5;
         line(0, py, pw, py);
       }
     }
