@@ -122,4 +122,18 @@
     }
   }
 
+  > .alignment {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+    > .segments {
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
 }

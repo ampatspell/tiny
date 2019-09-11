@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { assign } from '@ember/polyfills';
 
 const choices = {
   vertical: [
@@ -14,6 +15,11 @@ const choices = {
   ]
 };
 
+const choice = key => computed('value', function() {
+  let value = this.get(`value.${key}`);
+  return choices[key].find(hash => hash.value === value);
+}).readOnly();
+
 export default Component.extend({
   classNameBindings: [ ':alignment' ],
 
@@ -23,8 +29,9 @@ export default Component.extend({
   horizontal: choice('horizontal'),
 
   actions: {
-    alignment() {
-
+    select(key, { value }) {
+      let hash = assign({}, this.value, { [key]: value });
+      this.update(hash);
     }
   }
 
