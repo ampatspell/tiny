@@ -5,7 +5,10 @@ import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
 import { assert } from '@ember/debug';
 import { A } from '@ember/array';
+import { assign } from '@ember/polyfills';
 import Konva from 'konva';
+
+const indexOf = (arr, item) => Array.prototype.indexOf.call(arr, item);
 
 export default Component.extend(Parent, Events, {
   // needs element because of -parent.js node.zIndex
@@ -31,6 +34,14 @@ export default Component.extend(Parent, Events, {
     return node;
   }).readOnly(),
 
+  resolveZIndex() {
+    let { element } = this;
+    if(!element) {
+      return;
+    }
+    return indexOf(element.parentElement.children, element);
+  },
+
   nodeAttributes() {
     let { node } = this;
     return node.getAttrs();
@@ -47,6 +58,12 @@ export default Component.extend(Parent, Events, {
 
   updateNodeAttributes() {
     let { node, props } = this;
+
+    let zIndex = this.resolveZIndex();
+    if(zIndex !== undefined) {
+      props = assign({}, props, { zIndex });
+    }
+
     if(!props) {
       return false;
     }

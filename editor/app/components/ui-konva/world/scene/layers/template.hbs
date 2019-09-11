@@ -1,5 +1,6 @@
-{{#each scene.layers as |layer|}}
+{{#each scene.orderedLayers as |layer|}}
   {{ui-konva/world/scene/layers/layer
+      __index=layer.index
       disabled=(or disabled layer.locked)
       hidden=(or hidden layer.hidden)
       scene=scene
