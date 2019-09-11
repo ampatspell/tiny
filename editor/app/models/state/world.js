@@ -126,6 +126,10 @@ export default EmberObject.extend({
         x: 0,
         y: 0,
       },
+      alignment: {
+        vertical: 'top',
+        horizontal: 'left'
+      },
       sprite
     });
   },
