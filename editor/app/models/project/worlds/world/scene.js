@@ -34,7 +34,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   _adding: array(),
 
-  layersQuery: path(({ store, path, _adding }) => store.collection(`${path}/layers`).query({
+  layersQuery: path(({ store, path, _adding }) => store.collection(`${path}/layers`).orderBy('index', 'asc').query({
     doc: path => _adding.findBy('path', path)
   })),
 
@@ -45,6 +45,10 @@ export default EmberObject.extend(ScheduleSave, {
       return `project/worlds/world/scene/layer/${type}`;
     })
     .mapping((doc, scene) => ({ doc, scene })),
+
+  layersReversed: computed('layers.@each.index', function() {
+    return this.layers.slice().reverse();
+  }).readOnly(),
 
   isLoading: or('doc.isLoading', 'layersQuery.isLoading'),
 
@@ -76,8 +80,13 @@ export default EmberObject.extend(ScheduleSave, {
   //
 
   async createLayer(opts) {
-    // TODO: layer order
-    opts = assign({ index: 0 }, opts);
+    let last = this.layers.lastObject;
+    let index = 0;
+    if(last) {
+      index = last.index + 1;
+    }
+
+    opts = assign({}, opts, { index });
     let doc = this.doc.ref.collection('layers').doc().new(opts);
 
     try {

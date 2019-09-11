@@ -8,9 +8,9 @@
     {{#ui-block/tree class="tree" select=(action "select") selected=state.selection as |row|}}
       {{#each state.world.scenes as |scene|}}
         {{#row model=scene class="scene" content=(component c.row content=(component (concat c.content "scene") state=state scene=scene) model=scene) as |row|}}
-          {{#each scene.layers as |layer|}}
+          {{#each scene.layersReversed as |layer|}}
             {{#row model=layer class="layer" content=(component c.row content=(component (concat c.content "layer") state=state layer=layer) model=layer) as |row|}}
-              {{#each layer.nodes as |node|}}
+              {{#each layer.nodesReversed as |node|}}
                 {{row model=node class="node" content=(component c.row content=(component (concat c.content "node") state=state node=node) model=node)}}
               {{/each}}
             {{/row}}

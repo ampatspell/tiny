@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import { models, observed, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { array } from 'editor/utils/computed';
@@ -37,7 +37,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   frame: readOnly('scene.frame'),
 
-  nodesQuery: path(({ store, path, _adding }) => store.collection(`${path}/nodes`).query({
+  nodesQuery: path(({ store, path, _adding }) => store.collection(`${path}/nodes`).orderBy('index', 'asc').query({
     doc: path => _adding.findBy('path', path)
   })),
 
@@ -48,6 +48,10 @@ export default EmberObject.extend(ScheduleSave, {
       return `project/worlds/world/scene/node/${type}`;
     })
     .mapping((doc, layer) => ({ doc, layer })),
+
+  nodesReversed: computed('nodes.@each.index', function() {
+    return this.nodes.slice().reverse();
+  }).readOnly(),
 
   isLoading: or('doc.isLoading', 'nodesQuery.isLoading'),
 
@@ -66,7 +70,13 @@ export default EmberObject.extend(ScheduleSave, {
   },
 
   async createNode(opts) {
-    opts = assign({}, opts);
+    let last = this.nodes.lastObject;
+    let index = 0;
+    if(last) {
+      index = last.index + 1;
+    }
+
+    opts = assign({}, opts, { index });
     let doc = this.doc.ref.collection('nodes').doc().new(opts);
 
     try {

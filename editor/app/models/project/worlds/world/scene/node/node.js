@@ -19,6 +19,7 @@ export default EmberObject.extend(ScheduleSave, {
   id: doc('id'),
 
   type: data('type'),
+  index: data('index'),
   position: data('position.serialized'),
   size: data('size.serialized'),
 
