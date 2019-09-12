@@ -2,7 +2,7 @@
   "name": "editor",
   "version": "0.0.0",
   "private": true,
-  "description": "Small description for editor goes here",
+  "description": "Arduboy sprite and scene editor",
   "repository": "",
   "license": "MIT",
   "author": "",
