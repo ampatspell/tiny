@@ -1,0 +1,42 @@
+.ui-block-sprite-loops-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  > .content {
+    flex: 1;
+    > .placeholder {
+      margin: 10px;
+    }
+    > .loops {
+      > .loop {
+        border-bottom: 1px solid fade-out(#000, 0.95);
+        > .master {
+          padding: 10px 10px 5px 10px;
+          > .preview {
+            margin-bottom: 5px;
+            background-color: fade-out(#000, 0.9);
+            padding: 5px;
+          }
+          > .identifier {
+            font-weight: 600;
+          }
+        }
+        > .details {
+          > .section {
+            &:last-child {
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+  > .actions {
+    margin: 15px 10px 10px 10px;
+    display: flex;
+    flex-direction: row;
+    > .action {
+      flex: 1;
+    }
+  }
+}

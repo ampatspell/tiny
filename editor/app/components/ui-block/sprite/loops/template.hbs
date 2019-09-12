@@ -1,20 +1,4 @@
-<div class="overflow">
-  <div class="content">
-    {{#if loops}}
-      <div class="loops">
-        {{#each loops as |loop|}}
-          {{ui-block/sprite/loops/loop state=state loops=loops loop=loop selected=(eq loop selected) select=(action "select" loop)}}
-        {{/each}}
-      </div>
-    {{else}}
-      <div class="placeholder">No loops</div>
-    {{/if}}
-  </div>
-  {{#ui-block/sidebar disabled=sprite.locked class="actions" as |sidebar|}}
-    {{#sidebar.section as |section|}}
-      {{#section.actions as |actions|}}
-        {{actions.button value="Add new loop" action=(action "createLoop")}}
-      {{/section.actions}}
-    {{/sidebar.section}}
-  {{/ui-block/sidebar}}
-</div>
+{{#ui-block/tabs class="tabs" selected=tab select=(action "tab") as |tabs|}}
+  {{tabs.tab label="Loops"    id="list"     component=(component "ui-block/sprite/loops/list"     state=state didSelect=(action "tab" "selected"))}}
+  {{tabs.tab label="Selected" id="selected" component=(component "ui-block/sprite/loops/selected" state=state)}}
+{{/ui-block/tabs}}

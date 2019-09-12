@@ -2,48 +2,9 @@
   width: 220px;
   background: darken(#fff, 0.7%);
   border-right: 1px solid darken(#fff, 25%);
-  overflow: hidden;
-  position: relative;
-  > .overflow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    > .content {
-      flex: 1;
-      > .placeholder {
-        margin: 10px;
-      }
-      > .loops {
-        > .loop {
-          border-bottom: 1px solid fade-out(#000, 0.95);
-          > .master {
-            padding: 10px 10px 5px 10px;
-            > .preview {
-              margin-bottom: 5px;
-              background-color: fade-out(#000, 0.9);
-              padding: 5px;
-            }
-            > .identifier {
-              font-weight: 600;
-            }
-          }
-          > .details {
-            > .section {
-              &:last-child {
-                margin-bottom: 5px;
-              }
-            }
-          }
-        }
-      }
-    }
-    > .actions {
-      margin-top: 10px;
-    }
+  display: flex;
+  flex-direction: column;
+  > .tabs {
+    flex: 1;
   }
 }

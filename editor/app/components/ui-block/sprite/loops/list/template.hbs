@@ -1,0 +1,15 @@
+<div class="content">
+  {{#if loops}}
+    <div class="loops">
+      {{#each loops as |loop|}}
+        {{ui-block/sprite/loops/list/loop state=state loops=loops loop=loop selected=(eq loop selected) select=(action "select" loop)}}
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="placeholder">No loops</div>
+  {{/if}}
+</div>
+
+<div class="actions">
+  {{ui-block/button class="action" value="Add new loop" disabled=sprite.locked action=(action "create")}}
+</div>

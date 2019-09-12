@@ -10,7 +10,7 @@ const size = key => computed(`sprite.size.${key}`, 'pixel', function() {
 
 export default Component.extend({
   tagName: 'canvas',
-  classNameBindings: [ ':ui-block-sprite-loops-loop-preview' ],
+  classNameBindings: [ ':ui-block-sprite-loop-preview' ],
   attributeBindings: [ 'width', 'height' ],
 
   loop: null,
