@@ -157,7 +157,11 @@ export default EmberObject.extend({
   },
 
   async createThumbnail() {
-    let { store, doc } = this;
+    let { skipCreateThumbnail, store, doc } = this;
+
+    if(skipCreateThumbnail) {
+      return;
+    }
 
     let blob = await this.createThumbnailBlob();
     let url = null;
@@ -200,6 +204,7 @@ export default EmberObject.extend({
   //
 
   async delete() {
+    this.skipCreateThumbnail = true;
     await this.doc.delete();
   },
 
