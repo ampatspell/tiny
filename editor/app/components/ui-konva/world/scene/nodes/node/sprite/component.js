@@ -17,6 +17,9 @@ export default Node.extend({
 
   flipped: computed('variants', 'flip', function() {
     let { variants, flip } = this;
+    if(!variants) {
+      return;
+    }
     flip = flip || {};
     if(flip.horizontal && flip.vertical) {
       return variants.flipped.both;
