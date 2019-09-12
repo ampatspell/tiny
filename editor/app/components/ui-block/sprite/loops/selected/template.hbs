@@ -1,3 +1,30 @@
+{{#if loop}}
+
+  {{#ui-block/sidebar disabled=loop.locked class="content" as |sidebar|}}
+
+    {{#sidebar.section class="header" as |section|}}
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.identifier value=loop.identifier}}
+        {{/header.content}}
+      {{/section.header}}
+      {{#section.padded class="preview"}}
+        {{ui-block/sprite/loop/preview class="content" loop=loop pixel=2}}
+      {{/section.padded}}
+    {{/sidebar.section}}
+
+  {{/ui-block/sidebar}}
+
+{{else}}
+
+  {{#ui-block/sidebar as |sidebar|}}
+    {{#sidebar.section as |section|}}
+      {{section.placeholder value="No selection"}}
+    {{/sidebar.section}}
+  {{/ui-block/sidebar}}
+
+{{/if}}
+
 {{!--
 
 {{#ui-block/sidebar disabled=loop.locked class="details" as |sidebar|}}

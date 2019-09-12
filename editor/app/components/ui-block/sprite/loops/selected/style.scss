@@ -1,3 +1,9 @@
 .ui-block-sprite-loops-selected {
-  background: $red;
+  > .content {
+    > .header {
+      > .preview {
+        background-color: fade-out(#000, 0.9);
+      }
+    }
+  }
 }

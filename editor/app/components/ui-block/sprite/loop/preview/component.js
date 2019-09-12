@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { later, cancel } from '@ember/runloop';
+import { htmlSafe } from '@ember/string';
 
 const size = key => computed(`sprite.size.${key}`, 'pixel', function() {
   let { sprite: { size }, pixel } = this;
@@ -11,7 +12,7 @@ const size = key => computed(`sprite.size.${key}`, 'pixel', function() {
 export default Component.extend({
   tagName: 'canvas',
   classNameBindings: [ ':ui-block-sprite-loop-preview' ],
-  attributeBindings: [ 'width', 'height' ],
+  attributeBindings: [ 'style', 'width', 'height' ],
 
   loop: null,
   sprite: readOnly('loop.sprite'),
@@ -20,6 +21,11 @@ export default Component.extend({
   pixel: 4,
   width: size('width'),
   height: size('height'),
+
+  style: computed('width', 'height', function() {
+    let { width, height } = this;
+    return htmlSafe(`width: ${width}px; height: ${height}px`);
+  }).readOnly(),
 
   index: 0,
 
