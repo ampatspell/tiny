@@ -1,1 +1,1 @@
-# arduboy game
+# Arduboy Sprite and Scene editor
