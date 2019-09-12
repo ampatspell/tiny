@@ -1,8 +1,9 @@
 import Node from '../-node';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
+import { drawImageFlipped } from 'editor/utils/canvas';
 
-const observe = [ 'size', 'flipped', 'bounds' ];
+const observe = [ 'size', 'bounds', 'content' ];
 
 export default Node.extend({
 
@@ -10,25 +11,40 @@ export default Node.extend({
   observe,
 
   sprite: readOnly('layerNode.sprite'),
-  frame: readOnly('sprite.frames.firstObject'),
-  preview: readOnly('frame.preview'),
-  variants: readOnly('preview.variants'),
+  rendered: readOnly('sprite.frames.firstObject.preview.rendered'),
   flip: readOnly('layerNode.flip'),
 
-  flipped: computed('variants', 'flip', function() {
-    let { variants, flip } = this;
-    if(!variants) {
+  canvas: computed('sprite.size', function() {
+    let { sprite } = this;
+    if(!sprite) {
       return;
     }
-    flip = flip || {};
-    if(flip.horizontal && flip.vertical) {
-      return variants.flipped.both;
-    } else if(flip.horizontal) {
-      return variants.flipped.horizontal;
-    } else if(flip.vertical) {
-      return variants.flipped.vertical;
+    let { size: { width, height } } = sprite;
+    let element = document.createElement('canvas');
+    element.width = width;
+    element.height = height;
+    let ctx = element.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    return { element, ctx };
+  }).readOnly(),
+
+  content: computed('rendered', 'canvas', 'flip', function() {
+    let { canvas, rendered, flip } = this;
+
+    if(!canvas) {
+      return;
     }
-    return variants.normal;
+
+    if(!rendered) {
+      return;
+    }
+
+    flip = flip || {};
+
+    let { element, ctx } = canvas;
+    drawImageFlipped(ctx, rendered, flip.horizontal, flip.vertical);
+
+    return element;
   }).readOnly(),
 
   bounds: computed('layerNode.{size,alignment}', 'pixel', 'sprite.size', function() {
@@ -71,13 +87,13 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  sceneFunc: computed('size', 'bounds', 'flipped', function() {
-    let { size, bounds, flipped } = this;
+  sceneFunc: computed('size', 'bounds', 'content', function() {
+    let { size, bounds, content } = this;
     return ctx => {
-      if(flipped) {
+      if(content) {
         this.disableImageSmoothing();
         let { x, y, width, height } = bounds;
-        ctx.drawImage(flipped, x, y, width, height);
+        ctx.drawImage(content, x, y, width, height);
       } else {
         ctx.fillStyle = 'rgba(253, 96, 96, 0.5)';
         let { width, height } = size;
