@@ -59,10 +59,10 @@ export default EmberObject.extend({
 
   didSelect() {
     let parent = this.selection.parent;
-    do {
+    while(parent) {
       parent.update({ collapsed: false });
       parent = parent.parent;
-    } while(parent);
+    }
   },
 
   select(selection) {
