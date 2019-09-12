@@ -175,7 +175,7 @@ export default EmberObject.extend(ScheduleSave, {
   async delete() {
     this.cancelScheduledSave();
     await this.doc.delete();
-    await this.sprite.reindexFrames();
+    await this.sprite.onFrameDeleted(this);
   }
 
 });

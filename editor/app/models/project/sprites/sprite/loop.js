@@ -57,6 +57,18 @@ export default EmberObject.extend(ScheduleSave, {
     this._withFrames(frames => frames.removeAt(idx));
   },
 
+  onFrameDeleted(frame) {
+    let { id } = frame;
+
+    let frames = A(this._frames);
+    if(frames.indexOf(id) === -1) {
+      return;
+    }
+
+    frames = frames.filter(item => item !== id);
+    this.update({ frames });
+  },
+
   //
 
   async delete() {

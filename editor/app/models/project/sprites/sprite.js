@@ -210,6 +210,13 @@ export default EmberObject.extend({
 
   //
 
+  onFrameDeleted(frame) {
+    this.reindexFrames();
+    this.loops.forEach(loop => loop.onFrameDeleted(frame));
+  },
+
+  //
+
   toStringExtension() {
     let { id, identifier } = this;
     return `${id}:${identifier}`;
