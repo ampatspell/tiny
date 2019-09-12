@@ -10,6 +10,7 @@ export default Component.extend({
   state: null,
   sprite: readOnly('state.sprite'),
   loops: readOnly('sprite.loops'),
+  selected: readOnly('state.loop'),
 
   width: readOnly('sprite.size.width'),
 
@@ -22,6 +23,9 @@ export default Component.extend({
   actions: {
     createLoop() {
       this.state.createLoop();
+    },
+    select(loop) {
+      this.state.selectLoop(loop);
     }
   }
 

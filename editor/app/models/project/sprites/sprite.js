@@ -189,7 +189,8 @@ export default EmberObject.extend({
 
   async createLoop() {
     let doc = this.doc.ref.collection('loops').doc().new({
-      identifier: 'untitled'
+      identifier: 'untitled',
+      frames: this.frames.map(frame => frame.id)
     });
 
     try {

@@ -2,45 +2,38 @@
   <div class="preview">
     {{ui-block/sprite/loops/loop/preview loop=loop pixel=2}}
   </div>
-  <div class="toggle" {{action "toggle"}} role="button">
-    {{#if loop.collapsed}}
-      {{fa-icon "angle-right" class="icon"}}
-    {{else}}
-      {{fa-icon "angle-down" class="icon"}}
-    {{/if}}
-    <div class="identifier">{{loop.identifier}}</div>
-  </div>
+  <div class="identifier">{{loop.identifier}}</div>
 </div>
 
-{{#unless loop.collapsed}}
+{{!--
 
-  {{#ui-block/sidebar disabled=loop.locked class="details" as |sidebar|}}
+{{#ui-block/sidebar disabled=loop.locked class="details" as |sidebar|}}
 
-    {{#sidebar.section class="section" as |section|}}
-      {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
-    {{/sidebar.section}}
+  {{#sidebar.section class="section" as |section|}}
+    {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
+  {{/sidebar.section}}
 
-    {{#sidebar.section class="section" as |section|}}
-      {{#section.padded}}
-        {{#each loop.frames as |frame idx|}}
-          {{#if frame}}
-            <div>#{{frame.index}} {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
-          {{else}}
-            <div>Missing frame {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
-          {{/if}}
-        {{/each}}
-      {{/section.padded}}
-      {{#section.actions as |actions|}}
-        {{actions.button value=(concat "Add frame #" frame.index) disabled=(or loop.locked (not frame)) action=(action "addFrame")}}
-      {{/section.actions}}
-    {{/sidebar.section}}
+  {{#sidebar.section class="section" as |section|}}
+    {{#section.padded}}
+      {{#each loop.frames as |frame idx|}}
+        {{#if frame}}
+          <div>#{{frame.index}} {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
+        {{else}}
+          <div>Missing frame {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
+        {{/if}}
+      {{/each}}
+    {{/section.padded}}
+    {{#section.actions as |actions|}}
+      {{actions.button value=(concat "Add frame #" frame.index) disabled=(or loop.locked (not frame)) action=(action "addFrame")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
 
-    {{#sidebar.section class="section" as |section|}}
-      {{#section.actions as |actions|}}
-        {{actions.button value="Delete" action=(action "delete")}}
-      {{/section.actions}}
-    {{/sidebar.section}}
+  {{#sidebar.section class="section" as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Delete" action=(action "delete")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
 
-  {{/ui-block/sidebar}}
+{{/ui-block/sidebar}}
 
-{{/unless}}
+--}}

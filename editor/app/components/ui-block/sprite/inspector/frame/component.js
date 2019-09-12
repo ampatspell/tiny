@@ -23,10 +23,10 @@ export default Component.extend({
       this.sprite.createFrame();
     },
     duplicate() {
-      this.state.duplicate();
+      this.state.duplicateCurrentFrame();
     },
     delete() {
-      this.state.delete();
+      this.state.deleteCurrentFrame();
     }
   }
 

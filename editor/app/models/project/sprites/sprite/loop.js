@@ -14,7 +14,6 @@ export default EmberObject.extend(ScheduleSave, {
   locked: readOnly('sprite.locked'),
 
   identifier: data('identifier'),
-  collapsed: data('collapsed'),
   _frames: data('frames.serialized'),
 
   frames: computed('_frames', 'sprite.frames.@each.id', function() {
