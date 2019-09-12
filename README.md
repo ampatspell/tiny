@@ -1,1 +1,1 @@
-# Arduboy Sprite and Scene editor
+# Arduboy sprite and scene editor
