@@ -12,6 +12,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   sprite: null,
   doc: null,
+  id: doc('id'),
 
   size:  sprite('size'),
   index: data('index'),

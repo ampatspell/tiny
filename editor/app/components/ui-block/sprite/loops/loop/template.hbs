@@ -15,13 +15,28 @@
 {{#unless loop.collapsed}}
 
   {{#ui-block/sidebar disabled=loop.locked class="details" as |sidebar|}}
+
     {{#sidebar.section class="section" as |section|}}
       {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
-      {{section.input label="Indexes" value=indexes update=(action "updateIndexes")}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="section" as |section|}}
+      {{#section.padded}}
+        {{#each loop.frames as |frame idx|}}
+          <div>#{{frame.index}} {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
+        {{/each}}
+      {{/section.padded}}
+      {{#section.actions as |actions|}}
+        {{actions.button value=(concat "Add frame #" frame.index) disabled=(or loop.locked (not frame)) action=(action "addFrame")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="section" as |section|}}
       {{#section.actions as |actions|}}
         {{actions.button value="Delete" action=(action "delete")}}
       {{/section.actions}}
     {{/sidebar.section}}
+
   {{/ui-block/sidebar}}
 
 {{/unless}}

@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import { A } from '@ember/array';
 
 export default Component.extend({
@@ -8,6 +9,8 @@ export default Component.extend({
   state: null,
   loops: null,
   loop: null,
+
+  frame: readOnly('state.frame'),
 
   indexes: computed('loop.indexes.[]', function() {
     return A(this.loop.indexes).join(', ');
@@ -29,6 +32,12 @@ export default Component.extend({
     },
     update(key, value) {
       this.loop.update({ [key]: value });
+    },
+    addFrame() {
+      this.loop.addFrame(this.frame);
+    },
+    removeFrame(loop, idx) {
+      this.loop.removeFrameAtIndex(idx);
     },
     delete() {
       this.loop.delete();
