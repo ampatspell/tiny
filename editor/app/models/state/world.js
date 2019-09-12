@@ -168,10 +168,13 @@ export default EmberObject.extend({
 
   async createSpriteFrameNode()  {
     await this._createSpriteNode('frame', sprite => {
-      let frame = null
+      let frame = null;
       if(sprite) {
         // TODO: identifier
-        frame = sprite.get('frames.firstObject.id') || null;
+        frame = sprite.get('frames.firstObject.index');
+        if(frame === undefined) {
+          frame = null;
+        }
       }
       return { frame };
     });
@@ -179,7 +182,7 @@ export default EmberObject.extend({
 
   async createSpriteLoopNode() {
     await this._createSpriteNode('loop', sprite => {
-      let loop = null
+      let loop = null;
       if(sprite) {
         loop = sprite.get('loops.firstObject.identifier') || null;
       }
