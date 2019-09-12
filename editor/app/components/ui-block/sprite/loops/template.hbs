@@ -1,7 +1,7 @@
 <div class="content">
   {{#if loops}}
     <div class="loops">
-      {{#each state.sprite.loops as |loop|}}
+      {{#each loops as |loop|}}
         {{ui-block/sprite/loops/loop state=state loops=loops loop=loop}}
       {{/each}}
     </div>
@@ -10,7 +10,7 @@
   {{/if}}
 </div>
 
-{{#ui-block/sidebar class="actions" as |sidebar|}}
+{{#ui-block/sidebar disabled=sprite.locked class="actions" as |sidebar|}}
   {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
       {{actions.button value="Add new loop" action=(action "createLoop")}}

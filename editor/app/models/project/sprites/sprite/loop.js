@@ -11,6 +11,8 @@ export default EmberObject.extend(ScheduleSave, {
   sprite: null,
   doc: null,
 
+  locked: readOnly('sprite.locked'),
+
   identifier: data('identifier'),
   collapsed: data('collapsed'),
 

@@ -14,7 +14,7 @@
 
 {{#unless loop.collapsed}}
 
-  {{#ui-block/sidebar class="details" as |sidebar|}}
+  {{#ui-block/sidebar disabled=loop.locked class="details" as |sidebar|}}
     {{#sidebar.section class="section" as |section|}}
       {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
       {{section.input label="Indexes" value=indexes update=(action "updateIndexes")}}
