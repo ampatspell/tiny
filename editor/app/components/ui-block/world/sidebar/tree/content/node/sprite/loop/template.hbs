@@ -1,0 +1,16 @@
+<div class="strong">{{node.name}}</div>
+{{#if node.identifier}}
+  <div>{{node.identifier}}</div>
+{{/if}}
+{{#if node.sprite}}
+  <div>
+    {{node.sprite.identifier}}:
+    {{#if node.selected}}
+      {{node.selected.identifier}}
+    {{else}}
+      Missing loop
+    {{/if}}
+  </div>
+{{else}}
+  <div>Missign sprite</div>
+{{/if}}

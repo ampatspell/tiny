@@ -1,8 +1,8 @@
-import Node from './node';
+import Node from '../node';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
-const data = path => readOnly(`doc.data.${path}`);
+export const data = path => readOnly(`doc.data.${path}`);
 
 const _size = Object.freeze({ width: 8, height: 8 });
 

@@ -25,7 +25,11 @@ export default EmberObject.extend(ScheduleSave, {
   }).readOnly(),
 
   _framesPreviewRendered: computed('frames.@each._previewRendered', function() {
-    return this.frames.map(frame => frame && frame._previewRendered);
+    let { frames } = this;
+    if(!frames) {
+      return;
+    }
+    return frames.map(frame => frame && frame._previewRendered);
   }).readOnly(),
 
   async load() {

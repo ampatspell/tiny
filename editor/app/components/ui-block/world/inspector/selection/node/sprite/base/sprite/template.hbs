@@ -1,0 +1,22 @@
+{{#if node.sprite}}
+
+  {{#sidebar.section class="section" as |section|}}
+    {{#section.custom class="padded row sprite"}}
+      <div class="label">{{node.sprite.identifier}}</div>
+      <div class="name">{{node.sprite.name}}</div>
+      <div class="preview">
+        {{ui-block/background-image class="image" url=node.sprite.thumbnail}}
+      </div>
+    {{/section.custom}}
+
+    {{yield section}}
+
+  {{/sidebar.section}}
+
+{{else}}
+
+  {{#sidebar.section as |section|}}
+    {{section.placeholder value="Missing sprite"}}
+  {{/sidebar.section}}
+
+{{/if}}

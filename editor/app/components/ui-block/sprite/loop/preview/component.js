@@ -42,11 +42,14 @@ export default Component.extend({
   iterate() {
     let { element, frames, index, width, height } = this;
 
-    if(index > frames.length - 1) {
-      index = 0;
-    }
+    let frame;
 
-    let frame = frames.objectAt(index);
+    if(frames) {
+      if(index > frames.length - 1) {
+        index = 0;
+      }
+      frame = frames.objectAt(index);
+    }
 
     let ctx = element.getContext('2d');
     ctx.imageSmoothingEnabled = false;

@@ -1,0 +1,12 @@
+{{#sidebar.section as |section|}}
+  {{section.position label="Position" value=node.position update=(action "update" "position")}}
+{{/sidebar.section}}
+
+{{#ui-block/world/inspector/selection/node/sprite/base/sprite sidebar=sidebar node=node update=update as |section|}}
+  {{yield section}}
+{{/ui-block/world/inspector/selection/node/sprite/base/sprite}}
+
+{{#sidebar.section as |section|}}
+  {{section.alignment label="Alignment" value=node.alignment update=(action "update" "alignment")}}
+  {{section.flip label="Flip" value=node.flip update=(action "update" "flip")}}
+{{/sidebar.section}}

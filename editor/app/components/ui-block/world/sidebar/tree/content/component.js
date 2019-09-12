@@ -1,7 +1,16 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-world-sidebar-tree-row',  'model.type', 'model.chainLocked:locked', 'model.chainHidden:hidden' ],
+  classNameBindings: [ ':ui-block-world-sidebar-tree-row',  'type', 'model.chainLocked:locked', 'model.chainHidden:hidden' ],
+
+  type: computed('model.type', function() {
+    let { model: { type } } = this;
+    if(!type) {
+      return;
+    }
+    return type.replace('/', '-');
+  }).readOnly(),
 
   actions: {
     toggle() {

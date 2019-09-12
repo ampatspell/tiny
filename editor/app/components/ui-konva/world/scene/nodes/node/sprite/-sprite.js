@@ -11,7 +11,6 @@ export default Node.extend({
   observe,
 
   sprite: readOnly('layerNode.sprite'),
-  rendered: readOnly('sprite.frames.firstObject.preview.rendered'),
   flip: readOnly('layerNode.flip'),
 
   canvas: computed('sprite.size', function() {
@@ -42,6 +41,8 @@ export default Node.extend({
     flip = flip || {};
 
     let { element, ctx } = canvas;
+
+    ctx.clearRect(0, 0, element.width, element.height);
     drawImageFlipped(ctx, rendered, flip.horizontal, flip.vertical);
 
     return element;
