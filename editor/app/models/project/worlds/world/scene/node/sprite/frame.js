@@ -7,11 +7,11 @@ export default Sprite.extend({
   name: 'Sprite Frame',
 
   _frame: data('frame'),
-  _frames: readOnly('sprite.frames'),
+  frames: readOnly('sprite.frames'),
 
   // TODO: frame index
-  spriteFrame: computed('_frames.@each.index', '_frame', function() {
-    let { _frames: frames, _frame: index } = this;
+  selected: computed('frames.@each.index', '_frame', function() {
+    let { frames, _frame: index } = this;
     if(!frames || typeof index !== 'number') {
       return;
     }

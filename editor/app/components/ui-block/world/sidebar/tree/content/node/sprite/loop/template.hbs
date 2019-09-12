@@ -5,8 +5,8 @@
 {{#if node.sprite}}
   <div>
     {{node.sprite.identifier}}:
-    {{#if node.spriteLoop}}
-      {{node.spriteLoop.identifier}}
+    {{#if node.selected}}
+      {{node.selected.identifier}}
     {{else}}
       Missing loop
     {{/if}}

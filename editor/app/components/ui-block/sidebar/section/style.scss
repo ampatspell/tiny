@@ -158,4 +158,12 @@
     }
   }
 
+  > .dropdown {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+  }
+
 }

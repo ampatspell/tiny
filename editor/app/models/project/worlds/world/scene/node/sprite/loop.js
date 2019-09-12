@@ -7,10 +7,10 @@ export default Sprite.extend({
   name: 'Sprite Loop',
 
   _loop: data('loop'),
-  _loops: readOnly('sprite.loops'),
+  loops: readOnly('sprite.loops'),
 
-  spriteLoop: computed('_loops.@each.identifier', '_loop', function() {
-    let { _loops: loops, _loop: identifier } = this;
+  selected: computed('loops.@each.identifier', '_loop', function() {
+    let { loops, _loop: identifier } = this;
     if(!loops || !identifier) {
       return;
     }

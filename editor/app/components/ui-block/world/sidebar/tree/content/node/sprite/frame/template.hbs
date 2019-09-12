@@ -5,8 +5,8 @@
 {{#if node.sprite}}
   <div>
     {{node.sprite.identifier}}:
-    {{#if node.spriteFrame}}
-      #{{node.spriteFrame.index}}
+    {{#if node.selected}}
+      #{{node.selected.index}}
     {{else}}
       Missing frame
     {{/if}}
