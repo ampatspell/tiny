@@ -8,7 +8,6 @@ describe('sanity', () => {
   it('has extensions', () => {
     assert.ok(this.test);
     assert.ok(this.admin);
-    assert.ok(this.client);
     assert.ok(this.app);
     assert.ok(this.index);
   });

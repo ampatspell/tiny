@@ -1,5 +1,22 @@
 'use strict';
 
+let get = require('../../get-config')
+
+const getConfig = environment => {
+  let opts = {};
+  if(environment !== 'production') {
+    opts.alias = 'development';
+  }
+  let { alias, firebase, client } = get(opts);
+  let { version } = require('../package.json');
+  return {
+    version,
+    alias,
+    firebase,
+    client
+  };
+};
+
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'editor',
@@ -22,6 +39,8 @@ module.exports = function(environment) {
     APP: {
     }
   };
+
+  ENV.editor = getConfig(environment);
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
