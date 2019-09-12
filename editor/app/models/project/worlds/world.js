@@ -42,7 +42,6 @@ export default EmberObject.extend({
   },
 
   async load() {
-    setGlobal({ world: this });
     await resolveObservers(this.scenesQuery);
     await all(this.scenes.map(scene => scene.load()));
   },

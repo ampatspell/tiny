@@ -103,7 +103,6 @@ export default EmberObject.extend({
 
   selectSprite(sprite) {
     sprite = sprite || null;
-    setGlobal({ sprite });
     this.update({ sprite });
     if(sprite) {
       this.onSpriteSelected(sprite);
