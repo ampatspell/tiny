@@ -18,7 +18,8 @@
   {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
       {{actions.button value="Add Fill Node" action=(action "createFillNode")}}
-      {{actions.button value="Add Sprite Node" action=(action "createSpriteNode")}}
+      {{actions.button value="Add Sprite Node" action=(action "createSpriteFrameNode")}}
+      {{actions.button value="Add Loop Node" action=(action "createSpriteLoopNode")}}
     {{/section.actions}}
   {{/sidebar.section}}
 

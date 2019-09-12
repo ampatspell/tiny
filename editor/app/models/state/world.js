@@ -134,10 +134,21 @@ export default EmberObject.extend({
     this.select(node);
   },
 
-  async createSpriteNode() {
-    let sprite = this.sprite && this.sprite.identifier;
+  async _createSpriteNode(type, cb) {
+    let { sprite } = this;
+
+    let opts = cb(sprite);
+    if(!opts) {
+      return;
+    }
+
+    let identifier = null;
+    if(sprite) {
+      identifier = sprite.identifier;
+    }
+
     await this.createNode({
-      type: 'sprite',
+      type: `sprite/${type}`,
       position: {
         x: 0,
         y: 0,
@@ -150,7 +161,29 @@ export default EmberObject.extend({
         horizontal: false,
         vertical: false
       },
-      sprite
+      sprite: identifier,
+      ...opts
+    });
+  },
+
+  async createSpriteFrameNode()  {
+    await this._createSpriteNode('frame', sprite => {
+      let frame = null
+      if(sprite) {
+        // TODO: identifier
+        frame = sprite.get('frames.firstObject.id') || null;
+      }
+      return { frame };
+    });
+  },
+
+  async createSpriteLoopNode() {
+    await this._createSpriteNode('loop', sprite => {
+      let loop = null
+      if(sprite) {
+        loop = sprite.get('loops.firstObject.identifier') || null;
+      }
+      return { loop };
     });
   },
 

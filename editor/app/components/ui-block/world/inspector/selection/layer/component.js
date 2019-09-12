@@ -17,8 +17,11 @@ export default Component.extend({
     createFillNode() {
       this.state.createFillNode();
     },
-    createSpriteNode() {
-      this.state.createSpriteNode();
+    createSpriteFrameNode() {
+      this.state.createSpriteFrameNode();
+    },
+    createSpriteLoopNode() {
+      this.state.createSpriteLoopNode();
     },
     moveUp() {
       this.layer.moveUp();
