@@ -18,6 +18,9 @@
     {{#sidebar.section class="section" as |section|}}
       {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
       {{section.input label="Indexes" value=indexes update=(action "updateIndexes")}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Delete" action=(action "delete")}}
+      {{/section.actions}}
     {{/sidebar.section}}
   {{/ui-block/sidebar}}
 

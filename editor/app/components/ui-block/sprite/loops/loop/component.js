@@ -29,6 +29,9 @@ export default Component.extend({
     },
     update(key, value) {
       this.loop.update({ [key]: value });
+    },
+    delete() {
+      this.loop.delete();
     }
   }
 
