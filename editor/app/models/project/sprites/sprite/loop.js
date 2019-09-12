@@ -13,6 +13,8 @@ export default EmberObject.extend(ScheduleSave, {
   identifier: data('identifier'),
   collapsed: data('collapsed'),
 
+  indexes: data('indexes.serialized'),
+
   async load() {
   },
 
