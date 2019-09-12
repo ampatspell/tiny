@@ -23,7 +23,11 @@
     {{#sidebar.section class="section" as |section|}}
       {{#section.padded}}
         {{#each loop.frames as |frame idx|}}
-          <div>#{{frame.index}} {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
+          {{#if frame}}
+            <div>#{{frame.index}} {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
+          {{else}}
+            <div>Missing frame {{fa-icon "trash" click=(action "removeFrame" loop idx)}}</div>
+          {{/if}}
         {{/each}}
       {{/section.padded}}
       {{#section.actions as |actions|}}
