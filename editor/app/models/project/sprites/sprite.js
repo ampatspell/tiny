@@ -199,6 +199,12 @@ export default EmberObject.extend({
 
   //
 
+  async delete() {
+    await this.doc.delete();
+  },
+
+  //
+
   toStringExtension() {
     let { id, identifier } = this;
     return `${id}:${identifier}`;

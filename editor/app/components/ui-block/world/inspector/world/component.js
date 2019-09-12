@@ -9,6 +9,9 @@ export default Component.extend({
   locked: readOnly('world.locked'),
 
   actions: {
+    update(key, value) {
+      this.world.update({ [key]: value });
+    },
     delete() {
       this.state.deleteWorld();
     }

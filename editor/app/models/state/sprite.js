@@ -51,6 +51,12 @@ export default EmberObject.extend({
 
   async createLoop() {
     await this.sprite.createLoop();
+  },
+
+  async deleteSprite() {
+    let promise = this.sprite.delete();
+    this.router.transitionTo('projects.project');
+    await promise;
   }
 
 });
