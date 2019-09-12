@@ -18,7 +18,13 @@ export default Component.extend({
       this.loop.update({ collapsed: !this.loop.collapsed });
     },
     updateIndexes(string) {
-      let indexes = string.split(',').map(str => str.trim());
+      let indexes = A(string.split(',').map(str => {
+        let int = parseInt(str.trim());
+        if(isNaN(int)) {
+          return;
+        }
+        return int;
+      })).compact();
       this.loop.update({ indexes });
     },
     update(key, value) {

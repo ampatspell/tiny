@@ -1,6 +1,7 @@
-import EmberObject from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import EmberObject, { computed } from '@ember/object';
+import { readOnly, mapBy } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
+import { A } from '@ember/array';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
@@ -14,6 +15,16 @@ export default EmberObject.extend(ScheduleSave, {
   collapsed: data('collapsed'),
 
   indexes: data('indexes.serialized'),
+
+  frames: computed('indexes', 'sprite.frames.@each.index', function() {
+    let { indexes, sprite: { frames } } = this;
+    if(!indexes) {
+      return;
+    }
+    return A(indexes.map(index => frames.findBy('index', index))).compact();
+  }).readOnly(),
+
+  _framesPreviewRendered: mapBy('frames', '_previewRendered'),
 
   async load() {
   },

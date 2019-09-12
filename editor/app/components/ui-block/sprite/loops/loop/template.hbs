@@ -1,5 +1,7 @@
 <div class="master">
-  <div class="preview"></div>
+  <div class="preview">
+    {{ui-block/sprite/loops/loop/preview loop=loop pixel=2}}
+  </div>
   <div class="toggle" {{action "toggle"}} tole="button">
     {{#if loop.collapsed}}
       {{fa-icon "angle-right" class="icon"}}
