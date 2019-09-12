@@ -41,11 +41,16 @@ export default Component.extend({
     }
 
     let frame = frames.objectAt(index);
+
+    let ctx = element.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, width, height);
+
     if(frame) {
-      let ctx = element.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
-      ctx.clearRect(0, 0, width, height);
       ctx.drawImage(frame, 0, 0, width, height);
+    } else {
+      ctx.fillStyle = "rgba(253, 96, 96, 0.5)";
+      ctx.fillRect(0, 0, width, height);
     }
 
     this.set('index', ++index);

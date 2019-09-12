@@ -1,5 +1,5 @@
 import EmberObject, { computed } from '@ember/object';
-import { readOnly, mapBy } from '@ember/object/computed';
+import { readOnly, map } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
 import { A } from '@ember/array';
 
@@ -22,10 +22,10 @@ export default EmberObject.extend(ScheduleSave, {
     if(!ids) {
       return;
     }
-    return A(ids.map(id => frames.findBy('id', id))).compact();
+    return ids.map(id => frames.findBy('id', id));
   }).readOnly(),
 
-  _framesPreviewRendered: mapBy('frames', '_previewRendered'),
+  _framesPreviewRendered: map('frames', [ '_previewRendered' ], frame => frame && frame._previewRendered),
 
   async load() {
   },
