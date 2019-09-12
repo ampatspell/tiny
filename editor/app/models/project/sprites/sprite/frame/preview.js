@@ -1,7 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { Pixel } from 'editor/utils/pixel';
-import { canvasToBlob } from 'editor/utils/canvas';
+import { canvasToBlob, flipped } from 'editor/utils/canvas';
 
 export default EmberObject.extend({
 
@@ -59,6 +59,18 @@ export default EmberObject.extend({
     ctx.putImageData(image, 0, 0);
 
     return canvas;
+  }).readOnly(),
+
+  variants: computed('rendered', function() {
+    let { rendered } = this;
+    return {
+      flipped: {
+        both:       flipped(rendered, true, true),
+        horizontal: flipped(rendered, true, false),
+        vertical:   flipped(rendered, false, true),
+      },
+      normal: rendered
+    };
   }).readOnly(),
 
   opaque: computed('rendered', function() {

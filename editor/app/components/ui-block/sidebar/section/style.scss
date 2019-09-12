@@ -136,4 +136,23 @@
     }
   }
 
+  > .flip {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+    > .axis {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      > .label {
+        margin-left: 10px;
+      }
+    }
+  }
+
 }
