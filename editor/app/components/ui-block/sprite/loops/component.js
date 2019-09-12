@@ -16,7 +16,7 @@ export default Component.extend({
 
   style: computed('width', function() {
     let { width } = this;
-    width = Math.max(220, (width * 2) + 31);
+    width = Math.max(200, (width * 2) + 31);
     return htmlSafe(`width: ${width}px`);
   }).readOnly(),
 
