@@ -16,6 +16,7 @@ export default EmberObject.extend(ScheduleSave, {
   identifier: data('identifier'),
   collapsed: data('collapsed'),
 
+  // TODO: remove indexes, refernce by ids
   indexes: data('indexes.serialized'),
 
   frames: computed('indexes', 'sprite.frames.@each.index', function() {
