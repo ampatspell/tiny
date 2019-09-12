@@ -1,13 +1,19 @@
-<div class="loops">
-  {{#each state.sprite.loops as |loop|}}
-    <div>{{loop}}</div>
-  {{/each}}
+<div class="content">
+  {{#if loops}}
+    <div class="loops">
+      {{#each state.sprite.loops as |loop|}}
+        {{ui-block/sprite/loops/loop state=state loops=loops loop=loop}}
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="placeholder">No loops</div>
+  {{/if}}
 </div>
 
 {{#ui-block/sidebar class="actions" as |sidebar|}}
   {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
-      {{actions.button value="Add loop" action=(action 'createLoop')}}
+      {{actions.button value="Add new loop" action=(action 'createLoop')}}
     {{/section.actions}}
   {{/sidebar.section}}
 {{/ui-block/sidebar}}

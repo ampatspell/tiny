@@ -3,8 +3,19 @@
   background: darken(#fff, 0.7%);
   border-right: 1px solid darken(#fff, 25%);
   overflow: hidden;
-  > .loops {
-
+  > .content {
+    > .placeholder {
+      margin: 10px;
+    }
+    > .loops {
+      > .loop {
+        padding: 10px;
+        border-bottom: 1px solid fade-out(#000, 0.95);
+        &.selected {
+          background: fade-out(#000, 0.95);
+        }
+      }
+    }
   }
   > .actions {
     margin-top: 10px;
