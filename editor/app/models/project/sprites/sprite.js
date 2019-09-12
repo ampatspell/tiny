@@ -189,7 +189,8 @@ export default EmberObject.extend({
 
   async createLoop() {
     let doc = this.doc.ref.collection('loops').doc().new({
-      identifier: 'untitled'
+      identifier: 'untitled',
+      frames: this.frames.map(frame => frame.id)
     });
 
     try {
@@ -206,6 +207,13 @@ export default EmberObject.extend({
   async delete() {
     this.skipCreateThumbnail = true;
     await this.doc.delete();
+  },
+
+  //
+
+  onFrameDeleted(frame) {
+    this.reindexFrames();
+    this.loops.forEach(loop => loop.onFrameDeleted(frame));
   },
 
   //

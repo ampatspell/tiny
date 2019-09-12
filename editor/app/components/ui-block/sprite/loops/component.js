@@ -7,10 +7,11 @@ export default Component.extend({
   classNameBindings: [ ':ui-block-sprite-loops' ],
   attributeBindings: [ 'style' ],
 
+  tab: 'list',
+
   state: null,
   sprite: readOnly('state.sprite'),
   loops: readOnly('sprite.loops'),
-
   width: readOnly('sprite.size.width'),
 
   style: computed('width', function() {
@@ -20,8 +21,8 @@ export default Component.extend({
   }).readOnly(),
 
   actions: {
-    createLoop() {
-      this.state.createLoop();
+    tab(tab) {
+      this.setProperties({ tab });
     }
   }
 

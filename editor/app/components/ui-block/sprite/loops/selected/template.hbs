@@ -1,0 +1,55 @@
+{{#if loop}}
+
+  {{#ui-block/sidebar disabled=loop.locked class="content" as |sidebar|}}
+
+    {{#sidebar.section class="header" as |section|}}
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.identifier value=loop.identifier}}
+        {{/header.content}}
+      {{/section.header}}
+      {{#section.padded class="preview"}}
+        {{ui-block/sprite/loop/preview class="content" loop=loop pixel=2}}
+      {{/section.padded}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="details" as |section|}}
+      {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
+      {{#section.custom class="frames"}}
+        {{#each loop.frames as |frame idx|}}
+          <div class="frame">
+            <div class="index">
+              {{#if frame}}
+                #{{frame.index}}
+              {{else}}
+                Missing frame
+              {{/if}}
+            </div>
+            <div class="actions">
+              {{fa-icon "trash-alt" prefix="far" class="action" click=(action "removeFrame" idx)}}
+            </div>
+          </div>
+        {{/each}}
+      {{/section.custom}}
+      {{#section.actions as |actions|}}
+        {{actions.button value=(concat "Add frame #" frame.index) disabled=(or loop.locked (not frame)) action=(action "addFrame")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="section" as |section|}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Delete" action=(action "delete")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+  {{/ui-block/sidebar}}
+
+{{else}}
+
+  {{#ui-block/sidebar as |sidebar|}}
+    {{#sidebar.section as |section|}}
+      {{section.placeholder value="No selection"}}
+    {{/sidebar.section}}
+  {{/ui-block/sidebar}}
+
+{{/if}}

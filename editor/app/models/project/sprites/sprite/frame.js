@@ -12,6 +12,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   sprite: null,
   doc: null,
+  id: doc('id'),
 
   size:  sprite('size'),
   index: data('index'),
@@ -174,7 +175,7 @@ export default EmberObject.extend(ScheduleSave, {
   async delete() {
     this.cancelScheduledSave();
     await this.doc.delete();
-    await this.sprite.reindexFrames();
+    await this.sprite.onFrameDeleted(this);
   }
 
 });

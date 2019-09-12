@@ -1,5 +1,5 @@
 import EmberObject, { computed } from '@ember/object';
-import { readOnly, mapBy } from '@ember/object/computed';
+import { readOnly } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
 import { A } from '@ember/array';
 
@@ -14,20 +14,19 @@ export default EmberObject.extend(ScheduleSave, {
   locked: readOnly('sprite.locked'),
 
   identifier: data('identifier'),
-  collapsed: data('collapsed'),
+  _frames: data('frames.serialized'),
 
-  // TODO: remove indexes, refernce by ids
-  indexes: data('indexes.serialized'),
-
-  frames: computed('indexes', 'sprite.frames.@each.index', function() {
-    let { indexes, sprite: { frames } } = this;
-    if(!indexes) {
+  frames: computed('_frames', 'sprite.frames.@each.id', function() {
+    let { _frames: ids, sprite: { frames } } = this;
+    if(!ids) {
       return;
     }
-    return A(indexes.map(index => frames.findBy('index', index))).compact();
+    return ids.map(id => frames.findBy('id', id));
   }).readOnly(),
 
-  _framesPreviewRendered: mapBy('frames', '_previewRendered'),
+  _framesPreviewRendered: computed('frames.@each._previewRendered', function() {
+    return this.frames.map(frame => frame && frame._previewRendered);
+  }).readOnly(),
 
   async load() {
   },
@@ -40,6 +39,38 @@ export default EmberObject.extend(ScheduleSave, {
     this.doc.data.setProperties(props);
     this.scheduleSave();
   },
+
+  _withFrames(cb) {
+    let frames = A(this._frames).slice();
+    cb(frames);
+    this.update({ frames });
+  },
+
+  addFrame(frame) {
+    if(!frame) {
+      return;
+    }
+    let { id } = frame;
+    this._withFrames(frames => frames.push(id));
+  },
+
+  removeFrameAtIndex(idx) {
+    this._withFrames(frames => frames.removeAt(idx));
+  },
+
+  onFrameDeleted(frame) {
+    let { id } = frame;
+
+    let frames = A(this._frames);
+    if(frames.indexOf(id) === -1) {
+      return;
+    }
+
+    frames = frames.filter(item => item !== id);
+    this.update({ frames });
+  },
+
+  //
 
   async delete() {
     this.cancelScheduledSave();

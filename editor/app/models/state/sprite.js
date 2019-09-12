@@ -13,6 +13,7 @@ export default EmberObject.extend({
   next: delta('frames', 'frame', +1),
 
   frame: current('frames', 0),
+  loop: null,
 
   pixel: 16,
 
@@ -38,12 +39,12 @@ export default EmberObject.extend({
     frame && this.update({ frame });
   },
 
-  async duplicate() {
+  async duplicateCurrentFrame() {
     let frame = await this.frame.duplicate();
     this.update({ frame });
   },
 
-  async delete() {
+  async deleteCurrentFrame() {
     let { frame, prev } = this;
     this.update({ frame: prev });
     await frame.delete();
@@ -57,6 +58,17 @@ export default EmberObject.extend({
     let promise = this.sprite.delete();
     this.router.transitionTo('projects.project');
     await promise;
-  }
+  },
+
+  selectLoop(loop) {
+    this.setProperties({ loop });
+  },
+
+  async deleteLoop(loop) {
+    if(this.loop === loop) {
+      this.selectLoop(null);
+    }
+    await loop.delete();
+  },
 
 });
