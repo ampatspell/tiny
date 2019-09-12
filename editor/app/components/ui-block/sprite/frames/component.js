@@ -10,7 +10,7 @@ export default Component.extend({
 
   style: computed('state.sprite.size', function() {
     let { state: { sprite: { size } } } = this;
-    return htmlSafe(`height: ${size.height * 2 + 30}px`);
+    return htmlSafe(`height: ${size.height * 2 + 31}px`);
   }).readOnly(),
 
   actions: {

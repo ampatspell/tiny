@@ -47,6 +47,10 @@ export default EmberObject.extend({
     let { frame, prev } = this;
     this.update({ frame: prev });
     await frame.delete();
+  },
+
+  async createLoop() {
+    await this.sprite.createLoop();
   }
 
 });

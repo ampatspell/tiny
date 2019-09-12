@@ -1,0 +1,48 @@
+.ui-block-sprite-loops {
+  width: 220px;
+  background: darken(#fff, 0.7%);
+  border-right: 1px solid darken(#fff, 25%);
+  overflow: hidden;
+  > .content {
+    > .placeholder {
+      margin: 10px;
+    }
+    > .loops {
+      > .loop {
+        border-bottom: 1px solid fade-out(#000, 0.95);
+        > .master {
+          padding: 10px 10px 5px 10px;
+          > .preview {
+            margin-bottom: 5px;
+            background-color: fade-out(#000, 0.9);
+            padding: 5px;
+          }
+          > .toggle {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            > .icon {
+              font-size: 15px;
+              margin-right: 10px;
+              width: 10px;
+            }
+            > .identifier {
+              flex: 1;
+              font-weight: 600;
+            }
+          }
+        }
+        > .details {
+          > .section {
+            &:last-child {
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+  > .actions {
+    margin-top: 10px;
+  }
+}

@@ -22,18 +22,31 @@ export default EmberObject.extend({
   identifier: data('identifier'),
   thumbnail: data('thumbnail'),
   locked: data('locked'),
+  size: data('size.serialized'),
 
-  _adding: array(),
+  //
 
-  framesQuery: path(({ store, path, _adding }) => store.collection(`${path}/frames`).orderBy('index').query({
-    doc: path => _adding.findBy('path', path)
+  _framesAdding: array(),
+
+  framesQuery: path(({ store, path, _framesAdding }) => store.collection(`${path}/frames`).orderBy('index').query({
+    doc: path => _framesAdding.findBy('path', path)
   })),
 
   frames: models('framesQuery.content').named('project/sprites/sprite/frame').mapping((doc, sprite) => ({ doc, sprite })),
 
-  isLoading: or('doc.isLoading', 'framesQuery.isLoading'),
+  //
 
-  size: readOnly('doc.data.size.serialized'),
+  _loopsAdding: array(),
+
+  loopsQuery: path(({ store, path, _loopsAdding }) => store.collection(`${path}/loops`).query({
+    doc: path => _loopsAdding.findBy('path', path)
+  })),
+
+  loops: models('loopsQuery.content').named('project/sprites/sprite/loop').mapping((doc, sprite) => ({ doc, sprite })),
+
+  //
+
+  isLoading: or('doc.isLoading', 'framesQuery.isLoading', 'loopsQuery.isLoading'),
 
   async save() {
     await this.doc.save({ token: true });
@@ -45,8 +58,11 @@ export default EmberObject.extend({
   },
 
   async load() {
-    await resolveObservers(this.framesQuery);
-    await all(this.frames.map(frame => frame.load()));
+    await resolveObservers(this.framesQuery, this.loopsQuery);
+    await all([
+      ...this.frames.map(frame => frame.load()),
+      ...this.loops.map(loop => loop.load())
+    ]);
   },
 
   async resize(handle, diff) {
@@ -109,11 +125,11 @@ export default EmberObject.extend({
     });
 
     try {
-      this._adding.pushObject(doc);
+      this._framesAdding.pushObject(doc);
       await doc.save();
       return this.frames.findBy('doc', doc);
     } finally {
-      this._adding.removeObject(doc);
+      this._framesAdding.removeObject(doc);
     }
   },
 
@@ -163,6 +179,22 @@ export default EmberObject.extend({
     doc.data.setProperties({ thumbnail: url });
 
     await this.save();
+  },
+
+  //
+
+  async createLoop() {
+    let doc = this.doc.ref.collection('loops').doc().new({
+      identifier: 'untitled'
+    });
+
+    try {
+      this._loopsAdding.pushObject(doc);
+      await doc.save();
+      return this.loops.findBy('doc', doc);
+    } finally {
+      this._loopsAdding.removeObject(doc);
+    }
   },
 
   //
