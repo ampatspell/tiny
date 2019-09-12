@@ -11,12 +11,18 @@ export default EmberObject.extend(ScheduleSave, {
   doc: null,
 
   identifier: data('identifier'),
+  collapsed: data('collapsed'),
 
   async load() {
   },
 
   async save() {
     await this.doc.save({ token: true });
+  },
+
+  update(props) {
+    this.doc.data.setProperties(props);
+    this.scheduleSave();
   },
 
   async delete() {

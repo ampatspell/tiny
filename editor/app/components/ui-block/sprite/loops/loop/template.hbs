@@ -1,1 +1,21 @@
-{{loop.identifier}}
+<div class="master">
+  <div class="preview"></div>
+  <div class="toggle" {{action "toggle"}} tole="button">
+    {{#if loop.collapsed}}
+      {{fa-icon "angle-right" class="icon"}}
+    {{else}}
+      {{fa-icon "angle-down" class="icon"}}
+    {{/if}}
+    <div class="identifier">{{loop.identifier}}</div>
+  </div>
+</div>
+
+{{#unless loop.collapsed}}
+
+  {{#ui-block/sidebar class="details" as |sidebar|}}
+    {{#sidebar.section class="section" as |section|}}
+      {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
+    {{/sidebar.section}}
+  {{/ui-block/sidebar}}
+
+{{/unless}}

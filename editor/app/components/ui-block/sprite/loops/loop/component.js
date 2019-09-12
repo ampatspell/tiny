@@ -7,4 +7,13 @@ export default Component.extend({
   loops: null,
   loop: null,
 
+  actions: {
+    toggle() {
+      this.loop.update({ collapsed: !this.loop.collapsed });
+    },
+    update(key, value) {
+      this.loop.update({ [key]: value });
+    }
+  }
+
 });

@@ -9,10 +9,35 @@
     }
     > .loops {
       > .loop {
-        padding: 10px;
         border-bottom: 1px solid fade-out(#000, 0.95);
-        &.selected {
-          background: fade-out(#000, 0.95);
+        > .master {
+          padding: 10px 10px 5px 10px;
+          > .preview {
+            height: 40px;
+            background-color: fade-out(#000, 0.9);
+            margin-bottom: 5px;
+          }
+          > .toggle {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            > .icon {
+              font-size: 15px;
+              margin-right: 10px;
+              width: 10px;
+            }
+            > .identifier {
+              flex: 1;
+              font-weight: 600;
+            }
+          }
+        }
+        > .details {
+          > .section {
+            &:last-child {
+              margin-bottom: 5px;
+            }
+          }
         }
       }
     }
