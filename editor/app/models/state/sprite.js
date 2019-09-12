@@ -62,6 +62,13 @@ export default EmberObject.extend({
 
   selectLoop(loop) {
     this.setProperties({ loop });
-  }
+  },
+
+  async deleteLoop(loop) {
+    if(this.loop === loop) {
+      this.selectLoop(null);
+    }
+    await loop.delete();
+  },
 
 });

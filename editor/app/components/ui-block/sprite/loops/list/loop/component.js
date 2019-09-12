@@ -13,16 +13,7 @@ export default Component.extend({
   actions: {
     update(key, value) {
       this.loop.update({ [key]: value });
-    },
-    // addFrame() {
-    //   this.loop.addFrame(this.frame);
-    // },
-    // removeFrame(idx) {
-    //   this.loop.removeFrameAtIndex(idx);
-    // },
-    // delete() {
-    //   this.loop.delete();
-    // }
+    }
   },
 
   click() {
