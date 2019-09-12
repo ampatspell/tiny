@@ -76,6 +76,9 @@
   > .padded {
     @include row();
     @include padding();
+    > .label {
+      @include label();
+    }
   }
 
   > .input {

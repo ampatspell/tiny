@@ -1,0 +1,18 @@
+.ui-block-world-inspector-selection-node-sprite-base-sprite {
+  > .section {
+    > .sprite {
+      > .name {
+        margin-bottom: 5px;
+      }
+      > .preview {
+        background-color: fade-out(#000, 0.9);
+        padding: 5px 0;
+        > .image {
+          height: 32px;
+          background-size: contain;
+          image-rendering: pixelated;
+        }
+      }
+    }
+  }
+}

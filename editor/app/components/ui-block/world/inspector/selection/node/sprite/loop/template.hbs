@@ -1,1 +1,7 @@
-{{ui-block/world/inspector/selection/node/sprite/base sidebar=sidebar node=node update=update}}
+{{#ui-block/world/inspector/selection/node/sprite/base sidebar=sidebar node=node update=update}}
+
+  {{#sidebar.section as |section|}}
+    {{section.input label="Loop" value=node._loop update=(action "update" "loop")}}
+  {{/sidebar.section}}
+
+{{/ui-block/world/inspector/selection/node/sprite/base}}
