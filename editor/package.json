@@ -1,0 +1,23 @@
+{
+  "name": "tiny",
+  "scripts": {
+    "prepare:client": "(cd client && npm install)",
+    "prepare:firebase": "(cd firebase/functions && npm install)",
+    "prepare": "npm run prepare:clietn && npm run prepare:firebase",
+
+    "client:build": "(cd client && ember build -prod --output-path ../firebase/public)",
+    "firebase:deploy:hosting": "(cd firebase && firebase deploy --only hosting --project $FIREBASE)",
+    "firebase:deploy:all": "(cd firebase && firebase deploy --project $FIREBASE)",
+
+    "deploy:hosting": "npm run client:build && npm run firebase:deploy:client",
+    "deploy:all": "npm run client:build && npm run firebase:deploy:all",
+
+    "deploy:production:hosting": "FIREBASE=production npm run deploy:hosting",
+    "deploy:development:hosting": "FIREBASE=development npm run deploy:hosting",
+    "deploy:production:all": "FIREBASE=production npm run deploy:all",
+    "deploy:development:all": "FIREBASE=development npm run deploy:all",
+
+    "deploy:all:hosting": "npm run deploy:development:hosting && npm run deploy:production:hosting",
+    "deploy:all:all": "npm run deploy:development:all && npm run deploy:production:all"
+  }
+}

@@ -1,7 +1,7 @@
 import Store from 'ember-cli-zuglet/store';
 import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
-import { later } from './util/runloop';
+import { later } from 'editor/utils/runloop';
 
 const firestore = {
   persistenceEnabled: true

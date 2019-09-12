@@ -23,7 +23,7 @@ const normalizeLogging = (root={}) => {
 }
 
 module.exports = root => {
-  let { logging, email } = root;
+  let { logging } = root;
   return {
     logging: normalizeLogging(logging)
   };
