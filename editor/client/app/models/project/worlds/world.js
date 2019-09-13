@@ -16,6 +16,7 @@ export default EmberObject.extend({
   name: data('name'),
   locked: data('locked'),
   thumbnail: data('thumbnail'),
+  token: data('token'),
 
   scenes: model().named('project/worlds/world/scenes').mapping(world => ({ world })),
 

@@ -104,6 +104,7 @@ $ npm run deploy:development:all
 // projects/{project-id}/worlds/{world-id}
 {
   name: 'First',
+  token: 'export-token',
   thumbnail: 'https://.../thumbnail.png'
 }
 ```

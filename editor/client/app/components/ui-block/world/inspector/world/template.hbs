@@ -5,6 +5,13 @@
   {{/sidebar.section}}
 
   {{#sidebar.section as |section|}}
+    {{section.input label="Export token" value=world.token update=(action "update" "token")}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Generate token" action=(action "generateToken")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
       {{actions.button value="Delete world" action=(action "delete")}}
     {{/section.actions}}
