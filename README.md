@@ -1,5 +1,7 @@
 # Arduboy sprite and scene editor
 
+Work in progress. Haven't built any games with it yet.
+
 ## Setup
 
 * `config.js`
