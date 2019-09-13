@@ -38,7 +38,7 @@
 ## Project / Sprite / Loop
 
 ``` javascript
-// projects/{project-id}/sprites/{sprite-id}/frames/{frame-id}
+// projects/{project-id}/sprites/{sprite-id}/loops/{frame-id}
 {
   identifier: 'wink',
   frames: [
