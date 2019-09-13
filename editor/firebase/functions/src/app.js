@@ -5,7 +5,7 @@ module.exports = class Application {
 
   constructor(admin, functions) {
     this.admin = admin;
-    this.functions = functions;
+    this.functions = functions.region('europe-west2');
     this.auth = admin.auth();
     this.firestore = admin.firestore();
     this.storage = admin.storage();
