@@ -1,12 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
-import { array } from 'editor/utils/computed';
-import { model, models, observed, resolveObservers } from 'ember-cli-zuglet/lifecycle';
-import { assign } from '@ember/polyfills';
-import { all } from 'rsvp';
-
-const path = fn => observed().owner('path').content(fn);
+import { model } from 'ember-cli-zuglet/lifecycle';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);

@@ -46,9 +46,6 @@ export default Node.extend({
     if(!_sprite) {
       return;
     }
-    if(!_sprites) {
-      debugger;
-    }
     return _sprites.models.findBy('identifier', _sprite);
   }).readOnly(),
 
