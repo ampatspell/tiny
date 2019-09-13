@@ -9,6 +9,14 @@ module.exports = async (url, token) => {
     },
     body: JSON.stringify({ token })
   });
+
   let json = await response.json();
-  return json;
+
+  if(!json || !json.data) {
+    throw new Error('No data fetched');
+  }
+
+  let { data } = json;
+
+  return data;
 }
