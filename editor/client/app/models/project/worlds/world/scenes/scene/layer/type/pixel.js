@@ -1,4 +1,4 @@
-import Layer from './layer';
+import Layer from '../layer';
 
 export default Layer.extend({
 

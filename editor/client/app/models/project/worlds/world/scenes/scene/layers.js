@@ -25,7 +25,7 @@ export default EmberObject.extend({
     .object('data.type')
     .named(doc => {
       let type = doc.get('data.type');
-      return `project/worlds/world/scenes/scene/layer/${type}`;
+      return `project/worlds/world/scenes/scene/layer/type/${type}`;
     })
     .mapping((doc, layers) => ({ doc, layers })),
 

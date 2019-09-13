@@ -1,4 +1,4 @@
-import Node from './node';
+import Node from '../node';
 import { readOnly } from '@ember/object/computed';
 
 const data = path => readOnly(`doc.data.${path}`);
