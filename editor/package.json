@@ -9,7 +9,7 @@
     "firebase:deploy:hosting": "(cd firebase && firebase deploy --only hosting --project $FIREBASE)",
     "firebase:deploy:all": "(cd firebase && firebase deploy --project $FIREBASE)",
 
-    "deploy:hosting": "npm run client:build && npm run firebase:deploy:client",
+    "deploy:hosting": "npm run client:build && npm run firebase:deploy:hosting",
     "deploy:all": "npm run client:build && npm run firebase:deploy:all",
 
     "deploy:production:hosting": "FIREBASE=production npm run deploy:hosting",
