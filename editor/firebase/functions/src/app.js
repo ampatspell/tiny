@@ -13,6 +13,7 @@ module.exports = class Application {
     this.config = normalizeConfig(functions.config());
     this.services = services(this);
     this.exports = {
+      version: this.require('./actions/version')
     };
   }
 
