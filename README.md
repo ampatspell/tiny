@@ -72,6 +72,23 @@ const fetch = async (url, token) => {
 let json = await fetch('https://....app-id.cloudfunctions.net/export-world', 'Ny7qX8WIN5zW05mpPwqqWk43');
 ```
 
+## Bytes
+
+``` javascript
+let width = 4;
+let bytes = [ 0, 1, 2, 2, 2, 1, 0, 0 ];
+// 0 1 2 2
+// 2 1 0 0
+```
+
+``` javascript
+export const Pixel = {
+  transparent: 0,
+  white: 1,
+  black: 2
+};
+```
+
 ## Firestore structure
 
 ### Project
