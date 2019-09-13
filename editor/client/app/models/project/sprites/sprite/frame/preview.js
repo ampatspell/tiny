@@ -67,20 +67,17 @@ export default EmberObject.extend({
       return;
     }
     let canvas = document.createElement('canvas');
-    canvas.width = rendered.width;
-    canvas.height = rendered.height;
+    canvas.width = rendered.width + 2;
+    canvas.height = rendered.height + 2;
 
     let ctx = canvas.getContext('2d');
 
-    let fill = color => {
-      ctx.fillStyle = color;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    };
+    ctx.save();
+    ctx.fillStyle = `#ddd`;
+    ctx.fillRect(0, 0, canvas.width + 2, canvas.height + 2);
+    ctx.restore();
 
-    fill('#fff');
-    fill('rgba(0,0,0,0.1)');
-
-    ctx.drawImage(rendered, 0, 0);
+    ctx.drawImage(rendered, 1, 1);
 
     return canvas;
   }).readOnly(),
