@@ -1,0 +1,9 @@
+{
+  "name": "player",
+  "scripts": {
+    "generate": "node tools/generate"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
