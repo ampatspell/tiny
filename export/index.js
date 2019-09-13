@@ -1,6 +1,5 @@
-let fetch = require('node-fetch');
-
-const load = async (url, token) => {
+const fetch = async (url, token) => {
+  let fetch = require('node-fetch');
   let response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -14,12 +13,8 @@ const load = async (url, token) => {
 
 const run = async () => {
   let url = 'https://europe-west2-dev-tiny.cloudfunctions.net/export-world';
-  let json = await load(url, 'hello-world');
+  let json = await fetch(url, 'Ny7qX8WIN5zW05mpPwqqWk43');
   console.log(json);
 }
 
-run().then(() => {
-  console.log('done');
-}, err => {
-  console.log(err.stack);
-});
+run().then(() => {}, err => console.log(err.stack));

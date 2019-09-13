@@ -10,6 +10,10 @@ module.exports = app => app.functions.https.onRequest(app.services.https.json(as
     throw new Error('Export token is required');
   }
 
-  return { ok: true, token };
+  let data = await app.services.export.byToken(token);
+
+  return {
+    data
+  };
 
 }));

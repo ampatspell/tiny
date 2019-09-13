@@ -132,7 +132,7 @@ class ExportService {
     };
   }
 
-  async usingToken(token) {
+  async byToken(token) {
     let snapshot = await this.app.firestore.collectionGroup('worlds').where('token', '==', token).get();
 
     if(snapshot.size === 0) {

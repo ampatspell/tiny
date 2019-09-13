@@ -121,7 +121,7 @@ describe('services / export', () => {
 
   it('hello', async () => {
     await this.insert();
-    let json = await this.export.usingToken('the-token');
+    let json = await this.export.byToken('the-token');
     assert.deepEqual(json, {
       project: { id: 'bug', title: 'The Bug' },
       world: {
