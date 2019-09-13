@@ -1,5 +1,10 @@
 # Arduboy sprite and scene editor
 
+![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-1.png?raw=true)
+
+![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-2.png?raw=true)
+
+
 ## Setup
 
 * `config.js`
