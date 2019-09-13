@@ -13,7 +13,25 @@ module.exports = class Application {
     this.config = normalizeConfig(functions.config());
     this.services = services(this);
     this.exports = {
-      version: this.require('./actions/version')
+      version: this.require('./actions/version'),
+      auth: {
+        onCreate: this.require('./triggers/auth/on-create')
+      },
+      projects: {
+        onDelete: this.require('./triggers/projects/on-delete'),
+        sprites: {
+          onDelete: this.require('./triggers/projects/sprites/on-delete')
+        },
+        worlds: {
+          onDelete: this.require('./triggers/projects/worlds/on-delete'),
+          scenes: {
+            onDelete: this.require('./triggers/projects/worlds/scenes/on-delete'),
+            layers: {
+              onDelete: this.require('./triggers/projects/worlds/scenes/layers/on-delete')
+            }
+          }
+        }
+      }
     };
   }
 
