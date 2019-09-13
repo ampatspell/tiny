@@ -1,11 +1,10 @@
 # Tiny: sprite and scene editor for Arduboy games
 
+Work in progress. Haven't built any games with it yet.
+
 ![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-1.png?raw=true)
 
 ![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-2.png?raw=true)
-
-
-Work in progress. Haven't built any games with it yet.
 
 ## Setup
 
