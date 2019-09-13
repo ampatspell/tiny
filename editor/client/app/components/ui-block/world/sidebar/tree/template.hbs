@@ -6,13 +6,13 @@
   ) as |c|}}
 
     {{#ui-block/tree class="tree" select=(action "select") selected=state.selection as |row|}}
-      {{#each state.world.scenes as |scene|}}
+      {{#each state.world.scenes.ordered as |scene|}}
         {{#row model=scene class="scene" content=(component c.row content=(component (concat c.content "scene") state=state scene=scene) model=scene collapsable=true) as |row|}}
           {{#unless scene.collapsed}}
-            {{#each scene.layersReversed as |layer|}}
+            {{#each scene.layers.reversed as |layer|}}
               {{#row model=layer class="layer" content=(component c.row content=(component (concat c.content "layer") state=state layer=layer) model=layer collapsable=true) as |row|}}
                 {{#unless layer.collapsed}}
-                  {{#each layer.nodesReversed as |node|}}
+                  {{#each layer.nodes.reversed as |node|}}
                     {{row model=node class="node" content=(component c.row content=(component (concat c.content "node") state=state node=node) model=node)}}
                   {{/each}}
                 {{/unless}}

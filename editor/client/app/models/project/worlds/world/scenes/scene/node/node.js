@@ -10,8 +10,10 @@ export default EmberObject.extend(ScheduleSave, {
 
   isNode: true,
 
+  nodes: null,
   doc: null,
-  layer: null,
+
+  layer: readOnly('nodes.layer'),
   parent: readOnly('layer'),
   scene: layer('scene'),
   world: layer('world'),
@@ -39,6 +41,11 @@ export default EmberObject.extend(ScheduleSave, {
     };
   }).readOnly(),
 
+  //
+
+  async load() {
+  },
+
   async save() {
     await this.doc.save({ token: true });
   },
@@ -46,9 +53,6 @@ export default EmberObject.extend(ScheduleSave, {
   update(props) {
     this.doc.data.setProperties(props);
     this.scheduleSave();
-  },
-
-  async load() {
   },
 
   async delete() {
@@ -71,11 +75,11 @@ export default EmberObject.extend(ScheduleSave, {
   //
 
   async moveUp() {
-    await this.layer.moveNodeUp(this);
+    await this.nodes.moveUp(this);
   },
 
   async moveDown() {
-    await this.layer.moveNodeDown(this);
+    await this.nodes.moveDown(this);
   }
 
 });

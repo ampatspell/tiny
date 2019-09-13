@@ -112,7 +112,7 @@ export default EmberObject.extend({
   //
 
   async createScene(opts) {
-    let scene = await this.world.createScene(opts);
+    let scene = await this.world.scenes.create(opts);
     this.select(scene);
   },
 
@@ -121,7 +121,7 @@ export default EmberObject.extend({
     if(!scene) {
       return;
     }
-    let layer = await scene.createLayer(opts);
+    let layer = await scene.layers.create(opts);
     this.select(layer);
   },
 
@@ -130,7 +130,7 @@ export default EmberObject.extend({
     if(!layer) {
       return;
     }
-    let node = await layer.createNode(opts);
+    let node = await layer.nodes.create(opts);
     this.select(node);
   },
 

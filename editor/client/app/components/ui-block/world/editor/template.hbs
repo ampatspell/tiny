@@ -10,7 +10,7 @@
       draggable=isSpacePressed
     }}
 
-      {{#each state.world.scenes as |scene|}}
+      {{#each state.world.scenes.ordered as |scene|}}
         {{#ui-konva/layer}}
           {{ui-konva/world/scene
             __index=scene.index
