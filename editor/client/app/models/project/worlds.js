@@ -5,13 +5,12 @@ export default EmberObject.extend({
 
   project: null,
 
-  path: computed('project.doc.path', function() {
-    let project = this.project.doc.path;
-    return `${project}/worlds`;
+  ref: computed('project.ref', function() {
+    return this.project.ref.collection('worlds');
   }).readOnly(),
 
-  query: observed().owner('path').content(({ path, store }) => {
-    return store.collection(path).orderBy('name').query();
+  query: observed().owner('ref').content(({ ref }) => {
+    return ref.query();
   }),
 
   models: models('query.content').named('project/worlds/world').mapping((doc, worlds) => ({ doc, worlds })),

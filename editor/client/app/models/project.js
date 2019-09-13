@@ -3,13 +3,15 @@ import { readOnly } from '@ember/object/computed';
 import { observed, resolveObservers, model } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 
-const data = key => readOnly(`doc.data.${key}`);
+const doc = key => readOnly(`doc.${key}`);
+const data = key => doc(`data.${key}`);
 
 export default EmberObject.extend({
 
   id: null,
   doc: observed().owner('id').content(({ id, store }) => store.doc(`projects/${id}`).existing()),
 
+  ref: doc('ref'),
   title: data('title'),
 
   sprites: model().named('project/sprites').mapping(project => ({ project })),
