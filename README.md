@@ -52,7 +52,11 @@ $ npm run deploy:development:all
 ## Export
 
 ``` bash
-$ curl -d '{ "token": "Ny7qX8WIN5zW05mpPwqqWk43" }' -H "Content-Type: application/json" -X POST https://....app-id.cloudfunctions.net/export-world
+$ curl \
+  -d '{ "token": "Ny7qX8WIN5zW05mpPwqqWk43" }' \
+  -H "Content-Type: application/json" \
+  -X POST \
+  https://....app-id.cloudfunctions.net/export-world
 ```
 
 ``` javascript
@@ -69,7 +73,8 @@ const fetch = async (url, token) => {
   return await response.json();
 }
 
-let json = await fetch('https://....app-id.cloudfunctions.net/export-world', 'Ny7qX8WIN5zW05mpPwqqWk43');
+let url = 'https://....app-id.cloudfunctions.net/export-world';
+let json = await fetch(url, 'Ny7qX8WIN5zW05mpPwqqWk43');
 ```
 
 ## Bytes
@@ -77,8 +82,14 @@ let json = await fetch('https://....app-id.cloudfunctions.net/export-world', 'Ny
 ``` javascript
 let width = 4;
 let bytes = [ 0, 1, 2, 2, 2, 1, 0, 0 ];
-// 0 1 2 2
-// 2 1 0 0
+//
+//      y
+//  0,0 | 0 1 2 3
+// x -- +---------+
+//    0 | 0 1 2 2 |
+//    1 | 2 1 0 0 |
+//      +---------+
+//
 ```
 
 ``` javascript
