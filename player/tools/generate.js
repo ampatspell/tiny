@@ -1,6 +1,7 @@
 let path = require('path');
 let fetch = require('./lib/fetch');
 let runtime = require('./lib/runtime');
+let { save, retrieve } = require('./lib/cache');
 
 runtime(async () => {
 
@@ -10,7 +11,10 @@ runtime(async () => {
     token: 'Ny7qX8WIN5zW05mpPwqqWk43'
   };
 
-  let json = await fetch(opts.url, opts.token);
+  // let json = await fetch(opts.url, opts.token);
+  // await save(json);
+
+  let json = await retrieve();
 
   console.log(json);
 
