@@ -4,7 +4,7 @@ import { A } from '@ember/array';
 const all = A();
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-dropdown' ],
+  classNameBindings: [ ':ui-block-dropdown', 'disabled:disabled' ],
 
   expanded: false,
 
@@ -20,12 +20,17 @@ export default Component.extend({
 
   actions: {
     toggle() {
+      if(this.disabled) {
+        return;
+      }
       this.toggleProperty('expanded');
       this.update();
     },
     select(item) {
-      if(this.selected !== item && this.select) {
-        this.select(item);
+      if(!this.disabled) {
+        if(this.selected !== item && this.select) {
+          this.select(item);
+        }
       }
       this.set('expanded', false);
       this.update();
