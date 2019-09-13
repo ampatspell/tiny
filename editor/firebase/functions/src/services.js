@@ -3,6 +3,7 @@ const { properties } = require('./util/lazy');
 let services = [
   'firestore',
   'storage',
+  'https',
   'user'
 ];
 
