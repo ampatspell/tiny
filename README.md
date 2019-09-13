@@ -49,6 +49,29 @@ module.exports = {
 $ npm run deploy:development:all
 ```
 
+## Export
+
+``` bash
+$ curl -d '{ "token": "Ny7qX8WIN5zW05mpPwqqWk43" }' -H "Content-Type: application/json" -X POST https://....app-id.cloudfunctions.net/export-world
+```
+
+``` javascript
+const fetch = async (url, token) => {
+  let fetch = require('node-fetch');
+  let response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ token })
+  });
+  return await response.json();
+}
+
+let json = await fetch('https://....app-id.cloudfunctions.net/export-world', 'Ny7qX8WIN5zW05mpPwqqWk43');
+```
+
 ## Firestore structure
 
 ### Project

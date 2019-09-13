@@ -95,5 +95,14 @@ module.exports = function(ctx) {
     }
   }
 
+  // ctx.collection = {
+
+  //   async rimraf(coll) {
+  //     let colls = await ctx.admin.firestore.listCollections();
+  //     console.log(colls.map(coll => coll.path));
+  //   }
+
+  // }
+
   return () => instance.cleanup();
 }

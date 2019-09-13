@@ -9,7 +9,11 @@ const pick = (object, keys) => {
   const result = {};
 
   for(const key of keys) {
-    result[key] = object[key];
+    let value = object[key];
+    if(value === undefined) {
+      continue;
+    }
+    result[key] = value;
   }
 
   return result;

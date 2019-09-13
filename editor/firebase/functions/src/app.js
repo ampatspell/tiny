@@ -14,6 +14,9 @@ module.exports = class Application {
     this.services = services(this);
     this.exports = {
       version: this.require('./actions/version'),
+      export: {
+        world: this.require('./actions/export/world')
+      },
       auth: {
         onCreate: this.require('./triggers/auth/on-create')
       },
