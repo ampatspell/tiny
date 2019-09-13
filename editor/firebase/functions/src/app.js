@@ -13,7 +13,10 @@ module.exports = class Application {
     this.config = normalizeConfig(functions.config());
     this.services = services(this);
     this.exports = {
-      version: this.require('./actions/version')
+      version: this.require('./actions/version'),
+      auth: {
+        onCreate: this.require('./triggers/auth/on-create')
+      }
     };
   }
 
