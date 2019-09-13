@@ -5,6 +5,7 @@
     "generate": "node tools/generate"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "outdent": "^0.7.0"
   }
 }

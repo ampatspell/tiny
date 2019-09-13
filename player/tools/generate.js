@@ -1,5 +1,6 @@
 let runtime = require('./lib/runtime');
 let { retrieve } = require('./lib/cache');
+let write = require('./lib/write');
 
 runtime(async () => {
 
@@ -11,6 +12,22 @@ runtime(async () => {
   let { size } = weirdo;
   let { bytes } = frame;
 
-  console.log(size, bytes);
+  let data = `0x00`;
+
+  await write('sprite.h', `
+    /*
+      Sprite: weirdo
+      Frame: 0
+      Size: ${size.width}x${size.height}px
+    */
+
+    const unsigned char PROGMEM weirdo[] = {
+      // size
+      ${size.width}, ${size.height},
+      // Frame
+      ${data}
+    };
+
+  `);
 
 });
