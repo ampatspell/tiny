@@ -1,22 +1,26 @@
 import Store from 'ember-cli-zuglet/store';
-import { later } from './utils/runloop';
+import { computed } from '@ember/object';
+import { getOwner } from '@ember/application';
+import { later } from 'editor/utils/runloop';
 
-const options = {
-  firebase: {
-    apiKey: "AIzaSyDwCGLTmvKCiCxIO9msehKyULJ_rilnEvw",
-    authDomain: "quatsch-38adf.firebaseapp.com",
-    databaseURL: "https://quatsch-38adf.firebaseio.com",
-    projectId: "quatsch-38adf",
-    storageBucket: "quatsch-38adf.appspot.com"
-  },
-  firestore: {
-    persistenceEnabled: true
-  }
+const firestore = {
+  persistenceEnabled: true
 };
 
 export default Store.extend({
 
-  options,
+  options: computed(function() {
+    let {
+      editor: {
+        firebase
+      }
+    } = getOwner(this).factoryFor('config:environment').class;
+
+    return {
+      firebase,
+      firestore
+    };
+  }).readOnly(),
 
   user: null,
 
@@ -38,6 +42,5 @@ export default Store.extend({
       current.destroy();
     }
   }
-
 
 });
