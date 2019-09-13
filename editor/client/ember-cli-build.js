@@ -5,6 +5,7 @@ const Funnel = require('broccoli-funnel');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
+    name: 'editor',
     sassOptions: {
       includePaths: [
         'app'
