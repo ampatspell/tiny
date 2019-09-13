@@ -4,7 +4,8 @@ let services = [
   'firestore',
   'storage',
   'https',
-  'user'
+  'user',
+  'export'
 ];
 
 class Services {
