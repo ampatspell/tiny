@@ -1,7 +1,64 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
+
+    function isSignedIn() {
+      return request.auth != null;
     }
+
+    function isUID(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    match /projects/{id} {
+
+      function isResourceOwner() {
+        return isUID(resource.data.owner);
+      }
+
+      allow read: if isResourceOwner();
+      allow create: if isUID(request.resource.data.owner);
+      allow update: if isResourceOwner();
+      allow delete: if isResourceOwner();
+
+      function isProjectOwner() {
+        return isUID(get(/databases/$(database)/documents/projects/$(id)).data.owner);
+      }
+
+      match /sprites/{sprite} {
+        allow read: if isProjectOwner();
+        allow write: if isProjectOwner();
+
+        match /frames/{frame} {
+          allow read: if isProjectOwner();
+          allow write: if isProjectOwner();
+        }
+
+        match /loops/{frame} {
+          allow read: if isProjectOwner();
+          allow write: if isProjectOwner();
+        }
+      }
+
+      match /worlds/{world} {
+        allow read: if isProjectOwner();
+        allow write: if isProjectOwner();
+
+        match /scenes/{scene} {
+          allow read: if isProjectOwner();
+          allow write: if isProjectOwner();
+
+          match /layers/{layer} {
+            allow read: if isProjectOwner();
+            allow write: if isProjectOwner();
+
+            match /nodes/{frame} {
+              allow read: if isProjectOwner();
+              allow write: if isProjectOwner();
+            }
+          }
+        }
+      }
+    }
+
   }
 }
