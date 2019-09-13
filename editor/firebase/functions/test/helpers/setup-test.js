@@ -9,14 +9,6 @@ module.exports = function(ctx) {
   let mockConfig = {
     logging: {
       enabled: process.env.LOGGING ? 'true' : 'false'
-    },
-    email: {
-      send: 'false',
-      key: 'key-fakeone',
-      from: 'bain × <no-reply@mg.getbain.com>',
-      reply: 'ampatspell@gmail.com',
-      domain: 'mg.getbain.com',
-      host: 'api.eu.mailgun.net'
     }
   };
 
