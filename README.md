@@ -1,4 +1,4 @@
-# Arduboy sprite and scene editor
+# Tiny: sprite and scene editor for Arduboy games
 
 ![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-1.png?raw=true)
 
