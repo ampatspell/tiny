@@ -27,6 +27,9 @@ export default Component.extend({
     },
     delete() {
       this.state.deleteCurrentFrame();
+    },
+    update(key, value) {
+      this.frame.update({ [key]: value });
     }
   }
 

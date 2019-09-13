@@ -9,13 +9,12 @@ export default Sprite.extend({
   _frame: data('frame'),
   frames: readOnly('sprite.frames'),
 
-  // TODO: frame index
-  selected: computed('frames.@each.index', '_frame', function() {
-    let { frames, _frame: index } = this;
-    if(!frames || typeof index !== 'number') {
+  selected: computed('frames.@each.identifier', '_frame', function() {
+    let { frames, _frame: identifier } = this;
+    if(!frames || !identifier) {
       return;
     }
-    return frames.findBy('index', index);
+    return frames.findBy('identifier', identifier);
   }).readOnly(),
 
   onSprite(sprite) {
@@ -23,11 +22,7 @@ export default Sprite.extend({
     if(!sprite) {
       return;
     }
-    // TODO: frame index
-    let frame = sprite.get('frames.firstObject.index');
-    if(typeof frame !== 'number') {
-      frame = null;
-    }
+    let frame = sprite.get('frames.firstObject.identifier') || null;
     this.update({ frame });
   }
 

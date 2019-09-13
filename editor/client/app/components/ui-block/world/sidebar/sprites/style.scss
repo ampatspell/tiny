@@ -9,14 +9,14 @@
     > .preview {
       margin-bottom: -1px;
       border-bottom: 1px solid fade-out(#000, 0.95);
-      background-color: fade-out(#000, 0.9);
+      background-color: #ddd;
       padding: 5px 10px;
       display: flex;
       flex-direction: row;
       align-items: center;
       > .thumbnail {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         background-size: contain;
         image-rendering: pixelated;
       }

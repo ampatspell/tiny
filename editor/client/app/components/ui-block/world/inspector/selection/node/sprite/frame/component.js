@@ -1,21 +1,25 @@
 import Component from '../../-node';
 import { computed } from '@ember/object';
+import { A } from '@ember/array';
 
 export default Component.extend({
 
-  frames: computed('node.frames.@each.index', function() {
+  frames: computed('node.frames.@each.{index,identifier}', function() {
     let { node: { frames } } = this;
     if(!frames) {
       return;
     }
-    return frames.map(frame => {
-      let { index } = frame;
-      let label = `#${index}`;
+    return A(frames.map(frame => {
+      let { index, identifier } = frame;
+      if(!identifier) {
+        return;
+      }
+      let label = `${identifier} (#${index})`;
       return {
-        index,
+        identifier,
         label
       };
-    })
+    })).compact();
   }).readOnly(),
 
   selected: computed('node.selected', function() {
@@ -23,12 +27,12 @@ export default Component.extend({
     if(!selected) {
       return;
     }
-    return this.frames.findBy('index', selected.index);
+    return this.frames.findBy('identifier', selected.identifier);
   }).readOnly(),
 
   actions: {
-    frame({ index }) {
-      this.update('frame', index);
+    frame({ identifier }) {
+      this.update('frame', identifier);
     }
   }
 

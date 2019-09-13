@@ -14,9 +14,11 @@ export default EmberObject.extend(ScheduleSave, {
   doc: null,
   id: doc('id'),
 
-  size:  sprite('size'),
+  size: sprite('size'),
+
   index: data('index'),
   bytes: data('bytes'),
+  identifier: data('identifier'),
 
   preview: model().named('project/sprites/sprite/frame/preview').mapping(frame => ({ frame })),
 
@@ -27,6 +29,11 @@ export default EmberObject.extend(ScheduleSave, {
 
   async save() {
     await this.doc.save({ token: true });
+  },
+
+  update(props) {
+    this.doc.data.setProperties(props);
+    this.scheduleSave();
   },
 
   _didUpdateBytes() {

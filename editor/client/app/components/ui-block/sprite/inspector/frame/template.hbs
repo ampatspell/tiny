@@ -8,7 +8,12 @@
         {{#content.footer}}
           <div class="size">{{size sprite.size "px"}}</div>
           {{#if frame}}
-            <div class="frame">#{{frame.index}}</div>
+            <div class="frame">
+              #{{frame.index}}
+              {{#if frame.identifier}}
+                ({{frame.identifier}})
+              {{/if}}
+            </div>
           {{/if}}
         {{/content.footer}}
       {{/header.content}}
@@ -22,6 +27,10 @@
   {{/sidebar.section}}
 
   {{#if frame}}
+
+    {{#sidebar.section as |section|}}
+      {{section.input label="Identifier" value=frame.identifier update=(action "update" "identifier")}}
+    {{/sidebar.section}}
 
     {{#sidebar.section as |section|}}
       {{#section.actions type="grid" as |actions|}}
