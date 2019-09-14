@@ -1,7 +1,6 @@
 #include <Arduboy2.h>
+#include <generated/sprite.h>
 #include <WString.h>
-
-#include "../lib/generated/sprite.h"
 
 Arduboy2 arduboy;
 

@@ -7,4 +7,4 @@ payload.json
 
 /node_modules/
 
-/lib/generated/
+/src/generated/
