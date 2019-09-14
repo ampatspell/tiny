@@ -1,12 +1,6 @@
 module.exports = async (runtime, project) => {
 
-  let file = [
-    '#pragma once',
-    '#include <avr/pgmspace.h>',
-    ''
-  ];
-
-  const generateSpriteFrames = sprite => {
+  let generateSpriteFrames = sprite => {
     let frames = sprite.toPlusMaskString();
     return [
       `// Sprite "${sprite.identifier}"`,
@@ -17,33 +11,75 @@ module.exports = async (runtime, project) => {
     ];
   }
 
-  const generateSpriteLoops = sprite => {
-    return sprite.loops.reduce((arr, loop) => {
-      loop.variable = `sprite_${sprite.identifier}_loop_${loop.identifier}_indexes`;
-      let indexes = loop.toFrameIndexesString();
-      arr.push(...[
-        `// Sprite "${sprite.identifier}" loop "${loop.identifier}"`,
-        `const uint8_t ${loop.variable}[] = { ${indexes} };`,
-        ''
-      ]);
-      return arr;
-    }, []);
+  let generateSpriteLoop = (sprite, loop) => {
+    let indexes = loop.toFrameIndexesString();
+    return [
+      `// Sprite "${sprite.identifier}" loop "${loop.identifier}"`,
+      `const uint8_t ${loop.variable}[] = { ${indexes} };`,
+      ''
+    ];
   }
 
-  const generateSprite = sprite => {
-    let { identifier } = sprite;
-    sprite.variable = `sprite_${identifier}_frames_plus_mask`;
+  let generateSpriteLoopClass = (sprite, loop) => {
+    return [
+      `Loop ${sprite.identifier}_${loop.identifier}(${sprite.identifier}, ${loop.variable}, sizeof(${loop.variable}));`,
+      ''
+    ];
+  }
+
+  let generateSpriteLoops = sprite => {
+    let content = [];
+    sprite.loops.forEach(loop => {
+      loop.variable = `_sprite_${sprite.identifier}_loop_${loop.identifier}_indexes`;
+      content.push(
+        ...generateSpriteLoop(sprite, loop),
+        ...generateSpriteLoopClass(sprite, loop)
+      );
+    });
+    return content;
+  }
+
+  let generateSpriteClass = sprite => {
+    return [
+      `Sprite ${sprite.identifier}(${sprite.variable});`,
+      ''
+    ];
+  }
+
+  let generateSprite = sprite => {
+    sprite.variable = `_sprite_${sprite.identifier}_frames_plus_mask`;
     return [
       ...generateSpriteFrames(sprite),
+      ...generateSpriteClass(sprite),
       ...generateSpriteLoops(sprite)
-    ]
+    ];
+  };
+
+  let generateSprites = () => {
+    let content = [];
+    project.sprites.forEach(sprite => {
+      content.push(...generateSprite(sprite));
+    });
+    return content;
   }
 
-  file.push(...project.sprites.reduce((arr, sprite) => {
-    let content = generateSprite(sprite);
-    arr.push(...content);
-    return arr;
-  }, []));
+  let content = [
+    ...generateSprites(),
+  ];
+
+  let file = [
+    '#pragma once',
+    '#include <avr/pgmspace.h>',
+    '#include <loop.h>',
+    '#include <sprite.h>',
+    '',
+    'namespace Generated {',
+    '',
+    ...content,
+    '',
+    '}'
+  ];
+
 
   await runtime.write('sprites.h', file.join('\n'));
 
