@@ -1,5 +1,7 @@
 #include <Arduboy2.h>
-#include <generated/sprite.h>
+#include <generated/weirdo.h>
+#include <stdint.h>
+#include <Sprites.h>
 #include <WString.h>
 
 Arduboy2 arduboy;
@@ -26,7 +28,7 @@ void loop() {
     }
   }
 
-  Weirdo::draw(10, 10, frame);
+  Sprites::drawPlusMask(10, 10, sprite_weirdo_plus_mask, frame);
 
   arduboy.display();
 }
