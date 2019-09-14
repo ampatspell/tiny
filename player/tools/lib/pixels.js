@@ -1,5 +1,6 @@
+const pixel = (bytes, x, y, size) => bytes[y * size.width + x];
+
 const toDrawPlusMaskArray = (bytes, size) => {
-  let pixel = (x, y) => bytes[y * size.width + x];
   let { width, height } = size;
   let pages = Math.ceil(height / 8);
   let data = [];
@@ -8,7 +9,7 @@ const toDrawPlusMaskArray = (bytes, size) => {
       let sprite = 0;
       let mask = 0;
       for(let y = 0; y < 8; y++) {
-        let px = pixel(x, page * 8 + y);
+        let px = pixel(bytes, x, page * 8 + y, size);
         // white
         if(px === 1) {
           sprite |= (1 << y);
