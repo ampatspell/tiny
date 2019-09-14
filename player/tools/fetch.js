@@ -1,12 +1,9 @@
 let config = require('./config');
-let fetch = require('./lib/fetch');
-let runtime = require('./lib/runtime');
-let { save } = require('./lib/cache');
+let runtime = require('./lib');
 
-runtime(async () => {
+runtime(config, async ctx => {
 
-  let { url, token } = config;
-  let json = await fetch(url, token);
-  await save(json);
+  let json = await ctx.fetch();
+  await ctx.cache.save(json);
 
 });

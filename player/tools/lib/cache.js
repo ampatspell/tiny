@@ -1,18 +1,20 @@
-const path = require('path');
-const filename = path.join(__dirname, '..', '..', 'payload.json');
 const fs = require('./fs');
 
-const save = json => {
-  let string = JSON.stringify(json, null, 2);
-  return fs.writeFile(filename, string, 'utf-8');
-}
+module.exports = config => {
+  let { cache } = config;
 
-const retrieve = async () => {
-  let data = await fs.readFile(filename, 'utf-8');
-  return JSON.parse(data);
-}
+  const save = json => {
+    let string = JSON.stringify(json, null, 2);
+    return fs.writeFile(cache, string, 'utf-8');
+  }
 
-module.exports = {
-  save,
-  retrieve
-};
+  const retrieve = async () => {
+    let data = await fs.readFile(cache, 'utf-8');
+    return JSON.parse(data);
+  }
+
+  return {
+    save,
+    retrieve
+  };
+}

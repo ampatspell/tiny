@@ -2,7 +2,8 @@
   "name": "player",
   "scripts": {
     "fetch": "node tools/fetch",
-    "generate": "node tools/generate"
+    "gen": "node tools/generate",
+    "fgen": "npm run fetch && npm run gen"
   },
   "dependencies": {
     "node-fetch": "^2.6.0",
