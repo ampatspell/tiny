@@ -1,4 +1,14 @@
 const fs = require('fs');
+const { mkdir: _mkdir } = require('mkdir-recursive');
+
+const mkdir = path => new Promise((resolve, reject) => {
+  _mkdir(path, err =>  {
+    if(err) {
+      return reject(err);
+    }
+    resolve();
+  });
+});
 
 const writeFile = (...args) => new Promise((resolve, reject) => {
   fs.writeFile(...args, err => {
@@ -20,5 +30,6 @@ const readFile = (...args) => new Promise((resolve, reject) => {
 
 module.exports = {
   writeFile,
-  readFile
+  readFile,
+  mkdir
 };

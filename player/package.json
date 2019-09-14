@@ -6,6 +6,7 @@
     "fgen": "npm run fetch && npm run gen"
   },
   "dependencies": {
+    "mkdir-recursive": "^0.4.0",
     "node-fetch": "^2.6.0",
     "outdent": "^0.7.0"
   }
