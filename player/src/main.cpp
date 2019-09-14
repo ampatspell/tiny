@@ -16,7 +16,7 @@ void loop() {
     return;
   }
 
-  arduboy.fillScreen();
+//  arduboy.fillScreen();
   arduboy.setCursor(4, 9);
   arduboy.print(F("Weird animals"));
 
@@ -33,5 +33,5 @@ void loop() {
   Generated::building_flashing.draw(40, 15, building);
   Generated::bubble_in.draw(27, 13, loop);
 
-  arduboy.display();
+  arduboy.display(true);
 }
