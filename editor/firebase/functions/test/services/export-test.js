@@ -123,42 +123,43 @@ describe('services / export', () => {
     await this.insert();
     let json = await this.export.byToken('the-token');
     assert.deepEqual(json, {
-      project: { id: 'bug', title: 'The Bug' },
+      project: {
+        _id: 'bug',
+        title: 'The Bug',
+      },
+      sprites: [
+        {
+          _id: 'one',
+          identifier: 'weirdo',
+          size: { height: 16, width: 16 },
+          frames: [
+            { _id: '1', bytes: [ 1, 2, 3 ] },
+            { _id: '2', bytes: [ 2, 3, 4 ], identifier: '2' }
+          ],
+          loops: [
+            { _id: 'wink', identifier: 'wink', frames: [ 0, 1 ] }
+          ]
+        }
+      ],
       world: {
-        id: 'earth',
+        _id: 'earth',
         name: 'Earth',
-        sprites: [
-          {
-            id: 'one',
-            identifier: 'weirdo',
-            size: { height: 16, width: 16 },
-            frames: [
-              { id: '1', bytes: [ 1, 2, 3 ], index: 1 },
-              { id: '2', bytes: [ 2, 3, 4 ], identifier: '2', index: 2 }
-            ],
-            loops: [
-              { id: 'wink', identifier: 'wink', frames: [ '1', '2' ] }
-            ]
-          }
-        ],
         scenes: [
           {
-            id: 'intro',
+            _id: 'intro',
             identifier: 'intro',
             background: 'black',
             name: 'Earth',
             size: { height: 64, width: 128 },
             layers: [
               {
-                id: 'background',
+                _id: 'background',
                 identifier: 'background',
                 type: 'grid',
-                index: 0,
                 grid: { height: 8, width: 8 },
                 nodes: [
                   {
-                    id: '1',
-                    index: 0,
+                    _id: '1',
                     type: 'sprite/frame',
                     sprite: 'weirdo',
                     frame: '2',
@@ -169,14 +170,12 @@ describe('services / export', () => {
                 ]
               },
               {
-                id: 'char',
+                _id: 'char',
                 identifier: 'char',
                 type: 'pixel',
-                index: 1,
                 nodes: [
                   {
-                    id: '1',
-                    index: 0,
+                    _id: '1',
                     type: 'sprite/loop',
                     sprite: 'weirdo',
                     position: { y: 40, x: 104 },
@@ -185,8 +184,7 @@ describe('services / export', () => {
                     loop: 'wink',
                   },
                   {
-                    id: '2',
-                    index: 1,
+                    _id: '2',
                     type: 'fill',
                     position: { y: 40, x: 104 },
                     color: 'white'
