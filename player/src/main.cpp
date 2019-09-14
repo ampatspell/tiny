@@ -1,5 +1,5 @@
 #include <Arduboy2.h>
-#include <generated/weirdo.h>
+#include <generated/sprites.h>
 #include <stdint.h>
 #include <Sprites.h>
 #include <WString.h>
@@ -28,7 +28,8 @@ void loop() {
     }
   }
 
-  Sprites::drawPlusMask(10, 10, spriteWeirdoPlusMask, frame);
+  Sprites::drawPlusMask(10, 10, sprite_weirdo_frames_plus_mask, frame);
+  Sprites::drawPlusMask(30, 13, sprite_bubble_frames_plus_mask, frame);
 
   arduboy.display();
 }
