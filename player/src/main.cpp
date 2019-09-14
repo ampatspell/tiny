@@ -1,9 +1,8 @@
 #include <Arduboy2.h>
-#include <Sprites.h>
+#include <generated/sprite.h>
 #include <WString.h>
 
 Arduboy2 arduboy;
-Sprites sprites;
 
 void setup() {
   arduboy.begin();
@@ -15,7 +14,9 @@ void loop() {
     return;
   }
   arduboy.clear();
+  arduboy.fillScreen();
   arduboy.setCursor(4, 9);
   arduboy.print(F("Weird animals"));
+  drawSprite(10, 10);
   arduboy.display();
 }

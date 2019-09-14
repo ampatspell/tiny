@@ -2,3 +2,10 @@
 .cproject
 .settings
 .project
+
+/payload-cache.json
+/payload-readable.json
+
+/node_modules/
+
+/src/generated/
