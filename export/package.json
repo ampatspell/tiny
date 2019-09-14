@@ -1,0 +1,12 @@
+{
+  "name": "tiny-export",
+  "version": "0.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mkdir-recursive": "^0.4.0",
+    "node-fetch": "^2.6.0"
+  }
+}

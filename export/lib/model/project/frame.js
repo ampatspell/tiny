@@ -1,4 +1,4 @@
-const pixels = require('../pixels');
+const pixels = require('../../util/pixels');
 
 class Frame {
 
