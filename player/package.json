@@ -6,5 +6,6 @@
     "fgen": "npm run fetch && npm run gen"
   },
   "dependencies": {
+    "tiny-export": "^0.0.0"
   }
 }
