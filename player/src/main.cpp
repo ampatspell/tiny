@@ -19,7 +19,7 @@ void loop() {
   arduboy.print(F("Weird animals"));
 
   static uint8_t frame = 0;
-  if (arduboy.everyXFrames(5)) {
+  if (arduboy.everyXFrames(7)) {
     frame++;
     if (frame > 3) {
       frame = 0;

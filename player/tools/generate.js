@@ -3,15 +3,12 @@ let runtime = require('./lib');
 
 runtime(config, async ctx => {
 
-  let json = await ctx.cache.retrieve();
+  let project = ctx.project(await ctx.cache.retrieve());
+  let weirdo = project.spriteByIdentifier('weirdo');
+  let wink = weirdo.loopByIdentifier('wink');
 
-  let weirdo = json.world.sprites.find(sprite => sprite.identifier === 'weirdo');
-
-  let { size } = weirdo;
-  let data = weirdo.frames.map(frame => {
-    let { bytes } = frame;
-    return ctx.pixels.toDrawPlusMaskString(bytes, size);
-  }).join(', ');
+  let sprite = weirdo.toPlusMaskString();
+  let loop = wink.toFrameIndexesString();
 
   await ctx.write('sprite.cpp', `
     #include <avr/pgmspace.h>
@@ -19,12 +16,10 @@ runtime(config, async ctx => {
     #include <Sprites.h>
 
     const unsigned char PROGMEM weirdo_plus_mask[] = {
-      // weirdo, ${weirdo.frames.length} frames
-      // size
-      ${size.width}, ${size.height},
-      // frames
-      ${data}
+      ${sprite}
     };
+
+    const uint8_t weirdo_loop_wink[] = { ${loop} };
 
     void Weirdo::draw(uint8_t x, uint8_t y, uint8_t frame) {
       Sprites::drawPlusMask(x, y, weirdo_plus_mask, frame);
