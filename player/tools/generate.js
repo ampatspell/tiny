@@ -13,11 +13,11 @@ runtime(config, async ctx => {
   await ctx.write('weirdo.h', `
     #include <avr/pgmspace.h>
 
-    const unsigned char PROGMEM sprite_weirdo_plus_mask[] = {
+    const unsigned char PROGMEM spriteWeirdoPlusMask[] = {
       ${sprite}
     };
 
-    const uint8_t sprite_weirdo_loop_wink[] = { ${loop} };
+    const uint8_t spriteWeirdoLoopWink[] = { ${loop} };
 
   `);
 

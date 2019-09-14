@@ -28,7 +28,7 @@ void loop() {
     }
   }
 
-  Sprites::drawPlusMask(10, 10, sprite_weirdo_plus_mask, frame);
+  Sprites::drawPlusMask(10, 10, spriteWeirdoPlusMask, frame);
 
   arduboy.display();
 }
