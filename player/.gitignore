@@ -3,7 +3,8 @@
 .settings
 .project
 
-payload.json
+/payload-cache.json
+/payload-readable.json
 
 /node_modules/
 
