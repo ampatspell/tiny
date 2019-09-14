@@ -1,86 +1,105 @@
 module.exports = async (runtime, project) => {
 
-  let generateSpriteFrames = sprite => {
+  let files = {
+    h: [
+      '#pragma once',
+      '',
+      '#include <sprite.h>',
+      '',
+      'namespace Generated {',
+      'namespace Sprites {',
+      '',
+    ],
+    cpp: [
+      '#include <avr/pgmspace.h>',
+      '#include <sprites.h>',
+      '#include <frames.h>',
+      '#include <loop.h>',
+      '#include <sprite.h>',
+      '',
+      'namespace Generated {',
+      'namespace Sprites {',
+      ''
+    ]
+  };
+
+  project.sprites.forEach(sprite => {
+    sprite.variable = `_sprite_${sprite.identifier}_frames_plus_mask`;
+
+    //
+
     let frames = sprite.toPlusMaskString();
-    return [
+    files.cpp.push(...[
       `// Sprite "${sprite.identifier}"`,
-      `const unsigned char PROGMEM ${sprite.variable}[] = {`,
+      `const unsigned char ${sprite.variable}[] PROGMEM = {`,
       frames,
       '};',
       ''
-    ];
-  }
+    ]);
 
-  let generateSpriteLoop = (sprite, loop) => {
-    let indexes = loop.toFrameIndexesString();
-    return [
-      `// Sprite "${sprite.identifier}" loop "${loop.identifier}"`,
-      `const uint8_t ${loop.variable}[] = { ${indexes} };`,
+    //
+
+    files.cpp.push(...[
+      `Frames ${sprite.identifier}_frames(${sprite.variable});`,
       ''
-    ];
-  }
+    ]);
 
-  let generateSpriteLoopClass = (sprite, loop) => {
-    return [
-      `Loop ${sprite.identifier}_${loop.identifier}(${sprite.identifier}, ${loop.variable}, sizeof(${loop.variable}));`,
-      ''
-    ];
-  }
+    //
 
-  let generateSpriteLoops = sprite => {
-    let content = [];
+    let loops = [];
+
     sprite.loops.forEach(loop => {
-      loop.variable = `_sprite_${sprite.identifier}_loop_${loop.identifier}_indexes`;
-      content.push(
-        ...generateSpriteLoop(sprite, loop),
-        ...generateSpriteLoopClass(sprite, loop)
-      );
-    });
-    return content;
-  }
+      loop.indexesVariable = `_sprite_${sprite.identifier}_loop_${loop.identifier}_indexes`;
+      loop.variable = `${sprite.identifier}_${loop.identifier}`;
 
-  let generateSpriteClass = sprite => {
-    return [
-      `Sprite ${sprite.identifier}(${sprite.variable});`,
+      let indexes = loop.toFrameIndexesString();
+
+      //
+
+      files.cpp.push(...[
+        `// Sprite "${sprite.identifier}" loop "${loop.identifier}"`,
+        `const uint8_t ${loop.indexesVariable}[] = { ${indexes} };`,
+        ''
+      ]);
+
+      //
+
+      files.cpp.push(...[
+        `Loop ${sprite.identifier}_${loop.identifier}(&${sprite.identifier}_frames, ${loop.indexesVariable}, sizeof(${loop.indexesVariable}));`,
+        ''
+      ]);
+
+      loops.push(`&${loop.variable}`);
+    });
+
+    files.cpp.push(...[
+      `Loop *${sprite.identifier}_loops = { ${loops.join(', ')} };`,
+      '',
+      `Sprite ${sprite.identifier}(&${sprite.identifier}_frames, ${sprite.identifier}_loops);`,
       ''
-    ];
-  }
+    ]);
+    files.h.push(...[
+      `extern Sprite ${sprite.identifier};`
+    ]);
+  });
 
-  let generateSprite = sprite => {
-    sprite.variable = `_sprite_${sprite.identifier}_frames_plus_mask`;
-    return [
-      ...generateSpriteFrames(sprite),
-      ...generateSpriteClass(sprite),
-      ...generateSpriteLoops(sprite)
-    ];
-  };
-
-  let generateSprites = () => {
-    let content = [];
-    project.sprites.forEach(sprite => {
-      content.push(...generateSprite(sprite));
-    });
-    return content;
-  }
-
-  let content = [
-    ...generateSprites(),
-  ];
-
-  let file = [
-    '#pragma once',
-    '#include <avr/pgmspace.h>',
-    '#include <loop.h>',
-    '#include <sprite.h>',
+  files.h.push(...[
     '',
-    'namespace Generated {',
-    '',
-    ...content,
-    '',
-    '}'
-  ];
+    '}',
+    '}',
+    ''
+  ]);
 
+  files.cpp.push(...[
+    '',
+    '}',
+    '}',
+    ''
+  ]);
 
-  await runtime.write('sprites.h', file.join('\n'));
+  await Promise.all([
+    runtime.write('sprites.h', files.h.join('\n')),
+    runtime.write('sprites.cpp', files.cpp.join('\n'))
+  ]);
 
 }
