@@ -13,10 +13,20 @@ void loop() {
   if (!(arduboy.nextFrame())) {
     return;
   }
-  arduboy.clear();
+
   arduboy.fillScreen();
   arduboy.setCursor(4, 9);
   arduboy.print(F("Weird animals"));
-  drawSprite(10, 10);
+
+  static uint8_t frame = 0;
+  if (arduboy.everyXFrames(5)) {
+    frame++;
+    if (frame > 3) {
+      frame = 0;
+    }
+  }
+
+  Weirdo::draw(10, 10, frame);
+
   arduboy.display();
 }
