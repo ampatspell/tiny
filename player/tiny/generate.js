@@ -1,16 +1,18 @@
 let config = require('./config');
-let runtime = require('./lib');
+let { run } = require('tiny-export');
 
-runtime(config, async ctx => {
+run(config, async runtime => {
 
-  let project = ctx.project(await ctx.cache.retrieve());
+  let project = await runtime.project();
+
   let weirdo = project.spriteByIdentifier('weirdo');
   let wink = weirdo.loopByIdentifier('wink');
 
   let sprite = weirdo.toPlusMaskString();
   let loop = wink.toFrameIndexesString();
 
-  await ctx.write('weirdo.h', `
+  await runtime.write('weirdo.h', `
+    #pragma once
     #include <avr/pgmspace.h>
 
     const unsigned char PROGMEM spriteWeirdoPlusMask[] = {
