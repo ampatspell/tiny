@@ -3,8 +3,8 @@
 #include <globals.h>
 #include <stdint.h>
 
-class Loop;
 class Frames;
+class Loop;
 
 class Sprite: public NonAssignable {
 
