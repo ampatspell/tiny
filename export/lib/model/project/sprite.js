@@ -24,14 +24,8 @@ class Sprite {
     let { size, frames } = this;
     let data = frames.map(frame => frame.toPlusMaskString())
     return [
-      `// ${frames.length} ${frames.length === 1 ? 'frame' : 'frames'}`,
       `${size.width}, ${size.height},`,
-      data.map((row, idx) => {
-        return [
-          `// #${idx}`,
-          row
-        ].join('\n');
-      }).join(',\n')
+      data.join(',\n')
     ].join('\n');
   }
 
