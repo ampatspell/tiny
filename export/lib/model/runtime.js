@@ -3,6 +3,7 @@ const fetch = require('../util/fetch');
 const write = require('../util/write');
 const Cache = require('./cache');
 const Project = require('./project');
+const ejs = require('../util/ejs');
 
 class Runtime {
 
@@ -24,6 +25,10 @@ class Runtime {
   async project() {
     let json = await this.cache.retrieve();
     return new Project(json);
+  }
+
+  render(filename, props) {
+    return ejs(filename, props);
   }
 
   async write(filename, content) {
