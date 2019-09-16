@@ -9,3 +9,8 @@
 /node_modules/
 
 /src/generated/
+
+.idea
+/cmake-build-leonardo/
+/CMakeLists.txt
+/CMakeListsPrivate.txt
