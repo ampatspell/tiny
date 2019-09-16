@@ -1,7 +1,5 @@
 #include <Arduboy2.h>
-#include <generated/scene_01.h>
 #include <globals.h>
-#include <scene.h>
 
 void setup() {
   arduboy.begin();
@@ -13,7 +11,8 @@ void loop() {
     return;
   }
 
-  Generated::Scenes::scene_01.draw();
+  arduboy.setCursor(1, 1);
+  arduboy.print(F("Hello"));
 
   arduboy.display(true);
 }
