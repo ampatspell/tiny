@@ -1,0 +1,67 @@
+// Project: <%= project.title %>
+// World: <%= world.name %>
+// Scene:  <%= scene.identifier -%>
+
+<% let backgrounds = {
+  'transparent': 0,
+  'black': 1,
+  'white': 2
+} -%>
+<% let layers = {
+  'grid': 'Grid',
+  'pixel': 'Pixel'
+} -%>
+
+namespace Tiny {
+  namespace Generated {
+    namespace Scenes {
+
+      const uint8_t scene_<%= scene.index %>_definition PROGMEM = {
+
+        <%= backgrounds[scene.background] %>, // background: <%= scene.background %>
+        <%= scene.size.width %>, // width
+        <%= scene.size.height %> // height
+
+      };
+
+      // Layers
+
+    <% scene.layers.forEach((layer, idx) => { %>
+      const uint8_t scene_<%= scene.index %>_layer_<%= idx %>_definition PROGMEM = {
+    <% if(layer.type === 'grid') { %>
+        0, // grid
+        <%= layer.grid.width %>, // width
+        <%= layer.grid.height %> // height
+    <% } else if(layer.type === 'pixel') { %>
+        1, // pixel
+    <% } %>
+      };
+
+    <% }); %>
+
+      // Nodes
+
+    <% scene.layers.forEach((layer, lidx) => layer.nodes.forEach((node, nidx) => { %>
+      // Node: <%= layer.identifier || lidx %> → <%= node.identifier || nidx %>
+
+      const uint8_t scene_<%= scene.index %>_layer_<%= lidx %>_node_<%= nidx %>_definition PROGMEM = {
+      <% if(node.type === 'sprite/frame') { %>
+        0, // type: <%= node.type %>
+        <%= node.position.x %> // position.x
+        <%= node.position.y %> // position.y
+        <%= node.sprite.model.sprites.indexOf(node.sprite) %> // sprite index
+        <%= node.sprite.frames.indexOf(node.frame) %> // frame index
+      <% } else if(node.type === 'sprite/loop') { %>
+        1, // type: <%= node.type %>
+        <%= node.position.x %> // position.x
+        <%= node.position.y %> // position.y
+        <%= node.sprite.model.sprites.indexOf(node.sprite) %> // sprite index
+        <%= node.sprite.loops.indexOf(node.loop) %> // loop index
+      <% } %>
+      };
+
+    <% })); %>
+
+    }
+  }
+}

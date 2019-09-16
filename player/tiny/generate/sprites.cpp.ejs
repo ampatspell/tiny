@@ -9,8 +9,7 @@ namespace Tiny {
 
         // Sprites
       <% sprites.forEach((sprite, idx) => { %>
-        // <%= idx %> "<%= sprite.identifier %>"
-        // <%= sprite.size.width %>×<%= sprite.size.height %>
+        // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px)
         const unsigned char sprite_<%= idx %>[] PROGMEM = {
           <%= indent(sprite.toPlusMaskString(), 5) %>
         };
@@ -18,6 +17,7 @@ namespace Tiny {
 
         // Loops
       <% sprites.forEach((sprite, sidx) => sprite.loops.forEach((loop, lidx) => { %>
+        // <%= sprite.identifier %> → <%= loop.identifier %>
         const uint8_t sprite_<%= sidx %>_loop_<%= lidx %>[] PROGMEM = {
           <%= loop.toFrameIndexesString() %>
         };

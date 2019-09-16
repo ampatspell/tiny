@@ -2,8 +2,9 @@ let config = require('../config');
 let { run } = require('tiny-export');
 let path = require('path');
 let sprites = require('./sprites');
+let scenes = require('./scenes');
 
-let template = filename => path.join(__dirname, filename);
+let local = filename => path.join(__dirname, filename);
 
 run(config, async runtime => {
 
@@ -19,14 +20,18 @@ run(config, async runtime => {
     }).join('\n');
   };
 
-  let render = async (name, props) => {
-    let file = ext => runtime.render(template(`${name}.${ext}.ejs`), Object.assign({ indent } ,props));
+  let render = async ({ template, filename, props }) => {
+    filename = filename || template;
+    let file = ext => runtime.render(local(`${template}.${ext}.ejs`), Object.assign({ indent } ,props));
     await Promise.all([
-      runtime.write(`${name}.h`, file('h')),
-      runtime.write(`${name}.cpp`, file('cpp')),
+      runtime.write(`${filename}.h`, file('h')),
+      runtime.write(`${filename}.cpp`, file('cpp')),
     ]);
   }
 
-  await sprites(payload, render);
+  await Promise.all([
+    sprites(payload, render),
+    scenes(payload, render)
+  ]);
 
 });
