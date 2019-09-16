@@ -23,10 +23,8 @@ run(config, async runtime => {
   let render = async ({ template, filename, props }) => {
     filename = filename || template;
     let file = ext => runtime.render(local(`${template}.${ext}.ejs`), Object.assign({ indent } ,props));
-    await Promise.all([
-      runtime.write(`${filename}.h`, file('h')),
-      runtime.write(`${filename}.cpp`, file('cpp')),
-    ]);
+    await runtime.write(`${filename}.cpp`, file('cpp')); // setup variables
+    await runtime.write(`${filename}.h`, file('h')); // externs
   }
 
   await Promise.all([

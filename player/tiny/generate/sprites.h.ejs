@@ -1,10 +1,15 @@
+#pragma once
+
 // Project: <%= project.title %>
 // Sprites: <%= sprites.length %>
 
 namespace Tiny {
   namespace Generated {
     namespace Sprites {
-
+    <% sprites.forEach(sprite => { %>
+      // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px, <%= sprite.loops.length %> <%= sprite.loops.length === 1 ? 'loop' : 'loops' %>)
+      extern Sprite <%= sprite.variable %>;
+    <% }); %>
     }
   }
 }
