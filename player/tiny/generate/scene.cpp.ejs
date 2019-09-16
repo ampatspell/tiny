@@ -14,12 +14,13 @@
   'grid': 'Grid',
   'pixel': 'Pixel'
 } -%>
+<% scene.variable = `scene_${scene.index}` -%>
 
 namespace Tiny {
   namespace Generated {
     namespace Scenes {
 
-      const uint8_t scene_<%= scene.index %>_definition[] PROGMEM = {
+      const uint8_t <% scene.variable %>_definition[] PROGMEM = {
 
         <%= backgrounds[scene.background] %>, // background: <%= scene.background %>
         <%= scene.size.width %>, // width
@@ -30,7 +31,7 @@ namespace Tiny {
       // Layers
 
     <% scene.layers.forEach((layer, idx) => { %>
-      const uint8_t scene_<%= scene.index %>_layer_<%= idx %>_definition[] PROGMEM = {
+      const uint8_t <%= scene.variable %>_layer_<%= idx %>_definition[] PROGMEM = {
     <% if(layer.type === 'grid') { %>
         0, // grid
         <%= layer.grid.width %>, // width
@@ -44,10 +45,12 @@ namespace Tiny {
 
       // Nodes
 
-    <% scene.layers.forEach((layer, lidx) => layer.nodes.forEach((node, nidx) => { %>
+    <% scene.layers.forEach((layer, lidx) => { %>
+      <% layer.variable = `${scene.variable}_layer_${lidx}` %>
+      <% layer.nodes.forEach((node, nidx) => { %>
+      <% node.variable = `${layer.variable}_node_${nidx}` %>
       // Node: <%= layer.identifier || lidx %> → <%= node.identifier || nidx %>
-
-      const uint8_t scene_<%= scene.index %>_layer_<%= lidx %>_node_<%= nidx %>_definition[] PROGMEM = {
+      const uint8_t <%= node.variable %>_definition[] PROGMEM = {
       <% if(node.type === 'sprite/frame') { %>
         0, // type: <%= node.type %>
         <%= node.position.x %>, // position.x
@@ -62,8 +65,11 @@ namespace Tiny {
         <%= node.sprite.loops.indexOf(node.loop) %> // loop index
       <% } %>
       };
-
-    <% })); %>
+      <% }); %>
+      const uint8_t <%= layer.variable %>_node_definitions[] PROGMEM = { <%= layer.nodes.map(node => `${node.variable}_definition`).join(', ') %> };
+    <% }); %>
+      const uint8_t <%= scene.variable %>_layer_definitions[] PROGMEM = { <%= scene.layers.map(layer => `${layer.variable}_definition`).join(', ') %> };
+      const uint8_t <%= scene.variable %>_layer_node_definitions[] PROGMEM = { <%= scene.layers.map(layer => `${layer.variable}_node_definitions`).join(', ') %> };
 
     }
   }
