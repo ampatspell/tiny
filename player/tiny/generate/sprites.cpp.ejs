@@ -1,0 +1,28 @@
+// Project: <%= project.title %>
+// Sprites: <%= sprites.length %>
+
+#include <avr/pgmspace.h>
+
+namespace Tiny {
+  namespace Generated {
+    namespace Sprites {
+
+        // Sprites
+      <% sprites.forEach((sprite, idx) => { %>
+        // <%= idx %> "<%= sprite.identifier %>"
+        // <%= sprite.size.width %>×<%= sprite.size.height %>
+        const unsigned char sprite_<%= idx %>[] PROGMEM = {
+          <%= indent(sprite.toPlusMaskString(), 5) %>
+        };
+      <% }); %>
+
+        // Loops
+      <% sprites.forEach((sprite, sidx) => sprite.loops.forEach((loop, lidx) => { %>
+        const uint8_t sprite_<%= sidx %>_loop_<%= lidx %>[] PROGMEM = {
+          <%= loop.toFrameIndexesString() %>
+        };
+      <% })); %>
+
+    }
+  }
+}
