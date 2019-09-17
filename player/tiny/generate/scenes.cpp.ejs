@@ -26,10 +26,15 @@ namespace Tiny {
     <% }) %>
     };
 
+    const uint8_t numberOfScenes = <%= scenes.length %>;
     const size_t storageSize = sizeof(SceneSizes);
 
     size_t getStorageSize() {
       return storageSize;
+    }
+
+    uint8_t getNumberOfScenes() {
+      return numberOfScenes;
     }
 
     uint8_t _storage[storageSize];
