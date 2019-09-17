@@ -44,6 +44,12 @@ export default Component.extend({
         type: 'pixel'
       });
     },
+    moveUp() {
+      this.scene.moveUp();
+    },
+    moveDown() {
+      this.scene.moveDown();
+    },
     deleteScene() {
       this.state.deleteScene(this.scene);
     }

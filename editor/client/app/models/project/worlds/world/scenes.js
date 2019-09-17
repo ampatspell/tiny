@@ -79,4 +79,42 @@ export default EmberObject.extend({
     }
   },
 
+  //
+
+  async _moveDelta(scene, delta) {
+    let { ordered } = this;
+    let idx = ordered.indexOf(scene);
+    if(idx === -1) {
+      return;
+    }
+
+    idx = idx + delta;
+    if(idx < 0 || idx > ordered.length - 1) {
+      return;
+    }
+
+    let next = ordered.objectAt(idx);
+    if(!next) {
+      return;
+    }
+
+    let { index } = scene;
+
+    scene.doc.data.setProperties({ index: next.index });
+    next.doc.data.setProperties({ index });
+
+    await this.store.batch(batch => {
+      batch.save(scene.doc);
+      batch.save(next.doc);
+    });
+  },
+
+  async moveUp(scene) {
+    await this._moveDelta(scene, +1);
+  },
+
+  async moveDown(scene) {
+    await this._moveDelta(scene, -1);
+  }
+
 });
