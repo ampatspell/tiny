@@ -2,7 +2,9 @@
 
 Work in progress. Haven't built any games with it yet.
 
+<div style="margin: 0 auto">
 ![](https://github.com/ampatspell/tiny/blob/master/other/emulator-1.png?raw=true)
+</div>
 
 ![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-1.png?raw=true)
 
