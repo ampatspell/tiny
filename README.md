@@ -2,6 +2,8 @@
 
 Work in progress. Haven't built any games with it yet.
 
+![](https://github.com/ampatspell/tiny/blob/master/other/emulator-1.png?raw=true)
+
 ![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-1.png?raw=true)
 
 ![](https://github.com/ampatspell/tiny/blob/master/other/screenshot-2.png?raw=true)
@@ -82,6 +84,12 @@ const fetch = async (url, token) => {
 let url = 'https://....app-id.cloudfunctions.net/export-world';
 let json = await fetch(url, 'Ny7qX8WIN5zW05mpPwqqWk43');
 ```
+
+See `player/tiny` for proper export example using `export` tools.
+
+## Player example
+
+You'll need a PlatformIO to build and it.
 
 ## Bytes
 
