@@ -20,7 +20,13 @@ namespace Tiny {
       <%= include('scene.cpp', { project, world, scene }) %>
     <% }) %>
 
-    const size_t storageSize = Scene_0::scene_size;
+    union SceneSizes {
+    <% scenes.forEach(scene => { %>
+      size_t scene_<%= scene.index %>[<%= scene.namespace %>::scene_size];
+    <% }) %>
+    };
+
+    const size_t storageSize = sizeof(SceneSizes);
 
     size_t getStorageSize() {
       return storageSize;
