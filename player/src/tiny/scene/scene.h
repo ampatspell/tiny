@@ -1,19 +1,20 @@
 #pragma once
 
+#include <globals.h>
 #include <stdint.h>
 
 class Layer;
 
-class Scene {
+class Scene: public PlacementNew {
 
   const uint8_t *definition;
 
-  Layer *first;
-  Layer *last;
+  Layer **layers;
+  uint8_t numberOfLayers;
 
 public:
 
-  Scene(const uint8_t *_definition);
+  Scene(const uint8_t *_definition, Layer **layers);
   void addLayer(Layer *_layer);
 
   void draw();

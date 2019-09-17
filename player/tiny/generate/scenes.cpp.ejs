@@ -32,12 +32,16 @@ namespace Tiny {
     <% scenes.forEach(scene => { %>
       if(index == <%= scene.index %>) {
         uint8_t *storage = _storage;
-        <%= scene.className %> *scene = new (storage) <%= scene.className %>(<%= scene.namespace %>::scene);
+        Layer **layers = reinterpret_cast<Layer **>(storage + sizeof(<%= scene.className %>));
+        <%= scene.className %> *scene = new (storage) <%= scene.className %>(<%= scene.namespace %>::scene, layers);
         storage += sizeof(<%= scene.className %>);
+        storage += (sizeof(Layer *) * <%= scene.layers.length %>);
       <% scene.layers.forEach(layer => { %>
         {
-          <%= layer.className %> *layer = new (storage) <%= layer.className %>(<%= scene.namespace %>::<%= layer.variable %>);
+          Node **nodes = reinterpret_cast<Node **>(storage + sizeof(<%= layer.className %>));
+          <%= layer.className %> *layer = new (storage) <%= layer.className %>(<%= scene.namespace %>::<%= layer.variable %>, nodes);
           storage += sizeof(<%= layer.className %>);
+          storage += (sizeof(Node *) * <%= layer.nodes.length %>);
           scene->addLayer(layer);
           {
             <% layer.nodes.forEach(node => { %>

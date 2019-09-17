@@ -1,31 +1,17 @@
 #include <tiny/scene/layer.h>
 #include <tiny/scene/node.h>
 
-Layer::Layer(const uint8_t *_definition): definition(_definition), next(nullptr), last(nullptr), first(nullptr) {
-}
-
-void Layer::setNext(Layer *layer) {
-  next = layer;
-}
-
-Layer *Layer::getNext() {
-  return next;
+Layer::Layer(const uint8_t *_definition, Node **_nodes): definition(_definition), nodes(_nodes), numberOfNodes(0) {
 }
 
 void Layer::addNode(Node *_node) {
-  if(!first) {
-    first = _node;
-    last = _node;
-  } else {
-    last->setNext(_node);
-    last = _node;
-  }
+  nodes[numberOfNodes] = _node;
+  numberOfNodes++;
 }
 
 void Layer::draw() {
-  Node *curr = first;
-  while(curr) {
-    curr->draw();
-    curr = curr->getNext();
+  for(uint8_t i = 0; i < numberOfNodes; i++) {
+    Node *node = nodes[i];
+    node->draw();
   }
 }

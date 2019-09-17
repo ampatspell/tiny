@@ -46,6 +46,7 @@
       <%= scene.backgroundType %> // background: <%= scene.background %>
     };
     <% scene.sizeof.push(`sizeof(${scene.className})`); -%>
+    <% scene.sizeof.push(`(sizeof(Layer *) * ${scene.layers.length})`); -%>
 <% scene.layers.forEach(layer => { %>
     const uint8_t <%= layer.variable %>[] PROGMEM = {
     <% if (layer.type === 'grid') { %>
@@ -55,6 +56,7 @@
     <% } %>
     };
     <% scene.sizeof.push(`sizeof(${layer.className})`); -%>
+    <% scene.sizeof.push(`(sizeof(Node *) * ${layer.nodes.length})`); -%>
   <% layer.nodes.forEach(node => { %>
     const uint8_t <%= node.variable %>[] PROGMEM = {
       <%= node.position.x %>, // x
