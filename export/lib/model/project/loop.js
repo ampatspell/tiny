@@ -7,6 +7,10 @@ class Loop {
     this.frames = frames.map(frame => sprite.frames[frame]);
   }
 
+  get index() {
+    return this.sprite.loops.indexOf(this);
+  }
+
   toFrameIndexes() {
     return this.frames.map(frame => frame.index);
   }

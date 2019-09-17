@@ -1,14 +1,22 @@
 #pragma once
 
+#include <globals.h>
 #include <stdint.h>
 
-namespace Tiny {
+class Layer;
 
-class Scene {
+class Scene: public PlacementNew {
+
+  const uint8_t *definition;
+
+  Layer **layers;
+  uint8_t numberOfLayers;
+
 public:
-  uint8_t inits;
-  Scene(uint8_t _inits): inits(_inits) {}
-  void hello() {}
-};
 
-}
+  Scene(const uint8_t *_definition, Layer **layers);
+  void addLayer(Layer *_layer);
+
+  void draw();
+
+};

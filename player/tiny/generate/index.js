@@ -32,6 +32,4 @@ run(config, async runtime => {
     scenes(payload, render)
   ]);
 
-  await render({ template: 'generated', props: payload });
-
 });

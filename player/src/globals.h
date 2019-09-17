@@ -13,7 +13,12 @@ public:
   }
 };
 
-inline void * operator new (size_t size, void *pointer)
-{
-	return pointer;
-}
+class PlacementNew {
+public:
+  PlacementNew() {
+  }
+  inline void * operator new (size_t size, void *ptr)
+  {
+    return ptr;
+  }
+};
