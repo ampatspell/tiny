@@ -1,9 +1,7 @@
 #include <Arduboy2.h>
 #include <globals.h>
 #include <generated/scenes.h>
-#include <generated/sprites.h>
 #include <tiny/scene/scene.h>
-#include <tiny/sprite/sprite.h>
 
 Scene *scene;
 
@@ -19,17 +17,11 @@ void loop() {
   }
 
   arduboy.pollButtons();
-
-  arduboy.setCursor(1, 1);
-
-  unsigned long time = millis();
   scene->draw();
-  unsigned long now = millis();
-  unsigned long took = now - time;
 
-  char buffer[30];
-  snprintf(buffer, sizeof(buffer), "Took %lu\n", took);
-  arduboy.println(buffer);
+  // char buffer[30];
+  // snprintf(buffer, sizeof(buffer), "Took %lu\n", took);
+  // arduboy.println(buffer);
 
   arduboy.display(true);
 }

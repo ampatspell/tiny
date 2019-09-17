@@ -5,6 +5,7 @@ void Scene::addLayer(Layer *_layer) {
   if(!layer) {
     layer = _layer;
   } else {
+    // TODO: sets 1st and last layer. doh
     layer->setNext(_layer);
   }
 }

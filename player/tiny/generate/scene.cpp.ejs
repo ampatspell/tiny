@@ -57,6 +57,8 @@
     <% scene.sizeof.push(`sizeof(${layer.className})`); -%>
   <% layer.nodes.forEach(node => { %>
     const uint8_t <%= node.variable %>[] PROGMEM = {
+      <%= node.position.x %>, // x
+      <%= node.position.y %>, // y
   <% if (node.type.startsWith('sprite/')) { %>
       <%= node.sprite.index -%>, // sprite
     <% if (node.type === 'sprite/frame') { %>

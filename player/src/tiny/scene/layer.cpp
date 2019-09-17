@@ -20,7 +20,7 @@ void Layer::addNode(Node *_node) {
 void Layer::draw() {
   Node *curr = node;
   while(curr) {
-    node->draw();
+    curr->draw();
     curr = curr->getNext();
   }
 }

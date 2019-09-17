@@ -32,20 +32,19 @@ namespace Tiny {
     Scene *instantiate(uint8_t index) {
     <% scenes.forEach(scene => { %>
       if(index == <%= scene.index %>) {
-        size_t offset = 0;
         uint8_t *storage = _storage;
-        <%= scene.className %> *scene = new (storage + offset) <%= scene.className %>(<%= scene.namespace %>::scene);
-        offset += sizeof(<%= scene.className %>);
+        <%= scene.className %> *scene = new (storage) <%= scene.className %>(<%= scene.namespace %>::scene);
+        storage += sizeof(<%= scene.className %>);
       <% scene.layers.forEach(layer => { %>
         {
-          <%= layer.className %> *layer = new (storage + offset) <%= layer.className %>(<%= scene.namespace %>::<%= layer.variable %>);
-          offset += sizeof(<%= layer.className %>);
+          <%= layer.className %> *layer = new (storage) <%= layer.className %>(<%= scene.namespace %>::<%= layer.variable %>);
+          storage += sizeof(<%= layer.className %>);
           scene->addLayer(layer);
           {
             <% layer.nodes.forEach(node => { %>
               {
-                <%= node.className %> *node = new (storage + offset) <%= node.className %>(<%= scene.namespace %>::<%= node.variable %>);
-                offset += sizeof(<%= node.className %>);
+                <%= node.className %> *node = new (storage) <%= node.className %>(<%= scene.namespace %>::<%= node.variable %>);
+                storage += sizeof(<%= node.className %>);
                 layer->addNode(node);
               }
             <% }) %>

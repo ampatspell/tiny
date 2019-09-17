@@ -7,13 +7,15 @@ class Node {
 
 protected:
   const uint8_t *definition;
+  uint8_t x;
+  uint8_t y;
 
 private:
   Node *next;
 
 public:
 
-  Node(const uint8_t *_definition): definition(_definition), next(nullptr) {}
+  Node(const uint8_t *_definition);
   void setNext(Node *node);
   Node *getNext();
 
@@ -24,16 +26,17 @@ public:
 class Sprite;
 
 class SpriteNode: public Node {
+protected:
   Sprite *sprite;
 public:
   SpriteNode(const uint8_t *_definition);
-  void draw() override;
 };
 
 class SpriteFrameNode: public SpriteNode {
   uint8_t frame;
 public:
-  SpriteFrameNode(const uint8_t *_definition): SpriteNode(_definition) {}
+  SpriteFrameNode(const uint8_t *_definition);
+  void draw() override;
 };
 
 class Loop;
@@ -43,4 +46,5 @@ class SpriteLoopNode: public SpriteNode {
   uint8_t index;
 public:
   SpriteLoopNode(const uint8_t *_definition): SpriteNode(_definition) {}
+  void draw() override;
 };
