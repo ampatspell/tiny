@@ -1,7 +1,12 @@
-#include "sprite.h"
-#include <sprites.h>
+#include <Sprites.h>
+#include <tiny/sprite/sprite.h>
 
-Sprite::Sprite(const unsigned char *_definition, Loop **_loops): definition(_definition), loops(_loops) {
+Sprite::Sprite(const unsigned char *_definition, Loop **_loops): definition(_definition), loops(_loops), numberOfLoops(0) {
+}
+
+void Sprite::addLoop(Loop *loop) {
+  loops[numberOfLoops] = loop;
+  numberOfLoops++;
 }
 
 Loop* Sprite::getLoop(uint8_t index) {

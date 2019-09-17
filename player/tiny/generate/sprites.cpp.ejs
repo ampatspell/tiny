@@ -2,51 +2,87 @@
 // Sprites: <%= sprites.length %>
 
 #include <avr/pgmspace.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <tiny/sprite/loop.h>
 #include <tiny/sprite/sprite.h>
-
+<%
+  loops = [];
+  sprites.forEach((sprite, s) => {
+    sprite.variable = `sprite_${s}`;
+    sprite.loops.forEach((loop, l) => {
+      loop.variable = `${sprite.variable}_loop_${l}`;
+      loops.push(loop);
+    });
+  });
+%>
 namespace Tiny {
   namespace Sprites {
 
-        // Sprites
-      <% sprites.forEach((sprite, idx) => { -%>
-      <% sprite.variable = `sprite_${idx}`; %>
-        // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px)
-        const unsigned char _<%= sprite.variable %>[] PROGMEM = {
-          <%= indent(sprite.toPlusMaskString(), 5) %>
-        };
-      <% }); %>
-
-        // Loops
-      <% sprites.forEach((sprite, sidx) => sprite.loops.forEach((loop, lidx) => { -%>
-      <% loop.variable = `${sprite.variable}_loop_${lidx}` %>
-        // <%= sprite.identifier %> → <%= loop.identifier %>
-        const uint8_t _<%= loop.variable %>[] PROGMEM = {
-          <%= loop.toFrameIndexesString() %>
-        };
-      <% })); %>
-
-        // Loop instances
-    <% sprites.forEach(sprite => { %>
-        // <%= sprite.identifier %>
-      <% sprite.loops.forEach(loop => { %>
-        Loop <%= loop.variable %>(_<%= loop.variable %>);
-      <% }); %>
-        Loop *<%= sprite.variable %>_loops[] = { <%- sprite.loops.map(loop => `&${loop.variable}`).join(', ') %> };
-    <% }); %>
-
-        // Sprite instances
       <% sprites.forEach(sprite => { %>
-        // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px)
-        Sprite <%= sprite.variable %>(_<%= sprite.variable %>, <%= sprite.variable %>_loops);
-      <% }); %>
 
-        Sprite *sprites[] = { <%= sprites.map(sprite => `&${sprite.variable}`).join(', ') %> };
+        const unsigned char _<%= sprite.variable %>[] PROGMEM = {
+          <%= indent(sprite.toPlusMaskString(), 1) %>
+        };
 
-        Sprite *getSprite(uint8_t index) {
-          return sprites[index];
+        <% sprite.loops.forEach(loop => { %>
+          const uint8_t _<%= loop.variable %>[] PROGMEM = {
+            <%= loop.frames.length %>, // indexes
+            <%= loop.toFrameIndexesString() %>
+          };
+        <% }) %>
+
+      <% }) %>
+
+      const size_t _spritesStorageSize = (sizeof(Sprite) * <%= sprites.length %>);
+      const size_t _spritesLoopsStorageSize = (sizeof(Loop *) * <%= loops.length %>);
+      const size_t _loopsStorageSize = sizeof(Loop) * <%= loops.length %>;
+      const size_t _storageSize = _spritesStorageSize + _spritesLoopsStorageSize + _loopsStorageSize;
+
+      const uint8_t _numberOfSprites = <%= sprites.length %>;
+
+      uint8_t _storage[_storageSize];
+      Sprite *_sprites[_numberOfSprites];
+
+      bool initialized = false;
+
+      uint8_t getNumberOfSprites() {
+        return _numberOfSprites;
+      }
+
+      size_t getStorageSize() {
+        return _storageSize + sizeof(_sprites);
+      }
+
+      void initialize() {
+        if(initialized) {
+          return;
         }
+
+        uint8_t *storage = _storage;
+
+        <% sprites.forEach((sprite, idx) => { %>
+          {
+            Loop **loops = reinterpret_cast<Loop **>(storage + sizeof(Sprite));
+            Sprite *sprite = new (storage) Sprite(_<%= sprite.variable %>, loops);
+            storage += sizeof(Sprite);
+            storage += (sizeof(Loop *) * <%= sprite.loops.length %>);
+            <% sprite.loops.forEach(loop => { %>
+              {
+                Loop *loop = new (storage) Loop(_<%= loop.variable %>, sprite);
+                sprite->addLoop(loop);
+                storage += sizeof(Loop);
+              }
+            <% }); %>
+            _sprites[<%= idx %>] = sprite;
+          }
+        <% }); %>
+      }
+
+      Sprite *getSprite(uint8_t index) {
+        initialize();
+        return _sprites[index];
+      }
 
   }
 }

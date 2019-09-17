@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include <stdint.h>
 
 // Project: <%= project.title %>
@@ -9,6 +10,11 @@ class Sprite;
 
 namespace Tiny {
   namespace Sprites {
+
+    uint8_t getNumberOfSprites();
+    size_t getStorageSize();
+
     Sprite *getSprite(uint8_t index);
+
   }
 }

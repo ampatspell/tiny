@@ -1,6 +1,5 @@
 #include <globals.h>
 #include <stdarg.h>
-#include <stdint.h>
 #include <stdio.h>
 
 Arduboy2 arduboy;

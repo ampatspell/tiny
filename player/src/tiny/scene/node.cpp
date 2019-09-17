@@ -1,6 +1,8 @@
 #include <avr/pgmspace.h>
+#include <Arduboy2.h>
 #include <generated/sprites.h>
 #include <tiny/scene/node.h>
+#include <tiny/sprite/loop.h>
 #include <tiny/sprite/sprite.h>
 
 Node::Node(const uint8_t *_definition): definition(_definition) {
@@ -27,5 +29,8 @@ SpriteLoopNode::SpriteLoopNode(const uint8_t *_definition): SpriteNode(_definiti
 }
 
 void SpriteLoopNode::draw() {
-  sprite->draw(x, y, 0);
+  if(arduboy.everyXFrames(7)) {
+    index = loop->next(index);
+  }
+  loop->draw(x, y, index);
 }
