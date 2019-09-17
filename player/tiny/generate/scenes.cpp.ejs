@@ -23,21 +23,19 @@ namespace Tiny {
 
     const size_t storageSize = Scene_0::scene_size;
 
-    uint8_t _storage[storageSize];
-
     size_t getStorageSize() {
       return storageSize;
     }
+
+    uint8_t _storage[storageSize];
 
     Scene *instantiate(uint8_t index) {
     <% scenes.forEach(scene => { %>
       if(index == <%= scene.index %>) {
         size_t offset = 0;
         uint8_t *storage = _storage;
-
         <%= scene.className %> *scene = new (storage + offset) <%= scene.className %>(<%= scene.namespace %>::scene);
         offset += sizeof(<%= scene.className %>);
-
       <% scene.layers.forEach(layer => { %>
         {
           <%= layer.className %> *layer = new (storage + offset) <%= layer.className %>(<%= scene.namespace %>::<%= layer.variable %>);
@@ -54,7 +52,6 @@ namespace Tiny {
           }
         }
       <% }); %>
-
         return scene;
       }
     <% }); %>

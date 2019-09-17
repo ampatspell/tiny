@@ -43,30 +43,21 @@
     const uint8_t scene[] PROGMEM = {
       1
     };
+    <% scene.size.push(`sizeof(${scene.className})`); -%>
+<% scene.layers.forEach(layer => { %>
+    const uint8_t <%= layer.variable %>[] PROGMEM = {
+      1
+    };
+    <% scene.size.push(`sizeof(${layer.className})`); -%>
+  <% layer.nodes.forEach(node => { %>
+    const uint8_t <%= node.variable %>[] PROGMEM = {
+      1
+    };
 
-    <% scene.size.push(`sizeof(${scene.className})`); %>
-
-    <% scene.layers.forEach(layer => { %>
-
-      const uint8_t <%= layer.variable %>[] PROGMEM = {
-        1
-      };
-
-      <% scene.size.push(`sizeof(${layer.className})`); %>
-
-      <% layer.nodes.forEach(node => { %>
-
-        const uint8_t <%= node.variable %>[] PROGMEM = {
-          1
-        };
-
-        const size_t <%= node.variable %>_size = sizeof(<%= node.className %>);
-
-        <% scene.size.push(`sizeof(${node.className})`); %>
-
-      <% }); %>
-
-    <% }); %>
+    const size_t <%= node.variable %>_size = sizeof(<%= node.className %>);
+    <% scene.size.push(`sizeof(${node.className})`); -%>
+  <% }); -%>
+<% }); %>
 
     const size_t scene_size = <%= scene.size.join(' + ') %>;
 
