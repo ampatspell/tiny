@@ -6,7 +6,7 @@
   ) as |c|}}
 
     {{#ui-block/tree class="tree" select=(action "select") selected=state.selection as |row|}}
-      {{#each state.world.scenes.ordered as |scene|}}
+      {{#each state.world.scenes.reversed as |scene|}}
         {{#row model=scene class="scene" content=(component c.row content=(component (concat c.content "scene") state=state scene=scene) model=scene collapsable=true) as |row|}}
           {{#unless scene.collapsed}}
             {{#each scene.layers.reversed as |layer|}}
