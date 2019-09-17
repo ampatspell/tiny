@@ -2,13 +2,12 @@
 // World: <%= world.name %>
 // Scenes: <%= scenes.length %>
 
+#include <avr/pgmspace.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <tiny/scene/scene.h>
 #include <tiny/scene/layer.h>
 #include <tiny/scene/node.h>
-#include <avr/pgmspace.h>
-#include <globals.h>
+#include <tiny/scene/scene.h>
 
 <%
 scenes.forEach((scene, idx) => scene.index = idx);

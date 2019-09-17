@@ -21,6 +21,7 @@ public:
   Layer *getNext();
 
   virtual void draw();
+  virtual ~Layer() {};
 
 };
 

@@ -1,5 +1,5 @@
-#include <tiny/scene/scene.h>
 #include <tiny/scene/layer.h>
+#include <tiny/scene/scene.h>
 
 Scene::Scene(const uint8_t *_definition): definition(_definition), first(nullptr), last(nullptr)  {
 }

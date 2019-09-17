@@ -1,7 +1,7 @@
-#include <tiny/scene/node.h>
+#include <avr/pgmspace.h>
 #include <generated/sprites.h>
+#include <tiny/scene/node.h>
 #include <tiny/sprite/sprite.h>
-#include <Arduino.h>
 
 Node::Node(const uint8_t *_definition): definition(_definition), next(nullptr) {
   x = pgm_read_byte(definition);
@@ -29,7 +29,7 @@ void SpriteFrameNode::draw() {
   sprite->draw(x, y, frame);
 }
 
-SpriteLoopNode::SpriteLoopNode(const uint8_t *_definition): SpriteNode(_definition) {
+SpriteLoopNode::SpriteLoopNode(const uint8_t *_definition): index(0), SpriteNode(_definition) {
   uint8_t index = pgm_read_byte(definition + 3);
   loop = sprite->getLoop(index);
 }

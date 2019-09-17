@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdint.h>
-#include <avr/pgmspace.h>
 
 class Node {
 
@@ -20,6 +19,8 @@ public:
   Node *getNext();
 
   virtual void draw() {};
+
+  virtual ~Node() {}
 
 };
 
