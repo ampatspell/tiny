@@ -13,7 +13,7 @@ public:
   }
 };
 
-inline void * operator new (size_t size, void *pointer)
+inline void * operator new (size_t size, void *ptr)
 {
-	return pointer;
+	return ptr;
 }

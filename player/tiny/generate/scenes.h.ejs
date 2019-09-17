@@ -1,15 +1,19 @@
 #pragma once
 
-#include <stdint.h>
-
 // Project: <%= project.title %>
 // World: <%= world.name %>
 // Scenes: <%= scenes.length %>
 
-#include <tiny/scene/scene.h>
+class Scene;
+
+<% scenes.forEach(scene => { %>
+<%= include('scene.h', { project, world, scene }) %>
+<% }) %>
 
 namespace Tiny {
+  namespace Scenes {
 
-  Scene *instantiateScene(uint8_t index);
+    Scene *instantiate(uint8_t index);
 
+  }
 }

@@ -1,7 +1,5 @@
 #pragma once
 
-namespace Tiny {
-
 class Loop;
 
 class Sprite {
@@ -11,5 +9,3 @@ public:
   Sprite(const unsigned char *_definition, Loop *_loops);
 
 };
-
-}

@@ -2,13 +2,11 @@
 
 #include <stdint.h>
 
-namespace Tiny {
+class Layer;
 
 class Scene {
+  const uint8_t *definition;
 public:
-  uint8_t inits;
-  Scene(uint8_t _inits): inits(_inits) {}
-  void hello() {}
+  Scene(const uint8_t *_definition): definition(_definition)  {}
+  void registerLayer(Layer *layer) {}
 };
-
-}

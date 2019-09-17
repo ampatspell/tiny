@@ -17,13 +17,13 @@ void loop() {
   arduboy.setCursor(1, 1);
 
   unsigned long time = millis();
-  Tiny::Scene *scene = Tiny::instantiateScene(0);
+  Scene *scene = Tiny::Scenes::instantiate(0);
 
   unsigned long now = millis();
   unsigned long took = now - time;
 
   char buffer[30];
-  snprintf(buffer, sizeof(buffer), "%p %i %lu\n", scene, scene->inits, took);
+  snprintf(buffer, sizeof(buffer), "%p %lu\n", scene, took);
   arduboy.println(buffer);
 
   arduboy.display(true);

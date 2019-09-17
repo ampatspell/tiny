@@ -6,11 +6,8 @@
 #include <tiny/sprite/loop.h>
 #include <tiny/sprite/sprite.h>
 
-using namespace Tiny;
-
 namespace Tiny {
-  namespace Generated {
-    namespace Sprites {
+  namespace Sprites {
 
         // Sprites
       <% sprites.forEach((sprite, idx) => { -%>
@@ -45,6 +42,5 @@ namespace Tiny {
         Sprite <%= sprite.variable %>(_<%= sprite.variable %>, <%= sprite.variable %>_loops);
       <% }); %>
 
-    }
   }
 }

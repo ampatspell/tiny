@@ -2,13 +2,8 @@
 
 #include <stdint.h>
 
-namespace Tiny {
-
 class Loop {
   const uint8_t *definition;
 public:
   Loop(const uint8_t *_definition);
-
 };
-
-}

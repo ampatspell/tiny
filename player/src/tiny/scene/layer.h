@@ -1,20 +1,22 @@
 #pragma once
 
-namespace Tiny {
+#include <stdint.h>
+
+class Node;
 
 class Layer {
+  const uint8_t *definition;
 public:
-  Layer() {}
+  Layer(const uint8_t *_definition): definition(_definition) {}
+  void registerNode(Node *node) {}
 };
 
 class GridLayer: public Layer {
 public:
-  GridLayer(): Layer() {}
+  GridLayer(const uint8_t *_definition): Layer(_definition) {}
 };
 
 class PixelLayer: public Layer {
 public:
-  PixelLayer(): Layer() {}
+  PixelLayer(const uint8_t *_definition): Layer(_definition) {}
 };
-
-}
