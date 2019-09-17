@@ -12,3 +12,8 @@ public:
   NonAssignable() {
   }
 };
+
+inline void * operator new (size_t size, void *pointer)
+{
+	return pointer;
+}

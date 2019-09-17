@@ -3,7 +3,7 @@ const { mkdir: _mkdir } = require('mkdir-recursive');
 
 const mkdir = path => new Promise((resolve, reject) => {
   _mkdir(path, err =>  {
-    if(err) {
+    if(err && err.code !== 'EEXIST') {
       return reject(err);
     }
     resolve();

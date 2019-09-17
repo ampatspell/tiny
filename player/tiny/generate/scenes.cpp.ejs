@@ -1,0 +1,63 @@
+// Project: <%= project.title %>
+// World: <%= world.name %>
+// Scenes: <%= scenes.length %>
+
+#include <stddef.h>
+#include <stdint.h>
+#include <avr/pgmspace.h>
+#include <tiny/scene/scene.h>
+#include <tiny/scene/layer.h>
+#include <tiny/scene/node.h>
+#include <globals.h>
+
+<%
+scenes.forEach((scene, idx) => {
+  scene.index = idx;
+});
+%>
+
+namespace Tiny {
+
+<% scenes.forEach(scene => { %>
+  <%= include('scene.cpp', { project, world, scene }) %>
+<% }) %>
+
+  // constexpr size_t max(size_t a, size_t b) {
+  //   return a > b ? a : b;
+  // }
+
+  const size_t _scene_size = _<%= scenes[0].variable %>_size;
+  const size_t _layers_size = _<%= scenes[0].variable %>_layers_size;
+  const size_t _nodes_size = _<%= scenes[0].variable %>_nodes_size;
+
+  char storage[_scene_size + _layers_size + _nodes_size];
+  uint8_t inits = 0;
+
+  Scene *instantiateScene(uint8_t index) {
+  <% scenes.forEach(scene => { %>
+    size_t offset = 0;
+
+    if(index == <%= scene.index %>) {
+      <%= scene.className %> *scene = new (storage + offset) <%= scene.className %>(++inits);
+      offset += sizeof(<%= scene.className %>);
+    <% scene.layers.forEach(layer => { %>
+      {
+        <%= layer.className %> *layer = new (storage + offset) <%= layer.className %>();
+        // scene.registerLayer(layer);
+        offset += sizeof(<%= layer.className %>);
+    <% scene.nodes.forEach(node => { %>
+        {
+          <%= node.className %> *node = new (storage + offset) <%= node.className %>();
+          // layer.registerNode(node);
+          offset += sizeof(<%= node.className %>);
+        }
+    <% }); %>
+      }
+    <% }); %>
+      return scene;
+    }
+  <% }); %>
+    return nullptr;
+  }
+
+}
