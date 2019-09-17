@@ -1,15 +1,14 @@
 #pragma once
 
+#include <stdint.h>
+
 // Project: <%= project.title %>
 // Sprites: <%= sprites.length %>
 
+class Sprite;
+
 namespace Tiny {
   namespace Sprites {
-
-<% sprites.forEach(sprite => { %>
-  // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px, <%= sprite.loops.length %> <%= sprite.loops.length === 1 ? 'loop' : 'loops' %>)
-  extern Sprite <%= sprite.variable %>;
-<% }); %>
-
+    Sprite *getSprite(uint8_t index);
   }
 }

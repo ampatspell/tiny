@@ -8,3 +8,11 @@ void Scene::addLayer(Layer *_layer) {
     layer->setNext(_layer);
   }
 }
+
+void Scene::draw() {
+  Layer *curr = layer;
+  while(curr) {
+    curr->draw();
+    curr = curr->getNext();
+  }
+}

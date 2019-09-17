@@ -14,8 +14,10 @@ private:
 public:
 
   Node(const uint8_t *_definition): definition(_definition), next(nullptr) {}
-
   void setNext(Node *node);
+  Node *getNext();
+
+  virtual void draw() {};
 
 };
 
@@ -24,9 +26,8 @@ class Sprite;
 class SpriteNode: public Node {
   Sprite *sprite;
 public:
-  SpriteNode(const uint8_t *_definition): Node(_definition) {
-    // uint8_t index = pgm_read_byte(definition);
-  }
+  SpriteNode(const uint8_t *_definition);
+  void draw() override;
 };
 
 class SpriteFrameNode: public SpriteNode {

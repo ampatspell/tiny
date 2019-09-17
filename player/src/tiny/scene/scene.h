@@ -12,7 +12,8 @@ class Scene {
 public:
 
   Scene(const uint8_t *_definition): definition(_definition), layer(nullptr)  {}
-
   void addLayer(Layer *_layer);
+
+  void draw();
 
 };

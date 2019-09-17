@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 class Loop;
 
 class Sprite {
@@ -7,5 +9,5 @@ class Sprite {
   Loop *loops;
 public:
   Sprite(const unsigned char *_definition, Loop *_loops);
-
+  void draw(uint8_t x, uint8_t y, uint8_t frame);
 };

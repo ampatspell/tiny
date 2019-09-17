@@ -13,9 +13,12 @@ class Layer {
 public:
 
   Layer(const uint8_t *_definition): definition(_definition), next(nullptr), node(nullptr) {}
+  void addNode(Node *node);
 
   void setNext(Layer *layer);
-  void addNode(Node *node);
+  Layer *getNext();
+
+  virtual void draw();
 
 };
 

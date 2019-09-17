@@ -42,5 +42,11 @@ namespace Tiny {
         Sprite <%= sprite.variable %>(_<%= sprite.variable %>, <%= sprite.variable %>_loops);
       <% }); %>
 
+        Sprite *sprites[] = { <%= sprites.map(sprite => `&${sprite.variable}`).join(', ') %> };
+
+        Sprite *getSprite(uint8_t index) {
+          return sprites[index];
+        }
+
   }
 }
