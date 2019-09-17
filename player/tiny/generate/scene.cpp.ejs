@@ -18,6 +18,7 @@
   scene.className = 'Scene';
   scene.namespace = `Scene_${scene.index}`;
   scene.backgroundType = backgrounds[scene.background];
+  scene.size = [];
   scene.layers.forEach((layer, lidx) => {
     layer.className = layerClasses[layer.type];
     layer.variable = `layer_${lidx}`;
@@ -43,11 +44,15 @@
       1
     };
 
+    <% scene.size.push(`sizeof(${scene.className})`); %>
+
     <% scene.layers.forEach(layer => { %>
 
       const uint8_t <%= layer.variable %>[] PROGMEM = {
         1
       };
+
+      <% scene.size.push(`sizeof(${layer.className})`); %>
 
       <% layer.nodes.forEach(node => { %>
 
@@ -55,8 +60,14 @@
           1
         };
 
+        const size_t <%= node.variable %>_size = sizeof(<%= node.className %>);
+
+        <% scene.size.push(`sizeof(${node.className})`); %>
+
       <% }); %>
 
     <% }); %>
+
+    const size_t scene_size = <%= scene.size.join(' + ') %>;
 
   }

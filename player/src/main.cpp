@@ -12,18 +12,18 @@ void loop() {
   if (!(arduboy.nextFrame())) {
     return;
   }
+
   arduboy.pollButtons();
 
   arduboy.setCursor(1, 1);
 
   unsigned long time = millis();
   Scene *scene = Tiny::Scenes::instantiate(0);
-
   unsigned long now = millis();
   unsigned long took = now - time;
 
   char buffer[30];
-  snprintf(buffer, sizeof(buffer), "%p %lu\n", scene, took);
+  snprintf(buffer, sizeof(buffer), "%u %lu\n", Tiny::Scenes::getStorageSize(), took);
   arduboy.println(buffer);
 
   arduboy.display(true);

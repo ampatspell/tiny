@@ -5,10 +5,18 @@
 class Node;
 
 class Layer {
+
   const uint8_t *definition;
+  Layer *next;
+  Node *node;
+
 public:
-  Layer(const uint8_t *_definition): definition(_definition) {}
-  void registerNode(Node *node) {}
+
+  Layer(const uint8_t *_definition): definition(_definition), next(nullptr), node(nullptr) {}
+
+  void setNext(Layer *layer);
+  void addNode(Node *node);
+
 };
 
 class GridLayer: public Layer {

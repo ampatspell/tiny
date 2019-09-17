@@ -3,9 +3,16 @@
 #include <stdint.h>
 
 class Node {
+
   const uint8_t *definition;
+  Node *next;
+
 public:
-  Node(const uint8_t *_definition): definition(_definition) {}
+
+  Node(const uint8_t *_definition): definition(_definition), next(nullptr) {}
+
+  void setNext(Node *node);
+
 };
 
 class SpriteNode: public Node {
