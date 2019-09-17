@@ -29,6 +29,11 @@ void SpriteFrameNode::draw() {
   sprite->draw(x, y, frame);
 }
 
+SpriteLoopNode::SpriteLoopNode(const uint8_t *_definition): SpriteNode(_definition) {
+  uint8_t index = pgm_read_byte(definition + 3);
+  loop = sprite->getLoop(index);
+}
+
 void SpriteLoopNode::draw() {
   sprite->draw(x, y, 0);
 }

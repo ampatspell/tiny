@@ -7,11 +7,13 @@ class Layer;
 class Scene {
 
   const uint8_t *definition;
-  Layer *layer;
+
+  Layer *first;
+  Layer *last;
 
 public:
 
-  Scene(const uint8_t *_definition): definition(_definition), layer(nullptr)  {}
+  Scene(const uint8_t *_definition);
   void addLayer(Layer *_layer);
 
   void draw();

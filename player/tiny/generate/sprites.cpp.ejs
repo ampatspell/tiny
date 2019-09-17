@@ -33,7 +33,7 @@ namespace Tiny {
       <% sprite.loops.forEach(loop => { %>
         Loop <%= loop.variable %>(_<%= loop.variable %>);
       <% }); %>
-        Loop *<%= sprite.variable %>_loops = { <%- sprite.loops.map(loop => `&${loop.variable}`).join(', ') %> };
+        Loop *<%= sprite.variable %>_loops[] = { <%- sprite.loops.map(loop => `&${loop.variable}`).join(', ') %> };
     <% }); %>
 
         // Sprite instances

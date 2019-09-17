@@ -8,11 +8,13 @@ class Layer {
 
   const uint8_t *definition;
   Layer *next;
-  Node *node;
+
+  Node *last;
+  Node *first;
 
 public:
 
-  Layer(const uint8_t *_definition): definition(_definition), next(nullptr), node(nullptr) {}
+  Layer(const uint8_t *_definition);
   void addNode(Node *node);
 
   void setNext(Layer *layer);

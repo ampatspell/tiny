@@ -1,6 +1,9 @@
 #include <tiny/scene/layer.h>
 #include <tiny/scene/node.h>
 
+Layer::Layer(const uint8_t *_definition): definition(_definition), next(nullptr), last(nullptr), first(nullptr) {
+}
+
 void Layer::setNext(Layer *layer) {
   next = layer;
 }
@@ -10,15 +13,17 @@ Layer *Layer::getNext() {
 }
 
 void Layer::addNode(Node *_node) {
-  if(!node) {
-    node = _node;
+  if(!first) {
+    first = _node;
+    last = _node;
   } else {
-    node->setNext(_node);
+    last->setNext(_node);
+    last = _node;
   }
 }
 
 void Layer::draw() {
-  Node *curr = node;
+  Node *curr = first;
   while(curr) {
     curr->draw();
     curr = curr->getNext();
