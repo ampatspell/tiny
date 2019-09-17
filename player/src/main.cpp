@@ -17,9 +17,10 @@ void loop() {
   }
 
   arduboy.pollButtons();
+
   scene->draw();
 
-  Tiny::snprintf(0, 0, 20, "scenes=%u", Tiny::Scenes::getStorageSize());
+//  Tiny::snprintf(0, 0, 20, "scenes=%u", Tiny::Scenes::getStorageSize());
 
   arduboy.display(true);
 }
