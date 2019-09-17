@@ -1,0 +1,15 @@
+.ui-route-users-new {
+  margin: 15px;
+  > .content {
+    width: 300px;
+    > .row {
+      margin-bottom: 10px;
+      > .label {
+        font-weight: 600;
+      }
+      &.error {
+        font-weight: 600;
+      }
+    }
+  }
+}
