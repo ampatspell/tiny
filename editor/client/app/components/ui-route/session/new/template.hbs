@@ -13,6 +13,6 @@
     {{ui-block/input value=model.password type="password" disabled=model.isBusy update=(action "update" "password")}}
   </div>
   <div class="row">
-    {{ui-block/button value="Sign in" disabled=model.isDisabled action=(action "save")}} or {{link-to 'sign up' 'users.new'}}
+    {{ui-block/button value="Sign in" disabled=model.isDisabled action=(action "save")}} or {{link-to "sign up" "users.new"}}
   </div>
 </div>
