@@ -19,9 +19,7 @@ void loop() {
   arduboy.pollButtons();
   scene->draw();
 
-  // char buffer[30];
-  // snprintf(buffer, sizeof(buffer), "Took %lu\n", took);
-  // arduboy.println(buffer);
+  Tiny::snprintf(0, 0, 20, "scenes=%u", Tiny::Scenes::getStorageSize());
 
   arduboy.display(true);
 }
