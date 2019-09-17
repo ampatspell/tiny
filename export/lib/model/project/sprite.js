@@ -12,6 +12,10 @@ class Sprite {
     this.loops = loops.map(loop => new Loop(this, loop));
   }
 
+  get index() {
+    return this.model.sprites.indexOf(this);
+  }
+
   frameByIdentifier(identifier) {
     return this.frames.find(frame => frame.identifier === identifier);
   }

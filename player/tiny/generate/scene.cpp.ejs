@@ -18,7 +18,7 @@
   scene.className = 'Scene';
   scene.namespace = `Scene_${scene.index}`;
   scene.backgroundType = backgrounds[scene.background];
-  scene.size = [];
+  scene.sizeof = [];
   scene.layers.forEach((layer, lidx) => {
     layer.className = layerClasses[layer.type];
     layer.variable = `layer_${lidx}`;
@@ -41,24 +41,37 @@
   namespace <%= scene.namespace %> {
 
     const uint8_t scene[] PROGMEM = {
-      1
+      <%= scene.size.width %>, // width
+      <%= scene.size.height %>, // height
+      <%= scene.backgroundType %> // background: <%= scene.background %>
     };
-    <% scene.size.push(`sizeof(${scene.className})`); -%>
+    <% scene.sizeof.push(`sizeof(${scene.className})`); -%>
 <% scene.layers.forEach(layer => { %>
     const uint8_t <%= layer.variable %>[] PROGMEM = {
-      1
+    <% if (layer.type === 'grid') { %>
+      <%= layer.grid.width %>, // grid width
+      <%= layer.grid.height %>, // grid height
+    <% } else if (layer.type === 'pixel') { %>
+    <% } %>
     };
-    <% scene.size.push(`sizeof(${layer.className})`); -%>
+    <% scene.sizeof.push(`sizeof(${layer.className})`); -%>
   <% layer.nodes.forEach(node => { %>
     const uint8_t <%= node.variable %>[] PROGMEM = {
-      1
+  <% if (node.type.startsWith('sprite/')) { %>
+      <%= node.sprite.index -%>, // sprite
+    <% if (node.type === 'sprite/frame') { %>
+      <%= node.frame.index -%> // frame
+    <% } else if (node.type === 'sprite/loop') { %>
+      <%= node.loop.index -%> // loop
+    <% } %>
+  <% } %>
     };
 
     const size_t <%= node.variable %>_size = sizeof(<%= node.className %>);
-    <% scene.size.push(`sizeof(${node.className})`); -%>
+    <% scene.sizeof.push(`sizeof(${node.className})`); -%>
   <% }); -%>
 <% }); %>
 
-    const size_t scene_size = <%= scene.size.join(' + ') %>;
+    const size_t scene_size = <%= scene.sizeof.join(' + ') %>;
 
   }
