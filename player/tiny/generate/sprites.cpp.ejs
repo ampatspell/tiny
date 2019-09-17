@@ -6,39 +6,45 @@
 #include <tiny/sprite/loop.h>
 #include <tiny/sprite/sprite.h>
 
+using namespace Tiny;
+
 namespace Tiny {
+  namespace Generated {
+    namespace Sprites {
 
-  // Sprites
-<% sprites.forEach((sprite, idx) => { -%>
-<% sprite.variable = `sprite_${idx}`; %>
-  // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px)
-  const unsigned char _<%= sprite.variable %>[] PROGMEM = {
-    <%= indent(sprite.toPlusMaskString(), 2) %>
-  };
-<% }); %>
+        // Sprites
+      <% sprites.forEach((sprite, idx) => { -%>
+      <% sprite.variable = `sprite_${idx}`; %>
+        // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px)
+        const unsigned char _<%= sprite.variable %>[] PROGMEM = {
+          <%= indent(sprite.toPlusMaskString(), 5) %>
+        };
+      <% }); %>
 
-  // Loops
-<% sprites.forEach((sprite, sidx) => sprite.loops.forEach((loop, lidx) => { -%>
-<% loop.variable = `${sprite.variable}_loop_${lidx}` %>
-  // <%= sprite.identifier %> → <%= loop.identifier %>
-  const uint8_t _<%= loop.variable %>[] PROGMEM = {
-    <%= loop.toFrameIndexesString() %>
-  };
-<% })); %>
+        // Loops
+      <% sprites.forEach((sprite, sidx) => sprite.loops.forEach((loop, lidx) => { -%>
+      <% loop.variable = `${sprite.variable}_loop_${lidx}` %>
+        // <%= sprite.identifier %> → <%= loop.identifier %>
+        const uint8_t _<%= loop.variable %>[] PROGMEM = {
+          <%= loop.toFrameIndexesString() %>
+        };
+      <% })); %>
 
-  // Loop instances
-<% sprites.forEach(sprite => { %>
-  // <%= sprite.identifier %>
-<% sprite.loops.forEach(loop => { %>
-  Loop <%= loop.variable %>(_<%= loop.variable %>);
-<% }); %>
-  Loop *<%= sprite.variable %>_loops = { <%- sprite.loops.map(loop => `&${loop.variable}`).join(', ') %> };
-<% }); %>
+        // Loop instances
+    <% sprites.forEach(sprite => { %>
+        // <%= sprite.identifier %>
+      <% sprite.loops.forEach(loop => { %>
+        Loop <%= loop.variable %>(_<%= loop.variable %>);
+      <% }); %>
+        Loop *<%= sprite.variable %>_loops = { <%- sprite.loops.map(loop => `&${loop.variable}`).join(', ') %> };
+    <% }); %>
 
-  // Sprite instances
-<% sprites.forEach(sprite => { %>
-  // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px)
-  Sprite <%= sprite.variable %>(_<%= sprite.variable %>, <%= sprite.variable %>_loops);
-<% }); %>
+        // Sprite instances
+      <% sprites.forEach(sprite => { %>
+        // <%= sprite.identifier %> (<%= sprite.size.width %>×<%= sprite.size.height %>px)
+        Sprite <%= sprite.variable %>(_<%= sprite.variable %>, <%= sprite.variable %>_loops);
+      <% }); %>
 
+    }
+  }
 }

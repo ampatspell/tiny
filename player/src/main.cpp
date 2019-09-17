@@ -1,5 +1,4 @@
 #include <Arduboy2.h>
-#include <generated/scene_01.h>
 #include <globals.h>
 #include <generated/scenes.h>
 #include <tiny/scene/scene.h>
