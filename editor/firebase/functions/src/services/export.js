@@ -112,7 +112,7 @@ class ExportService {
     }
 
     let [ scenes ] = await Promise.all([
-      this._exportScenes(await world.ref.collection('scenes').orderBy('index', 'asc').get())
+      this._exportScenes(await world.ref.collection('scenes').orderBy('index', 'desc').get())
     ]);
 
     return Object.assign(pick(data, [ 'name' ]), { _id: world.id, scenes });
