@@ -1,170 +1,110 @@
 # Tiny Editor
 
-## Firestore structure
+A webapp build with Ember.js and Firebase.
 
-### Project
+## General setup
 
-``` javascript
-// projects/{project-id}
-{
-  owner: uid,
-  title: 'Hello'
-}
+To run it locally or deploy to firebase hosting you'll need:
+
+* Node.js: https://nodejs.org
+* Firebase Tools: https://github.com/firebase/firebase-tools
+
+Download Node.js latest LTS version from https://nodejs.org
+
+That will add `npm` command tool to your shell. Then,
+
+``` bash
+# Install firebase tools
+$ npm install -g firebase-tools
+# Login
+$ firebase login
 ```
 
-### Project / Sprite
+Clone whole repository
 
-``` javascript
-// projects/{project-id}/sprites/{sprite-id}
-{
-  identifier: 'weirdo',
-  name: 'Weirdo',
-  size: {
-    width: 16,
-    height: 16
-  },
-  thumbnail: 'https://.../thumbnail.gif'
-}
+``` bash
+$ git@github.com:ampatspell/tiny.git
+$ cd tiny/editor
 ```
 
-### Project / Sprite / Frame
+Now you'll need to create a Firebase project in Google's Firebase console: https://console.firebase.google.com. Click "Add project" and follow the steps.
+
+Then few things:
+
+* Go to Authentication → Sign-in method and enable Email/Password
+* Go to Authentication → Users and create user for yourself
+* Go to Database and enable Firestore (in locked mode, default or closer to you region is fine)
+* Go to Storage and enable it with default security rules
+* Go to Settings → Project settings and add a web app.
+* Now in the Project Settings below general info, you'll see your webapp, switch to Config in Firebase SDK snippet and copy firebase config which should look like this:
 
 ``` javascript
-// projects/{project-id}/sprites/{sprite-id}/frames/{frame-id}
-{
-  bytes: blob,
-  index: 0
-}
+const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  databaseURL: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...", // remove this line, not needed for tiny
+  appId: "..."
+};
 ```
 
-### Project / Sprite / Loop
+## Configuration
+
+Create the following files:
+
+* `editor/config.js`
+* `editor/firebase/.firebaserc`
 
 ``` javascript
-// projects/{project-id}/sprites/{sprite-id}/loops/{frame-id}
-{
-  identifier: 'wink',
-  frames: [
-    "frame-id",
-  ]
-}
+// editor/config.js
+module.exports = {
+  'your-project-id': {
+    firebase: {
+      apiKey: "...",
+      authDomain: "...",
+      databaseURL: "...",
+      projectId: "your-project-id",
+      storageBucket: "...",
+      appId: "..."
+    }
+  }
+};
 ```
 
-### Project / World
-
 ``` javascript
-// projects/{project-id}/worlds/{world-id}
+// editor/firebase/.firebaserc
 {
-  name: 'First',
-  token: 'export-token',
-  thumbnail: 'https://.../thumbnail.png'
-}
-```
-
-### Project / World / Scene
-
-``` javascript
-// projects/{project-id}/worlds/{world-id}/scenes/{scene-id}
-{
-  name: 'One',
-  identifier: '01',
-  background: 'black', // black, white, transparent
-  collapsed: false, // ui
-  hidden: false,
-  index: 0, // ui
-  locked: false, // ui
-  position: { // ui
-    x: 0,
-    y: 0
-  },
-  size: { // px
-    width: 128,
-    height: 64
+  "projects": {
+    "production": "your-project-id"
   }
 }
 ```
 
-### Project / World / Scene / Layer
+## Install dependencies
 
-Grid layer
-
-``` javascript
-// projects/{project-id}/worlds/{world-id}/scenes/{scene-id}/layers/{layer-id}
-{
-  type: 'grid',
-  identifier: 'background',
-  collapsed: false, // ui
-  index: 1, // ui
-  locked: false, // ui
-  grid: {
-    width: 8,
-    height: 8
-  }
-}
+``` bash
+$ cd editor/client
+$ npm install
+$ cd editor/firebase/functions
+$ npm install
 ```
 
-Pixel layer
+## Deploy webapp and cloud functions
 
-``` javascript
-// projects/{project-id}/worlds/{world-id}/scenes/{scene-id}/layers/{layer-id}
-{
-  type: 'pixel',
-  identifier: 'background',
-  collapsed: false, // ui
-  index: 1, // ui
-  locked: false // ui
-}
+``` bash
+$ cd editor
+$ npm run deploy:production:all
 ```
 
-### Project / World / Scene / Layer / Node
+Visit your app at url printed out after successful deployment. Login with email/password you created few steps before.
 
-Sprite frame
+## Run locally
 
-``` javascript
-// projects/{project-id}/worlds/{world-id}/scenes/{scene-id}/layers/{layer-id}/nodes/{node-id}
-{
-  type: 'sprite/frame',
-  sprite: "spider",
-  frame: "frame-identifier",
-  identifier: "the-spider",
-    position: {
-    x: 104,
-    y: 40
-  },
-  alignment: {
-    horizontal: 'left',
-    vertical: 'top'
-  },
-  flip: {
-    horizontal: false,
-    vertical: false
-  },
-  index: 0, // ui,
-  locked: false // ui
-}
-```
+To run it locally, you'll still need Firebase project setup and deployed cloud functions.
 
-Sprite loop
-
-``` javascript
-// projects/{project-id}/worlds/{world-id}/scenes/{scene-id}/layers/{layer-id}/nodes/{node-id}
-{
-  type: 'sprite/loop',
-  sprite: "spider",
-  loop: "loop-identifier",
-  identifier: "the-spider",
-    position: {
-    x: 104,
-    y: 40
-  },
-  alignment: {
-    horizontal: 'left',
-    vertical: 'top'
-  },
-  flip: {
-    horizontal: false,
-    vertical: false
-  },
-  index: 0, // ui,
-  locked: false // ui
-}
+``` bash
+$ cd editor/client
+$ FIREBASE=production ember s
 ```

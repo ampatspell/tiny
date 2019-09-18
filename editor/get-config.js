@@ -19,7 +19,11 @@ const getConfig = (opts={}) => {
     console.log('Firebase:', id, `(${alias})`);
   }
 
-  let serviceAccountKey = require.resolve(`./${alias}-service-account-key.json`);
+  let serviceAccountKey;
+  try {
+    serviceAccountKey = require.resolve(`./${alias}-service-account-key.json`);
+  } catch(err) {
+  }
 
   return Object.assign({ }, config, { alias, id, serviceAccountKey });
 }
