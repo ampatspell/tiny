@@ -5,6 +5,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "bump": "npm version minor --no-git-tag-version",
+    "patch": "npm version patch --no-git-tag-version"
+  },
   "dependencies": {
     "ejs": "^2.7.1",
     "mkdir-recursive": "^0.4.0",
