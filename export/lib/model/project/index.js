@@ -6,7 +6,7 @@ class Project {
   constructor(json) {
     Object.defineProperty(this, 'json', { value: json });
     let { project: { title }, sprites, world } = json;
-    this.project = { title };
+    this.title = title;
     this.sprites = sprites.map(sprite => new Sprite(this, sprite));
     this.world = new World(this, world);
   }

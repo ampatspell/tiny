@@ -12,6 +12,10 @@ class Scene {
     this.layers = layers.map(layer => new Layer(this, layer));
   }
 
+  layerByIdentifier(identifier) {
+    return this.layers.find(layer => layer.identifier === identifier);
+  }
+
 }
 
 module.exports = Scene;

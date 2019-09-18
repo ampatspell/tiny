@@ -9,10 +9,12 @@ class Node {
     this.alignment = alignment;
     this.flip = flip;
     this.color = color;
-    this.sprite = layer.scene.world.project.spriteByIdentifier(sprite);
-    if(this.sprite) {
-      this.frame = this.sprite.frameByIdentifier(frame);
-      this.loop = this.sprite.loopByIdentifier(loop);
+    if(sprite) {
+      this.sprite = layer.scene.world.project.spriteByIdentifier(sprite);
+      if(this.sprite) {
+        this.frame = this.sprite.frameByIdentifier(frame);
+        this.loop = this.sprite.loopByIdentifier(loop);
+      }
     }
   }
 
