@@ -1,7 +1,7 @@
 module.exports = async (hash, render) => {
 
-  let { project, world, world: { scenes } } = hash;
+  let { title, world, world: { scenes } } = hash;
 
-  await render({ template: 'scenes', props: { project, world, scenes } });
+  await render({ template: 'scenes', props: { project: { title }, world, scenes } });
 
 }

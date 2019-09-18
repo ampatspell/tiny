@@ -1,7 +1,7 @@
 module.exports = async (hash, render) => {
 
-  let { project, sprites } = hash;
+  let { title, sprites } = hash;
 
-  await render({ template: 'sprites', props: { sprites, project } });
+  await render({ template: 'sprites', props: { sprites, project: { title } } });
 
 }
