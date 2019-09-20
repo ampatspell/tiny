@@ -1,7 +1,7 @@
 <div class="label">{{label}}</div>
-{{#if value}}
+{{#if properties}}
   <div class="items">
-    {{#each value as |item|}}
+    {{#each properties as |item|}}
       <div class="item">
         <div class="content">
           {{ui-block/input class="input key" value=item.key update=(action 'update' item 'key') enter=(action 'update' item 'key')}}
