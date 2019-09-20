@@ -11,6 +11,10 @@
   {{/sidebar.section}}
 
   {{#sidebar.section as |section|}}
+    {{section.properties label="Custom properties" value=world.properties update=(action "update" "properties")}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
       {{actions.button value="Add new scene" action=(action "createScene")}}
     {{/section.actions}}

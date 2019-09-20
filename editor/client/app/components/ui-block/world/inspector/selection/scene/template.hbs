@@ -28,6 +28,10 @@
   {{/sidebar.section}}
 
   {{#sidebar.section as |section|}}
+    {{section.properties label="Custom properties" value=scene.properties update=(action "update" "properties")}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
     {{#section.actions as |actions|}}
       {{actions.button value="Add Grid Layer" action=(action "createGridLayer")}}
       {{actions.button value="Add Pixel Layer" action=(action "createPixelLayer")}}

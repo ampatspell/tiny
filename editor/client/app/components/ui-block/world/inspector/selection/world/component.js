@@ -13,7 +13,10 @@ export default Component.extend({
     },
     createScene() {
       this.state.createScene({ name: 'New Scene', identifier: 'new-scene' });
-    }
+    },
+    update(key, value) {
+      this.world.update({ [key]: value });
+    },
   }
 
 });

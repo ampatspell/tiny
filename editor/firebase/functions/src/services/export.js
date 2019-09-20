@@ -7,6 +7,16 @@ class ExportService {
     this.app = app;
   }
 
+  async _exportProperties(snapshot) {
+    let data = snapshot.data();
+    if(!data) {
+      return;
+    }
+    let { properties } = data;
+    properties = properties || [];
+    return properties.filter(prop => !!prop.key && prop.value !== '');
+  }
+
   async _exportSpriteFrame(frame) {
     let data = frame.data();
     if(!data) {
@@ -68,7 +78,9 @@ class ExportService {
       return;
     }
 
-    return Object.assign(pick(data, [ 'type', 'sprite', 'frame', 'position', 'alignment', 'flip', 'loop', 'color' ]), { _id: node.id });
+    let properties = await this._exportProperties(node);
+
+    return Object.assign(pick(data, [ 'type', 'sprite', 'frame', 'position', 'alignment', 'flip', 'loop', 'color' ]), { _id: node.id, properties });
   }
 
   async _exportSceneLayerNodes(nodes) {
@@ -81,9 +93,12 @@ class ExportService {
       return;
     }
 
-    let nodes = await this._exportSceneLayerNodes(await layer.ref.collection('nodes').orderBy('index', 'asc').get());
+    let [ nodes, properties ] = await Promise.all([
+      this._exportSceneLayerNodes(await layer.ref.collection('nodes').orderBy('index', 'asc').get()),
+      this._exportProperties(layer)
+    ]);
 
-    return Object.assign(pick(data, [ 'identifier', 'type', 'grid' ]), { _id: layer.id, nodes });
+    return Object.assign(pick(data, [ 'identifier', 'type', 'grid' ]), { _id: layer.id, nodes, properties });
   }
 
   async _exportSceneLayers(layers) {
@@ -96,9 +111,12 @@ class ExportService {
       return;
     }
 
-    let layers = await this._exportSceneLayers(await scene.ref.collection('layers').orderBy('index', 'asc').get());
+    let [ layers, properties ] = await Promise.all([
+      this._exportSceneLayers(await scene.ref.collection('layers').orderBy('index', 'asc').get()),
+      this._exportProperties(scene)
+    ]);
 
-    return Object.assign(pick(data, [ 'identifier', 'background', 'name', 'size' ]), { _id: scene.id, layers });
+    return Object.assign(pick(data, [ 'identifier', 'background', 'name', 'size' ]), { _id: scene.id, layers, properties });
   }
 
   async _exportScenes(scenes) {
@@ -111,11 +129,12 @@ class ExportService {
       return;
     }
 
-    let [ scenes ] = await Promise.all([
-      this._exportScenes(await world.ref.collection('scenes').orderBy('index', 'desc').get())
+    let [ scenes, properties ] = await Promise.all([
+      this._exportScenes(await world.ref.collection('scenes').orderBy('index', 'desc').get()),
+      this._exportProperties(world)
     ]);
 
-    return Object.assign(pick(data, [ 'name' ]), { _id: world.id, scenes });
+    return Object.assign(pick(data, [ 'name' ]), { _id: world.id, scenes, properties });
   }
 
   async _exportProject(project) {
