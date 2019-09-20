@@ -72,7 +72,7 @@ union MaxSceneSize {
 // one scene at the time
 uint8_t storage[sizeof(MaxSceneSize)];
 
-void intantiate() {
+void instantiate() {
   uint8_t *ptr = storage;
 
   Layer **layers = reinterpret_cast<Layer**>(ptr);
