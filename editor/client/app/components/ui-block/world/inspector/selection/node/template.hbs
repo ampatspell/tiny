@@ -16,6 +16,10 @@
   {{component (concat "ui-block/world/inspector/selection/node/" node.type) state=state node=node sidebar=sidebar update=(action "update")}}
 
   {{#sidebar.section as |section|}}
+    {{section.properties label="Custom properties" value=node.properties update=(action "update" "properties")}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
     {{#section.actions type="grid" as |actions|}}
       {{actions.button value="Move Up" action=(action "moveUp")}}
       {{actions.button value="Move Down" action=(action "moveDown")}}

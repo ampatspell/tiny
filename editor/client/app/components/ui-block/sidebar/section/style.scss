@@ -166,4 +166,39 @@
     }
   }
 
+  > .properties {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+    > .items {
+      margin-top: 5px;
+      > .item {
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: row;
+        > .content {
+          flex: 1;
+          > .input {
+            margin-bottom: 1px;
+          }
+        }
+        > .accessories {
+          margin: 3px 0 0 5px;
+        }
+      }
+    }
+    > .placeholder {
+      margin-bottom: 5px;
+    }
+    > .actions {
+      display: flex;
+      flex-direction: row;
+      > .action {
+        flex: 1;
+      }
+    }
+  }
+
 }

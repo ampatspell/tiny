@@ -25,6 +25,7 @@ export default EmberObject.extend(ScheduleSave, {
   background: data('background'),
   position: data('position.serialized'),
   collapsed: data('collapsed'),
+  properties: data('properties.serialized'),
 
   locked: data('locked'),
   chainLocked: or('locked', 'world.locked'),
