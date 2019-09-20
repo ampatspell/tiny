@@ -11,6 +11,8 @@ uint8_t idx = 0;
 bool info = false;
 
 void setup() {
+//  Serial.begin(9600);
+
   arduboy.begin();
   arduboy.setFrameRate(24);
   if (Tiny::Scenes::getNumberOfScenes() == 0) {
@@ -47,15 +49,12 @@ void loop() {
   if (scene) {
     scene->draw();
     if (info) {
-    Tiny::snprintf(0, 0, 50, "Scene #%u\nSprites %u\nScenes %u",
-        idx,
-        Tiny::Sprites::getStorageSize(),
-        Tiny::Scenes::getStorageSize()
-    );
+      Tiny::snprintf(0, 0, 50, "Scene #%u\nSprites %u\nScenes %u", idx, Tiny::Sprites::getStorageSize(),
+          Tiny::Scenes::getStorageSize());
+    }
+  } else {
+    Tiny::snprintf(0, 0, 20, "No Scenes");
   }
-} else {
-  Tiny::snprintf(0, 0, 20, "No Scenes");
-}
 
-arduboy.display(true);
+  arduboy.display(true);
 }
