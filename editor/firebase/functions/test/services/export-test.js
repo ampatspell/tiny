@@ -35,16 +35,23 @@ describe('services / export', () => {
       },
       'projects/bug/worlds/earth': {
         token: 'the-token',
-        name: 'Earth'
+        name: 'Earth',
+        properties: [
+          { key: 'className', value: 'TheWorld' }
+        ]
       },
       'projects/bug/worlds/earth/scenes/intro': {
         background: 'black',
         identifier: 'intro',
         name: 'Earth',
+        index: 0,
         size: {
           width: 128,
           height: 64
-        }
+        },
+        properties: [
+          { key: 'className', value: 'TheScene' }
+        ]
       },
       'projects/bug/worlds/earth/scenes/intro/layers/background': {
         identifier: 'background',
@@ -53,7 +60,10 @@ describe('services / export', () => {
         grid: {
           width: 8,
           height: 8
-        }
+        },
+        properties: [
+          { key: 'className', value: 'TheBackground' }
+        ]
       },
       'projects/bug/worlds/earth/scenes/intro/layers/background/nodes/1': {
         index: 0,
@@ -71,7 +81,10 @@ describe('services / export', () => {
         flip: {
           horizontal: false,
           vertical: false
-        }
+        },
+        properties: [
+          { key: 'className', value: 'TheNode' }
+        ]
       },
       'projects/bug/worlds/earth/scenes/intro/layers/char': {
         identifier: 'char',
@@ -144,12 +157,18 @@ describe('services / export', () => {
       world: {
         _id: 'earth',
         name: 'Earth',
+        properties: [
+          { key: 'className', value: 'TheWorld' }
+        ],
         scenes: [
           {
             _id: 'intro',
             identifier: 'intro',
             background: 'black',
             name: 'Earth',
+            properties: [
+              { key: 'className', value: 'TheScene' }
+            ],
             size: { height: 64, width: 128 },
             layers: [
               {
@@ -157,6 +176,9 @@ describe('services / export', () => {
                 identifier: 'background',
                 type: 'grid',
                 grid: { height: 8, width: 8 },
+                properties: [
+                  { key: 'className', value: 'TheBackground' }
+                ],
                 nodes: [
                   {
                     _id: '1',
@@ -165,7 +187,10 @@ describe('services / export', () => {
                     frame: '2',
                     position: { x: 104, y: 40 },
                     alignment: { vertical: 'top', horizontal: 'left' },
-                    flip: { horizontal: false, vertical: false }
+                    flip: { horizontal: false, vertical: false },
+                    properties: [
+                      { key: 'className', value: 'TheNode' }
+                    ],
                   }
                 ]
               },
@@ -173,6 +198,7 @@ describe('services / export', () => {
                 _id: 'char',
                 identifier: 'char',
                 type: 'pixel',
+                properties: [],
                 nodes: [
                   {
                     _id: '1',
@@ -182,12 +208,14 @@ describe('services / export', () => {
                     alignment: { vertical: 'top', horizontal: 'left' },
                     flip: { horizontal: false, vertical: false },
                     loop: 'wink',
+                    properties: []
                   },
                   {
                     _id: '2',
                     type: 'fill',
                     position: { y: 40, x: 104 },
-                    color: 'white'
+                    color: 'white',
+                    properties: []
                   }
                 ]
               }
