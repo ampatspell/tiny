@@ -9,6 +9,7 @@ export default Component.extend({
   properties: computed('value', function() {
     let { value } = this;
     if(!value) {
+      console.log('no value', value);
       value = [];
     }
     return value;
@@ -18,7 +19,7 @@ export default Component.extend({
     add() {
       let { properties } = this;
       properties = properties.slice();
-      properties.push({ key: '', value: '' });
+      properties.push({ key: '', value: null });
       this.update(properties);
     },
     delete(item) {
@@ -32,6 +33,19 @@ export default Component.extend({
       if(focus === false) {
         return;
       }
+
+      if(key === 'value') {
+        if(value.match(/^[+-]?([0-9]*[.])?[0-9]+$/)) {
+          value = parseFloat(value);
+        } else if(value === 'true') {
+          value = true;
+        } else if(value === 'false') {
+          value = false;
+        } else if(!value) {
+          value = null;
+        }
+      }
+
       let { properties } = this;
       let idx = properties.indexOf(item);
       properties = properties.slice();
