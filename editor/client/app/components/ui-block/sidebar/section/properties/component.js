@@ -9,7 +9,6 @@ export default Component.extend({
   properties: computed('value', function() {
     let { value } = this;
     if(!value) {
-      console.log('no value', value);
       value = [];
     }
     return value;
