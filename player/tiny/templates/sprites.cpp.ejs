@@ -10,15 +10,15 @@ namespace Sprites {
 
 <% project.sprites.forEach(sprite => { %>
 
-const unsigned char <%= sprite.variable %>[] PROGMEM = {
+constexpr unsigned char <%= sprite.variable %>[] PROGMEM = {
   <%= sprite.toPlusMaskString() %>
 };
 
 <% sprite.loops.forEach(loop => { %>
-  const uint8_t <%= loop.variable %>[] PROGMEM = {
-    <%= loop.frames.length %>,
-    <%= loop.toFrameIndexesString() %>
-  };
+constexpr uint8_t <%= loop.variable %>[] PROGMEM = {
+  <%= loop.frames.length %>,
+  <%= loop.toFrameIndexesString() %>
+};
 <% }) %>
 
 <% }) %>
@@ -29,14 +29,14 @@ const unsigned char <%= sprite.variable %>[] PROGMEM = {
 // loops arrays
 // loops
 
-const size_t spritesSize = sizeof(Sprite) * <%= project.sprites.length %>;
-const size_t spriteLoopArraysSize = sizeof(Loop*) * <%= project.loops.length %>;
-const size_t loopsSize = sizeof(Loop) * <%= project.loops.length %>;
+constexpr size_t spritesSize = sizeof(Sprite) * <%= project.sprites.length %>;
+constexpr size_t spriteLoopArraysSize = sizeof(Loop*) * <%= project.loops.length %>;
+constexpr size_t loopsSize = sizeof(Loop) * <%= project.loops.length %>;
 
-const size_t storageSize = spritesSize + spriteLoopArraysSize + loopsSize;
+constexpr size_t storageSize = spritesSize + spriteLoopArraysSize + loopsSize;
 uint8_t storage[storageSize];
 
-const uint8_t numberOfSprites = <%= project.sprites.length %>;
+constexpr uint8_t numberOfSprites = <%= project.sprites.length %>;
 Sprite *sprites[numberOfSprites];
 
 bool initialized = false;
