@@ -13,8 +13,22 @@ class ExportService {
       return;
     }
     let { properties } = data;
-    properties = properties || [];
-    return properties.filter(prop => !!prop.key && prop.value !== '');
+    properties = properties || {};
+    let parse = value => {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return value;
+      }
+    }
+    return Object.keys(properties).reduce((hash, key) => {
+      let value = properties[key];
+      if(value === '') {
+        return;
+      }
+      hash[key] = parse(value);
+      return hash;
+    }, {});
   }
 
   async _exportSpriteFrame(frame) {

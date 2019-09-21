@@ -36,9 +36,12 @@ describe('services / export', () => {
       'projects/bug/worlds/earth': {
         token: 'the-token',
         name: 'Earth',
-        properties: [
-          { key: 'className', value: 'TheWorld' }
-        ]
+        properties: {
+          className: 'TheWorld',
+          speed: '5',
+          ok: true,
+          names: '[ "one", "two" ]'
+        }
       },
       'projects/bug/worlds/earth/scenes/intro': {
         background: 'black',
@@ -49,9 +52,9 @@ describe('services / export', () => {
           width: 128,
           height: 64
         },
-        properties: [
-          { key: 'className', value: 'TheScene' }
-        ]
+        properties: {
+          className: 'TheScene'
+        }
       },
       'projects/bug/worlds/earth/scenes/intro/layers/background': {
         identifier: 'background',
@@ -61,9 +64,9 @@ describe('services / export', () => {
           width: 8,
           height: 8
         },
-        properties: [
-          { key: 'className', value: 'TheBackground' }
-        ]
+        properties: {
+          className: 'TheBackground'
+        }
       },
       'projects/bug/worlds/earth/scenes/intro/layers/background/nodes/1': {
         index: 0,
@@ -82,9 +85,9 @@ describe('services / export', () => {
           horizontal: false,
           vertical: false
         },
-        properties: [
-          { key: 'className', value: 'TheNode' }
-        ]
+        properties: {
+          className: 'TheNode'
+        }
       },
       'projects/bug/worlds/earth/scenes/intro/layers/char': {
         identifier: 'char',
@@ -157,18 +160,21 @@ describe('services / export', () => {
       world: {
         _id: 'earth',
         name: 'Earth',
-        properties: [
-          { key: 'className', value: 'TheWorld' }
-        ],
+        properties: {
+          className: 'TheWorld',
+          speed: 5,
+          ok: true,
+          names: [ 'one', 'two' ]
+        },
         scenes: [
           {
             _id: 'intro',
             identifier: 'intro',
             background: 'black',
             name: 'Earth',
-            properties: [
-              { key: 'className', value: 'TheScene' }
-            ],
+            properties: {
+              className: 'TheScene'
+            },
             size: { height: 64, width: 128 },
             layers: [
               {
@@ -176,9 +182,9 @@ describe('services / export', () => {
                 identifier: 'background',
                 type: 'grid',
                 grid: { height: 8, width: 8 },
-                properties: [
-                  { key: 'className', value: 'TheBackground' }
-                ],
+                properties: {
+                  className: 'TheBackground'
+                },
                 nodes: [
                   {
                     _id: '1',
@@ -188,9 +194,9 @@ describe('services / export', () => {
                     position: { x: 104, y: 40 },
                     alignment: { vertical: 'top', horizontal: 'left' },
                     flip: { horizontal: false, vertical: false },
-                    properties: [
-                      { key: 'className', value: 'TheNode' }
-                    ],
+                    properties: {
+                      className: 'TheNode'
+                    },
                   }
                 ]
               },
@@ -198,7 +204,7 @@ describe('services / export', () => {
                 _id: 'char',
                 identifier: 'char',
                 type: 'pixel',
-                properties: [],
+                properties: {},
                 nodes: [
                   {
                     _id: '1',
@@ -208,14 +214,14 @@ describe('services / export', () => {
                     alignment: { vertical: 'top', horizontal: 'left' },
                     flip: { horizontal: false, vertical: false },
                     loop: 'wink',
-                    properties: []
+                    properties: {},
                   },
                   {
                     _id: '2',
                     type: 'fill',
                     position: { y: 40, x: 104 },
                     color: 'white',
-                    properties: []
+                    properties: {},
                   }
                 ]
               }
