@@ -26,7 +26,6 @@ export default EmberObject.extend(ScheduleSave, {
   index: data('index'),
   identifier: data('identifier'),
   collapsed: data('collapsed'),
-  properties: data('properties.serialized'),
 
   locked: data('locked'),
   chainLocked: or('locked', 'scene.locked'),
@@ -35,6 +34,7 @@ export default EmberObject.extend(ScheduleSave, {
 
   frame: readOnly('scene.frame'),
 
+  properties: model().named('project/properties').mapping(owner => ({ owner })),
   nodes: model().named('project/worlds/world/scenes/scene/layer/nodes').mapping(layer => ({ layer })),
 
   async load() {

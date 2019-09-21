@@ -1,56 +1,44 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { A } from '@ember/array';
-import { assign } from '@ember/polyfills';
+import { readOnly, or, not } from '@ember/object/computed';
 
 export default Component.extend({
   classNameBindings: [ ':properties' ],
 
-  properties: computed('value', function() {
-    let { value } = this;
-    if(!value) {
-      value = [];
-    }
-    return value;
+  properties: readOnly('value.array'),
+
+  key: null,
+
+  duplicate: computed('key', 'properties', function() {
+    let { key, properties } = this;
+    return properties.find(prop => prop.key === key);
   }).readOnly(),
 
+  empty: not('key'),
+
+  addDisabled: or('disabled', 'empty', 'duplicate'),
+
   actions: {
+    key(key) {
+      this.setProperties({ key });
+    },
     add() {
-      let { properties } = this;
-      properties = properties.slice();
-      properties.push({ key: '', value: null });
-      this.update(properties);
+      this.add();
     },
-    delete(item) {
-      let { properties } = this;
-      let idx = properties.indexOf(item);
-      properties = A(properties.slice());
-      properties.removeAt(idx);
-      this.update(properties);
-    },
-    update(item, key, value, focus) {
+    update(item, value, focus) {
       if(focus === false) {
         return;
       }
-
-      if(key === 'value') {
-        if(value.match(/^[+-]?([0-9]*[.])?[0-9]+$/)) {
-          value = parseFloat(value);
-        } else if(value === 'true') {
-          value = true;
-        } else if(value === 'false') {
-          value = false;
-        } else if(!value) {
-          value = null;
-        }
-      }
-
-      let { properties } = this;
-      let idx = properties.indexOf(item);
-      properties = properties.slice();
-      properties[idx] = assign({}, properties[idx], { [key]: value });
-      this.update(properties);
+      this.value.update(item.key, value);
+    },
+    delete(item) {
+      this.value.delete(item.key);
     }
   },
+
+  add() {
+    this.value.update(this.key, null);
+    this.setProperties({ key: null });
+  }
 
 });
