@@ -16,18 +16,14 @@ constexpr unsigned char <%= sprite.variable %>[] PROGMEM = {
 
 <% sprite.loops.forEach(loop => { %>
 constexpr uint8_t <%= loop.variable %>[] PROGMEM = {
-  <%= loop.frames.length %>,
-  <%= loop.toFrameIndexesString() %>
+  <%= loop.frames.length %>, // count
+  <%= loop.toFrameIndexesString() %> // indexes
 };
 <% }) %>
 
 <% }) %>
 
 //
-
-// sprites
-// loops arrays
-// loops
 
 constexpr size_t spritesSize = sizeof(Sprite) * <%= project.sprites.length %>;
 constexpr size_t spriteLoopArraysSize = sizeof(Loop*) * <%= project.loops.length %>;
