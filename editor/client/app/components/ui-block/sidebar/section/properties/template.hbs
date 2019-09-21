@@ -1,13 +1,12 @@
 <div class="label">{{label}}</div>
+
 {{#if properties}}
   <div class="items">
     {{#each properties as |item|}}
       <div class="item">
+        <div class="label">{{item.key}}</div>
         <div class="content">
-          {{ui-block/input class="input key" value=item.key update=(action 'update' item 'key') enter=(action 'update' item 'key')}}
-          {{ui-block/input class="input value" value=item.value update=(action 'update' item 'value') enter=(action 'update' item 'value')}}
-        </div>
-        <div class="accessories">
+          {{ui-block/input class="input" value=item.value update=(action "update" item) enter=(action "update" item)}}
           {{fa-icon "trash-alt" prefix="far" class="delete" click=(action "delete" item)}}
         </div>
       </div>
@@ -16,6 +15,8 @@
 {{else}}
   <div class="placeholder">Empty</div>
 {{/if}}
-<div class="actions">
-  {{ui-block/button class="action" value="Add Property" disabled=disabled action=(action 'add')}}
+
+<div class="add">
+  {{ui-block/input class="input" value=key update=(action "key") disabled=disabled}}
+  {{ui-block/button class="action" value="Add" disabled=(or addDisabled) action=(action "add")}}
 </div>

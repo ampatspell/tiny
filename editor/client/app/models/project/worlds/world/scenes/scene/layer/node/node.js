@@ -1,6 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import ScheduleSave from 'editor/models/-schedule-save';
+import { model } from 'ember-cli-zuglet/lifecycle';
 
 const doc = path => readOnly(`doc.${path}`);
 const data = path => doc(`data.${path}`);
@@ -25,7 +26,6 @@ export default EmberObject.extend(ScheduleSave, {
   identifier: data('identifier'),
   position: data('position.serialized'),
   size: data('size.serialized'),
-  properties: data('properties.serialized'),
 
   locked: data('locked'),
   chainLocked: or('locked', 'layer.chainLocked'),
@@ -41,6 +41,8 @@ export default EmberObject.extend(ScheduleSave, {
       height: size.height
     };
   }).readOnly(),
+
+  properties: model().named('project/properties').mapping(owner => ({ owner })),
 
   //
 

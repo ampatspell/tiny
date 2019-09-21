@@ -2,11 +2,12 @@ import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { imageURLToBlob } from 'editor/utils/canvas';
+import ScheduleSaveMixin from '../../-schedule-save';
 
 const doc = key => readOnly(`doc.${key}`);
 const data = key => doc(`data.${key}`);
 
-export default EmberObject.extend({
+export default EmberObject.extend(ScheduleSaveMixin, {
 
   worlds: null,
   doc: null,
@@ -17,8 +18,8 @@ export default EmberObject.extend({
   locked: data('locked'),
   thumbnail: data('thumbnail'),
   token: data('token'),
-  properties: data('properties.serialized'),
 
+  properties: model().named('project/properties').mapping(owner => ({ owner })),
   scenes: model().named('project/worlds/world/scenes').mapping(world => ({ world })),
 
   //
