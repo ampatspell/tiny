@@ -242,24 +242,9 @@ let world = project.world;
 let properties = world.properties;
 ```
 
-* `properties.array` → `Array<Property>`
-* `properties.property(key)` → `Property`
-* `properties.properties(key)` → `Array<Property>`
+* `properties.all` → `Object`
+* `properties.keys` → `Array<String>`
 * `properties.get(key, defaultValue)` → `any`
-* `properties.all(key, defaultValue)` → `Array<any>`
-
-## Property
-
-``` javascript
-let project = runtime.project();
-let world = project.world;
-let properties = world.properties;
-let property = properties.property('className');
-```
-
-* `property.key` → `String`
-* `property.value` → `any`
-* `property.get(defaultValue)` → `any`
 
 ## Bytes
 

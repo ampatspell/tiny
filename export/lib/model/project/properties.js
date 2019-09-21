@@ -1,45 +1,23 @@
-class Property {
-
-  constructor({ key, value }) {
-    this.key = key;
-    this.value = value;
-  }
-
-  get(def) {
-    let { value } = this;
-    if(value === null) {
-      return def;
-    }
-    return value;
-  }
-
-}
-
 class Properties {
 
   constructor(json) {
     Object.defineProperty(this, 'json', { value: json });
-    this.array = json.map(item => new Property(item));
   }
 
-  property(key) {
-    return this.array.find(prop => prop.key === key);
+  get all() {
+    return this.json;
   }
 
-  properties(key) {
-    return this.array.filter(prop => prop.key === key);
+  get keys() {
+    return Object.keys(this.json);
   }
 
   get(key, def) {
-    let property = this.property(key);
-    if(!property) {
+    let value = this.json[key];
+    if(value === undefined) {
       return def;
     }
-    return property.get(def);
-  }
-
-  all(key, def) {
-    return this.properties(key).map(prop => prop.get(def));
+    return value;
   }
 
 }
