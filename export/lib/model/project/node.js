@@ -1,3 +1,5 @@
+const Properties = require('./properties');
+
 class Node {
 
   constructor(layer, json) {
@@ -9,6 +11,7 @@ class Node {
     this.alignment = alignment;
     this.flip = flip;
     this.color = color;
+    this.properties = new Properties(json.properties);
     if(sprite) {
       this.sprite = layer.scene.world.project.spriteByIdentifier(sprite);
       if(this.sprite) {

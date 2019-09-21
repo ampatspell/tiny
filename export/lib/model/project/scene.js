@@ -1,4 +1,5 @@
 const Layer = require('./layer');
+const Properties = require('./properties');
 
 class Scene {
 
@@ -10,6 +11,7 @@ class Scene {
     this.name = name;
     this.size = size;
     this.layers = layers.map(layer => new Layer(this, layer));
+    this.properties = new Properties(json.properties);
   }
 
   layerByIdentifier(identifier) {

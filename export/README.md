@@ -177,6 +177,7 @@ let world = project.world;
 * `world.name` → `String`
 * `world.scenes` → `Array<Scene>`
 * `world.sceneByIdentifier(identifier)` → `Scene`
+* `world.properties` → `Properties`
 
 ### Scene
 
@@ -194,6 +195,7 @@ world.scenes.forEach(scene => {
 * `scene.size` → `{ width, height }`
 * `scene.layers` → `Array<Layer>`
 * `scene.layerByIdentifier(identifier)` → `Layer`
+* `scene.properties` → `Properties`
 
 ### Layer
 
@@ -210,6 +212,7 @@ scene.layers.forEach(layer => {
 * `layer.type` → `pixel`, `grid`
 * `layer.grid` → `{ width, heigt }` if type is `grid`
 * `layer.nodes` → `Array<Node>`
+* `layer.properties` → `Properties`
 
 ### Node
 
@@ -229,6 +232,34 @@ let layer = scene.layerByIdentifier('background');
 * `node.sprite` → `Sprite` (for `sprite/..` types)
 * `node.frame` → `Frame` (for `sprite/frame` type)
 * `node.loop` → `Loop` (for `sprite/loop` type)
+* `properties.properties` → `Properties`
+
+## Properties
+
+``` javascript
+let project = runtime.project();
+let world = project.world;
+let properties = world.properties;
+```
+
+* `properties.array` → `Array<Property>`
+* `properties.property(key)` → `Property`
+* `properties.properties(key)` → `Array<Property>`
+* `properties.get(key, defaultValue)` → `any`
+* `properties.all(key, defaultValue)` → `Array<any>`
+
+## Property
+
+``` javascript
+let project = runtime.project();
+let world = project.world;
+let properties = world.properties;
+let property = properties.property('className');
+```
+
+* `property.key` → `String`
+* `property.value` → `any`
+* `property.get(defaultValue)` → `any`
 
 ## Bytes
 
