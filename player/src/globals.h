@@ -2,7 +2,6 @@
 
 #include <Arduboy2.h>
 #include <stddef.h>
-#include <stdint.h>
 
 extern Arduboy2 arduboy;
 
@@ -23,9 +22,3 @@ public:
     return ptr;
   }
 };
-
-namespace Tiny {
-
-void snprintf(uint8_t x, uint8_t y, uint8_t bufferSize, const char *fmt...);
-
-}

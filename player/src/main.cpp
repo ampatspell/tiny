@@ -1,7 +1,6 @@
 #include <Arduboy2.h>
 #include <Arduboy2Core.h>
 #include <generated/scenes.h>
-#include <generated/sprites.h>
 #include <globals.h>
 #include <stdint.h>
 #include <tiny/scene/scene.h>
@@ -48,12 +47,7 @@ void loop() {
 
   if (scene) {
     scene->draw();
-    if (info) {
-      Tiny::snprintf(0, 0, 50, "Scene #%u\nSprites %u\nScenes %u", idx, Tiny::Sprites::getStorageSize(),
-          Tiny::Scenes::getStorageSize());
-    }
   } else {
-    Tiny::snprintf(0, 0, 20, "No Scenes");
   }
 
   arduboy.display(true);
