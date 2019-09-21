@@ -17,7 +17,7 @@ class ExportService {
     let parse = value => {
       try {
         return JSON.parse(value);
-      } catch {
+      } catch(_) {
         return value;
       }
     }
