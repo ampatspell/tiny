@@ -1,4 +1,5 @@
 const Scene = require('./scene');
+const Properties = require('./properties');
 
 class World {
 
@@ -7,6 +8,7 @@ class World {
     let { name, scenes } = json;
     this.name = name;
     this.scenes = scenes.map(scene => new Scene(this, scene));
+    this.properties = new Properties(json.properties);
   }
 
   sceneByIdentifier(identifier) {

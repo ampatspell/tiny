@@ -1,4 +1,5 @@
 const Node = require('./node');
+const Properties = require('./properties');
 
 class Layer {
 
@@ -9,6 +10,7 @@ class Layer {
     this.type = type;
     this.grid = grid;
     this.nodes = nodes.map(node => new Node(this, node));
+    this.properties = new Properties(json.properties);
   }
 
 }
