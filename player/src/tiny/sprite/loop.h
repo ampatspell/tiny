@@ -3,6 +3,8 @@
 #include <globals.h>
 #include <stdint.h>
 
+namespace Tiny {
+
 class Sprite;
 
 class Loop: public PlacementNew {
@@ -17,3 +19,5 @@ public:
   void draw(uint8_t x, uint8_t y, uint8_t index);
 
 };
+
+}

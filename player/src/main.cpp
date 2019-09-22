@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <tiny/scene/scene.h>
 
-Scene *scene = nullptr;
+Tiny::Scene *scene = nullptr;
 uint8_t idx = 0;
 bool info = false;
 

@@ -1,7 +1,9 @@
 #include <avr/pgmspace.h>
 #include <Arduboy2.h>
-#include <tiny/scene/layer.h>
+#include <tiny/scene/layer/layer.h>
 #include <tiny/scene/scene.h>
+
+namespace Tiny {
 
 Scene::Scene(const uint8_t *_definition, Layer **_layers, uint8_t _numberOfLayers) :
     definition(_definition), layers(_layers), numberOfLayers(_numberOfLayers) {
@@ -17,4 +19,6 @@ void Scene::draw() {
     Layer *layer = layers[i];
     layer->draw();
   }
+}
+
 }

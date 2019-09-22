@@ -3,6 +3,8 @@
 #include <globals.h>
 #include <stdint.h>
 
+namespace Tiny {
+
 class Layer;
 
 class Scene: public PlacementNew {
@@ -19,3 +21,5 @@ public:
   void draw();
 
 };
+
+}
