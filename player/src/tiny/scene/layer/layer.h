@@ -10,7 +10,8 @@ class Scene;
 
 class Layer: public PlacementNew {
 
-  Scene *scene;
+protected:
+  const Scene *scene;
   const uint8_t *definition;
 
   Node **nodes;
@@ -18,7 +19,7 @@ class Layer: public PlacementNew {
 
 public:
 
-  Layer(Scene *_scene, const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes);
+  Layer(const Scene *_scene, const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes);
 
   virtual void draw();
 

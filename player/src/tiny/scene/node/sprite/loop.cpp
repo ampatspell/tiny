@@ -7,7 +7,7 @@
 
 namespace Tiny {
 
-SpriteLoopNode::SpriteLoopNode(Layer *_layer, const uint8_t *_definition) :
+SpriteLoopNode::SpriteLoopNode(const Layer *_layer, const uint8_t *_definition) :
     SpriteNode(_layer, _definition), index(0) {
   uint8_t index = pgm_read_byte(definition + 3);
   loop = sprite->loopAtIndex(index);

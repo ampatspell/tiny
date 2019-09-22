@@ -8,7 +8,7 @@ namespace Tiny {
 class PixelLayer: public Layer {
 
 public:
-  PixelLayer(Scene *_scene, const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes);
+  PixelLayer(const Scene *_scene, const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes);
 
 };
 

@@ -11,7 +11,7 @@ class SpriteLoopNode: public SpriteNode {
   Loop *loop;
   uint8_t index;
 public:
-  SpriteLoopNode(Layer *_layer, const uint8_t *_definition);
+  SpriteLoopNode(const Layer *_layer, const uint8_t *_definition);
   void draw() override;
 };
 
