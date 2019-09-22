@@ -18,6 +18,8 @@ public:
 
   Scene(const uint8_t *_definition, Layer **layers, uint8_t _numberOfLayers);
 
+  uint8_t index();
+
   void draw();
 
 };

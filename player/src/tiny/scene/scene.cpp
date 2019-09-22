@@ -9,8 +9,12 @@ Scene::Scene(const uint8_t *_definition, Layer **_layers, uint8_t _numberOfLayer
     definition(_definition), layers(_layers), numberOfLayers(_numberOfLayers) {
 }
 
+uint8_t Scene::index() {
+  return pgm_read_byte(definition);
+}
+
 void Scene::draw() {
-  uint8_t background = pgm_read_byte(definition + 2);
+  uint8_t background = pgm_read_byte(definition + 3);
   if (background == 2) {
     arduboy.fillScreen(WHITE);
   }

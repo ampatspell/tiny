@@ -1,6 +1,7 @@
 namespace <%= scene.namespace %> {
 
 constexpr uint8_t _scene[] PROGMEM = {
+  <%= scene.index %>, // index
   <%= scene.size.width %>, // width
   <%= scene.size.height %>, // height
   <%= scene.backgroundType %> // background: <%= scene.background %>
