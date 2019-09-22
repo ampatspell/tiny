@@ -3,8 +3,8 @@
 
 namespace Tiny {
 
-Node::Node(const uint8_t *_definition) :
-    definition(_definition) {
+Node::Node(Layer *_layer, const uint8_t *_definition) :
+    layer(_layer), definition(_definition) {
   x = pgm_read_byte(definition);
   y = pgm_read_byte(definition + 1);
 }

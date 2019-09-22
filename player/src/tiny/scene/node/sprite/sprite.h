@@ -11,7 +11,7 @@ class SpriteNode: public Node {
 protected:
   Sprite *sprite;
 public:
-  SpriteNode(const uint8_t *_definition);
+  SpriteNode(Layer *_layer, const uint8_t *_definition);
 };
 
 }

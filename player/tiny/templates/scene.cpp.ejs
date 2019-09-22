@@ -46,12 +46,12 @@ Scene* instantiate(uint8_t *storage) {
   {
     Node **nodes = reinterpret_cast<Node **>(ptr);
     ptr += (sizeof(Node *) * <%= layer.nodes.length %>);
-    Layer *layer = new (ptr) <%= layer.className %>(<%= layer.variable %>, nodes, <%= layer.nodes.length %>);
+    Layer *layer = new (ptr) <%= layer.className %>(scene, <%= layer.variable %>, nodes, <%= layer.nodes.length %>);
     ptr += sizeof(<%= layer.className %>);
     layers[<%= layer.index %>] = layer;
 <% layer.nodes.forEach(node => { -%>
     {
-      Node *node = new (ptr) <%= node.className %>(<%= node.variable %>);
+      Node *node = new (ptr) <%= node.className %>(layer, <%= node.variable %>);
       ptr += sizeof(<%= node.className %>);
       nodes[<%= node.index %>] = node;
     }

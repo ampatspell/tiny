@@ -4,8 +4,8 @@
 
 namespace Tiny {
 
-SpriteFrameNode::SpriteFrameNode(const uint8_t *_definition) :
-    SpriteNode(_definition) {
+SpriteFrameNode::SpriteFrameNode(Layer *_layer, const uint8_t *_definition) :
+    SpriteNode(_layer, _definition) {
   frame = pgm_read_byte(definition + 3);
 }
 

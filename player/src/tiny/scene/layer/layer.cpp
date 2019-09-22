@@ -3,8 +3,8 @@
 
 namespace Tiny {
 
-Layer::Layer(const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes) :
-    definition(_definition), nodes(_nodes), numberOfNodes(_numberOfNodes) {
+Layer::Layer(Scene *_scene, const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes) :
+    scene(_scene), definition(_definition), nodes(_nodes), numberOfNodes(_numberOfNodes) {
 }
 
 void Layer::draw() {

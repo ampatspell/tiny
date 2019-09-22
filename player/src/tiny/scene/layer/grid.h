@@ -8,7 +8,7 @@ namespace Tiny {
 class GridLayer: public Layer {
 
 public:
-  GridLayer(const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes);
+  GridLayer(Scene *_scene, const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes);
 
 };
 
