@@ -1,23 +1,17 @@
 #include <Arduboy2.h>
 #include <Arduboy2Core.h>
-#include <generated/scenes.h>
 #include <globals.h>
-#include <stdint.h>
-#include <tiny/scene/scene.h>
+#include <tiny/world.h>
 
-Tiny::Scene *scene = nullptr;
-uint8_t idx = 0;
 bool info = false;
+
+Tiny::World world;
 
 void setup() {
 //  Serial.begin(9600);
 
   arduboy.begin();
   arduboy.setFrameRate(24);
-  if (Tiny::Project::Scenes::numberOfScenes() == 0) {
-    return;
-  }
-  scene = Tiny::Project::Scenes::instantiateSceneAtIndex(0);
 }
 
 void loop() {
@@ -28,27 +22,12 @@ void loop() {
   arduboy.pollButtons();
 
   if (arduboy.justPressed(UP_BUTTON)) {
-    if (idx > 0) {
-      idx = idx - 1;
-      scene = Tiny::Project::Scenes::instantiateSceneAtIndex(idx);
-    }
+    world.previousScene();
   } else if (arduboy.justPressed(DOWN_BUTTON)) {
-    if (idx + 1 < Tiny::Project::Scenes::numberOfScenes()) {
-      idx = idx + 1;
-      scene = Tiny::Project::Scenes::instantiateSceneAtIndex(idx);
-    }
+    world.nextScene();
   }
 
-  if (arduboy.justPressed(A_BUTTON)) {
-    info = true;
-  } else if (arduboy.justReleased(A_BUTTON)) {
-    info = false;
-  }
-
-  if (scene) {
-    scene->draw();
-  } else {
-  }
+  world.draw();
 
   arduboy.display(true);
 }
