@@ -1,0 +1,64 @@
+namespace <%= scene.namespace %> {
+
+const uint8_t _scene[] PROGMEM = {
+  <%= scene.size.width %>, // width
+  <%= scene.size.height %>, // height
+  <%= scene.backgroundType %> // background: <%= scene.background %>
+};
+
+<% scene.layers.forEach(layer => { -%>
+constexpr uint8_t <%= layer.variable %>[] PROGMEM = {
+<% if (layer.type === 'grid') { -%>
+  <%= layer.grid.width %>, // grid width
+  <%= layer.grid.height %>, // grid height
+<% } else if (layer.type === 'pixel') { -%>
+<% } -%>
+};
+
+<% layer.nodes.forEach(node => { -%>
+constexpr uint8_t <%= node.variable %>[] PROGMEM = {
+  <%= node.position.x %>, // x
+  <%= node.position.y %>, // y
+<% if (node.type.startsWith('sprite/')) { -%>
+  <%= node.sprite.index -%>, // sprite
+<% if (node.type === 'sprite/frame') { -%>
+  <%= node.frame.index -%> // frame
+<% } else if (node.type === 'sprite/loop') { -%>
+  <%= node.loop.index -%> // loop
+<% } -%>
+<% } -%>
+};
+
+<% }); -%>
+<% }); -%>
+
+constexpr size_t size = <%= scene.sizeof.join(' + ') %>;
+
+Scene* instantiate(uint8_t *storage) {
+  uint8_t *ptr = storage;
+
+  Layer **layers = reinterpret_cast<Layer **>(ptr);
+  ptr += (sizeof(Layer*) * <%= scene.layers.length %>);
+  Scene *scene = new (ptr) <%= scene.className %>(_scene, layers, <%= scene.layers.length %>);
+  ptr += sizeof(<%= scene.className %>);
+<% scene.layers.forEach(layer => { -%>
+  {
+    Node **nodes = reinterpret_cast<Node **>(ptr);
+    ptr += (sizeof(Node *) * <%= layer.nodes.length %>);
+    Layer *layer = new (ptr) <%= layer.className %>(<%= layer.variable %>, nodes, <%= layer.nodes.length %>);
+    ptr += sizeof(<%= layer.className %>);
+    layers[<%= layer.index %>] = layer;
+<% layer.nodes.forEach(node => { -%>
+    {
+      Node *node = new (ptr) <%= node.className %>(<%= node.variable %>);
+      ptr += sizeof(<%= node.className %>);
+      nodes[<%= node.index %>] = node;
+    }
+<% }) -%>
+  }
+<% }) -%>
+
+  return scene;
+}
+
+}

@@ -14,20 +14,25 @@ class Layer: public PlacementNew {
 
 public:
 
-  Layer(const uint8_t *_definition, Node **_nodes);
-  void addNode(Node *node);
+  Layer(const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes);
 
   virtual void draw();
-  virtual ~Layer() {};
+
+  virtual ~Layer() {
+  }
 
 };
 
 class GridLayer: public Layer {
 public:
-  GridLayer(const uint8_t *_definition, Node **_nodes): Layer(_definition, _nodes) {}
+  GridLayer(const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes) :
+      Layer(_definition, _nodes, _numberOfNodes) {
+  }
 };
 
 class PixelLayer: public Layer {
 public:
-  PixelLayer(const uint8_t *_definition, Node **_nodes): Layer(_definition, _nodes) {}
+  PixelLayer(const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes) :
+      Layer(_definition, _nodes, _numberOfNodes) {
+  }
 };

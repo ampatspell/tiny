@@ -1,12 +1,8 @@
 #include <tiny/scene/layer.h>
 #include <tiny/scene/node.h>
 
-Layer::Layer(const uint8_t *_definition, Node **_nodes): definition(_definition), nodes(_nodes), numberOfNodes(0) {
-}
-
-void Layer::addNode(Node *_node) {
-  nodes[numberOfNodes] = _node;
-  numberOfNodes++;
+Layer::Layer(const uint8_t *_definition, Node **_nodes, uint8_t _numberOfNodes) :
+    definition(_definition), nodes(_nodes), numberOfNodes(_numberOfNodes) {
 }
 
 void Layer::draw() {

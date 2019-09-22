@@ -21,6 +21,10 @@ class Node {
     }
   }
 
+  get index() {
+    return this.layer.nodes.indexOf(this);
+  }
+
 }
 
 module.exports = Node;

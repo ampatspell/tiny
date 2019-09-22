@@ -13,6 +13,10 @@ class Layer {
     this.properties = new Properties(json.properties);
   }
 
+  get index() {
+    return this.scene.layers.indexOf(this);
+  }
+
 }
 
 module.exports = Layer;

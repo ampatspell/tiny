@@ -1,0 +1,75 @@
+#include <avr/pgmspace.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <tiny/sprite/loop.h>
+#include <tiny/sprite/sprite.h>
+
+namespace Tiny {
+namespace Project {
+namespace Sprites {
+
+<% project.sprites.forEach(sprite => { %>
+
+constexpr unsigned char <%= sprite.variable %>[] PROGMEM = {
+  <%= sprite.toPlusMaskString() %>
+};
+
+<% sprite.loops.forEach(loop => { %>
+constexpr uint8_t <%= loop.variable %>[] PROGMEM = {
+  <%= loop.frames.length %>, // count
+  <%= loop.toFrameIndexesString() %> // indexes
+};
+<% }) %>
+
+<% }) %>
+
+//
+
+constexpr size_t spritesSize = sizeof(Sprite) * <%= project.sprites.length %>;
+constexpr size_t spriteLoopArraysSize = sizeof(Loop*) * <%= project.loops.length %>;
+constexpr size_t loopsSize = sizeof(Loop) * <%= project.loops.length %>;
+
+constexpr size_t storageSize = spritesSize + spriteLoopArraysSize + loopsSize;
+uint8_t storage[storageSize];
+
+constexpr uint8_t numberOfSprites = <%= project.sprites.length %>;
+Sprite *sprites[numberOfSprites];
+
+bool initialized = false;
+
+void initialize() {
+  if(initialized) {
+    return;
+  }
+  initialized = true;
+
+  uint8_t *ptr = storage;
+
+<% project.sprites.forEach((sprite, is) => { %>
+  {
+    Loop **loops = reinterpret_cast<Loop **>(ptr);
+    ptr += (sizeof(Loop*) * <%= sprite.loops.length %>);
+
+    Sprite *sprite = new (ptr) Sprite(<%= sprite.variable %>, loops);
+    ptr += sizeof(Sprite);
+
+  <% sprite.loops.forEach((loop, il) => { %>
+    {
+      Loop *loop = new (ptr) Loop(<%= loop.variable %>, sprite);
+      ptr += sizeof(Loop);
+      loops[<%= il %>] = loop;
+    }
+  <% }); %>
+    sprites[<%= is %>] = sprite;
+  }
+<% }); %>
+}
+
+Sprite* spriteAtIndex(uint8_t index) {
+  initialize();
+  return sprites[index];
+}
+
+}
+}
+}

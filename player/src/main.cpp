@@ -1,7 +1,6 @@
 #include <Arduboy2.h>
 #include <Arduboy2Core.h>
 #include <generated/scenes.h>
-#include <generated/sprites.h>
 #include <globals.h>
 #include <stdint.h>
 #include <tiny/scene/scene.h>
@@ -15,10 +14,10 @@ void setup() {
 
   arduboy.begin();
   arduboy.setFrameRate(24);
-  if (Tiny::Scenes::getNumberOfScenes() == 0) {
+  if (Tiny::Project::Scenes::numberOfScenes() == 0) {
     return;
   }
-  scene = Tiny::Scenes::instantiate(0);
+  scene = Tiny::Project::Scenes::instantiateSceneAtIndex(0);
 }
 
 void loop() {
@@ -31,12 +30,12 @@ void loop() {
   if (arduboy.justPressed(UP_BUTTON)) {
     if (idx > 0) {
       idx = idx - 1;
-      scene = Tiny::Scenes::instantiate(idx);
+      scene = Tiny::Project::Scenes::instantiateSceneAtIndex(idx);
     }
   } else if (arduboy.justPressed(DOWN_BUTTON)) {
-    if (idx + 1 < Tiny::Scenes::getNumberOfScenes()) {
+    if (idx + 1 < Tiny::Project::Scenes::numberOfScenes()) {
       idx = idx + 1;
-      scene = Tiny::Scenes::instantiate(idx);
+      scene = Tiny::Project::Scenes::instantiateSceneAtIndex(idx);
     }
   }
 
@@ -48,12 +47,7 @@ void loop() {
 
   if (scene) {
     scene->draw();
-    if (info) {
-      Tiny::snprintf(0, 0, 50, "Scene #%u\nSprites %u\nScenes %u", idx, Tiny::Sprites::getStorageSize(),
-          Tiny::Scenes::getStorageSize());
-    }
   } else {
-    Tiny::snprintf(0, 0, 20, "No Scenes");
   }
 
   arduboy.display(true);

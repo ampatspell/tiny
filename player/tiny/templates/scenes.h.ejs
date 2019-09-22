@@ -1,0 +1,20 @@
+#pragma once
+
+#include <stdint.h>
+
+class Scene;
+
+namespace Tiny {
+namespace Project {
+namespace Scenes {
+<% project.world.scenes.forEach(scene => { -%>
+<%= include('scene.h', { project, scene }) -%>
+<% }) -%>
+
+uint8_t numberOfScenes();
+
+Scene *instantiateSceneAtIndex(uint8_t index);
+
+}
+}
+}

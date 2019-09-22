@@ -14,8 +14,27 @@ class Scene {
     this.properties = new Properties(json.properties);
   }
 
+  get index() {
+    return this.world.scenes.indexOf(this);
+  }
+
   layerByIdentifier(identifier) {
     return this.layers.find(layer => layer.identifier === identifier);
+  }
+
+  get nodes() {
+    let nodes = this._nodes;
+    if(!nodes) {
+      nodes = this.layers.reduce((arr, layer) => {
+        layer.nodes.reduce((arr, node) => {
+          arr.push(node);
+          return arr;
+        }, arr);
+        return arr;
+      }, []);
+      Object.defineProperty(this, '_nodes', { value: nodes });
+    }
+    return nodes;
   }
 
 }

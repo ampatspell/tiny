@@ -12,7 +12,7 @@ Node::Node(const uint8_t *_definition): definition(_definition) {
 
 SpriteNode::SpriteNode(const uint8_t *_definition): Node(_definition) {
   uint8_t index = pgm_read_byte(definition + 2);
-  sprite = Tiny::Sprites::getSprite(index);
+  sprite = Tiny::Project::Sprites::spriteAtIndex(index);
 }
 
 SpriteFrameNode::SpriteFrameNode(const uint8_t *_definition): SpriteNode(_definition) {
@@ -25,7 +25,7 @@ void SpriteFrameNode::draw() {
 
 SpriteLoopNode::SpriteLoopNode(const uint8_t *_definition): SpriteNode(_definition), index(0) {
   uint8_t index = pgm_read_byte(definition + 3);
-  loop = sprite->getLoop(index);
+  loop = sprite->loopAtIndex(index);
 }
 
 void SpriteLoopNode::draw() {
