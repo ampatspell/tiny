@@ -1,0 +1,42 @@
+#include <avr/pgmspace.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <tiny/scene/layer.h>
+#include <tiny/scene/node.h>
+#include <tiny/scene/scene.h>
+
+namespace Tiny {
+namespace Project {
+namespace Scenes {
+
+<% project.world.scenes.forEach(scene => { %>
+<%= include('scene.cpp', { project, scene }) %>
+<% }) %>
+
+union SceneSizes {
+<% project.world.scenes.forEach(scene => { -%>
+  size_t scene_<%= scene.index %>[<%= scene.namespace %>::size];
+<% }) -%>
+};
+
+constexpr size_t storageSize = sizeof(SceneSizes);
+uint8_t storage[storageSize];
+
+constexpr uint8_t _numberOfScenes = <%= project.world.scenes.length %>;
+
+uint8_t numberOfScenes() {
+  return _numberOfScenes;
+}
+
+Scene *instantiateSceneAtIndex(uint8_t index) {
+  switch(index) {
+<% project.world.scenes.forEach(scene => { %>
+    case <%= scene.index %>: return <%= scene.namespace %>::instantiate(storage);
+<% }) %>
+  }
+  return nullptr;
+}
+
+}
+}
+}

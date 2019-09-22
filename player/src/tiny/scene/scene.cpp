@@ -3,22 +3,17 @@
 #include <tiny/scene/layer.h>
 #include <tiny/scene/scene.h>
 
-Scene::Scene(const uint8_t *_definition, Layer **_layers): definition(_definition), layers(_layers), numberOfLayers(0)  {
-}
-
-void Scene::addLayer(Layer *_layer) {
-  layers[numberOfLayers] = _layer;
-  numberOfLayers++;
+Scene::Scene(const uint8_t *_definition, Layer **_layers, uint8_t _numberOfLayers) :
+    definition(_definition), layers(_layers), numberOfLayers(_numberOfLayers) {
 }
 
 void Scene::draw() {
   uint8_t background = pgm_read_byte(definition + 2);
-  // TODO: constants
-  if(background == 2) {
+  if (background == 2) {
     arduboy.fillScreen(WHITE);
   }
 
-  for(uint8_t i = 0; i < numberOfLayers; i++) {
+  for (uint8_t i = 0; i < numberOfLayers; i++) {
     Layer *layer = layers[i];
     layer->draw();
   }

@@ -14,8 +14,7 @@ class Scene: public PlacementNew {
 
 public:
 
-  Scene(const uint8_t *_definition, Layer **layers);
-  void addLayer(Layer *_layer);
+  Scene(const uint8_t *_definition, Layer **layers, uint8_t _numberOfLayers);
 
   void draw();
 

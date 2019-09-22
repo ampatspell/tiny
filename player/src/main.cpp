@@ -14,10 +14,10 @@ void setup() {
 
   arduboy.begin();
   arduboy.setFrameRate(24);
-  if (Tiny::Scenes::getNumberOfScenes() == 0) {
+  if (Tiny::Project::Scenes::numberOfScenes() == 0) {
     return;
   }
-  scene = Tiny::Scenes::instantiate(0);
+  scene = Tiny::Project::Scenes::instantiateSceneAtIndex(0);
 }
 
 void loop() {
@@ -30,12 +30,12 @@ void loop() {
   if (arduboy.justPressed(UP_BUTTON)) {
     if (idx > 0) {
       idx = idx - 1;
-      scene = Tiny::Scenes::instantiate(idx);
+      scene = Tiny::Project::Scenes::instantiateSceneAtIndex(idx);
     }
   } else if (arduboy.justPressed(DOWN_BUTTON)) {
-    if (idx + 1 < Tiny::Scenes::getNumberOfScenes()) {
+    if (idx + 1 < Tiny::Project::Scenes::numberOfScenes()) {
       idx = idx + 1;
-      scene = Tiny::Scenes::instantiate(idx);
+      scene = Tiny::Project::Scenes::instantiateSceneAtIndex(idx);
     }
   }
 
