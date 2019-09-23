@@ -2,6 +2,8 @@
 
 Work in progress. Haven't built any games with it yet.
 
+**Warning: Looks like I'm going to completely restructure editor & firestore database schema**
+
 <p align="center">
   <img src="https://github.com/ampatspell/tiny/blob/master/other/emulator-1.png?raw=true">
 </p>
