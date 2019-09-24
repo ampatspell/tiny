@@ -47,6 +47,9 @@ export default Component.extend({
     // let { width, height } = container.getBoundingClientRect();
 
     setGlobal({ component: this });
+
+    let stage = this.stage.build();
+    setGlobal({ stage });
   },
 
 });
