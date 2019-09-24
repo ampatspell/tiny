@@ -5,7 +5,7 @@ import { assert } from '@ember/debug';
 
 export default EmberObject.extend({
 
-  name: null,
+  type: null,
   props: null,
 
   nodes: computed(function() {
@@ -20,12 +20,12 @@ export default EmberObject.extend({
     return this;
   },
 
-  build() {
-    let { name, props, nodes } = this;
-    let factory = getOwner(this).factoryFor(`model:${name}`);
-    assert(`node model '${name}' is not registered`, !!factory);
-    nodes = nodes.map(node => node.build());
-    return factory.create({ name, props, nodes });
+  build(parent=null) {
+    let { type, props, nodes } = this;
+    let factory = getOwner(this).factoryFor(`model:${type}`);
+    assert(`node model '${type}' is not registered`, !!factory);
+    let models = nodes.map(node => node.build(this));
+    return factory.create({ parent, type, props, models });
   }
 
 });

@@ -12,7 +12,7 @@ export default EmberObject.extend({
   node: computed(function() {
     let { parent, opts } = this;
     let factory = getOwner(this).factoryFor('konva:definition/node');
-    let build = (name, props={}) => factory.create({ name, props });
+    let build = (type, props={}) => factory.create({ type, props });
     let node = opts.content.call(parent, build);
     this.startObserving();
     return node;
