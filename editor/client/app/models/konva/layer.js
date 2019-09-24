@@ -5,13 +5,13 @@ export default Node.extend({
 
   nodeClassName: 'Layer',
 
-  setDirty() {
-    this.scheduleBatchDraw();
-  },
+  // setDirty() {
+  //   this.scheduleBatchDraw();
+  // },
 
-  scheduleBatchDraw() {
-    cancel(this._scheduleBatchDraw);
-    this._scheduleBatchDraw = next(() => this._node.batchDraw());
-  }
+  // scheduleBatchDraw() {
+  //   cancel(this._scheduleBatchDraw);
+  //   this._scheduleBatchDraw = next(() => this._node.batchDraw());
+  // }
 
 });

@@ -21,24 +21,15 @@ export default Component.extend({
     return EmberObject.create({ rects, title });
   }).readOnly(),
 
-  stage: node().named('konva/wip/stage').mapping(owner => {
-    let container = owner.element.querySelector('.content');
-    let { width, height } = container.getBoundingClientRect();
-    let size = { width, height };
-    let { object: model } = owner;
-    return {
-      container,
-      size,
-      model,
-      parent: null
-    };
-  }),
+  stage: node().owner('object').named('konva/wip/stage').mapping(({ object: model }) => ({ model })),
 
   didInsertElement() {
     this._super(...arguments);
 
-    let stage = this.stage;
-    stage.mount();
+    let container = this.element.querySelector('.content');
+    let { width, height } = container.getBoundingClientRect();
+
+    this.stage.model.bind(container, { width, height });
 
     setGlobal({ component: this });
   },

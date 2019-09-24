@@ -6,9 +6,9 @@ export default Node.extend({
   isStage: true,
   nodeClassName: 'Stage',
 
-  attributes: computed('size', function() {
-    let { size, container } = this;
-    if(!size) {
+  attributes: computed('container', 'size', function() {
+    let { container, size } = this;
+    if(!container || !size) {
       return;
     }
     let { width, height } = size;
@@ -19,9 +19,9 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  mount() {
-    this._super();
-    this._node.batchDraw();
+  bind(container, size) {
+    this.setProperties({ container, size });
+    this.node;
   }
 
 });

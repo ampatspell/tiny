@@ -1,6 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import { A } from '@ember/array';
+import Node from '../node';
 
 const property = opts => {
   return computed(function(key) {
@@ -35,61 +36,40 @@ export default EmberObject.extend({
   key: null,
   opts: null,
 
-  _mounted: false,
-  model: null,
+  model: computed(function() {
+    return this._createModel();
+  }),
+
+  init() {
+    this._super(...arguments);
+    this._startObserving();
+  },
 
   _createModel() {
-    let { model } = this;
-    if(!model) {
-      let { parent, opts } = this;
-      let call = arg => {
-        if(typeof arg === 'function') {
-          return arg.call(parent, parent);
-        }
-        return arg;
+    let { parent, opts } = this;
+    let call = arg => {
+      if(typeof arg === 'function') {
+        return arg.call(parent, parent);
       }
-      let name = call(opts.named);
-      if(name) {
-        let props = call(opts.mapping);
-        model = this.store.models.create(name, assign({ parent }, props));
-        if(model) {
-          this.setProperties({ model });
-        }
-      }
+      return arg;
     }
-    return model;
-  },
-
-  _destroyModel() {
-    let { model } = this;
-    if(!model) {
-      return;
-    }
-    this.setProperties({ model: null });
-    model.unmount();
-  },
-
-  _mountModel() {
-    let { model } = this;
-    if(model) {
-      model.mount();
+    let name = call(opts.named);
+    if(name) {
+      let props = call(opts.mapping);
+      parent = Node.detectInstance(parent) ? parent : null;
+      return this.store.models.create(name, assign({ parent }, props));
     }
   },
 
-  mount() {
-    if(this._mounted) {
-      return;
-    }
+  // _destroyModel() {
+  //   let { model } = this;
+  //   if(!model) {
+  //     return;
+  //   }
+  //   this.setProperties({ model: null });
+  //   model.unmount();
+  // },
 
-    this._createModel();
-    this._mountModel();
-    this._startObserving();
-
-    this.setProperties({ _mounted: true });
-  },
-
-  unmount() {
-  },
 
   _withOwnerKeys(cb) {
     let { parent, opts } = this;
@@ -97,11 +77,11 @@ export default EmberObject.extend({
   },
 
   _ownerKeyDidChange() {
-    this._destroyModel();
-    this._createModel();
-    if(this._mounted) {
-      this._mountModel();
-    }
+    // this._destroyModel();
+    // this._createModel();
+    // if(this._mounted) {
+    //   this._mountModel();
+    // }
   },
 
   _startObserving() {
