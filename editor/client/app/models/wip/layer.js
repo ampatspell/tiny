@@ -1,7 +1,3 @@
-import Node from './-node';
+import Layer from 'ember-cli-konva/models/layer';
 
-export default Node.extend({
-
-  nodeClassName: 'Layer',
-
-});
+export default Layer;

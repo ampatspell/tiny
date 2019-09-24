@@ -1,25 +1,16 @@
-import Node from './-node';
-import { computed } from '@ember/object';
+import Stage from 'ember-cli-konva/models/stage';
+import { node } from 'ember-cli-konva';
 
-export default Node.extend({
+export default Stage.extend({
 
-  nodeClassName: 'Stage',
+  opacity: 0.5,
 
-  renderer: null,
-
-  attributes: computed('renderer.{container,size}', function() {
-    let { renderer: { container, size: { width, height } } } = this;
-    return {
-      container,
-      width,
-      height
-    };
-  }).readOnly(),
-
-  bind(renderer) {
-    this.setProperties({ renderer });
-    this._super();
-    this.node.batchDraw(); // TODO
-  },
+  layer: node().owner('opacity').content(function(node) {
+    let { opacity } = this;
+    let layer = node('wip/layer');
+    layer.add(node('wip/rect', { x: 10, y: 10, fill: `rgba(255,0,0,${opacity})` }));
+    layer.add(node('wip/rect', { x: 60, y: 60, fill: `rgba(0,255,0,${opacity})` }));
+    return layer;
+  })
 
 });

@@ -7,10 +7,9 @@ const property = opts => destroyable({
   reusable: () => true,
   create(key) {
     let parent = this;
-    return getOwner(this).factoryFor('konva:definition').create({ parent, key, opts });
+    return getOwner(this).factoryFor('konva:definition/property').create({ parent, key, opts });
   },
-  get: definition => definition.node
-});
+}).meta({ isKonvaNodeDefinition: true });
 
 const compact = array => A(array).compact();
 

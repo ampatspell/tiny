@@ -1,52 +1,46 @@
 import EmberObject, { computed } from '@ember/object';
+import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
+import { assert } from '@ember/debug';
 
 export default EmberObject.extend({
 
-  isObserving: false,
-
   parent: null,
-  key: null,
-  opts: null,
+  type: null,
+  props: null,
 
-  node: computed(function() {
-    let { parent, opts } = this;
-    let factory = getOwner(this).factoryFor('konva:definition/node');
-    let build = (type, props={}) => factory.create({ type, props });
-    let node = opts.content.call(parent, build);
-    this.startObserving();
-    return node;
+  definitions: computed(function() {
+    return A();
   }).readOnly(),
 
-  parentKeyDidChange() {
-    this.notifyPropertyChange('node');
-    this.parent.notifyPropertyChange(this.key);
-  },
-
-  withObserving(cb) {
-    let { parent, opts } = this;
-    opts.parent.forEach(key => cb(parent, key));
-  },
-
-  startObserving() {
-    if(this.isObserving) {
+  add(definition) {
+    if(!definition) {
       return;
     }
-    this.withObserving((parent, key) => parent.addObserver(key, this, this.parentKeyDidChange));
-    this.isObserving = true;
+    this.definitions.pushObject(definition);
+    return this;
   },
 
-  stopObserving() {
-    if(!this.isObserving) {
+  bind() {
+    console.log('bind', 'definition', this.type);
+    this.createModel();
+  },
+
+  createModel() {
+    let { model } = this;
+    if(model) {
       return;
     }
-    this.withObserving((parent, key) => parent.removeObserver(key, this, this.parentKeyDidChange));
-    this.isObserving = false;
-  },
 
-  willDestroy() {
-    this.stopObserving();
-    this._super(...arguments);
-  }
+    let { parent, type, props, definitions } = this;
+
+    let factory = getOwner(this).factoryFor(`model:${type}`);
+    assert(`node model '${type}' is not registered`, !!factory);
+
+    model = factory.create({ definition: this, parent, props });
+    definitions.map(definition => definition.bind());
+
+    this.setProperties({ model });
+  },
 
 });
