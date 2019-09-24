@@ -1,0 +1,9 @@
+{
+  "name": "ember-cli-konva",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "ember-cli-babel": "^7.7.3"
+  }
+}
