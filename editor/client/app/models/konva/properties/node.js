@@ -47,18 +47,23 @@ export default EmberObject.extend({
 
   _createModel() {
     let { parent, opts } = this;
+
     let call = arg => {
       if(typeof arg === 'function') {
         return arg.call(parent, parent);
       }
       return arg;
     }
+
     let name = call(opts.named);
-    if(name) {
-      let props = call(opts.mapping);
-      parent = Node.detectInstance(parent) ? parent : null;
-      return this.store.models.create(name, assign({ parent }, props));
+    if(!name) {
+      return;
     }
+
+    let props = call(opts.mapping);
+    parent = Node.detectInstance(parent) ? parent : null;
+
+    return this.store.models.create(name, assign({ parent }, props));
   },
 
   // _destroyModel() {
@@ -69,7 +74,6 @@ export default EmberObject.extend({
   //   this.setProperties({ model: null });
   //   model.unmount();
   // },
-
 
   _withOwnerKeys(cb) {
     let { parent, opts } = this;
