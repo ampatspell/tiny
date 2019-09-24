@@ -105,7 +105,14 @@ export default Component.extend(Parent, Events, {
 
   didInsertElement() {
     this._super(...arguments);
+
     this.parentView.registerChildComponent(this);
+
+    let zIndex = this.resolveZIndex();
+    if(zIndex !== undefined) {
+      this.node.zIndex(zIndex);
+    }
+
     this.startObservingProperties();
     this.drawLayer();
   },
