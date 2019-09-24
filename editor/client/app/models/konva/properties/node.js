@@ -35,21 +35,81 @@ export default EmberObject.extend({
   key: null,
   opts: null,
 
-  model: computed(function() {
-    let { parent, opts } = this;
-    let props = this.opts.mapping.call(parent, parent);
-    return this.store.models.create(opts.named, assign(props, { parent }));
-  }).readOnly(),
+  _mounted: false,
+  model: null,
+
+  _createModel() {
+    let { model } = this;
+    if(!model) {
+      let { parent, opts } = this;
+      let call = arg => {
+        if(typeof arg === 'function') {
+          return arg.call(parent, parent);
+        }
+        return arg;
+      }
+      let name = call(opts.named);
+      if(name) {
+        let props = call(opts.mapping);
+        model = this.store.models.create(name, assign({ parent }, props));
+        if(model) {
+          this.setProperties({ model });
+        }
+      }
+    }
+    return model;
+  },
+
+  _destroyModel() {
+    let { model } = this;
+    if(!model) {
+      return;
+    }
+    this.setProperties({ model: null });
+    model.unmount();
+  },
+
+  _mountModel() {
+    let { model } = this;
+    if(model) {
+      model.mount();
+    }
+  },
 
   mount() {
-    this.model.mount();
-    this.startObserving();
+    if(this._mounted) {
+      return;
+    }
+
+    this._createModel();
+    this._mountModel();
+    this._startObserving();
+
+    this.setProperties({ _mounted: true });
   },
 
-  unmound() {
+  unmount() {
   },
 
-  startObserving() {
+  _withOwnerKeys(cb) {
+    let { parent, opts } = this;
+    A(opts.parent).forEach(key => cb(parent, key));
+  },
+
+  _ownerKeyDidChange() {
+    this._destroyModel();
+    this._createModel();
+    if(this._mounted) {
+      this._mountModel();
+    }
+  },
+
+  _startObserving() {
+    this._withOwnerKeys((owner, key) => owner.addObserver(key, this, this._ownerKeyDidChange));
+  },
+
+  _stopObserving() {
+    this._withOwnerKeys((owner, key) => owner.removeObserver(key, this, this._ownerKeyDidChange));
   },
 
 });

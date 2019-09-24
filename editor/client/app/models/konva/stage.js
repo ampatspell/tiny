@@ -15,13 +15,9 @@ export default Node.extend({
     return {
       container,
       width,
-      height,
-      draggable: true
+      height
     };
   }).readOnly(),
-
-  _didCreateNode() {
-  },
 
   mount() {
     this._super();

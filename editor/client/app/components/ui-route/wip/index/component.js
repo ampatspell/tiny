@@ -17,7 +17,7 @@ export default Component.extend({
 
   object: computed('rects', function() {
     let { rects } = this;
-    let title = EmberObject.create({ value: 'Hello', show: true });
+    let title = EmberObject.create({ value: 'Hello', show: true, type: 'text' });
     return EmberObject.create({ rects, title });
   }).readOnly(),
 
@@ -29,15 +29,18 @@ export default Component.extend({
     return {
       container,
       size,
-      model
+      model,
+      parent: null
     };
   }),
 
   didInsertElement() {
     this._super(...arguments);
 
-    let stage = this.stage.model;
+    let stage = this.stage;
     stage.mount();
+
+    setGlobal({ component: this });
   },
 
 });
