@@ -3,57 +3,49 @@ import { getOwner } from '@ember/application';
 
 export default EmberObject.extend({
 
+  isObserving: false,
+
   parent: null,
   key: null,
   opts: null,
 
-  _isObserving: false,
-
   node: computed(function() {
     let { parent, opts } = this;
-
     let factory = getOwner(this).factoryFor('konva:definition/node');
-
-    let ctx = {
-      owner: parent,
-      node(name, props={}) {
-        return factory.create({ name, props });
-      }
-    };
-
-    let node = opts.content.call(ctx, ctx);
-    this._startObserving();
+    let build = (name, props={}) => factory.create({ name, props });
+    let node = opts.content.call(parent, build);
+    this.startObserving();
     return node;
   }).readOnly(),
 
-  _parentKeyDidChange() {
+  parentKeyDidChange() {
     this.notifyPropertyChange('node');
     this.parent.notifyPropertyChange(this.key);
   },
 
-  _withObserving(cb) {
+  withObserving(cb) {
     let { parent, opts } = this;
     opts.parent.forEach(key => cb(parent, key));
   },
 
-  _startObserving() {
-    if(this._isObserving) {
+  startObserving() {
+    if(this.isObserving) {
       return;
     }
-    this._withObserving((parent, key) => parent.addObserver(key, this, this._parentKeyDidChange));
-    this._isObserving = true;
+    this.withObserving((parent, key) => parent.addObserver(key, this, this.parentKeyDidChange));
+    this.isObserving = true;
   },
 
-  _stopObserving() {
-    if(!this._isObserving) {
+  stopObserving() {
+    if(!this.isObserving) {
       return;
     }
-    this._withObserving((parent, key) => parent.removeObserver(key, this, this._parentKeyDidChange));
-    this._isObserving = false;
+    this.withObserving((parent, key) => parent.removeObserver(key, this, this.parentKeyDidChange));
+    this.isObserving = false;
   },
 
   willDestroy() {
-    this._stopObserving();
+    this.stopObserving();
     this._super(...arguments);
   }
 

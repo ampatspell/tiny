@@ -24,14 +24,18 @@ export default Component.extend({
     return EmberObject.create({ rects, title });
   }).readOnly(),
 
-  stage: node().owner('model').content(function() {
-    let stage = this.node('wip/stage', { model: this.owner });
-
-    let layer = this.node('wip/layer');
-    stage.add(layer);
-
-    let rect = this.node('wip/rect', { x: 10, y: 10 });
+  layer: node().content(function(node) {
+    let layer = node('wip/layer');
+    let rect = node('wip/rect', { x: 10, y: 10 });
     layer.add(rect);
+    return layer;
+  }),
+
+  stage: node().owner('model', 'layer').content(function(node) {
+    let stage = node('wip/stage', { model: this });
+
+    let layer = this.layer;
+    stage.add(layer);
 
     return stage;
   }),
