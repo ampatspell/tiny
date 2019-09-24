@@ -7,6 +7,8 @@ export default EmberObject.extend({
   key: null,
   opts: null,
 
+  _isObserving: false,
+
   node: computed(function() {
     let { parent, opts } = this;
 
@@ -19,13 +21,14 @@ export default EmberObject.extend({
       }
     };
 
-    return opts.content.call(ctx, ctx);
+    let node = opts.content.call(ctx, ctx);
+    this._startObserving();
+    return node;
   }).readOnly(),
-
-  _isObserving: false,
 
   _parentKeyDidChange() {
     this.notifyPropertyChange('node');
+    this.parent.notifyPropertyChange(this.key);
   },
 
   _withObserving(cb) {
@@ -48,5 +51,10 @@ export default EmberObject.extend({
     this._withObserving((parent, key) => parent.removeObserver(key, this, this._parentKeyDidChange));
     this._isObserving = false;
   },
+
+  willDestroy() {
+    this._stopObserving();
+    this._super(...arguments);
+  }
 
 });

@@ -1,14 +1,16 @@
-import { computed } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
+import destroyable from 'ember-cli-zuglet/-private/util/destroyable';
 
-const property = opts => {
-  return computed(function(key) {
+const property = opts => destroyable({
+  reusable: () => true,
+  create(key) {
     let parent = this;
     return getOwner(this).factoryFor('konva:definition').create({ parent, key, opts });
-  }).meta({}).readOnly();
-}
+  },
+  get: definition => definition.node
+});
 
 const compact = array => A(array).compact();
 

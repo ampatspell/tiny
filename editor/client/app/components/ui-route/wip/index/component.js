@@ -25,7 +25,7 @@ export default Component.extend({
   }).readOnly(),
 
   stage: node().owner('model').content(function() {
-    let stage = this.node('wip/stage');
+    let stage = this.node('wip/stage', { model: this.owner });
 
     let layer = this.node('wip/layer');
     stage.add(layer);
@@ -42,7 +42,7 @@ export default Component.extend({
     // let container = this.element.querySelector('.content');
     // let { width, height } = container.getBoundingClientRect();
 
-    setGlobal({ stage: this.stage });
+    setGlobal({ component: this });
   },
 
 });

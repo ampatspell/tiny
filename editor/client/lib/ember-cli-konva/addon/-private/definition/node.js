@@ -3,6 +3,9 @@ import { A } from '@ember/array';
 
 export default EmberObject.extend({
 
+  name: null,
+  props: null,
+
   nodes: computed(function() {
     return A();
   }).readOnly(),
