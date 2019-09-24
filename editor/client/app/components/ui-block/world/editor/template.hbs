@@ -11,9 +11,8 @@
     }}
 
       {{#each state.world.scenes.ordered as |scene idx|}}
-        {{#ui-konva/layer idx=idx}}
+        {{#ui-konva/layer props=(hash zIndex=idx)}}
           {{ui-konva/world/scene
-            __index=scene.index
             scene=scene
             pixel=state.pixel
             selected=(eq selectedScene scene)

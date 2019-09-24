@@ -37,13 +37,14 @@ export default Node.extend({
 
   customProps: null,
 
-  props: computed('position', 'disabled', 'customProps', 'hidden', function() {
-    let { position, disabled, customProps, hidden } = this;
+  props: computed('zIndex', 'position', 'disabled', 'customProps', 'hidden', function() {
+    let { zIndex, position, disabled, customProps, hidden } = this;
     if(!position) {
       return;
     }
     customProps = customProps || {};
     return {
+      zIndex,
       ...customProps,
       ...position,
       draggable: true,

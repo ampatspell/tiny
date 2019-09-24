@@ -18,9 +18,10 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  props: computed('clipFunc', 'hidden', function() {
-    let { clipFunc, hidden } = this;
+  props: computed('zIndex', 'clipFunc', 'hidden', function() {
+    let { zIndex, clipFunc, hidden } = this;
     return {
+      zIndex,
       clipFunc,
       visible: !hidden
     }
