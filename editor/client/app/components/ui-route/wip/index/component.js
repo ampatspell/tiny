@@ -24,10 +24,14 @@ export default Component.extend({
     return EmberObject.create({ rects, title });
   }).readOnly(),
 
-  layer: node().content(function(node) {
+  opacity: 0.5,
+
+  // TODO: move node defs to models so that I can have sprite-editor model with all the nested konva nodes
+  layer: node().owner('opacity').content(function(node) {
+    let { opacity } = this;
     let layer = node('wip/layer');
-    let rect = node('wip/rect', { x: 10, y: 10 });
-    layer.add(rect);
+    layer.add(node('wip/rect', { x: 10, y: 10, fill: `rgba(255,0,0,${opacity})` }));
+    layer.add(node('wip/rect', { x: 60, y: 60, fill: `rgba(0,255,0,${opacity})` }));
     return layer;
   }),
 
@@ -40,15 +44,24 @@ export default Component.extend({
     return stage;
   }),
 
+  container: computed(function() {
+    return this.element.querySelector('.content');
+  }).readOnly(),
+
+  size: computed(function() {
+    let { container } = this;
+    let { width, height } = container.getBoundingClientRect();
+    return { width, height };
+  }).readOnly(),
+
   didInsertElement() {
     this._super(...arguments);
-
-    // let container = this.element.querySelector('.content');
-    // let { width, height } = container.getBoundingClientRect();
 
     setGlobal({ component: this });
 
     let stage = this.stage.build();
+    stage.bind(this);
+
     setGlobal({ stage });
   },
 

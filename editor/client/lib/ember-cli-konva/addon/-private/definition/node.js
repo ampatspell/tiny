@@ -24,8 +24,10 @@ export default EmberObject.extend({
     let { type, props, nodes } = this;
     let factory = getOwner(this).factoryFor(`model:${type}`);
     assert(`node model '${type}' is not registered`, !!factory);
-    let models = nodes.map(node => node.build(this));
-    return factory.create({ parent, type, props, models });
+    let model = factory.create({ parent, type, props });
+    let models = nodes.map(node => node.build(model));
+    model.setProperties({ models });
+    return model;
   }
 
 });
