@@ -7,6 +7,8 @@ const SettingsMixin = createSettingsMixin('project', 'sprites');
 
 export default EmberObject.extend(SettingsMixin, {
 
+  name: 'Sprites',
+
   project: null,
 
   ref: computed('project.ref', function() {
