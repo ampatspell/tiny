@@ -34,17 +34,20 @@ export default EmberObject.extend(SettingsMixin, {
     let {
       identifier,
       position,
-      size
+      size,
+      pixel
     } = assign({
       identifier: 'new-sprite',
       position: { x: 4, y: 6 },
-      size: { width: 16, height: 16 }
+      size: { width: 16, height: 16 },
+      pixel: 1
     }, opts);
 
     let doc = this.ref.doc().new({
       identifier,
       position,
       size,
+      pixel
     });
 
     await doc.save();

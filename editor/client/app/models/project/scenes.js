@@ -45,11 +45,13 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     let {
       identifier,
       position,
-      size
+      size,
+      background
     } = assign({
       identifier: 'new-scene',
       position: { x: 4, y: 6 },
-      size: { width: 128, height: 64 }
+      size: { width: 128, height: 64 },
+      background: 'white'
     }, opts);
 
     let doc = this.ref.doc().new({
@@ -57,7 +59,7 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
       identifier,
       position,
       size,
-      background: 'white'
+      background
     });
 
     await doc.save();
