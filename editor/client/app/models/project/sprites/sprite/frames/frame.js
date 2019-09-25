@@ -15,6 +15,7 @@ export default EmberObject.extend(DocMixin, {
 
   index: data('index'),
   identifier: data('identifier'),
+  bytes: data('bytes'),
 
   properties: properties(),
 

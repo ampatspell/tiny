@@ -40,7 +40,7 @@ export default EmberObject.extend(SettingsMixin, {
       identifier: 'new-sprite',
       position: { x: 4, y: 6 },
       size: { width: 16, height: 16 },
-      pixel: 1
+      pixel: 2
     }, opts);
 
     let doc = this.ref.doc().new({
