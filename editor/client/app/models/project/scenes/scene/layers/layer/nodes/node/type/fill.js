@@ -4,6 +4,7 @@ export default Node.extend({
 
   typeName: 'Fill Node',
 
-  color: data('color')
+  color: data('color'),
+  size: data('size.serialized')
 
 });

@@ -1,0 +1,5 @@
+{{#sidebar.section as |section|}}
+  {{section.position label="Position" value=model.position update=(action "update" "position")}}
+  {{section.alignment label="Alignment" value=model.alignment update=(action "update" "alignment")}}
+  {{section.flip label="Flip" value=model.flip update=(action "update" "flip")}}
+{{/sidebar.section}}

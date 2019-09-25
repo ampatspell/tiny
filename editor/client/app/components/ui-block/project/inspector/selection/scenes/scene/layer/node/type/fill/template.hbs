@@ -1,0 +1,5 @@
+{{#sidebar.section as |section|}}
+  {{section.position label="Position" value=model.position update=(action "update" "position")}}
+  {{section.size label="Size" value=model.size update=(action "update" "size")}}
+  {{section.segments label="Fill" items=fills selected=fill update=(action "fill")}}
+{{/sidebar.section}}

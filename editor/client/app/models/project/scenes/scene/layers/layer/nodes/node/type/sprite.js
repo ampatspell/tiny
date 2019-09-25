@@ -10,8 +10,8 @@ export default Node.extend({
 
   typeName: 'Sprite Node',
 
-  // alignment: data('alignment.serialized'),
-  // flip: data('flip.serialized'),
+  alignment: data('alignment.serialized'),
+  flip: data('flip.serialized'),
 
   // _sprite: data('sprite'),
   // _sprites: readOnly('layer.scene.world.worlds.project.sprites'),
