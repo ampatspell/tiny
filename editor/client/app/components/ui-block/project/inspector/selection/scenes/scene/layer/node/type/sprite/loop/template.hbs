@@ -1,9 +1,9 @@
-{{ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common sidebar=sidebar model=model}}
+{{#ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common sidebar=sidebar model=model as |section|}}
 
-{{#sidebar.section as |section|}}
-  {{#if model.loop}}
-    {{section.placeholder value=(concat 'Loop: ' model.loop.identifier)}}
+  {{#if model.loops}}
+    {{section.dropdown label="Loop" items=loops selected=loop update=(action "loop")}}
   {{else}}
-    {{section.placeholder value="No loop"}}
+    {{section.placeholder value="Sprite doesn't have any loops with identifier"}}
   {{/if}}
-{{/sidebar.section}}
+
+{{/ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common}}

@@ -20,7 +20,7 @@ export default EmberObject.extend({
 
   // name: data('name'),
   // identifier: data('identifier'),
-  thumbnail: data('thumbnail'),
+  // thumbnail: data('thumbnail'),
   // locked: data('locked'),
   // size: data('size.serialized'),
 

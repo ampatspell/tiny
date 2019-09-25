@@ -1,13 +1,31 @@
 {{#sidebar.section as |section|}}
   {{section.position label="Position" value=model.position update=(action "update" "position")}}
-  {{section.alignment label="Alignment" value=model.alignment update=(action "update" "alignment")}}
-  {{section.flip label="Flip" value=model.flip update=(action "update" "flip")}}
 {{/sidebar.section}}
 
+{{#if model.sprite}}
+
+  {{#sidebar.section as |section|}}
+
+    {{#section.custom class="sprite"}}
+      <div class="identifier">{{model.sprite.identifier}}</div>
+      <div class="preview">
+        {{ui-block/background-image class="image" url=model.sprite.thumbnail}}
+      </div>
+    {{/section.custom}}
+
+    {{yield section}}
+
+  {{/sidebar.section}}
+
+{{else}}
+
+  {{#sidebar.section as |section|}}
+    {{section.placeholder value="Missing sprite"}}
+  {{/sidebar.section}}
+
+{{/if}}
+
 {{#sidebar.section as |section|}}
-  {{#if model.sprite}}
-    {{section.placeholder value=(concat 'Sprite: ' model.sprite.identifier)}}
-  {{else}}
-    {{section.placeholder value="No sprite"}}
-  {{/if}}
+  {{section.alignment label="Alignment" value=model.alignment update=(action "update" "alignment")}}
+  {{section.flip label="Flip" value=model.flip update=(action "update" "flip")}}
 {{/sidebar.section}}

@@ -1,9 +1,9 @@
-{{ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common sidebar=sidebar model=model}}
+{{#ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common sidebar=sidebar model=model as |section|}}
 
-{{#sidebar.section as |section|}}
-  {{#if model.frame}}
-    {{section.placeholder value=(concat 'Frame: ' model.frame.identifier)}}
+  {{#if model.frames}}
+    {{section.dropdown label="Frame" items=frames selected=frame update=(action "frame")}}
   {{else}}
-    {{section.placeholder value="No frame"}}
+    {{section.placeholder value="Sprite doesn't have any frames with identifier"}}
   {{/if}}
-{{/sidebar.section}}
+
+{{/ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common}}

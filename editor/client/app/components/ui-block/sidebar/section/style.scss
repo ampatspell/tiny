@@ -205,4 +205,21 @@
     }
   }
 
+  > .sprite {
+    @include row();
+    @include padding();
+    > .identifier {
+      @include label();
+    }
+    > .preview {
+      background-color: #ddd;
+      padding: 5px 0;
+      > .image {
+        height: 32px;
+        background-size: contain;
+        image-rendering: pixelated;
+      }
+    }
+  }
+
 }

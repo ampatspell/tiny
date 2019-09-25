@@ -18,6 +18,7 @@ export default EmberObject.extend(DocMixin, {
   identifier: data('identifier'),
   position: data('position.serialized'),
   size: data('size.serialized'),
+  thumbnail: data('thumbnail'),
 
   hidden: data('hidden'),
   locked: data('locked'),
