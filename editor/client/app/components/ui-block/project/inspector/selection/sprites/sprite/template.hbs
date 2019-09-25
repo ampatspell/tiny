@@ -11,6 +11,7 @@
 {{#sidebar.section as |section|}}
   {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}}
   {{section.position label="Position" value=model.position update=(action "update" "position")}}
+  {{section.segments label="Pixel" items=pixels selected=pixel update=(action "pixel")}}
 {{/sidebar.section}}
 
 {{#sidebar.section as |section|}}
