@@ -35,7 +35,7 @@ export default EmberObject.extend(DocMixin, {
   //
 
   frame: frame(),
-  pixelFrame: pixelFrame('project.pixel', 'project.pixel'),
+  pixelFrame: pixelFrame('project.pixel'),
 
   //
 
