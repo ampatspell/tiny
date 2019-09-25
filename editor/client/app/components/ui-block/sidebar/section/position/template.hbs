@@ -1,0 +1,11 @@
+<div class="label">{{label}}</div>
+<div class="items">
+  <div class="item">
+    <div class="label">X</div>
+    {{ui-block/input value=value.x enter=(action "update" "x") disabled=disabled delayed=true}}
+  </div>
+  <div class="item">
+    <div class="label">Y</div>
+    {{ui-block/input value=value.y enter=(action "update" "y") disabled=disabled delayed=true}}
+  </div>
+</div>

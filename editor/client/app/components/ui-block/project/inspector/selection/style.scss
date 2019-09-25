@@ -1,3 +1,5 @@
 .ui-block-project-inspector-selection {
-  margin: 10px;
+  > .placeholder {
+    margin: 10px;
+  }
 }

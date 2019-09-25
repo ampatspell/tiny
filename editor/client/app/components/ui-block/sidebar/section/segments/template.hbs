@@ -1,0 +1,4 @@
+<div class="label">{{label}}</div>
+{{#ui-block/segments class="segments" disabled=disabled items=items selected=selected select=(action "select") as |hash|}}
+  {{hash.component value=hash.item.label}}
+{{/ui-block/segments}}

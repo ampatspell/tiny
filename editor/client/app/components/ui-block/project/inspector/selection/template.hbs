@@ -1,9 +1,11 @@
 {{#if selection}}
-  <div>{{selection.typeGroup}}</div>
-  {{#if selection.type}}
-    <div>{{selection.type}}</div>
-  {{/if}}
-  <div>{{selection.typeName}}</div>
+
+  {{#ui-block/sidebar disabled=selection.chainLocked as |sidebar|}}
+
+    {{component (concat 'ui-block/project/inspector/selection/' selection.typeGroup) sidebar=sidebar model=selection project=project}}
+
+  {{/ui-block/sidebar}}
+
 {{else}}
-  No selection
+  <div class="placeholder">No selection</div>
 {{/if}}

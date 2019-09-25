@@ -1,0 +1,208 @@
+.ui-block-sidebar-section {
+
+  margin-bottom: 15px;
+
+  border-bottom: 1px solid fade-out(#000, 0.9);
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @mixin row($top: 5px) {
+    border-bottom: 1px solid fade-out(#000, 0.9);
+    &:last-child {
+      border-bottom: 0;
+    }
+    padding-top: $top;
+    padding-bottom: 5px;
+  }
+
+  @mixin padding() {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @mixin horizontal-grid() {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    grid-gap: 5px;
+  }
+
+  @mixin vertical-grid() {
+    display: grid;
+    grid-gap: 5px;
+  }
+
+  @mixin label($margin: true, $strong: true) {
+    @if $margin {
+      margin-bottom: 2px;
+    }
+    @if $strong {
+      font-weight: 600;
+    }
+  }
+
+  > .header {
+    @include row($top: 10px);
+    @include padding();
+    display: flex;
+    flex-direction: row;
+    > .content {
+      flex: 1;
+      > .type {
+        margin-bottom: 5px;
+      }
+      > .identifier {
+        font-weight: 600;
+      }
+    }
+  }
+
+  > .placeholder {
+    @include row();
+    @include padding();
+  }
+
+  > .actions {
+    @include row();
+    @include padding();
+    &.type-grid {
+      @include horizontal-grid();
+    }
+    &.type-regular {
+      @include vertical-grid();
+    }
+  }
+
+  > .padded {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+  }
+
+  > .input {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+  }
+
+  > .size,
+  > .position {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+    > .items {
+      @include horizontal-grid();
+      > .item {
+        > .label {
+          @include label($strong: false);
+        }
+      }
+    }
+  }
+
+  > .segments {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+  }
+
+  > .checkmark {
+    @include row();
+    @include padding();
+    display: flex;
+    flex-direction: row;
+    > .label {
+      margin-left: 5px;
+      @include label($margin: false);
+    }
+  }
+
+  > .alignment {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+    > .segments {
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  > .flip {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+    > .axis {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      > .label {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  > .dropdown {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+  }
+
+  > .properties {
+    @include row();
+    @include padding();
+    > .label {
+      @include label();
+    }
+    > .items {
+      margin-top: 5px;
+      > .item {
+        margin-bottom: 5px;
+        > .content {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          > .input {
+            flex: 1;
+          }
+          > .delete {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+    > .placeholder {
+      margin-bottom: 5px;
+    }
+    > .add {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      > .input {
+        flex: 1;
+        margin-right: 5px;
+      }
+      > .action {
+      }
+    }
+  }
+
+}

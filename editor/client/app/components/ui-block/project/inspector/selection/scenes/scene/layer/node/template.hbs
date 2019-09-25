@@ -1,0 +1,8 @@
+{{#sidebar.section as |section|}}
+  {{#section.header as |header|}}
+    {{#header.content as |content|}}
+      {{content.type value=model.typeName}}
+      {{content.identifier value=model.identifier}}
+    {{/header.content}}
+  {{/section.header}}
+{{/sidebar.section}}
