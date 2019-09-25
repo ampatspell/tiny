@@ -1,6 +1,7 @@
 import EmberObject from '@ember/object';
 import { or } from '@ember/object/computed';
-import DocMixin, { data } from '../../../../../../-doc';
+import DocMixin, { data } from 'editor/models/-doc';
+import { properties } from 'editor/models/properties';
 
 export {
   data
@@ -22,6 +23,8 @@ export default EmberObject.extend(DocMixin, {
 
   chainHidden: or('nodes.chainHidden', 'hidden'),
   chainLocked: or('nodes.chainLocked', 'locked'),
+
+  properties: properties(),
 
   async load() {
   }

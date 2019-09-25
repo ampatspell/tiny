@@ -3,6 +3,7 @@ import { readOnly } from '@ember/object/computed';
 import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
+import { properties } from './properties';
 
 export default EmberObject.extend(DocMixin, {
 
@@ -18,6 +19,8 @@ export default EmberObject.extend(DocMixin, {
   chainHidden: readOnly('hidden'),
   chainLocked: readOnly('locked'),
 
+  properties: properties(),
+
   sprites: model().named('project/sprites').mapping(project => ({ project })),
   scenes: model().named('project/scenes').mapping(project => ({ project })),
 
@@ -29,6 +32,7 @@ export default EmberObject.extend(DocMixin, {
   },
 
   async load({ type }) {
+    setGlobal({ project: this });
     if(type === 'detail') {
       await all([
         this.sprites.load({ type }),

@@ -2,7 +2,8 @@ import EmberObject from '@ember/object';
 import { or } from '@ember/object/computed';
 import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
-import DocMixin, { data } from '../../-doc';
+import DocMixin, { data } from 'editor/models/-doc';
+import { properties } from 'editor/models/properties';
 
 export default EmberObject.extend(DocMixin, {
 
@@ -19,6 +20,8 @@ export default EmberObject.extend(DocMixin, {
 
   chainHidden: or('sprites.chainHidden', 'hidden'),
   chainLocked: or('sprites.chainLocked', 'locked'),
+
+  properties: properties(),
 
   frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
   loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),

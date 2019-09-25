@@ -1,7 +1,8 @@
 import EmberObject from '@ember/object';
 import { or } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
-import DocMixin, { data } from '../../../../-doc';
+import DocMixin, { data } from 'editor/models/-doc';
+import { properties } from 'editor/models/properties';
 
 export {
   data
@@ -24,6 +25,8 @@ export default EmberObject.extend(DocMixin, {
 
   chainHidden: or('layers.chainHidden', 'hidden'),
   chainLocked: or('layers.chainLocked', 'locked'),
+
+  properties: properties(),
 
   nodes: model().named('project/scenes/scene/layers/layer/nodes').mapping(layer => ({ layer })),
 

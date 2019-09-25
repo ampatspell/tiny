@@ -1,18 +1,18 @@
 import EmberObject from '@ember/object';
-import { doc, data } from 'editor/utils/computed';
+import DocMixin, { data } from 'editor/models/-doc';
+import { properties } from 'editor/models/properties';
 
-export default EmberObject.extend({
+export default EmberObject.extend(DocMixin, {
 
   typeName: 'Frame',
 
   frames: null,
   doc: null,
 
-  id: doc('id'),
-  ref: doc('ref'),
-
   index: data('index'),
   identifier: data('identifier'),
+
+  properties: properties(),
 
   async load() {
   }
