@@ -1,11 +1,6 @@
-{{#if selection}}
+{{#ui-block/sidebar disabled=selection.chainLocked as |sidebar|}}
 
-  {{#ui-block/sidebar disabled=selection.chainLocked as |sidebar|}}
+  {{component (concat 'ui-block/project/inspector/selection/' selection.typeGroup) sidebar=sidebar model=selection project=project}}
 
-    {{component (concat 'ui-block/project/inspector/selection/' selection.typeGroup) sidebar=sidebar model=selection project=project}}
+{{/ui-block/sidebar}}
 
-  {{/ui-block/sidebar}}
-
-{{else}}
-  <div class="placeholder">No selection</div>
-{{/if}}

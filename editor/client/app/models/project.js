@@ -7,6 +7,7 @@ import { properties } from './properties';
 
 export default EmberObject.extend(DocMixin, {
 
+  typeGroup: 'project',
   typeName: 'Project',
 
   projects: null,
