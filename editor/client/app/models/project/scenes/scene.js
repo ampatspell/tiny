@@ -6,6 +6,7 @@ import { properties } from 'editor/models/properties';
 
 export default EmberObject.extend(DocMixin, {
 
+  typeGroup: 'scenes/scene',
   typeName: 'Scene',
 
   scenes: null,

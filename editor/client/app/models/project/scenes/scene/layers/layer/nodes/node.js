@@ -9,6 +9,7 @@ export {
 
 export default EmberObject.extend(DocMixin, {
 
+  typeGroup: 'scenes/scene/layer/node',
   typeName: 'Node',
 
   nodes: null,

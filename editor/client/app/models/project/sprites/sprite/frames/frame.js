@@ -4,6 +4,7 @@ import { properties } from 'editor/models/properties';
 
 export default EmberObject.extend(DocMixin, {
 
+  typeGroup: 'sprites/sprite/frame',
   typeName: 'Frame',
 
   frames: null,

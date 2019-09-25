@@ -10,6 +10,7 @@ export {
 
 export default EmberObject.extend(DocMixin, {
 
+  typeGroup: 'scenes/scene/layer',
   typeName: 'Layer',
 
   layers: null,

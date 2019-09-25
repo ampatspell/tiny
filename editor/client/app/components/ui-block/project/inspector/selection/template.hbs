@@ -1,5 +1,9 @@
 {{#if selection}}
-  {{selection.typeName}}
+  <div>{{selection.typeGroup}}</div>
+  {{#if selection.type}}
+    <div>{{selection.type}}</div>
+  {{/if}}
+  <div>{{selection.typeName}}</div>
 {{else}}
   No selection
 {{/if}}
