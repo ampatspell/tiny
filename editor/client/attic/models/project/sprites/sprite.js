@@ -13,57 +13,57 @@ const data = key => doc(`data.${key}`);
 
 export default EmberObject.extend({
 
-  sprites: null,
-  doc: null,
-  id: doc('id'),
-  path: doc('path'),
+  // sprites: null,
+  // doc: null,
+  // id: doc('id'),
+  // path: doc('path'),
 
-  name: data('name'),
-  identifier: data('identifier'),
+  // name: data('name'),
+  // identifier: data('identifier'),
   thumbnail: data('thumbnail'),
-  locked: data('locked'),
-  size: data('size.serialized'),
+  // locked: data('locked'),
+  // size: data('size.serialized'),
 
   //
 
-  _framesAdding: array(),
+  // _framesAdding: array(),
 
-  framesQuery: path(({ store, path, _framesAdding }) => store.collection(`${path}/frames`).orderBy('index').query({
-    doc: path => _framesAdding.findBy('path', path)
-  })),
+  // framesQuery: path(({ store, path, _framesAdding }) => store.collection(`${path}/frames`).orderBy('index').query({
+  //   doc: path => _framesAdding.findBy('path', path)
+  // })),
 
-  frames: models('framesQuery.content').named('project/sprites/sprite/frame').mapping((doc, sprite) => ({ doc, sprite })),
-
-  //
-
-  _loopsAdding: array(),
-
-  loopsQuery: path(({ store, path, _loopsAdding }) => store.collection(`${path}/loops`).query({
-    doc: path => _loopsAdding.findBy('path', path)
-  })),
-
-  loops: models('loopsQuery.content').named('project/sprites/sprite/loop').mapping((doc, sprite) => ({ doc, sprite })),
+  // frames: models('framesQuery.content').named('project/sprites/sprite/frame').mapping((doc, sprite) => ({ doc, sprite })),
 
   //
 
-  isLoading: or('doc.isLoading', 'framesQuery.isLoading', 'loopsQuery.isLoading'),
+  // _loopsAdding: array(),
 
-  async save() {
-    await this.doc.save({ token: true });
-  },
+  // loopsQuery: path(({ store, path, _loopsAdding }) => store.collection(`${path}/loops`).query({
+  //   doc: path => _loopsAdding.findBy('path', path)
+  // })),
 
-  update(props) {
-    this.doc.data.setProperties(props);
-    this.save();
-  },
+  // loops: models('loopsQuery.content').named('project/sprites/sprite/loop').mapping((doc, sprite) => ({ doc, sprite })),
 
-  async load() {
-    await resolveObservers(this.framesQuery, this.loopsQuery);
-    await all([
-      ...this.frames.map(frame => frame.load()),
-      ...this.loops.map(loop => loop.load())
-    ]);
-  },
+  //
+
+  // isLoading: or('doc.isLoading', 'framesQuery.isLoading', 'loopsQuery.isLoading'),
+
+  // async save() {
+  //   await this.doc.save({ token: true });
+  // },
+
+  // update(props) {
+  //   this.doc.data.setProperties(props);
+  //   this.save();
+  // },
+
+  // async load() {
+  //   await resolveObservers(this.framesQuery, this.loopsQuery);
+  //   await all([
+  //     ...this.frames.map(frame => frame.load()),
+  //     ...this.loops.map(loop => loop.load())
+  //   ]);
+  // },
 
   async resize(handle, diff) {
     if(diff.x === 0 && diff.y === 0) {
@@ -204,10 +204,10 @@ export default EmberObject.extend({
 
   //
 
-  async delete() {
-    this.skipCreateThumbnail = true;
-    await this.doc.delete();
-  },
+  // async delete() {
+  //   this.skipCreateThumbnail = true;
+  //   await this.doc.delete();
+  // },
 
   //
 
@@ -218,9 +218,9 @@ export default EmberObject.extend({
 
   //
 
-  toStringExtension() {
-    let { id, identifier } = this;
-    return `${id}:${identifier}`;
-  }
+  // toStringExtension() {
+  //   let { id, identifier } = this;
+  //   return `${id}:${identifier}`;
+  // }
 
 });

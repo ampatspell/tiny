@@ -1,17 +1,24 @@
 import EmberObject from '@ember/object';
-import { doc, data } from 'editor/utils/computed';
+import DocMixin, { data } from './-doc';
+import { model } from 'ember-cli-zuglet/lifecycle';
+import { all } from 'rsvp';
 
-export default EmberObject.extend({
+export default EmberObject.extend(DocMixin, {
 
   projects: null,
   doc: null,
 
-  id: doc('id'),
-  ref: doc('ref'),
-
   title: data('title'),
+  locked: data('locked'),
+
+  sprites: model().named('project/sprites').mapping(project => ({ project })),
 
   async load({ type }) {
+    if(type === 'detail') {
+      await all([
+        this.sprites.load({ type })
+      ]);
+    }
   }
 
 });
