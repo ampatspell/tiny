@@ -3,6 +3,10 @@ import { or } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from '../../../../-doc';
 
+export {
+  data
+}
+
 export default EmberObject.extend(DocMixin, {
 
   typeName: 'Layer',

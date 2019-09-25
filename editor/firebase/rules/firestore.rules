@@ -39,6 +39,11 @@ service cloud.firestore {
         }
       }
 
+      // Migration
+      match /worlds/{any=**} {
+        allow read: if isProjectOwner();
+      }
+
       match /scenes/{scene} {
         allow read: if isProjectOwner();
         allow write: if isProjectOwner();
