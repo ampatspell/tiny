@@ -40,44 +40,44 @@ export default EmberObject.extend({
 
   //
 
-  async create(opts) {
-    let last = this.ordered.lastObject;
-    let index = 0;
-    if(last) {
-      index = last.index + 1;
-    }
+  // async create(opts) {
+  //   let last = this.ordered.lastObject;
+  //   let index = 0;
+  //   if(last) {
+  //     index = last.index + 1;
+  //   }
 
-    let {
-      name,
-      identifier,
-      position,
-      size,
-      grid
-    } = assign({
-      name: null,
-      identifier: null,
-      position: { x: 4, y: 6 },
-      size: { width: 128, height: 64 }
-    }, opts);
+  //   let {
+  //     name,
+  //     identifier,
+  //     position,
+  //     size,
+  //     grid
+  //   } = assign({
+  //     name: null,
+  //     identifier: null,
+  //     position: { x: 4, y: 6 },
+  //     size: { width: 128, height: 64 }
+  //   }, opts);
 
-    let doc = this.ref.doc().new({
-      index,
-      name,
-      identifier,
-      position,
-      size,
-      grid,
-      background: 'white'
-    });
+  //   let doc = this.ref.doc().new({
+  //     index,
+  //     name,
+  //     identifier,
+  //     position,
+  //     size,
+  //     grid,
+  //     background: 'white'
+  //   });
 
-    try {
-      this._adding.pushObject(doc);
-      await doc.save();
-      return this.models.findBy('doc', doc);
-    } finally {
-      this._adding.removeObject(doc);
-    }
-  },
+  //   try {
+  //     this._adding.pushObject(doc);
+  //     await doc.save();
+  //     return this.models.findBy('doc', doc);
+  //   } finally {
+  //     this._adding.removeObject(doc);
+  //   }
+  // },
 
   //
 

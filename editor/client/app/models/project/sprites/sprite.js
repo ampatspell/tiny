@@ -1,19 +1,22 @@
 import EmberObject from '@ember/object';
-import { doc, data } from 'editor/utils/computed';
+import { or } from '@ember/object/computed';
 import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
+import DocMixin, { data } from '../../-doc';
 
-export default EmberObject.extend({
+export default EmberObject.extend(DocMixin, {
 
   sprites: null,
   doc: null,
 
-  id: doc('id'),
-  ref: doc('ref'),
-
   identifier: data('identifier'),
-  locked: data('locked'),
   size: data('size.serialized'),
+
+  hidden: data('hidden'),
+  locked: data('locked'),
+
+  chainHidden: or('sprites.chainHidden', 'hidden'),
+  chainLocked: or('sprites.chainLocked', 'locked'),
 
   frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
   loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),

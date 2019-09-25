@@ -46,22 +46,22 @@ export default EmberObject.extend(ScheduleSave, {
 
   //
 
-  async load() {
-  },
+  // async load() {
+  // },
 
-  async save() {
-    await this.doc.save({ token: true });
-  },
+  // async save() {
+  //   await this.doc.save({ token: true });
+  // },
 
-  update(props) {
-    this.doc.data.setProperties(props);
-    this.scheduleSave();
-  },
+  // update(props) {
+  //   this.doc.data.setProperties(props);
+  //   this.scheduleSave();
+  // },
 
-  async delete() {
-    this.cancelScheduledSave();
-    await this.doc.delete();
-  },
+  // async delete() {
+  //   this.cancelScheduledSave();
+  //   await this.doc.delete();
+  // },
 
   //
 

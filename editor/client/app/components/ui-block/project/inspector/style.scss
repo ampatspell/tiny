@@ -1,0 +1,19 @@
+.ui-block-project-inspector {
+  width: 220px;
+  background: darken(#fff, 0.7%);
+  border-left: 1px solid darken(#fff, 25%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  > .tabs {
+    flex: 1;
+    > .content {
+      > .overflow {
+        > .tree,
+        > .sprites {
+          flex: 1;
+        }
+      }
+    }
+  }
+}

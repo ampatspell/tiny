@@ -1,7 +1,11 @@
 import EmberObject, { computed } from '@ember/object';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
+import createSettingsMixin from '../-settings';
+import { all } from 'rsvp';
 
-export default EmberObject.extend({
+const SettingsMixin = createSettingsMixin('project', 'sprites');
+
+export default EmberObject.extend(SettingsMixin, {
 
   project: null,
 
@@ -19,7 +23,7 @@ export default EmberObject.extend({
 
   async load({ type }) {
     await resolveObservers(this.query);
-    await this.models.map(model => model.load({ type }));
-  },
+    await all(this.models.map(model => model.load({ type })));
+  }
 
 });

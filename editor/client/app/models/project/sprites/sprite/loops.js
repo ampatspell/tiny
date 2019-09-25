@@ -1,5 +1,6 @@
 import EmberObject, { computed } from '@ember/object';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
+import { all } from 'rsvp';
 
 export default EmberObject.extend({
 
@@ -19,7 +20,7 @@ export default EmberObject.extend({
 
   async load({ type }) {
     await resolveObservers(this.query);
-    await this.models.map(model => model.load({ type }));
+    await all(this.models.map(model => model.load({ type })));
   },
 
 });
