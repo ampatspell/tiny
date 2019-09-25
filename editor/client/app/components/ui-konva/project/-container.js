@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import DraggableMixin from './-dragable';
 
-const observe = [ 'pixelFrame', 'hidden', 'draggable' ];
+const observe = [ 'pixelFrame', 'hidden', 'locked', 'draggable' ];
 
 export default Mixin.create(DraggableMixin, {
 
@@ -14,10 +14,12 @@ export default Mixin.create(DraggableMixin, {
   project: null,
 
   pixelFrame: readOnly('model.pixelFrame'),
-  hidden: readOnly('model.hidden'),
+  locked: readOnly('model.chainLocked'),
+  hidden: readOnly('model.chainHidden'),
 
-  draggable: computed(function() {
-    return true;
+  draggable: computed('disabled', 'locked', function() {
+    let { disabled, locked } = this;
+    return !disabled && !locked;
   }).readOnly(),
 
   props: computed('pixelFrame', 'hidden', 'draggable', 'index', function() {

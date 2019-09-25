@@ -11,11 +11,11 @@
     }}
 
       {{#ui-konva/layer props=(hash zIndex=0)}}
-        {{ui-konva/project/scenes project=project}}
+        {{ui-konva/project/scenes project=project disabled=draggable}}
       {{/ui-konva/layer}}
 
       {{#ui-konva/layer props=(hash zIndex=1)}}
-        {{ui-konva/project/sprites project=project}}
+        {{ui-konva/project/sprites project=project disabled=draggable}}
       {{/ui-konva/layer}}
 
     {{/ui-konva/stage}}
