@@ -6,6 +6,8 @@ import { all } from 'rsvp';
 
 export default EmberObject.extend(DocMixin, {
 
+  typeName: 'Project',
+
   projects: null,
   doc: null,
 

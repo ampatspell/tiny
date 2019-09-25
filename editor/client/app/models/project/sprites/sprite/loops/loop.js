@@ -3,6 +3,8 @@ import { doc, data } from 'editor/utils/computed';
 
 export default EmberObject.extend({
 
+  typeName: 'Loop',
+
   frames: null,
   doc: null,
 

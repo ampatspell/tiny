@@ -6,6 +6,8 @@ import { all } from 'rsvp';
 
 export default EmberObject.extend({
 
+  typeName: 'Nodes',
+
   layer: null,
 
   chainHidden: readOnly('layer.chainHidden'),

@@ -2,7 +2,7 @@ import Layer from '../../layer';
 
 export default Layer.extend({
 
-  name: 'Pixel Layer',
+  typeName: 'Pixel Layer',
 
   clampNodePosition(node, position) {
     return position;

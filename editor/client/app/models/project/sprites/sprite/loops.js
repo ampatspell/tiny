@@ -4,6 +4,8 @@ import { all } from 'rsvp';
 
 export default EmberObject.extend({
 
+  typeName: 'Loops',
+
   sprite: null,
 
   ref: computed('sprite.ref', function() {

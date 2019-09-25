@@ -2,7 +2,8 @@ import Layer, { data } from '../../layer';
 
 export default Layer.extend({
 
-  name: 'Grid Layer',
+  typeName: 'Grid Layer',
+
   grid: data('grid.serialized'),
 
   clampNodePosition(node, position) {

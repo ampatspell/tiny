@@ -3,6 +3,8 @@ import { doc, data } from 'editor/utils/computed';
 
 export default EmberObject.extend({
 
+  typeName: 'Frame',
+
   frames: null,
   doc: null,
 

@@ -5,6 +5,8 @@ import DocMixin, { data } from '../../../../-doc';
 
 export default EmberObject.extend(DocMixin, {
 
+  typeName: 'Layer',
+
   layers: null,
   doc: null,
 

@@ -4,7 +4,7 @@ import Sprite, { data } from '../sprite';
 
 export default Sprite.extend({
 
-  name: 'Sprite Loop',
+  typeName: 'Sprite Loop Node',
 
   // _loop: data('loop'),
   // loops: readOnly('sprite.loops'),

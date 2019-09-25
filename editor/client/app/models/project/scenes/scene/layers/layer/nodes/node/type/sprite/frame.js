@@ -4,7 +4,7 @@ import { readOnly } from '@ember/object/computed';
 
 export default Sprite.extend({
 
-  name: 'Sprite Frame',
+  typeName: 'Sprite Frame Node',
 
   // _frame: data('frame'),
   // frames: readOnly('sprite.frames'),

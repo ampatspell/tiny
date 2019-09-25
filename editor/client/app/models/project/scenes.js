@@ -8,7 +8,7 @@ const SettingsMixin = createSettingsMixin('project', 'scenes');
 
 export default EmberObject.extend(SettingsMixin, {
 
-  name: 'Scenes',
+  typeName: 'Scenes',
 
   project: null,
 

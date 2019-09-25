@@ -7,7 +7,7 @@ const SettingsMixin = createSettingsMixin('project', 'sprites');
 
 export default EmberObject.extend(SettingsMixin, {
 
-  name: 'Sprites',
+  typeName: 'Sprites',
 
   project: null,
 

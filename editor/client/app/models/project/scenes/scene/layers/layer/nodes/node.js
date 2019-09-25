@@ -8,6 +8,8 @@ export {
 
 export default EmberObject.extend(DocMixin, {
 
+  typeName: 'Node',
+
   nodes: null,
   doc: null,
 

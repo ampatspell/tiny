@@ -2,7 +2,7 @@ import Node, { data } from '../../node';
 
 export default Node.extend({
 
-  name: 'Fill',
+  typeName: 'Fill Node',
 
   color: data('color')
 

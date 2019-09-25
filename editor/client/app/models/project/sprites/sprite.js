@@ -6,7 +6,7 @@ import DocMixin, { data } from '../../-doc';
 
 export default EmberObject.extend(DocMixin, {
 
-  name: 'Sprite',
+  typeName: 'Sprite',
 
   sprites: null,
   doc: null,

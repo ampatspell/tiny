@@ -8,7 +8,7 @@ export {
 
 export default Node.extend({
 
-  name: 'Sprite',
+  typeName: 'Sprite Node',
 
   // alignment: data('alignment.serialized'),
   // flip: data('flip.serialized'),
