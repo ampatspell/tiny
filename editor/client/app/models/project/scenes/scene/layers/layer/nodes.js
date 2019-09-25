@@ -8,6 +8,8 @@ export default EmberObject.extend({
 
   typeName: 'Nodes',
 
+  project: readOnly('layer.project'),
+
   layer: null,
 
   chainHidden: readOnly('layer.chainHidden'),
@@ -48,7 +50,76 @@ export default EmberObject.extend({
     let doc = this.ref.doc().new(opts);
 
     await doc.save();
-    return this.models.findBy('doc', doc);
-  }
+    return this.project.select(this.models.findBy('id', doc.id));
+  },
+
+  async _createSprite(type, cb) {
+    // let { sprite } = this;
+    let sprite = null;
+
+    let opts = cb(sprite);
+    if(!opts) {
+      return;
+    }
+
+    let identifier = null;
+    if(sprite) {
+      identifier = sprite.identifier;
+    }
+
+    await this.create({
+      type: `sprite/${type}`,
+      position: {
+        x: 0,
+        y: 0,
+      },
+      alignment: {
+        vertical: 'top',
+        horizontal: 'left'
+      },
+      flip: {
+        horizontal: false,
+        vertical: false
+      },
+      sprite: identifier,
+      ...opts
+    });
+  },
+
+  async createSpriteFrame()  {
+    await this._createSprite('frame', sprite => {
+      let frame;
+      if(sprite) {
+        frame = sprite.get('frames.firstObject.identifier');
+      }
+      frame = frame || null;
+      return { frame };
+    });
+  },
+
+  async createSpriteLoop() {
+    await this._createSprite('loop', sprite => {
+      let loop = null;
+      if(sprite) {
+        loop = sprite.get('loops.firstObject.identifier') || null;
+      }
+      return { loop };
+    });
+  },
+
+  async createFill() {
+    await this.create({
+      type: 'fill',
+      position: {
+        x: 0,
+        y: 0,
+      },
+      size: {
+        width: 8,
+        height: 8
+      },
+      color: 'black'
+    });
+  },
 
 });

@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { or } from '@ember/object/computed';
+import { readOnly, or } from '@ember/object/computed';
 import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
@@ -9,6 +9,8 @@ export default EmberObject.extend(DocMixin, {
 
   typeGroup: 'sprites/sprite',
   typeName: 'Sprite',
+
+  project: readOnly('sprites.project'),
 
   sprites: null,
   doc: null,
@@ -34,6 +36,10 @@ export default EmberObject.extend(DocMixin, {
         this.loops.load({ type })
       ]);
     }
+  },
+
+  willDelete() {
+    this.project.selectIf(this, this.sprites);
   }
 
 });

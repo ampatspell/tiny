@@ -1,8 +1,26 @@
-{{#sidebar.section as |section|}}
+{{#sidebar.section class="header" as |section|}}
   {{#section.header as |header|}}
     {{#header.content as |content|}}
       {{content.type value=model.typeName}}
       {{content.identifier value=model.identifier}}
     {{/header.content}}
+    {{header.lock locked=model.chainLocked update=(action "locked")}}
   {{/section.header}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{section.properties label="Custom properties" value=model.properties update=(action "update" "properties")}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Add new grid layer" action=(action "createGridLayer")}}
+    {{actions.button value="Add new pixel layer" action=(action "createPixelLayer")}}
+  {{/section.actions}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Delete scene" action=(action "delete")}}
+  {{/section.actions}}
 {{/sidebar.section}}

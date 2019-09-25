@@ -4,10 +4,10 @@ export default Component.extend({
 
   actions: {
     createScene() {
-      this.model.scenes.create({ identifier: 'new-scene' });
+      this.model.scenes.create();
     },
     createSprite() {
-      this.model.sprites.create({ identifier: 'new-sprite' });
+      this.model.sprites.create();
     }
   }
 

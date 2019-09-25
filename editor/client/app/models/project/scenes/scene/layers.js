@@ -1,4 +1,5 @@
 import EmberObject, { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 import { all } from 'rsvp';
@@ -9,6 +10,8 @@ const SettingsMixin = createSettingsMixin('scene', 'layers');
 export default EmberObject.extend(SettingsMixin, {
 
   typeName: 'Layers',
+
+  project: readOnly('scene.project'),
 
   scene: null,
 
@@ -47,7 +50,7 @@ export default EmberObject.extend(SettingsMixin, {
     let doc = this.ref.doc().new(opts);
 
     await doc.save();
-    return this.models.findBy('doc', doc);
+    return this.project.select(this.models.findBy('id', doc.id));
   },
 
 });

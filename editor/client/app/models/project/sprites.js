@@ -36,7 +36,7 @@ export default EmberObject.extend(SettingsMixin, {
       position,
       size
     } = assign({
-      identifier: null,
+      identifier: 'new-sprite',
       position: { x: 4, y: 6 },
       size: { width: 16, height: 16 }
     }, opts);

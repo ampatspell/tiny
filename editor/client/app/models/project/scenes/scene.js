@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { or } from '@ember/object/computed';
+import { readOnly, or } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
@@ -8,6 +8,8 @@ export default EmberObject.extend(DocMixin, {
 
   typeGroup: 'scenes/scene',
   typeName: 'Scene',
+
+  project: readOnly('scenes.project'),
 
   scenes: null,
   doc: null,
@@ -33,6 +35,10 @@ export default EmberObject.extend(DocMixin, {
     if(type === 'detail') {
       await this.layers.load({ type });
     }
+  },
+
+  willDelete() {
+    this.project.selectIf(this, this.scenes);
   }
 
 });

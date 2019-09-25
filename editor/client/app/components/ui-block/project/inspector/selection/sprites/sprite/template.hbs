@@ -4,5 +4,23 @@
       {{content.type value=model.typeName}}
       {{content.identifier value=model.identifier}}
     {{/header.content}}
+    {{header.lock locked=model.chainLocked update=(action "locked")}}
   {{/section.header}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{section.properties label="Custom properties" value=model.properties update=(action "update" "properties")}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Add frame" action=(action "createFrame")}}
+    {{actions.button value="Add loop" action=(action "createLoop")}}
+  {{/section.actions}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Delete sprite" action=(action "delete")}}
+  {{/section.actions}}
 {{/sidebar.section}}

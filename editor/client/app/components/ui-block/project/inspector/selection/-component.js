@@ -9,6 +9,9 @@ export default Component.extend({
     },
     update(key, value) {
       this.model.update({ [key]: value });
+    },
+    delete() {
+      this.model.delete();
     }
   }
 

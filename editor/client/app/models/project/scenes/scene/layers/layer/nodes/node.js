@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { or } from '@ember/object/computed';
+import { readOnly, or } from '@ember/object/computed';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
 
@@ -11,6 +11,8 @@ export default EmberObject.extend(DocMixin, {
 
   typeGroup: 'scenes/scene/layer/node',
   typeName: 'Node',
+
+  project: readOnly('nodes.project'),
 
   nodes: null,
   doc: null,
@@ -28,6 +30,10 @@ export default EmberObject.extend(DocMixin, {
   properties: properties(),
 
   async load() {
+  },
+
+  willDelete() {
+    this.project.selectIf(this, this.nodes.layer);
   }
 
 });

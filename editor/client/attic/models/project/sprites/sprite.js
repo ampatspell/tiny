@@ -110,28 +110,28 @@ export default EmberObject.extend({
     });
   },
 
-  async createFrame(opts) {
-    let { index, bytes } = assign({ index: 0 }, opts);
-    if(bytes) {
-      bytes = bytes.slice();
-    } else {
-      let { size } = this;
-      bytes = new Uint8Array(size.width * size.height);
-    }
+  // async createFrame(opts) {
+  //   let { index, bytes } = assign({ index: 0 }, opts);
+  //   if(bytes) {
+  //     bytes = bytes.slice();
+  //   } else {
+  //     let { size } = this;
+  //     bytes = new Uint8Array(size.width * size.height);
+  //   }
 
-    let doc = this.doc.ref.collection('frames').doc().new({
-      index,
-      bytes
-    });
+  //   let doc = this.doc.ref.collection('frames').doc().new({
+  //     index,
+  //     bytes
+  //   });
 
-    try {
-      this._framesAdding.pushObject(doc);
-      await doc.save();
-      return this.frames.findBy('doc', doc);
-    } finally {
-      this._framesAdding.removeObject(doc);
-    }
-  },
+  //   try {
+  //     this._framesAdding.pushObject(doc);
+  //     await doc.save();
+  //     return this.frames.findBy('doc', doc);
+  //   } finally {
+  //     this._framesAdding.removeObject(doc);
+  //   }
+  // },
 
   async duplicateFrame(frame) {
     let { index, bytes } = frame;
@@ -187,20 +187,20 @@ export default EmberObject.extend({
 
   //
 
-  async createLoop() {
-    let doc = this.doc.ref.collection('loops').doc().new({
-      identifier: 'untitled',
-      frames: this.frames.map(frame => frame.id)
-    });
+  // async createLoop() {
+  //   let doc = this.doc.ref.collection('loops').doc().new({
+  //     identifier: 'untitled',
+  //     frames: this.frames.map(frame => frame.id)
+  //   });
 
-    try {
-      this._loopsAdding.pushObject(doc);
-      await doc.save();
-      return this.loops.findBy('doc', doc);
-    } finally {
-      this._loopsAdding.removeObject(doc);
-    }
-  },
+  //   try {
+  //     this._loopsAdding.pushObject(doc);
+  //     await doc.save();
+  //     return this.loops.findBy('doc', doc);
+  //   } finally {
+  //     this._loopsAdding.removeObject(doc);
+  //   }
+  // },
 
   //
 

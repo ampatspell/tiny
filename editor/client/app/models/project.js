@@ -33,6 +33,13 @@ export default EmberObject.extend(DocMixin, {
     return selection;
   },
 
+  selectIf(current, selection) {
+    if(this.selection !== current) {
+      return;
+    }
+    this.select(selection);
+  },
+
   async load({ type }) {
     if(type === 'detail') {
       setGlobal({ project: this });

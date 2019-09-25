@@ -46,7 +46,7 @@ export default EmberObject.extend(SettingsMixin, {
       position,
       size
     } = assign({
-      identifier: null,
+      identifier: 'new-scene',
       position: { x: 4, y: 6 },
       size: { width: 128, height: 64 }
     }, opts);

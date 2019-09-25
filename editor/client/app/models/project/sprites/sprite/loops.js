@@ -1,10 +1,13 @@
 import EmberObject, { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 
 export default EmberObject.extend({
 
   typeName: 'Loops',
+
+  project: readOnly('sprite.project'),
 
   sprite: null,
 
@@ -23,6 +26,18 @@ export default EmberObject.extend({
   async load({ type }) {
     await resolveObservers(this.query);
     await all(this.models.map(model => model.load({ type })));
+  },
+
+  async create() {
+    let frames = this.sprite.frames.ordered.map(frame => frame.id);
+
+    let doc = this.ref.doc().new({
+      identifier: 'new-loop',
+      frames
+    });
+
+    await doc.save();
+    return this.models.findBy('id', doc.id);
   },
 
 });
