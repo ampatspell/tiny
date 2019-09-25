@@ -12,6 +12,8 @@
   {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}}
 {{/sidebar.section}}
 
+{{component (concat 'ui-block/project/inspector/selection/scenes/scene/layer/type/' model.type) sidebar=sidebar model=model}}
+
 {{#sidebar.section as |section|}}
   {{section.properties label="Custom properties" value=model.properties update=(action "update" "properties")}}
 {{/sidebar.section}}
