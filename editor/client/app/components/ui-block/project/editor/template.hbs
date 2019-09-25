@@ -11,7 +11,13 @@
     }}
 
       {{#ui-konva/layer}}
-        {{ui-konva/rect props=(hash x=0 y=0 width=50 height=50 fill="rgba(255,0,0,0.1)")}}
+        {{ui-konva/rect props=(hash
+          x=(mul 0 project.pixel)
+          y=(mul 0 project.pixel)
+          width=(mul 50 project.pixel)
+          height=(mul 50 project.pixel)
+          fill="rgba(255,0,0,0.1)")
+        }}
       {{/ui-konva/layer}}
 
     {{/ui-konva/stage}}

@@ -4,7 +4,7 @@ import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { properties } from './properties';
-import EditorMixin from './project/-editor';
+import { EditorMixin } from './project/editor';
 
 export default EmberObject.extend(DocMixin, EditorMixin, {
 
@@ -15,6 +15,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   doc: null,
 
   title: data('title'),
+  pixel: data('pixel'),
 
   hidden: data('hidden'),
   locked: data('locked'),

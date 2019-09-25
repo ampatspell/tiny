@@ -35,7 +35,7 @@ export default Component.extend(KeyboardMixin, {
   },
 
   onDestroying() {
-    this.state.onEditorDestroying(this);
+    this.project.onEditorDestroying(this);
     this.set('stage', null);
   },
 

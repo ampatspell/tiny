@@ -16,4 +16,8 @@
       }
     }
   }
+  > .pixel {
+    padding: 10px;
+    border-top: 1px solid darken(#fff, 10%);
+  }
 }
