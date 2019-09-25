@@ -41,12 +41,10 @@ export default EmberObject.extend(SettingsMixin, {
     }
 
     let {
-      name,
       identifier,
       position,
       size
     } = assign({
-      name: null,
       identifier: null,
       position: { x: 4, y: 6 },
       size: { width: 128, height: 64 }
@@ -54,7 +52,6 @@ export default EmberObject.extend(SettingsMixin, {
 
     let doc = this.ref.doc().new({
       index,
-      name,
       identifier,
       position,
       size,

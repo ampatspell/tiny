@@ -7,6 +7,10 @@ export default Component.extend({
     select(model) {
       this.project.select(model);
     }
+  },
+
+  click() {
+    this.project.select(null);
   }
 
 });
