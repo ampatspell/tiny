@@ -185,6 +185,7 @@
           }
           > .delete {
             margin-left: 5px;
+            transition: opacity 0.3s ease-in-out;
           }
         }
       }
@@ -201,6 +202,17 @@
         margin-right: 5px;
       }
       > .action {
+      }
+    }
+    &.disabled {
+      > .items {
+        > .item {
+          > .content {
+            > .delete {
+              opacity: 0.5;
+            }
+          }
+        }
       }
     }
   }

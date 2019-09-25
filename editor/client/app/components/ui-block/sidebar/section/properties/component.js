@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { readOnly, or, not } from '@ember/object/computed';
 
 export default Component.extend({
-  classNameBindings: [ ':properties' ],
+  classNameBindings: [ ':properties', 'disabled:disabled' ],
 
   properties: readOnly('value.array'),
 
@@ -32,6 +32,9 @@ export default Component.extend({
       this.value.update(item.key, value);
     },
     delete(item) {
+      if(this.disabled) {
+        return;
+      }
       this.value.delete(item.key);
     }
   },
