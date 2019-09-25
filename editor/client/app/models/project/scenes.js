@@ -3,10 +3,11 @@ import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import createSettingsMixin from '../-settings';
 import { assign } from '@ember/polyfills';
 import { all } from 'rsvp';
+import MoveMixin from '../-move';
 
 const SettingsMixin = createSettingsMixin('project', 'scenes');
 
-export default EmberObject.extend(SettingsMixin, {
+export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
   typeGroup: 'scenes',
   typeName: 'Scenes',

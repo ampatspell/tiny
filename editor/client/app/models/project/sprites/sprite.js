@@ -16,6 +16,7 @@ export default EmberObject.extend(DocMixin, {
   doc: null,
 
   identifier: data('identifier'),
+  position: data('position.serialized'),
   size: data('size.serialized'),
 
   hidden: data('hidden'),

@@ -9,6 +9,10 @@
 {{/sidebar.section}}
 
 {{#sidebar.section as |section|}}
+  {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
   {{section.properties label="Custom properties" value=model.properties update=(action "update" "properties")}}
 {{/sidebar.section}}
 
@@ -21,7 +25,11 @@
 {{/sidebar.section}}
 
 {{#sidebar.section as |section|}}
+  {{#section.actions type="grid" as |actions|}}
+    {{actions.button value="Move Up" action=(action "moveUp")}}
+    {{actions.button value="Move Down" action=(action "moveDown")}}
+  {{/section.actions}}
   {{#section.actions as |actions|}}
-    {{actions.button value="Delete layer" action=(action "delete")}}
+    {{actions.button value="Delete Layer" action=(action "delete")}}
   {{/section.actions}}
 {{/sidebar.section}}

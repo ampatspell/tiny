@@ -7,12 +7,23 @@ export default Component.extend({
     locked(locked) {
       this.model.update({ locked });
     },
-    update(key, value) {
-      this.model.update({ [key]: value });
+    update() {
+      this.update(...arguments);
     },
     delete() {
       this.model.delete();
+    },
+    moveUp() {
+      this.model.moveUp();
+    },
+    moveDown() {
+      this.model.moveDown();
     }
+  },
+
+  update(key, value) {
+    this.model.update({ [key]: value });
+
   }
 
 });

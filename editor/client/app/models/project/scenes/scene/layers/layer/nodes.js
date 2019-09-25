@@ -3,8 +3,9 @@ import { readOnly } from '@ember/object/computed';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 import { all } from 'rsvp';
+import MoveMixin from '../../../../../-move';
 
-export default EmberObject.extend({
+export default EmberObject.extend(MoveMixin, {
 
   typeName: 'Nodes',
 

@@ -41,6 +41,15 @@ export default EmberObject.extend(DocMixin, {
 
   willDelete() {
     this.project.selectIf(this, this.layers.scene);
-  }
+  },
+
+  async moveUp() {
+    await this.layers.moveUp(this);
+  },
+
+  async moveDown() {
+    await this.layers.moveDown(this);
+  },
+
 
 });
