@@ -1,4 +1,5 @@
 {{#sidebar.section as |section|}}
+  {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}}
   {{section.position label="Position" value=model.position update=(action "update" "position")}}
 {{/sidebar.section}}
 
