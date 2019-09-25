@@ -3,13 +3,13 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
 
-  loops: computed('model.loops.@each.identifier', function() {
-    let { model: { loops } } = this;
-    if(!loops) {
+  loops: computed('model.spriteLoops.@each.identifier', function() {
+    let { model: { spriteLoops } } = this;
+    if(!spriteLoops) {
       return;
     }
-    return loops.map(frame => {
-      let { identifier } = frame;
+    return spriteLoops.map(loop => {
+      let { identifier } = loop;
       let label = identifier;
       return {
         identifier,
@@ -18,12 +18,12 @@ export default Component.extend({
     })
   }).readOnly(),
 
-  loop: computed('model.loop', function() {
-    let { model: { loop } } = this;
-    if(!loop) {
+  loop: computed('loops.@each.identifier', 'model.spriteLoop', function() {
+    let { model: { spriteLoop } } = this;
+    if(!spriteLoop) {
       return;
     }
-    return this.loops.findBy('identifier', loop.identifier);
+    return this.loops.findBy('identifier', spriteLoop.identifier);
   }).readOnly(),
 
   actions: {

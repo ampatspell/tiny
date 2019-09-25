@@ -7,14 +7,14 @@ export default Sprite.extend({
   typeName: 'Sprite Loop Node',
 
   _loop: data('loop'),
-  loops: readOnly('sprite.loops.models'),
+  spriteLoops: readOnly('sprite.loops.models'),
 
-  loop: computed('loops.@each.identifier', '_loop', function() {
-    let { loops, _loop: identifier } = this;
-    if(!loops || !identifier) {
+  spriteLoop: computed('spriteLoops.@each.identifier', '_loop', function() {
+    let { spriteLoops, _loop: identifier } = this;
+    if(!spriteLoops || !identifier) {
       return;
     }
-    return loops.findBy('identifier', identifier);
+    return spriteLoops.findBy('identifier', identifier);
   }).readOnly(),
 
   // onSprite(sprite) {

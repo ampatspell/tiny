@@ -7,14 +7,14 @@ export default Sprite.extend({
   typeName: 'Sprite Frame Node',
 
   _frame: data('frame'),
-  frames: readOnly('sprite.frames.models'),
+  spriteFrames: readOnly('sprite.frames.models'),
 
-  frame: computed('frames.@each.identifier', '_frame', function() {
-    let { frames, _frame: identifier } = this;
-    if(!frames || !identifier) {
+  spriteFrame: computed('spriteFrames.@each.identifier', '_frame', function() {
+    let { spriteFrames, _frame: identifier } = this;
+    if(!spriteFrames || !identifier) {
       return;
     }
-    return frames.findBy('identifier', identifier);
+    return spriteFrames.findBy('identifier', identifier);
   }).readOnly(),
 
   // onSprite(sprite) {

@@ -2,6 +2,7 @@ import EmberObject from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
+import { frame, pixelFrame } from '../../../../../../-frame';
 
 export {
   data
@@ -13,6 +14,7 @@ export default EmberObject.extend(DocMixin, {
   typeName: 'Node',
 
   project: readOnly('nodes.project'),
+  layer: readOnly('nodes.layer'),
 
   nodes: null,
   doc: null,
@@ -30,7 +32,15 @@ export default EmberObject.extend(DocMixin, {
 
   properties: properties(),
 
+  //
+
+  frame: frame(),
+  pixelFrame: pixelFrame('project.pixel'),
+
+  //
+
   async load() {
+    setGlobal({ node: this });
   },
 
   willDelete() {

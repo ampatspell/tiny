@@ -4,12 +4,12 @@ import { A } from '@ember/array';
 
 export default Component.extend({
 
-  frames: computed('model.frames.@each.{index,identifier}', function() {
-    let { model: { frames } } = this;
-    if(!frames) {
+  frames: computed('model.spriteFrames.@each.{index,identifier}', function() {
+    let { model: { spriteFrames } } = this;
+    if(!spriteFrames) {
       return;
     }
-    return A(frames.map(frame => {
+    return A(spriteFrames.map(frame => {
       let { index, identifier } = frame;
       if(!identifier) {
         return;
@@ -22,12 +22,12 @@ export default Component.extend({
     })).compact();
   }).readOnly(),
 
-  frame: computed('model.frame', function() {
-    let { model: { frame } } = this;
-    if(!frame) {
+  frame: computed('frames.@each.identifier', 'model.spriteFrame', function() {
+    let { model: { spriteFrame } } = this;
+    if(!spriteFrame) {
       return;
     }
-    return this.frames.findBy('identifier', frame.identifier);
+    return this.frames.findBy('identifier', spriteFrame.identifier);
   }).readOnly(),
 
   actions: {
