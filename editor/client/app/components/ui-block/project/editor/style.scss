@@ -1,2 +1,21 @@
 .ui-block-project-editor {
+  display: flex;
+  flex-direction: column;
+  > .content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    > .autosized {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      > .stage {
+        > .content {
+          background: fade-out(#000, 0.9);
+        }
+      }
+    }
+  }
 }

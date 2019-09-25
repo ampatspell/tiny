@@ -4,8 +4,9 @@ import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { properties } from './properties';
+import EditorMixin from './project/-editor';
 
-export default EmberObject.extend(DocMixin, {
+export default EmberObject.extend(DocMixin, EditorMixin, {
 
   typeGroup: 'project',
   typeName: 'Project',
@@ -31,6 +32,10 @@ export default EmberObject.extend(DocMixin, {
     selection = selection || null;
     this.setProperties({ selection });
     return selection;
+  },
+
+  deselect() {
+    this.select(null);
   },
 
   selectIf(current, selection) {
