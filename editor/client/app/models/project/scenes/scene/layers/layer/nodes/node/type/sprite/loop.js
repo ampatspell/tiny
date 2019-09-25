@@ -1,21 +1,21 @@
 import Sprite, { data } from '../sprite';
-// import { computed } from '@ember/object';
-// import { readOnly } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 
 export default Sprite.extend({
 
   typeName: 'Sprite Loop Node',
 
-  // _loop: data('loop'),
-  // loops: readOnly('sprite.loops'),
+  _loop: data('loop'),
+  loops: readOnly('sprite.loops.models'),
 
-  // selected: computed('loops.@each.identifier', '_loop', function() {
-  //   let { loops, _loop: identifier } = this;
-  //   if(!loops || !identifier) {
-  //     return;
-  //   }
-  //   return loops.findBy('identifier', identifier);
-  // }).readOnly(),
+  loop: computed('loops.@each.identifier', '_loop', function() {
+    let { loops, _loop: identifier } = this;
+    if(!loops || !identifier) {
+      return;
+    }
+    return loops.findBy('identifier', identifier);
+  }).readOnly(),
 
   // onSprite(sprite) {
   //   this._super(...arguments);

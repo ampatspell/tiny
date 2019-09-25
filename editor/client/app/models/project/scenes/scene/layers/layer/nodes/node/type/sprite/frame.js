@@ -6,16 +6,16 @@ export default Sprite.extend({
 
   typeName: 'Sprite Frame Node',
 
-  // _frame: data('frame'),
-  // frames: readOnly('sprite.frames'),
+  _frame: data('frame'),
+  frames: readOnly('sprite.frames.models'),
 
-  // selected: computed('frames.@each.identifier', '_frame', function() {
-  //   let { frames, _frame: identifier } = this;
-  //   if(!frames || !identifier) {
-  //     return;
-  //   }
-  //   return frames.findBy('identifier', identifier);
-  // }).readOnly(),
+  frame: computed('frames.@each.identifier', '_frame', function() {
+    let { frames, _frame: identifier } = this;
+    if(!frames || !identifier) {
+      return;
+    }
+    return frames.findBy('identifier', identifier);
+  }).readOnly(),
 
   // onSprite(sprite) {
   //   this._super(...arguments);

@@ -1,1 +1,9 @@
 {{ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common sidebar=sidebar model=model}}
+
+{{#sidebar.section as |section|}}
+  {{#if model.loop}}
+    {{section.placeholder value=(concat 'Loop: ' model.loop.identifier)}}
+  {{else}}
+    {{section.placeholder value="No loop"}}
+  {{/if}}
+{{/sidebar.section}}

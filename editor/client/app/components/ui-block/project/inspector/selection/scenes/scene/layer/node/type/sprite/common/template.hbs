@@ -3,3 +3,11 @@
   {{section.alignment label="Alignment" value=model.alignment update=(action "update" "alignment")}}
   {{section.flip label="Flip" value=model.flip update=(action "update" "flip")}}
 {{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{#if model.sprite}}
+    {{section.placeholder value=(concat 'Sprite: ' model.sprite.identifier)}}
+  {{else}}
+    {{section.placeholder value="No sprite"}}
+  {{/if}}
+{{/sidebar.section}}

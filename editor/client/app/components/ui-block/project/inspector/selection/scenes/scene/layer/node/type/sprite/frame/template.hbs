@@ -1,1 +1,9 @@
 {{ui-block/project/inspector/selection/scenes/scene/layer/node/type/sprite/common sidebar=sidebar model=model}}
+
+{{#sidebar.section as |section|}}
+  {{#if model.frame}}
+    {{section.placeholder value=(concat 'Frame: ' model.frame.identifier)}}
+  {{else}}
+    {{section.placeholder value="No frame"}}
+  {{/if}}
+{{/sidebar.section}}
