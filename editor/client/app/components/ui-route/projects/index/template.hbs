@@ -1,0 +1,15 @@
+<div class="header">Projects</div>
+
+{{#if projects.models}}
+  <div class="projects">
+    {{#each projects.models as |project|}}
+      <div class="project" role="button" {{action "select" project}}>{{project.title}}</div>
+    {{/each}}
+  </div>
+{{else}}
+  <div class="placeholder">You don't have any projects yet</div>
+{{/if}}
+
+<div class="actions">
+  {{ui-block/button value="Add new project" action=(action "new")}}
+</div>
