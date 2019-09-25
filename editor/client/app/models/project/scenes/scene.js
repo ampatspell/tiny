@@ -3,6 +3,7 @@ import { readOnly, or } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
+import { frame, pixelFrame } from '../../-frame';
 
 export default EmberObject.extend(DocMixin, {
 
@@ -30,6 +31,13 @@ export default EmberObject.extend(DocMixin, {
   properties: properties(),
 
   layers: model().named('project/scenes/scene/layers').mapping(scene => ({ scene })),
+
+  //
+
+  frame: frame(),
+  pixelFrame: pixelFrame('project.pixel', 'project.pixel'),
+
+  //
 
   async load({ type }) {
     if(type === 'detail') {

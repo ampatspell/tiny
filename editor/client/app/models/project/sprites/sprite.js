@@ -4,6 +4,7 @@ import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
+import { frame, pixelFrame } from '../../-frame';
 
 export default EmberObject.extend(DocMixin, {
 
@@ -19,6 +20,7 @@ export default EmberObject.extend(DocMixin, {
   position: data('position.serialized'),
   size: data('size.serialized'),
   thumbnail: data('thumbnail'),
+  pixel: data('pixel'),
 
   hidden: data('hidden'),
   locked: data('locked'),
@@ -30,6 +32,13 @@ export default EmberObject.extend(DocMixin, {
 
   frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
   loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),
+
+  //
+
+  frame: frame(),
+  pixelFrame: pixelFrame('project.pixel', 'pixel'),
+
+  //
 
   async load({ type }) {
     if(type === 'detail') {

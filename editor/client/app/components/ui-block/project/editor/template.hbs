@@ -10,14 +10,28 @@
       draggable=draggable
     }}
 
-      {{#ui-konva/layer}}
-        {{ui-konva/rect props=(hash
-          x=(mul 0 project.pixel)
-          y=(mul 0 project.pixel)
-          width=(mul 50 project.pixel)
-          height=(mul 50 project.pixel)
-          fill="rgba(255,0,0,0.1)")
-        }}
+      {{#ui-konva/layer props=(hash zIndex=0)}}
+        {{#each project.scenes.ordered as |scene index|}}
+          {{ui-konva/rect props=(hash
+            x=scene.pixelFrame.x
+            y=scene.pixelFrame.y
+            width=scene.pixelFrame.width
+            height=scene.pixelFrame.height
+            fill="rgba(255,0,0,0.1)")
+          }}
+        {{/each}}
+      {{/ui-konva/layer}}
+
+      {{#ui-konva/layer props=(hash zIndex=1)}}
+        {{#each project.sprites.ordered as |sprite index|}}
+          {{ui-konva/rect props=(hash
+            x=sprite.pixelFrame.x
+            y=sprite.pixelFrame.y
+            width=sprite.pixelFrame.width
+            height=sprite.pixelFrame.height
+            fill="rgba(0,255,0,0.1)")
+          }}
+        {{/each}}
       {{/ui-konva/layer}}
 
     {{/ui-konva/stage}}
