@@ -60,7 +60,8 @@ export default EmberObject.extend(SettingsMixin, {
     });
 
     await doc.save();
-    return this.models.findBy('doc', doc);
+    let model = this.models.findBy('id', doc.id);
+    return this.project.select(model);
   }
 
 });

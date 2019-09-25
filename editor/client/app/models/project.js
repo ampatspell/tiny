@@ -30,11 +30,12 @@ export default EmberObject.extend(DocMixin, {
   select(selection) {
     selection = selection || null;
     this.setProperties({ selection });
+    return selection;
   },
 
   async load({ type }) {
-    setGlobal({ project: this });
     if(type === 'detail') {
+      setGlobal({ project: this });
       await all([
         this.sprites.load({ type }),
         this.scenes.load({ type })

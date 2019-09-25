@@ -2,6 +2,7 @@ import EmberObject, { computed } from '@ember/object';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import createSettingsMixin from '../-settings';
 import { all } from 'rsvp';
+import { assign } from '@ember/polyfills';
 
 const SettingsMixin = createSettingsMixin('project', 'sprites');
 
@@ -27,6 +28,28 @@ export default EmberObject.extend(SettingsMixin, {
   async load({ type }) {
     await resolveObservers(this.query);
     await all(this.models.map(model => model.load({ type })));
+  },
+
+  async create(opts) {
+    let {
+      identifier,
+      position,
+      size
+    } = assign({
+      identifier: null,
+      position: { x: 4, y: 6 },
+      size: { width: 16, height: 16 }
+    }, opts);
+
+    let doc = this.ref.doc().new({
+      identifier,
+      position,
+      size,
+    });
+
+    await doc.save();
+    let model = this.models.findBy('id', doc.id);
+    return this.project.select(model);
   }
 
 });
