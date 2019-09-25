@@ -38,3 +38,12 @@ export const pixelFrame = (positionPixelKey, sizePixelKey) => {
     };
   }).readOnly();
 }
+
+export const absolutePixel = (parentKey, selfKey) => computed(parentKey, selfKey, function() {
+  let parent = this.get(parentKey);
+  let self = this.get(selfKey);
+  if(!self) {
+    self = 1;
+  }
+  return parent * self;
+}).readOnly();

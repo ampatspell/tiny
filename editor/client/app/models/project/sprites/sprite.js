@@ -4,7 +4,7 @@ import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { frame, pixelFrame } from '../../-frame';
+import { frame, pixelFrame, absolutePixel } from '../../-frame';
 
 export default EmberObject.extend(DocMixin, {
 
@@ -34,6 +34,8 @@ export default EmberObject.extend(DocMixin, {
   loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),
 
   //
+
+  absolutePixel: absolutePixel('project.pixel', 'pixel'),
 
   frame: frame(),
   pixelFrame: pixelFrame('project.pixel', 'pixel'),
