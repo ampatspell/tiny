@@ -19,7 +19,7 @@ export default EmberObject.extend({
   }).readOnly(),
 
   query: observed().owner('ref').content(({ ref }) => ref.query()),
-  models: models('query.content').named('project/sprites/sprite/frames/frame').mapping((doc, sprite) => ({ sprite, doc })),
+  models: models('query.content').named('project/sprites/sprite/frames/frame').mapping((doc, frames) => ({ frames, doc })),
 
   ordered: computed('models.@each.index', function() {
     return this.models.sortBy('index');

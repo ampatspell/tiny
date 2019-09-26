@@ -17,7 +17,7 @@ export default EmberObject.extend({
   }).readOnly(),
 
   query: observed().owner('ref').content(({ ref }) => ref.query()),
-  models: models('query.content').named('project/sprites/sprite/loops/loop').mapping((doc, sprite) => ({ sprite, doc })),
+  models: models('query.content').named('project/sprites/sprite/loops/loop').mapping((doc, loops) => ({ loops, doc })),
 
   ordered: computed('models.@each.identifier', function() {
     return this.models.sortBy('identifier');

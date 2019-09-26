@@ -5,16 +5,17 @@ import { readOnly } from '@ember/object/computed';
 export default Node.extend({
 
   nodeClassName: 'group',
-  observe: Object.freeze([ 'pixelFrame' ]),
 
   pixelFrame: readOnly('model.pixelFrame'),
+  absolutePixel: readOnly('model.absolutePixel'),
 
-  props: computed('pixelFrame', function() {
-    let { pixelFrame } = this;
+  props: computed('pixelFrame', 'additionalProps', function() {
+    let { pixelFrame, additionalProps } = this;
+    additionalProps = additionalProps || {};
     return {
-      x: pixelFrame.x,
-      y: pixelFrame.y,
+      ...pixelFrame,
+      ...additionalProps
     };
-  }).readOnly(),
+  }).readOnly()
 
 });

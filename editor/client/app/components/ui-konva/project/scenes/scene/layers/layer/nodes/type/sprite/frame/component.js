@@ -1,8 +1,8 @@
-import Node from '../-node';
+import Component from '../-node';
 import { readOnly } from '@ember/object/computed';
 
-export default Node.extend({
+export default Component.extend({
 
-  pixelFrame: readOnly('model.pixelFrame'),
+  rendered: readOnly('model.spriteFrame.preview.rendered'),
 
 });

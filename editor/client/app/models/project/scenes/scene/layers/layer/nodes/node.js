@@ -34,13 +34,14 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
+  absolutePixel: readOnly('project.pixel'),
+
   frame: frame(),
   pixelFrame: pixelFrame('project.pixel'),
 
   //
 
   async load() {
-    setGlobal({ node: this });
   },
 
   willDelete() {
