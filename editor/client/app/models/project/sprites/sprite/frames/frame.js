@@ -11,6 +11,7 @@ export default EmberObject.extend(DocMixin, {
 
   project: readOnly('frames.project'),
   sprite: readOnly('frames.sprite'),
+  size: readOnly('sprite.size'),
 
   index: data('index'),
   identifier: data('identifier'),
@@ -18,9 +19,8 @@ export default EmberObject.extend(DocMixin, {
 
   properties: properties(),
 
-  size: readOnly('sprite.size'),
-
   preview: model().named('project/sprites/sprite/frames/frame/preview').mapping(frame => ({ frame })),
+
   _previewRendered: readOnly('preview.rendered'),
 
   async load() {

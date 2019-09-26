@@ -3,12 +3,11 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { drawImageFlipped } from 'editor/utils/canvas';
 
-const observe = [ 'bounds', 'content' ];
-
 export default Node.extend({
 
+  observe: Object.freeze([ 'bounds', 'content' ]),
+
   nodeClassName: 'shape',
-  observe,
 
   sprite: readOnly('model.sprite'),
   flip: readOnly('model.flip'),
@@ -118,6 +117,6 @@ export default Node.extend({
       sceneFunc,
       hitFunc
     };
-  }).readOnly(),
+  }).readOnly()
 
 });

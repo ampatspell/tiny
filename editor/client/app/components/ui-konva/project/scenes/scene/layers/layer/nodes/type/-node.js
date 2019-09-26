@@ -4,6 +4,8 @@ import { readOnly } from '@ember/object/computed';
 
 export default Node.extend({
 
+  observe: Object.freeze([ 'pixelFrame' ]),
+
   nodeClassName: 'group',
 
   pixelFrame: readOnly('model.pixelFrame'),
