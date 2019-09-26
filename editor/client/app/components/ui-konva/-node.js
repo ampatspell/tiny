@@ -73,8 +73,8 @@ export default Component.extend(Parent, Events, {
     }
   },
 
-  updateNodeAttributesAndDraw() {
-    if(this.updateNodeAttributes()) {
+  updateNodeAttributesAndDraw(force) {
+    if(this.updateNodeAttributes() || force) {
       this.drawLayer();
     }
   },
@@ -93,7 +93,7 @@ export default Component.extend(Parent, Events, {
   didInsertElement() {
     this._super(...arguments);
     this.parentView.registerChildComponent(this);
-    this.updateNodeAttributesAndDraw();
+    this.updateNodeAttributesAndDraw(true);
     this.startObservingProperties();
   },
 
