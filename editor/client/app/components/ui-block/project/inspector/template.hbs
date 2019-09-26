@@ -1,5 +1,6 @@
 {{#ui-block/tabs class="tabs" selected=tab select=(action "tab") as |tabs|}}
   {{tabs.tab label="Selection" id="selection" component=(component "ui-block/project/inspector/selection" project=project)}}
+  {{tabs.tab label="Project"   id="project"   component=(component "ui-block/project/inspector/project"   project=project)}}
 {{/ui-block/tabs}}
 
 {{ui-block/project/inspector/pixel project=project class="pixel"}}

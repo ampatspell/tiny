@@ -1,0 +1,29 @@
+{{#ui-block/sidebar disabled=project.locked as |sidebar|}}
+
+  {{#sidebar.section class="header" as |section|}}
+    {{#section.header as |header|}}
+      {{#header.content as |content|}}
+        {{content.type value=project.typeName}}
+        {{content.identifier value=project.title}}
+      {{/header.content}}
+    {{/section.header}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{section.input label="Title" value=project.title update=(action "update" "title")}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{section.input label="Export token" value=project.token update=(action "update" "token")}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Generate New Token" action=(action "generateToken")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Delete Project" action=(action "delete")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+{{/ui-block/sidebar}}

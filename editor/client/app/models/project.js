@@ -16,6 +16,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   title: data('title'),
   pixel: data('pixel'),
+  token: data('token'),
 
   hidden: data('hidden'),
   locked: data('locked'),
