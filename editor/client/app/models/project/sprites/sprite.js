@@ -16,6 +16,7 @@ export default EmberObject.extend(DocMixin, {
   sprites: null,
   doc: null,
 
+  index: data('index'),
   identifier: data('identifier'),
   position: data('position.serialized'),
   size: data('size.serialized'),
@@ -53,6 +54,14 @@ export default EmberObject.extend(DocMixin, {
 
   willDelete() {
     this.project.selectIf(this, this.sprites);
-  }
+  },
+
+  async moveUp() {
+    await this.sprites.moveUp(this);
+  },
+
+  async moveDown() {
+    await this.sprites.moveDown(this);
+  },
 
 });

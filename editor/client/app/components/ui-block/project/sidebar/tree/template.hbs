@@ -24,7 +24,7 @@
 
     {{#row model=project.sprites content=(component prefix model=project.sprites collapsable=true content=(component (concat prefix "/sprites") project=project model=project.sprites)) as |row|}}
       {{#unless project.sprites.collapsed}}
-        {{#each project.sprites.ordered as |sprite|}}
+        {{#each project.sprites.reversed as |sprite|}}
           {{row model=sprite content=(component prefix model=sprite content=(component (concat prefix "/sprites/sprite") project=project model=sprite))}}
         {{/each}}
       {{/unless}}

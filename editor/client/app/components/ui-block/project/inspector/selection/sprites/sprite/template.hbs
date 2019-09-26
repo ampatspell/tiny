@@ -26,7 +26,11 @@
 {{/sidebar.section}}
 
 {{#sidebar.section as |section|}}
+  {{#section.actions type="grid" as |actions|}}
+    {{actions.button value="Move Up" action=(action "moveUp")}}
+    {{actions.button value="Move Down" action=(action "moveDown")}}
+  {{/section.actions}}
   {{#section.actions as |actions|}}
-    {{actions.button value="Delete sprite" action=(action "delete")}}
+    {{actions.button value="Delete Sprite" action=(action "delete")}}
   {{/section.actions}}
 {{/sidebar.section}}

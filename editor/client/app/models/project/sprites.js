@@ -3,10 +3,11 @@ import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import createSettingsMixin from '../-settings';
 import { all } from 'rsvp';
 import { assign } from '@ember/polyfills';
+import MoveMixin from '../-move';
 
 const SettingsMixin = createSettingsMixin('project', 'sprites');
 
-export default EmberObject.extend(SettingsMixin, {
+export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
   typeGroup: 'sprites',
   typeName: 'Sprites',
@@ -21,8 +22,12 @@ export default EmberObject.extend(SettingsMixin, {
   query: observed().owner('ref').content(({ ref }) => ref.query()),
   models: models('query.content').named('project/sprites/sprite').mapping((doc, sprites) => ({ sprites, doc })),
 
-  ordered: computed('models.@each.identifier', function() {
-    return this.models.sortBy('identifier');
+  ordered: computed('models.@each.index', function() {
+    return this.models.sortBy('index');
+  }).readOnly(),
+
+  reversed: computed('ordered', function() {
+    return this.ordered.slice().reverse();
   }).readOnly(),
 
   async load({ type }) {
@@ -31,6 +36,12 @@ export default EmberObject.extend(SettingsMixin, {
   },
 
   async create(opts) {
+    let last = this.ordered.lastObject;
+    let index = 0;
+    if(last) {
+      index = last.index + 1;
+    }
+
     let {
       identifier,
       position,
@@ -44,6 +55,7 @@ export default EmberObject.extend(SettingsMixin, {
     }, opts);
 
     let doc = this.ref.doc().new({
+      index,
       identifier,
       position,
       size,
