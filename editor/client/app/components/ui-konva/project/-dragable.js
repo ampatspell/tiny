@@ -7,7 +7,7 @@ export default Mixin.create({
 
   onDragstart() {
     this.setProperties({ isDragging: true });
-    this.selectSelf();
+    this.model.select();
   },
 
   onDragmove() {
@@ -23,7 +23,7 @@ export default Mixin.create({
       y: Math.floor(y / pixel)
     };
 
-    position = this.clampPosition(position);
+    // position = this.clampPosition(position);
 
     x = position.x * pixel;
     y = position.y * pixel;
@@ -36,7 +36,7 @@ export default Mixin.create({
     }
 
     this.set('_dragPosition', position);
-    this.updateSelf({ position });
+    this.model.update({ position });
   },
 
   onDragend() {

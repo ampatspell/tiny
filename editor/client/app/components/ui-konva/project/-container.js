@@ -33,14 +33,6 @@ export default Mixin.create(DraggableMixin, {
     };
   }),
 
-  updateSelf(props) {
-    this.model.update(props);
-  },
-
-  clampPosition(position) {
-    return position;
-  },
-
   onClick(e) {
     e.cancelBubble = true;
     this.model.select(true);
