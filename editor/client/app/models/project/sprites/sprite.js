@@ -5,6 +5,7 @@ import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
 import { selected } from '../-selection';
+import { assign } from '@ember/polyfills';
 
 export default EmberObject.extend(DocMixin, {
 
@@ -70,6 +71,47 @@ export default EmberObject.extend(DocMixin, {
 
   select() {
     this.project.select(this);
-  }
+  },
+
+  //
+
+  async resize(handle, diff) {
+    if(diff.x === 0 && diff.y === 0) {
+      return false;
+    }
+
+    let size = assign({}, this.size);
+    size.width += diff.x;
+    size.height += diff.y;
+
+    if(size.width < 1 || size.height < 1) {
+      return false;
+    }
+
+    let pixel = this.pixel;
+    let position = assign({}, this.position);
+    if(handle === 'left') {
+      position.x -= (diff.x * pixel);
+    } else if(handle === 'top') {
+      position.y -= (diff.y * pixel);
+    }
+
+    let { doc, frames } = this;
+
+    await this.store.batch(batch => {
+      frames.resize(batch, handle, size);
+      doc.set('data.size', size);
+      doc.set('data.position', position);
+      batch.save(doc);
+    });
+
+    return true;
+  },
+
+  //
+
+  onResize(id, diff) {
+    this.resize(id, diff);
+  },
 
 });

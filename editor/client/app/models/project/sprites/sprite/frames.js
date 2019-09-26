@@ -57,4 +57,11 @@ export default EmberObject.extend({
     return this.models.findBy('id', doc.id);
   },
 
+  resize(batch, handle, target) {
+    this.ordered.forEach(frame => {
+      let doc = frame._resize(handle, target);
+      batch.save(doc);
+    });
+  },
+
 });
