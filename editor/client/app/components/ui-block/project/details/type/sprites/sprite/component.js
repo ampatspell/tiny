@@ -5,7 +5,7 @@ export default Component.extend({
 
   actions: {
     select(frame) {
-      console.log(frame);
+      this.model.frames.select(frame);
     }
   }
 

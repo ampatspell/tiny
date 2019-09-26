@@ -66,3 +66,23 @@ export const className = opts => {
 
 export const doc = key => readOnly(`doc.${key}`);
 export const data = key => doc(`data.${key}`);
+
+export const selectedWithDefault = defaultKey => {
+  let cacheKeyForKey = key => `_selectedWithDefault_${key}`;
+  return computed(defaultKey, {
+    get(key) {
+      let cacheKey = cacheKeyForKey(key);
+      let selected = this[cacheKey];
+      if(selected === undefined) {
+        selected = this.get(defaultKey) || null;
+        this._selected = selected;
+      }
+      return selected;
+    },
+    set(key, value) {
+      let cacheKey = cacheKeyForKey(key);
+      this[cacheKey] = value;
+      return value;
+    }
+  });
+};

@@ -3,6 +3,7 @@ import { readOnly } from '@ember/object/computed';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { assign } from '@ember/polyfills';
+import { selectedWithDefault } from 'editor/utils/computed';
 
 export default EmberObject.extend({
 
@@ -24,6 +25,13 @@ export default EmberObject.extend({
   ordered: computed('models.@each.index', function() {
     return this.models.sortBy('index');
   }).readOnly(),
+
+  selected: selectedWithDefault('ordered.firstObject'),
+
+  select(selected) {
+    selected = selected || null;
+    this.setProperties({ selected });
+  },
 
   async load({ type }) {
     await resolveObservers(this.query);
