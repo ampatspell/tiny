@@ -1,9 +1,9 @@
 import Component from '../-node';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { later, cancel } from '@ember/runloop';
+import TickMixin from 'editor/utils/tick-component-mixin';
 
-export default Component.extend({
+export default Component.extend(TickMixin, {
 
   frames: readOnly('model.spriteLoop.frames'),
   index: 0,
@@ -20,17 +20,7 @@ export default Component.extend({
     return frame._previewRendered;
   }).readOnly(),
 
-  didInsertElement() {
-    this._super(...arguments);
-    this.iterate();
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    cancel(this._iterate);
-  },
-
-  iterate() {
+  onTick() {
     let { index, frames } = this;
 
     if(frames) {
@@ -43,9 +33,7 @@ export default Component.extend({
       index = 0;
     }
 
-    // TODO: have one unique later for all animations
     this.set('index', index);
-    this._iterate = later(() => this.iterate(), 250);
   }
 
 });
