@@ -18,6 +18,10 @@
         {{ui-konva/project/sprites project=project disabled=draggable}}
       {{/ui-konva/layer}}
 
+      {{#ui-konva/layer props=(hash zIndex=2)}}
+        {{ui-konva/project/selection project=project}}
+      {{/ui-konva/layer}}
+
     {{/ui-konva/stage}}
   {{/ui-konva/autosized}}
 </div>

@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
@@ -28,7 +28,25 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   sprites: model().named('project/sprites').mapping(project => ({ project })),
   scenes: model().named('project/scenes').mapping(project => ({ project })),
 
+  //
+
+  absolutePixel: readOnly('pixel'),
+
+  //
+
   selection: null,
+
+  selections: computed('selection.selections', function() {
+    let { selection } = this;
+    if(!selection) {
+      return;
+    }
+    let { selections } = selection;
+    if(selections) {
+      return selections;
+    }
+    return [ selection ];
+  }).readOnly(),
 
   select(selection) {
     selection = selection || null;

@@ -4,7 +4,7 @@ import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { frame, pixelFrame, pixelSize, absolutePixel } from '../../-frame';
+import { frame, pixelFrame, absolutePixel } from '../../-frame';
 import { selected } from '../-selection';
 
 export default EmberObject.extend(DocMixin, {
@@ -37,11 +37,11 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  absolutePixel: absolutePixel('project.pixel', 'pixel'),
+  absolutePixel: absolutePixel('project'),
 
   frame: frame(),
-  pixelFrame: pixelFrame('project.pixel', 'pixel'),
-  pixelSize: pixelSize('absolutePixel'),
+  pixelFrame: pixelFrame('project'),
+  absolutePixelFrame: readOnly('pixelFrame'),
 
   selected: selected(),
 

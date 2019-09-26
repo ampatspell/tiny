@@ -1,8 +1,8 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { frame, pixelFrame } from '../../../../../../-frame';
+import { frame, pixelFrame, absolutePixelFrame } from '../../../../../../-frame';
 
 export {
   data
@@ -20,7 +20,6 @@ export default EmberObject.extend(DocMixin, {
   scene: readOnly('layer.scene'),
 
   nodes: null,
-  doc: null,
 
   type: data('type'),
   index: data('index'),
@@ -37,10 +36,16 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  absolutePixel: readOnly('project.pixel'),
+  absolutePixel: readOnly('project.absolutePixel'),
 
   frame: frame(),
-  pixelFrame: pixelFrame('project.pixel'),
+  pixelFrame: pixelFrame('project'),
+  absolutePixelFrame: absolutePixelFrame('scene'),
+
+  selections: computed('scene', function() {
+    let { scene } = this;
+    return [ this, scene ];
+  }).readOnly(),
 
   //
 

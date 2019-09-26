@@ -3,7 +3,7 @@ import { readOnly, or } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { frame, pixelFrame, pixelSize } from '../../-frame';
+import { frame, pixelFrame } from '../../-frame';
 import { selected, selectedChild } from '../-selection';
 
 export default EmberObject.extend(DocMixin, {
@@ -35,11 +35,11 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  absolutePixel: readOnly('project.pixel'),
+  absolutePixel: readOnly('project.absolutePixel'),
 
   frame: frame(),
-  pixelFrame: pixelFrame('project.pixel'),
-  pixelSize: pixelSize('absolutePixel'),
+  pixelFrame: pixelFrame('project'),
+  absolutePixelFrame: readOnly('pixelFrame'),
 
   selected: selected(),
   selectedChild: selectedChild('scene'),
