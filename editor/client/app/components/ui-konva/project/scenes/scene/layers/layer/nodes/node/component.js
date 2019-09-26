@@ -1,5 +1,5 @@
 import Node from '../../../../../../../-node';
-import { readOnly, not } from '@ember/object/computed';
+import { readOnly, not, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
 const observe = [ 'frame', 'listening', 'editable' ];
@@ -11,7 +11,8 @@ export default Node.extend({
 
   frame: readOnly('model.render.frame'),
   pixel: readOnly('model.render.pixel'),
-  editable: readOnly('model.scene.isEditing'),
+  enabled: not('disabled'),
+  editable: and('model.scene.isEditing', 'enabled'),
   layer: readOnly('model.layer'),
 
   listening: not('model.chainLocked'),
