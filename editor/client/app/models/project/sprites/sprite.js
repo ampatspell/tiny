@@ -52,10 +52,6 @@ export default EmberObject.extend(DocMixin, {
     }
   },
 
-  onShortcutDigit(pixel) {
-    this.update({ pixel });
-  },
-
   willDelete() {
     this.project.selectIf(this, this.sprites);
   },
@@ -67,5 +63,15 @@ export default EmberObject.extend(DocMixin, {
   async moveDown() {
     await this.sprites.moveDown(this);
   },
+
+  //
+
+  onShortcutDigit(pixel) {
+    this.update({ pixel });
+  },
+
+  select() {
+    this.project.select(this);
+  }
 
 });

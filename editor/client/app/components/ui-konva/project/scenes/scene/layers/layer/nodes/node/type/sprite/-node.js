@@ -5,7 +5,7 @@ import { drawImageFlipped } from 'editor/utils/canvas';
 
 export default Node.extend({
 
-  observe: Object.freeze([ 'bounds', 'content' ]),
+  observe: Object.freeze([ 'pixelFrame', 'bounds', 'content' ]),
 
   nodeClassName: 'shape',
 
@@ -111,9 +111,11 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  props: computed('sceneFunc', 'hitFunc', function() {
-    let { sceneFunc, hitFunc } = this;
+  props: computed('pixelFrame', 'sceneFunc', 'hitFunc', function() {
+    let { pixelFrame: { width, height }, sceneFunc, hitFunc } = this;
     return {
+      width,
+      height,
       sceneFunc,
       hitFunc
     };

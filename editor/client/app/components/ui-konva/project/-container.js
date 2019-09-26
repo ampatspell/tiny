@@ -33,10 +33,6 @@ export default Mixin.create(DraggableMixin, {
     };
   }),
 
-  selectSelf() {
-    this.project.select(this.model);
-  },
-
   updateSelf(props) {
     this.model.update(props);
   },
@@ -47,7 +43,7 @@ export default Mixin.create(DraggableMixin, {
 
   onClick(e) {
     e.cancelBubble = true;
-    this.selectSelf();
+    this.model.select(true);
   },
 
 });

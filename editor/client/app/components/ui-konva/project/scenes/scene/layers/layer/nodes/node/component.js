@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 export default Node.extend({
 
   nodeClassName: 'group',
-  observe: Object.freeze([ 'frame' ]),
+  observe: Object.freeze([ 'pixelFrame' ]),
 
   pixelFrame: readOnly('model.pixelFrame'),
 
@@ -16,5 +16,10 @@ export default Node.extend({
       y
     };
   }).readOnly(),
+
+  onClick(e) {
+    e.cancelBubble = true;
+    this.model.select();
+  }
 
 });

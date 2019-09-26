@@ -54,5 +54,12 @@ export default EmberObject.extend(DocMixin, {
     await this.layers.moveDown(this);
   },
 
+  select() {
+    this.project.select(this);
+  },
+
+  selectParent() {
+    this.scene.select();
+  }
 
 });
