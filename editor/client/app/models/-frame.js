@@ -37,7 +37,18 @@ export const pixelFrame = (positionPixelKey, sizePixelKey) => {
       height: calc('height', positionPixel * sizePixel)
     };
   }).readOnly();
-}
+};
+
+export const pixelSize = pixelKey => computed('size', pixelKey, function() {
+  let size = this.get('size');
+  let pixel = this.get(pixelKey);
+  return  {
+    x: 0,
+    y: 0,
+    width: size.width * pixel,
+    height: size.height * pixel
+  };
+}).readOnly();
 
 export const absolutePixel = (parentKey, selfKey) => computed(parentKey, selfKey, function() {
   let parent = this.get(parentKey);

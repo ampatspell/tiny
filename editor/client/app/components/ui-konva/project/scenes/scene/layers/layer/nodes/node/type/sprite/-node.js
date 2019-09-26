@@ -111,7 +111,7 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  additionalProps: computed('sceneFunc', 'hitFunc', function() {
+  props: computed('sceneFunc', 'hitFunc', function() {
     let { sceneFunc, hitFunc } = this;
     return {
       sceneFunc,

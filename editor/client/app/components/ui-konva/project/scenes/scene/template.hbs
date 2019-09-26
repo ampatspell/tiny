@@ -1,2 +1,10 @@
 {{ui-konva/project/scenes/scene/background model=model}}
 {{ui-konva/project/scenes/scene/layers model=model project=project}}
+
+{{#if (or model.selected model.selectedChild)}}
+  {{ui-konva/project/selection frame=model.pixelSize}}
+{{/if}}
+
+{{#if model.selectedNode}}
+  {{ui-konva/project/selection frame=model.selectedNode.pixelFrame offset=-0.5 opacity=1}}
+{{/if}}

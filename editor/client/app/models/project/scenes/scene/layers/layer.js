@@ -10,10 +10,13 @@ export {
 
 export default EmberObject.extend(DocMixin, {
 
+  isLayer: true,
+
   typeGroup: 'scenes/scene/layer',
   typeName: 'Layer',
 
   project: readOnly('layers.project'),
+  scene: readOnly('layers.scene'),
 
   layers: null,
   doc: null,
