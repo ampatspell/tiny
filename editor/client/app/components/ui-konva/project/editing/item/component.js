@@ -31,7 +31,6 @@ export default Node.extend({
     return {
       ..._frame,
       stroke: `rgba(255,102,97,${opacity})`,
-      // dash: [ 5, 3 ],
       strokeWidth: 2,
       listening: false
     };
