@@ -11,10 +11,15 @@
 
 @import "sidebar/section/style";
 
+@import "sprites/sprite/frames/style";
+@import "sprites/sprite/frame/preview/style";
+
 @import "project/style";
 @import "project/sidebar/style";
 @import "project/sidebar/tree/row/style";
 @import "project/editor/style";
+@import "project/details/style";
+@import "project/details/type/sprites/sprite/style";
 @import "project/inspector/style";
 @import "project/inspector/pixel/style";
 @import "project/inspector/selection/style";

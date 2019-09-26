@@ -2,18 +2,18 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-sprite-frame-preview' ],
+  classNameBindings: [ ':ui-block-sprites-sprite-frame-preview' ],
 
   frame: null,
-  scale: 2,
+  pixel: 2,
 
-  preview: computed('frame.preview.{url,size}', 'scale', function() {
-    let { scale, frame } = this;
+  preview: computed('frame.preview.{url,size}', 'pixel', function() {
+    let { pixel, frame } = this;
     if(!frame) {
       return;
     }
     let { preview: { url, size: { width, height } } } = frame;
-    let calc = value => value * scale;
+    let calc = value => value * pixel;
     let size = {
       width: calc(width),
       height: calc(height)

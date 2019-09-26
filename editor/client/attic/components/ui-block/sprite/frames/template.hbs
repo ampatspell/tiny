@@ -1,7 +1,0 @@
-<div class="content">
-  <div class="frames">
-    {{#each state.frames as |frame|}}
-      {{ui-block/sprite/frames/frame frame=frame selected=(eq frame state.frame) select=(action "select" frame)}}
-    {{/each}}
-  </div>
-</div>
