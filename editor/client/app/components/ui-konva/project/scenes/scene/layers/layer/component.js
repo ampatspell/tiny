@@ -1,17 +1,21 @@
 import Node from '../../../../../-node';
 import { computed } from '@ember/object';
+import { not } from '@ember/object/computed';
 
-const observe = [ 'index' ];
+const observe = [ 'index', 'listening' ];
 
 export default Node.extend({
 
   nodeClassName: 'group',
   observe,
 
-  props: computed('index', function() {
-    let { index } = this;
+  listening: not('model.chainLocked'),
+
+  props: computed('index', 'listening', function() {
+    let { index, listening } = this;
     return {
-      zIndex: index
+      zIndex: index,
+      listening
     };
   }).readOnly(),
 

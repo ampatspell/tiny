@@ -22,13 +22,13 @@ export default Mixin.create(DraggableMixin, {
     return !disabled && !locked;
   }).readOnly(),
 
-  props: computed('pixelFrame', 'draggable', 'index', function() {
-    let { index, pixelFrame, draggable } = this;
+  props: computed('pixelFrame', 'draggable', 'locked', 'index', function() {
+    let { index, pixelFrame, draggable, locked } = this;
     return {
       zIndex: index,
       x: pixelFrame.x,
       y: pixelFrame.y,
-      listening: true,
+      listening: !locked,
       draggable
     };
   }),
