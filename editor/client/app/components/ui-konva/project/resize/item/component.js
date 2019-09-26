@@ -122,7 +122,7 @@ export default Node.extend({
   },
 
   commit(id, diff) {
-    console.log(id, diff);
+    this.model.onResize(id, diff);
   }
 
 });

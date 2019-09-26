@@ -4,6 +4,7 @@ import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
 import { selected, selectedChild } from '../-selection';
+import { assign } from '@ember/polyfills';
 
 export default EmberObject.extend(DocMixin, {
 
@@ -66,6 +67,13 @@ export default EmberObject.extend(DocMixin, {
       return;
     }
     this.project.select(this);
+  },
+
+  onResize(id, diff) {
+    let size = assign({}, this.size);
+    size.width += diff.x;
+    size.height += diff.y;
+    this.update({ size });
   }
 
 });
