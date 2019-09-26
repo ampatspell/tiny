@@ -7,7 +7,7 @@ export default Sprite.extend({
   typeName: 'Sprite Loop Node',
 
   _loop: data('loop'),
-  spriteLoops: readOnly('sprite.loops.models'),
+  spriteLoops: readOnly('sprite.loops.ordered'),
 
   spriteLoop: computed('spriteLoops.@each.identifier', '_loop', function() {
     let { spriteLoops, _loop: identifier } = this;

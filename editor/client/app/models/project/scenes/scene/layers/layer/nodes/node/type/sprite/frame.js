@@ -7,7 +7,7 @@ export default Sprite.extend({
   typeName: 'Sprite Frame Node',
 
   _frame: data('frame'),
-  spriteFrames: readOnly('sprite.frames.models'),
+  spriteFrames: readOnly('sprite.frames.ordered'),
 
   spriteFrame: computed('spriteFrames.@each.identifier', '_frame', function() {
     let { spriteFrames, _frame: identifier } = this;
