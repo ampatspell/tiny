@@ -47,6 +47,18 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     this.select(selection);
   },
 
+  onShortcutDigit(pixel) {
+    if(pixel < 1) {
+      return;
+    }
+    let selection = this.selection;
+    if(!selection) {
+      this.update({ pixel });
+    } else {
+      selection.onShortcutDigit && selection.onShortcutDigit(pixel);
+    }
+  },
+
   async load({ type }) {
     if(type === 'detail') {
       setGlobal({ project: this });

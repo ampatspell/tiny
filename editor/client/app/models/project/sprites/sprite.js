@@ -52,6 +52,10 @@ export default EmberObject.extend(DocMixin, {
     }
   },
 
+  onShortcutDigit(pixel) {
+    this.update({ pixel });
+  },
+
   willDelete() {
     this.project.selectIf(this, this.sprites);
   },
