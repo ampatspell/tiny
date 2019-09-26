@@ -24,6 +24,9 @@ export default Node.extend({
   onClick(e) {
     e.cancelBubble = true;
     this.model.select();
+    if(this.isDoubleClick()) {
+      this.model.scene.edit();
+    }
   }
 
 });

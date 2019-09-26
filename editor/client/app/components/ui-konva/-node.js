@@ -143,6 +143,23 @@ export default Component.extend(Parent, Events, {
     }
     let native = layer.getContext()._context;
     native.imageSmoothingEnabled = false;
-  }
+  },
+
+  //
+
+  // workaround for messed up konva doubleclick
+  isDoubleClick() {
+    let now = new Date();
+    let last = this._lastClick;
+    let ret = false;
+    if(last && now - last < 300) {
+      last = null;
+      ret = true;
+    } else {
+      last = now;
+    }
+    this._lastClick = last;
+    return ret;
+  },
 
 });

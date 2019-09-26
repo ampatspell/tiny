@@ -32,18 +32,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   //
 
   selection: null,
-
-  // selections: computed('selection.selections', function() {
-  //   let { selection } = this;
-  //   if(!selection) {
-  //     return;
-  //   }
-  //   let { selections } = selection;
-  //   if(selections) {
-  //     return selections;
-  //   }
-  //   return [ selection ];
-  // }).readOnly(),
+  editing: null,
 
   select(selection) {
     selection = selection || null;
@@ -53,6 +42,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   deselect() {
     this.select(null);
+    this.edit(null);
   },
 
   selectIf(current, selection) {
@@ -61,6 +51,13 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     }
     this.select(selection);
   },
+
+  edit(editing) {
+    editing = editing || null;
+    this.setProperties({ editing });
+  },
+
+  //
 
   onShortcutDigit(pixel) {
     if(pixel < 1) {

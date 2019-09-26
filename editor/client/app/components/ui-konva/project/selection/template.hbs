@@ -1,3 +1,5 @@
 {{#each project.render.selection as |model|}}
-  {{ui-konva/project/selection/item model=model}}
+  {{#unless model.isEditing}}
+    {{ui-konva/project/selection/item model=model}}
+  {{/unless}}
 {{/each}}

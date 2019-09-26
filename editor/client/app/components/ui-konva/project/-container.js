@@ -16,10 +16,11 @@ export default Mixin.create(DraggableMixin, {
   frame:  readOnly('model.render.frame'),
   locked: readOnly('model.chainLocked'),
   hidden: readOnly('model.chainHidden'),
+  editing: readOnly('model.isEditing'),
 
-  draggable: computed('disabled', 'locked', function() {
-    let { disabled, locked } = this;
-    return !disabled && !locked;
+  draggable: computed('disabled', 'locked', 'editing', function() {
+    let { disabled, locked, editing } = this;
+    return !disabled && !locked && !editing;
   }).readOnly(),
 
   props: computed('frame', 'draggable', 'locked', 'index', function() {
@@ -36,6 +37,9 @@ export default Mixin.create(DraggableMixin, {
   onClick(e) {
     e.cancelBubble = true;
     this.model.select(true);
+    if(this.isDoubleClick()) {
+      this.model.edit();
+    }
   }
 
 });

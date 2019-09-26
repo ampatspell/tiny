@@ -3,7 +3,7 @@ import { readOnly, or } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { selected, selectedChild } from '../-selection';
+import { selected, editing, selectedChild } from '../-selection';
 import { assign } from '@ember/polyfills';
 
 export default EmberObject.extend(DocMixin, {
@@ -37,6 +37,8 @@ export default EmberObject.extend(DocMixin, {
   //
 
   isSelected: selected(),
+  isEditing: editing(),
+
   selectedChild: selectedChild('scene'),
   selectedNode: selectedChild('scene', 'isNode'),
   selectedLayer: selectedChild('scene', 'isLayer'),
@@ -61,6 +63,8 @@ export default EmberObject.extend(DocMixin, {
     await this.scenes.moveDown(this);
   },
 
+  //
+
   select(parent=false) {
     if(parent && this.selectedChild) {
       this.selectedChild.selectParent();
@@ -68,6 +72,12 @@ export default EmberObject.extend(DocMixin, {
     }
     this.project.select(this);
   },
+
+  edit() {
+    this.project.edit(this);
+  },
+
+  //
 
   onResize(id, diff) {
     let position = assign({}, this.position);

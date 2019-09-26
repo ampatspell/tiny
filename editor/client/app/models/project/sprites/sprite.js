@@ -4,7 +4,7 @@ import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { selected } from '../-selection';
+import { selected, editing } from '../-selection';
 import { assign } from '@ember/polyfills';
 
 export default EmberObject.extend(DocMixin, {
@@ -39,6 +39,7 @@ export default EmberObject.extend(DocMixin, {
   //
 
   isSelected: selected(),
+  isEditing: editing(),
 
   //
 
@@ -49,28 +50,6 @@ export default EmberObject.extend(DocMixin, {
         this.loops.load({ type })
       ]);
     }
-  },
-
-  willDelete() {
-    this.project.selectIf(this, this.sprites);
-  },
-
-  async moveUp() {
-    await this.sprites.moveUp(this);
-  },
-
-  async moveDown() {
-    await this.sprites.moveDown(this);
-  },
-
-  //
-
-  onShortcutDigit(pixel) {
-    this.update({ pixel });
-  },
-
-  select() {
-    this.project.select(this);
   },
 
   //
@@ -106,6 +85,34 @@ export default EmberObject.extend(DocMixin, {
     });
 
     return true;
+  },
+
+  //
+
+  willDelete() {
+    this.project.selectIf(this, this.sprites);
+  },
+
+  async moveUp() {
+    await this.sprites.moveUp(this);
+  },
+
+  async moveDown() {
+    await this.sprites.moveDown(this);
+  },
+
+  //
+
+  onShortcutDigit(pixel) {
+    this.update({ pixel });
+  },
+
+  select() {
+    this.project.select(this);
+  },
+
+  edit() {
+    this.project.edit(this);
   },
 
   //

@@ -4,6 +4,10 @@ export const selected = () => computed('project.selection', function() {
   return this.project.selection === this;
 }).readOnly();
 
+export const editing = () => computed('project.editing', function() {
+  return this.project.editing === this;
+}).readOnly();
+
 export const selectedChild = (parentKey, typeKey) => {
   let dep = `project.selection.${parentKey}`;
   if(typeKey) {

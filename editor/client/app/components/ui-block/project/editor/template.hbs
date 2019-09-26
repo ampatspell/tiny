@@ -20,6 +20,7 @@
 
       {{#ui-konva/layer props=(hash zIndex=2)}}
         {{ui-konva/project/selection project=project disabled=isSpacePressed}}
+        {{ui-konva/project/editing project=project}}
         {{ui-konva/project/resize project=project disabled=(not isSpacePressed)}}
       {{/ui-konva/layer}}
 
