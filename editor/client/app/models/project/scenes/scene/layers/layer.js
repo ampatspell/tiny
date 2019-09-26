@@ -34,12 +34,8 @@ export default EmberObject.extend(DocMixin, {
 
   properties: properties(),
 
-  selections: computed('scene', function() {
-    let { scene } = this;
-    return [ scene ];
-  }).readOnly(),
-
   nodes: model().named('project/scenes/scene/layers/layer/nodes').mapping(layer => ({ layer })),
+  render: model().named('project/scenes/scene/layers/layer/render').mapping(model => ({ model })),
 
   async load({ type }) {
     if(type === 'detail') {

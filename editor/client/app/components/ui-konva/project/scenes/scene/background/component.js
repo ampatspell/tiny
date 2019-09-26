@@ -24,15 +24,15 @@ export default Node.extend({
   model: null,
 
   background: readOnly('model.background'),
-  pixelFrame: readOnly('model.pixelFrame'),
+  _frame: readOnly('model.render.frame'),
 
-  frame: computed('pixelFrame', function() {
-    let { pixelFrame } = this;
+  frame: computed('_frame', function() {
+    let { _frame: frame } = this;
     return {
       x: -0.5,
       y: -0.5,
-      width: pixelFrame.width + 1,
-      height: pixelFrame.height + 1
+      width: frame.width + 1,
+      height: frame.height + 1
     };
   }).readOnly(),
 

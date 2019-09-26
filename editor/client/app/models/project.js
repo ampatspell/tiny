@@ -27,26 +27,23 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   sprites: model().named('project/sprites').mapping(project => ({ project })),
   scenes: model().named('project/scenes').mapping(project => ({ project })),
-
-  //
-
-  absolutePixel: readOnly('pixel'),
+  render: model().named('project/render').mapping(model => ({ model })),
 
   //
 
   selection: null,
 
-  selections: computed('selection.selections', function() {
-    let { selection } = this;
-    if(!selection) {
-      return;
-    }
-    let { selections } = selection;
-    if(selections) {
-      return selections;
-    }
-    return [ selection ];
-  }).readOnly(),
+  // selections: computed('selection.selections', function() {
+  //   let { selection } = this;
+  //   if(!selection) {
+  //     return;
+  //   }
+  //   let { selections } = selection;
+  //   if(selections) {
+  //     return selections;
+  //   }
+  //   return [ selection ];
+  // }).readOnly(),
 
   select(selection) {
     selection = selection || null;

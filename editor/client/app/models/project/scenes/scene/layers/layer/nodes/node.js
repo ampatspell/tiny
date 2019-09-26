@@ -2,7 +2,7 @@ import EmberObject, { computed } from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { frame, pixelFrame, absolutePixelFrame } from '../../../../../../-frame';
+import { model } from 'ember-cli-zuglet/lifecycle';
 
 export {
   data
@@ -34,13 +34,9 @@ export default EmberObject.extend(DocMixin, {
 
   properties: properties(),
 
+  render: model().named('project/scenes/scene/layers/layer/nodes/node/render').mapping(model => ({ model })),
+
   //
-
-  absolutePixel: readOnly('project.absolutePixel'),
-
-  frame: frame(),
-  pixelFrame: pixelFrame('project'),
-  absolutePixelFrame: absolutePixelFrame('scene'),
 
   selections: computed('scene', function() {
     let { scene } = this;

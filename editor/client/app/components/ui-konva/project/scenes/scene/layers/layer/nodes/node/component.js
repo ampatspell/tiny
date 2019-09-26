@@ -2,16 +2,18 @@ import Node from '../../../../../../../-node';
 import { readOnly, not } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
+const observe = [ 'frame', 'listening' ];
+
 export default Node.extend({
 
   nodeClassName: 'group',
-  observe: Object.freeze([ 'pixelFrame', 'listening' ]),
+  observe,
 
-  pixelFrame: readOnly('model.pixelFrame'),
+  frame: readOnly('model.render.frame'),
   listening: not('model.chainLocked'),
 
-  props: computed('pixelFrame', 'listening', function() {
-    let { pixelFrame: { x, y }, listening } = this;
+  props: computed('frame', 'listening', function() {
+    let { frame: { x, y }, listening } = this;
     return {
       x,
       y,

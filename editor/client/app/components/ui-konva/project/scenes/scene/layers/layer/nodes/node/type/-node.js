@@ -5,7 +5,7 @@ export default Node.extend({
 
   nodeClassName: 'group',
 
-  pixelFrame:    readOnly('model.pixelFrame'),
-  absolutePixel: readOnly('model.absolutePixel')
+  frame: readOnly('model.render.frame'),
+  pixel: readOnly('model.render.pixel')
 
 });

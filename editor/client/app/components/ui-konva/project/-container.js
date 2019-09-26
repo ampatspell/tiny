@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import DraggableMixin from './-dragable';
 
-const observe = [ 'pixelFrame', 'locked', 'draggable' ];
+const observe = [ 'frame', 'draggable', 'locked', 'index' ];
 
 export default Mixin.create(DraggableMixin, {
 
@@ -13,7 +13,7 @@ export default Mixin.create(DraggableMixin, {
   model: null,
   project: null,
 
-  pixelFrame: readOnly('model.pixelFrame'),
+  frame:  readOnly('model.render.frame'),
   locked: readOnly('model.chainLocked'),
   hidden: readOnly('model.chainHidden'),
 
@@ -22,12 +22,12 @@ export default Mixin.create(DraggableMixin, {
     return !disabled && !locked;
   }).readOnly(),
 
-  props: computed('pixelFrame', 'draggable', 'locked', 'index', function() {
-    let { index, pixelFrame, draggable, locked } = this;
+  props: computed('frame', 'draggable', 'locked', 'index', function() {
+    let { index, frame, draggable, locked } = this;
     return {
       zIndex: index,
-      x: pixelFrame.x,
-      y: pixelFrame.y,
+      x: frame.x,
+      y: frame.y,
       listening: !locked,
       draggable
     };
@@ -36,6 +36,6 @@ export default Mixin.create(DraggableMixin, {
   onClick(e) {
     e.cancelBubble = true;
     this.model.select(true);
-  },
+  }
 
 });

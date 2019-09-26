@@ -2,7 +2,7 @@ import Node from '../../../../../-node';
 import { computed } from '@ember/object';
 import { not } from '@ember/object/computed';
 
-const observe = [ 'index', 'listening' ];
+const observe = [ 'listening' ];
 
 export default Node.extend({
 
@@ -17,6 +17,6 @@ export default Node.extend({
       zIndex: index,
       listening
     };
-  }).readOnly(),
+  }).readOnly()
 
 });

@@ -3,11 +3,12 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { drawImageFlipped } from 'editor/utils/canvas';
 
+const observe = [ 'frame', 'sceneFunc', 'hitFunc' ];
+
 export default Node.extend({
 
-  observe: Object.freeze([ 'pixelFrame', 'bounds', 'content' ]),
-
   nodeClassName: 'shape',
+  observe,
 
   sprite: readOnly('model.sprite'),
   flip: readOnly('model.flip'),
@@ -47,8 +48,8 @@ export default Node.extend({
     return element;
   }).readOnly(),
 
-  bounds: computed('model.{size,alignment}', 'absolutePixel', 'sprite.size', function() {
-    let { model: { size, alignment }, absolutePixel: pixel, sprite } = this;
+  bounds: computed('model.{size,alignment}', 'pixel', 'sprite.size', function() {
+    let { model: { size, alignment }, pixel, sprite } = this;
 
     if(!sprite) {
       return;
@@ -87,8 +88,8 @@ export default Node.extend({
     };
   }).readOnly(),
 
-  sceneFunc: computed('pixelFrame', 'bounds', 'content', function() {
-    let { pixelFrame, bounds, content } = this;
+  sceneFunc: computed('frame', 'bounds', 'content', function() {
+    let { frame, bounds, content } = this;
     return ctx => {
       if(content) {
         this.disableImageSmoothing();
@@ -96,7 +97,7 @@ export default Node.extend({
         ctx.drawImage(content, x, y, width, height);
       } else {
         ctx.fillStyle = 'rgba(253, 96, 96, 0.5)';
-        let { width, height } = pixelFrame;
+        let { width, height } = frame;
         ctx.fillRect(0, 0, width, height);
       }
     }
@@ -111,8 +112,8 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  props: computed('pixelFrame', 'sceneFunc', 'hitFunc', function() {
-    let { pixelFrame: { width, height }, sceneFunc, hitFunc } = this;
+  props: computed('frame', 'sceneFunc', 'hitFunc', function() {
+    let { frame: { width, height }, sceneFunc, hitFunc } = this;
     return {
       width,
       height,

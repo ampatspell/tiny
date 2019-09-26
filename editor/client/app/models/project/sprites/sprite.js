@@ -4,7 +4,6 @@ import { all } from 'rsvp';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
-import { frame, pixelFrame, absolutePixel } from '../../-frame';
 import { selected } from '../-selection';
 
 export default EmberObject.extend(DocMixin, {
@@ -34,16 +33,11 @@ export default EmberObject.extend(DocMixin, {
 
   frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
   loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),
+  render: model().named('project/sprites/sprite/render').mapping(model => ({ model })),
 
   //
 
-  absolutePixel: absolutePixel('project'),
-
-  frame: frame(),
-  pixelFrame: pixelFrame('project'),
-  absolutePixelFrame: readOnly('pixelFrame'),
-
-  selected: selected(),
+  isSelected: selected(),
 
   //
 

@@ -3,24 +3,25 @@ import { Pixel, fromIndex, toIndex } from 'editor/utils/pixel';
 import { readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
-const observe = [ 'pixelFrame', 'sceneFunc', 'disabled' ];
+const observe = [ 'frame', 'sceneFunc', 'hitFunc', 'disabled' ];
 
 export default Node.extend({
 
-  observe,
   nodeClassName: 'shape',
+  observe,
 
   model: null,
 
-  pixel: readOnly('sprite.absolutePixel'),
-  frame: readOnly('sprite.frame'),
+  pixel: readOnly('sprite.render.pixel'),
+  frame: readOnly('sprite.render.frame'),
+  size: readOnly('sprite.size'),
   bytes: readOnly('model.bytes'),
 
-  sceneFunc: computed('frame', 'pixel', 'bytes', function() {
-    let { frame, pixel, bytes } = this;
+  sceneFunc: computed('size', 'pixel', 'bytes', function() {
+    let { size, pixel, bytes } = this;
     return ctx => {
       ctx.strokeStyle = 'rgba(0,0,0,0.1)';
-      ctx.strokeRect(-0.5, -0.5, (frame.width * pixel) + 1, (frame.height * pixel) + 1);
+      ctx.strokeRect(-0.5, -0.5, (size.width * pixel) + 1, (size.height * pixel) + 1);
 
       if(!bytes) {
         return;
@@ -38,7 +39,7 @@ export default Node.extend({
           c = '#fff';
         }
 
-        let { x, y } = fromIndex(idx, frame);
+        let { x, y } = fromIndex(idx, size);
 
         ctx.fillStyle = c;
         ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
@@ -57,11 +58,11 @@ export default Node.extend({
 
   disabled: false,
 
-  props: computed('frame', 'pixel', 'sceneFunc', 'hitFunc', 'disabled', function() {
-    let { frame, pixel, sceneFunc, hitFunc, disabled } = this;
+  props: computed('frame', 'sceneFunc', 'hitFunc', 'disabled', function() {
+    let { frame, sceneFunc, hitFunc, disabled } = this;
     return {
-      width: frame.width * pixel,
-      height: frame.height * pixel,
+      width: frame.width,
+      height: frame.height,
       sceneFunc,
       hitFunc,
       listening: !disabled
