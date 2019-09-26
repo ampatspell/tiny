@@ -39,7 +39,7 @@ export default EmberObject.extend(DocMixin, {
 
   frame: frame(),
   pixelFrame: pixelFrame('project.pixel'),
-  pixelSize: pixelSize('project.pixel'),
+  pixelSize: pixelSize('absolutePixel'),
 
   selected: selected(),
   selectedChild: selectedChild('scene'),
