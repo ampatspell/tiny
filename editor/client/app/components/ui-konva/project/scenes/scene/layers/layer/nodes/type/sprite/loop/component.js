@@ -43,6 +43,7 @@ export default Component.extend({
       index = 0;
     }
 
+    // TODO: have one unique later for all animations
     this.set('index', index);
     this._iterate = later(() => this.iterate(), 250);
   }
