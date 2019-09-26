@@ -3,6 +3,12 @@
   {{section.position label="Position" value=model.position update=(action "update" "position")}}
 {{/sidebar.section}}
 
+{{#if sprites}}
+  {{#sidebar.section as |section|}}
+    {{section.dropdown label="Sprite" items=sprites selected=sprite update=(action "sprite")}}
+  {{/sidebar.section}}
+{{/if}}
+
 {{#if model.sprite}}
 
   {{#sidebar.section as |section|}}

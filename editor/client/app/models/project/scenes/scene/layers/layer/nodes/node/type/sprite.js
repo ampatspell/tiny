@@ -16,7 +16,7 @@ export default Node.extend({
   flip: data('flip.serialized'),
 
   _sprite: data('sprite'),
-  _sprites: readOnly('project.sprites'),
+  sprites: readOnly('project.sprites.selectable'),
 
   size: computed('sprite.size', 'layer.grid', function() {
     let { sprite, layer: { grid } } = this;
@@ -43,9 +43,9 @@ export default Node.extend({
     return _size;
   }).readOnly(),
 
-  sprite: computed('_sprite', '_sprites.models.@each.identifier', function() {
-    let { _sprite, _sprites } = this;
-    return _sprites.models.findBy('identifier', _sprite);
+  sprite: computed('_sprite', 'sprites.@each.identifier', function() {
+    let { _sprite, sprites } = this;
+    return sprites.findBy('identifier', _sprite);
   }).readOnly(),
 
   // onSprite({ identifier: sprite }) {
