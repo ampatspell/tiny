@@ -58,4 +58,8 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     return this.project.select(this.models.findBy('id', doc.id));
   },
 
+  onParentResized(id, diff) {
+    this.models.forEach(model => model.onParentResized(id, diff));
+  }
+
 });

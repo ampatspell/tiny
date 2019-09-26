@@ -3,6 +3,7 @@ import { readOnly, or } from '@ember/object/computed';
 import DocMixin, { data } from 'editor/models/-doc';
 import { properties } from 'editor/models/properties';
 import { model } from 'ember-cli-zuglet/lifecycle';
+import { assign } from '@ember/polyfills';
 
 export {
   data
@@ -68,6 +69,18 @@ export default EmberObject.extend(DocMixin, {
 
   selectParent() {
     this.layer.select();
-  }
+  },
+
+  //
+
+  onParentResized(id, diff) {
+    if(id === 'left' || id === 'top') {
+      let position = assign({}, this.position);
+      let calc = key => position[key] += diff[key];
+      calc('x');
+      calc('y');
+      this.update({ position });
+    }
+  },
 
 });

@@ -61,6 +61,10 @@ export default EmberObject.extend(DocMixin, {
 
   selectParent() {
     this.scene.select();
+  },
+
+  onParentResized(id, diff) {
+    this.nodes.onParentResized(id, diff);
   }
 
 });

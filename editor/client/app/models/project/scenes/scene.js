@@ -70,10 +70,21 @@ export default EmberObject.extend(DocMixin, {
   },
 
   onResize(id, diff) {
+    let position = assign({}, this.position);
     let size = assign({}, this.size);
+
+    if(id === 'left') {
+      position.x -= diff.x;
+    } else if(id === 'top') {
+      position.y -= diff.y;
+    }
+
     size.width += diff.x;
     size.height += diff.y;
-    this.update({ size });
+
+    this.layers.onParentResized(id, diff);
+
+    this.update({ position, size });
   }
 
 });

@@ -127,4 +127,8 @@ export default EmberObject.extend(MoveMixin, {
     });
   },
 
+  onParentResized(id, diff) {
+    this.models.forEach(model => model.onParentResized(id, diff));
+  }
+
 });
