@@ -27,4 +27,6 @@ export default EmberObject.extend({
     return [ model ];
   }).readOnly(),
 
+  resizable: true
+
 });

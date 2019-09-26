@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import KeyboardMixin from 'editor/utils/keyboard';
-import { readOnly } from '@ember/object/computed';
 
 const stage = cb => function(...args) {
   let { stage } = this;
@@ -12,8 +11,6 @@ const stage = cb => function(...args) {
 
 export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-block-project-editor' ],
-
-  draggable: readOnly('isSpacePressed'),
 
   stage: null,
 

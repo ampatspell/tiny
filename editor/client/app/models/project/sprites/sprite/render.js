@@ -29,6 +29,8 @@ export default EmberObject.extend({
   selection: computed('model', function() {
     let { model } = this;
     return [ model ];
-  }).readOnly()
+  }).readOnly(),
+
+  resizable: true,
 
 });

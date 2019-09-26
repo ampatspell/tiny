@@ -7,19 +7,20 @@
       created=(action "created")
       destroying=(action "destroying")
       onClick=(action "deselect")
-      draggable=draggable
+      draggable=isSpacePressed
     }}
 
       {{#ui-konva/layer props=(hash zIndex=0)}}
-        {{ui-konva/project/scenes project=project disabled=draggable}}
+        {{ui-konva/project/scenes project=project disabled=isSpacePressed}}
       {{/ui-konva/layer}}
 
       {{#ui-konva/layer props=(hash zIndex=1)}}
-        {{ui-konva/project/sprites project=project disabled=draggable}}
+        {{ui-konva/project/sprites project=project disabled=isSpacePressed}}
       {{/ui-konva/layer}}
 
       {{#ui-konva/layer props=(hash zIndex=2)}}
-        {{ui-konva/project/selection project=project}}
+        {{ui-konva/project/selection project=project disabled=isSpacePressed}}
+        {{ui-konva/project/resize project=project disabled=(not isSpacePressed)}}
       {{/ui-konva/layer}}
 
     {{/ui-konva/stage}}
