@@ -73,59 +73,58 @@ export default Node.extend({
     return true;
   },
 
-  // isDrawing: false,
+  isDrawing: false,
 
-  // pixelForRelativePointerPosition() {
-  //   let pos = this.getRelativePointerPosition();
-  //   let { pixel, size } = this;
-  //   let x = Math.floor(pos.x / pixel);
-  //   let y = Math.floor(pos.y / pixel);
-  //   let index = toIndex(x, y, size);
-  //   return { x, y, index };
-  // },
+  pixelForRelativePointerPosition() {
+    let pos = this.getRelativePointerPosition();
+    let { pixel, size } = this;
+    let x = Math.floor(pos.x / pixel);
+    let y = Math.floor(pos.y / pixel);
+    let index = toIndex(x, y, size);
+    return { x, y, index };
+  },
 
-  // targetPixelValueForEvent({ evt }) {
-  //   let { shiftKey, metaKey } = evt;
-  //   if(shiftKey) {
-  //     return Pixel.transparent;
-  //   } else if(metaKey) {
-  //     return Pixel.white;
-  //   } else {
-  //     return Pixel.black;
-  //   }
-  // },
+  targetPixelValueForEvent({ evt }) {
+    let { shiftKey, metaKey } = evt;
+    if(shiftKey) {
+      return Pixel.transparent;
+    } else if(metaKey) {
+      return Pixel.white;
+    } else {
+      return Pixel.black;
+    }
+  },
 
-  // updatePixelForEvent(e) {
-  //   let { index } = this.pixelForRelativePointerPosition();
-  //   let value = this.targetPixelValueForEvent(e);
-  //   this.update && this.update(index, value);
-  // },
+  updatePixelForEvent(e) {
+    let { index } = this.pixelForRelativePointerPosition();
+    let value = this.targetPixelValueForEvent(e);
+    this.model.setPixel(index, value);
+  },
 
-  // onMousedown(e) {
-  //   if(this.disabled) {
-  //     return;
-  //   }
-  //   e.cancelBubble = true;
-  //   this.setProperties({ isDrawing: true });
-  //   this.updatePixelForEvent(e);
-  // },
+  onMousedown(e) {
+    if(this.disabled) {
+      return;
+    }
+    e.cancelBubble = true;
+    this.setProperties({ isDrawing: true });
+    this.updatePixelForEvent(e);
+  },
 
-  // onMouseup(e) {
-  //   e.cancelBubble = true;
-  //   this.setProperties({ isDrawing: false });
-  // },
+  onMouseup(e) {
+    e.cancelBubble = true;
+    this.setProperties({ isDrawing: false });
+  },
 
-  // onMouseleave() {
-  //   this.setProperties({ isDrawing: false });
-  // },
+  onMouseleave() {
+    this.setProperties({ isDrawing: false });
+  },
 
-  // onMousemove(e) {
-  //   if(!this.isDrawing) {
-  //     return;
-  //   }
-  //   e.cancelBubble = true;
-  //   this.updatePixelForEvent(e);
-  // },
-
+  onMousemove(e) {
+    if(!this.isDrawing) {
+      return;
+    }
+    e.cancelBubble = true;
+    this.updatePixelForEvent(e);
+  },
 
 });

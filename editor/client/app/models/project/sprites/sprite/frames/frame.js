@@ -27,6 +27,65 @@ export default EmberObject.extend(DocMixin, {
   async load() {
   },
 
+  //
+
+  _didUpdateBytes() {
+    this.notifyPropertyChange('bytes');
+    this.scheduleSave();
+  },
+
+  _replaceBytes(bytes) {
+    this.doc.set('data.bytes', bytes);
+    this._didUpdateBytes();
+  },
+
+  _withBytes(cb) {
+    let { bytes } = this;
+    if(!bytes) {
+      return;
+    }
+    let mutated = cb(bytes);
+    if(mutated === false) {
+      return;
+    }
+    this._didUpdateBytes();
+  },
+
+  setPixel(index, value) {
+    this._withBytes(bytes => {
+      if(bytes[index] === value) {
+        return false;
+      }
+      bytes[index] = value;
+    });
+  },
+
+  fill(value) {
+    this._withBytes(bytes => bytes.fill(value));
+  },
+
+  invert() {
+    this._withBytes(bytes => bytes.forEach((value, index) => {
+      if(value === 0) {
+        return;
+      }
+      bytes[index] = value === 1 ? 2 : 1;
+    }));
+  },
+
+  beginMove(source) {
+    let pristine = this.bytes.slice();
+    let selection = this._select(pristine, source);
+    return target => {
+      let bytes = pristine.slice();
+      this._clear(bytes, source);
+      this._write(bytes, target, selection);
+      this._replaceBytes(bytes);
+    }
+  },
+
+  //
+
   _resize(handle, size) {
     this.cancelScheduledSave();
 
