@@ -1,9 +1,9 @@
 import Node from '../../../../-node';
 import { Pixel, fromIndex, toIndex } from 'editor/utils/pixel';
-import { readOnly } from '@ember/object/computed';
+import { readOnly, not, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
-const observe = [ 'frame', 'sceneFunc', 'hitFunc', 'disabled' ];
+const observe = [ 'frame', 'sceneFunc', 'hitFunc', 'editing' ];
 
 export default Node.extend({
 
@@ -12,10 +12,16 @@ export default Node.extend({
 
   model: null,
 
+  isEditing: readOnly('sprite.isEditing'),
+  enabled: not('disabled'),
+  editable: and('isEditing', 'enabled'),
+
   pixel: readOnly('sprite.render.pixel'),
   frame: readOnly('sprite.render.frame'),
   size: readOnly('sprite.size'),
   bytes: readOnly('model.bytes'),
+
+  isDrawing: false,
 
   sceneFunc: computed('size', 'pixel', 'bytes', function() {
     let { size, pixel, bytes } = this;
@@ -56,24 +62,19 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  disabled: false,
-
-  props: computed('frame', 'sceneFunc', 'hitFunc', 'disabled', function() {
-    let { frame, sceneFunc, hitFunc, disabled } = this;
+  props: computed('frame', 'sceneFunc', 'hitFunc', function() {
+    let { frame, sceneFunc, hitFunc } = this;
     return {
       width: frame.width,
       height: frame.height,
       sceneFunc,
-      hitFunc,
-      listening: !disabled
+      hitFunc
     };
   }).readOnly(),
 
   nodeAttributesChanged() {
     return true;
   },
-
-  isDrawing: false,
 
   pixelForRelativePointerPosition() {
     let pos = this.getRelativePointerPosition();
@@ -102,7 +103,7 @@ export default Node.extend({
   },
 
   onMousedown(e) {
-    if(this.disabled) {
+    if(!this.editable) {
       return;
     }
     e.cancelBubble = true;

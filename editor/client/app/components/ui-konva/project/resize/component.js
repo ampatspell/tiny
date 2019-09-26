@@ -6,14 +6,14 @@ export default Node.extend({
 
   nodeClassName: 'group',
 
-  selection: readOnly('project.selection'),
+  model: readOnly('project.editing'),
 
-  isResizable: computed('selection.render.resizable', 'disabled', function() {
-    let { selection, disabled } = this;
-    if(!selection || disabled) {
+  isResizable: computed('model.render.resizable', 'disabled', function() {
+    let { model, disabled } = this;
+    if(!model || disabled) {
       return;
     }
-    return selection.render.resizable;
+    return model.render.resizable;
   }).readOnly(),
 
 });
