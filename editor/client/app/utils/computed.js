@@ -52,23 +52,3 @@ export const delta = (arrayKey, currentKey, value, ring=true) => computed(`${arr
   }
   return array.objectAt(index);
 }).readOnly();
-
-export const selectedWithDefault = defaultKey => {
-  let cacheKeyForKey = key => `_selectedWithDefault_${key}`;
-  return computed(defaultKey, {
-    get(key) {
-      let cacheKey = cacheKeyForKey(key);
-      let selected = this[cacheKey];
-      if(selected === undefined) {
-        selected = this.get(defaultKey) || null;
-        this._selected = selected;
-      }
-      return selected;
-    },
-    set(key, value) {
-      let cacheKey = cacheKeyForKey(key);
-      this[cacheKey] = value;
-      return value;
-    }
-  });
-};
