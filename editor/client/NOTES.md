@@ -1,6 +1,5 @@
 # Notes
 
-* fill node color
 * sprite node: sprite preview when loop/frame is not selected
 * sprite node: sprite frame preview
 * sprite node: sprite loop preview
