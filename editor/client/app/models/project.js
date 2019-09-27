@@ -136,6 +136,16 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   onShortcutRight() {
     let model = this._selectionRenderDetails();
     model && model.onShortcutRight && model.onShortcutRight();
+  },
+
+  //
+
+  async onWillDeleteSprite(sprite) {
+    this.selectIf(sprite, this.sprites);
+  },
+
+  async onWillDeleteScene(scene) {
+    this.selectIf(scene, this.scenes);
   }
 
 });

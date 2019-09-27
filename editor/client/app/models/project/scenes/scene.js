@@ -52,10 +52,6 @@ export default EmberObject.extend(DocMixin, {
     }
   },
 
-  willDelete() {
-    this.project.selectIf(this, this.scenes);
-  },
-
   async moveUp() {
     await this.scenes.moveUp(this);
   },
@@ -100,6 +96,12 @@ export default EmberObject.extend(DocMixin, {
     this.layers.onParentResized(id, diff);
 
     this.update({ position, size });
+  },
+
+  //
+
+  async willDelete() {
+    await this.project.onWillDeleteScene(this);
   }
 
 });

@@ -90,8 +90,8 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  willDelete() {
-    this.project.selectIf(this, this.sprites);
+  async willDelete() {
+    await this.project.onWillDeleteSprite(this);
   },
 
   async moveUp() {
