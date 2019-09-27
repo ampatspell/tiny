@@ -1,0 +1,35 @@
+{{#sidebar.section as |section|}}
+
+  {{#section.header as |header|}}
+    {{#header.content as |content|}}
+      {{content.type value="Frame"}}
+      {{content.identifier value=model.identifier}}
+      {{#if frame}}
+        {{content.name value=(concat '#' frame.index)}}
+      {{else}}
+        {{content.name value="No frames"}}
+      {{/if}}
+    {{/header.content}}
+  {{/section.header}}
+
+  {{#if frame}}
+
+    {{#section.padded class="preview"}}
+      {{ui-block/sprites/sprite/frame/preview frame=frame pixel=2}}
+    {{/section.padded}}
+
+    {{section.input label="Identifier" value=frame.identifier update=(action "update" "identifier")}}
+
+    {{#section.actions as |actions|}}
+      {{actions.button value=(concat "Delete Frame #" frame.index) action=(action "deleteFrame")}}
+    {{/section.actions}}
+
+  {{/if}}
+
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Add frame" action=(action "createFrame")}}
+  {{/section.actions}}
+{{/sidebar.section}}

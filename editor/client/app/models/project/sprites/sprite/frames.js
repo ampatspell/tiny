@@ -77,4 +77,42 @@ export default EmberObject.extend({
     });
   },
 
+  async reindex(hole) {
+    await this.store.batch(batch => {
+      let delta = 0;
+      this.ordered.forEach((frame, idx) => {
+        let { doc } = frame;
+        if(idx === hole) {
+          delta = 1;
+        }
+        doc.set('data.index', idx + delta);
+        batch.save(doc);
+      });
+    });
+  },
+
+  async duplicate(frame) {
+    let { index, bytes } = frame;
+    index = index + 1;
+    await this.reindex(index);
+    return await this.create({ index, bytes });
+  },
+
+  async createOrDuplicate(frame) {
+    if(frame) {
+      return await this.duplicate(frame);
+    }
+    return await this.create();
+  },
+
+  async createOrDuplicateSelected() {
+    return await this.createOrDuplicate(this.selected);
+  }
+
+  // TODO: frame delete
+  // onFrameDeleted(frame) {
+  //   this.reindexFrames();
+  //   this.loops.forEach(loop => loop.onFrameDeleted(frame));
+  // },
+
 });

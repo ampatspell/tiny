@@ -17,7 +17,7 @@ export default Component.extend({
       this.update('pixel', pixel.value);
     },
     createFrame() {
-      this.model.frames.create();
+      this.model.frames.createOrDuplicateSelected();
     },
     createLoop() {
       this.model.loops.create();
