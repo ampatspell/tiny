@@ -12,6 +12,8 @@ export default Component.extend({
   pixels,
   pixel: pixel(),
 
+  deleteConfirmation: 'Sure you want to delete this sprite?',
+
   actions: {
     pixel(pixel) {
       this.update('pixel', pixel.value);

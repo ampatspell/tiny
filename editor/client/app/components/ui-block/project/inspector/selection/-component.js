@@ -1,7 +1,11 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   tagName: '',
+
+  dialogs: service(),
+  deleteConfirmation: null,
 
   actions: {
     locked(locked) {
@@ -11,7 +15,7 @@ export default Component.extend({
       this.update(...arguments);
     },
     delete() {
-      this.model.delete();
+      this.deleteModel();
     },
     moveUp() {
       this.model.moveUp();
@@ -19,6 +23,17 @@ export default Component.extend({
     moveDown() {
       this.model.moveDown();
     }
+  },
+
+  async deleteModel() {
+    let message = this.deleteConfirmation;
+    if(message) {
+      let confirmed = await this.dialogs.alert(message, 'Cancel', 'Delete');
+      if(!confirmed) {
+        return;
+      }
+    }
+    this.model.delete();
   },
 
   update(key, value) {

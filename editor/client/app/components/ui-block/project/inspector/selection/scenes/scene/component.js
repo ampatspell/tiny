@@ -18,6 +18,8 @@ export default Component.extend({
   backgrounds,
   background: background(),
 
+  deleteConfirmation: 'Sure you want to delete this scene?',
+
   actions: {
     background(background) {
       this.update('background', background.value);
