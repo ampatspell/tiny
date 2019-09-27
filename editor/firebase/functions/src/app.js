@@ -25,13 +25,10 @@ module.exports = class Application {
         sprites: {
           onDelete: this.require('./triggers/projects/sprites/on-delete')
         },
-        worlds: {
-          onDelete: this.require('./triggers/projects/worlds/on-delete'),
-          scenes: {
-            onDelete: this.require('./triggers/projects/worlds/scenes/on-delete'),
-            layers: {
-              onDelete: this.require('./triggers/projects/worlds/scenes/layers/on-delete')
-            }
+        scenes: {
+          onDelete: this.require('./triggers/projects/scenes/on-delete'),
+          layers: {
+            onDelete: this.require('./triggers/projects/scenes/layers/on-delete')
           }
         }
       }
