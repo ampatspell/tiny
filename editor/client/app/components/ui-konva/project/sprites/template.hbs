@@ -1,3 +1,5 @@
-{{#each project.sprites.visible as |sprite index|}}
-  {{ui-konva/project/sprites/sprite project=project model=sprite zIndex=index disabled=disabled}}
-{{/each}}
+{{#unless project.sprites.chainHidden}}
+  {{#each project.sprites.visible as |sprite index|}}
+    {{ui-konva/project/sprites/sprite project=project model=sprite zIndex=index disabled=disabled}}
+  {{/each}}
+{{/unless}}
