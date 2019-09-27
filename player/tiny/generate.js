@@ -34,7 +34,7 @@ run(config, async runtime => {
     'fill': 'FillNode'
   };
 
-  project.world.scenes.forEach(scene => {
+  project.scenes.forEach(scene => {
     scene.className = 'Scene';
     scene.namespace = `Scene_${scene.index}`;
     scene.backgroundType = backgrounds[scene.background];

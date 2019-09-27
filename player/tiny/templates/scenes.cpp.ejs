@@ -11,12 +11,12 @@ namespace Tiny {
 namespace Project {
 namespace Scenes {
 
-<% project.world.scenes.forEach(scene => { %>
+<% project.scenes.forEach(scene => { %>
 <%= include('scene.cpp', { project, scene }) %>
 <% }) %>
 
 union SceneSizes {
-<% project.world.scenes.forEach(scene => { -%>
+<% project.scenes.forEach(scene => { -%>
   size_t scene_<%= scene.index %>[<%= scene.namespace %>::size];
 <% }) -%>
 };
@@ -24,7 +24,7 @@ union SceneSizes {
 constexpr size_t storageSize = sizeof(SceneSizes);
 uint8_t storage[storageSize];
 
-constexpr uint8_t _numberOfScenes = <%= project.world.scenes.length %>;
+constexpr uint8_t _numberOfScenes = <%= project.scenes.length %>;
 
 uint8_t numberOfScenes() {
   return _numberOfScenes;
@@ -32,7 +32,7 @@ uint8_t numberOfScenes() {
 
 Scene *instantiateSceneAtIndex(uint8_t index) {
   switch(index) {
-<% project.world.scenes.forEach(scene => { %>
+<% project.scenes.forEach(scene => { %>
     case <%= scene.index %>: return <%= scene.namespace %>::instantiate(storage);
 <% }) %>
   }

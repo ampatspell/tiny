@@ -3,8 +3,8 @@ const Properties = require('./properties');
 
 class Scene {
 
-  constructor(world, json) {
-    Object.defineProperty(this, 'world', { value: world });
+  constructor(project, json) {
+    Object.defineProperty(this, 'project', { value: project });
     let { identifier, background, name, size, layers } = json;
     this.identifier = identifier;
     this.background = background;
@@ -15,7 +15,7 @@ class Scene {
   }
 
   get index() {
-    return this.world.scenes.indexOf(this);
+    return this.project.scenes.indexOf(this);
   }
 
   layerByIdentifier(identifier) {

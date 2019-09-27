@@ -13,7 +13,7 @@ class Node {
     this.color = color;
     this.properties = new Properties(json.properties);
     if(sprite) {
-      this.sprite = layer.scene.world.project.spriteByIdentifier(sprite);
+      this.sprite = layer.scene.project.spriteByIdentifier(sprite);
       if(this.sprite) {
         this.frame = this.sprite.frameByIdentifier(frame);
         this.loop = this.sprite.loopByIdentifier(loop);

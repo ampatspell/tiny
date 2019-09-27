@@ -1,14 +1,20 @@
 const Sprite = require('./sprite');
-const World = require('./world');
+const Scene = require('./scene');
+const Properties = require('./properties');
 
 class Project {
 
   constructor(json) {
     Object.defineProperty(this, 'json', { value: json });
-    let { project: { title }, sprites, world } = json;
+    let { title, sprites, scenes } = json;
     this.title = title;
     this.sprites = sprites.map(sprite => new Sprite(this, sprite));
-    this.world = new World(this, world);
+    this.scenes = scenes.map(scene => new Scene(this, scene));
+    this.properties = new Properties(json.properties);
+  }
+
+  sceneByIdentifier(identifier) {
+    return this.scenes.find(scene => scene.identifier === identifier);
   }
 
   spriteByIdentifier(identifier) {
