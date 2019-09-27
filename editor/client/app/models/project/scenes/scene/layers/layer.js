@@ -44,8 +44,8 @@ export default EmberObject.extend(DocMixin, {
     }
   },
 
-  willDelete() {
-    this.project.selectIf(this, this.layers.scene);
+  async willDelete() {
+    await this.layers.onWillDeleteLayer(this);
   },
 
   async moveUp() {
@@ -66,6 +66,10 @@ export default EmberObject.extend(DocMixin, {
 
   onParentResized(id, diff) {
     this.nodes.onParentResized(id, diff);
+  },
+
+  async onWillDeleteNode(node) {
+    await this.layers.onWillDeleteNode(node);
   }
 
 });

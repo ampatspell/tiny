@@ -58,13 +58,6 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     this.edit(null);
   },
 
-  selectIf(current, selection) {
-    if(this.selection !== current) {
-      return;
-    }
-    this.select(selection);
-  },
-
   edit(editing) {
     editing = editing || null;
     this.setProperties({ editing });
@@ -140,12 +133,30 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   //
 
+  onWillDeleteEditable(model, next) {
+    let { selection } = this;
+    if(selection !== model) {
+      return;
+    }
+    selection = next;
+    let editing = null;
+    this.setProperties({ selection, editing });
+  },
+
   async onWillDeleteSprite(sprite) {
-    this.selectIf(sprite, this.sprites);
+    this.onWillDeleteEditable(sprite, this.sprites);
   },
 
   async onWillDeleteScene(scene) {
-    this.selectIf(scene, this.scenes);
+    this.onWillDeleteEditable(scene, this.scenes);
+  },
+
+  async onWillDeleteLayer(layer) {
+    this.onWillDeleteEditable(layer, layer.scene);
+  },
+
+  async onWillDeleteNode(node) {
+    this.onWillDeleteEditable(node, node.layer);
   }
 
 });

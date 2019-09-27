@@ -45,9 +45,21 @@ export default EmberObject.extend({
     model && this.select(model);
   },
 
+  selectAnother(frame) {
+    let previous = this.previous;
+    if(previous === frame) {
+      previous = null;
+    }
+    this.select(previous);
+  },
+
   async load({ type }) {
     await resolveObservers(this.query);
     await all(this.models.map(model => model.load({ type })));
+  },
+
+  async didCreateFrame(frame) {
+    this.select(frame);
   },
 
   async create(opts) {
@@ -67,7 +79,7 @@ export default EmberObject.extend({
 
     await doc.save();
     let model = this.models.findBy('id', doc.id);
-    this.select(model);
+    await this.didCreateFrame(model);
     return model;
   },
 
@@ -96,9 +108,7 @@ export default EmberObject.extend({
     let { index, bytes } = frame;
     index = index + 1;
     await this.reindex(index);
-    let model = await this.create({ index, bytes });
-    this.select(model);
-    return model;
+    return await this.create({ index, bytes });
   },
 
   async createOrDuplicate(frame) {
@@ -116,10 +126,7 @@ export default EmberObject.extend({
 
   async onWillDeleteFrame(frame) {
     if(this.selected === frame) {
-      this.selectPrevious();
-      if(frame === frame) {
-        this.select(null);
-      }
+      this.selectAnother(frame);
     }
     await this.sprite.onWillDeleteFrame(frame);
   },

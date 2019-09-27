@@ -50,10 +50,6 @@ export default EmberObject.extend(DocMixin, {
   async load() {
   },
 
-  willDelete() {
-    this.project.selectIf(this, this.nodes.layer);
-  },
-
   async moveUp() {
     await this.nodes.moveUp(this);
   },
@@ -94,5 +90,9 @@ export default EmberObject.extend(DocMixin, {
       this.update({ position });
     }
   },
+
+  async willDelete() {
+    await this.nodes.onWillDeleteNode(this);
+  }
 
 });
