@@ -3,7 +3,7 @@ module.exports = app => app.functions.firestore.document('projects/{project}').o
   let { ref } = snapshot;
 
   await app.services.firestore.deleteCollections([
-    ref.collection('worlds'),
+    ref.collection('scenes'),
     ref.collection('sprites')
   ]);
 
