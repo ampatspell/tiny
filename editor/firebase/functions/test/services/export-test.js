@@ -11,7 +11,14 @@ describe('services / export', () => {
     this.doc = path => this.admin.firestore.doc(path);
     this.documents = {
       'projects/bug': {
-        title: 'The Bug'
+        title: 'The Bug',
+        token: 'the-token',
+        properties: {
+          className: 'TheWorld',
+          speed: '5',
+          ok: true,
+          names: '[ "one", "two" ]'
+        }
       },
       'projects/bug/sprites/one': {
         identifier: 'weirdo',
@@ -33,17 +40,7 @@ describe('services / export', () => {
         identifier: 'wink',
         frames: [ '1', '2' ]
       },
-      'projects/bug/worlds/earth': {
-        token: 'the-token',
-        name: 'Earth',
-        properties: {
-          className: 'TheWorld',
-          speed: '5',
-          ok: true,
-          names: '[ "one", "two" ]'
-        }
-      },
-      'projects/bug/worlds/earth/scenes/intro': {
+      'projects/bug/scenes/intro': {
         background: 'black',
         identifier: 'intro',
         name: 'Earth',
@@ -56,7 +53,7 @@ describe('services / export', () => {
           className: 'TheScene'
         }
       },
-      'projects/bug/worlds/earth/scenes/intro/layers/background': {
+      'projects/bug/scenes/intro/layers/background': {
         identifier: 'background',
         type: 'grid',
         index: 0,
@@ -68,7 +65,7 @@ describe('services / export', () => {
           className: 'TheBackground'
         }
       },
-      'projects/bug/worlds/earth/scenes/intro/layers/background/nodes/1': {
+      'projects/bug/scenes/intro/layers/background/nodes/1': {
         index: 0,
         type: 'sprite/frame',
         sprite: "weirdo",
@@ -89,12 +86,12 @@ describe('services / export', () => {
           className: 'TheNode'
         }
       },
-      'projects/bug/worlds/earth/scenes/intro/layers/char': {
+      'projects/bug/scenes/intro/layers/char': {
         identifier: 'char',
         type: 'pixel',
         index: 1
       },
-      'projects/bug/worlds/earth/scenes/intro/layers/char/nodes/1': {
+      'projects/bug/scenes/intro/layers/char/nodes/1': {
         index: 0,
         type: 'sprite/loop',
         sprite: "weirdo",
@@ -112,7 +109,7 @@ describe('services / export', () => {
           vertical: false
         }
       },
-      'projects/bug/worlds/earth/scenes/intro/layers/char/nodes/2': {
+      'projects/bug/scenes/intro/layers/char/nodes/2': {
         index: 1,
         type: 'fill',
         color: 'white',
@@ -135,13 +132,17 @@ describe('services / export', () => {
     }
   });
 
-  it('hello', async () => {
+  it('exports', async () => {
     await this.insert();
     let json = await this.export.byToken('the-token');
     assert.deepEqual(json, {
-      project: {
-        _id: 'bug',
-        title: 'The Bug',
+      _id: 'bug',
+      title: 'The Bug',
+      properties: {
+        className: 'TheWorld',
+        speed: 5,
+        ok: true,
+        names: [ 'one', 'two' ]
       },
       sprites: [
         {
@@ -157,78 +158,68 @@ describe('services / export', () => {
           ]
         }
       ],
-      world: {
-        _id: 'earth',
-        name: 'Earth',
-        properties: {
-          className: 'TheWorld',
-          speed: 5,
-          ok: true,
-          names: [ 'one', 'two' ]
-        },
-        scenes: [
-          {
-            _id: 'intro',
-            identifier: 'intro',
-            background: 'black',
-            name: 'Earth',
-            properties: {
-              className: 'TheScene'
-            },
-            size: { height: 64, width: 128 },
-            layers: [
-              {
-                _id: 'background',
-                identifier: 'background',
-                type: 'grid',
-                grid: { height: 8, width: 8 },
-                properties: {
-                  className: 'TheBackground'
-                },
-                nodes: [
-                  {
-                    _id: '1',
-                    type: 'sprite/frame',
-                    sprite: 'weirdo',
-                    frame: '2',
-                    position: { x: 104, y: 40 },
-                    alignment: { vertical: 'top', horizontal: 'left' },
-                    flip: { horizontal: false, vertical: false },
-                    properties: {
-                      className: 'TheNode'
-                    },
-                  }
-                ]
+      scenes: [
+        {
+          _id: 'intro',
+          identifier: 'intro',
+          background: 'black',
+          name: 'Earth',
+          properties: {
+            className: 'TheScene'
+          },
+          size: { height: 64, width: 128 },
+          layers: [
+            {
+              _id: 'background',
+              identifier: 'background',
+              type: 'grid',
+              grid: { height: 8, width: 8 },
+              properties: {
+                className: 'TheBackground'
               },
-              {
-                _id: 'char',
-                identifier: 'char',
-                type: 'pixel',
-                properties: {},
-                nodes: [
-                  {
-                    _id: '1',
-                    type: 'sprite/loop',
-                    sprite: 'weirdo',
-                    position: { y: 40, x: 104 },
-                    alignment: { vertical: 'top', horizontal: 'left' },
-                    flip: { horizontal: false, vertical: false },
-                    loop: 'wink',
-                    properties: {},
+              nodes: [
+                {
+                  _id: '1',
+                  type: 'sprite/frame',
+                  sprite: 'weirdo',
+                  frame: '2',
+                  position: { x: 104, y: 40 },
+                  alignment: { vertical: 'top', horizontal: 'left' },
+                  flip: { horizontal: false, vertical: false },
+                  properties: {
+                    className: 'TheNode'
                   },
-                  {
-                    _id: '2',
-                    type: 'fill',
-                    position: { y: 40, x: 104 },
-                    color: 'white',
-                    properties: {},
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+                }
+              ]
+            },
+            {
+              _id: 'char',
+              identifier: 'char',
+              type: 'pixel',
+              properties: {},
+              nodes: [
+                {
+                  _id: '1',
+                  type: 'sprite/loop',
+                  sprite: 'weirdo',
+                  position: { y: 40, x: 104 },
+                  alignment: { vertical: 'top', horizontal: 'left' },
+                  flip: { horizontal: false, vertical: false },
+                  loop: 'wink',
+                  properties: {},
+                },
+                {
+                  _id: '2',
+                  type: 'fill',
+                  position: { y: 40, x: 104 },
+                  color: 'white',
+                  properties: {},
+                }
+              ]
+            }
+          ]
+        }
+      ]
     });
   });
 

@@ -137,45 +137,23 @@ class ExportService {
     return await Promise.all(scenes.docs.map(snapshot => this._exportScene(snapshot)));
   }
 
-  async _exportWorld(world) {
-    let data = world.data();
-    if(!data) {
-      return;
-    }
-
-    let [ scenes, properties ] = await Promise.all([
-      this._exportScenes(await world.ref.collection('scenes').orderBy('index', 'desc').get()),
-      this._exportProperties(world)
-    ]);
-
-    return Object.assign(pick(data, [ 'name' ]), { _id: world.id, scenes, properties });
-  }
-
-  async _exportProject(project) {
+  async exportProject(project) {
     let data = project.data();
     if(!data) {
       return;
     }
 
-    return Object.assign(pick(data, [ 'title' ]), { _id: project.id });
-  }
-
-  async exportWorld(worldSnapshot) {
-    let [ project, sprites, world ] = await Promise.all([
-      this._exportProject(await worldSnapshot.ref.parent.parent.get()),
-      this._exportSprites(await worldSnapshot.ref.parent.parent.collection('sprites').get()),
-      this._exportWorld(worldSnapshot)
+    let [ sprites, scenes, properties ] = await Promise.all([
+      this._exportSprites(await project.ref.collection('sprites').get()),
+      this._exportScenes(await project.ref.collection('scenes').orderBy('index', 'desc').get()),
+      this._exportProperties(project)
     ]);
 
-    return {
-      project,
-      sprites,
-      world
-    };
+    return Object.assign(pick(data, [ 'title' ]), { _id: project.id, properties, sprites, scenes });
   }
 
   async byToken(token) {
-    let snapshot = await this.app.firestore.collectionGroup('worlds').where('token', '==', token).get();
+    let snapshot = await this.app.firestore.collection('projects').where('token', '==', token).get();
 
     if(snapshot.size === 0) {
       throw new Error(`Word not found for token '${token}'`);
@@ -185,7 +163,7 @@ class ExportService {
       throw new Error(`Multiple worlds fortoken '${token}' found`);
     }
 
-    return await this.exportWorld(snapshot.docs[0]);
+    return await this.exportProject(snapshot.docs[0]);
   }
 
 }
