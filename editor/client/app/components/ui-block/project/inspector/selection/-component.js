@@ -23,7 +23,6 @@ export default Component.extend({
 
   update(key, value) {
     this.model.update({ [key]: value });
-
   }
 
 });
