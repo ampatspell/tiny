@@ -1,7 +1,6 @@
 # Notes
 
 * collapse custom properties (if empty) and unnecessary position editors
-* remove gif.js
 * save selected sprite frame
 * delete confirmations (dialogs from bain)
 * sprite node: sprite preview when loop/frame is not selected
