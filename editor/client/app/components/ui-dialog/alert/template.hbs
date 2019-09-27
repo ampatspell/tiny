@@ -1,0 +1,15 @@
+<div class="message">
+  {{dialog.message}}
+</div>
+<div class="actions">
+  <div class="left">
+    {{#if isBusy}}
+      Working…
+    {{/if}}
+  </div>
+  <div class="right">
+    {{#each dialog.actions as |act|}}
+      {{ui-block/button value=act.label disabled=isBusy action=(action "invoke" act)}}
+    {{/each}}
+  </div>
+</div>

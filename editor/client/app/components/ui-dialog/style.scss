@@ -1,0 +1,9 @@
+.ui-dialog {
+  background: #fff;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px fade-out(#000, 0.8), 0 1px 5px fade-out(#000, 0.9);
+  user-select: none;
+}
+
+@import "alert/style";
