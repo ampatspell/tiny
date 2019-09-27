@@ -3,10 +3,11 @@ import { readOnly } from '@ember/object/computed';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { assign } from '@ember/polyfills';
-import { delta, selectedWithDefault } from 'editor/utils/computed';
+import { delta } from 'editor/utils/computed';
 import { heart } from 'editor/utils/frame';
+import SettingsMixin from './frames/-settings';
 
-export default EmberObject.extend({
+export default EmberObject.extend(SettingsMixin, {
 
   typeName: 'Frames',
 
@@ -35,13 +36,20 @@ export default EmberObject.extend({
     return ordered.map(frame => frame && frame._previewRendered);
   }).readOnly(),
 
-  selected: selectedWithDefault('ordered.firstObject'),
+  index: readOnly('settings.index'),
+
+  selected: computed('index', 'ordered.[]', function() {
+    let { index, ordered } = this;
+    index = index || 0;
+    return ordered.objectAt(index);
+  }),
+
   previous: delta('ordered', 'selected', -1),
   next:     delta('ordered', 'selected', +1),
 
   select(selected) {
-    selected = selected || null;
-    this.setProperties({ selected });
+    let index = this.ordered.indexOf(selected) || null;
+    this.update({ index });
   },
 
   selectPrevious() {
