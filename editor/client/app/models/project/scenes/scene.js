@@ -100,6 +100,10 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
+  async onDidCreateLayer(layer) {
+    await this.project.onDidCreateLayer(layer);
+  },
+
   async willDelete() {
     await this.project.onWillDeleteScene(this);
   }

@@ -134,12 +134,14 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   //
 
   onWillDeleteEditable(model, next) {
-    let { selection } = this;
+    let { selection, editing } = this;
     if(selection !== model) {
       return;
     }
     selection = next;
-    let editing = null;
+    if(editing === model) {
+      editing = null;
+    }
     this.setProperties({ selection, editing });
   },
 
@@ -157,6 +159,20 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   async onWillDeleteNode(node) {
     this.onWillDeleteEditable(node, node.layer);
-  }
+  },
+
+  async onDidCreateScene(scene) {
+    this.select(scene);
+  },
+
+  async onDidCreateLayer(layer) {
+    this.select(layer);
+  },
+
+  async onDidCreateNode(node) {
+    let scene = node.scene;
+    this.select(node);
+    this.edit(scene);
+  },
 
 });

@@ -70,6 +70,10 @@ export default EmberObject.extend(DocMixin, {
 
   async onWillDeleteNode(node) {
     await this.layers.onWillDeleteNode(node);
-  }
+  },
+
+  async onDidCreateNode(node) {
+    await this.layers.onDidCreateNode(node);
+  },
 
 });

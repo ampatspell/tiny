@@ -55,7 +55,9 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     let doc = this.ref.doc().new(opts);
 
     await doc.save();
-    return this.project.select(this.models.findBy('id', doc.id));
+    let model = this.models.findBy('id', doc.id);
+    await this.scene.onDidCreateLayer(model);
+    return model;
   },
 
   onParentResized(id, diff) {
@@ -68,6 +70,10 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
   async onWillDeleteNode(node) {
     await this.project.onWillDeleteNode(node);
-  }
+  },
+
+  async onDidCreateNode(node) {
+    await this.project.onDidCreateNode(node);
+  },
 
 });

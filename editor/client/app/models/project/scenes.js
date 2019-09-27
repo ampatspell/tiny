@@ -69,7 +69,8 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
     await doc.save();
     let model = this.models.findBy('id', doc.id);
-    return this.project.select(model);
+    await this.project.onDidCreateScene(model);
+    return model;
   }
 
 });

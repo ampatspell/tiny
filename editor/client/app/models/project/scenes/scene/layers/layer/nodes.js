@@ -44,6 +44,10 @@ export default EmberObject.extend(MoveMixin, {
     await all(this.models.map(model => model.load({ type })));
   },
 
+  async didCreate(node) {
+    await this.layer.onDidCreateNode(node);
+  },
+
   async create(opts) {
     let last = this.ordered.lastObject;
     let index = 0;
@@ -55,7 +59,9 @@ export default EmberObject.extend(MoveMixin, {
     let doc = this.ref.doc().new(opts);
 
     await doc.save();
-    return this.project.select(this.models.findBy('id', doc.id));
+    let model = this.models.findBy('id', doc.id);
+    await this.didCreate(model);
+    return model;
   },
 
   async _createSprite(type, cb) {
