@@ -11,7 +11,7 @@
   {{#if model.loops.ordered}}
     {{#section.custom class="content"}}
       {{#each model.loops.ordered as |loop|}}
-        {{ui-block/project/inspector/selection/sprites/sprite/loops/loop loop=loop select=(action "select" loop)}}
+        {{ui-block/project/inspector/selection/sprites/sprite/tab/loops/loop loop=loop select=(action "select" loop)}}
       {{/each}}
     {{/section.custom}}
   {{else}}

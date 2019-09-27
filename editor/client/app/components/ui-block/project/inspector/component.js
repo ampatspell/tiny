@@ -4,8 +4,8 @@ import { or } from '@ember/object/computed';
 
 const mapping = {
   'sprites/sprite': [
-    { id: 'frames', label: 'Frames', component: 'sprites/sprite/frames' },
-    { id: 'loops',  label: 'Loops',  component: 'sprites/sprite/loops' }
+    { id: 'frames', label: 'Frames', component: 'sprites/sprite/tab/frames' },
+    { id: 'loops',  label: 'Loops',  component: 'sprites/sprite/tab/loops' }
   ]
 };
 

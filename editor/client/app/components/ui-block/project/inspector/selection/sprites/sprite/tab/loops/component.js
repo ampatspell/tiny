@@ -1,4 +1,4 @@
-import Component from '../../../-component';
+import Component from '../../../../-component';
 
 export default Component.extend({
 
@@ -6,7 +6,8 @@ export default Component.extend({
     createLoop() {
       this.model.loops.create();
     },
-    select() {
+    select(loop) {
+      this.project.select(loop);
     }
   }
 
