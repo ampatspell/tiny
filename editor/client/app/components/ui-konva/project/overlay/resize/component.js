@@ -1,6 +1,5 @@
 import Node from '../../../-node';
-import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import { readOnly, not, and } from '@ember/object/computed';
 
 export default Node.extend({
 
@@ -8,12 +7,10 @@ export default Node.extend({
 
   model: readOnly('project.editing'),
 
-  isResizable: computed('model.render.resizable', 'disabled', function() {
-    let { model, disabled } = this;
-    if(!model || disabled) {
-      return;
-    }
-    return model.render.resizable;
-  }).readOnly(),
+  resizable: readOnly('model.render.resizable'),
+  enabled: not('disabled'),
+  unlocked: not('model.chainLocked'),
+
+  isResizable: and('resizable', 'enabled', 'unlocked')
 
 });
