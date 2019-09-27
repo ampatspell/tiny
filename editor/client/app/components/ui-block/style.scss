@@ -8,26 +8,20 @@
 @import "background-image/style";
 @import "tabs/style";
 @import "tree/style";
+@import "dialogs/style";
+
 @import "sidebar/section/style";
+@import "sprites/preview/style";
 
-@import "scene/pixel/style";
-
-@import "project/sprites/style";
-@import "project/worlds/style";
-
-@import "sprite/inspector/style";
-@import "sprite/frames/style";
-@import "sprite/frame/preview/style";
-@import "sprite/frame/editor/style";
-@import "sprite/loop/preview/style";
-@import "sprite/loops/style";
-@import "sprite/loops/list/style";
-@import "sprite/loops/selected/style";
-
-@import "world/editor/style";
-@import "world/inspector/style";
-@import "world/inspector/world/style";
-@import "world/inspector/selection/node/sprite/base/sprite/style";
-@import "world/sidebar/style";
-@import "world/sidebar/tree/style";
-@import "world/sidebar/sprites/style";
+@import "project/style";
+@import "project/sidebar/style";
+@import "project/sidebar/tree/row/style";
+@import "project/editor/style";
+@import "project/details/style";
+@import "project/details/type/sprites/sprite/style";
+@import "project/details/type/sprites/sprite/frames/style";
+@import "project/inspector/style";
+@import "project/inspector/pixel/style";
+@import "project/inspector/selection/style";
+@import "project/inspector/selection/tab/style";
+@import "project/inspector/selection/sprites/sprite/tab/loop/style";

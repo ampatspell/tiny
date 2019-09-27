@@ -1,9 +1,9 @@
-<div class="title">Your projects</div>
+<div class="header">Projects</div>
 
-{{#if projects}}
+{{#if projects.models}}
   <div class="projects">
-    {{#each projects as |project|}}
-      <div class="project" {{action "select" project}} role="button">{{project.title}}</div>
+    {{#each projects.models as |project|}}
+      <div class="project" role="button" {{action "select" project}}>{{project.title}}</div>
     {{/each}}
   </div>
 {{else}}
@@ -11,5 +11,5 @@
 {{/if}}
 
 <div class="actions">
-  {{ui-block/button value="Add new project" action=(action "add")}}
+  {{ui-block/button value="Add new project" action=(action "new")}}
 </div>

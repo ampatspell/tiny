@@ -1,0 +1,3 @@
+{{#each model.nodes.visible as |layerNode idx|}}
+  {{ui-konva/project/scenes/scene/layers/layer/nodes/node zIndex=idx model=layerNode disabled=disabled}}
+{{/each}}

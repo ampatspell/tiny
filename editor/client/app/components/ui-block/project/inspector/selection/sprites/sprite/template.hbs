@@ -1,0 +1,29 @@
+{{#sidebar.section as |section|}}
+  {{#section.header as |header|}}
+    {{#header.content as |content|}}
+      {{content.type value=model.typeName}}
+      {{content.identifier value=model.identifier}}
+    {{/header.content}}
+    {{header.lock locked=model.chainLocked update=(action "locked")}}
+  {{/section.header}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}}
+  {{section.position label="Position" value=model.position update=(action "update" "position")}}
+  {{section.properties label="Custom properties" value=model.properties update=(action "update" "properties")}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{section.segments label="Pixel" items=pixels selected=pixel update=(action "pixel")}}
+{{/sidebar.section}}
+
+{{#sidebar.section as |section|}}
+  {{#section.actions type="grid" as |actions|}}
+    {{actions.button value="Move Up" action=(action "moveUp")}}
+    {{actions.button value="Move Down" action=(action "moveDown")}}
+  {{/section.actions}}
+  {{#section.actions as |actions|}}
+    {{actions.button value="Delete Sprite" action=(action "delete")}}
+  {{/section.actions}}
+{{/sidebar.section}}

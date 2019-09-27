@@ -5,19 +5,15 @@
 
 @import "ui-konva/style";
 @import "ui-block/style";
+@import "ui-dialog/style";
 
 @import "ui-route/index/style";
 @import "ui-route/session/index/style";
 @import "ui-route/session/new/style";
 @import "ui-route/users/new/style";
 
+@import "ui-route/wip/index/style";
+
 @import "ui-route/projects/index/style";
 @import "ui-route/projects/new/style";
 @import "ui-route/projects/project/index/style";
-@import "ui-route/projects/project/sprites/new/style";
-@import "ui-route/projects/project/sprites/sprite/index/style";
-
-@import "ui-route/projects/project/worlds/new/style";
-@import "ui-route/projects/project/worlds/world/index/style";
-
-@import "ui-route/wip/index/style";

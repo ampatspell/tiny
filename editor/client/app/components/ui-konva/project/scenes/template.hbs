@@ -1,0 +1,5 @@
+{{#unless project.scenes.chainHidden}}
+  {{#each project.scenes.visible as |scene index|}}
+    {{ui-konva/project/scenes/scene project=project model=scene zIndex=index disabled=disabled}}
+  {{/each}}
+{{/unless}}

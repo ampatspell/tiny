@@ -1,0 +1,25 @@
+.ui-block-project-inspector-selection-tab {
+  &.loop {
+    > .sidebar {
+      > .content {
+        > .frames {
+          > .frame {
+            display: flex;
+            flex-direction: row;
+            padding: 5px 10px;
+            border-bottom: 1px solid fade-out(#000, 0.9);
+            &:last-child {
+              border-bottom: none;
+            }
+            > .index {
+              flex: 1;
+            }
+            > .actions {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

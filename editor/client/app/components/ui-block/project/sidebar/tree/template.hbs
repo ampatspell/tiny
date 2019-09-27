@@ -1,0 +1,35 @@
+{{#let "ui-block/project/sidebar/tree/row" as |prefix|}}
+
+  {{#ui-block/tree class="tree" select=(action "select") selected=project.selection as |row|}}
+
+    {{#row model=project.scenes content=(component prefix model=project.scenes collapsable=true content=(component (concat prefix "/scenes") project=project model=project.scenes)) as |row|}}
+      {{#unless project.scenes.collapsed}}
+        {{#each project.scenes.reversed as |scene|}}
+          {{#row model=scene content=(component prefix model=scene collapsable=true content=(component (concat prefix "/scenes/scene") project=project model=scene)) as |row|}}
+            {{#unless scene.collapsed}}
+              {{#each scene.layers.reversed as |layer|}}
+                {{#row model=layer content=(component prefix model=layer collapsable=true content=(component (concat prefix "/scenes/scene/layer") project=project model=layer)) as |row|}}
+                  {{#unless layer.collapsed}}
+                    {{#each layer.nodes.reversed as |node|}}
+                      {{row model=node content=(component prefix model=node content=(component (concat prefix "/scenes/scene/layer/node") project=project model=node))}}
+                    {{/each}}
+                  {{/unless}}
+                {{/row}}
+              {{/each}}
+            {{/unless}}
+          {{/row}}
+        {{/each}}
+      {{/unless}}
+    {{/row}}
+
+    {{#row model=project.sprites content=(component prefix model=project.sprites collapsable=true content=(component (concat prefix "/sprites") project=project model=project.sprites)) as |row|}}
+      {{#unless project.sprites.collapsed}}
+        {{#each project.sprites.reversed as |sprite|}}
+          {{row model=sprite content=(component prefix model=sprite content=(component (concat prefix "/sprites/sprite") project=project model=sprite))}}
+        {{/each}}
+      {{/unless}}
+    {{/row}}
+
+  {{/ui-block/tree}}
+
+{{/let}}

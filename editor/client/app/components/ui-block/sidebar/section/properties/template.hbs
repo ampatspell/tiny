@@ -6,7 +6,7 @@
       <div class="item">
         <div class="label">{{item.key}}</div>
         <div class="content">
-          {{ui-block/input class="input" value=item.value update=(action "update" item) enter=(action "update" item)}}
+          {{ui-block/input class="input" value=item.value update=(action "update" item) enter=(action "update" item) disabled=disabled}}
           {{fa-icon "trash-alt" prefix="far" class="delete" click=(action "delete" item)}}
         </div>
       </div>

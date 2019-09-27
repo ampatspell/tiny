@@ -39,22 +39,22 @@ service cloud.firestore {
         }
       }
 
-      match /worlds/{world} {
+      // Migration
+      match /worlds/{any=**} {
+        allow read: if isProjectOwner();
+      }
+
+      match /scenes/{scene} {
         allow read: if isProjectOwner();
         allow write: if isProjectOwner();
 
-        match /scenes/{scene} {
+        match /layers/{layer} {
           allow read: if isProjectOwner();
           allow write: if isProjectOwner();
 
-          match /layers/{layer} {
+          match /nodes/{frame} {
             allow read: if isProjectOwner();
             allow write: if isProjectOwner();
-
-            match /nodes/{frame} {
-              allow read: if isProjectOwner();
-              allow write: if isProjectOwner();
-            }
           }
         }
       }

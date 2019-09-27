@@ -1,0 +1,77 @@
+.ui-block-project-sidebar-tree-row {
+  display: flex;
+  flex-direction: row;
+  > .toggle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 10px 0 10px;
+    width: 10px;
+    > .icon {
+      flex: 1;
+      font-size: 15px;
+    }
+  }
+  > .accessories {
+    padding: 0 12px 0 0;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    > .icon {
+      margin-right: 5px;
+      width: 14px;
+      text-align: center;
+      &:last-child {
+        margin-right: 0;
+      }
+      &.lock {
+        opacity: 0.3;
+      }
+      &.hidden {
+        opacity: 0.2;
+      }
+      transition: opacity 0.2s ease-in-out;
+    }
+  }
+  transition: opacity 0.2s ease-in-out;
+  &.hidden {
+    opacity: 0.4;
+    > .accessories {
+      > .icon {
+        &.hidden {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  &.locked {
+    > .accessories {
+      > .icon {
+        &.lock {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.ui-block-project-sidebar-tree-row-content {
+  padding: 5px 5px 5px 30px;
+  &.sprites,
+  &.scenes,
+  &.scenes-scene,
+  &.scenes-scene-layer {
+    padding-left: 10px;
+  }
+  overflow-x: hidden;
+  > div {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  > .strong {
+    font-weight: 600;
+  }
+}

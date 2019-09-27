@@ -1,0 +1,18 @@
+.ui-block-project-inspector-selection-tab.loops {
+  > .sidebar {
+    > .content {
+      > .loops {
+        > .loop {
+          border-bottom: 1px solid fade-out(#000, 0.9);
+          &:last-child {
+            border-bottom: none;
+          }
+          > .identifier {
+            padding: 5px 10px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}

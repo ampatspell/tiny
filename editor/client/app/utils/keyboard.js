@@ -34,20 +34,34 @@ export default Mixin.create({
   isSpacePressed: false,
   isAltPressed: false,
 
+  shouldHandleEvent() {
+    let el = document.activeElement;
+    return el.tagName.toLowerCase() !== 'input';
+  },
+
   onWindowKeyDown(e) {
     let { code, key } = e;
 
-    if(code === 'Space') {
-      this.setProperties({ isSpacePressed: true });
-    }
+    if(this.shouldHandleEvent()) {
 
-    if(key === 'Alt') {
-      this.setProperties({ isAltPressed: true });
+      if(code === 'Space') {
+        this.setProperties({ isSpacePressed: true });
+      }
+
+      if(key === 'Alt') {
+        this.setProperties({ isAltPressed: true });
+      }
+
     }
   },
 
   onWindowKeyUp(e) {
     let { code, key } = e;
+
+    if(code.startsWith('Digit') && this.shouldHandleEvent()) {
+      let value = parseInt(key);
+      this._invokeShortcut('onDigit', value);
+    }
 
     if(code === 'Space') {
       this.setProperties({ isSpacePressed: false });
@@ -57,12 +71,14 @@ export default Mixin.create({
       this.setProperties({ isAltPressed: false });
     }
 
-    if(key === 'ArrowRight') {
-      this._invokeShortcut('onRight');
-    } else if(key === 'ArrowLeft') {
-      this._invokeShortcut('onLeft');
-    } else if(key === 'Escape') {
-      this._invokeShortcut('onEscape');
+    if(this.shouldHandleEvent()) {
+      if(key === 'ArrowRight') {
+        this._invokeShortcut('onRight');
+      } else if(key === 'ArrowLeft') {
+        this._invokeShortcut('onLeft');
+      } else if(key === 'Escape') {
+        this._invokeShortcut('onEscape');
+      }
     }
   }
 

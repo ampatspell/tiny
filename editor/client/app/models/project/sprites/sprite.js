@@ -1,226 +1,150 @@
 import EmberObject from '@ember/object';
 import { readOnly, or } from '@ember/object/computed';
-import { observed, resolveObservers, models } from 'ember-cli-zuglet/lifecycle';
-import { assign } from '@ember/polyfills';
-import { array } from 'editor/utils/computed';
-import gif from 'editor/utils/gif';
 import { all } from 'rsvp';
+import { model } from 'ember-cli-zuglet/lifecycle';
+import DocMixin, { data } from 'editor/models/-doc';
+import { properties } from 'editor/models/properties';
+import { selected, editing } from '../-selection';
+import { assign } from '@ember/polyfills';
 
-const path = fn => observed().owner('path').content(fn);
+export default EmberObject.extend(DocMixin, {
 
-const doc = key => readOnly(`doc.${key}`);
-const data = key => doc(`data.${key}`);
+  typeGroup: 'sprites/sprite',
+  typeName: 'Sprite',
+  baseTypeName: 'Sprite',
 
-export default EmberObject.extend({
+  project: readOnly('sprites.project'),
 
   sprites: null,
   doc: null,
-  id: doc('id'),
-  path: doc('path'),
 
-  name: data('name'),
+  index: data('index'),
   identifier: data('identifier'),
-  thumbnail: data('thumbnail'),
-  locked: data('locked'),
+  position: data('position.serialized'),
   size: data('size.serialized'),
+  pixel: data('pixel'),
+
+  hidden: data('hidden'),
+  locked: data('locked'),
+
+  chainHidden: or('sprites.chainHidden', 'hidden'),
+  chainLocked: or('sprites.chainLocked', 'locked'),
+
+  properties: properties(),
+
+  frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
+  loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),
+  render: model().named('project/sprites/sprite/render').mapping(model => ({ model })),
 
   //
 
-  _framesAdding: array(),
-
-  framesQuery: path(({ store, path, _framesAdding }) => store.collection(`${path}/frames`).orderBy('index').query({
-    doc: path => _framesAdding.findBy('path', path)
-  })),
-
-  frames: models('framesQuery.content').named('project/sprites/sprite/frame').mapping((doc, sprite) => ({ doc, sprite })),
+  isSelected: selected(),
+  isEditing: editing(),
 
   //
 
-  _loopsAdding: array(),
-
-  loopsQuery: path(({ store, path, _loopsAdding }) => store.collection(`${path}/loops`).query({
-    doc: path => _loopsAdding.findBy('path', path)
-  })),
-
-  loops: models('loopsQuery.content').named('project/sprites/sprite/loop').mapping((doc, sprite) => ({ doc, sprite })),
+  async load({ type }) {
+    if(type === 'detail') {
+      await all([
+        this.frames.load({ type }),
+        this.loops.load({ type })
+      ]);
+    }
+  },
 
   //
-
-  isLoading: or('doc.isLoading', 'framesQuery.isLoading', 'loopsQuery.isLoading'),
-
-  async save() {
-    await this.doc.save({ token: true });
-  },
-
-  update(props) {
-    this.doc.data.setProperties(props);
-    this.save();
-  },
-
-  async load() {
-    await resolveObservers(this.framesQuery, this.loopsQuery);
-    await all([
-      ...this.frames.map(frame => frame.load()),
-      ...this.loops.map(loop => loop.load())
-    ]);
-  },
 
   async resize(handle, diff) {
     if(diff.x === 0 && diff.y === 0) {
       return false;
     }
 
-    let { size } = this;
+    let size = assign({}, this.size);
+    size.width += diff.x;
+    size.height += diff.y;
 
-    let target = {
-      width: size.width + diff.x,
-      height: size.height + diff.y
-    };
-
-    if(target.width < 1 || target.height < 1) {
+    if(size.width < 1 || size.height < 1) {
       return false;
     }
 
-    let { doc } = this;
+    let pixel = this.pixel;
+    let position = assign({}, this.position);
+    if(handle === 'left') {
+      position.x -= (diff.x * pixel);
+    } else if(handle === 'top') {
+      position.y -= (diff.y * pixel);
+    }
+
+    let { doc, frames } = this;
 
     await this.store.batch(batch => {
-      this.frames.forEach(frame => {
-        let doc = frame._resize(handle, target);
-        batch.save(doc);
-      });
-
-      doc.set('data.size', target)
+      frames.resize(batch, handle, size);
+      doc.set('data.size', size);
+      doc.set('data.position', position);
       batch.save(doc);
     });
 
     return true;
   },
 
-  async reindexFrames(hole) {
-    await this.store.batch(batch => {
-      let delta = 0;
-      this.frames.forEach((frame, idx) => {
-        let { doc } = frame;
-        if(idx === hole) {
-          delta = 1;
-        }
-        doc.set('data.index', idx + delta);
-        batch.save(doc);
-      });
-    });
+  //
+
+  async willDelete() {
+    await this.project.onWillDeleteSprite(this);
   },
 
-  async createFrame(opts) {
-    let { index, bytes } = assign({ index: 0 }, opts);
-    if(bytes) {
-      bytes = bytes.slice();
-    } else {
-      let { size } = this;
-      bytes = new Uint8Array(size.width * size.height);
-    }
-
-    let doc = this.doc.ref.collection('frames').doc().new({
-      index,
-      bytes
-    });
-
-    try {
-      this._framesAdding.pushObject(doc);
-      await doc.save();
-      return this.frames.findBy('doc', doc);
-    } finally {
-      this._framesAdding.removeObject(doc);
-    }
+  async moveUp() {
+    await this.sprites.moveUp(this);
   },
 
-  async duplicateFrame(frame) {
-    let { index, bytes } = frame;
-    index = index + 1;
-    // TODO: implement reindex and create in one batch
-    await this.reindexFrames(index);
-    return await this.createFrame({ index, bytes });
+  async moveDown() {
+    await this.sprites.moveDown(this);
   },
 
   //
 
-  createThumbnailBlob() {
-    let { frames } = this;
-    if(frames.length === 0) {
-      return;
-    }
-    return gif(gif => {
-      frames.map(frame => {
-        let canvas = frame.preview.opaque;
-        gif.addFrame(canvas, { delay: 200 });
-      });
-    });
+  onShortcutDigit(pixel) {
+    this.update({ pixel });
   },
 
-  async createThumbnail() {
-    let { skipCreateThumbnail, store, doc } = this;
+  onShortcutLeft() {
+    this.frames.selectPrevious();
+  },
 
-    if(skipCreateThumbnail) {
-      return;
-    }
-
-    let blob = await this.createThumbnailBlob();
-    let url = null;
-
-    if(blob) {
-      let ref = store.storage.ref(`${doc.ref.path}/thumbnail.gif`);
-      await ref.put({
-        type: 'data',
-        data: blob,
-        metadata: {
-          contentType: 'image/gif'
-        }
-      });
-
-      let { value } = await ref.url.load();
-      url = value;
-    }
-
-    doc.data.setProperties({ thumbnail: url });
-
-    await this.save();
+  onShortcutRight() {
+    this.frames.selectNext();
   },
 
   //
 
-  async createLoop() {
-    let doc = this.doc.ref.collection('loops').doc().new({
-      identifier: 'untitled',
-      frames: this.frames.map(frame => frame.id)
-    });
+  select() {
+    this.project.select(this);
+  },
 
-    try {
-      this._loopsAdding.pushObject(doc);
-      await doc.save();
-      return this.loops.findBy('doc', doc);
-    } finally {
-      this._loopsAdding.removeObject(doc);
-    }
+  edit() {
+    this.project.edit(this);
   },
 
   //
 
-  async delete() {
-    this.skipCreateThumbnail = true;
-    await this.doc.delete();
+  onResize(id, diff) {
+    this.resize(id, diff);
   },
 
   //
 
-  onFrameDeleted(frame) {
-    this.reindexFrames();
-    this.loops.forEach(loop => loop.onFrameDeleted(frame));
+  async onWillDeleteLoop() {
   },
 
-  //
+  async onDidDeleteLoop() {
+  },
 
-  toStringExtension() {
-    let { id, identifier } = this;
-    return `${id}:${identifier}`;
+  async onWillDeleteFrame(frame) {
+    await this.loops.onWillDeleteFrame(frame);
+  },
+
+  async onDidDeleteFrame(frame) {
+    await this.loops.onDidDeleteFrame(frame);
   }
 
 });

@@ -7,12 +7,12 @@
     border-bottom: 0;
   }
 
-  @mixin row() {
+  @mixin row($top: 5px) {
     border-bottom: 1px solid fade-out(#000, 0.9);
     &:last-child {
       border-bottom: 0;
     }
-    padding-top: 5px;
+    padding-top: $top;
     padding-bottom: 5px;
   }
 
@@ -42,7 +42,7 @@
   }
 
   > .header {
-    @include row();
+    @include row($top: 10px);
     @include padding();
     display: flex;
     flex-direction: row;
@@ -185,6 +185,7 @@
           }
           > .delete {
             margin-left: 5px;
+            transition: opacity 0.3s ease-in-out;
           }
         }
       }
@@ -201,6 +202,17 @@
         margin-right: 5px;
       }
       > .action {
+      }
+    }
+    &.disabled {
+      > .items {
+        > .item {
+          > .content {
+            > .delete {
+              opacity: 0.5;
+            }
+          }
+        }
       }
     }
   }

@@ -1,5 +1,6 @@
 {{#let "ui-block/sidebar/section/" as |prefix|}}
   {{yield (hash
+    disabled=disabled
     header=(component (concat prefix "header"))
     placeholder=(component (concat prefix "placeholder"))
     custom=(component (concat prefix "custom"))

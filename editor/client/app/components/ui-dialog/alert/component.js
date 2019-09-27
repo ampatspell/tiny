@@ -1,0 +1,29 @@
+import Component from '../component';
+import { next } from 'editor/utils/runloop';
+
+export default Component.extend({
+  classNameBindings: [ ':ui-dialog-alert' ],
+
+  actions: {
+    async invoke(action) {
+      let { status, fn } = action;
+      try {
+        await this.invokeFunction(fn);
+      } finally {
+        this.dialog.resolve({ status });
+      }
+    }
+  },
+
+  async invokeFunction(fn) {
+    if(!fn) {
+      return;
+    }
+
+    this.set('isBusy', true);
+
+    await next();
+    await fn();
+  }
+
+});

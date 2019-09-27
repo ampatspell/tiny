@@ -1,9 +1,0 @@
-{{#ui-block/world/inspector/selection/node/sprite/base sidebar=sidebar node=node update=update as |section|}}
-
-  {{#if frames}}
-    {{section.dropdown label="Frame" items=frames selected=selected update=(action "frame")}}
-  {{else}}
-    {{section.placeholder value="Sprite doesn't have any frames with identifier"}}
-  {{/if}}
-
-{{/ui-block/world/inspector/selection/node/sprite/base}}
