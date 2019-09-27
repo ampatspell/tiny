@@ -1,4 +1,4 @@
-import Node from '../../../../-node';
+import Node from '../../../../../-node';
 import { computed } from '@ember/object';
 
 export default Node.extend({

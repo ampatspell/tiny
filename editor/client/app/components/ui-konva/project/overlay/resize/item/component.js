@@ -1,4 +1,4 @@
-import Node from '../../../-node';
+import Node from '../../../../-node';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 

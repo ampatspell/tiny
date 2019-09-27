@@ -1,4 +1,4 @@
-import Node from '../../../-node';
+import Node from '../../../../-node';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
@@ -11,8 +11,8 @@ export default Node.extend({
 
   model: null,
 
-  offset: 1.5,
-  opacity: 0.75,
+  offset: 2,
+  opacity: 0.9,
 
   frame: readOnly('model.render.absolute'),
 
@@ -30,8 +30,8 @@ export default Node.extend({
     let { _frame, opacity } = this;
     return {
       ..._frame,
-      stroke: `rgba(96,190,253,${opacity})`,
-      strokeWidth: 1,
+      stroke: `rgba(255,102,97,${opacity})`,
+      strokeWidth: 2,
       listening: false
     };
   })
