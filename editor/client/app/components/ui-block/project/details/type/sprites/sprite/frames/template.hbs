@@ -1,0 +1,7 @@
+<div class="content">
+  <div class="frames">
+    {{#each sprite.frames.ordered as |frame|}}
+      {{ui-block/project/details/type/sprites/sprite/frames/frame frame=frame selected=(eq frame selected) pixel=pixel select=(action "select" frame)}}
+    {{/each}}
+  </div>
+</div>
