@@ -20,16 +20,32 @@
 
     {{section.input label="Identifier" value=frame.identifier update=(action "update" "identifier")}}
 
+    {{#section.actions type="grid" as |actions|}}
+      {{actions.button value="Clear" action=(action "fill" 0)}}
+      {{actions.button value="Fill" action=(action "fill" 2)}}
+      {{actions.button value="Invert" action=(action "invert")}}
+    {{/section.actions}}
+
     {{#section.actions as |actions|}}
-      {{actions.button value=(concat "Delete Frame #" frame.index) action=(action "deleteFrame")}}
+      {{actions.button value="Duplicate" action=(action "createFrame")}}
+    {{/section.actions}}
+
+  {{else}}
+
+    {{#section.actions as |actions|}}
+      {{actions.button value="Create first frame" action=(action "createFrame")}}
     {{/section.actions}}
 
   {{/if}}
 
 {{/sidebar.section}}
 
-{{#sidebar.section as |section|}}
-  {{#section.actions as |actions|}}
-    {{actions.button value="Add frame" action=(action "createFrame")}}
-  {{/section.actions}}
-{{/sidebar.section}}
+{{#if frame}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value=(concat "Delete Frame #" frame.index) action=(action "deleteFrame")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+{{/if}}

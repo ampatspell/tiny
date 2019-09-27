@@ -12,6 +12,12 @@ export default Component.extend({
     deleteFrame() {
       this.frame.delete();
     },
+    fill(value) {
+      this.frame.fill(value);
+    },
+    invert() {
+      this.frame.invert();
+    },
     update(key, value) {
       this.frame.update({ [key]: value });
     }
