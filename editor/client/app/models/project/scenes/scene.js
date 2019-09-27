@@ -10,6 +10,7 @@ export default EmberObject.extend(DocMixin, {
 
   typeGroup: 'scenes/scene',
   typeName: 'Scene',
+  baseTypeName: 'Scene',
 
   project: readOnly('scenes.project'),
 

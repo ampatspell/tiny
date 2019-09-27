@@ -11,6 +11,7 @@ export default EmberObject.extend(DocMixin, {
 
   typeGroup: 'sprites/sprite',
   typeName: 'Sprite',
+  baseTypeName: 'Sprite',
 
   project: readOnly('sprites.project'),
 

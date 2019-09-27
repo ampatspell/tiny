@@ -14,6 +14,7 @@ export default EmberObject.extend(DocMixin, {
 
   typeGroup: 'scenes/scene/layer',
   typeName: 'Layer',
+  baseTypeName: 'Layer',
 
   project: readOnly('layers.project'),
   scene: readOnly('layers.scene'),

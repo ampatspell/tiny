@@ -11,6 +11,7 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
   typeGroup: 'sprites',
   typeName: 'Sprites',
+  baseTypeName: 'Sprites',
 
   project: null,
 

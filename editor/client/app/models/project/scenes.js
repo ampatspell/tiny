@@ -11,6 +11,7 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
   typeGroup: 'scenes',
   typeName: 'Scenes',
+  baseTypeName: 'Scenes',
 
   project: null,
 
