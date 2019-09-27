@@ -10,7 +10,7 @@
 
 {{#sidebar.section as |section|}}
   {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}}
-  {{component (concat 'ui-block/project/inspector/selection/scenes/scene/layer/type/' model.type) section=section model=model}}
+  {{component (concat "ui-block/project/inspector/selection/scenes/scene/layer/type/" model.type) section=section model=model}}
 {{/sidebar.section}}
 
 {{#sidebar.section as |section|}}

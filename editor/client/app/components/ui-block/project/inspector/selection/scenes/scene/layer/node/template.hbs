@@ -8,7 +8,7 @@
   {{/section.header}}
 {{/sidebar.section}}
 
-{{component (concat 'ui-block/project/inspector/selection/scenes/scene/layer/node/type/' model.type) sidebar=sidebar model=model}}
+{{component (concat "ui-block/project/inspector/selection/scenes/scene/layer/node/type/" model.type) sidebar=sidebar model=model}}
 
 {{#sidebar.section as |section|}}
   {{section.properties label="Custom properties" value=model.properties update=(action "update" "properties")}}

@@ -19,7 +19,7 @@ export default Component.extend({
     deleteLoop() {
       this.loop.delete();
       this.tab('loops');
-    },
+    }
   }
 
 });
