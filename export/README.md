@@ -27,12 +27,12 @@ module.exports =  {
     payload: path.join(root, 'payload-cache.json'),
     readable: path.join(root, 'payload-readable.json')
   },
-  url: 'https://...your-app-id.cloudfunctions.net/export-world',
-  token: 'token for world you want to export'
+  url: 'https://...your-app-id.cloudfunctions.net/export-project',
+  token: 'token for project you want to export'
 };
 ```
 
-Create `fetch.js` which will fetch and cache locally your current world (sprites, scenes):
+Create `fetch.js` which will fetch and cache locally your current project (sprites, scenes):
 
 ``` javascript
 // fetch.js
@@ -86,10 +86,9 @@ For this example I'm generating `tiny.cpp` and `tiny.h` using `tiny.cpp.ejs` and
 <%# templates/tiny.h.ejs %>
 namespace Tiny {
   // Project: <%= title %>
-  // World: <%= world.name %>
 
   // Sprites
-<% sprites.forEach(sprite => { %>
+<% project.sprites.forEach(sprite => { %>
   // <%= sprite.index %>: <%= sprite.identifier %> <%= sprite.size.width %> <%= sprite.size.height %>
 <% }) %>
 }
@@ -112,9 +111,11 @@ let project = runtime.project();
 ```
 
 * `project.title` → `String`
+* `project.properties` → `Properties`
 * `project.sprites` → `Array<Sprite>`
-* `project.world` → `World`
+* `project.scenes` → `Array<Scene>`
 * `project.spriteByIdentifier(identifier)` → `Sprite`
+* `project.sceneByIdentifier(identifier)` → `Scene`
 
 ### Sprite
 
@@ -167,24 +168,11 @@ sprite.loops.forEach(loop => {
 * `loop.toFrameIndexes()` → `Array<Number>`
 * `loop.toFrameIndexesString()` → `String`
 
-### World
-
-``` javascript
-let project = runtime.project();
-let world = project.world;
-```
-
-* `world.name` → `String`
-* `world.scenes` → `Array<Scene>`
-* `world.sceneByIdentifier(identifier)` → `Scene`
-* `world.properties` → `Properties`
-
 ### Scene
 
 ``` javascript
 let project = runtime.project();
-let world = project.world;
-world.scenes.forEach(scene => {
+project.scenes.forEach(scene => {
   //
 });
 ```
@@ -201,8 +189,7 @@ world.scenes.forEach(scene => {
 
 ``` javascript
 let project = runtime.project();
-let world = project.world;
-let scene = world.sceneByIdentifier('01');
+let scene = project.sceneByIdentifier('01');
 scene.layers.forEach(layer => {
   //
 });
@@ -218,8 +205,7 @@ scene.layers.forEach(layer => {
 
 ``` javascript
 let project = runtime.project();
-let world = project.world;
-let scene = world.sceneByIdentifier('01');
+let scene = project.sceneByIdentifier('01');
 let layer = scene.layerByIdentifier('background');
 ```
 
@@ -238,8 +224,7 @@ let layer = scene.layerByIdentifier('background');
 
 ``` javascript
 let project = runtime.project();
-let world = project.world;
-let properties = world.properties;
+let properties = project.properties;
 ```
 
 * `properties.all` → `Object`

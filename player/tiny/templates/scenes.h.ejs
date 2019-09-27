@@ -8,7 +8,7 @@ class Scene;
 
 namespace Project {
 namespace Scenes {
-<% project.world.scenes.forEach(scene => { -%>
+<% project.scenes.forEach(scene => { -%>
 <%= include('scene.h', { project, scene }) -%>
 <% }) -%>
 
