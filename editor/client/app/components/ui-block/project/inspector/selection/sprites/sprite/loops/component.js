@@ -6,6 +6,8 @@ export default Component.extend({
     createLoop() {
       this.model.loops.create();
     },
+    select() {
+    }
   }
 
 });

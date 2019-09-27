@@ -8,6 +8,7 @@ export default Mixin.create({
   didInsertElement() {
     this._super(...arguments);
     this.__tickCancel = this.tick.register(() => this.onTick());
+    this.onTick();
   },
 
   willDestroyElement() {

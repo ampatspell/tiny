@@ -1,4 +1,4 @@
-{{#ui-block/sidebar disabled=selection.chainLocked as |sidebar|}}
+{{#ui-block/sidebar class="sidebar" disabled=selection.chainLocked as |sidebar|}}
 
   {{component (concat 'ui-block/project/inspector/selection/' inspector.component) sidebar=sidebar model=selection project=project}}
 

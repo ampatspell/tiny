@@ -7,6 +7,18 @@
   {{/section.header}}
 {{/sidebar.section}}
 
+{{#sidebar.section class="loops" as |section|}}
+  {{#if model.loops.ordered}}
+    {{#section.custom class="content"}}
+      {{#each model.loops.ordered as |loop|}}
+        {{ui-block/project/inspector/selection/sprites/sprite/loops/loop loop=loop select=(action "select" loop)}}
+      {{/each}}
+    {{/section.custom}}
+  {{else}}
+    {{section.placeholder value="No loops"}}
+  {{/if}}
+{{/sidebar.section}}
+
 {{#sidebar.section as |section|}}
   {{#section.actions as |actions|}}
     {{actions.button value="Add loop" action=(action "createLoop")}}
