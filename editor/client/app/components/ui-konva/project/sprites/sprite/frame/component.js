@@ -14,7 +14,7 @@ export default Node.extend({
 
   isEditing: readOnly('sprite.isEditing'),
   enabled: not('disabled'),
-  editable: and('isEditing', 'enabled'),
+  editable: and('isEditing', 'enabled', 'model'),
 
   pixel: readOnly('sprite.render.pixel'),
   frame: readOnly('sprite.render.frame'),
