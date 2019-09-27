@@ -68,8 +68,13 @@ export default EmberObject.extend(DocMixin, {
     await this.loops.onWillDeleteLoop(this);
   },
 
-  onFrameDeleted(frame) {
-    let id = frame.doc.id;
+  async didDelete() {
+    await this._super(...arguments);
+    await this.loops.onDidDeleteLoop(this);
+  },
+
+  async onWillDeleteFrame(frame) {
+    let { id } = frame;
     let frames = A(this._frames);
 
     if(frames.indexOf(id) === -1) {
@@ -78,6 +83,9 @@ export default EmberObject.extend(DocMixin, {
 
     frames = frames.filter(item => item !== id);
     this.update({ frames });
+  },
+
+  async onDidDeleteFrame() {
   }
 
 });

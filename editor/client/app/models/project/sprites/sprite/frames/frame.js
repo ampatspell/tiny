@@ -170,9 +170,14 @@ export default EmberObject.extend(DocMixin, {
     return doc;
   },
 
+  willDelete() {
+    this._super(...arguments);
+    this.frames.onWillDeleteFrame(this);
+  },
+
   didDelete() {
     this._super(...arguments);
-    this.frames.onFrameDeleted(this);
+    this.frames.onDidDeleteFrame(this);
   },
 
 });

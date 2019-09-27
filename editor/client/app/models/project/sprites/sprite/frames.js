@@ -66,7 +66,9 @@ export default EmberObject.extend({
     });
 
     await doc.save();
-    return this.models.findBy('id', doc.id);
+    let model = this.models.findBy('id', doc.id);
+    this.select(model);
+    return model;
   },
 
   resize(batch, handle, target) {
@@ -112,12 +114,19 @@ export default EmberObject.extend({
 
   //
 
-  async onFrameDeleted(frame) {
+  async onWillDeleteFrame(frame) {
     if(this.selected === frame) {
       this.selectPrevious();
+      if(frame === frame) {
+        this.select(null);
+      }
     }
+    await this.sprite.onWillDeleteFrame(frame);
+  },
+
+  async onDidDeleteFrame() {
     await this.reindex();
-    await this.sprite.onFrameDeleted(frame);
-  }
+    await this.sprite.onDidDeleteFrame(frame);
+  },
 
 });

@@ -23,16 +23,16 @@ export default Mixin.create(ScheduleSaveMixin, {
     this.scheduleSave();
   },
 
-  willDelete() {
+  async willDelete() {
   },
 
-  didDelete() {
+  async didDelete() {
   },
 
   async delete() {
     this.cancelScheduledSave();
     this.isDeleted = true;
-    this.willDelete();
+    await this.willDelete();
     await this.doc.delete();
     await this.didDelete();
   }

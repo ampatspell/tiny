@@ -134,8 +134,18 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  async onFrameDeleted(frame) {
-    await this.loops.onFrameDeleted(frame);
+  async onWillDeleteLoop() {
+  },
+
+  async onDidDeleteLoop() {
+  },
+
+  async onWillDeleteFrame(frame) {
+    await this.loops.onWillDeleteFrame(frame);
+  },
+
+  async onDidDeleteFrame(frame) {
+    await this.loops.onDidDeleteFrame(frame);
   }
 
 });

@@ -8,10 +8,10 @@ export default Component.extend({
 
   actions: {
     addFrame() {
-      this.model.addFrame(this.frame);
+      this.loop.addFrame(this.frame);
     },
     removeFrame(idx) {
-      this.model.removeFrameAtIndex(idx);
+      this.loop.removeFrameAtIndex(idx);
     },
     update(key, value) {
       this.loop.update({ [key]: value });

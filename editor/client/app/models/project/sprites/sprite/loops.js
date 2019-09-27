@@ -53,14 +53,23 @@ export default EmberObject.extend({
 
   //
 
-  onWillDeleteLoop(loop) {
+  async onWillDeleteLoop(loop) {
     if(this.selected === loop) {
       this.select(null);
     }
+    await this.sprite.onWillDeleteLoop(loop);
   },
 
-  async onFrameDeleted(frame) {
-    await all(this.ordered.map(loop => loop.onFrameDeleted(frame)));
+  async onDidDeleteLoop(loop) {
+    await this.sprite.onDidDeleteLoop(loop);
+  },
+
+  async onWillDeleteFrame(frame) {
+    await all(this.ordered.map(loop => loop.onWillDeleteFrame(frame)));
+  },
+
+  async onDidDeleteFrame(frame) {
+    await all(this.ordered.map(loop => loop.onDidDeleteFrame(frame)));
   }
 
 });
