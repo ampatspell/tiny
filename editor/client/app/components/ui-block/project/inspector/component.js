@@ -1,12 +1,38 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
+
+const mapping = {
+  'sprites/sprite': [
+    { id: 'frames', label: 'Frames', component: 'sprites/sprite/frames' },
+    { id: 'loops',  label: 'Loops',  component: 'sprites/sprite/loops' }
+  ]
+};
 
 export default Component.extend({
   classNameBindings: [ ':ui-block-project-inspector' ],
 
-  tab: 'selection',
+  tab: computed('inspectors', {
+    get() {
+      let value = this._tab;
+      if(!value || !this.inspectors.findBy('id', value)) {
+        value = 'selection';
+        this._tab = value;
+      }
+      return value;
+    },
+    set(key, value) {
+      this._tab = value;
+      return value;
+    }
+  }),
 
   selection: or('project.selection', 'project'),
+
+  inspectors: computed('selection.typeGroup', function() {
+    let { selection: { typeGroup } } = this;
+    return mapping[typeGroup] || [];
+  }).readOnly(),
 
   actions: {
     tab(tab) {
