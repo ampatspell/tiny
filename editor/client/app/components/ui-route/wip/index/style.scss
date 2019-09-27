@@ -1,2 +1,22 @@
 .ui-route-wip-index {
+  margin: 10px;
+  > .content {
+    display: flex;
+    flex-direction: row;
+    > .rows {
+      margin-right: 10px;
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+      background: fade-out(#000, 0.97);
+      border: 1px solid fade-out(#000, 0.9);
+      > .row {
+        border-bottom: 1px solid fade-out(#000, 0.9);
+        padding: 5px 0;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
 }

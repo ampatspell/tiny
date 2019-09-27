@@ -14,9 +14,7 @@
 
   {{#if frame}}
 
-    {{#section.padded class="preview"}}
-      {{ui-block/sprites/sprite/frame/preview frame=frame pixel=2}}
-    {{/section.padded}}
+    {{ui-block/sprites/preview/frame model=frame pixel=2 class="preview padded"}}
 
     {{section.input label="Identifier" value=frame.identifier update=(action "update" "identifier")}}
 

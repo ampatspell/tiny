@@ -27,6 +27,14 @@ export default EmberObject.extend({
     return this.models.sortBy('index');
   }).readOnly(),
 
+  _framesPreviewRendered: computed('ordered.@each._previewRendered', function() {
+    let { ordered } = this;
+    if(!ordered) {
+      return;
+    }
+    return ordered.map(frame => frame && frame._previewRendered);
+  }).readOnly(),
+
   selected: selectedWithDefault('ordered.firstObject'),
   previous: delta('ordered', 'selected', -1),
   next:     delta('ordered', 'selected', +1),

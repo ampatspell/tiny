@@ -1,3 +1,41 @@
-<div>{{weirdo}}</div>
-<div>{{bubbleIn}}</div>
-<div>{{buildingZero}}</div>
+<div class="content">
+  {{#let 2 as |pixel|}}
+    <div class="rows">
+      <div class="row">
+        {{ui-block/sprites/preview/sprite pixel=pixel model=weirdo}}
+      </div>
+      <div class="row">
+        {{ui-block/sprites/preview/loop pixel=pixel model=bubbleIn}}
+      </div>
+      <div class="row">
+        {{ui-block/sprites/preview/frame pixel=pixel model=buildingZero}}
+      </div>
+    </div>
+  {{/let}}
+  {{#let 4 as |pixel|}}
+    <div class="rows">
+      <div class="row">
+        {{ui-block/sprites/preview/sprite pixel=pixel model=weirdo}}
+      </div>
+      <div class="row">
+        {{ui-block/sprites/preview/loop pixel=pixel model=bubbleIn}}
+      </div>
+      <div class="row">
+        {{ui-block/sprites/preview/frame pixel=pixel model=buildingZero}}
+      </div>
+    </div>
+  {{/let}}
+  {{#let 16 as |pixel|}}
+    <div class="rows">
+      <div class="row">
+        {{ui-block/sprites/preview/sprite pixel=pixel model=weirdo}}
+      </div>
+      <div class="row">
+        {{ui-block/sprites/preview/loop pixel=pixel model=bubbleIn}}
+      </div>
+      <div class="row">
+        {{ui-block/sprites/preview/frame pixel=pixel model=buildingZero}}
+      </div>
+    </div>
+  {{/let}}
+</div>

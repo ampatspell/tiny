@@ -2,10 +2,6 @@
   &.loop {
     > .sidebar {
       > .content {
-        > .preview {
-          background-color: fade-out(#000, 0.95);
-          padding: 10px;
-        }
         > .frames {
           > .frame {
             display: flex;

@@ -1,15 +1,12 @@
-{{#sidebar.section as |section|}}
+{{#sidebar.section class="content" as |section|}}
   {{#section.header as |header|}}
     {{#header.content as |content|}}
       {{content.type value=model.typeName}}
       {{content.identifier value=model.identifier}}
     {{/header.content}}
   {{/section.header}}
-{{/sidebar.section}}
-
-{{#sidebar.section class="loops" as |section|}}
   {{#if model.loops.ordered}}
-    {{#section.custom class="content"}}
+    {{#section.custom class="loops"}}
       {{#each model.loops.ordered as |loop|}}
         {{ui-block/project/inspector/selection/sprites/sprite/tab/loops/loop loop=loop select=(action "select" loop)}}
       {{/each}}
@@ -21,6 +18,6 @@
 
 {{#sidebar.section as |section|}}
   {{#section.actions as |actions|}}
-    {{actions.button value="Add loop" action=(action "createLoop")}}
+    {{actions.button value="Add new loop" action=(action "createLoop")}}
   {{/section.actions}}
 {{/sidebar.section}}

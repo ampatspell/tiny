@@ -14,6 +14,7 @@ export default EmberObject.extend(DocMixin, {
   loops: null,
   project: readOnly('loops.project'),
   sprite: readOnly('loops.sprite'),
+  size: readOnly('sprite.size'),
 
   identifier: data('identifier'),
   _frames: data('frames'),

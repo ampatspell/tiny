@@ -1,0 +1,13 @@
+.ui-block-sprites-preview {
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: fade-out(#000, 0.95);
+  &.padded {
+    padding: 5px 0;
+  }
+  > .canvas {
+    image-rendering: pixelated;
+  }
+}
