@@ -34,10 +34,15 @@ export default Mixin.create({
   isSpacePressed: false,
   isAltPressed: false,
 
+  shouldHandleEvent() {
+    let el = document.activeElement;
+    return el.tagName.toLowerCase() !== 'input';
+  },
+
   onWindowKeyDown(e) {
     let { code, key } = e;
 
-    if(this.isBodyActive()) {
+    if(this.shouldHandleEvent()) {
 
       if(code === 'Space') {
         this.setProperties({ isSpacePressed: true });
@@ -50,14 +55,10 @@ export default Mixin.create({
     }
   },
 
-  isBodyActive() {
-    return document.activeElement === document.body;
-  },
-
   onWindowKeyUp(e) {
     let { code, key } = e;
 
-    if(code.startsWith('Digit') && this.isBodyActive()) {
+    if(code.startsWith('Digit') && this.shouldHandleEvent()) {
       let value = parseInt(key);
       this._invokeShortcut('onDigit', value);
     }
@@ -70,7 +71,7 @@ export default Mixin.create({
       this.setProperties({ isAltPressed: false });
     }
 
-    if(this.isBodyActive()) {
+    if(this.shouldHandleEvent()) {
       if(key === 'ArrowRight') {
         this._invokeShortcut('onRight');
       } else if(key === 'ArrowLeft') {

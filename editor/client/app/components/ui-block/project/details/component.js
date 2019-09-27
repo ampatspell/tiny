@@ -10,13 +10,14 @@ export default Component.extend({
   classNameBindings: [ ':ui-block-project-details', 'hidden:hidden' ],
 
   selection: readOnly('project.selection'),
+  details: readOnly('selection.render.details'),
 
-  hidden: computed('selection.typeGroup', function() {
-    let { selection } = this;
-    if(!selection) {
+  hidden: computed('details.typeGroup', function() {
+    let { details } = this;
+    if(!details) {
       return true;
     }
-    if(!types.includes(selection.typeGroup)) {
+    if(!types.includes(details.typeGroup)) {
       return true;
     }
     return false;

@@ -22,7 +22,7 @@ export default Component.extend({
     })).compact();
   }).readOnly(),
 
-  frame: computed('frames.@each.identifier', 'model.spriteFrame', function() {
+  frame: computed('frames.@each.identifier', 'model.spriteFrame.identifier', function() {
     let { model: { spriteFrame } } = this;
     if(!spriteFrame) {
       return;

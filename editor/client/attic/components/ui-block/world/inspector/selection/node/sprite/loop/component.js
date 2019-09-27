@@ -18,7 +18,7 @@ export default Component.extend({
     })
   }).readOnly(),
 
-  selected: computed('node.selected', function() {
+  selected: computed('node.selected.identifier', 'loops.@each.identifier', function() {
     let { node: { selected } } = this;
     if(!selected) {
       return;

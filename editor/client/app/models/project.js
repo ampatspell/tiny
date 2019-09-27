@@ -92,14 +92,18 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     }
   },
 
+  _selectionRenderDetails() {
+    return this.get('selection.render.details') || this.get('selection');
+  },
+
   onShortcutLeft() {
-    let { selection } = this;
-    selection && selection.onShortcutLeft && selection.onShortcutLeft();
+    let model = this._selectionRenderDetails();
+    model && model.onShortcutLeft && model.onShortcutLeft();
   },
 
   onShortcutRight() {
-    let { selection } = this;
-    selection && selection.onShortcutRight && selection.onShortcutRight();
+    let model = this._selectionRenderDetails();
+    model && model.onShortcutRight && model.onShortcutRight();
   }
 
 });

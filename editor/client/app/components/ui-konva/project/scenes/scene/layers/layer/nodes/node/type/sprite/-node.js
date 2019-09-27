@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { drawImageFlipped } from 'editor/utils/canvas';
 
-const observe = [ 'frame', 'sceneFunc', 'hitFunc' ];
+const observe = [ 'rendered', 'frame', 'sceneFunc', 'hitFunc' ];
 
 export default Node.extend({
 

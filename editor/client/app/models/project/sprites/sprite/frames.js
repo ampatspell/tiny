@@ -51,6 +51,7 @@ export default EmberObject.extend({
   },
 
   async create(opts) {
+    // TODO: frame index
     let { index, bytes } = assign({ index: 0 }, opts);
 
     if(bytes) {

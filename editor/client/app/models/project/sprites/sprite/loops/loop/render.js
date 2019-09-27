@@ -10,6 +10,8 @@ export default EmberObject.extend({
   selection: computed('sprite', function() {
     let { sprite } = this;
     return [ sprite ];
-  }).readOnly()
+  }).readOnly(),
+
+  details: readOnly('sprite')
 
 });

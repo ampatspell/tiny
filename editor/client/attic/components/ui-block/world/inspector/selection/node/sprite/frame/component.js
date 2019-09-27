@@ -22,7 +22,7 @@ export default Component.extend({
     })).compact();
   }).readOnly(),
 
-  selected: computed('node.selected', function() {
+  selected: computed('node.selected.identifier', 'node.frames.@each.identifier', function() {
     let { node: { selected } } = this;
     if(!selected) {
       return;

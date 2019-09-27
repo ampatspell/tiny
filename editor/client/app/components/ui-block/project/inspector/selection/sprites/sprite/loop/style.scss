@@ -1,0 +1,29 @@
+.ui-block-project-inspector-selection {
+  &.sprites-sprite-loop {
+    > .sidebar {
+      > .content {
+        > .preview {
+          background-color: fade-out(#000, 0.95);
+          padding: 10px;
+        }
+        > .frames {
+          > .frame {
+            display: flex;
+            flex-direction: row;
+            padding: 5px 10px;
+            border-bottom: 1px solid fade-out(#000, 0.9);
+            &:last-child {
+              border-bottom: none;
+            }
+            > .index {
+              flex: 1;
+            }
+            > .actions {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ export default Component.extend({
     })
   }).readOnly(),
 
-  loop: computed('loops.@each.identifier', 'model.spriteLoop', function() {
+  loop: computed('loops.@each.identifier', 'model.spriteLoop.identifier', function() {
     let { model: { spriteLoop } } = this;
     if(!spriteLoop) {
       return;
