@@ -3,7 +3,9 @@ import { computed } from '@ember/object';
 
 const fills = [
   { value: 'black', label: 'Black' },
-  { value: 'white', label: 'White' }
+  { value: 'white', label: 'White' },
+  { value: 'green', label: 'Green' },
+  { value: 'red',   label: 'Red' }
 ];
 
 const fill = () => computed(`fills.@each.value`, 'model.color', function() {
