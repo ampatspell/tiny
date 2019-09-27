@@ -94,7 +94,9 @@ export default EmberObject.extend({
     let { index, bytes } = frame;
     index = index + 1;
     await this.reindex(index);
-    return await this.create({ index, bytes });
+    let model = await this.create({ index, bytes });
+    this.select(model);
+    return model;
   },
 
   async createOrDuplicate(frame) {
