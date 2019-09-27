@@ -132,4 +132,10 @@ export default EmberObject.extend(DocMixin, {
     this.resize(id, diff);
   },
 
+  //
+
+  async onFrameDeleted(frame) {
+    await this.loops.onFrameDeleted(frame);
+  }
+
 });

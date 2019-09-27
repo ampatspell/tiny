@@ -40,4 +40,10 @@ export default EmberObject.extend({
     return this.models.findBy('id', doc.id);
   },
 
+  //
+
+  async onFrameDeleted(frame) {
+    await all(this.ordered.map(loop => loop.onFrameDeleted(frame)));
+  }
+
 });

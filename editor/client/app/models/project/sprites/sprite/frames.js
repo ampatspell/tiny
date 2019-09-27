@@ -51,7 +51,6 @@ export default EmberObject.extend({
   },
 
   async create(opts) {
-    // TODO: frame index
     let { index, bytes } = assign({ index: 0 }, opts);
 
     if(bytes) {
@@ -107,12 +106,16 @@ export default EmberObject.extend({
 
   async createOrDuplicateSelected() {
     return await this.createOrDuplicate(this.selected);
-  }
+  },
 
-  // TODO: frame delete
-  // onFrameDeleted(frame) {
-  //   this.reindexFrames();
-  //   this.loops.forEach(loop => loop.onFrameDeleted(frame));
-  // },
+  //
+
+  async onFrameDeleted(frame) {
+    if(this.selected === frame) {
+      this.selectPrevious();
+    }
+    await this.reindex();
+    await this.sprite.onFrameDeleted(frame);
+  }
 
 });

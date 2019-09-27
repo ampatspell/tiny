@@ -61,17 +61,18 @@ export default EmberObject.extend(DocMixin, {
     this._withFrames(frames => frames.removeAt(idx));
   },
 
-  // TODO: on frame deleted
-  // onFrameDeleted(frame) {
-  //   let { id } = frame;
+  //
 
-  //   let frames = A(this._frames);
-  //   if(frames.indexOf(id) === -1) {
-  //     return;
-  //   }
+  onFrameDeleted(frame) {
+    let id = frame.doc.id;
+    let frames = A(this._frames);
 
-  //   frames = frames.filter(item => item !== id);
-  //   this.update({ frames });
-  // },
+    if(frames.indexOf(id) === -1) {
+      return;
+    }
+
+    frames = frames.filter(item => item !== id);
+    this.update({ frames });
+  }
 
 });
