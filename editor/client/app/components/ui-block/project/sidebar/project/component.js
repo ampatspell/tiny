@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import randomString from 'ember-cli-zuglet/util/random-string';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-project-inspector-project' ],
+  classNameBindings: [ ':ui-block-project-sidebar-project' ],
 
   actions: {
     generateToken() {
