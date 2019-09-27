@@ -23,6 +23,17 @@ export default EmberObject.extend({
     return this.models.sortBy('identifier');
   }).readOnly(),
 
+  //
+
+  selected:  null,
+
+  select(selected) {
+    selected = selected || null;
+    this.setProperties({ selected });
+  },
+
+  //
+
   async load({ type }) {
     await resolveObservers(this.query);
     await all(this.models.map(model => model.load({ type })));
@@ -41,6 +52,12 @@ export default EmberObject.extend({
   },
 
   //
+
+  onWillDeleteLoop(loop) {
+    if(this.selected === loop) {
+      this.select(null);
+    }
+  },
 
   async onFrameDeleted(frame) {
     await all(this.ordered.map(loop => loop.onFrameDeleted(frame)));

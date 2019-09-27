@@ -63,6 +63,11 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
+  async willDelete() {
+    await this._super(...arguments);
+    await this.loops.onWillDeleteLoop(this);
+  },
+
   onFrameDeleted(frame) {
     let id = frame.doc.id;
     let frames = A(this._frames);

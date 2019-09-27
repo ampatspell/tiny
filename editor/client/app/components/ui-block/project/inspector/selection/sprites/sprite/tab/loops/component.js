@@ -7,7 +7,8 @@ export default Component.extend({
       this.model.loops.create();
     },
     select(loop) {
-      this.project.select(loop);
+      this.model.loops.select(loop);
+      this.tab('loop');
     }
   }
 
