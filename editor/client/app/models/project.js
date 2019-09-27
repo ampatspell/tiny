@@ -31,6 +31,18 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   //
 
+  async load({ type }) {
+    if(type === 'detail') {
+      setGlobal({ project: this });
+      await all([
+        this.sprites.load({ type }),
+        this.scenes.load({ type })
+      ]);
+    }
+  },
+
+  //
+
   selection: null,
   editing: null,
 
@@ -71,14 +83,22 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     }
   },
 
-  async load({ type }) {
-    if(type === 'detail') {
-      setGlobal({ project: this });
-      await all([
-        this.sprites.load({ type }),
-        this.scenes.load({ type })
-      ]);
+  onShortcutEscape() {
+    if(this.editing) {
+      this.edit();
+    } else {
+      this.deselect();
     }
+  },
+
+  onShortcutLeft() {
+    let { selection } = this;
+    selection && selection.onShortcutLeft && selection.onShortcutLeft();
+  },
+
+  onShortcutRight() {
+    let { selection } = this;
+    selection && selection.onShortcutRight && selection.onShortcutRight();
   }
 
 });

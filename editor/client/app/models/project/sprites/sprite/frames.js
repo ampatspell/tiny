@@ -3,7 +3,7 @@ import { readOnly } from '@ember/object/computed';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { assign } from '@ember/polyfills';
-import { selectedWithDefault } from 'editor/utils/computed';
+import { delta, selectedWithDefault } from 'editor/utils/computed';
 
 export default EmberObject.extend({
 
@@ -27,10 +27,22 @@ export default EmberObject.extend({
   }).readOnly(),
 
   selected: selectedWithDefault('ordered.firstObject'),
+  previous: delta('ordered', 'selected', -1),
+  next:     delta('ordered', 'selected', +1),
 
   select(selected) {
     selected = selected || null;
     this.setProperties({ selected });
+  },
+
+  selectPrevious() {
+    let model = this.previous;
+    model && this.select(model);
+  },
+
+  selectNext() {
+    let model = this.next;
+    model && this.select(model);
   },
 
   async load({ type }) {

@@ -4,6 +4,9 @@ import { A } from '@ember/array';
 import { notBlank as _notBlank } from './string';
 import { assign } from '@ember/polyfills';
 
+export const doc = key => readOnly(`doc.${key}`);
+export const data = key => doc(`data.${key}`);
+
 export const notBlank = key => computed(key, function() {
   let value = this.get(key);
   return _notBlank(value);
@@ -31,41 +34,24 @@ export const className = opts => {
   }).readOnly();
 }
 
-// export const delta = (arrayKey, currentKey, value) => computed(`${arrayKey}.[]`, currentKey, function() {
-//   let array = this[arrayKey];
-//   let current = this[currentKey];
-//   let index = array.indexOf(current) + value;
-//   if(index < 0 || index > array.length - 1) {
-//     return;
-//   }
-//   return array.objectAt(index);
-// }).readOnly();
-
-// export const current = (arrayKey, defaultIndex=0) => {
-//   let getIndexKey = key => `_${key}_index`
-//   return computed(`${arrayKey}.[]`, {
-//     get(key) {
-//       let array = this[arrayKey];
-//       let indexKey = getIndexKey(key);
-//       let index = this[indexKey];
-//       let value = array.objectAt(index);
-//       return value || array.objectAt(defaultIndex);
-//     },
-//     set(key, value) {
-//       let array = this[arrayKey];
-//       let index = array.indexOf(value);
-//       if(index == -1) {
-//         index = defaultIndex;
-//         value = array.objectAt(defaultIndex);
-//       }
-//       this[getIndexKey(key)] = index;
-//       return value;
-//     }
-//   });
-// }
-
-export const doc = key => readOnly(`doc.${key}`);
-export const data = key => doc(`data.${key}`);
+export const delta = (arrayKey, currentKey, value, ring=true) => computed(`${arrayKey}.[]`, currentKey, function() {
+  let array = this[arrayKey];
+  let current = this[currentKey];
+  let index = array.indexOf(current) + value;
+  if(index < 0) {
+    if(ring) {
+      return array.lastObject;
+    }
+    return;
+  }
+  if(index > array.length - 1) {
+    if(ring) {
+      return array.firstObject;
+    }
+    return;
+  }
+  return array.objectAt(index);
+}).readOnly();
 
 export const selectedWithDefault = defaultKey => {
   let cacheKeyForKey = key => `_selectedWithDefault_${key}`;

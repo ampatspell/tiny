@@ -42,6 +42,20 @@ export default Component.extend(KeyboardMixin, {
     this.project.onShortcutDigit(value);
   },
 
+  onLeft() {
+    this.project.onShortcutLeft();
+  },
+
+  onRight() {
+    this.project.onShortcutRight();
+  },
+
+  onEscape() {
+    this.project.onShortcutEscape();
+  },
+
+  //
+
   center: stage(function(stage) {
     stage.center();
   }),

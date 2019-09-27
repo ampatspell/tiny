@@ -107,6 +107,16 @@ export default EmberObject.extend(DocMixin, {
     this.update({ pixel });
   },
 
+  onShortcutLeft() {
+    this.frames.selectPrevious();
+  },
+
+  onShortcutRight() {
+    this.frames.selectNext();
+  },
+
+  //
+
   select() {
     this.project.select(this);
   },
