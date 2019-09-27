@@ -4,6 +4,7 @@ import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { assign } from '@ember/polyfills';
 import { delta, selectedWithDefault } from 'editor/utils/computed';
+import { heart } from 'editor/utils/frame';
 
 export default EmberObject.extend({
 
@@ -63,7 +64,7 @@ export default EmberObject.extend({
   },
 
   async create(opts) {
-    let { index, bytes } = assign({ index: 0 }, opts);
+    let { index, bytes, identifier } = assign({ index: 0, identifier: null }, opts);
 
     if(bytes) {
       bytes = bytes.slice();
@@ -74,7 +75,8 @@ export default EmberObject.extend({
 
     let doc = this.ref.doc().new({
       index,
-      bytes
+      bytes,
+      identifier
     });
 
     await doc.save();
@@ -120,6 +122,12 @@ export default EmberObject.extend({
 
   async createOrDuplicateSelected() {
     return await this.createOrDuplicate(this.selected);
+  },
+
+  async createFromTemplate() {
+    let bytes = new Uint8Array(heart);
+    let frame = await this.create({ bytes, identifier: 'heart' });
+    return frame;
   },
 
   //

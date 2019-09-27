@@ -74,6 +74,12 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     await doc.save();
     let model = this.models.findBy('id', doc.id);
     return this.project.select(model);
-  }
+  },
+
+  async createFromTemplate() {
+    let sprite = await this.create();
+    await sprite.frames.createFromTemplate();
+    return sprite;
+  },
 
 });

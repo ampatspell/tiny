@@ -7,7 +7,7 @@ export default Component.extend({
       this.model.scenes.create();
     },
     createSprite() {
-      this.model.sprites.create();
+      this.model.sprites.createFromTemplate();
     }
   }
 
