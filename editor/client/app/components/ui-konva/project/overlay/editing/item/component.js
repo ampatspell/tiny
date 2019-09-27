@@ -11,8 +11,8 @@ export default Node.extend({
 
   model: null,
 
-  offset: 2,
-  opacity: 0.9,
+  offset: 1.5,
+  opacity: 0.8,
 
   frame: readOnly('model.render.absolute'),
 
@@ -31,7 +31,7 @@ export default Node.extend({
     return {
       ..._frame,
       stroke: `rgba(255,102,97,${opacity})`,
-      strokeWidth: 2,
+      strokeWidth: 1,
       listening: false
     };
   })

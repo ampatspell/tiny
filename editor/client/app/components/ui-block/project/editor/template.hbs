@@ -20,7 +20,7 @@
 
       {{#ui-konva/layer zIndex=2}}
         {{ui-konva/project/overlay/selection project=project}}
-        {{ui-konva/project/overlay/editing project=project}}
+        {{ui-konva/project/overlay/editing project=project disabled=isSpacePressed}}
         {{ui-konva/project/overlay/resize project=project disabled=(not isSpacePressed)}}
       {{/ui-konva/layer}}
 
