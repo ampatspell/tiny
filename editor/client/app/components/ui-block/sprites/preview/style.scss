@@ -9,5 +9,8 @@
   }
   > .canvas {
     image-rendering: pixelated;
+    &.hidden {
+      display: none;
+    }
   }
 }

@@ -8,6 +8,10 @@ export default Component.extend({
 
   actions: {
     update(pixel) {
+      pixel = parseInt(pixel);
+      if(isNaN(pixel)) {
+        return;
+      }
       this.project.update({ pixel });
     },
     center() {

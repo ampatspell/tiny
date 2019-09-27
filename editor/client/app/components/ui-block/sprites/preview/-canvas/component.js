@@ -5,7 +5,7 @@ import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
   tagName: 'canvas',
-  classNameBindings: [ ':canvas' ],
+  classNameBindings: [ ':canvas', 'size::hidden' ],
   attributeBindings: [ 'style', 'width', 'height' ],
 
   width: readOnly('size.width'),
@@ -13,6 +13,9 @@ export default Component.extend({
 
   style: computed('width', 'height', function() {
     let { width, height } = this;
+    if(!width || !height) {
+      return;
+    }
     return htmlSafe(`width: ${width}px; height: ${height}px`);
   }).readOnly(),
 

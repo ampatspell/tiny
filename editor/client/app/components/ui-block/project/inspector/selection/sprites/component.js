@@ -4,7 +4,7 @@ export default Component.extend({
 
   actions: {
     createSprite() {
-      this.model.create();
+      this.model.createFromTemplate();
     }
   }
 
