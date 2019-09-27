@@ -1,4 +1,4 @@
-import EmberObject, { computed } from '@ember/object';
+import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';

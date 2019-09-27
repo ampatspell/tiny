@@ -124,7 +124,7 @@ export default EmberObject.extend({
     await this.sprite.onWillDeleteFrame(frame);
   },
 
-  async onDidDeleteFrame() {
+  async onDidDeleteFrame(frame) {
     await this.reindex();
     await this.sprite.onDidDeleteFrame(frame);
   },

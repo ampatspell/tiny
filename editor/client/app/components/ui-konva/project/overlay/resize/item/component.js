@@ -6,13 +6,11 @@ const observe = [ 'frame' ];
 
 export default Node.extend({
 
-  nodeClassName: 'rect',
+  nodeClassName: 'group',
   observe,
 
   frame: readOnly('model.render.absolute'),
   pixel: readOnly('model.render.pixel'),
-
-  nodeClassName: 'group',
 
   disabled: false,
 
