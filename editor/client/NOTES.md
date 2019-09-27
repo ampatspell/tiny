@@ -1,5 +1,7 @@
 # Notes
 
+* collapse custom properties (if empty) and unnecessary position editors
+* remove gif.js
 * save selected sprite frame
 * sprite node: sprite preview when loop/frame is not selected
 * sprite node: sprite frame preview
