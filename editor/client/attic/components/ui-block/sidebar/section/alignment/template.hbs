@@ -1,7 +1,0 @@
-<div class="label">{{label}}</div>
-{{#ui-block/segments class="segments" disabled=disabled items=choices.vertical selected=vertical select=(action "select" "vertical") as |hash|}}
-  {{hash.component value=hash.item.label}}
-{{/ui-block/segments}}
-{{#ui-block/segments class="segments" disabled=disabled items=choices.horizontal selected=horizontal select=(action "select" "horizontal") as |hash|}}
-  {{hash.component value=hash.item.label}}
-{{/ui-block/segments}}

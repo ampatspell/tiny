@@ -1,4 +1,0 @@
-{{#ui-block/tabs class="tabs" selected=tab select=(action "tab") as |tabs|}}
-  {{tabs.tab label="Loops"    id="list"     component=(component "ui-block/sprite/loops/list"     state=state didSelect=(action "tab" "selected"))}}
-  {{tabs.tab label="Selected" id="selected" component=(component "ui-block/sprite/loops/selected" state=state didDelete=(action "tab" "list"))}}
-{{/ui-block/tabs}}

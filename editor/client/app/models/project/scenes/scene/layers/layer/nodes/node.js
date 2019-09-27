@@ -74,6 +74,17 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
+  // TODO: node clamp to scene
+  // clampPosition(position) {
+  //   let { size, scene: { size: scene } } = this;
+
+  //   let clamp = (p, s) => Math.max(0, Math.min(position[p], scene[s] - size[s]));
+  //   let x = clamp('x', 'width');
+  //   let y = clamp('y', 'height');
+
+  //   return this.layer.clampNodePosition(this, { x, y });
+  // },
+
   onParentResized(id, diff) {
     if(id === 'left' || id === 'top') {
       let position = assign({}, this.position);

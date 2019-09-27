@@ -1,8 +1,0 @@
-{{#ui-block/tabs class="tabs" selected=selected select=(action "select") as |tabs|}}
-  {{tabs.tab label="Selection" id="selection" component=(component "ui-block/world/inspector/selection"  state=state)}}
-  {{tabs.tab label="World"     id="world"     component=(component "ui-block/world/inspector/world" state=state)}}
-{{/ui-block/tabs}}
-
-<div class="footer">
-  {{ui-block/scene/pixel pixel=state.pixel update=(action "pixel") center=(action "center")}}
-</div>
