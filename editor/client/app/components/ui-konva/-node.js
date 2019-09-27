@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
 import { assert } from '@ember/debug';
 import { A } from '@ember/array';
+import { assign } from '@ember/polyfills';
 import Konva from 'konva';
 
 export default Component.extend(Parent, Events, {
@@ -44,15 +45,30 @@ export default Component.extend(Parent, Events, {
     return !!Object.keys(props).find(key => current[key] !== props[key]);
   },
 
+  resolveZIndex() {
+    let { zIndex } = this;
+    if(zIndex !== undefined) {
+      let { node } = this;
+      if(!node.parent) {
+        return;
+      }
+      if(zIndex >= node.parent.children.length) {
+        return;
+      }
+      return zIndex;
+    }
+  },
+
   updateNodeAttributes() {
     let { node, props } = this;
 
-    if(!props) {
-      return false;
+    let zIndex = this.resolveZIndex();
+    if(zIndex !== undefined && node.parent) {
+      props = assign({}, props, { zIndex });
     }
 
-    if(!node.parent) {
-      delete props.zIndex;
+    if(!props) {
+      return false;
     }
 
     let current = node.getAttrs();
@@ -90,9 +106,17 @@ export default Component.extend(Parent, Events, {
     this.updateNodeAttributesAndDraw();
   },
 
+  updateZIndex() {
+    let zIndex = this.resolveZIndex();
+    if(zIndex !== undefined) {
+      this.node.zIndex(zIndex);
+    }
+  },
+
   didInsertElement() {
     this._super(...arguments);
     this.parentView.registerChildComponent(this);
+    this.updateZIndex();
     this.updateNodeAttributesAndDraw(true);
     this.startObservingProperties();
   },

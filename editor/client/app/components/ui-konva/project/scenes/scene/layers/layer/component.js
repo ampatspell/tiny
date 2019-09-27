@@ -11,10 +11,9 @@ export default Node.extend({
 
   listening: not('model.chainLocked'),
 
-  props: computed('index', 'listening', function() {
-    let { index, listening } = this;
+  props: computed('listening', function() {
+    let { listening } = this;
     return {
-      zIndex: index,
       listening
     };
   }).readOnly()

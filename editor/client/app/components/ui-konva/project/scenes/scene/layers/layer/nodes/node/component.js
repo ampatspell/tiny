@@ -17,10 +17,9 @@ export default Node.extend({
 
   listening: not('model.chainLocked'),
 
-  props: computed('index', 'frame', 'listening', 'editable', function() {
-    let { index, frame: { x, y }, listening, editable: draggable } = this;
+  props: computed('frame', 'listening', 'editable', function() {
+    let { frame: { x, y }, listening, editable: draggable } = this;
     return {
-      zIndex: index,
       x,
       y,
       listening,
