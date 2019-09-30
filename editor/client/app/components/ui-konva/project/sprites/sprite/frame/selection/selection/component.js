@@ -1,15 +1,20 @@
-import Node from '../../../-node';
+import Node from '../../../../../../-node';
+import { equal, readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
+
+const observe = [ 'frame', 'moving' ];
 
 export default Node.extend({
 
   nodeClassName: 'rect',
+  observe,
 
-  pixel: null,
-  size: null,
+  model: null,
+  sprite: readOnly('model.sprite'),
+  pixel: readOnly('sprite.render.pixel'),
+
   state: null,
-  isMoving: equal('state.phase', 'moving'),
+  moving: equal('state.phase', 'moving'),
 
   frame: computed('state', 'pixel', function() {
     let { state, pixel } = this;
@@ -21,19 +26,15 @@ export default Node.extend({
     return { x, y, width, height };
   }).readOnly(),
 
-  props: computed('frame', 'isMoving', function() {
-    let { frame, isMoving } = this;
-    let strokeWidth = 1;
-    if(frame.width === 0 && frame.height === 0) {
-      strokeWidth = 0;
-    }
+  props: computed('frame', 'moving', function() {
+    let { frame, moving } = this;
     return {
       ...frame,
       fill: 'rgba(96,190,253, 0.3)',
       stroke: 'rgba(96,190,253, 0.5)',
-      strokeWidth,
-      listening: isMoving,
-      draggable: isMoving
+      strokeWidth: 1,
+      listening: moving,
+      draggable: true
     }
   }).readOnly(),
 

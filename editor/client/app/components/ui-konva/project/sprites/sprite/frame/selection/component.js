@@ -1,27 +1,26 @@
-import Node from '../../-node';
+import Node from '../../../../../-node';
 import { computed } from '@ember/object';
+
+const observe = [];
 
 export default Node.extend({
 
   nodeClassName: 'group',
+  observe,
 
-  pixel: null,
-  size: null,
-
-  disabled: computed({
-    get() {
-      return this._disabled;
-    },
-    set(key, value) {
-      this._disabled = value;
-      if(!value) {
-        this.set('state', null);
-      }
-      return value;
-    }
-  }),
-
+  model: null,
   state: null,
+
+  hasSelection: computed('state', function() {
+    let { state } = this;
+    if(!state) {
+      return;
+    }
+    if(state.width === 0 && state.height === 0) {
+      return;
+    }
+    return true;
+  }).readOnly(),
 
   actions: {
     beginDraw({ x, y }) {
@@ -45,7 +44,8 @@ export default Node.extend({
         return;
       }
       let { state: { x, y, width, height } } = this;
-      this.set('move', this.begin({ x, y, width, height }));
+      let move = this.model.beginMove({ x, y, width, height });
+      this.set('move', move);
     },
     updateMove(pos) {
       this.move(pos);

@@ -1,20 +1,26 @@
-import Node from '../../../-node';
+import Node from '../../../../../../-node';
+import { equal, readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { assign } from '@ember/polyfills';
-import { equal } from '@ember/object/computed';
+
+const observe = [ 'frame' ];
 
 export default Node.extend({
 
   nodeClassName: 'rect',
+  observe,
 
-  pixel: null,
-  size: null,
+  model: null,
+  sprite: readOnly('model.sprite'),
+  pixel: readOnly('sprite.render.pixel'),
+  _frame: readOnly('sprite.render.frame'),
 
-  frame: computed('x', 'y', 'pixel', 'size', function() {
-    let { x, y, pixel, size } = this;
-    let width = size.width * pixel;
-    let height = size.height * pixel;
-    return { x, y, width, height };
+  frame: computed('_frame', function() {
+    let { _frame: { width, height } } = this;
+    return {
+      width,
+      height
+    };
   }).readOnly(),
 
   props: computed('frame', function() {
