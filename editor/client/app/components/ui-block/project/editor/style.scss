@@ -13,7 +13,7 @@
       right: 0;
       > .stage {
         > .content {
-          background: fade-out(#000, 0.9);
+          background-color: darken(#fff, 13%);
         }
       }
     }
