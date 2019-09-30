@@ -1,2 +1,4 @@
 {{ui-konva/project/sprites/sprite/frame/grid model=model disabled=disabled}}
-{{ui-konva/project/sprites/sprite/frame/selection model=model}}
+{{#if isMovingPixelsEnabled}}
+  {{ui-konva/project/sprites/sprite/frame/selection model=model}}
+{{/if}}

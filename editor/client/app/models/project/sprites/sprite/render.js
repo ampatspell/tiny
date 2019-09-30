@@ -33,6 +33,9 @@ export default EmberObject.extend({
 
   resizable: true,
 
-  details: readOnly('model')
+  details: readOnly('model'),
+
+  // TODO: remove with addition of tools
+  isAltPressed: readOnly('project.editor.isAltPressed'),
 
 });

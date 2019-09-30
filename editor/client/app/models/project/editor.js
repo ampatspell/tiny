@@ -1,5 +1,6 @@
 import Mixin from '@ember/object/mixin';
 import EmberObject from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 
 export const EditorMixin = Mixin.create({
@@ -28,6 +29,9 @@ export default EmberObject.extend({
 
   project: null,
   component: null,
+
+  isSpacePressed: readOnly('component.isSpacePressed'),
+  isAltPressed:   readOnly('component.isAltPressed'),
 
   center() {
     this.component.center();
