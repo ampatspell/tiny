@@ -11,8 +11,8 @@ export default Node.extend({
   observe,
 
   model: null,
+  sprite: null,
 
-  sprite: readOnly('model.sprite'),
   editing: readOnly('sprite.isEditing'),
   enabled: not('disabled'),
   editable: and('editing', 'enabled', 'model'),

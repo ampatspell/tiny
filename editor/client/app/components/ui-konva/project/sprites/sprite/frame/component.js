@@ -5,7 +5,9 @@ export default Node.extend({
 
   nodeClassName: 'group',
 
-  sprite: readOnly('model.sprite'),
+  sprite: null,
+  model: null,
+
   isAltPressed: readOnly('sprite.render.isAltPressed'),
   isEditing: readOnly('sprite.isEditing'),
   unlocked: not('sprite.chainLocked'),
