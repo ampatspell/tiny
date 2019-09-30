@@ -1,5 +1,5 @@
 import Node from '../../../../../../-node';
-import { equal, readOnly, not, and } from '@ember/object/computed';
+import { equal, readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
 const observe = [ 'frame', 'moving' ];
