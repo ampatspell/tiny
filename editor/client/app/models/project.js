@@ -102,10 +102,10 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
       return;
     }
     let selection = this.selection;
-    if(!selection) {
-      this.update({ pixel });
+    if(selection && selection.onShortcutDigit) {
+      selection.onShortcutDigit(pixel);
     } else {
-      selection.onShortcutDigit && selection.onShortcutDigit(pixel);
+      this.update({ pixel });
     }
   },
 
@@ -121,14 +121,32 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     return this.get('selection.render.details') || this.get('selection');
   },
 
+  _invokeShortcut(model, name) {
+    if(!model) {
+      return false;
+    }
+    let fn = model[name];
+    if(!fn) {
+      return false;
+    }
+    fn.call(model);
+    return true;
+  },
+
+  onShortcutUp() {
+    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutUp');
+  },
+
+  onShortcutDown() {
+    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutDown');
+  },
+
   onShortcutLeft() {
-    let model = this._selectionRenderDetails();
-    model && model.onShortcutLeft && model.onShortcutLeft();
+    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutLeft');
   },
 
   onShortcutRight() {
-    let model = this._selectionRenderDetails();
-    model && model.onShortcutRight && model.onShortcutRight();
+    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutRight');
   },
 
   //

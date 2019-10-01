@@ -34,6 +34,8 @@ export default EmberObject.extend({
   selection: computed('model', 'scene', function() {
     let { model, scene } = this;
     return [ model, scene ];
-  }).readOnly()
+  }).readOnly(),
+
+  selectionInset: -0.5
 
 });

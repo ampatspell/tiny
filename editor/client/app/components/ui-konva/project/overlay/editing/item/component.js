@@ -11,7 +11,7 @@ export default Node.extend({
 
   model: null,
 
-  offset: 1.5,
+  offset: 0.5,
   opacity: 0.8,
 
   frame: readOnly('model.render.absolute'),

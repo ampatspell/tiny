@@ -60,7 +60,7 @@ export default Node.extend({
       y: Math.floor(y / pixel)
     };
 
-    position = this.layer.clampNodePosition(this.model, position);
+    position = this.model.clampPosition(position);
 
     x = position.x * pixel;
     y = position.y * pixel;

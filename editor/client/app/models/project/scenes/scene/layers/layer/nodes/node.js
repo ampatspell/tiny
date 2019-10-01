@@ -70,16 +70,47 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  // TODO: node clamp to scene
-  // clampPosition(position) {
-  //   let { size, scene: { size: scene } } = this;
+  clampPosition(position) {
+    return this.layer.clampNodePosition(this, position);
+  },
 
-  //   let clamp = (p, s) => Math.max(0, Math.min(position[p], scene[s] - size[s]));
-  //   let x = clamp('x', 'width');
-  //   let y = clamp('y', 'height');
+  updatePositionDelta({ x, y }) {
+    let { position } = this;
 
-  //   return this.layer.clampNodePosition(this, { x, y });
-  // },
+    position = {
+      x: position.x + x,
+      y: position.y + y
+    };
+
+    position = this.clampPosition(position);
+
+    this.update({ position });
+  },
+
+  onPositionShortcut(delta) {
+    if(!this.scene.isEditing) {
+      return;
+    }
+    this.updatePositionDelta(delta);
+  },
+
+  onShortcutUp() {
+    this.onPositionShortcut({ x: 0, y: -1 });
+  },
+
+  onShortcutDown() {
+    this.onPositionShortcut({ x: 0, y: +1 });
+  },
+
+  onShortcutLeft() {
+    this.onPositionShortcut({ x: -1, y: 0 });
+  },
+
+  onShortcutRight() {
+    this.onPositionShortcut({ x: +1, y: 0 });
+  },
+
+  //
 
   onParentResized(id, diff) {
     if(id === 'left' || id === 'top') {

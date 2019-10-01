@@ -38,7 +38,7 @@ export default Node.extend({
 
   rect: computed('frame', 'resize', function() {
     let { frame, resize } = this;
-    let offset = 1.5;
+    let offset = 0.5;
     let x = frame.x - offset;
     let y = frame.y - offset;
     let width = frame.width + (2 * offset);
@@ -66,7 +66,7 @@ export default Node.extend({
       return;
     }
     let { x, y, width, height } = frame;
-    let calc = (position, size) => ({ min: position - 1.5, mid: position + (size / 2) + 0.5, max: position + size + 1.5 });
+    let calc = (position, size) => ({ min: position - 0.5, mid: position + (size / 2) - 0.5, max: position + size + 0.5 });
     return {
       x: calc(x, width),
       y: calc(y, height)

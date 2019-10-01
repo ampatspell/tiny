@@ -11,18 +11,19 @@ export default Node.extend({
 
   model: null,
 
-  offset: 1.5,
   opacity: 0.75,
 
+  inset: readOnly('model.render.selectionInset'),
   frame: readOnly('model.render.absolute'),
 
-  _frame: computed('frame', 'offset', function() {
-    let { frame, offset } = this;
+  _frame: computed('frame', 'inset', function() {
+    let { frame, inset } = this;
+    inset = inset || 0.5;
     return {
-      x: frame.x - offset,
-      y: frame.y - offset,
-      width: frame.width + (2 * offset),
-      height: frame.height + (2 * offset)
+      x: frame.x - inset,
+      y: frame.y - inset,
+      width: frame.width + (2 * inset),
+      height: frame.height + (2 * inset)
     };
   }).readOnly(),
 

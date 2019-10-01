@@ -42,6 +42,14 @@ export default Component.extend(KeyboardMixin, {
     this.project.onShortcutDigit(value);
   },
 
+  onUp() {
+    this.project.onShortcutUp();
+  },
+
+  onDown() {
+    this.project.onShortcutDown();
+  },
+
   onLeft() {
     this.project.onShortcutLeft();
   },

@@ -83,6 +83,10 @@ export default Mixin.create({
         this._invokeShortcut('onRight');
       } else if(key === 'ArrowLeft') {
         this._invokeShortcut('onLeft');
+      } else if(key === 'ArrowUp') {
+        this._invokeShortcut('onUp');
+      } else if(key === 'ArrowDown') {
+        this._invokeShortcut('onDown');
       } else if(key === 'Escape') {
         this._invokeShortcut('onEscape');
       }
