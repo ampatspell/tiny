@@ -32,7 +32,8 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     let mirrorContainer = document.querySelector('.ui-application');
-    this.drake = dragula(assign({ mirrorContainer }, this.options));
+    let moves = () => !this.disabled;
+    this.drake = dragula(assign({ mirrorContainer, moves }, this.options));
     this._withEvents((drake, name, fn) => drake.on(name, fn));
   },
 

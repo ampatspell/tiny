@@ -15,7 +15,7 @@
 
     {{#section.custom class="frames"}}
 
-      {{#ui-block/dragula class="dragula" onDrop=(action "reorder") options=(hash direction="vertical") as |dragula|}}
+      {{#ui-block/dragula class="dragula" disabled=section.disabled onDrop=(action "reorder") options=(hash direction="vertical") as |dragula|}}
         {{#dragula.container class="container"}}
 
           {{#each loop.frames as |frame idx|}}
@@ -31,7 +31,7 @@
                 {{/if}}
               </div>
               <div class="actions">
-                {{fa-icon "trash-alt" prefix="far" class="action" click=(action "removeFrame" idx)}}
+                {{fa-icon "trash-alt" prefix="far" class="action" click=(unless section.disabled (action "removeFrame" idx))}}
               </div>
             </div>
           {{/each}}
