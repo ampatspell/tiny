@@ -123,6 +123,7 @@ export default EmberObject.extend(SettingsMixin, {
   },
 
   async reorder(indexes) {
+    let { selected } = this;
     await this.store.batch(batch => {
       let frames = this.ordered.slice();
       frames.forEach(frame => {
@@ -130,6 +131,7 @@ export default EmberObject.extend(SettingsMixin, {
         doc.set('data.index', indexes.indexOf(frame.index));
         batch.save(doc);
       });
+      this.select(selected);
     });
   },
 
