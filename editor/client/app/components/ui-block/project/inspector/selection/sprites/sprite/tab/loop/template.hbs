@@ -23,6 +23,9 @@
               <div class="index">
                 {{#if frame}}
                   #{{frame.index}}
+                  {{#if frame.identifier}}
+                    – {{frame.identifier}}
+                  {{/if}}
                 {{else}}
                   Missing frame
                 {{/if}}
