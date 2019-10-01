@@ -5,7 +5,7 @@ export default Layer.extend({
   typeName: 'Pixel Layer',
 
   clampNodePosition(node, position) {
-    return position;
+    return this._super(node, position);
   }
 
 });

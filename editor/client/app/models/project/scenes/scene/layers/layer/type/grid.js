@@ -13,7 +13,7 @@ export default Layer.extend({
     let x = clamp('x', 'width');
     let y = clamp('y', 'height');
 
-    return { x, y };
+    return this._super(node, { x, y });
   }
 
 });
