@@ -17,6 +17,7 @@ module.exports = function(defaults) {
   app.import('vendor/konva-shim.js');
 
   app.import('node_modules/dragula/dist/dragula.js');
+  app.import('node_modules/dragula/dist/dragula.css');
   app.import('vendor/dragula-shim.js');
 
   return app.toTree();
