@@ -3,7 +3,7 @@ import { Pixel, fromIndex, toIndex } from 'editor/utils/pixel';
 import { readOnly, not, and } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
-const observe = [ 'frame', 'sceneFunc', 'hitFunc', 'editing' ];
+const observe = [ 'frame', 'sceneFunc', 'hitFunc' ];
 
 export default Node.extend({
 
@@ -13,6 +13,7 @@ export default Node.extend({
   model: null,
   sprite: null,
 
+  selected: readOnly('sprite.isSelected'),
   editing: readOnly('sprite.isEditing'),
   enabled: not('disabled'),
   editable: and('editing', 'enabled', 'model'),
@@ -104,7 +105,7 @@ export default Node.extend({
   },
 
   onMousedown(e) {
-    if(!this.editable) {
+    if(!this.editable || !this.selected) {
       return;
     }
     e.cancelBubble = true;
