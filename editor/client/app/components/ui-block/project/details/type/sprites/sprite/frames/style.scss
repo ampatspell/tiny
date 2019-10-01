@@ -15,24 +15,26 @@
       flex: 1;
       display: flex;
       flex-direction: row;
-      > .frame {
-        padding: 5px 10px 5px 10px;
-        display: flex;
-        flex-direction: column;
-        border-right: 1px solid #ddd;
-        > .preview {
-          flex: 1;
-          display: flex;
-          justify-content: center;
-        }
-        > .details {
-          margin-top: 2px;
-        }
-        border-top: 3px solid rgba(0,0,0,0);
-        &.selected {
-          border-top: 3px solid fade-out(#000, 0.2);
-        }
-      }
     }
+  }
+}
+
+.ui-block-project-details-type-sprites-sprite-frames-frame {
+  padding: 5px 10px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  background: #fff;
+  > .preview {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  > .details {
+    margin-top: 2px;
+  }
+  border-top: 3px solid rgba(0,0,0,0);
+  &.selected {
+    border-top: 3px solid fade-out(#000, 0.2);
   }
 }
