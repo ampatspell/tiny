@@ -3,12 +3,23 @@ import dragula from 'dragula';
 import { computed } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import { run } from '@ember/runloop';
+import { A } from '@ember/array';
 
 const events = {
   cloned: 'onCloned',
-  drag:   'onDrag',
-  drop:   'onDrop'
+  drag:   '_onDrag',
+  drop:   '_onDrop'
 };
+
+const mapDataIds = target => {
+  let indexes = target.querySelectorAll('[data-id]');
+  let array = A();
+  indexes.forEach(el => {
+    let id = el.dataset.id;
+    array.push(id);
+  });
+  return array;
+}
 
 export default Component.extend({
   classNameBindings: [ ':ui-block-dragula' ],
@@ -52,6 +63,23 @@ export default Component.extend({
 
   onCloned(clone) {
     clone.removeAttribute('id');
+  },
+
+  _onDrag(el, source) {
+    let sibling = el.nextSibling;
+    this.dragging = { el, sibling, source };
+  },
+
+  _onDrop(_, target) {
+    let ids = mapDataIds(target);
+
+    let { el, sibling, source } = this.dragging;
+    this.dragging = null;
+
+    source.removeChild(el);
+    source.insertBefore(el, sibling);
+
+    this.onDrop && this.onDrop(ids);
   }
 
 });

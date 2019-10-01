@@ -1,6 +1,5 @@
 import Component from '../../../../-component';
 import { readOnly } from '@ember/object/computed';
-import { idsFromTarget } from 'editor/utils/dragula';
 
 export default Component.extend({
 
@@ -21,8 +20,7 @@ export default Component.extend({
       this.loop.delete();
       this.tab('loops');
     },
-    reorder(el, target) {
-      let frames = idsFromTarget(target);
+    reorder(frames) {
       this.loop.update({ frames });
     }
   }

@@ -25,7 +25,7 @@ export default EmberObject.extend(DocMixin, {
 
   render: model().named('project/sprites/sprite/loops/loop/render').mapping(model => ({ model })),
 
-  frames: computed('_frames', 'sprite.frames.models.@each.id', function() {
+  frames: computed('_frames.[]', 'sprite.frames.models.@each.id', function() {
     let { _frames: ids, sprite: { frames: { models } } } = this;
     if(!ids) {
       return;
