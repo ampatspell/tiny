@@ -122,6 +122,17 @@ export default EmberObject.extend(SettingsMixin, {
     });
   },
 
+  async reorder(indexes) {
+    await this.store.batch(batch => {
+      let frames = this.ordered.slice();
+      frames.forEach(frame => {
+        let { doc } = frame;
+        doc.set('data.index', indexes.indexOf(frame.index));
+        batch.save(doc);
+      });
+    });
+  },
+
   async duplicate(frame) {
     let { index, bytes } = frame;
     index = index + 1;

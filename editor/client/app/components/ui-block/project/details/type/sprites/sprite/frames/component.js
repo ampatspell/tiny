@@ -1,13 +1,13 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import { indexesFromDropEvent } from 'editor/utils/dragula';
 
 export default Component.extend({
   classNameBindings: [ ':ui-block-project-details-type-sprites-sprite-frames' ],
   attributeBindings: [ 'style' ],
 
   sprite: null,
-  pixel: 4,
 
   style: computed('sprite.size', 'pixel', function() {
     let { sprite: { size }, pixel } = this;
@@ -17,6 +17,10 @@ export default Component.extend({
   actions: {
     select(frame) {
       this.select(frame);
+    },
+    reorder(...args) {
+      let indexes = indexesFromDropEvent(...args);
+      this.sprite.frames.reorder(indexes);
     }
   }
 
