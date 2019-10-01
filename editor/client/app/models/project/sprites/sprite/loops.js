@@ -23,6 +23,10 @@ export default EmberObject.extend({
     return this.models.sortBy('identifier');
   }).readOnly(),
 
+  identified: computed('ordered.@each.identifier', function() {
+    return this.ordered.filter(model => !!model.identifier);
+  }).readOnly(),
+
   //
 
   selected:  null,

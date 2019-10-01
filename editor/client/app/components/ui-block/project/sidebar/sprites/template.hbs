@@ -1,0 +1,47 @@
+{{#ui-block/sidebar class="sidebar" disabled=project.locked as |sidebar|}}
+
+  {{#if selected}}
+
+    {{#sidebar.section class="header" as |section|}}
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.type value="Sprite"}}
+          {{content.identifier value=selected.identifier}}
+        {{/header.content}}
+      {{/section.header}}
+      {{ui-block/sprites/preview/sprite model=selected class="preview padded"}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="items" as |section|}}
+      {{#each selected.frames.identified as |frame|}}
+        <div class="item">
+          {{ui-block/sprites/preview/frame model=frame}}
+        </div>
+      {{else}}
+        <div class="placeholder">No frames with identifiers</div>
+      {{/each}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="items" as |section|}}
+      {{#each selected.loops.identified as |loop|}}
+        <div class="item">
+          {{ui-block/sprites/preview/loop model=loop}}
+        </div>
+      {{else}}
+        <div class="placeholder">No loops with identifiers</div>
+      {{/each}}
+    {{/sidebar.section}}
+
+  {{else}}
+
+    {{#sidebar.section class="sprites" as |section|}}
+      {{#each project.sprites.identified as |sprite|}}
+        <div {{action 'selectSprite' sprite}}>
+          {{ui-block/sprites/preview/sprite model=sprite class="padded"}}
+        </div>
+      {{/each}}
+    {{/sidebar.section}}
+
+  {{/if}}
+
+{{/ui-block/sidebar}}

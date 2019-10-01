@@ -28,6 +28,10 @@ export default EmberObject.extend(SettingsMixin, {
     return this.models.sortBy('index');
   }).readOnly(),
 
+  identified: computed('ordered.@each.identifier', function() {
+    return this.ordered.filter(model => !!model.identifier);
+  }).readOnly(),
+
   _framesPreviewRendered: computed('ordered.@each._previewRendered', function() {
     let { ordered } = this;
     if(!ordered) {

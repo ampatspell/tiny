@@ -1,4 +1,5 @@
 {{#ui-block/tabs class="tabs" selected=tab select=(action "tab") as |tabs|}}
   {{tabs.tab label="Project" id="project" component=(component "ui-block/project/sidebar/project" project=project class="project")}}
   {{tabs.tab label="Tree"    id="tree"    component=(component "ui-block/project/sidebar/tree"    project=project class="tree")}}
+  {{tabs.tab label="Sprites" id="sprites" component=(component "ui-block/project/sidebar/sprites" project=project class="sprites")}}
 {{/ui-block/tabs}}

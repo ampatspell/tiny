@@ -27,6 +27,10 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     return this.models.sortBy('index');
   }).readOnly(),
 
+  identified: computed('ordered.@each.identifier', function() {
+    return this.ordered.filter(model => !!model.identifier);
+  }).readOnly(),
+
   selectable: computed('ordered.@each.identifier', function() {
     return this.ordered.filter(sprite => !!sprite.identifier);
   }).readOnly(),
