@@ -2,6 +2,7 @@ import Mixin from '@ember/object/mixin';
 import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
+import alive from 'editor/utils/alive';
 
 export const EditorMixin = Mixin.create({
 
@@ -19,9 +20,9 @@ export const EditorMixin = Mixin.create({
     this.setProperties({ _editor });
   },
 
-  onEditorDestroying() {
+  onEditorDestroying: alive(function() {
     this.setProperties({ _editor: null });
-  }
+  })
 
 });
 
