@@ -33,14 +33,26 @@ export default Mixin.create({
 
   isSpacePressed: false,
   isAltPressed: false,
+  isCtrlPressed: false,
+  isShiftPressed: false,
+  isMetaPressed: false,
 
   shouldHandleEvent() {
     let el = document.activeElement;
     return el.tagName.toLowerCase() !== 'input';
   },
 
+  updateCommonKeys(e) {
+    this.setProperties({
+      isAltPressed: e.altKey,
+      isCtrlPressed: e.ctrlKey,
+      isShiftPressed: e.shiftKey,
+      isMetaPressed: e.metaKey
+    });
+  },
+
   onWindowKeyDown(e) {
-    let { code, key } = e;
+    let { code } = e;
 
     if(this.shouldHandleEvent()) {
 
@@ -48,10 +60,7 @@ export default Mixin.create({
         this.setProperties({ isSpacePressed: true });
       }
 
-      if(key === 'Alt') {
-        this.setProperties({ isAltPressed: true });
-      }
-
+      this.updateCommonKeys(e);
     }
   },
 
@@ -67,9 +76,7 @@ export default Mixin.create({
       this.setProperties({ isSpacePressed: false });
     }
 
-    if(key === 'Alt') {
-      this.setProperties({ isAltPressed: false });
-    }
+    this.updateCommonKeys(e);
 
     if(this.shouldHandleEvent()) {
       if(key === 'ArrowRight') {
