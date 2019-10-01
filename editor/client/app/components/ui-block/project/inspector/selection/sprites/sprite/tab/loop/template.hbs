@@ -14,20 +14,28 @@
     {{section.input label="Identifier" value=loop.identifier update=(action "update" "identifier")}}
 
     {{#section.custom class="frames"}}
-      {{#each loop.frames as |frame idx|}}
-        <div class="frame">
-          <div class="index">
-            {{#if frame}}
-              #{{frame.index}}
-            {{else}}
-              Missing frame
-            {{/if}}
-          </div>
-          <div class="actions">
-            {{fa-icon "trash-alt" prefix="far" class="action" click=(action "removeFrame" idx)}}
-          </div>
-        </div>
-      {{/each}}
+
+      {{#ui-block/dragula class="dragula" onDrop=(action "reorder") options=(hash direction="vertical") as |dragula|}}
+        {{#dragula.container class="container"}}
+
+          {{#each loop.frames as |frame idx|}}
+            <div class="ui-block-project-inspector-selection-tab-loop-frames-frame" data-id={{frame.id}}>
+              <div class="index">
+                {{#if frame}}
+                  #{{frame.index}}
+                {{else}}
+                  Missing frame
+                {{/if}}
+              </div>
+              <div class="actions">
+                {{fa-icon "trash-alt" prefix="far" class="action" click=(action "removeFrame" idx)}}
+              </div>
+            </div>
+          {{/each}}
+
+        {{/dragula.container}}
+      {{/ui-block/dragula}}
+
     {{/section.custom}}
     {{#section.actions as |actions|}}
       {{#if frame}}
