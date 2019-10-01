@@ -17,7 +17,7 @@ export default EmberObject.extend(DocMixin, {
   size: readOnly('sprite.size'),
 
   identifier: data('identifier'),
-  _frames: data('frames'),
+  _frames: data('frames.serialized'),
 
   properties: properties(),
 
