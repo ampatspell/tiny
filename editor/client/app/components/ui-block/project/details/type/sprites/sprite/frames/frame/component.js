@@ -5,7 +5,7 @@ import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
   classNameBindings: [ ':ui-block-project-details-type-sprites-sprite-frames-frame', 'selected:selected' ],
-  attributeBindings: [ 'style', 'index:data-index' ],
+  attributeBindings: [ 'style', 'index:data-id' ],
 
   sprite: readOnly('frame.sprite'),
   index: readOnly('frame.index'),
