@@ -14,7 +14,8 @@ const events = {
 const mapDataIds = target => {
   let indexes = target.querySelectorAll('[data-id]');
   let array = A();
-  indexes.forEach(el => {
+  // Older browsers doesn't have forEach
+  Array.prototype.forEach.call(indexes, el => {
     let id = el.dataset.id;
     array.push(id);
   });
