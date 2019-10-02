@@ -8,7 +8,7 @@ export default Mixin.create({
   settings: readOnly('sprite.doc.data.frames.serialized'),
 
   update(props) {
-    let frames = assign({}, this.settings, props);
+    let frames = assign({}, this.settings || {}, props);
     this.sprite.update({ frames });
   }
 

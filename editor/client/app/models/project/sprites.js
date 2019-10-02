@@ -48,6 +48,10 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     await all(this.models.map(model => model.load({ type })));
   },
 
+  async didCreate(sprite) {
+    await this.project.onDidCreateSprite(sprite);
+  },
+
   async create(opts) {
     let last = this.ordered.lastObject;
     let index = 0;
@@ -77,7 +81,8 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
     await doc.save();
     let model = this.models.findBy('id', doc.id);
-    return this.project.select(model);
+    await this.didCreate(model);
+    return model;
   },
 
   async createFromTemplate() {

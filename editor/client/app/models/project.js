@@ -65,38 +65,6 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   //
 
-  // TODO project thumbnail
-  // async createThumbnailFromDataURL(dataURL) {
-  //   if(this.skipCreateThumbnail) {
-  //     return;
-  //   }
-
-  //   let { store, doc } = this;
-
-  //   let blob = await imageURLToBlob(dataURL);
-  //   let url = null;
-
-  //   if(blob) {
-  //     let ref = store.storage.ref(`${doc.ref.path}/thumbnail.png`);
-  //     await ref.put({
-  //       type: 'data',
-  //       data: blob,
-  //       metadata: {
-  //         contentType: 'image/png'
-  //       }
-  //     });
-
-  //     let { value } = await ref.url.load();
-  //     url = value;
-  //   }
-
-  //   doc.data.setProperties({ thumbnail: url });
-
-  //   await this.save();
-  // },
-
-  //
-
   onShortcutDigit(pixel) {
     if(pixel < 1) {
       return;
@@ -192,5 +160,10 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     this.select(node);
     this.edit(scene);
   },
+
+  async onDidCreateSprite(sprite) {
+    this.select(sprite);
+    this.edit(null);
+  }
 
 });

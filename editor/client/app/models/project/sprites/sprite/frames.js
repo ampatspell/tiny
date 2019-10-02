@@ -40,11 +40,17 @@ export default EmberObject.extend(SettingsMixin, {
     return ordered.map(frame => frame && frame._previewRendered);
   }).readOnly(),
 
-  index: readOnly('settings.index'),
+  index: computed('settings.index', function() {
+    let { settings } = this;
+    let index = 0;
+    if(settings && settings.index) {
+      index = settings.index;
+    }
+    return index;
+  }),
 
   selected: computed('index', 'ordered.[]', function() {
     let { index, ordered } = this;
-    index = index || 0;
     return ordered.objectAt(index);
   }),
 
