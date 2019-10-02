@@ -1,0 +1,5 @@
+{{#each models as |model|}}
+  {{#ui-block/project/sidebar/sprites/list/item model=model selected=selected select=(action "select" model)}}
+    {{yield model}}
+  {{/ui-block/project/sidebar/sprites/list/item}}
+{{/each}}
