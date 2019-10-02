@@ -17,13 +17,12 @@ export default Sprite.extend({
     return spriteLoops.findBy('identifier', identifier);
   }).readOnly(),
 
-  // onSprite(sprite) {
-  //   this._super(...arguments);
-  //   if(!sprite) {
-  //     return;
-  //   }
-  //   let loop = sprite.get('loops.firstObject.identifier') || null;
-  //   this.update({ loop });
-  // }
+  onLoop(loop) {
+    let { sprite, identifier } = loop;
+    if(!this.onSprite(sprite)) {
+      return;
+    }
+    this.update({ loop: identifier });
+  }
 
 });

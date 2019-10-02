@@ -48,11 +48,13 @@ export default Node.extend({
     return sprites.findBy('identifier', _sprite);
   }).readOnly(),
 
-  // onSprite({ identifier: sprite }) {
-  //   if(!sprite) {
-  //     return;
-  //   }
-  //   this.update({ sprite });
-  // }
+  onSprite(sprite) {
+    // TODO: chainLocked, scene.isEditing
+    if(this.chainLocked || !this.scene.isEditing) {
+      return false;
+    }
+    this.update({ sprite: sprite.identifier });
+    return true;
+  }
 
 });

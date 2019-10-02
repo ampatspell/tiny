@@ -13,6 +13,10 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
+          transition: background-color 0.15s ease-in-out;
+          &.selected {
+            background: fade-out(#000, 0.9);
+          }
         }
       }
     }
