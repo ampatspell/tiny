@@ -2,20 +2,26 @@
   > .sidebar {
     > .section {
       > .sprites {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
-        gap: 3px;
-        padding: 10px;
-        > .sprite {
-          border: 1px solid fade-out(#000, 0.9);
-          border-radius: 3px;
-          padding: 5px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          transition: background-color 0.15s ease-in-out;
-          &.selected {
-            background: fade-out(#000, 0.9);
+        > .list {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+          gap: 3px;
+          padding: 10px;
+          > .item {
+            border: 1px solid fade-out(#000, 0.9);
+            border-radius: 3px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background-color 0.15s ease-in-out;
+            background-color: darken(#fff, 30%);
+            &.selected {
+              background-color: darken(#fff, 40%);
+            }
+          }
+          &.disabled {
+            opacity: 0.3;
           }
         }
       }
