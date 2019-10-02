@@ -9,37 +9,63 @@
           {{content.identifier value=selected.identifier}}
         {{/header.content}}
       {{/section.header}}
-      {{ui-block/sprites/preview/sprite model=selected class="preview padded"}}
+      {{ui-block/sprites/preview/sprite model=selected class="padded"}}
     {{/sidebar.section}}
 
-    {{#sidebar.section class="items" as |section|}}
-      {{#each selected.frames.identified as |frame|}}
-        <div class="item">
-          {{ui-block/sprites/preview/frame model=frame}}
-        </div>
+    {{#sidebar.section class="section" as |section|}}
+
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.identifier value="Frames"}}
+        {{/header.content}}
+      {{/section.header}}
+
+      {{#if selected.frames.identified}}
+        {{#section.custom class="sprites"}}
+          {{#each selected.frames.identified as |frame|}}
+            <div class="sprite">
+              {{ui-block/sprites/preview/frame model=frame class="clear padded"}}
+            </div>
+          {{/each}}
+        {{/section.custom}}
       {{else}}
-        <div class="placeholder">No frames with identifiers</div>
-      {{/each}}
+        {{section.placeholder value="No frames with identifiers"}}
+      {{/if}}
+
     {{/sidebar.section}}
 
-    {{#sidebar.section class="items" as |section|}}
-      {{#each selected.loops.identified as |loop|}}
-        <div class="item">
-          {{ui-block/sprites/preview/loop model=loop}}
-        </div>
+    {{#sidebar.section class="section" as |section|}}
+
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.identifier value="Loops"}}
+        {{/header.content}}
+      {{/section.header}}
+
+      {{#if selected.loops.identified}}
+        {{#section.custom class="sprites"}}
+          {{#each selected.loops.identified as |loop|}}
+            <div class="sprite">
+              {{ui-block/sprites/preview/loop model=loop class="clear padded"}}
+            </div>
+          {{/each}}
+        {{/section.custom}}
       {{else}}
-        <div class="placeholder">No loops with identifiers</div>
-      {{/each}}
+        {{section.placeholder value="No loops with identifiers"}}
+      {{/if}}
+
     {{/sidebar.section}}
 
   {{else}}
 
-    {{#sidebar.section class="sprites" as |section|}}
-      {{#each project.sprites.identified as |sprite|}}
-        <div {{action 'selectSprite' sprite}}>
-          {{ui-block/sprites/preview/sprite model=sprite class="padded"}}
-        </div>
-      {{/each}}
+    {{#sidebar.section class="section" as |section|}}
+      {{#section.custom class="sprites"}}
+        {{#each project.sprites.identified as |sprite|}}
+          <div class="sprite" {{action 'selectSprite' sprite}}>
+            {{ui-block/sprites/preview/sprite model=sprite class="preview clear"}}
+          </div>
+        {{/each}}
+      {{/section.custom}}
     {{/sidebar.section}}
 
   {{/if}}
