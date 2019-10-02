@@ -19,6 +19,11 @@ Router.map(function() {
     });
   });
 
+  this.route('emulators', function() {
+    this.route('hex', { path: ':hex_id' }, function() {
+    });
+  });
+
   this.route('users', function() {
     this.route('new');
   });

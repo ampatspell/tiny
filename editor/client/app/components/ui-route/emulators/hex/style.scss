@@ -1,0 +1,17 @@
+.ui-route-emulators-hex {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  > .content {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid fade-out(#000, 0.7);
+    box-shadow: 0 1px 5px fade-out(#000, 0.7);
+    > .iframe {
+      width: 512px;
+      height: 256px;
+    }
+  }
+}
