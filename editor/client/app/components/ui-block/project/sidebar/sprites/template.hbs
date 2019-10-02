@@ -3,7 +3,7 @@
   {{#sidebar.section class="section" as |section|}}
     {{#section.custom class="sprites"}}
       {{#each project.sprites.identified as |sprite|}}
-        <div class="sprite{{if (eq this.sprite sprite) " selected"}}" {{action 'selectSprite' sprite}}>
+        <div class="sprite{{if (eq this.sprite sprite) " selected"}}" role="button" {{action "selectSprite" sprite}}>
           {{ui-block/sprites/preview/sprite model=sprite class="preview clear"}}
         </div>
       {{/each}}
@@ -32,7 +32,7 @@
       {{#if sprite.frames.identified}}
         {{#section.custom class="sprites"}}
           {{#each sprite.frames.identified as |frame|}}
-            <div class="sprite" {{action "selectFrame" frame}}>
+            <div class="sprite" role="button" {{action "selectFrame" frame}}>
               {{ui-block/sprites/preview/frame model=frame class="clear padded"}}
             </div>
           {{/each}}
@@ -54,7 +54,7 @@
       {{#if sprite.loops.identified}}
         {{#section.custom class="sprites"}}
           {{#each sprite.loops.identified as |loop|}}
-            <div class="sprite" {{action "selectLoop" loop}}>
+            <div class="sprite" role="button" {{action "selectLoop" loop}}>
               {{ui-block/sprites/preview/loop model=loop class="clear padded"}}
             </div>
           {{/each}}
