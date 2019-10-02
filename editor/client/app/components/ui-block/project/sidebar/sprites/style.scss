@@ -14,8 +14,9 @@
           flex-direction: column;
           justify-content: center;
           transition: background-color 0.15s ease-in-out;
+          background-color: darken(#fff, 30%);
           &.selected {
-            background: fade-out(#000, 0.9);
+            background-color: darken(#fff, 40%);
           }
         }
       }
