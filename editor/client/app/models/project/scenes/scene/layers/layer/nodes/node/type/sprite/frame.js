@@ -17,13 +17,12 @@ export default Sprite.extend({
     return spriteFrames.findBy('identifier', identifier);
   }).readOnly(),
 
-  // onSprite(sprite) {
-  //   this._super(...arguments);
-  //   if(!sprite) {
-  //     return;
-  //   }
-  //   let frame = sprite.get('frames.firstObject.identifier') || null;
-  //   this.update({ frame });
-  // }
+  onFrame(frame) {
+    let { sprite, identifier } = frame;
+    if(!this.onSprite(sprite)) {
+      return;
+    }
+    this.update({ frame: identifier });
+  }
 
 });

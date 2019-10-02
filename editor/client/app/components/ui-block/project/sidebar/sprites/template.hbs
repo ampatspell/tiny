@@ -1,0 +1,70 @@
+{{#ui-block/sidebar class="sidebar" disabled=project.locked as |sidebar|}}
+
+  {{#sidebar.section class="section" as |section|}}
+    {{#section.custom class="sprites"}}
+      {{#each project.sprites.identified as |sprite|}}
+        <div class="sprite{{if (eq this.sprite sprite) " selected"}}" role="button" {{action "selectSprite" sprite}}>
+          {{ui-block/sprites/preview/sprite model=sprite class="preview clear"}}
+        </div>
+      {{/each}}
+    {{/section.custom}}
+  {{/sidebar.section}}
+
+  {{#if sprite}}
+
+    {{#sidebar.section class="header" as |section|}}
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.type value="Sprite"}}
+          {{content.identifier value=selected.identifier}}
+        {{/header.content}}
+      {{/section.header}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="section" as |section|}}
+
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.identifier value="Frames"}}
+        {{/header.content}}
+      {{/section.header}}
+
+      {{#if sprite.frames.identified}}
+        {{#section.custom class="sprites"}}
+          {{#each sprite.frames.identified as |frame|}}
+            <div class="sprite" role="button" {{action "selectFrame" frame}}>
+              {{ui-block/sprites/preview/frame model=frame class="clear padded"}}
+            </div>
+          {{/each}}
+        {{/section.custom}}
+      {{else}}
+        {{section.placeholder value="No frames with identifiers"}}
+      {{/if}}
+
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="section" as |section|}}
+
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.identifier value="Loops"}}
+        {{/header.content}}
+      {{/section.header}}
+
+      {{#if sprite.loops.identified}}
+        {{#section.custom class="sprites"}}
+          {{#each sprite.loops.identified as |loop|}}
+            <div class="sprite" role="button" {{action "selectLoop" loop}}>
+              {{ui-block/sprites/preview/loop model=loop class="clear padded"}}
+            </div>
+          {{/each}}
+        {{/section.custom}}
+      {{else}}
+        {{section.placeholder value="No loops with identifiers"}}
+      {{/if}}
+
+    {{/sidebar.section}}
+
+  {{/if}}
+
+{{/ui-block/sidebar}}

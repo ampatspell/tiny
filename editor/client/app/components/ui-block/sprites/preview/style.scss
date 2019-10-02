@@ -25,6 +25,16 @@
       @include stroke;
     }
   }
+  &.clear {
+    background-color: initial;
+    &.padded {
+      margin: 0;
+      &:before,
+      &:after {
+        display: none;
+      }
+    }
+  }
   > .canvas {
     image-rendering: pixelated;
     &.hidden {
