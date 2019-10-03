@@ -15,13 +15,16 @@ export default Mixin.create(ScheduleSaveMixin, {
   ref: doc('ref'),
 
   async save() {
-    if(this.isDeleted || !this.doc.isDirty) {
+    if(this.isDeleted) {
       return;
     }
-    await this.doc.save({ token: true });
+    await this.doc.save({ token: true, optional: true });
   },
 
   update(props) {
+    if(!props || Object.keys(props).length === 0) {
+      return;
+    }
     this.doc.data.setProperties(props);
     this.scheduleSave();
   },
