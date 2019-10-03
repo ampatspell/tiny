@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { readOnly } from '@ember/object/computed';
 import KeyboardMixin from 'editor/utils/keyboard';
 
 const stage = cb => function(...args) {
@@ -13,8 +14,12 @@ export default Component.extend(KeyboardMixin, {
   classNameBindings: [ ':ui-block-project-editor' ],
 
   stage: null,
+  size: readOnly('stage.size'),
 
   actions: {
+    update(props) {
+      this.project.update(props);
+    },
     created(stage) {
       this.onCreated(stage);
     },

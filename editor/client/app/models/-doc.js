@@ -15,6 +15,9 @@ export default Mixin.create(ScheduleSaveMixin, {
   ref: doc('ref'),
 
   async save() {
+    if(this.isDeleted || !this.doc.isDirty) {
+      return;
+    }
     await this.doc.save({ token: true });
   },
 

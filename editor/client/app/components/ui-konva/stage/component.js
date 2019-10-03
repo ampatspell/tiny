@@ -20,6 +20,7 @@ export default Component.extend(Parent, StageEvents, {
   classNameBindings: [ ':ui-konva-stage' ],
 
   size: null,
+  position: null,
   draggable: true,
   node: null, // Konva.Stage
 
@@ -40,7 +41,7 @@ export default Component.extend(Parent, StageEvents, {
   },
 
   createNode() {
-    let { size, draggable, node } = this;
+    let { size, node } = this;
 
     if(node) {
       return;
@@ -55,21 +56,16 @@ export default Component.extend(Parent, StageEvents, {
       return;
     }
 
-    let { width, height } = size;
     let container = element.getElementsByClassName('content')[0];
 
     node = new Konva.Stage({
-      container,
-      width,
-      height,
-      draggable
+      container
     });
 
     node.component = this;
-
     this.addNodeEventListeners(node);
-    this.set('node', node);
-
+    this.setProperties({ node });
+    this.propertiesDidChange();
     this.created && this.created(this);
   },
 
@@ -84,7 +80,7 @@ export default Component.extend(Parent, StageEvents, {
   //
 
   propertiesDidChange() {
-    let { size, draggable, node } = this;
+    let { size, position, draggable, node } = this;
 
     if(!node) {
       this.createNode();
@@ -101,7 +97,12 @@ export default Component.extend(Parent, StageEvents, {
       }
     }
 
+    if(position) {
+      node.position(position);
+    }
+
     node.draggable(draggable);
+    node.batchDraw();
   },
 
   //
@@ -135,6 +136,24 @@ export default Component.extend(Parent, StageEvents, {
   toDataURL() {
     let { node } = this;
     return node.toDataURL();
+  },
+
+  //
+
+  onDragstart() {
+    this.setProperties({ isDragging: true });
+  },
+
+  onDragmove() {
+    if(!this.isDragging) {
+      return;
+    }
+    let position = this.node.position();
+    this.update({ position });
+  },
+
+  onDragend() {
+    this.setProperties({ isDragging: false });
   },
 
 });

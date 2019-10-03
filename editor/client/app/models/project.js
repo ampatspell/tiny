@@ -1,10 +1,21 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { properties } from './properties';
 import { EditorMixin } from './project/editor';
+import { split } from 'editor/utils/object';
+
+const position = def => computed({
+  get() {
+    return this._position || def;
+  },
+  set(_, value) {
+    this._position = value;
+    return value;
+  }
+});
 
 export default EmberObject.extend(DocMixin, EditorMixin, {
 
@@ -29,6 +40,16 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   sprites: model().named('project/sprites').mapping(project => ({ project })),
   scenes: model().named('project/scenes').mapping(project => ({ project })),
   render: model().named('project/render').mapping(model => ({ model })),
+
+  position: position({ x: 0, y: 0 }),
+
+  //
+
+  update(props) {
+    let [ local, remote ] = split(props, [ 'position' ]);
+    this.setProperties(local);
+    this._super(remote);
+  },
 
   //
 
@@ -164,6 +185,32 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   async onDidCreateSprite(sprite) {
     this.select(sprite);
     this.edit(null);
-  }
+  },
+
+  //
+
+  // updatePixel(next) {
+  //   let { position, pixel, editor: { size } } = this;
+
+  //   if(pixel === next) {
+  //     return;
+  //   }
+
+  //   // let calc = (x, width) => {
+  //   //   let mid = (size[width] / 2);
+  //   //   let p = mid / pixel;
+  //   //   let n = mid / next;
+  //   //   let v = p - n;
+  //   //   let r = position[x] - v;
+  //   //   return Math.round(r);
+  //   // };
+
+  //   // position = {
+  //   //   x: calc('x', 'width'),
+  //   //   y: calc('y', 'height')
+  //   // };
+
+  //   this.update({ pixel: next });
+  // }
 
 });
