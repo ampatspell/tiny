@@ -147,11 +147,11 @@ export default Component.extend(Parent, Events, {
   },
 
   startObservingProperties() {
-    A(this.observe).forEach(key => this.addObserver(key, this, this.observedPropertyDidChange));
+    A(this.observe).forEach(key => this.addObserver(key, this, this.observedPropertyDidChange, true));
   },
 
   stopObservingProperties() {
-    A(this.observe).forEach(key => this.removeObserver(key, this, this.observedPropertyDidChange));
+    A(this.observe).forEach(key => this.removeObserver(key, this, this.observedPropertyDidChange, true));
   },
 
   //
