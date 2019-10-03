@@ -34,6 +34,8 @@ export default EmberObject.extend({
   isSpacePressed: readOnly('component.isSpacePressed'),
   isAltPressed:   readOnly('component.isAltPressed'),
 
+  size: readOnly('component.size'),
+
   center() {
     this.component.center();
   }

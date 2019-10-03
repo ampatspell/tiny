@@ -12,7 +12,7 @@ export default Component.extend({
       if(isNaN(pixel)) {
         return;
       }
-      this.project.update({ pixel });
+      this.project.updatePixel(pixel);
     },
     center() {
       this.project.editor.center();
