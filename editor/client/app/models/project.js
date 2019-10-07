@@ -185,32 +185,6 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   async onDidCreateSprite(sprite) {
     this.select(sprite);
     this.edit(null);
-  },
-
-  //
-
-  // updatePixel(next) {
-  //   let { position, pixel, editor: { size } } = this;
-
-  //   if(pixel === next) {
-  //     return;
-  //   }
-
-  //   // let calc = (x, width) => {
-  //   //   let mid = (size[width] / 2);
-  //   //   let p = mid / pixel;
-  //   //   let n = mid / next;
-  //   //   let v = p - n;
-  //   //   let r = position[x] - v;
-  //   //   return Math.round(r);
-  //   // };
-
-  //   // position = {
-  //   //   x: calc('x', 'width'),
-  //   //   y: calc('y', 'height')
-  //   // };
-
-  //   this.update({ pixel: next });
-  // }
+  }
 
 });
