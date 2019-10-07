@@ -15,6 +15,7 @@ export default {
       }
 
       let mapping = {};
+      let index = 0;
 
       let entities = project.ref.collection('entities');
 
@@ -60,22 +61,35 @@ export default {
         await migrateSpriteLoops(id, sprite, await sprite.ref.collection('loops').load());
       }
 
-      let index = 0;
+      const migrateSprites = async sprites => {
+        await Promise.all(sprites.map((sprite, idx) => migrateSprite(sprite, index + idx)));
+        index += sprites.length;
+      }
 
-      const migrateSprites = sprites => Promise.all(sprites.map((sprite, idx) => migrateSprite(sprite, index + idx)));
+      //
 
-      let sprites = await migrateSprites(await project.ref.collection('sprites').load());
-      index += sprites.length;
+      const migrateLayers = async (parent, scene, layers) => {
+      }
 
-        // Promise.all(scenes.map(async scene => {
-        //   let layers = await scene.ref.collection('layers').load();
-        //   await Promise.all(layers.map(async layer => {
-        //     let nodes = await layer.ref.collection('nodes').load();
-        //     nodes.map(async node => {
-        //       console.log(node.path);
-        //     });
-        //   }));
-        // }));
+      const migrateScene = async (scene, index) => {
+        let data = scene.data.serialized;
+        data.type = 'scene';
+        data.parent = null;
+        data.index = index;
+
+        let id = await save(data);
+        mapping[scene.path] = id;
+        console.log('scene', id);
+
+        await migrateLayers(id, scene, await scene.ref.collection('layers').load());
+      }
+
+      const migrateScenes = scenes => Promise.all(scenes.map((scene, idx) => migrateScene(scene, index + idx)));
+
+      //
+
+      await migrateSprites(await project.ref.collection('sprites').load());
+      await migrateScenes(await project.ref.collection('scenes').load());
     }
   }
 };
