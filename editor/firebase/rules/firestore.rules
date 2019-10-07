@@ -24,6 +24,12 @@ service cloud.firestore {
         return isUID(get(/databases/$(database)/documents/projects/$(id)).data.owner);
       }
 
+      match /entities/{path=**} {
+        allow read: if isProjectOwner();
+        allow write: if isProjectOwner();
+      }
+
+      // TODO: Remove
       match /sprites/{sprite} {
         allow read: if isProjectOwner();
         allow write: if isProjectOwner();
@@ -39,6 +45,7 @@ service cloud.firestore {
         }
       }
 
+      // TODO: Remove
       match /scenes/{scene} {
         allow read: if isProjectOwner();
         allow write: if isProjectOwner();
