@@ -1,0 +1,12 @@
+{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
+
+  {{#sidebar.section class="header" as |section|}}
+    {{#section.header as |header|}}
+      {{#header.content as |content|}}
+        {{content.type value=model.typeName}}
+        {{content.identifier value=model.title}}
+      {{/header.content}}
+    {{/section.header}}
+  {{/sidebar.section}}
+
+{{/ui-block/sidebar}}

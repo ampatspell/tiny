@@ -1,0 +1,15 @@
+.ui-block-project-inspector-tabs {
+  display: flex;
+  flex-direction: column;
+  > .tabs {
+    flex: 1;
+    > .content {
+      > .overflow {
+        > .tree,
+        > .sprites {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
