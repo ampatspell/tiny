@@ -5,10 +5,10 @@ export default Render.extend({
 
   expandable: true,
 
-  inspectorTabs: computed('model.{type,typeName}', function() {
-    let { model: { type, typeName } } = this;
+  inspectorTabs: computed('model.{type,baseTypeName}', function() {
+    let { model: { type, baseTypeName } } = this;
     return [
-      { id: 'main', label: typeName, component: `${type}/main` }
+      { id: 'main', label: baseTypeName, component: `${type}/main` }
     ];
   }),
 
