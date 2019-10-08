@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-project-sidebar-tree-entity' ],
+  classNameBindings: [ ':ui-block-project-sidebar-tree-entity', 'hidden:render-hidden', 'model.hidden:hidden', 'model.locked:locked' ],
 
   expandable: readOnly('model.render.expandable'),
   hidden: readOnly('model.render.hidden'),

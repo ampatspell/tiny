@@ -10,10 +10,7 @@
   {{else}}
     <div class="expand"></div>
   {{/if}}
-  <div class="content">
-    <div class="line">{{model.typeName}}</div>
-    <div class="line">{{model.identifier}}</div>
-  </div>
+  {{component (concat 'ui-block/project/sidebar/tree/entity/' model.render.treeComponentName) model=model class="content"}}
   <div class="accessories">
     <div class="icon hidden" {{action "hidden" bubbles=false}} role="button">{{fa-icon (if hidden "eye-slash" "eye") prefix="far"}}</div>
     <div class="icon lock" {{action "locked" bubbles=false}} role="button">{{fa-icon (if locked "lock" "lock-open")}}</div>

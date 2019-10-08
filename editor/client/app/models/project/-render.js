@@ -7,4 +7,6 @@ export default EmberObject.extend({
 
   model: null,
 
+  treeComponentName: 'basic'
+
 });
