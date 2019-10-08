@@ -68,8 +68,29 @@ export default {
 
       //
 
-      const migrateLayers = async (parent, scene, layers) => {
+      const migrateLayerNode = async (parent, node) => {
+        let data = node.data.serialized;
+        data.type = `scene/layer/node/${data.type}`;
+        data.parent = parent;
+
+        let id = await save(data);
+        mapping[node.path] = id;
       }
+
+      const migrateLayerNodes = (parent, nodes) => Promise.all(nodes.map(node => migrateLayerNode(parent, node)));
+
+      const migrateLayer = async (parent, scene, layer) => {
+        let data = layer.data.serialized;
+        data.type = `scene/layer/${data.type}`;
+        data.parent = parent;
+
+        let id = await save(data);
+        mapping[scene.path] = id;
+
+        await migrateLayerNodes(id, await layer.ref.collection('nodes').load());
+      }
+
+      const migrateLayers = async (parent, scene, layers) => Promise.all(layers.map(layer => migrateLayer(parent, scene, layer)));
 
       const migrateScene = async (scene, index) => {
         let data = scene.data.serialized;
@@ -79,7 +100,6 @@ export default {
 
         let id = await save(data);
         mapping[scene.path] = id;
-        console.log('scene', id);
 
         await migrateLayers(id, scene, await scene.ref.collection('layers').load());
       }
