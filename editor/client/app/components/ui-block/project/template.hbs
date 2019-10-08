@@ -1,6 +1,42 @@
-{{ui-block/project/sidebar project=project class="tree"}}
+{{!-- {{ui-block/project/sidebar project=project class="tree"}}
 <div class="center">
   {{ui-block/project/editor project=project class="editor"}}
   {{ui-block/project/details project=project class="details"}}
 </div>
-{{ui-block/project/inspector project=project class="inspector"}}
+{{ui-block/project/inspector project=project class="inspector"}} --}}
+
+<div class="block">
+  <div>{{project}}</div>
+</div>
+
+{{#each project.entities as |root|}}
+  <div class="block">
+    <div>{{root.baseType}} {{root.type}} {{root.id}}</div>
+    <div class="pad">
+      {{#each root.entities as |child|}}
+        <div class="block">
+          <div>{{child.baseType}} {{child.type}} {{child.id}}</div>
+          <div class="pad">
+            {{#each child.entities as |child|}}
+              <div class="block">
+                <div>{{child.baseType}}  {{child.type}} {{child.id}}</div>
+                <div class="pad">
+                  {{#each child.entities as |child|}}
+                    <div class="block">
+                      <div>{{child.baseType}} {{child.type}} {{child.id}}</div>
+                      <div class="pad">
+                        {{#each child.entities as |child|}}
+
+                        {{/each}}
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/each}}
