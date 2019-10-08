@@ -21,6 +21,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   type: 'project',
   baseType: 'project',
+  typeName: 'Project',
 
   projects: null,
   doc: null,
