@@ -2,13 +2,13 @@ import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 
-export const properties = () => model().named('properties').mapping(owner => ({ owner }));
+export const properties = () => model().named('project/properties').mapping(model => ({ model }));
 
 export default EmberObject.extend({
 
-  owner: null,
-  doc: readOnly('owner.doc'),
-  object: readOnly('doc.data.properties'),
+  model: null,
+  doc: readOnly('model.doc'),
+  object: readOnly('model.data.properties'),
   serialized: readOnly('object.serialized'),
 
   array: computed('serialized', function() {
@@ -44,7 +44,7 @@ export default EmberObject.extend({
   },
 
   scheduleSave() {
-    this.owner.scheduleSave();
+    this.model.scheduleSave();
   }
 
 });

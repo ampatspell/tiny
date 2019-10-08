@@ -3,9 +3,10 @@ import { readOnly } from '@ember/object/computed';
 import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
-import { properties } from './properties';
+import { properties } from './project/properties';
 import { EditorMixin } from './project/editor';
 import { split } from 'editor/utils/object';
+import { render } from './project/-render';
 
 // const position = def => computed({
 //   get() {
@@ -35,6 +36,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   // chainLocked: readOnly('locked'),
 
   properties: properties(),
+  renderer: render('project'),
 
   content: model().named('project/content').mapping(project => ({ project })),
 
@@ -42,9 +44,8 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     return this.content.models.filter(model => model._parent === null);
   }).readOnly(),
 
-  // sprites: model().named('project/sprites').mapping(project => ({ project })),
-  // scenes: model().named('project/scenes').mapping(project => ({ project })),
-  // render: model().named('project/render').mapping(model => ({ model })),
+  scenes: model().named('project/scenes').mapping(model => ({ model })),
+  sprites: model().named('project/sprites').mapping(model => ({ model })),
 
   // position: position({ x: 0, y: 0 }),
 

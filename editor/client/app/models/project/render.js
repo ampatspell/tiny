@@ -1,11 +1,10 @@
-import EmberObject from '@ember/object';
+import Render from './-render';
 import { readOnly } from '@ember/object/computed';
 
-export default EmberObject.extend({
-
-  model: null,
+export default Render.extend({
 
   pixel: readOnly('model.pixel'),
-  selection: readOnly('model.selection.render.selection')
+
+  // selection: readOnly('model.selection.render.selection')
 
 });
