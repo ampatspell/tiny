@@ -7,21 +7,20 @@ import { properties } from './properties';
 import { EditorMixin } from './project/editor';
 import { split } from 'editor/utils/object';
 
-const position = def => computed({
-  get() {
-    return this._position || def;
-  },
-  set(_, value) {
-    this._position = value;
-    return value;
-  }
-});
+// const position = def => computed({
+//   get() {
+//     return this._position || def;
+//   },
+//   set(_, value) {
+//     this._position = value;
+//     return value;
+//   }
+// });
 
 export default EmberObject.extend(DocMixin, EditorMixin, {
 
-  typeGroup: 'project',
-  typeName: 'Project',
-  baseTypeName: 'Project',
+  type: 'project',
+  baseType: 'project',
 
   projects: null,
   doc: null,
@@ -32,16 +31,22 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   hidden: data('hidden'),
   locked: data('locked'),
-  chainHidden: readOnly('hidden'),
-  chainLocked: readOnly('locked'),
+  // chainHidden: readOnly('hidden'),
+  // chainLocked: readOnly('locked'),
 
   properties: properties(),
 
-  sprites: model().named('project/sprites').mapping(project => ({ project })),
-  scenes: model().named('project/scenes').mapping(project => ({ project })),
-  render: model().named('project/render').mapping(model => ({ model })),
+  content: model().named('project/content').mapping(project => ({ project })),
 
-  position: position({ x: 0, y: 0 }),
+  entities: computed('content.models.@each._parent', function() {
+    return this.content.models.filter(model => model._parent === null);
+  }).readOnly(),
+
+  // sprites: model().named('project/sprites').mapping(project => ({ project })),
+  // scenes: model().named('project/scenes').mapping(project => ({ project })),
+  // render: model().named('project/render').mapping(model => ({ model })),
+
+  // position: position({ x: 0, y: 0 }),
 
   //
 
@@ -56,135 +61,132 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   async load({ type }) {
     if(type === 'detail') {
       setGlobal({ project: this });
-      await all([
-        this.sprites.load({ type }),
-        this.scenes.load({ type })
-      ]);
+      await this.content.load();
     }
   },
 
   //
 
-  selection: null,
-  editing: null,
+  // selection: null,
+  // editing: null,
 
-  select(selection) {
-    selection = selection || null;
-    this.setProperties({ selection });
-    return selection;
-  },
+  // select(selection) {
+  //   selection = selection || null;
+  //   this.setProperties({ selection });
+  //   return selection;
+  // },
 
-  deselect() {
-    this.select(null);
-    this.edit(null);
-  },
+  // deselect() {
+  //   this.select(null);
+  //   this.edit(null);
+  // },
 
-  edit(editing) {
-    editing = editing || null;
-    this.setProperties({ editing });
-  },
+  // edit(editing) {
+  //   editing = editing || null;
+  //   this.setProperties({ editing });
+  // },
 
-  //
+  // //
 
-  onShortcutDigit(pixel) {
-    if(pixel < 1) {
-      return;
-    }
-    let selection = this.selection;
-    if(selection && selection.onShortcutDigit) {
-      selection.onShortcutDigit(pixel);
-    } else {
-      this.update({ pixel });
-    }
-  },
+  // onShortcutDigit(pixel) {
+  //   if(pixel < 1) {
+  //     return;
+  //   }
+  //   let selection = this.selection;
+  //   if(selection && selection.onShortcutDigit) {
+  //     selection.onShortcutDigit(pixel);
+  //   } else {
+  //     this.update({ pixel });
+  //   }
+  // },
 
-  onShortcutEscape() {
-    if(this.editing) {
-      this.edit();
-    } else {
-      this.deselect();
-    }
-  },
+  // onShortcutEscape() {
+  //   if(this.editing) {
+  //     this.edit();
+  //   } else {
+  //     this.deselect();
+  //   }
+  // },
 
-  _selectionRenderDetails() {
-    return this.get('selection.render.details') || this.get('selection');
-  },
+  // _selectionRenderDetails() {
+  //   return this.get('selection.render.details') || this.get('selection');
+  // },
 
-  _invokeShortcut(model, name) {
-    if(!model) {
-      return false;
-    }
-    let fn = model[name];
-    if(!fn) {
-      return false;
-    }
-    fn.call(model);
-    return true;
-  },
+  // _invokeShortcut(model, name) {
+  //   if(!model) {
+  //     return false;
+  //   }
+  //   let fn = model[name];
+  //   if(!fn) {
+  //     return false;
+  //   }
+  //   fn.call(model);
+  //   return true;
+  // },
 
-  onShortcutUp() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutUp');
-  },
+  // onShortcutUp() {
+  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutUp');
+  // },
 
-  onShortcutDown() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutDown');
-  },
+  // onShortcutDown() {
+  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutDown');
+  // },
 
-  onShortcutLeft() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutLeft');
-  },
+  // onShortcutLeft() {
+  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutLeft');
+  // },
 
-  onShortcutRight() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutRight');
-  },
+  // onShortcutRight() {
+  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutRight');
+  // },
 
-  //
+  // //
 
-  onWillDeleteEditable(model, next) {
-    let { selection, editing } = this;
-    if(selection !== model) {
-      return;
-    }
-    selection = next;
-    if(editing === model) {
-      editing = null;
-    }
-    this.setProperties({ selection, editing });
-  },
+  // onWillDeleteEditable(model, next) {
+  //   let { selection, editing } = this;
+  //   if(selection !== model) {
+  //     return;
+  //   }
+  //   selection = next;
+  //   if(editing === model) {
+  //     editing = null;
+  //   }
+  //   this.setProperties({ selection, editing });
+  // },
 
-  async onWillDeleteSprite(sprite) {
-    this.onWillDeleteEditable(sprite, this.sprites);
-  },
+  // async onWillDeleteSprite(sprite) {
+  //   this.onWillDeleteEditable(sprite, this.sprites);
+  // },
 
-  async onWillDeleteScene(scene) {
-    this.onWillDeleteEditable(scene, this.scenes);
-  },
+  // async onWillDeleteScene(scene) {
+  //   this.onWillDeleteEditable(scene, this.scenes);
+  // },
 
-  async onWillDeleteLayer(layer) {
-    this.onWillDeleteEditable(layer, layer.scene);
-  },
+  // async onWillDeleteLayer(layer) {
+  //   this.onWillDeleteEditable(layer, layer.scene);
+  // },
 
-  async onWillDeleteNode(node) {
-    this.onWillDeleteEditable(node, node.layer);
-  },
+  // async onWillDeleteNode(node) {
+  //   this.onWillDeleteEditable(node, node.layer);
+  // },
 
-  async onDidCreateScene(scene) {
-    this.select(scene);
-  },
+  // async onDidCreateScene(scene) {
+  //   this.select(scene);
+  // },
 
-  async onDidCreateLayer(layer) {
-    this.select(layer);
-  },
+  // async onDidCreateLayer(layer) {
+  //   this.select(layer);
+  // },
 
-  async onDidCreateNode(node) {
-    let scene = node.scene;
-    this.select(node);
-    this.edit(scene);
-  },
+  // async onDidCreateNode(node) {
+  //   let scene = node.scene;
+  //   this.select(node);
+  //   this.edit(scene);
+  // },
 
-  async onDidCreateSprite(sprite) {
-    this.select(sprite);
-    this.edit(null);
-  }
+  // async onDidCreateSprite(sprite) {
+  //   this.select(sprite);
+  //   this.edit(null);
+  // }
 
 });
