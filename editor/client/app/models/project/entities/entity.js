@@ -20,10 +20,16 @@ const parent = () => computed('project.content.models.@each.id', '_parent', func
   return project.content.models.findBy('id', _parent);
 }).readOnly();
 
+const selected = () => computed('project.selection.model', function() {
+  return this.project.selection.model === this;
+}).readOnly();
+
 export default EmberObject.extend(DocMixin, {
 
   project: null,
   doc: null,
+
+  selected: selected(),
 
   type: data('type'),
   baseType: readOnly('type'),

@@ -19,7 +19,7 @@
 {{#if entities}}
   <div class="entities">
     {{#each entities as |entity|}}
-      {{ui-block/project/sidebar/tree/entity model=entity}}
+      {{ui-block/project/sidebar/tree/entity model=entity project=project}}
     {{/each}}
   </div>
 {{/if}}

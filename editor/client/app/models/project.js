@@ -17,6 +17,10 @@ const position = def => computed({
   }
 });
 
+const selected = () => computed('selection.model', function() {
+  return this.selection.model === this;
+}).readOnly();
+
 export default EmberObject.extend(DocMixin, EditorMixin, {
 
   type: 'project',
@@ -30,6 +34,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   pixel: data('pixel'),
   token: data('token'),
 
+  position: position({ x: 0, y: 0 }),
   properties: properties(),
   render: render('project'),
 
@@ -40,7 +45,9 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   scenes: model().named('project/scenes').mapping(model => ({ model })),
   sprites: model().named('project/sprites').mapping(model => ({ model })),
 
-  position: position({ x: 0, y: 0 }),
+  selection: model().named('project/selection').mapping(project => ({ project })),
+
+  selected: selected(),
 
   //
 
@@ -59,30 +66,11 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     }
   },
 
-  //
-
-  selection: null,
-  // editing: null,
-
-  select(selection) {
-    if(!selection) {
-      selection = null;
-    }
-    this.setProperties({ selection });
-    return selection;
+  select() {
+    return this.selection.select(...arguments);
   },
 
-  // deselect() {
-  //   this.select(null);
-  //   this.edit(null);
-  // },
-
-  // edit(editing) {
-  //   editing = editing || null;
-  //   this.setProperties({ editing });
-  // },
-
-  // //
+  //
 
   // onShortcutDigit(pixel) {
   //   if(pixel < 1) {

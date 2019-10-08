@@ -68,6 +68,11 @@
         }
       }
     }
+    &.selected {
+      > .entity {
+        background: fade-out(#000, 0.96);
+      }
+    }
   }
 
   @mixin level($level) {
