@@ -1,5 +1,7 @@
-import Entity from './entity';
+import Entity, { render } from './entity';
 
 export default Entity.extend({
+
+  render: render('scene')
 
 });

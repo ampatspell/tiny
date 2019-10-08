@@ -1,0 +1,31 @@
+.ui-block-project-sidebar-tree {
+
+  .ui-block-project-sidebar-tree-entity {
+    > .entity {
+      padding: 5px 10px;
+      border-bottom: 1px solid fade-out(#000, 0.9);
+    }
+    > .entities {
+    }
+  }
+
+  @mixin level($level) {
+    > .entity {
+      padding-left: 10px + ($level * 10px);
+    }
+  }
+
+  .ui-block-project-sidebar-tree-entity {
+    @include level(0);
+    .ui-block-project-sidebar-tree-entity {
+      @include level(1);
+      .ui-block-project-sidebar-tree-entity {
+        @include level(2);
+        .ui-block-project-sidebar-tree-entity {
+          @include level(3);
+        }
+      }
+    }
+  }
+
+}

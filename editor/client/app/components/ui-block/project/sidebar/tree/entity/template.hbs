@@ -1,0 +1,11 @@
+<div class="entity">
+  {{model.baseType}}
+  {{model.render}}
+</div>
+{{#if model.entities.ordered}}
+  <div class="entities">
+    {{#each model.entities.ordered as |entity|}}
+      {{ui-block/project/sidebar/tree/entity model=entity}}
+    {{/each}}
+  </div>
+{{/if}}

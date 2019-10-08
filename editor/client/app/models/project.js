@@ -1,23 +1,21 @@
 import EmberObject, { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
-import { all } from 'rsvp';
 import { properties } from './project/properties';
 import { EditorMixin } from './project/editor';
 import { split } from 'editor/utils/object';
 import { render } from './project/-render';
 import { entities } from './project/-entities';
 
-// const position = def => computed({
-//   get() {
-//     return this._position || def;
-//   },
-//   set(_, value) {
-//     this._position = value;
-//     return value;
-//   }
-// });
+const position = def => computed({
+  get() {
+    return this._position || def;
+  },
+  set(_, value) {
+    this._position = value;
+    return value;
+  }
+});
 
 export default EmberObject.extend(DocMixin, EditorMixin, {
 
@@ -37,7 +35,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   // chainLocked: readOnly('locked'),
 
   properties: properties(),
-  renderer: render('project'),
+  render: render('project'),
 
   content: model().named('project/content').mapping(project => ({ project })),
 
@@ -46,7 +44,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   scenes: model().named('project/scenes').mapping(model => ({ model })),
   sprites: model().named('project/sprites').mapping(model => ({ model })),
 
-  // position: position({ x: 0, y: 0 }),
+  position: position({ x: 0, y: 0 }),
 
   //
 
@@ -67,14 +65,16 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   //
 
-  // selection: null,
+  selection: null,
   // editing: null,
 
-  // select(selection) {
-  //   selection = selection || null;
-  //   this.setProperties({ selection });
-  //   return selection;
-  // },
+  select(selection) {
+    if(!selection) {
+      selection = null;
+    }
+    this.setProperties({ selection });
+    return selection;
+  },
 
   // deselect() {
   //   this.select(null);

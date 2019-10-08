@@ -2,10 +2,14 @@ import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import DocMixin, { doc, data } from '../../-doc';
 import { entities } from '../-entities';
+import { render as _render } from '../-render';
+
+const render = name => _render(`project/entities/${name}`);
 
 export {
   doc,
-  data
+  data,
+  render
 }
 
 const parent = () => computed('project.content.models.@each.id', '_parent', function() {
@@ -26,7 +30,6 @@ export default EmberObject.extend(DocMixin, {
 
   _parent: data('parent'),
   parent: parent(),
-
   entities: entities('project/entities/entity'),
 
   async load() {
