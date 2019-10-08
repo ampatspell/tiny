@@ -9,26 +9,21 @@
   <div>{{project}}</div>
 </div>
 
-{{#each project.entities as |root|}}
+{{#each project.entities.ordered as |root|}}
   <div class="block">
     <div>{{root.baseType}} {{root.type}} {{root.id}}</div>
     <div class="pad">
-      {{#each root.entities as |child|}}
+      {{#each root.entities.ordered as |child|}}
         <div class="block">
           <div>{{child.baseType}} {{child.type}} {{child.id}}</div>
           <div class="pad">
-            {{#each child.entities as |child|}}
+            {{#each child.entities.ordered as |child|}}
               <div class="block">
                 <div>{{child.baseType}}  {{child.type}} {{child.id}}</div>
                 <div class="pad">
-                  {{#each child.entities as |child|}}
+                  {{#each child.entities.ordered as |child|}}
                     <div class="block">
                       <div>{{child.baseType}} {{child.type}} {{child.id}}</div>
-                      <div class="pad">
-                        {{#each child.entities as |child|}}
-
-                        {{/each}}
-                      </div>
                     </div>
                   {{/each}}
                 </div>

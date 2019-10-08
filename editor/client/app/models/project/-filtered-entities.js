@@ -5,6 +5,6 @@ export default baseType => EmberObject.extend({
 
   model: null,
 
-  models: filterBy('model.entities', 'baseType', baseType)
+  models: filterBy('model.entities.models', 'baseType', baseType)
 
 });

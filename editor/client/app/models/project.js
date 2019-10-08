@@ -7,6 +7,7 @@ import { properties } from './project/properties';
 import { EditorMixin } from './project/editor';
 import { split } from 'editor/utils/object';
 import { render } from './project/-render';
+import { entities } from './project/-entities';
 
 // const position = def => computed({
 //   get() {
@@ -40,9 +41,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   content: model().named('project/content').mapping(project => ({ project })),
 
-  entities: computed('content.models.@each._parent', function() {
-    return this.content.models.filter(model => model._parent === null);
-  }).readOnly(),
+  entities: entities('project'),
 
   scenes: model().named('project/scenes').mapping(model => ({ model })),
   sprites: model().named('project/sprites').mapping(model => ({ model })),
