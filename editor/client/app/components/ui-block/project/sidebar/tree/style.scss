@@ -2,7 +2,37 @@
 
   .ui-block-project-sidebar-tree-entity {
     > .entity {
-      padding: 5px 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      > .expand {
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin: 0 5px 0 10px;
+        > .icon {
+          width: 12px;
+        }
+      }
+      > .content {
+        flex: 1;
+        overflow: hidden;
+        > .line {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      > .accessories {
+        display: flex;
+        flex-direction: row;
+        > .icon {
+          margin-left: 7px;
+          width: 15px;
+        }
+      }
+      padding: 5px 8px 5px 0;
       border-bottom: 1px solid fade-out(#000, 0.9);
     }
     > .entities {
@@ -11,7 +41,9 @@
 
   @mixin level($level) {
     > .entity {
-      padding-left: 10px + ($level * 10px);
+      > .expand {
+        width: 12px + ($level * 10px);
+      }
     }
   }
 

@@ -11,8 +11,16 @@ export default Mixin.create(ScheduleSaveMixin, {
 
   doc: null,
 
-  id: doc('id'),
+  id:  doc('id'),
   ref: doc('ref'),
+
+  index: data('index'),
+
+  hidden: data('hidden'),
+  locked: data('locked'),
+  expanded: data('expanded'),
+
+  identifier: data('identifier'),
 
   async save() {
     if(this.isDeleted) {

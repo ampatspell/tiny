@@ -83,6 +83,7 @@ export default {
         let data = layer.data.serialized;
         data.type = `scene/layer/${data.type}`;
         data.parent = parent;
+        data.expanded = true;
 
         let id = await save(data);
         mapping[scene.path] = id;
@@ -96,6 +97,7 @@ export default {
         let data = scene.data.serialized;
         data.type = 'scene';
         data.parent = null;
+        data.expanded = true;
         data.index = index;
 
         let id = await save(data);

@@ -30,11 +30,6 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   pixel: data('pixel'),
   token: data('token'),
 
-  hidden: data('hidden'),
-  locked: data('locked'),
-  // chainHidden: readOnly('hidden'),
-  // chainLocked: readOnly('locked'),
-
   properties: properties(),
   render: render('project'),
 

@@ -1,9 +1,27 @@
 <div class="entity">
-  {{model.typeName}}
+  {{#if expandable}}
+    <div class="expand" {{action "expanded" bubbles=false}} role="button">
+      {{#if expanded}}
+        {{fa-icon "angle-down" class="icon"}}
+      {{else}}
+        {{fa-icon "angle-right" class="icon"}}
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="expand"></div>
+  {{/if}}
+  <div class="content">
+    <div class="line">{{model.typeName}}</div>
+    <div class="line">{{model.identifier}}</div>
+  </div>
+  <div class="accessories">
+    <div class="icon hidden" {{action "hidden" bubbles=false}} role="button">{{fa-icon (if hidden "eye-slash" "eye") prefix="far"}}</div>
+    <div class="icon lock" {{action "locked" bubbles=false}} role="button">{{fa-icon (if locked "lock" "lock-open")}}</div>
+  </div>
 </div>
-{{#if model.entities.ordered}}
+{{#if entities}}
   <div class="entities">
-    {{#each model.entities.ordered as |entity|}}
+    {{#each entities as |entity|}}
       {{ui-block/project/sidebar/tree/entity model=entity}}
     {{/each}}
   </div>

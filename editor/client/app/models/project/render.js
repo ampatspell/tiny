@@ -3,8 +3,11 @@ import { readOnly } from '@ember/object/computed';
 
 export default Render.extend({
 
+  expandable: true,
+
   pixel: readOnly('model.pixel'),
 
-  // selection: readOnly('model.selection.render.selection')
+  hidden: readOnly('model.hidden'),
+  locked: readOnly('model.locked')
 
 });
