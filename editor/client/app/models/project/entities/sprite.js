@@ -1,5 +1,8 @@
 import Entity, { data, render } from './entity';
 import { properties } from '../properties';
+import { model } from 'ember-cli-zuglet/lifecycle';
+
+const typed = name => model().named(`project/entities/sprite/${name}`).mapping(model => ({ model }))
 
 export default Entity.extend({
 
@@ -8,6 +11,9 @@ export default Entity.extend({
   pixel: data('pixel'),
   properties: properties(),
 
-  render: render('sprite')
+  render: render('sprite'),
+
+  frames: typed('frames'),
+  loops:  typed('loops')
 
 });

@@ -5,7 +5,7 @@ import { next, cancel } from '@ember/runloop';
 export default Component.extend({
   classNameBindings: [ ':frame' ],
 
-  frame: readOnly('model.preview.rendered'),
+  frame: readOnly('model.previewRendered'),
 
   didInsertElement() {
     this._super(...arguments);

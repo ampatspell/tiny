@@ -8,7 +8,7 @@ export default Component.extend(TickMixin, {
   frames: readOnly('model.spriteLoop.frames'),
   index: 0,
 
-  rendered: computed('index', 'frames.@each._previewRendered', function() {
+  rendered: computed('index', 'frames.@each.previewRendered', function() {
     let { frames, index } = this;
     if(!frames) {
       return;
@@ -17,7 +17,7 @@ export default Component.extend(TickMixin, {
     if(!frame) {
       return;
     }
-    return frame._previewRendered;
+    return frame.previewRendered;
   }).readOnly(),
 
   onTick() {
