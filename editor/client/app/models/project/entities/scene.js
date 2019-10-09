@@ -1,9 +1,11 @@
-import Entity, { render } from './entity';
+import Entity, { data, render } from './entity';
 
 export default Entity.extend({
 
   typeName: 'Scene',
 
-  render: render('scene')
+  render: render('scene'),
+
+  background: data('background')
 
 });

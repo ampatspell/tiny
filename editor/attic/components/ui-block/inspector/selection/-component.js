@@ -8,12 +8,12 @@ export default Component.extend({
   deleteConfirmation: null,
 
   actions: {
-    locked(locked) {
-      this.model.update({ locked });
-    },
-    update() {
-      this.update(...arguments);
-    },
+    // locked(locked) {
+    //   this.model.update({ locked });
+    // },
+    // update() {
+    //   this.update(...arguments);
+    // },
     delete() {
       this.deleteModel();
     },
@@ -36,8 +36,8 @@ export default Component.extend({
     this.model.delete();
   },
 
-  update(key, value) {
-    this.model.update({ [key]: value });
-  }
+  // update(key, value) {
+  //   this.model.update({ [key]: value });
+  // }
 
 });

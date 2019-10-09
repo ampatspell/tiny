@@ -5,6 +5,12 @@ export default Component.extend({
   tagName: '',
 
   type: reads('model.typeName'),
-  identifier: reads('model.identifier')
+  identifier: reads('model.identifier'),
+
+  actions: {
+    locked(locked) {
+      this.model.update({ locked });
+    }
+  }
 
 });

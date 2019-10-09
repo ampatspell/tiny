@@ -8,32 +8,32 @@ import { assign } from '@ember/polyfills';
 
 export default EmberObject.extend(DocMixin, {
 
-  typeGroup: 'scenes/scene',
-  typeName: 'Scene',
-  baseTypeName: 'Scene',
+  // typeGroup: 'scenes/scene',
+  // typeName: 'Scene',
+  // baseTypeName: 'Scene',
 
-  project: readOnly('scenes.project'),
+  // project: readOnly('scenes.project'),
 
-  scenes: null,
-  doc: null,
+  // scenes: null,
+  // doc: null,
 
-  index: data('index'),
-  identifier: data('identifier'),
-  position: data('position.serialized'),
-  size: data('size.serialized'),
-  background: data('background'),
+  // index: data('index'),
+  // identifier: data('identifier'),
+  // position: data('position.serialized'),
+  // size: data('size.serialized'),
+  // background: data('background'),
 
-  collapsed: data('collapsed'),
-  hidden: data('hidden'),
-  locked: data('locked'),
+  // collapsed: data('collapsed'),
+  // hidden: data('hidden'),
+  // locked: data('locked'),
 
-  chainHidden: or('scenes.chainHidden', 'hidden'),
-  chainLocked: or('scenes.chainLocked', 'locked'),
+  // chainHidden: or('scenes.chainHidden', 'hidden'),
+  // chainLocked: or('scenes.chainLocked', 'locked'),
 
-  properties: properties(),
+  // properties: properties(),
 
   layers: model().named('project/scenes/scene/layers').mapping(scene => ({ scene })),
-  render: model().named('project/scenes/scene/render').mapping(model => ({ model })),
+  // render: model().named('project/scenes/scene/render').mapping(model => ({ model })),
 
   //
 

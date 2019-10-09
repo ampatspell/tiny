@@ -2,4 +2,13 @@
 
   {{ui-block/project/inspector/tabs/section/header sidebar=sidebar model=model}}
 
+  {{#sidebar.section as |section|}}
+    {{ui-block/project/inspector/tabs/section/item/identifier section=section model=model}}
+    {{ui-block/project/inspector/tabs/section/item/position section=section model=model}}
+    {{ui-block/project/inspector/tabs/section/item/size section=section model=model}}
+    {{section.segments label="Background" items=backgrounds selected=background update=(action "background")}}
+  {{/sidebar.section}}
+
+  {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=model}}
+
 {{/ui-block/sidebar}}

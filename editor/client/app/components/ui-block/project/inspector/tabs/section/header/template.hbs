@@ -8,5 +8,6 @@
         {{content.identifier value="No identifier" class="placeholder"}}
       {{/if}}
     {{/header.content}}
+    {{header.lock locked=model.locked update=(action "locked")}}
   {{/section.header}}
 {{/sidebar.section}}

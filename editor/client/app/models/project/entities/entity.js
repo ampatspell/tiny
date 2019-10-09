@@ -38,6 +38,9 @@ export default EmberObject.extend(DocMixin, {
   parent: parent(),
   entities: entities('project/entities/entity'),
 
+  position: data('position.serialized'),
+  size: data('size.serialized'),
+
   async load() {
   }
 

@@ -8,7 +8,7 @@ export default EmberObject.extend({
 
   model: null,
   doc: readOnly('model.doc'),
-  object: readOnly('model.data.properties'),
+  object: readOnly('doc.data.properties'),
   serialized: readOnly('object.serialized'),
 
   array: computed('serialized', function() {
