@@ -1,4 +1,4 @@
-{{#sidebar.section as |section|}}
+{{!-- {{#sidebar.section as |section|}}
   {{#section.header as |header|}}
     {{#header.content as |content|}}
       {{content.type value=model.typeName}}
@@ -6,16 +6,16 @@
     {{/header.content}}
     {{header.lock locked=model.chainLocked update=(action "locked")}}
   {{/section.header}}
-{{/sidebar.section}}
+{{/sidebar.section}} --}}
 
-{{#sidebar.section as |section|}}
-  {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}}
-  {{component (concat "ui-block/project/inspector/selection/scenes/scene/layer/type/" model.type) section=section model=model}}
-{{/sidebar.section}}
+{{!-- {{#sidebar.section as |section|}} --}}
+  {{!-- {{section.input label="Identifier" value=model.identifier update=(action "update" "identifier")}} --}}
+  {{!-- {{component (concat "ui-block/project/inspector/selection/scenes/scene/layer/type/" model.type) section=section model=model}} --}}
+{{!-- {{/sidebar.section}} --}}
 
-{{#sidebar.section as |section|}}
+{{!-- {{#sidebar.section as |section|}}
   {{section.properties label="Custom properties" value=model.properties update=(action "update" "properties")}}
-{{/sidebar.section}}
+{{/sidebar.section}} --}}
 
 {{#sidebar.section as |section|}}
   {{#section.actions as |actions|}}

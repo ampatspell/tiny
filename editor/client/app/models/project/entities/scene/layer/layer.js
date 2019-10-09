@@ -1,5 +1,9 @@
-import Entity, { render } from '../../entity';
+import Entity, { data, render } from '../../entity';
 import { properties } from '../../../properties';
+
+export {
+  data
+}
 
 export default Entity.extend({
 

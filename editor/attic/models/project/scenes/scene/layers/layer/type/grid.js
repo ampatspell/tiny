@@ -2,9 +2,9 @@ import Layer, { data } from '../../layer';
 
 export default Layer.extend({
 
-  typeName: 'Grid Layer',
+  // typeName: 'Grid Layer',
 
-  grid: data('grid.serialized'),
+  // grid: data('grid.serialized'),
 
   clampNodePosition(node, position) {
     let { grid } = this;
