@@ -1,4 +1,5 @@
 import Entity, { render } from '../../entity';
+import { properties } from '../../../properties';
 
 export default Entity.extend({
 
@@ -6,6 +7,7 @@ export default Entity.extend({
   baseTypeName: 'Layer',
   typeName: 'Layer',
 
-  render: render('scene/layer')
+  render: render('scene/layer'),
+  properties: properties(),
 
 });

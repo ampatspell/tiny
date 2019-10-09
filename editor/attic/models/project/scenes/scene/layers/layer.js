@@ -1,8 +1,8 @@
 import EmberObject from '@ember/object';
-import { readOnly, or } from '@ember/object/computed';
+// import { readOnly, or } from '@ember/object/computed';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import DocMixin, { data } from 'editor/models/-doc';
-import { properties } from 'editor/models/properties';
+// import { properties } from 'editor/models/properties';
 
 export {
   data
@@ -10,39 +10,39 @@ export {
 
 export default EmberObject.extend(DocMixin, {
 
-  isLayer: true,
+  // isLayer: true,
 
-  typeGroup: 'scenes/scene/layer',
-  typeName: 'Layer',
-  baseTypeName: 'Layer',
+  // typeGroup: 'scenes/scene/layer',
+  // typeName: 'Layer',
+  // baseTypeName: 'Layer',
 
-  project: readOnly('layers.project'),
-  scene: readOnly('layers.scene'),
+  // project: readOnly('layers.project'),
+  // scene: readOnly('layers.scene'),
 
-  layers: null,
-  doc: null,
+  // layers: null,
+  // doc: null,
 
-  type: data('type'),
-  index: data('index'),
-  identifier: data('identifier'),
+  // type: data('type'),
+  // index: data('index'),
+  // identifier: data('identifier'),
 
-  collapsed: data('collapsed'),
-  hidden: data('hidden'),
-  locked: data('locked'),
+  // collapsed: data('collapsed'),
+  // hidden: data('hidden'),
+  // locked: data('locked'),
 
-  chainHidden: or('layers.chainHidden', 'hidden'),
-  chainLocked: or('layers.chainLocked', 'locked'),
+  // chainHidden: or('layers.chainHidden', 'hidden'),
+  // chainLocked: or('layers.chainLocked', 'locked'),
 
-  properties: properties(),
+  // properties: properties(),
 
   nodes: model().named('project/scenes/scene/layers/layer/nodes').mapping(layer => ({ layer })),
-  render: model().named('project/scenes/scene/layers/layer/render').mapping(model => ({ model })),
+  // render: model().named('project/scenes/scene/layers/layer/render').mapping(model => ({ model })),
 
-  async load({ type }) {
-    if(type === 'detail') {
-      await this.nodes.load({ type });
-    }
-  },
+  // async load({ type }) {
+  //   if(type === 'detail') {
+  //     await this.nodes.load({ type });
+  //   }
+  // },
 
   async willDelete() {
     await this.layers.onWillDeleteLayer(this);
