@@ -10,22 +10,22 @@ export default EmberObject.extend(DocMixin, {
   typeGroup: 'sprites/sprite/frame',
   typeName: 'Frame',
 
-  project: readOnly('frames.project'),
-  sprite: readOnly('frames.sprite'),
-  size: readOnly('sprite.size'),
+  // project: readOnly('frames.project'),
+  // sprite: readOnly('frames.sprite'),
+  // size: readOnly('sprite.size'),
 
-  index: data('index'),
-  identifier: data('identifier'),
-  bytes: data('bytes'),
+  // index: data('index'),
+  // identifier: data('identifier'),
+  // bytes: data('bytes'),
 
-  properties: properties(),
+  // properties: properties(),
 
-  preview: model().named('project/sprites/sprite/frames/frame/preview').mapping(frame => ({ frame })),
+  // preview: model().named('project/sprites/sprite/frames/frame/preview').mapping(frame => ({ frame })),
 
-  _previewRendered: readOnly('preview.rendered'),
+  // _previewRendered: readOnly('preview.rendered'),
 
-  async load() {
-  },
+  // async load() {
+  // },
 
   //
 

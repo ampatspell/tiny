@@ -5,27 +5,27 @@ import { all } from 'rsvp';
 
 export default EmberObject.extend({
 
-  typeName: 'Loops',
+  // typeName: 'Loops',
 
-  project: readOnly('sprite.project'),
+  // project: readOnly('sprite.project'),
 
-  sprite: null,
+  // sprite: null,
 
-  ref: computed('sprite.ref', function() {
-    let { sprite: { ref } } = this;
-    return ref.collection('loops');
-  }).readOnly(),
+  // ref: computed('sprite.ref', function() {
+  //   let { sprite: { ref } } = this;
+  //   return ref.collection('loops');
+  // }).readOnly(),
 
-  query: observed().owner('ref').content(({ ref }) => ref.query()),
-  models: models('query.content').named('project/sprites/sprite/loops/loop').mapping((doc, loops) => ({ loops, doc })),
+  // query: observed().owner('ref').content(({ ref }) => ref.query()),
+  // models: models('query.content').named('project/sprites/sprite/loops/loop').mapping((doc, loops) => ({ loops, doc })),
 
-  ordered: computed('models.@each.identifier', function() {
-    return this.models.sortBy('identifier');
-  }).readOnly(),
+  // ordered: computed('models.@each.identifier', function() {
+  //   return this.models.sortBy('identifier');
+  // }).readOnly(),
 
-  identified: computed('ordered.@each.identifier', function() {
-    return this.ordered.filter(model => !!model.identifier);
-  }).readOnly(),
+  // identified: computed('ordered.@each.identifier', function() {
+  //   return this.ordered.filter(model => !!model.identifier);
+  // }).readOnly(),
 
   //
 
@@ -38,10 +38,10 @@ export default EmberObject.extend({
 
   //
 
-  async load({ type }) {
-    await resolveObservers(this.query);
-    await all(this.models.map(model => model.load({ type })));
-  },
+  // async load({ type }) {
+  //   await resolveObservers(this.query);
+  //   await all(this.models.map(model => model.load({ type })));
+  // },
 
   async create() {
     let frames = this.sprite.frames.ordered.map(frame => frame.id);

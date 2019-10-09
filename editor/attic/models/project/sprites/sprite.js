@@ -32,8 +32,8 @@ export default EmberObject.extend(DocMixin, {
 
   // properties: properties(),
 
-  frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
-  loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),
+  // frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
+  // loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),
   // render: model().named('project/sprites/sprite/render').mapping(model => ({ model })),
 
   //
@@ -43,14 +43,14 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  async load({ type }) {
-    if(type === 'detail') {
-      await all([
-        this.frames.load({ type }),
-        this.loops.load({ type })
-      ]);
-    }
-  },
+  // async load({ type }) {
+  //   if(type === 'detail') {
+  //     await all([
+  //       this.frames.load({ type }),
+  //       this.loops.load({ type })
+  //     ]);
+  //   }
+  // },
 
   //
 

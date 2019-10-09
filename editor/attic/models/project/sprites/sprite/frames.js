@@ -9,45 +9,45 @@ import SettingsMixin from './frames/-settings';
 
 export default EmberObject.extend(SettingsMixin, {
 
-  typeName: 'Frames',
+  // typeName: 'Frames',
 
   project: readOnly('sprite.project'),
 
-  sprite: null,
-  size: readOnly('sprite.size'),
+  // sprite: null,
+  // size: readOnly('sprite.size'),
 
-  ref: computed('sprite.ref', function() {
-    let { sprite: { ref } } = this;
-    return ref.collection('frames');
-  }).readOnly(),
+  // ref: computed('sprite.ref', function() {
+  //   let { sprite: { ref } } = this;
+  //   return ref.collection('frames');
+  // }).readOnly(),
 
-  query: observed().owner('ref').content(({ ref }) => ref.query()),
-  models: models('query.content').named('project/sprites/sprite/frames/frame').mapping((doc, frames) => ({ frames, doc })),
+  // query: observed().owner('ref').content(({ ref }) => ref.query()),
+  // models: models('query.content').named('project/sprites/sprite/frames/frame').mapping((doc, frames) => ({ frames, doc })),
 
-  ordered: computed('models.@each.index', function() {
-    return this.models.sortBy('index');
-  }).readOnly(),
+  // ordered: computed('models.@each.index', function() {
+  //   return this.models.sortBy('index');
+  // }).readOnly(),
 
-  identified: computed('ordered.@each.identifier', function() {
-    return this.ordered.filter(model => !!model.identifier);
-  }).readOnly(),
+  // identified: computed('ordered.@each.identifier', function() {
+  //   return this.ordered.filter(model => !!model.identifier);
+  // }).readOnly(),
 
-  _framesPreviewRendered: computed('ordered.@each._previewRendered', function() {
-    let { ordered } = this;
-    if(!ordered) {
-      return;
-    }
-    return ordered.map(frame => frame && frame._previewRendered);
-  }).readOnly(),
+  // _framesPreviewRendered: computed('ordered.@each._previewRendered', function() {
+  //   let { ordered } = this;
+  //   if(!ordered) {
+  //     return;
+  //   }
+  //   return ordered.map(frame => frame && frame._previewRendered);
+  // }).readOnly(),
 
-  index: computed('settings.index', function() {
-    let { settings } = this;
-    let index = 0;
-    if(settings && settings.index) {
-      index = settings.index;
-    }
-    return index;
-  }),
+  // index: computed('settings.index', function() {
+  //   let { settings } = this;
+  //   let index = 0;
+  //   if(settings && settings.index) {
+  //     index = settings.index;
+  //   }
+  //   return index;
+  // }),
 
   selected: computed('index', 'ordered.[]', function() {
     let { index, ordered } = this;
@@ -80,10 +80,10 @@ export default EmberObject.extend(SettingsMixin, {
     this.select(previous);
   },
 
-  async load({ type }) {
-    await resolveObservers(this.query);
-    await all(this.models.map(model => model.load({ type })));
-  },
+  // async load({ type }) {
+  //   await resolveObservers(this.query);
+  //   await all(this.models.map(model => model.load({ type })));
+  // },
 
   async didCreateFrame(frame) {
     this.select(frame);
