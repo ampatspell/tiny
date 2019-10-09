@@ -9,17 +9,17 @@ import { assign } from '@ember/polyfills';
 
 export default EmberObject.extend(DocMixin, {
 
-  typeGroup: 'sprites/sprite',
-  typeName: 'Sprite',
-  baseTypeName: 'Sprite',
+  // typeGroup: 'sprites/sprite',
+  // typeName: 'Sprite',
+  // baseTypeName: 'Sprite',
 
-  project: readOnly('sprites.project'),
+  // project: readOnly('sprites.project'),
 
-  sprites: null,
-  doc: null,
+  // sprites: null,
+  // doc: null,
 
-  index: data('index'),
-  identifier: data('identifier'),
+  // index: data('index'),
+  // identifier: data('identifier'),
   position: data('position.serialized'),
   size: data('size.serialized'),
   pixel: data('pixel'),

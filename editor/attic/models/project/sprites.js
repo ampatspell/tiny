@@ -9,27 +9,27 @@ const SettingsMixin = createSettingsMixin('project', 'sprites');
 
 export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
-  typeGroup: 'sprites',
-  typeName: 'Sprites',
-  baseTypeName: 'Sprites',
+  // typeGroup: 'sprites',
+  // typeName: 'Sprites',
+  // baseTypeName: 'Sprites',
 
-  project: null,
+  // project: null,
 
-  ref: computed('project.ref', function() {
-    let { project: { ref } } = this;
-    return ref.collection('sprites');
-  }).readOnly(),
+  // ref: computed('project.ref', function() {
+  //   let { project: { ref } } = this;
+  //   return ref.collection('sprites');
+  // }).readOnly(),
 
-  query: observed().owner('ref').content(({ ref }) => ref.query()),
-  models: models('query.content').named('project/sprites/sprite').mapping((doc, sprites) => ({ sprites, doc })),
+  // query: observed().owner('ref').content(({ ref }) => ref.query()),
+  // models: models('query.content').named('project/sprites/sprite').mapping((doc, sprites) => ({ sprites, doc })),
 
-  ordered: computed('models.@each.index', function() {
-    return this.models.sortBy('index');
-  }).readOnly(),
+  // ordered: computed('models.@each.index', function() {
+  //   return this.models.sortBy('index');
+  // }).readOnly(),
 
-  identified: computed('ordered.@each.identifier', function() {
-    return this.ordered.filter(model => !!model.identifier);
-  }).readOnly(),
+  // identified: computed('ordered.@each.identifier', function() {
+  //   return this.ordered.filter(model => !!model.identifier);
+  // }).readOnly(),
 
   selectable: computed('ordered.@each.identifier', function() {
     return this.ordered.filter(sprite => !!sprite.identifier);
@@ -43,10 +43,10 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     return this.ordered.slice().reverse();
   }).readOnly(),
 
-  async load({ type }) {
-    await resolveObservers(this.query);
-    await all(this.models.map(model => model.load({ type })));
-  },
+  // async load({ type }) {
+  //   await resolveObservers(this.query);
+  //   await all(this.models.map(model => model.load({ type })));
+  // },
 
   async didCreate(sprite) {
     await this.project.onDidCreateSprite(sprite);

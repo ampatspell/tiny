@@ -4,8 +4,8 @@ export default Entity.extend({
 
   typeName: 'Scene',
 
-  render: render('scene'),
+  background: data('background'),
 
-  background: data('background')
+  render: render('scene'),
 
 });
