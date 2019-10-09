@@ -30,11 +30,11 @@ export default EmberObject.extend(DocMixin, {
   chainHidden: or('sprites.chainHidden', 'hidden'),
   chainLocked: or('sprites.chainLocked', 'locked'),
 
-  properties: properties(),
+  // properties: properties(),
 
   frames: model().named('project/sprites/sprite/frames').mapping(sprite => ({ sprite })),
   loops: model().named('project/sprites/sprite/loops').mapping(sprite => ({ sprite })),
-  render: model().named('project/sprites/sprite/render').mapping(model => ({ model })),
+  // render: model().named('project/sprites/sprite/render').mapping(model => ({ model })),
 
   //
 
