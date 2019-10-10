@@ -12,4 +12,6 @@ export default Render.extend({
     ];
   }),
 
+  deleteConfirmation: 'Sure you want to delete this layer?'
+
 });

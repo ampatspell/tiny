@@ -13,6 +13,8 @@ export default Render.extend({
     ];
   }),
 
-  detailsComponentName: 'sprites/sprite'
+  detailsComponentName: 'sprites/sprite',
+
+  deleteConfirmation: 'Sure you want to delete this sprite?'
 
 });

@@ -16,12 +16,31 @@
       {{ui-block/project/inspector/tabs/section/item/identifier section=section model=frame}}
     {{/sidebar.section}}
 
+    {{#sidebar.section as |section|}}
+      {{#section.actions type="grid" as |actions|}}
+        {{actions.button value="Clear" action=(action "fill" 0)}}
+        {{actions.button value="Fill" action=(action "fill" 2)}}
+        {{actions.button value="Invert" action=(action "invert")}}
+      {{/section.actions}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Duplicate" action=(action "createFrame")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
     {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=frame}}
+
+    {{ui-block/project/inspector/tabs/section/move-remove sidebar=sidebar model=frame}}
 
   {{else}}
 
     {{#sidebar.section as |section|}}
-      {{section.placeholder value="No frame selected"}}
+      {{section.placeholder value="No frames"}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section as |section|}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Create first frame" action=(action "createFrame")}}
+      {{/section.actions}}
     {{/sidebar.section}}
 
   {{/if}}

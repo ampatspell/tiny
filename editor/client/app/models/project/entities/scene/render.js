@@ -12,4 +12,6 @@ export default Render.extend({
     { id: 'main', label: 'Scene', component: 'scene/main' }
   ]),
 
+  deleteConfirmation: 'Sure you want to delete this scene?'
+
 });

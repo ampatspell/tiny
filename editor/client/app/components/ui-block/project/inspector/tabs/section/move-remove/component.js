@@ -1,19 +1,14 @@
-import Component from '@ember/component';
+import Component from '../../-component';
 import { inject as service } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: '',
 
   dialogs: service(),
-  deleteConfirmation: null,
+  deleteConfirmation: readOnly('model.render.deleteConfirmation'),
 
   actions: {
-    // locked(locked) {
-    //   this.model.update({ locked });
-    // },
-    // update() {
-    //   this.update(...arguments);
-    // },
     delete() {
       this.deleteModel();
     },
@@ -33,11 +28,7 @@ export default Component.extend({
         return;
       }
     }
-    this.model.delete();
+    // this.model.delete();
   },
-
-  // update(key, value) {
-  //   this.model.update({ [key]: value });
-  // }
 
 });

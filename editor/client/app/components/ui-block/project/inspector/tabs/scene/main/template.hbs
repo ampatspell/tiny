@@ -11,4 +11,13 @@
 
   {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=model}}
 
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Add new grid layer" action=(action "createGridLayer")}}
+      {{actions.button value="Add new pixel layer" action=(action "createPixelLayer")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+  {{ui-block/project/inspector/tabs/section/move-remove sidebar=sidebar model=model}}
+
 {{/ui-block/sidebar}}

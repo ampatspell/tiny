@@ -1,4 +1,4 @@
-import Entity, { data } from '../entity';
+import Entity, { data, render } from '../entity';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { properties } from '../../properties';
@@ -16,6 +16,8 @@ export default Entity.extend({
   preview: model().named('project/entities/sprite/frame/preview').mapping(frame => ({ frame })),
 
   previewRendered: readOnly('preview.rendered'),
+
+  render: render('sprite/frame'),
 
   description: computed('index', 'identifier', function() {
     let { index, identifier } = this;

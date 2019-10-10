@@ -9,4 +9,11 @@
 
   {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=model}}
 
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Add new scene" action=(action "createScene")}}
+      {{actions.button value="Add new sprite" action=(action "createSprite")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
 {{/ui-block/sidebar}}
