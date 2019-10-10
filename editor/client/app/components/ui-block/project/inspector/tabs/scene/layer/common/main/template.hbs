@@ -5,6 +5,7 @@
   {{#sidebar.section as |section|}}
     {{ui-block/project/inspector/tabs/section/item/identifier section=section model=model}}
     {{yield (hash
+      position="section"
       section=section
     )}}
   {{/sidebar.section}}
