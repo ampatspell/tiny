@@ -9,13 +9,13 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.addObserver('frame', this, this._frameDidChange);
+    this.addObserver('frame', this, this._frameDidChange, true);
     this._frameDidChange();
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.removeObserver('frame', this, this._frameDidChange);
+    this.removeObserver('frame', this, this._frameDidChange, true);
     cancel(this.__frameDidChange);
   },
 

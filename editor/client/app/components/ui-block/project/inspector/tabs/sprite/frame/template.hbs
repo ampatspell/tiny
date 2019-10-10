@@ -2,9 +2,15 @@
 
   {{#if frame}}
 
-    {{#ui-block/project/inspector/tabs/section/header class="no-border" sidebar=sidebar model=frame lock=false}}
+    {{#sidebar.section class="no-border" as |section|}}
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.type value=frame.typeName}}
+          {{content.identifier value=frame.description}}
+        {{/header.content}}
+      {{/section.header}}
       {{ui-block/sprites/preview/frame model=frame class="padded"}}
-    {{/ui-block/project/inspector/tabs/section/header}}
+    {{/sidebar.section}}
 
     {{#sidebar.section as |section|}}
       {{ui-block/project/inspector/tabs/section/item/identifier section=section model=frame}}

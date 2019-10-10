@@ -37,7 +37,14 @@ export const className = opts => {
 export const delta = (arrayKey, currentKey, value, ring=true) => computed(`${arrayKey}.[]`, currentKey, function() {
   let array = this[arrayKey];
   let current = this[currentKey];
-  let index = array.indexOf(current) + value;
+  if(!current) {
+    return;
+  }
+  let index = array.indexOf(current);
+  if(index === -1) {
+    return;
+  }
+  index = index + value;
   if(index < 0) {
     if(ring) {
       return array.lastObject;

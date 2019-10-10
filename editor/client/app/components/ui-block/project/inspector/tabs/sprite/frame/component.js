@@ -3,6 +3,6 @@ import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
 
-  frame: readOnly('model.frames.selected'),
+  frame: readOnly('model.frames.selected')
 
 });

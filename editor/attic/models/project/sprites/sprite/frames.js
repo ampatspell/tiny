@@ -49,28 +49,28 @@ export default EmberObject.extend(SettingsMixin, {
   //   return index;
   // }),
 
-  selected: computed('index', 'ordered.[]', function() {
-    let { index, ordered } = this;
-    return ordered.objectAt(index);
-  }),
+  // selected: computed('index', 'ordered.[]', function() {
+  //   let { index, ordered } = this;
+  //   return ordered.objectAt(index);
+  // }),
 
-  previous: delta('ordered', 'selected', -1),
-  next:     delta('ordered', 'selected', +1),
+  // previous: delta('ordered', 'selected', -1),
+  // next:     delta('ordered', 'selected', +1),
 
-  select(selected) {
-    let index = this.ordered.indexOf(selected) || null;
-    this.update({ index });
-  },
+  // select(selected) {
+  //   let index = this.ordered.indexOf(selected) || null;
+  //   this.update({ index });
+  // },
 
-  selectPrevious() {
-    let model = this.previous;
-    model && this.select(model);
-  },
+  // selectPrevious() {
+  //   let model = this.previous;
+  //   model && this.select(model);
+  // },
 
-  selectNext() {
-    let model = this.next;
-    model && this.select(model);
-  },
+  // selectNext() {
+  //   let model = this.next;
+  //   model && this.select(model);
+  // },
 
   selectAnother(frame) {
     let previous = this.previous;

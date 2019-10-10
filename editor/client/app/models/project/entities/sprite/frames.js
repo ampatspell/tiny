@@ -1,10 +1,12 @@
 import filteredEntities from '../../-filtered-entities';
+import settings from '../../-settings';
 import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import { delta } from 'editor/utils/computed';
 
 const Frames = filteredEntities('sprite/frame');
+const SettingsMixin = settings('model', 'frames');
 
-export default Frames.extend({
+export default Frames.extend(SettingsMixin, {
 
   model: null,
 
@@ -16,6 +18,39 @@ export default Frames.extend({
     return ordered.map(frame => frame && frame.previewRendered);
   }).readOnly(),
 
-  selected: readOnly('ordered.firstObject'),
+  index: computed('settings.index', function() {
+    let { settings } = this;
+    let index = 0;
+    if(settings && settings.index) {
+      index = settings.index;
+    }
+    return index;
+  }),
+
+  selected: computed('index', 'ordered.[]', function() {
+    let { index, ordered } = this;
+    return ordered.objectAt(index);
+  }),
+
+  previous: delta('ordered', 'selected', -1),
+  next:     delta('ordered', 'selected', +1),
+
+  select(selected) {
+    let index = this.ordered.indexOf(selected);
+    if(index === -1) {
+      index = null;
+    }
+    this.update({ index });
+  },
+
+  selectPrevious() {
+    let model = this.previous;
+    model && this.select(model);
+  },
+
+  selectNext() {
+    let model = this.next;
+    model && this.select(model);
+  }
 
 });
