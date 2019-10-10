@@ -36,4 +36,6 @@ export default Render.extend({
     };
   }).readOnly(),
 
+  absolute: readOnly('frame')
+
 });

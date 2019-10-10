@@ -1,4 +1,4 @@
-import Render from '../../entity/render';
+import Render, { absolute } from '../../entity/render';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
@@ -25,6 +25,8 @@ export default Render.extend({
       width: width * pixel,
       height: height * pixel
     };
-  }).readOnly()
+  }).readOnly(),
+
+  absolute: absolute()
 
 });

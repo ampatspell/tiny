@@ -26,6 +26,8 @@ export default Render.extend({
       width: width * pixel,
       height: height * pixel
     };
-  }).readOnly()
+  }).readOnly(),
+
+  absolute: readOnly('frame'),
 
 });

@@ -42,6 +42,8 @@ export default EmberObject.extend(DocMixin, {
 
   entities: entities('project/entities/entity'),
 
+  _renderAbsolute: readOnly('render.absolute'),
+
   async load() {
   },
 
