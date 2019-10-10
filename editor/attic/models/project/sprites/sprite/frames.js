@@ -11,7 +11,7 @@ export default EmberObject.extend(SettingsMixin, {
 
   // typeName: 'Frames',
 
-  project: readOnly('sprite.project'),
+  // project: readOnly('sprite.project'),
 
   // sprite: null,
   // size: readOnly('sprite.size'),

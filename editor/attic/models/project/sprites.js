@@ -39,9 +39,9 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     return this.ordered.filter(model => !model.hidden);
   }).readOnly(),
 
-  reversed: computed('ordered', function() {
-    return this.ordered.slice().reverse();
-  }).readOnly(),
+  // reversed: computed('ordered', function() {
+  //   return this.ordered.slice().reverse();
+  // }).readOnly(),
 
   // async load({ type }) {
   //   await resolveObservers(this.query);

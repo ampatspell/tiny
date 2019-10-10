@@ -20,15 +20,15 @@ export default EmberObject.extend(DocMixin, {
 
   // index: data('index'),
   // identifier: data('identifier'),
-  position: data('position.serialized'),
-  size: data('size.serialized'),
-  pixel: data('pixel'),
+  // position: data('position.serialized'),
+  // size: data('size.serialized'),
+  // pixel: data('pixel'),
 
-  hidden: data('hidden'),
-  locked: data('locked'),
+  // hidden: data('hidden'),
+  // locked: data('locked'),
 
-  chainHidden: or('sprites.chainHidden', 'hidden'),
-  chainLocked: or('sprites.chainLocked', 'locked'),
+  // chainHidden: or('sprites.chainHidden', 'hidden'),
+  // chainLocked: or('sprites.chainLocked', 'locked'),
 
   // properties: properties(),
 

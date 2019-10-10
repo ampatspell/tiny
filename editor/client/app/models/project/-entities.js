@@ -8,10 +8,6 @@ export default EmberObject.extend({
   models: null,
 
   ordered: computed('models.@each.index', function() {
-    return this.models.sortBy('index');
-  }).readOnly(),
-
-  ordered: computed('models.@each.index', function() {
     return this.models.slice().sortBy('index');
   }).readOnly(),
 
