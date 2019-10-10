@@ -1,4 +1,16 @@
 {{#ui-block/project/inspector/tabs/scene/layer/node/sprite/common/main model=model as |common|}}
   {{#if (eq common.position "section")}}
+
+    {{#if loops}}
+      {{common.section.dropdown label="Loop" items=loops selected=loop update=(action "loop")}}
+      {{#if model.spriteLoop}}
+        {{#common.section.custom}}
+          {{ui-block/sprites/preview/loop model=model.spriteLoop pixel=2 class="preview padded"}}
+        {{/common.section.custom}}
+      {{/if}}
+    {{else}}
+      {{common.section.placeholder value="Sprite doesn't have any loops with identifiers"}}
+    {{/if}}
+
   {{/if}}
 {{/ui-block/project/inspector/tabs/scene/layer/node/sprite/common/main}}

@@ -4,18 +4,18 @@ import { readOnly } from '@ember/object/computed';
 
 export default Sprite.extend({
 
-  typeName: 'Sprite Frame Node',
+  // typeName: 'Sprite Frame Node',
 
-  _frame: data('frame'),
-  spriteFrames: readOnly('sprite.frames.ordered'),
+  // _frame: data('frame'),
+  // spriteFrames: readOnly('sprite.frames.ordered'),
 
-  spriteFrame: computed('spriteFrames.@each.identifier', '_frame', function() {
-    let { spriteFrames, _frame: identifier } = this;
-    if(!spriteFrames || !identifier) {
-      return;
-    }
-    return spriteFrames.findBy('identifier', identifier);
-  }).readOnly(),
+  // spriteFrame: computed('spriteFrames.@each.identifier', '_frame', function() {
+  //   let { spriteFrames, _frame: identifier } = this;
+  //   if(!spriteFrames || !identifier) {
+  //     return;
+  //   }
+  //   return spriteFrames.findBy('identifier', identifier);
+  // }).readOnly(),
 
   onFrame(frame) {
     let { sprite, identifier } = frame;

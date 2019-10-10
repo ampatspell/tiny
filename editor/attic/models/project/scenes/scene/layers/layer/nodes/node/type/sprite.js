@@ -6,7 +6,7 @@ export {
   data
 }
 
-const _size = Object.freeze({ width: 8, height: 8 });
+// const _size = Object.freeze({ width: 8, height: 8 });
 
 export default Node.extend({
 
@@ -18,30 +18,30 @@ export default Node.extend({
   // _sprite: data('sprite'),
   // sprites: readOnly('project.sprites.selectable'),
 
-  size: computed('sprite.size', 'layer.grid', function() {
-    let { sprite, layer: { grid } } = this;
+  // size: computed('sprite.size', 'layer.grid', function() {
+  //   let { sprite, layer: { grid } } = this;
 
-    if(grid) {
-      if(sprite) {
-        let { size } = sprite;
-        let calc = key => Math.ceil(size[key] / grid[key]) * grid[key];
-        return {
-          width: calc('width'),
-          height: calc('height')
-        };
-      }
-      return grid;
-    }
+  //   if(grid) {
+  //     if(sprite) {
+  //       let { size } = sprite;
+  //       let calc = key => Math.ceil(size[key] / grid[key]) * grid[key];
+  //       return {
+  //         width: calc('width'),
+  //         height: calc('height')
+  //       };
+  //     }
+  //     return grid;
+  //   }
 
-    if(sprite) {
-      let { size } = sprite;
-      if(size) {
-        return size;
-      }
-    }
+  //   if(sprite) {
+  //     let { size } = sprite;
+  //     if(size) {
+  //       return size;
+  //     }
+  //   }
 
-    return _size;
-  }).readOnly(),
+  //   return _size;
+  // }).readOnly(),
 
   // sprite: computed('_sprite', 'sprites.@each.identifier', function() {
   //   let { _sprite, sprites } = this;
