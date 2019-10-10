@@ -1,12 +1,3 @@
-{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
-
-  {{ui-block/project/inspector/tabs/section/header sidebar=sidebar model=model}}
-
-  {{#sidebar.section as |section|}}
-    {{ui-block/project/inspector/tabs/section/item/identifier section=section model=model}}
-    {{ui-block/project/inspector/tabs/section/item/grid section=section model=model}}
-  {{/sidebar.section}}
-
-  {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=model}}
-
-{{/ui-block/sidebar}}
+{{#ui-block/project/inspector/tabs/scene/layer/common/main model=model as |common|}}
+  {{ui-block/project/inspector/tabs/section/item/grid section=common.section model=model}}
+{{/ui-block/project/inspector/tabs/scene/layer/common/main}}
