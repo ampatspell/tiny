@@ -10,7 +10,7 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
     this.addObserver('frame', this, this._frameDidChange, true);
-    this._frameDidChange();
+    this.frameDidChange();
   },
 
   willDestroyElement() {
@@ -20,6 +20,7 @@ export default Component.extend({
   },
 
   frameDidChange() {
+    cancel(this.__frameDidChange);
     let { frame } = this;
     this.draw((ctx, { width, height }) => {
       if(!frame) {
