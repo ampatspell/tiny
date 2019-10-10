@@ -5,15 +5,18 @@ export default Mixin.create({
   isDragging: false,
   _dragPosition: null,
 
-  onDragstart() {
+  onDragstart(e) {
+    e.cancelBubble = true;
     this.setProperties({ isDragging: true });
     this.model.select();
   },
 
-  onDragmove() {
+  onDragmove(e) {
     if(!this.isDragging) {
       return;
     }
+
+    e.cancelBubble = true;
 
     let { x, y } = this.nodeAttributes();
     let { project: { pixel } } = this;
@@ -37,7 +40,11 @@ export default Mixin.create({
     this.model.update({ position });
   },
 
-  onDragend() {
+  onDragend(e) {
+    if(!this.isDragging) {
+      return;
+    }
+    e.cancelBubble = true;
     this.setProperties({ isDragging: false, _dragPosition: null });
   }
 
