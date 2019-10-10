@@ -52,6 +52,7 @@ export default {
         data.type = 'sprite';
         data.parent = null;
         data.index = index;
+        data.background = 'transparent';
         delete data.thumbnail;
 
         let id = await save(data);

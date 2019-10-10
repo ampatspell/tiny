@@ -9,6 +9,7 @@ export default Entity.extend({
   typeName: 'Sprite',
 
   pixel: data('pixel'),
+  background: data('background'),
   properties: properties(),
 
   render: render('sprite'),
