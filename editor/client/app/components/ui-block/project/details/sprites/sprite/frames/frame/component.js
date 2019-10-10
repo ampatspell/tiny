@@ -4,10 +4,10 @@ import { readOnly } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-project-details-type-sprites-sprite-frames-frame', 'selected:selected' ],
+  classNameBindings: [ ':ui-block-project-details-sprites-sprite-frames-frame', 'selected:selected' ],
   attributeBindings: [ 'style', 'index:data-id' ],
 
-  sprite: readOnly('frame.sprite'),
+  sprite: readOnly('frame.parent'),
   index: readOnly('frame.index'),
 
   style: computed('sprite.size', 'pixel', function() {

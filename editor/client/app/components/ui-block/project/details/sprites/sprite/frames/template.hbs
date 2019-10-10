@@ -1,0 +1,7 @@
+{{#ui-block/dragula class="content" disabled=sprite.render.locked onDrop=(action "reorder") options=(hash direction="horizontal") as |dragula|}}
+  {{#dragula.container class="frames"}}
+    {{#each sprite.frames.ordered as |frame|}}
+      {{ui-block/project/details/sprites/sprite/frames/frame class="frame" frame=frame selected=(eq frame selected) pixel=pixel select=(action "select" frame)}}
+    {{/each}}
+  {{/dragula.container}}
+{{/ui-block/dragula}}

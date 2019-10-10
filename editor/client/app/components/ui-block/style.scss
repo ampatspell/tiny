@@ -17,13 +17,13 @@
 @import "project/sidebar/tree/style";
 @import "project/sidebar/sprites/style";
 // @import "project/editor/style";
-// @import "project/details/style";
-// @import "project/details/type/sprites/sprite/style";
-// @import "project/details/type/sprites/sprite/frames/style";
 @import "project/inspector/style";
 @import "project/inspector/tabs/style";
 @import "project/inspector/pixel/style";
-// @import "project/inspector/tools/style";
+@import "project/details/style";
+@import "project/details/sprites/sprite/frames/style";
+@import "project/details/sprites/sprite/frames/frame/style";
+
 // @import "project/inspector/selection/style";
 // @import "project/inspector/selection/tab/style";
 // @import "project/inspector/selection/sprites/sprite/tab/loop/style";

@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
-  classNameBindings: [ ':ui-block-project-details-type-sprites-sprite-frames' ],
+  classNameBindings: [ ':ui-block-project-details-sprites-sprite-frames' ],
   attributeBindings: [ 'style' ],
 
   sprite: null,

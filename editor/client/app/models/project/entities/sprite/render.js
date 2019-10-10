@@ -13,4 +13,6 @@ export default Render.extend({
     ];
   }),
 
+  detailsComponentName: 'sprites/sprite'
+
 });
