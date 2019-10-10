@@ -1,5 +1,6 @@
 import Render from '../entity/render';
 import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 
 export default Render.extend({
 
@@ -15,6 +16,24 @@ export default Render.extend({
 
   detailsComponentName: 'sprites/sprite',
 
-  deleteConfirmation: 'Sure you want to delete this sprite?'
+  deleteConfirmation: 'Sure you want to delete this sprite?',
+
+  modelPixel: readOnly('model.pixel'),
+  projectPixel: readOnly('model.project.pixel'),
+
+  pixel: computed('modelPixel', 'projectPixel', function() {
+    let { modelPixel, projectPixel } = this;
+    return modelPixel * projectPixel;
+  }).readOnly(),
+
+  frame: computed('model.{position,size}', 'modelPixel', 'projectPixel', function() {
+    let { model: { position: { x, y }, size: { width, height } }, projectPixel, pixel } = this;
+    return {
+      x: x * projectPixel,
+      y: y * projectPixel,
+      width: width * pixel,
+      height: height * pixel
+    };
+  }).readOnly(),
 
 });

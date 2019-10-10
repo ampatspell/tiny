@@ -1,0 +1,5 @@
+{{#if renderEntities}}
+  {{#each model.entities.visible as |entity idx|}}
+    {{ui-konva/project/entity project=project model=entity zIndex=idx}}
+  {{/each}}
+{{/if}}

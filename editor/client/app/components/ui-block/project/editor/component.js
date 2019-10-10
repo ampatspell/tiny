@@ -21,6 +21,7 @@ export default Component.extend(KeyboardMixin, {
       this.project.update(props);
     },
     created(stage) {
+      setGlobal({ stage });
       this.onCreated(stage);
     },
     destroying() {

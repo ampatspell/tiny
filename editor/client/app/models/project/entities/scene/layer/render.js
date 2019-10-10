@@ -1,5 +1,6 @@
 import Render from '../../entity/render';
 import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 
 export default Render.extend({
 
@@ -12,6 +13,20 @@ export default Render.extend({
     ];
   }),
 
-  deleteConfirmation: 'Sure you want to delete this layer?'
+  deleteConfirmation: 'Sure you want to delete this layer?',
+
+  pixel: readOnly('model.project.pixel'),
+
+  frame: computed('model.{position,size}', 'pixel', function() {
+    let { model: { position: { x, y }, size: { width, height } }, pixel } = this;
+    return {
+      x: x * pixel,
+      y: y * pixel,
+      width: width * pixel,
+      height: height * pixel
+    };
+  }).readOnly(),
+
+  renderEntities: true,
 
 });

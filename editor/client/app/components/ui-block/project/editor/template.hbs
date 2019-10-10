@@ -12,6 +12,10 @@
       draggable=isSpacePressed
     }}
 
+      {{#ui-konva/layer}}
+        {{ui-konva/project/entity project=project model=project}}
+      {{/ui-konva/layer}}
+
       {{!-- {{#ui-konva/layer zIndex=0}}
         {{ui-konva/project/scenes project=project disabled=isSpacePressed}}
       {{/ui-konva/layer}}

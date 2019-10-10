@@ -17,6 +17,10 @@ export default EmberObject.extend({
 
   identified: computed('ordered.@each.identifier', function() {
     return this.ordered.filter(model => !!model.identifier);
+  }).readOnly(),
+
+  visible: computed('models.@each.hidden', function() {
+    return this.models.filter(model => !model.hidden);
   }).readOnly()
 
 });
