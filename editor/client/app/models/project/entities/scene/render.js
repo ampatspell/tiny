@@ -26,8 +26,6 @@ export default Render.extend({
       width: width * pixel,
       height: height * pixel
     };
-  }).readOnly(),
-
-  renderEntities: true,
+  }).readOnly()
 
 });

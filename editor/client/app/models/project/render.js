@@ -19,8 +19,6 @@ export default Render.extend({
     { id: 'exttas', label: 'Manage',  component: 'project/extras' },
   ]),
 
-  frame: freeze({ x: 0, y: 0 }),
-
-  renderEntities: true,
+  frame: freeze({ x: 0, y: 0 })
 
 });
