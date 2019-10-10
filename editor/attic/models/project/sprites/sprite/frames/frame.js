@@ -7,8 +7,8 @@ import { Pixel, toIndex } from 'editor/utils/pixel';
 
 export default EmberObject.extend(DocMixin, {
 
-  typeGroup: 'sprites/sprite/frame',
-  typeName: 'Frame',
+  // typeGroup: 'sprites/sprite/frame',
+  // typeName: 'Frame',
 
   // project: readOnly('frames.project'),
   // sprite: readOnly('frames.sprite'),

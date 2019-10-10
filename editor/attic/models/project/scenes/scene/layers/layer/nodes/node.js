@@ -11,32 +11,32 @@ export {
 
 export default EmberObject.extend(DocMixin, {
 
-  isNode: true,
+  // isNode: true,
 
-  typeGroup: 'scenes/scene/layer/node',
-  typeName: 'Node',
-  baseTypeName: 'Node',
+  // typeGroup: 'scenes/scene/layer/node',
+  // typeName: 'Node',
+  // baseTypeName: 'Node',
 
-  project: readOnly('nodes.project'),
-  layer: readOnly('nodes.layer'),
-  scene: readOnly('layer.scene'),
+  // project: readOnly('nodes.project'),
+  // layer: readOnly('nodes.layer'),
+  // scene: readOnly('layer.scene'),
 
-  nodes: null,
+  // nodes: null,
 
-  type: data('type'),
-  index: data('index'),
-  identifier: data('identifier'),
-  position: data('position.serialized'),
+  // type: data('type'),
+  // index: data('index'),
+  // identifier: data('identifier'),
+  // position: data('position.serialized'),
 
-  hidden: data('hidden'),
-  locked: data('locked'),
+  // hidden: data('hidden'),
+  // locked: data('locked'),
 
-  chainHidden: or('nodes.chainHidden', 'hidden'),
-  chainLocked: or('nodes.chainLocked', 'locked'),
+  // chainHidden: or('nodes.chainHidden', 'hidden'),
+  // chainLocked: or('nodes.chainLocked', 'locked'),
 
-  properties: properties(),
+  // properties: properties(),
 
-  render: model().named('project/scenes/scene/layers/layer/nodes/node/render').mapping(model => ({ model })),
+  // render: model().named('project/scenes/scene/layers/layer/nodes/node/render').mapping(model => ({ model })),
 
   //
 
@@ -47,8 +47,8 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  async load() {
-  },
+  // async load() {
+  // },
 
   async moveUp() {
     await this.nodes.moveUp(this);

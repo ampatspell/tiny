@@ -32,7 +32,7 @@ export default EmberObject.extend(DocMixin, {
 
   // properties: properties(),
 
-  layers: model().named('project/scenes/scene/layers').mapping(scene => ({ scene })),
+  // layers: model().named('project/scenes/scene/layers').mapping(scene => ({ scene })),
   // render: model().named('project/scenes/scene/render').mapping(model => ({ model })),
 
   //

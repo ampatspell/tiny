@@ -7,42 +7,42 @@ import MoveMixin from '../../../../../-move';
 
 export default EmberObject.extend(MoveMixin, {
 
-  typeName: 'Nodes',
+  // typeName: 'Nodes',
 
-  project: readOnly('layer.project'),
+  // project: readOnly('layer.project'),
 
-  layer: null,
+  // layer: null,
 
-  chainHidden: readOnly('layer.chainHidden'),
-  chainLocked: readOnly('layer.chainLocked'),
+  // chainHidden: readOnly('layer.chainHidden'),
+  // chainLocked: readOnly('layer.chainLocked'),
 
-  ref: computed('layer.ref', function() {
-    let { layer: { ref } } = this;
-    return ref.collection('nodes');
-  }).readOnly(),
+  // ref: computed('layer.ref', function() {
+  //   let { layer: { ref } } = this;
+  //   return ref.collection('nodes');
+  // }).readOnly(),
 
-  query: observed().owner('ref').content(({ ref }) => ref.query()),
-  models: models('query.content').object('data.type').named(doc => {
-    let type = doc.get('data.type');
-    return `project/scenes/scene/layers/layer/nodes/node/type/${type}`;
-  }).mapping((doc, nodes) => ({ nodes, doc })),
+  // query: observed().owner('ref').content(({ ref }) => ref.query()),
+  // models: models('query.content').object('data.type').named(doc => {
+  //   let type = doc.get('data.type');
+  //   return `project/scenes/scene/layers/layer/nodes/node/type/${type}`;
+  // }).mapping((doc, nodes) => ({ nodes, doc })),
 
-  ordered: computed('models.@each.index', function() {
-    return this.models.sortBy('index');
-  }).readOnly(),
+  // ordered: computed('models.@each.index', function() {
+  //   return this.models.sortBy('index');
+  // }).readOnly(),
 
   visible: computed('ordered.@each.hidden', function() {
     return this.ordered.filter(model => !model.hidden);
   }).readOnly(),
 
-  reversed: computed('ordered', function() {
-    return this.ordered.slice().reverse();
-  }).readOnly(),
+  // reversed: computed('ordered', function() {
+  //   return this.ordered.slice().reverse();
+  // }).readOnly(),
 
-  async load({ type }) {
-    await resolveObservers(this.query);
-    await all(this.models.map(model => model.load({ type })));
-  },
+  // async load({ type }) {
+  //   await resolveObservers(this.query);
+  //   await all(this.models.map(model => model.load({ type })));
+  // },
 
   async didCreate(node) {
     await this.layer.onDidCreateNode(node);
