@@ -12,6 +12,6 @@ export default Entity.extend({
   typeName: 'Layer',
 
   render: render('scene/layer'),
-  properties: properties(),
+  properties: properties()
 
 });

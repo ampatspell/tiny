@@ -1,4 +1,7 @@
 import Entity, { data, render } from './entity';
+import { model } from 'ember-cli-zuglet/lifecycle';
+
+const typed = name => model().named(`project/entities/scene/${name}`).mapping(model => ({ model }))
 
 export default Entity.extend({
 
@@ -7,5 +10,7 @@ export default Entity.extend({
   background: data('background'),
 
   render: render('scene'),
+
+  layers: typed('layers'),
 
 });
