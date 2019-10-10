@@ -12,19 +12,19 @@
       draggable=isSpacePressed
     }}
 
-      {{#ui-konva/layer zIndex=0}}
+      {{!-- {{#ui-konva/layer zIndex=0}}
         {{ui-konva/project/scenes project=project disabled=isSpacePressed}}
       {{/ui-konva/layer}}
 
       {{#ui-konva/layer zIndex=1}}
         {{ui-konva/project/sprites project=project disabled=isSpacePressed}}
-      {{/ui-konva/layer}}
+      {{/ui-konva/layer}} --}}
 
-      {{#ui-konva/layer zIndex=2}}
+      {{!-- {{#ui-konva/layer zIndex=2}}
         {{ui-konva/project/overlay/selection project=project}}
         {{ui-konva/project/overlay/editing project=project disabled=isSpacePressed}}
         {{ui-konva/project/overlay/resize project=project disabled=(not isSpacePressed)}}
-      {{/ui-konva/layer}}
+      {{/ui-konva/layer}} --}}
 
     {{/ui-konva/stage}}
   {{/ui-konva/autosized}}
