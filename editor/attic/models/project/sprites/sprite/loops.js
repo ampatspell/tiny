@@ -29,12 +29,12 @@ export default EmberObject.extend({
 
   //
 
-  selected:  null,
+  // selected:  null,
 
-  select(selected) {
-    selected = selected || null;
-    this.setProperties({ selected });
-  },
+  // select(selected) {
+  //   selected = selected || null;
+  //   this.setProperties({ selected });
+  // },
 
   //
 

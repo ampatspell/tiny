@@ -7,6 +7,9 @@ export default Component.extend({
     select(loop) {
       this.model.loops.select(loop);
       this.selectTab('loop');
+    },
+    createLoop() {
+      this.model.loops.create();
     }
   }
 
