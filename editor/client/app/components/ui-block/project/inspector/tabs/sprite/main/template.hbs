@@ -1,6 +1,8 @@
 {{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
 
-  {{ui-block/project/inspector/tabs/section/header sidebar=sidebar model=model}}
+  {{#ui-block/project/inspector/tabs/section/header class="no-border" sidebar=sidebar model=model}}
+    {{ui-block/sprites/preview/sprite model=model class="padded"}}
+  {{/ui-block/project/inspector/tabs/section/header}}
 
   {{#sidebar.section as |section|}}
     {{ui-block/project/inspector/tabs/section/item/identifier section=section model=model}}

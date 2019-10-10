@@ -7,6 +7,8 @@ export default Component.extend({
   type: reads('model.typeName'),
   identifier: reads('model.identifier'),
 
+  lock: true,
+
   actions: {
     locked(locked) {
       this.model.update({ locked });

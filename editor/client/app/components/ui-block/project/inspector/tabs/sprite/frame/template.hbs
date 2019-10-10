@@ -1,1 +1,23 @@
-{{yield}}
+{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
+
+  {{#if frame}}
+
+    {{#ui-block/project/inspector/tabs/section/header class="no-border" sidebar=sidebar model=frame lock=false}}
+      {{ui-block/sprites/preview/frame model=frame class="padded"}}
+    {{/ui-block/project/inspector/tabs/section/header}}
+
+    {{#sidebar.section as |section|}}
+      {{ui-block/project/inspector/tabs/section/item/identifier section=section model=frame}}
+    {{/sidebar.section}}
+
+    {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=frame}}
+
+  {{else}}
+
+    {{#sidebar.section as |section|}}
+      {{section.placeholder value="No frame selected"}}
+    {{/sidebar.section}}
+
+  {{/if}}
+
+{{/ui-block/sidebar}}
