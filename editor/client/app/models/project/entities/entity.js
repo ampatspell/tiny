@@ -43,6 +43,10 @@ export default EmberObject.extend(DocMixin, {
   entities: entities('project/entities/entity'),
 
   async load() {
+  },
+
+  select() {
+    return this.project.select(this);
   }
 
 });

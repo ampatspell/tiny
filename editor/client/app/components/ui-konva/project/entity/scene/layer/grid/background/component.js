@@ -1,4 +1,4 @@
-import Node from '../../../../../../../../-node';
+import Node from '../../../../../../-node';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
@@ -18,7 +18,7 @@ export default Node.extend({
   model: null,
   grid: readOnly('model.grid'),
 
-  scene: readOnly('model.scene'),
+  scene: readOnly('model.parent'),
   size: readOnly('scene.size'),
   pixel: readOnly('scene.render.pixel'),
   background: readOnly('scene.background'),

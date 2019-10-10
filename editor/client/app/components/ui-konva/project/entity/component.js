@@ -15,7 +15,6 @@ export default Node.extend(DraggableMixin, {
 
   frame:  readOnly('model.render.frame'),
   locked: readOnly('model.render.locked'),
-  hidden: readOnly('model.render.hidden'),
   // editing: readOnly('model.isEditing'),
 
   draggable: computed('disabled', 'locked', 'editing', function() {
@@ -34,8 +33,7 @@ export default Node.extend(DraggableMixin, {
 
   onClick(e) {
     e.cancelBubble = true;
-    console.log('click', this+'');
-    // this.model.select(true);
+    this.model.select();
     if(this.locked) {
       return;
     }
