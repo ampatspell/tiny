@@ -14,26 +14,30 @@ export default Node.extend({
   opacity: 0.75,
 
   inset: readOnly('model.render.selectionInset'),
-  frame: readOnly('model.render.absolute'),
+  absolute: readOnly('model.render.absolute'),
 
-  _frame: computed('frame', 'inset', function() {
-    let { frame, inset } = this;
+  frame: computed('absolute', 'inset', function() {
+    let { absolute, inset } = this;
+    if(!absolute) {
+      return {};
+    }
     inset = inset || 0.5;
     return {
-      x: frame.x - inset,
-      y: frame.y - inset,
-      width: frame.width + (2 * inset),
-      height: frame.height + (2 * inset)
+      x: absolute.x - inset,
+      y: absolute.y - inset,
+      width: absolute.width + (2 * inset),
+      height: absolute.height + (2 * inset)
     };
   }).readOnly(),
 
-  props: computed('_frame', 'opacity', function() {
-    let { _frame, opacity } = this;
+  props: computed('frame', 'opacity', function() {
+    let { frame, opacity } = this;
     return {
-      ..._frame,
+      ...frame,
       stroke: `rgba(96,190,253,${opacity})`,
       strokeWidth: 1,
-      listening: false
+      listening: false,
+      visible: !!frame
     };
   })
 

@@ -10,12 +10,7 @@ const absolute = (arrayKey, propertyKey) => computed(`model.entities.${arrayKey}
   let entities = this.get(`model.entities.${arrayKey}`);
 
   if(entities.length === 0) {
-    return {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0
-    };
+    return;
   }
 
   let box = {
@@ -61,7 +56,7 @@ export default Render.extend({
 
   frame: freeze({ x: 0, y: 0 }),
 
-  absolute: absolute('visible', '_renderAbsolute'),
+  // absolute: absolute('visible', '_renderAbsolute'),
 
   selection: computed('model.selection.model', function() {
     let { model: { selection: { model } } } = this;
