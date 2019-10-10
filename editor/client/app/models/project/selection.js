@@ -17,6 +17,10 @@ export default EmberObject.extend({
     }
     this.setProperties({ model });
     setGlobal({ selection: model });
+  },
+
+  deselect() {
+    this.select(null);
   }
 
 });

@@ -27,7 +27,7 @@ export default Component.extend(KeyboardMixin, {
       this.onDestroying();
     },
     deselect() {
-      this.project.deselect();
+      this.project.selection.deselect();
     }
   },
 
@@ -44,27 +44,27 @@ export default Component.extend(KeyboardMixin, {
   //
 
   onDigit(value) {
-    this.project.onShortcutDigit(value);
+    // this.project.onShortcutDigit(value);
   },
 
   onUp() {
-    this.project.onShortcutUp();
+    // this.project.onShortcutUp();
   },
 
   onDown() {
-    this.project.onShortcutDown();
+    // this.project.onShortcutDown();
   },
 
   onLeft() {
-    this.project.onShortcutLeft();
+    // this.project.onShortcutLeft();
   },
 
   onRight() {
-    this.project.onShortcutRight();
+    // this.project.onShortcutRight();
   },
 
   onEscape() {
-    this.project.onShortcutEscape();
+    // this.project.onShortcutEscape();
   },
 
   //

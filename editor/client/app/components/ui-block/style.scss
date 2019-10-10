@@ -8,20 +8,23 @@
 @import "background-image/style";
 @import "tabs/style";
 @import "dialogs/style";
-
 @import "sidebar/section/style";
 @import "sprites/preview/style";
 
 @import "project/style";
+
 @import "project/sidebar/style";
 @import "project/sidebar/tree/style";
 @import "project/sidebar/sprites/style";
-// @import "project/editor/style";
+
+@import "project/editor/style";
+
 @import "project/inspector/style";
 @import "project/inspector/tabs/style";
 @import "project/inspector/tabs/sprite/loops/style";
 @import "project/inspector/tabs/sprite/loop/frame/style";
 @import "project/inspector/pixel/style";
+
 @import "project/details/style";
 @import "project/details/sprites/sprite/frames/style";
 @import "project/details/sprites/sprite/frames/frame/style";
