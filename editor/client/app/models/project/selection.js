@@ -1,4 +1,5 @@
-import EmberObject, { computed } from '@ember/object';
+import EmberObject from '@ember/object';
+import { normalized } from 'editor/utils/computed';
 
 export default EmberObject.extend({
 
@@ -8,16 +9,7 @@ export default EmberObject.extend({
     return model || this.project;
   },
 
-  model: computed({
-    get() {
-      return this._normalize(this._model);
-    },
-    set(key, value) {
-      value = this._normalize(value);
-      this._model = value;
-      return value;
-    }
-  }),
+  model: normalized('_normalize'),
 
   select(model) {
     if(this._normalize(model) === this.model) {

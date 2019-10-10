@@ -59,3 +59,15 @@ export const delta = (arrayKey, currentKey, value, ring=true) => computed(`${arr
   }
   return array.objectAt(index);
 }).readOnly();
+
+export const normalized = normalize => computed({
+  get(key) {
+    let value = this[`_${key}`];
+    return this[normalize].call(this, value);
+  },
+  set(key, value) {
+    value = this[normalize].call(this, value);
+    this[`_${key}`] = value;
+    return value;
+  }
+});
