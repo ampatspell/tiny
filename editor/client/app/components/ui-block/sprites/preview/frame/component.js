@@ -16,11 +16,15 @@ export default Component.extend({
   willDestroyElement() {
     this._super(...arguments);
     this.removeObserver('frame', this, this._frameDidChange, true);
+    this.cancelFrameDidChange();
+  },
+
+  cancelFrameDidChange() {
     cancel(this.__frameDidChange);
   },
 
   frameDidChange() {
-    cancel(this.__frameDidChange);
+    this.cancelFrameDidChange();
     let { frame } = this;
     this.draw((ctx, { width, height }) => {
       if(!frame) {
@@ -31,7 +35,7 @@ export default Component.extend({
   },
 
   _frameDidChange() {
-    cancel(this.__frameDidChange);
+    this.cancelFrameDidChange();
     this.__frameDidChange = next(() => this.frameDidChange());
   },
 
