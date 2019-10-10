@@ -5,6 +5,12 @@ import { computed } from '@ember/object';
 
 const observe = [ 'frame', 'sceneFunc', 'hitFunc' ];
 
+const backgrounds = {
+  'transparent': null,
+  'black':       '#222',
+  'white':       '#fff'
+};
+
 export default Node.extend({
 
   nodeClassName: 'shape',
@@ -13,23 +19,33 @@ export default Node.extend({
   model: null,
   sprite: null,
 
-  selected: readOnly('sprite.isSelected'),
-  editing: readOnly('sprite.isEditing'),
-  enabled: not('disabled'),
-  editable: and('editing', 'enabled', 'model'),
+  // selected: readOnly('sprite.isSelected'),
+  // editing: readOnly('sprite.isEditing'),
+  // enabled: not('disabled'),
+  // editable: and('editing', 'enabled', 'model'),
+
+  disabled: true,
 
   pixel: readOnly('sprite.render.pixel'),
   frame: readOnly('sprite.render.frame'),
   size: readOnly('sprite.size'),
+  background: readOnly('sprite.background'),
+
   bytes: readOnly('model.bytes'),
 
   isDrawing: false,
 
-  sceneFunc: computed('size', 'pixel', 'bytes', function() {
-    let { size, pixel, bytes } = this;
+  sceneFunc: computed('size', 'pixel', 'bytes', 'background', function() {
+    let { size, pixel, bytes, background } = this;
     return ctx => {
       ctx.strokeStyle = 'rgba(0,0,0,0.1)';
       ctx.strokeRect(-0.5, -0.5, (size.width * pixel) + 1, (size.height * pixel) + 1);
+
+      let fill = backgrounds[background];
+      if(fill) {
+        ctx.fillStyle = fill;
+        ctx.fillRect(0, 0, size.width * pixel, size.height * pixel);
+      }
 
       if(!bytes) {
         return;
@@ -55,22 +71,18 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  hitFunc: computed(function() {
-    return (ctx, node) => {
-      ctx.beginPath();
-      ctx.rect(0, 0, node.width(), node.height());
-      ctx.closePath();
-      ctx.fillStrokeShape(node);
-    }
-  }).readOnly(),
-
-  props: computed('frame', 'sceneFunc', 'hitFunc', function() {
-    let { frame, sceneFunc, hitFunc } = this;
+  props: computed('frame', 'sceneFunc', function() {
+    let { frame: { width, height }, sceneFunc } = this;
     return {
-      width: frame.width,
-      height: frame.height,
+      width,
+      height,
       sceneFunc,
-      hitFunc
+      hitFunc: (ctx, node) => {
+        ctx.beginPath();
+        ctx.rect(0, 0, node.width(), node.height());
+        ctx.closePath();
+        ctx.fillStrokeShape(node);
+      }
     };
   }).readOnly(),
 
@@ -105,9 +117,12 @@ export default Node.extend({
   },
 
   onMousedown(e) {
-    if(!this.editable || !this.selected) {
+    if(this.disabled) {
       return;
     }
+    // if(!this.editable || !this.selected) {
+    //   return;
+    // }
     e.cancelBubble = true;
     this.setProperties({ isDrawing: true });
     this.updatePixelForEvent(e);
