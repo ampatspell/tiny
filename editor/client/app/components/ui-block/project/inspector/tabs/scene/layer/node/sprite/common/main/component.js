@@ -1,7 +1,8 @@
-import Component from '../../../../../../../-component';
+import Component from '../../../../../../-component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
+  tagName: '',
 
   sprites: computed('model.sprites.@each.identifier', function() {
     return this.model.sprites.map(({ identifier }) => ({

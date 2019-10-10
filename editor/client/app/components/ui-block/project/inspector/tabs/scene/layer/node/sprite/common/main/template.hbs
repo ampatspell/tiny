@@ -1,0 +1,33 @@
+{{#ui-block/project/inspector/tabs/scene/layer/node/common/main model=model as |common|}}
+
+  {{#if (eq common.position "sidebar")}}
+
+    {{#if sprites}}
+
+      {{#common.sidebar.section as |section|}}
+        {{section.dropdown label="Sprite" items=sprites selected=sprite update=(action "sprite")}}
+        {{#if model.sprite}}
+          {{ui-block/sprites/preview/sprite model=model.sprite pixel=2 class="preview padded"}}
+        {{/if}}
+
+        {{#if model.sprite}}
+          {{yield (hash
+            position="section"
+            section=section
+          )}}
+        {{else}}
+          {{section.placeholder value="Missing sprite"}}
+        {{/if}}
+
+      {{/common.sidebar.section}}
+
+      {{#common.sidebar.section as |section|}}
+        {{ui-block/project/inspector/tabs/section/item/alignment section=section model=model}}
+        {{ui-block/project/inspector/tabs/section/item/flip section=section model=model}}
+      {{/common.sidebar.section}}
+
+    {{/if}}
+
+  {{/if}}
+
+{{/ui-block/project/inspector/tabs/scene/layer/node/common/main}}

@@ -10,13 +10,13 @@ const _size = Object.freeze({ width: 8, height: 8 });
 
 export default Node.extend({
 
-  typeName: 'Sprite Node',
+  // typeName: 'Sprite Node',
 
-  alignment: data('alignment.serialized'),
-  flip: data('flip.serialized'),
+  // alignment: data('alignment.serialized'),
+  // flip: data('flip.serialized'),
 
-  _sprite: data('sprite'),
-  sprites: readOnly('project.sprites.selectable'),
+  // _sprite: data('sprite'),
+  // sprites: readOnly('project.sprites.selectable'),
 
   size: computed('sprite.size', 'layer.grid', function() {
     let { sprite, layer: { grid } } = this;
@@ -43,10 +43,10 @@ export default Node.extend({
     return _size;
   }).readOnly(),
 
-  sprite: computed('_sprite', 'sprites.@each.identifier', function() {
-    let { _sprite, sprites } = this;
-    return sprites.findBy('identifier', _sprite);
-  }).readOnly(),
+  // sprite: computed('_sprite', 'sprites.@each.identifier', function() {
+  //   let { _sprite, sprites } = this;
+  //   return sprites.findBy('identifier', _sprite);
+  // }).readOnly(),
 
   onSprite(sprite) {
     // TODO: chainLocked, scene.isEditing

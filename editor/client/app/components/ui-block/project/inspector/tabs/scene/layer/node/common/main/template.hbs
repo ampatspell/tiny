@@ -1,0 +1,21 @@
+{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
+
+  {{ui-block/project/inspector/tabs/section/header sidebar=sidebar model=model}}
+
+  {{#sidebar.section as |section|}}
+    {{ui-block/project/inspector/tabs/section/item/identifier section=section model=model}}
+    {{ui-block/project/inspector/tabs/section/item/position section=section model=model}}
+    {{yield (hash
+      position="section"
+      section=section
+    )}}
+  {{/sidebar.section}}
+
+  {{yield (hash
+    position="sidebar"
+    sidebar=sidebar
+  )}}
+
+  {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=model}}
+
+{{/ui-block/sidebar}}

@@ -1,5 +1,4 @@
-{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
-
-  {{ui-block/project/inspector/tabs/section/header sidebar=sidebar model=model}}
-
-{{/ui-block/sidebar}}
+{{#ui-block/project/inspector/tabs/scene/layer/node/sprite/common/main model=model as |common|}}
+  {{#if (eq common.position "section")}}
+  {{/if}}
+{{/ui-block/project/inspector/tabs/scene/layer/node/sprite/common/main}}
