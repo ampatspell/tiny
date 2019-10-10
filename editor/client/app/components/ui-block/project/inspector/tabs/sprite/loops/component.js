@@ -6,6 +6,7 @@ export default Component.extend({
   actions: {
     select(loop) {
       this.model.loops.select(loop);
+      this.selectTab('loop');
     }
   }
 
