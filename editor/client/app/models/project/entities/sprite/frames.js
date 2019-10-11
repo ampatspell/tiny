@@ -51,6 +51,16 @@ export default Frames.extend(SettingsMixin, {
   selectNext() {
     let model = this.next;
     model && this.select(model);
-  }
+  },
+
+  async reorder(indexes) {
+    let { selected } = this;
+    let frames = this.ordered.slice();
+    frames.forEach(frame => {
+      let index = indexes.indexOf(frame.index);
+      frame.update({ index });
+    });
+    this.select(selected);
+  },
 
 });

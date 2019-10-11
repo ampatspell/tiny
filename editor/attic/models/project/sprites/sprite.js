@@ -93,13 +93,13 @@ export default EmberObject.extend(DocMixin, {
     await this.project.onWillDeleteSprite(this);
   },
 
-  async moveUp() {
-    await this.sprites.moveUp(this);
-  },
+  // async moveUp() {
+  //   await this.sprites.moveUp(this);
+  // },
 
-  async moveDown() {
-    await this.sprites.moveDown(this);
-  },
+  // async moveDown() {
+  //   await this.sprites.moveDown(this);
+  // },
 
   //
 
