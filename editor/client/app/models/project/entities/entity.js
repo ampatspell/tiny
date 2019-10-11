@@ -57,6 +57,24 @@ export default EmberObject.extend(DocMixin, {
 
   clampPosition(position) {
     return position;
+  },
+
+  //
+
+  async moveUp() {
+    let { parent } = this;
+    if(!parent) {
+      return;
+    }
+    await parent.entities.moveUp(this);
+  },
+
+  async moveDown() {
+    let { parent } = this;
+    if(!parent) {
+      return;
+    }
+    await parent.entities.moveDown(this);
   }
 
 });

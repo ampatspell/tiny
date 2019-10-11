@@ -19,8 +19,42 @@ export default EmberObject.extend({
     return this.ordered.filter(model => !!model.identifier);
   }).readOnly(),
 
-  visible: computed('models.@each.hidden', function() {
-    return this.models.filter(model => !model.hidden);
-  }).readOnly()
+  visible: computed('ordered.@each.hidden', function() {
+    return this.ordered.filter(model => !model.hidden);
+  }).readOnly(),
+
+  //
+
+  async _moveDelta(model, delta) {
+    let { ordered } = this;
+    let idx = ordered.indexOf(model);
+    if(idx === -1) {
+      return;
+    }
+
+    idx = idx + delta;
+    if(idx < 0 || idx > ordered.length - 1) {
+      return;
+    }
+
+    let next = ordered.objectAt(idx);
+    if(!next) {
+      return;
+    }
+
+    let { index: modelIndex } = model;
+    let { index: nextIndex } = next;
+
+    model.update({ index: nextIndex });
+    next.update({ index: modelIndex });
+  },
+
+  async moveUp(model) {
+    await this._moveDelta(model, +1);
+  },
+
+  async moveDown(model) {
+    await this._moveDelta(model, -1);
+  }
 
 });
