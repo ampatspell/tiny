@@ -27,6 +27,6 @@ export default Scenes.extend({
     let model = await this.createModel({ type: 'scene', identifier, position, size, background });
     await this.didCreate(model);
     return model;
-  },
+  }
 
 });
