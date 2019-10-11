@@ -25,7 +25,7 @@ export default EmberObject.extend({
 
   //
 
-  async _moveDelta(model, delta) {
+  _moveDelta(model, delta) {
     let { ordered } = this;
     let idx = ordered.indexOf(model);
     if(idx === -1) {
@@ -49,12 +49,12 @@ export default EmberObject.extend({
     next.update({ index: modelIndex });
   },
 
-  async moveUp(model) {
-    await this._moveDelta(model, +1);
+  moveUp(model) {
+    this._moveDelta(model, +1);
   },
 
-  async moveDown(model) {
-    await this._moveDelta(model, -1);
+  moveDown(model) {
+    this._moveDelta(model, -1);
   }
 
 });
