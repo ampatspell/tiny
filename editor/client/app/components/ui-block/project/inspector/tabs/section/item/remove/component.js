@@ -22,7 +22,7 @@ export default Component.extend({
         return;
       }
     }
-    // this.model.delete();
+    this.model.delete();
   }
 
 });
