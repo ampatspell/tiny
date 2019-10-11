@@ -70,9 +70,9 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  clampPosition(position) {
-    return this.layer.clampNodePosition(this, position);
-  },
+  // clampPosition(position) {
+  //   return this.layer.clampNodePosition(this, position);
+  // },
 
   updatePositionDelta({ x, y }) {
     let { position } = this;

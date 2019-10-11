@@ -47,8 +47,16 @@ export default EmberObject.extend(DocMixin, {
   async load() {
   },
 
+  //
+
   select() {
     return this.project.select(this);
+  },
+
+  //
+
+  clampPosition(position) {
+    return position;
   }
 
 });

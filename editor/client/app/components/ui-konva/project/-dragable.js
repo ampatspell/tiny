@@ -26,6 +26,8 @@ export default Mixin.create({
       y: Math.floor(y / pixel)
     };
 
+    position = this.model.clampPosition(position);
+
     x = position.x * pixel;
     y = position.y * pixel;
 

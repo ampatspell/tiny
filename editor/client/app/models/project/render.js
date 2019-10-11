@@ -56,7 +56,7 @@ export default Render.extend({
 
   frame: freeze({ x: 0, y: 0 }),
 
-  // absolute: absolute('visible', '_renderAbsolute'),
+  absolute: absolute('visible', '_renderAbsolute'),
 
   selection: computed('model.selection.model', function() {
     let { model: { selection: { model } } } = this;

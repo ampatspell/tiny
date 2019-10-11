@@ -3,9 +3,9 @@ import { readOnly } from '@ember/object/computed';
 
 export default EmberObject.extend({
 
-  model: null,
+  // model: null,
 
-  scene: readOnly('model.scene'),
+  // scene: readOnly('model.scene'),
 
   selection: computed('scene', function() {
     let { scene } = this;

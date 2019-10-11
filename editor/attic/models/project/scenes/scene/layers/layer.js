@@ -66,17 +66,17 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  clampNodePosition(node, position) {
-    let { scene: { size: scene } } = this;
-    let { size } = node;
+  // clampNodePosition(node, position) {
+  //   let { scene: { size: scene } } = this;
+  //   let { size } = node;
 
-    let calc = (p, s) => Math.min(Math.max(position[p], 0), scene[s] - size[s]);
+  //   let calc = (p, s) => Math.min(Math.max(position[p], 0), scene[s] - size[s]);
 
-    let x = calc('x', 'width');
-    let y = calc('y', 'height');
+  //   let x = calc('x', 'width');
+  //   let y = calc('y', 'height');
 
-    return { x, y };
-  },
+  //   return { x, y };
+  // },
 
   //
 
