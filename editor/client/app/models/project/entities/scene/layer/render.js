@@ -27,6 +27,11 @@ export default Render.extend({
     };
   }).readOnly(),
 
-  absolute: absolute()
+  absolute: absolute(),
+
+  highlight: computed('model.scene', function() {
+    let { model: { scene } } = this;
+    return [ scene ];
+  }).readOnly(),
 
 });

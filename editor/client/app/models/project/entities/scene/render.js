@@ -30,4 +30,9 @@ export default Render.extend({
 
   absolute: readOnly('frame'),
 
+  highlight: computed('model', function() {
+    let { model } = this;
+    return [ model ];
+  }).readOnly(),
+
 });

@@ -13,11 +13,13 @@ export default Entity.extend({
   baseTypeName: 'Layer',
   typeName: 'Layer',
 
+  scene: readOnly('parent'),
+
   render: render('scene/layer'),
   properties: properties(),
 
   position: Object.freeze({ x: 0, y: 0 }),
-  size: readOnly('parent.size'),
+  size: readOnly('scene.size'),
 
   nodes: model().named('project/entities/scene/layer/nodes').mapping(model => ({ model })),
 

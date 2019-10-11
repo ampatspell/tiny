@@ -13,7 +13,7 @@ export default Node.extend({
 
   opacity: 0.75,
 
-  inset: readOnly('model.render.selectionInset'),
+  inset: readOnly('model.render.highlightInset'),
   absolute: readOnly('model.render.absolute'),
 
   frame: computed('absolute', 'inset', function() {

@@ -23,6 +23,13 @@ export default Render.extend({
     };
   }).readOnly(),
 
-  absolute: absolute()
+  absolute: absolute(),
+
+  highlightInset: -0.5,
+
+  highlight: computed('model.scene', function() {
+    let { model, model: { scene } } = this;
+    return [ scene, model ];
+  }).readOnly(),
 
 });

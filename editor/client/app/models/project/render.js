@@ -1,5 +1,4 @@
 import Render from './-render';
-import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { bounds } from 'editor/utils/computed';
 
@@ -25,12 +24,8 @@ export default Render.extend({
 
   absolute: bounds('model.entities.visible', '_renderAbsolute'),
 
-  selection: computed('model.selection.model', function() {
-    let { model: { selection: { model } } } = this;
-    if(!model) {
-      return;
-    }
-    return [ model ];
-  }).readOnly()
+  highlight: null,
+
+  selection: readOnly('model.selection.model.render.highlight'),
 
 });

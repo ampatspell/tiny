@@ -3,37 +3,37 @@ import { readOnly } from '@ember/object/computed';
 
 export default EmberObject.extend({
 
-  model: null,
+  // model: null,
 
-  project: readOnly('model.project'),
-  position: readOnly('model.position'),
-  size: readOnly('model.size'),
+  // project: readOnly('model.project'),
+  // position: readOnly('model.position'),
+  // size: readOnly('model.size'),
 
-  pixel: computed('project.pixel', 'model.pixel', function() {
-    let { project, model } = this;
-    return project.pixel * model.pixel;
-  }).readOnly(),
+  // pixel: computed('project.pixel', 'model.pixel', function() {
+  //   let { project, model } = this;
+  //   return project.pixel * model.pixel;
+  // }).readOnly(),
 
-  frame: computed('position', 'size', 'project.pixel', 'pixel', function() {
-    let { position, size, project: { pixel: project }, pixel } = this;
-    return {
-      x: position.x * project,
-      y: position.y * project,
-      width: size.width * pixel,
-      height: size.height * pixel
-    };
-  }).readOnly(),
+  // frame: computed('position', 'size', 'project.pixel', 'pixel', function() {
+  //   let { position, size, project: { pixel: project }, pixel } = this;
+  //   return {
+  //     x: position.x * project,
+  //     y: position.y * project,
+  //     width: size.width * pixel,
+  //     height: size.height * pixel
+  //   };
+  // }).readOnly(),
 
-  absolute: readOnly('frame'),
+  // absolute: readOnly('frame'),
 
-  selection: computed('model', function() {
-    let { model } = this;
-    return [ model ];
-  }).readOnly(),
+  // selection: computed('model', function() {
+  //   let { model } = this;
+  //   return [ model ];
+  // }).readOnly(),
 
   resizable: true,
 
-  details: readOnly('model'),
+  // details: readOnly('model'),
 
   // TODO: remove with addition of tools
   isAltPressed: readOnly('project.editor.isAltPressed'),

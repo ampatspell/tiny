@@ -36,6 +36,11 @@ export default Render.extend({
     };
   }).readOnly(),
 
-  absolute: readOnly('frame')
+  absolute: readOnly('frame'),
+
+  highlight: computed('model', function() {
+    let { model } = this;
+    return [ model ];
+  }).readOnly()
 
 });
