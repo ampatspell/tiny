@@ -2,7 +2,7 @@ import Entity, { data, render } from '../../entity';
 import { properties } from '../../../properties';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { readOnly } from '@ember/object/computed';
-import { isSelected, selectedChildEntity } from '../../../-selection';
+import { selectedChildEntity } from '../../../-selection';
 
 export {
   data
@@ -22,7 +22,6 @@ export default Entity.extend({
   position: Object.freeze({ x: 0, y: 0 }),
   size: readOnly('scene.size'),
 
-  isSelected: isSelected(),
   selectedNode: selectedChildEntity('layer'),
 
   nodes: model().named('project/entities/scene/layer/nodes').mapping(model => ({ model })),

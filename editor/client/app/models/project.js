@@ -47,7 +47,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   selection: model().named('project/selection').mapping(project => ({ project })),
 
-  selected: selected(),
+  isSelected: selected(),
 
   //
 
@@ -69,6 +69,12 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   select() {
     return this.selection.select(...arguments);
   },
+
+  //
+
+  willDeleteEntity() {
+    this.select(null);
+  }
 
   //
 

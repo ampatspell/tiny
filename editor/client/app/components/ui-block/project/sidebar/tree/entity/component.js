@@ -8,7 +8,7 @@ export default Component.extend({
     'hidden:render-hidden',
     'model.hidden:hidden',
     'model.locked:locked',
-    'model.selected:selected'
+    'model.isSelected:selected'
   ],
 
   expandable: readOnly('model.render.expandable'),
