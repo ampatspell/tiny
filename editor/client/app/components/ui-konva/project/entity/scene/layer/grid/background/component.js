@@ -8,7 +8,7 @@ const strokes = {
   'white':       'rgba(0,0,0,0.05)'
 };
 
-const observe = [ 'frame', 'sceneFunc' ];
+const observe = [ 'frame', 'sceneFunc', 'visible' ];
 
 export default Node.extend({
 
@@ -22,6 +22,11 @@ export default Node.extend({
   size: readOnly('scene.size'),
   pixel: readOnly('scene.render.pixel'),
   background: readOnly('scene.background'),
+
+  visible: computed('model.{isSelected,selectedNode}', function() {
+    let { model } = this;
+    return model.isSelected || !!model.selectedNode;
+  }).readOnly(),
 
   frame: computed('size', 'pixel', function() {
     let { pixel, size } = this;
@@ -59,11 +64,12 @@ export default Node.extend({
     }
   }).readOnly(),
 
-  props: computed('frame', 'sceneFunc', function() {
-    let { frame, sceneFunc } = this;
+  props: computed('frame', 'sceneFunc', 'visible', function() {
+    let { frame, sceneFunc, visible } = this;
     return {
       ...frame,
       sceneFunc,
+      visible,
       listening: false
     };
   }),
