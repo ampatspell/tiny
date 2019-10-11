@@ -31,7 +31,8 @@ export default baseType => EmberObject.extend({
     if(typeof opts.index !== 'number') {
       opts.index = this._nextIndex();
     }
-    return this.project.content.createModel(this.model, opts);
+    let { model } = this;
+    return this.project.content.createModel(model, opts);
   },
 
 });
