@@ -2,6 +2,7 @@ import EmberObject, { computed } from '@ember/object';
 import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
 import { all } from 'rsvp';
 import { assign } from '@ember/polyfills';
+import { array } from 'editor/utils/computed';
 
 export default EmberObject.extend({
 
@@ -11,7 +12,11 @@ export default EmberObject.extend({
     return this.project.ref.collection('entities');
   }).readOnly(),
 
-  query: observed().owner('ref').content(({ ref }) => ref.query()),
+  _adding: array(),
+
+  query: observed().owner('ref').content(owner => owner.ref.query({
+    doc: path => owner._adding.findBy('path', path)
+  })),
 
   models: models('query.content')
     .object('data.type')
@@ -33,8 +38,13 @@ export default EmberObject.extend({
   async createModel(parent, props) {
     parent = this._parentId(parent);
     let doc = this.ref.doc().new(assign({ parent }, props));
-    await doc.save();
-    return this.models.findBy('id', doc.id);
+    this._adding.pushObject(doc);
+    try {
+      await doc.save({ token: true });
+      return this.models.findBy('id', doc.id);
+    } finally {
+      this._adding.removeObject(doc);
+    }
   }
 
 });
