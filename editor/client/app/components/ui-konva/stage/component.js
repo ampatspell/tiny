@@ -142,6 +142,7 @@ export default Component.extend(Parent, StageEvents, {
 
   onDragstart() {
     this.setProperties({ isDragging: true });
+    this.dragStart && this.dragStart();
   },
 
   onDragmove() {
@@ -154,6 +155,7 @@ export default Component.extend(Parent, StageEvents, {
 
   onDragend() {
     this.setProperties({ isDragging: false });
+    this.dragEnd && this.dragEnd();
   },
 
 });
