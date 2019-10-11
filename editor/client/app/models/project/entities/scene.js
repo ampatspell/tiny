@@ -10,7 +10,6 @@ export default Entity.extend({
   background: data('background'),
 
   render: render('scene'),
-
   layers: typed('layers')
 
 });

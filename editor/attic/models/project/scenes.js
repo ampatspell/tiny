@@ -40,37 +40,37 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
   //   await all(this.models.map(model => model.load({ type })));
   // },
 
-  async create(opts) {
-    let last = this.ordered.lastObject;
-    let index = 0;
-    if(last) {
-      index = last.index + 1;
-    }
+  // async create(opts) {
+  //   let last = this.ordered.lastObject;
+  //   let index = 0;
+  //   if(last) {
+  //     index = last.index + 1;
+  //   }
 
-    let {
-      identifier,
-      position,
-      size,
-      background
-    } = assign({
-      identifier: 'new-scene',
-      position: { x: 4, y: 6 },
-      size: { width: 128, height: 64 },
-      background: 'white'
-    }, opts);
+  //   let {
+  //     identifier,
+  //     position,
+  //     size,
+  //     background
+  //   } = assign({
+  //     identifier: 'new-scene',
+  //     position: { x: 4, y: 6 },
+  //     size: { width: 128, height: 64 },
+  //     background: 'white'
+  //   }, opts);
 
-    let doc = this.ref.doc().new({
-      index,
-      identifier,
-      position,
-      size,
-      background
-    });
+  //   let doc = this.ref.doc().new({
+  //     index,
+  //     identifier,
+  //     position,
+  //     size,
+  //     background
+  //   });
 
-    await doc.save();
-    let model = this.models.findBy('id', doc.id);
-    await this.project.onDidCreateScene(model);
-    return model;
-  }
+  //   await doc.save();
+  //   let model = this.models.findBy('id', doc.id);
+  //   await this.project.onDidCreateScene(model);
+  //   return model;
+  // }
 
 });

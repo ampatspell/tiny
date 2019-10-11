@@ -8,7 +8,8 @@ export default Sprites.extend({
 
   project: readOnly('model'),
 
-  async didCreate() {
+  async didCreate(model) {
+    await this.project.didCreateSprite(model);
   },
 
   async create(opts) {

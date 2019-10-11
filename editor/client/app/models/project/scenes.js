@@ -8,7 +8,8 @@ export default Scenes.extend({
 
   project: readOnly('model'),
 
-  async didCreate() {
+  async didCreate(model) {
+    await this.project.didCreateScene(model);
   },
 
   async create(opts) {
