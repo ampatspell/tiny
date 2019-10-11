@@ -71,3 +71,37 @@ export const normalized = normalize => computed({
     return value;
   }
 });
+
+export const bounds = (arrayKey, propertyKey) => computed(`${arrayKey}.@each.${propertyKey}`, function() {
+  let models = this.get(arrayKey);
+
+  if(models.length === 0) {
+    return;
+  }
+
+  let box = {
+    min: {
+      x: Number.POSITIVE_INFINITY,
+      y: Number.POSITIVE_INFINITY,
+    },
+    max: {
+      x: Number.NEGATIVE_INFINITY,
+      y: Number.NEGATIVE_INFINITY,
+    }
+  };
+
+  models.forEach(model => {
+    let frame = model.get(propertyKey);
+    box.min.x = Math.min(box.min.x, frame.x);
+    box.min.y = Math.min(box.min.y, frame.y);
+    box.max.x = Math.max(box.max.x, frame.x + frame.width);
+    box.max.y = Math.max(box.max.y, frame.y + frame.height);
+  });
+
+  return {
+    x:      box.min.x,
+    y:      box.min.y,
+    width:  box.max.x - box.min.x,
+    height: box.max.y - box.min.y,
+  };
+}).readOnly();
