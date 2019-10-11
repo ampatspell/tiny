@@ -52,43 +52,43 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     await this.project.onDidCreateSprite(sprite);
   },
 
-  async create(opts) {
-    let last = this.ordered.lastObject;
-    let index = 0;
-    if(last) {
-      index = last.index + 1;
-    }
+  // async create(opts) {
+  //   let last = this.ordered.lastObject;
+  //   let index = 0;
+  //   if(last) {
+  //     index = last.index + 1;
+  //   }
 
-    let {
-      identifier,
-      position,
-      size,
-      pixel
-    } = assign({
-      identifier: 'new-sprite',
-      position: { x: 4, y: 6 },
-      size: { width: 16, height: 16 },
-      pixel: 2
-    }, opts);
+  //   let {
+  //     identifier,
+  //     position,
+  //     size,
+  //     pixel
+  //   } = assign({
+  //     identifier: 'new-sprite',
+  //     position: { x: 4, y: 6 },
+  //     size: { width: 16, height: 16 },
+  //     pixel: 2
+  //   }, opts);
 
-    let doc = this.ref.doc().new({
-      index,
-      identifier,
-      position,
-      size,
-      pixel
-    });
+  //   let doc = this.ref.doc().new({
+  //     index,
+  //     identifier,
+  //     position,
+  //     size,
+  //     pixel
+  //   });
 
-    await doc.save();
-    let model = this.models.findBy('id', doc.id);
-    await this.didCreate(model);
-    return model;
-  },
+  //   await doc.save();
+  //   let model = this.models.findBy('id', doc.id);
+  //   await this.didCreate(model);
+  //   return model;
+  // },
 
-  async createFromTemplate() {
-    let sprite = await this.create();
-    await sprite.frames.createFromTemplate();
-    return sprite;
-  },
+  // async createFromTemplate() {
+  //   let sprite = await this.create();
+  //   await sprite.frames.createFromTemplate();
+  //   return sprite;
+  // },
 
 });

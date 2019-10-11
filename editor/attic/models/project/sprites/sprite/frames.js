@@ -89,27 +89,27 @@ export default EmberObject.extend(SettingsMixin, {
     this.select(frame);
   },
 
-  async create(opts) {
-    let { index, bytes, identifier } = assign({ index: 0, identifier: null }, opts);
+  // async create(opts) {
+  //   let { index, bytes, identifier } = assign({ index: 0, identifier: null }, opts);
 
-    if(bytes) {
-      bytes = bytes.slice();
-    } else {
-      let { size } = this;
-      bytes = new Uint8Array(size.width * size.height);
-    }
+  //   if(bytes) {
+  //     bytes = bytes.slice();
+  //   } else {
+  //     let { size } = this;
+  //     bytes = new Uint8Array(size.width * size.height);
+  //   }
 
-    let doc = this.ref.doc().new({
-      index,
-      bytes,
-      identifier
-    });
+  //   let doc = this.ref.doc().new({
+  //     index,
+  //     bytes,
+  //     identifier
+  //   });
 
-    await doc.save();
-    let model = this.models.findBy('id', doc.id);
-    await this.didCreateFrame(model);
-    return model;
-  },
+  //   await doc.save();
+  //   let model = this.models.findBy('id', doc.id);
+  //   await this.didCreateFrame(model);
+  //   return model;
+  // },
 
   resize(batch, handle, target) {
     this.ordered.forEach(frame => {
@@ -163,11 +163,11 @@ export default EmberObject.extend(SettingsMixin, {
     return await this.createOrDuplicate(this.selected);
   },
 
-  async createFromTemplate() {
-    let bytes = new Uint8Array(heart);
-    let frame = await this.create({ bytes, identifier: 'heart' });
-    return frame;
-  },
+  // async createFromTemplate() {
+  //   let bytes = new Uint8Array(heart);
+  //   let frame = await this.create({ bytes, identifier: 'heart' });
+  //   return frame;
+  // },
 
   //
 

@@ -2,6 +2,8 @@ import filteredEntities from '../../-filtered-entities';
 import settings from '../../-settings';
 import { computed } from '@ember/object';
 import { delta } from 'editor/utils/computed';
+import { assign } from '@ember/polyfills';
+import { heart } from 'editor/utils/frame';
 
 const Frames = filteredEntities('sprite/frame');
 const SettingsMixin = settings('model', 'frames');
@@ -62,5 +64,31 @@ export default Frames.extend(SettingsMixin, {
     });
     this.select(selected);
   },
+
+  //
+
+  async didCreate() {
+  },
+
+  async create(opts) {
+    let { index, bytes, identifier } = assign({ index: 0, identifier: null }, opts);
+
+    if(bytes) {
+      bytes = bytes.slice();
+    } else {
+      let { model: { size } } = this;
+      bytes = new Uint8Array(size.width * size.height);
+    }
+
+    let model = await this.createModel({ type: 'sprite/frame', index, bytes, identifier });
+    await this.didCreate(model);
+    return model;
+  },
+
+  async createFromTemplate() {
+    let bytes = new Uint8Array(heart);
+    let frame = await this.create({ bytes, identifier: 'heart' });
+    return frame;
+  }
 
 });
