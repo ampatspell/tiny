@@ -19,8 +19,6 @@ export const editable = () => computed('locked', 'hidden', function() {
 
 export default Render.extend({
 
-  hiddable: true,
-
   hidden: or('model.hidden', 'model.parent.render.hidden'),
   locked: or('model.locked', 'model.parent.render.locked'),
 

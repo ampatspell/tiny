@@ -1,1 +1,3 @@
-{{ui-block/project/sidebar/tree/entity project=project model=project}}
+{{#each project.entities.reversed as |entity|}}
+  {{ui-block/project/sidebar/tree/entity model=entity project=project}}
+{{/each}}
