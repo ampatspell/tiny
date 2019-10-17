@@ -35,6 +35,11 @@ export default Render.extend({
     return [ model ];
   }).readOnly(),
 
-  editable: editable()
+  editable: editable(),
+
+  draggable: computed('locked', 'hidden', 'model.isEditing', function() {
+    let { locked, hidden, model: { isEditing } } = this;
+    return !locked && !hidden && !isEditing;
+  }).readOnly(),
 
 });

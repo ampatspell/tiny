@@ -8,11 +8,11 @@ import { render } from './project/-render';
 import { entities } from './project/-entities';
 
 const position = def => computed({
-  get() {
-    return this._position || def;
+  get(key) {
+    return this[`_${key}`] || def;
   },
-  set(_, value) {
-    this._position = value;
+  set(key, value) {
+    this[`_${key}`] = value;
     return value;
   }
 });
@@ -34,7 +34,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   pixel: data('pixel'),
   token: data('token'),
 
-  position: position({ x: 0, y: 0 }),
+  origin: position({ x: 0, y: 0 }),
   properties: properties(),
   render: render('project'),
 
@@ -52,7 +52,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   //
 
   update(props) {
-    let [ local, remote ] = split(props, [ 'position' ]);
+    let [ local, remote ] = split(props, [ 'origin' ]);
     this.setProperties(local);
     this._super(remote);
   },
@@ -70,6 +70,10 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     return this.selection.select(...arguments);
   },
 
+  edit() {
+    return this.selection.edit(...arguments);
+  },
+
   //
 
   didCreateScene(scene) {
@@ -82,7 +86,7 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   willDeleteEntity() {
     this.select(null);
-  }
+  },
 
   //
 

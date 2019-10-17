@@ -7,6 +7,7 @@ export default Mixin.create({
 
   onDragstart(e) {
     e.cancelBubble = true;
+
     this.setProperties({ isDragging: true });
     this.model.select();
   },
@@ -46,6 +47,7 @@ export default Mixin.create({
     if(!this.isDragging) {
       return;
     }
+
     e.cancelBubble = true;
     this.setProperties({ isDragging: false, _dragPosition: null });
   }

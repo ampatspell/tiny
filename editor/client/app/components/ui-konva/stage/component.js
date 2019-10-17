@@ -20,7 +20,7 @@ export default Component.extend(Parent, StageEvents, {
   classNameBindings: [ ':ui-konva-stage' ],
 
   size: null,
-  position: null,
+  origin: null,
   draggable: true,
   node: null, // Konva.Stage
 
@@ -80,7 +80,7 @@ export default Component.extend(Parent, StageEvents, {
   //
 
   propertiesDidChange() {
-    let { size, position, draggable, node } = this;
+    let { size, origin, draggable, node } = this;
 
     if(!node) {
       this.createNode();
@@ -97,8 +97,8 @@ export default Component.extend(Parent, StageEvents, {
       }
     }
 
-    if(position) {
-      node.position(position);
+    if(origin) {
+      node.position(origin);
     }
 
     node.draggable(draggable);
@@ -116,22 +116,22 @@ export default Component.extend(Parent, StageEvents, {
     return layers.map(layer => layer.component);
   },
 
-  center() {
-    let { node } = this;
-    let rect = node.getClientRect();
-    let position = node.position();
-    let size = node.size();
+  // center() {
+  //   let { node } = this;
+  //   let rect = node.getClientRect();
+  //   let position = node.position();
+  //   let size = node.size();
 
-    rect.x -= position.x;
-    rect.y -= position.y;
+  //   rect.x -= position.x;
+  //   rect.y -= position.y;
 
-    let calc = (p, s) => Math.floor((size[s] / 2) - (rect[s] / 2) - rect[p]);
-    let x = calc('x', 'width');
-    let y = calc('y', 'height');
+  //   let calc = (p, s) => Math.floor((size[s] / 2) - (rect[s] / 2) - rect[p]);
+  //   let x = calc('x', 'width');
+  //   let y = calc('y', 'height');
 
-    node.position({ x, y });
-    node.batchDraw();
-  },
+  //   node.position({ x, y });
+  //   node.batchDraw();
+  // },
 
   toDataURL() {
     let { node } = this;
@@ -149,8 +149,8 @@ export default Component.extend(Parent, StageEvents, {
     if(!this.isDragging) {
       return;
     }
-    let position = this.node.position();
-    this.update({ position });
+    let origin = this.node.position();
+    this.update({ origin });
   },
 
   onDragend() {

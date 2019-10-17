@@ -3,7 +3,7 @@ import { readOnly } from '@ember/object/computed';
 import DocMixin, { doc, data } from '../../-doc';
 import { entities } from '../-entities';
 import { render as _render } from '../-render';
-import { isSelected } from '../-selection';
+import { isSelected, isEditing } from '../-selection';
 
 const render = name => _render(`project/entities/${name}`);
 
@@ -36,6 +36,7 @@ export default EmberObject.extend(DocMixin, {
   parent: parent(),
 
   isSelected: isSelected(),
+  isEditing: isEditing(),
 
   entities: entities('project/entities/entity'),
 
@@ -48,6 +49,10 @@ export default EmberObject.extend(DocMixin, {
 
   select() {
     return this.project.select(this);
+  },
+
+  edit() {
+    return this.project.edit(this);
   },
 
   //

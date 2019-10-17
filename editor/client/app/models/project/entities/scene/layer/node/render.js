@@ -32,6 +32,11 @@ export default Render.extend({
     return [ scene, model ];
   }).readOnly(),
 
-  editable: readOnly('model.scene.render.editable')
+  editable: readOnly('model.scene.render.editable'),
+
+  draggable: computed('locked', 'hidden', 'model.scene.isEditing', function() {
+    let { locked, hidden, model: { scene } } = this;
+    return !locked && !hidden && scene.isEditing;
+  }).readOnly(),
 
 });

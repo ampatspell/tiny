@@ -14,14 +14,8 @@ export default Node.extend(DraggableMixin, {
   project: null,
 
   frame:  readOnly('model.render.frame'),
-  locked: readOnly('model.render.locked'),
   editable: readOnly('model.render.editable'),
-  // editing: readOnly('model.isEditing'),
-
-  draggable: computed('disabled', 'locked', 'editing', function() {
-    let { disabled, locked, editing } = this;
-    return !disabled && !locked && !editing;
-  }).readOnly(),
+  draggable: readOnly('model.render.draggable'),
 
   props: computed('frame', 'draggable', function() {
     let { frame, draggable } = this;
@@ -39,9 +33,7 @@ export default Node.extend(DraggableMixin, {
 
     if(this.isDoubleClick()) {
       let { editable } = this;
-      if(editable) {
-        console.log('editable', editable+"");
-      }
+      editable && editable.edit();
     }
   }
 

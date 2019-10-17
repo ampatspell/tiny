@@ -37,7 +37,7 @@ export default Component.extend(KeyboardMixin, {
       this._resume = this.tick.suspend();
     },
     dragEnd() {
-      this._resume();
+      this._resume && this._resume();
     }
   },
 

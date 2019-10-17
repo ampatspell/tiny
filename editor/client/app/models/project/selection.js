@@ -10,6 +10,7 @@ export default EmberObject.extend({
   },
 
   model: normalized('_normalize'),
+  editing: null,
 
   select(model) {
     if(this._normalize(model) === this.model) {
@@ -21,6 +22,11 @@ export default EmberObject.extend({
 
   deselect() {
     this.select(null);
+  },
+
+  edit(model) {
+    model = model || null;
+    this.setProperties({ editing: model });
   }
 
 });
