@@ -34,9 +34,9 @@ export default Render.extend({
 
   editable: readOnly('model.scene.render.editable'),
 
-  draggable: computed('locked', 'hidden', 'model.scene.isEditing', function() {
-    let { locked, hidden, model: { scene } } = this;
-    return !locked && !hidden && scene.isEditing;
-  }).readOnly(),
+  draggable: computed('isSpacePressed', 'locked', 'hidden', 'model.scene.isEditing', function() {
+    let { isSpacePressed, locked, hidden, model: { scene } } = this;
+    return !isSpacePressed && !locked && !hidden && scene.isEditing;
+  }).readOnly()
 
 });

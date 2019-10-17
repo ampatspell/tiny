@@ -1,6 +1,6 @@
 import Render from '../../-render';
 import { computed } from '@ember/object';
-import { or } from '@ember/object/computed';
+import { or, readOnly } from '@ember/object/computed';
 
 export const absolute = () => computed('model.parent.render.absolute', 'frame', function() {
   let { model: { parent: { render: { absolute } } }, frame } = this;
@@ -23,6 +23,9 @@ export const editable = () => computed('locked', 'hidden', 'model', function() {
 export default Render.extend({
 
   hidden: or('model.hidden', 'model.parent.render.hidden'),
-  locked: or('model.locked', 'model.parent.render.locked')
+  locked: or('model.locked', 'model.parent.render.locked'),
+
+  isSpacePressed: readOnly('model.project.editor.isSpacePressed'),
+  isAltPressed:   readOnly('model.project.editor.isAltPressed')
 
 });
