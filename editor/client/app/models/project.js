@@ -150,36 +150,28 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     }
   },
 
-  // _selectionRenderDetails() {
-  //   return this.get('selection.render.details') || this.get('selection');
-  // },
+  _invokeShortcut(name) {
+    let model = this.selection.model;
+    if(model && model !== this) {
+      let fn = model[name];
+      fn && fn.call(model);
+    }
+  },
 
-  // _invokeShortcut(model, name) {
-  //   if(!model) {
-  //     return false;
-  //   }
-  //   let fn = model[name];
-  //   if(!fn) {
-  //     return false;
-  //   }
-  //   fn.call(model);
-  //   return true;
-  // },
+  onShortcutUp() {
+    this._invokeShortcut('onShortcutUp');
+  },
 
-  // onShortcutUp() {
-  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutUp');
-  // },
+  onShortcutDown() {
+    this._invokeShortcut('onShortcutDown');
+  },
 
-  // onShortcutDown() {
-  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutDown');
-  // },
+  onShortcutLeft() {
+    this._invokeShortcut('onShortcutLeft');
+  },
 
-  // onShortcutLeft() {
-  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutLeft');
-  // },
-
-  // onShortcutRight() {
-  //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutRight');
-  // },
+  onShortcutRight() {
+    this._invokeShortcut('onShortcutRight');
+  },
 
 });

@@ -58,6 +58,14 @@ export default Entity.extend({
     this.update({ pixel: value });
   },
 
+  onShortcutRight() {
+    this.frames.selectNext();
+  },
+
+  onShortcutLeft() {
+    this.frames.selectPrevious();
+  },
+
   //
 
   async willDeleteFrame(frame) {

@@ -57,19 +57,19 @@ export default Component.extend(KeyboardMixin, {
   },
 
   onUp() {
-    // this.project.onShortcutUp();
+    this.project.onShortcutUp();
   },
 
   onDown() {
-    // this.project.onShortcutDown();
+    this.project.onShortcutDown();
   },
 
   onLeft() {
-    // this.project.onShortcutLeft();
+    this.project.onShortcutLeft();
   },
 
   onRight() {
-    // this.project.onShortcutRight();
+    this.project.onShortcutRight();
   },
 
   onEscape() {
