@@ -43,8 +43,16 @@ export default Entity.extend({
     await this.project.didCreateLayer(layer);
   },
 
-  async didCreateNode(model) {
-    await this.project.didCreateNode(model);
+  async didCreateNode(node) {
+    await this.project.didCreateNode(node);
+  },
+
+  async willDeleteLayer(layer) {
+    await this.project.willDeleteLayer(layer);
+  },
+
+  async willDeleteNode(node) {
+    await this.project.willDeleteNode(node);
   },
 
   //
@@ -56,6 +64,12 @@ export default Entity.extend({
     } else {
       this.select();
     }
+  },
+
+  //
+
+  async willDelete() {
+    await this.project.willDeleteScene(this);
   }
 
 });

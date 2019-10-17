@@ -168,4 +168,12 @@ export default Entity.extend({
     }
   },
 
+  async willDelete() {
+    await this.sprite.willDeleteFrame(this);
+  },
+
+  async didDelete() {
+    await this.sprite.didDeleteFrame(this);
+  }
+
 });

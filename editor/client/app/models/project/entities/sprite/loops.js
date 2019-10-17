@@ -1,6 +1,7 @@
 import filteredEntities from '../../-filtered-entities';
 import { normalized } from 'editor/utils/computed';
 import { assign } from '@ember/polyfills';
+import { all } from 'rsvp';
 
 const Loops = filteredEntities('sprite/loop');
 
@@ -35,5 +36,15 @@ export default Loops.extend({
     await this.didCreate(model);
     return model;
   },
+
+  async willDeleteFrame(frame) {
+    await all(this.models.map(model => model.willDeleteFrame(frame)));
+  },
+
+  async willDeleteLoop(loop) {
+    if(this.selected === loop) {
+      this.select(null);
+    }
+  }
 
 });

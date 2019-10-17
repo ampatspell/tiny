@@ -43,8 +43,18 @@ export default Entity.extend({
     this.nodes.onParentResized(id, diff);
   },
 
-  async didCreateNode(model) {
-    await this.scene.didCreateNode(model);
+  async didCreateNode(node) {
+    await this.scene.didCreateNode(node);
+  },
+
+  async willDeleteNode(node) {
+    await this.scene.willDeleteNode(node);
+  },
+
+  //
+
+  async willDelete() {
+    await this.scene.willDeleteLayer(this);
   }
 
 });

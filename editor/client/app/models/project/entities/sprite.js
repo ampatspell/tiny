@@ -2,6 +2,7 @@ import Entity, { data, render, self } from './entity';
 import { properties } from '../properties';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
+import { all } from 'rsvp';
 
 const typed = name => model().named(`project/entities/sprite/${name}`).mapping(model => ({ model }))
 
@@ -49,6 +50,29 @@ export default Entity.extend({
 
   onResize(id, diff) {
     this.resize(id, diff);
+  },
+
+  //
+
+  async willDeleteFrame(frame) {
+    await all([
+      this.frames.willDeleteFrame(frame),
+      this.loops.willDeleteFrame(frame)
+    ]);
+    await this.project.willDeleteFrame(frame);
+  },
+
+  async didDeleteFrame(frame) {
+    await this.frames.didDeleteFrame(frame);
+  },
+
+  async willDeleteLoop(loop) {
+    await this.loops.willDeleteLoop(loop);
+    await this.project.willDeleteLoop(loop);
+  },
+
+  async willDelete() {
+    await this.project.willDeleteSprite(this);
   }
 
 });

@@ -95,6 +95,26 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   //
 
+  willDeleteScene(scene) {
+  },
+
+  willDeleteLayer(layer) {
+  },
+
+  willDeleteNode(node) {
+  },
+
+  willDeleteSprite(sprite) {
+  },
+
+  willDeleteFrame(frame) {
+  },
+
+  willDeleteLoop(loop) {
+  },
+
+  //
+
   // onShortcutDigit(pixel) {
   //   if(pixel < 1) {
   //     return;
@@ -176,20 +196,5 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   // async onWillDeleteNode(node) {
   //   this.onWillDeleteEditable(node, node.layer);
   // },
-
-  // async onDidCreateLayer(layer) {
-  //   this.select(layer);
-  // },
-
-  // async onDidCreateNode(node) {
-  //   let scene = node.scene;
-  //   this.select(node);
-  //   this.edit(scene);
-  // },
-
-  // async onDidCreateSprite(sprite) {
-  //   this.select(sprite);
-  //   this.edit(null);
-  // }
 
 });

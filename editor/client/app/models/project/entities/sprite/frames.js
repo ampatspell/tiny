@@ -45,6 +45,14 @@ export default Frames.extend(SettingsMixin, {
     this.update({ index });
   },
 
+  selectAnother(frame) {
+    let previous = this.previous;
+    if(previous === frame) {
+      previous = null;
+    }
+    this.select(previous);
+  },
+
   selectPrevious() {
     let model = this.previous;
     model && this.select(model);
@@ -119,5 +127,15 @@ export default Frames.extend(SettingsMixin, {
     }
     return await this.create();
   },
+
+  async willDeleteFrame(frame) {
+    if(this.selected === frame) {
+      this.selectAnother(frame);
+    }
+  },
+
+  async didDeleteFrame() {
+    this.reindex();
+  }
 
 });

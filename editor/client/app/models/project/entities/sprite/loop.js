@@ -51,4 +51,15 @@ export default Entity.extend({
     this._withFrames(frames => frames.removeAt(idx));
   },
 
+  //
+
+  async willDeleteFrame(frame) {
+    let frames = A(this._frames).filter(id => id !== frame.id);
+    this.update({ frames });
+  },
+
+  async willDelete() {
+    await this.sprite.willDeleteLoop(this);
+  }
+
 });

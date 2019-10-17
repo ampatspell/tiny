@@ -31,4 +31,8 @@ export default Entity.extend({
     }
   },
 
+  async willDelete() {
+    await this.layer.willDeleteNode(this);
+  },
+
 });
