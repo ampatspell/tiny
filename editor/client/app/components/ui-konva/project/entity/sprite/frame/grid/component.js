@@ -19,12 +19,10 @@ export default Node.extend({
   model: null,
   sprite: null,
 
-  // selected: readOnly('sprite.isSelected'),
-  // editing: readOnly('sprite.isEditing'),
-  // enabled: not('disabled'),
-  // editable: and('editing', 'enabled', 'model'),
-
-  disabled: true,
+  selected: readOnly('sprite.isSelected'),
+  editing: readOnly('sprite.isEditing'),
+  // TODO: render.editable
+  editable: and('editing', 'sprite.render.editable', 'model'),
 
   pixel: readOnly('sprite.render.pixel'),
   frame: readOnly('sprite.render.frame'),
@@ -117,12 +115,9 @@ export default Node.extend({
   },
 
   onMousedown(e) {
-    if(this.disabled) {
+    if(!this.editable) {
       return;
     }
-    // if(!this.editable || !this.selected) {
-    //   return;
-    // }
     e.cancelBubble = true;
     this.setProperties({ isDrawing: true });
     this.updatePixelForEvent(e);

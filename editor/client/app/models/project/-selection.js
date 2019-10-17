@@ -1,11 +1,14 @@
 import { computed } from '@ember/object';
 
 export const isSelected = () => computed('project.selection.model', function() {
-  return this.get('project.selection.model') === this;
+  let model = this.get('project.selection.model');
+  return model === this;
 }).readOnly();
 
 export const isEditing = () => computed('project.selection.editing', function() {
-  return this.get('project.selection.editing') === this;
+  // TODO: render.editable
+  let model = this.get('project.selection.editing');
+  return model === this && this.render.editable;
 }).readOnly();
 
 export const selectedChildEntity = parentKey => computed(`project.selection.model.${parentKey}`, function() {

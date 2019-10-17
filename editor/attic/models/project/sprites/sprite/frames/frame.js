@@ -29,49 +29,49 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  _didUpdateBytes() {
-    this.notifyPropertyChange('bytes');
-    this.scheduleSave();
-  },
+  // _didUpdateBytes() {
+  //   this.notifyPropertyChange('bytes');
+  //   this.scheduleSave();
+  // },
 
-  _replaceBytes(bytes) {
-    this.doc.set('data.bytes', bytes);
-    this._didUpdateBytes();
-  },
+  // _replaceBytes(bytes) {
+  //   this.doc.set('data.bytes', bytes);
+  //   this._didUpdateBytes();
+  // },
 
-  _withBytes(cb) {
-    let { bytes } = this;
-    if(!bytes) {
-      return;
-    }
-    let mutated = cb(bytes);
-    if(mutated === false) {
-      return;
-    }
-    this._didUpdateBytes();
-  },
+  // _withBytes(cb) {
+  //   let { bytes } = this;
+  //   if(!bytes) {
+  //     return;
+  //   }
+  //   let mutated = cb(bytes);
+  //   if(mutated === false) {
+  //     return;
+  //   }
+  //   this._didUpdateBytes();
+  // },
 
-  setPixel(index, value) {
-    this._withBytes(bytes => {
-      if(bytes[index] === value) {
-        return false;
-      }
-      bytes[index] = value;
-    });
-  },
+  // setPixel(index, value) {
+  //   this._withBytes(bytes => {
+  //     if(bytes[index] === value) {
+  //       return false;
+  //     }
+  //     bytes[index] = value;
+  //   });
+  // },
 
-  fill(value) {
-    this._withBytes(bytes => bytes.fill(value));
-  },
+  // fill(value) {
+  //   this._withBytes(bytes => bytes.fill(value));
+  // },
 
-  invert() {
-    this._withBytes(bytes => bytes.forEach((value, index) => {
-      if(value === 0) {
-        return;
-      }
-      bytes[index] = value === 1 ? 2 : 1;
-    }));
-  },
+  // invert() {
+  //   this._withBytes(bytes => bytes.forEach((value, index) => {
+  //     if(value === 0) {
+  //       return;
+  //     }
+  //     bytes[index] = value === 1 ? 2 : 1;
+  //   }));
+  // },
 
   _select(bytes, frame) {
     let { size } = this;
