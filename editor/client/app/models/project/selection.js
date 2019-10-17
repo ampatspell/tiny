@@ -20,6 +20,7 @@ export default EmberObject.extend({
     if(this._normalizeModel(model) === this.model) {
       return;
     }
+    this.edit(null);
     this.setProperties({ model });
   },
 
