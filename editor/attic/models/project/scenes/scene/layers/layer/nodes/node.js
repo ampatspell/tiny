@@ -49,13 +49,13 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  select() {
-    this.project.select(this);
-  },
+  // select() {
+  //   this.project.select(this);
+  // },
 
-  selectParent() {
-    this.layer.select();
-  },
+  // selectParent() {
+  //   this.layer.select();
+  // },
 
   //
 
@@ -111,8 +111,8 @@ export default EmberObject.extend(DocMixin, {
   //   }
   // },
 
-  async willDelete() {
-    await this.nodes.onWillDeleteNode(this);
-  }
+  // async willDelete() {
+  //   await this.nodes.onWillDeleteNode(this);
+  // }
 
 });

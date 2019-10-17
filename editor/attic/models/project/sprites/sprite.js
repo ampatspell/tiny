@@ -80,9 +80,9 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  async willDelete() {
-    await this.project.onWillDeleteSprite(this);
-  },
+  // async willDelete() {
+  //   await this.project.onWillDeleteSprite(this);
+  // },
 
   // async moveUp() {
   //   await this.sprites.moveUp(this);
@@ -108,13 +108,13 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  select() {
-    this.project.select(this);
-  },
+  // select() {
+  //   this.project.select(this);
+  // },
 
-  edit() {
-    this.project.edit(this);
-  },
+  // edit() {
+  //   this.project.edit(this);
+  // },
 
   //
 
@@ -124,18 +124,18 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  async onWillDeleteLoop() {
-  },
+  // async onWillDeleteLoop() {
+  // },
 
-  async onDidDeleteLoop() {
-  },
+  // async onDidDeleteLoop() {
+  // },
 
-  async onWillDeleteFrame(frame) {
-    await this.loops.onWillDeleteFrame(frame);
-  },
+  // async onWillDeleteFrame(frame) {
+  //   await this.loops.onWillDeleteFrame(frame);
+  // },
 
-  async onDidDeleteFrame(frame) {
-    await this.loops.onDidDeleteFrame(frame);
-  }
+  // async onDidDeleteFrame(frame) {
+  //   await this.loops.onDidDeleteFrame(frame);
+  // }
 
 });
