@@ -95,30 +95,30 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   //
 
-  _willDeleteEntity(entity, prop) {
+  _willDeleteEntity(entity, prop, next) {
     let selection = this.selection.model;
     if(selection) {
       if(selection === entity || selection[prop] === entity) {
-        this.select(null);
+        this.select(next);
       }
     }
     this.edit(null);
   },
 
   willDeleteScene(scene) {
-    this._willDeleteEntity(scene, 'scene');
+    this._willDeleteEntity(scene, 'scene', null);
   },
 
   willDeleteLayer(layer) {
-    this._willDeleteEntity(layer, 'layer');
+    this._willDeleteEntity(layer, 'layer', layer.scene);
   },
 
   willDeleteNode(node) {
-    this._willDeleteEntity(node, 'node');
+    this._willDeleteEntity(node, 'node', node.layer);
   },
 
   willDeleteSprite(sprite) {
-    this._willDeleteEntity(sprite, 'sprite');
+    this._willDeleteEntity(sprite, 'sprite', null);
   },
 
   willDeleteFrame() {
@@ -180,36 +180,6 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   // onShortcutRight() {
   //   this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutRight');
-  // },
-
-  // //
-
-  // onWillDeleteEditable(model, next) {
-  //   let { selection, editing } = this;
-  //   if(selection !== model) {
-  //     return;
-  //   }
-  //   selection = next;
-  //   if(editing === model) {
-  //     editing = null;
-  //   }
-  //   this.setProperties({ selection, editing });
-  // },
-
-  // async onWillDeleteSprite(sprite) {
-  //   this.onWillDeleteEditable(sprite, this.sprites);
-  // },
-
-  // async onWillDeleteScene(scene) {
-  //   this.onWillDeleteEditable(scene, this.scenes);
-  // },
-
-  // async onWillDeleteLayer(layer) {
-  //   this.onWillDeleteEditable(layer, layer.scene);
-  // },
-
-  // async onWillDeleteNode(node) {
-  //   this.onWillDeleteEditable(node, node.layer);
   // },
 
 });

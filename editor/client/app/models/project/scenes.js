@@ -20,9 +20,16 @@ export default Scenes.extend({
       background
     } = assign({
       identifier: 'new-scene',
-      position: { x: 4, y: 6 },
-      size: { width: 128, height: 64 },
-      background: 'white'
+      position: {
+        x: 4,
+        y: 6
+      },
+      size: {
+        width: 128,
+        height: 64
+      },
+      background: 'white',
+      expanded: true
     }, opts);
 
     let model = await this.createModel({ type: 'scene', identifier, position, size, background });
