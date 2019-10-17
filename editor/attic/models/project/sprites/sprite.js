@@ -54,38 +54,38 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  async resize(handle, diff) {
-    if(diff.x === 0 && diff.y === 0) {
-      return false;
-    }
+  // async resize(handle, diff) {
+  //   if(diff.x === 0 && diff.y === 0) {
+  //     return false;
+  //   }
 
-    let size = assign({}, this.size);
-    size.width += diff.x;
-    size.height += diff.y;
+  //   let size = assign({}, this.size);
+  //   size.width += diff.x;
+  //   size.height += diff.y;
 
-    if(size.width < 1 || size.height < 1) {
-      return false;
-    }
+  //   if(size.width < 1 || size.height < 1) {
+  //     return false;
+  //   }
 
-    let pixel = this.pixel;
-    let position = assign({}, this.position);
-    if(handle === 'left') {
-      position.x -= (diff.x * pixel);
-    } else if(handle === 'top') {
-      position.y -= (diff.y * pixel);
-    }
+  //   let pixel = this.pixel;
+  //   let position = assign({}, this.position);
+  //   if(handle === 'left') {
+  //     position.x -= (diff.x * pixel);
+  //   } else if(handle === 'top') {
+  //     position.y -= (diff.y * pixel);
+  //   }
 
-    let { doc, frames } = this;
+  //   let { doc, frames } = this;
 
-    await this.store.batch(batch => {
-      frames.resize(batch, handle, size);
-      doc.set('data.size', size);
-      doc.set('data.position', position);
-      batch.save(doc);
-    });
+  //   await this.store.batch(batch => {
+  //     frames.resize(batch, handle, size);
+  //     doc.set('data.size', size);
+  //     doc.set('data.position', position);
+  //     batch.save(doc);
+  //   });
 
-    return true;
-  },
+  //   return true;
+  // },
 
   //
 
@@ -127,9 +127,9 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  onResize(id, diff) {
-    this.resize(id, diff);
-  },
+  // onResize(id, diff) {
+  //   this.resize(id, diff);
+  // },
 
   //
 

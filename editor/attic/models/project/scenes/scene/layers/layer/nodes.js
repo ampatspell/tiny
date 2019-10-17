@@ -133,9 +133,9 @@ export default EmberObject.extend(MoveMixin, {
     });
   },
 
-  onParentResized(id, diff) {
-    this.models.forEach(model => model.onParentResized(id, diff));
-  },
+  // onParentResized(id, diff) {
+  //   this.models.forEach(model => model.onParentResized(id, diff));
+  // },
 
   async onWillDeleteNode(node) {
     await this.layer.onWillDeleteNode(node);

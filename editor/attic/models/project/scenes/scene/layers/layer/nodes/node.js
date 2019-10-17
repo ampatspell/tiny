@@ -112,15 +112,15 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  onParentResized(id, diff) {
-    if(id === 'left' || id === 'top') {
-      let position = assign({}, this.position);
-      let calc = key => position[key] += diff[key];
-      calc('x');
-      calc('y');
-      this.update({ position });
-    }
-  },
+  // onParentResized(id, diff) {
+  //   if(id === 'left' || id === 'top') {
+  //     let position = assign({}, this.position);
+  //     let calc = key => position[key] += diff[key];
+  //     calc('x');
+  //     calc('y');
+  //     this.update({ position });
+  //   }
+  // },
 
   async willDelete() {
     await this.nodes.onWillDeleteNode(this);

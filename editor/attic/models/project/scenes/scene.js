@@ -37,28 +37,28 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  isSelected: selected(),
-  isEditing: editing(),
+  // isSelected: selected(),
+  // isEditing: editing(),
 
-  selectedChild: selectedChild('scene'),
-  selectedNode: selectedChild('scene', 'isNode'),
-  selectedLayer: selectedChild('scene', 'isLayer'),
+  // selectedChild: selectedChild('scene'),
+  // selectedNode: selectedChild('scene', 'isNode'),
+  // selectedLayer: selectedChild('scene', 'isLayer'),
 
   //
 
-  async load({ type }) {
-    if(type === 'detail') {
-      await this.layers.load({ type });
-    }
-  },
+  // async load({ type }) {
+  //   if(type === 'detail') {
+  //     await this.layers.load({ type });
+  //   }
+  // },
 
-  async moveUp() {
-    await this.scenes.moveUp(this);
-  },
+  // async moveUp() {
+  //   await this.scenes.moveUp(this);
+  // },
 
-  async moveDown() {
-    await this.scenes.moveDown(this);
-  },
+  // async moveDown() {
+  //   await this.scenes.moveDown(this);
+  // },
 
   //
 
@@ -76,27 +76,27 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  onResize(id, diff) {
-    let position = assign({}, this.position);
-    let size = assign({}, this.size);
+  // onResize(id, diff) {
+  //   let position = assign({}, this.position);
+  //   let size = assign({}, this.size);
 
-    if(id === 'left') {
-      position.x -= diff.x;
-    } else if(id === 'top') {
-      position.y -= diff.y;
-    }
+  //   if(id === 'left') {
+  //     position.x -= diff.x;
+  //   } else if(id === 'top') {
+  //     position.y -= diff.y;
+  //   }
 
-    size.width += diff.x;
-    size.height += diff.y;
+  //   size.width += diff.x;
+  //   size.height += diff.y;
 
-    if(size.width < 1 || size.height < 1) {
-      return false;
-    }
+  //   if(size.width < 1 || size.height < 1) {
+  //     return false;
+  //   }
 
-    this.layers.onParentResized(id, diff);
+  //   this.layers.onParentResized(id, diff);
 
-    this.update({ position, size });
-  },
+  //   this.update({ position, size });
+  // },
 
   //
 

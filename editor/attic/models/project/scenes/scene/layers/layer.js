@@ -80,9 +80,9 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  onParentResized(id, diff) {
-    this.nodes.onParentResized(id, diff);
-  },
+  // onParentResized(id, diff) {
+  //   this.nodes.onParentResized(id, diff);
+  // },
 
   async onWillDeleteNode(node) {
     await this.layers.onWillDeleteNode(node);

@@ -111,12 +111,12 @@ export default EmberObject.extend(SettingsMixin, {
   //   return model;
   // },
 
-  resize(batch, handle, target) {
-    this.ordered.forEach(frame => {
-      let doc = frame._resize(handle, target);
-      batch.save(doc);
-    });
-  },
+  // resize(batch, handle, target) {
+  //   this.ordered.forEach(frame => {
+  //     let doc = frame._resize(handle, target);
+  //     batch.save(doc);
+  //   });
+  // },
 
   async reindex(hole) {
     await this.store.batch(batch => {

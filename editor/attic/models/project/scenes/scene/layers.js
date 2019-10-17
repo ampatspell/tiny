@@ -60,9 +60,9 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
     return model;
   },
 
-  onParentResized(id, diff) {
-    this.models.forEach(model => model.onParentResized(id, diff));
-  },
+  // onParentResized(id, diff) {
+  //   this.models.forEach(model => model.onParentResized(id, diff));
+  // },
 
   async onWillDeleteLayer(layer) {
     await this.project.onWillDeleteLayer(layer);
