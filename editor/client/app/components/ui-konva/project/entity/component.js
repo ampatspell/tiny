@@ -27,12 +27,9 @@ export default Node.extend(DraggableMixin, {
 
   onClick(e) {
     e.cancelBubble = true;
-    this.model.select();
+    this.model.onClick();
     if(this.isDoubleClick()) {
-      let container = this.model.container;
-      if(container.render.editable) {
-        container.edit();
-      }
+      this.model.onDoubleClick();
     }
   }
 

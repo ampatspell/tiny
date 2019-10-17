@@ -59,6 +59,9 @@ export default EmberObject.extend(DocMixin, {
   },
 
   edit() {
+    if(!this.render.editable) {
+      return;
+    }
     return this.project.edit(this);
   },
 
@@ -91,5 +94,15 @@ export default EmberObject.extend(DocMixin, {
   async willDelete() {
     await this.project.willDeleteEntity(this);
   },
+
+  //
+
+  onClick() {
+    this.select();
+  },
+
+  onDoubleClick() {
+    this.container.edit();
+  }
 
 });

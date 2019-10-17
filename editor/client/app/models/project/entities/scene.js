@@ -35,6 +35,15 @@ export default Entity.extend({
     this.layers.onParentResized(id, diff);
 
     this.update({ position, size });
+  },
+
+  onClick() {
+    let selection = this.project.selection.model;
+    if(selection && selection.scene === this) {
+      selection.parent.select();
+    } else {
+      this.select();
+    }
   }
 
 });
