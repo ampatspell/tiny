@@ -17,6 +17,10 @@ export default Component.extend({
     center() {
       let { project: { editor } } = this;
       editor && editor.center();
+    },
+    fit() {
+      let { project: { editor } } = this;
+      editor && editor.fit();
     }
   }
 

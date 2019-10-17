@@ -116,23 +116,6 @@ export default Component.extend(Parent, StageEvents, {
     return layers.map(layer => layer.component);
   },
 
-  // center() {
-  //   let { node } = this;
-  //   let rect = node.getClientRect();
-  //   let position = node.position();
-  //   let size = node.size();
-
-  //   rect.x -= position.x;
-  //   rect.y -= position.y;
-
-  //   let calc = (p, s) => Math.floor((size[s] / 2) - (rect[s] / 2) - rect[p]);
-  //   let x = calc('x', 'width');
-  //   let y = calc('y', 'height');
-
-  //   node.position({ x, y });
-  //   node.batchDraw();
-  // },
-
   toDataURL() {
     let { node } = this;
     return node.toDataURL();
