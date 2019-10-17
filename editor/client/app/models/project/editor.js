@@ -54,7 +54,7 @@ export default EmberObject.extend({
 
     let calc = s => Math.floor((size[s] * pixel) / project[s]);
 
-    pixel = Math.max(1, Math.min(calc('width'), calc('height')));
+    pixel = Math.min(Math.max(1, Math.min(calc('width'), calc('height'))), 8);
 
     this.project.update({ pixel });
     this.center();
