@@ -43,7 +43,6 @@ export default EmberObject.extend({
     if(!_model || _model.container !== this._editing) {
       this.edit(null);
     }
-    setGlobal({ model: _model });
     this.setProperties({ _model });
   },
 
