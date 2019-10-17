@@ -24,7 +24,6 @@ export default Component.extend(KeyboardMixin, {
       this.project.update(props);
     },
     created(stage) {
-      setGlobal({ stage });
       this.onCreated(stage);
     },
     destroying() {
@@ -78,10 +77,6 @@ export default Component.extend(KeyboardMixin, {
   },
 
   //
-
-  center: stage(function(stage) {
-    stage.center();
-  }),
 
   toDataURL: stage(function(stage) {
     return stage.toDataURL();
