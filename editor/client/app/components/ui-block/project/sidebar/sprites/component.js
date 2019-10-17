@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
+// TODO: whaaa?
 const disabled = key => computed(`selection.{${key},chainLocked,scene.isEditing}`, function() {
   let { selection } = this;
   if(!selection) {

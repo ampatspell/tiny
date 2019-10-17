@@ -6,9 +6,8 @@ export const isSelected = () => computed('project.selection.model', function() {
 }).readOnly();
 
 export const isEditing = () => computed('project.selection.editing', function() {
-  // TODO: render.editable
   let model = this.get('project.selection.editing');
-  return model === this && this.render.editable;
+  return model === this;
 }).readOnly();
 
 export const selectedChildEntity = parentKey => computed(`project.selection.model.${parentKey}`, function() {

@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { normalized } from 'editor/utils/computed';
 
 export default EmberObject.extend({
@@ -13,22 +13,34 @@ export default EmberObject.extend({
     return model || null;
   },
 
-  model: normalized('_normalizeModel'),
-  editing: normalized('_normalizeEditing'),
+  _model: normalized('_normalizeModel'),
+  _editing: normalized('_normalizeEditing'),
 
-  select(model) {
-    if(this._normalizeModel(model) === this.model) {
+  model: computed('_model', function() {
+    return this._model;
+  }).readOnly(),
+
+  editing: computed('_editing.render.editable', function() {
+    let { _editing } = this;
+    if(!_editing || !_editing.render.editable) {
+      return;
+    }
+    return _editing;
+  }).readOnly(),
+
+  select(_model) {
+    if(this._normalizeModel(_model) === this._model) {
       return;
     }
     this.edit(null);
-    this.setProperties({ model });
+    this.setProperties({ _model });
   },
 
-  edit(editing) {
-    if(this._normalizeEditing(editing) === this.editing) {
+  edit(_editing) {
+    if(this._normalizeEditing(_editing) === this._editing) {
       return;
     }
-    this.setProperties({ editing });
+    this.setProperties({ _editing });
   },
 
   deselect() {
