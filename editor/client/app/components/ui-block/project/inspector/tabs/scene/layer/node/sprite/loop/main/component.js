@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '../../../../../../-component';
 import { computed } from '@ember/object';
 
 export default Component.extend({

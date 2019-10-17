@@ -5,13 +5,13 @@ export default Component.extend({
 
   actions: {
     createFillNode() {
-      this.model.nodes.createFill();
+      this.model.nodes.createFillNode();
     },
     createSpriteFrameNode() {
-      this.model.nodes.createSpriteFrame();
+      this.model.nodes.createSpriteFrameNode();
     },
     createSpriteLoopNode() {
-      this.model.nodes.createSpriteLoop();
+      this.model.nodes.createSpriteLoopNode();
     }
   }
 
