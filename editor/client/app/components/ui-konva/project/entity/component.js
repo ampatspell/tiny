@@ -31,6 +31,9 @@ export default Node.extend(DraggableMixin, {
     this.model.select();
     if(this.isDoubleClick()) {
       if(this.editable) {
+        // TODO: editable returns false on node
+        // needs node.render.container // node -> scene, layer -> scene
+        // node.render.container.editable
         this.model.edit();
       }
     }
