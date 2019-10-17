@@ -4,6 +4,10 @@ const Layers = filteredEntities('scene/layer');
 
 export default Layers.extend({
 
-  model: null
+  model: null,
+
+  onParentResized(id, diff) {
+    this.models.forEach(model => model.onParentResized(id, diff));
+  }
 
 });

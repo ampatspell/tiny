@@ -38,4 +38,8 @@ export default Entity.extend({
     return { x, y };
   },
 
+  onParentResized(id, diff) {
+    this.nodes.onParentResized(id, diff);
+  }
+
 });

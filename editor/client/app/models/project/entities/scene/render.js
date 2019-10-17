@@ -42,4 +42,9 @@ export default Render.extend({
     return !locked && !hidden && !isEditing;
   }).readOnly(),
 
+  resizable: computed('locked', 'hidden', 'model.isEditing', function() {
+    let { locked, hidden, model: { isEditing } } = this;
+    return !locked && !hidden && isEditing;
+  }).readOnly()
+
 });

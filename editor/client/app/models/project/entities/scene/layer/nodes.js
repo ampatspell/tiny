@@ -1,7 +1,13 @@
-import EmberObject from '@ember/object';
+import filteredEntities from '../../../-filtered-entities';
 
-export default EmberObject.extend({
+const Nodes = filteredEntities('scene/layer/node');
+
+export default Nodes.extend({
 
   model: null,
+
+  onParentResized(id, diff) {
+    this.models.forEach(model => model.onParentResized(id, diff));
+  }
 
 });

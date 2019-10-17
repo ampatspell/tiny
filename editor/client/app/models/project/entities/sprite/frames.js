@@ -55,6 +55,10 @@ export default Frames.extend(SettingsMixin, {
     model && this.select(model);
   },
 
+  resize(handle, target) {
+    this.ordered.forEach(frame => frame.resize(handle, target));
+  },
+
   reorder(indexes) {
     let { selected } = this;
     let frames = this.ordered.slice();
