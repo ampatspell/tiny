@@ -1,5 +1,5 @@
 import EmberObject, { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import { readOnly, or } from '@ember/object/computed';
 import DocMixin, { doc, data } from '../../-doc';
 import { entities } from '../-entities';
 import { render as _render } from '../-render';
@@ -45,7 +45,9 @@ export default EmberObject.extend(DocMixin, {
   entities: entities('project/entities/entity'),
 
   _renderAbsolute: readOnly('render.absolute'),
+  _renderLocked: readOnly('render.locked'),
   _renderHidden: readOnly('render.hidden'),
+  _renderDisabled: or('_renderLocked', '_renderHidden'),
 
   async load() {
   },

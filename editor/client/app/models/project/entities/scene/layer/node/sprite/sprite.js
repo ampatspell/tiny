@@ -48,5 +48,9 @@ export default Node.extend({
     return _size;
   }).readOnly(),
 
+  onSprite(sprite) {
+    this.update({ sprite: sprite.identifier });
+    return true;
+  }
 
 });

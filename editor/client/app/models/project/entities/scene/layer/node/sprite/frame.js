@@ -17,4 +17,12 @@ export default Sprite.extend({
     return spriteFrames.findBy('identifier', identifier);
   }).readOnly(),
 
+  onFrame(frame) {
+    let { sprite, identifier } = frame;
+    if(!this.onSprite(sprite)) {
+      return;
+    }
+    this.update({ frame: identifier });
+  }
+
 });

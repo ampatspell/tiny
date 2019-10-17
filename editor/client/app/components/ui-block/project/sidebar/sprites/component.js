@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
-// TODO: whaaa?
-const disabled = key => computed(`selection.{${key},chainLocked,scene.isEditing}`, function() {
+const disabled = key => computed(`selection.{${key},_renderDisabled,scene.isEditing}`, function() {
   let { selection } = this;
   if(!selection) {
     return true;
@@ -11,10 +10,9 @@ const disabled = key => computed(`selection.{${key},chainLocked,scene.isEditing}
   if(!selection[key]) {
     return true;
   }
-  if(selection.chainLocked) {
+  if(selection._renderDisabled) {
     return true;
   }
-
   let { scene } = selection;
   if(!scene) {
     return true;
@@ -22,14 +20,13 @@ const disabled = key => computed(`selection.{${key},chainLocked,scene.isEditing}
   if(!scene.isEditing) {
     return true;
   }
-
   return false;
 }).readOnly();
 
 export default Component.extend({
   classNameBindings: [ ':ui-block-project-sidebar-sprites' ],
 
-  selection: readOnly('project.selection'),
+  selection: readOnly('project.selection.model'),
   sprite: null,
 
   framesDisabled: disabled('onFrame'),
