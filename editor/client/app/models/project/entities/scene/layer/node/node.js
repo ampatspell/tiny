@@ -13,6 +13,7 @@ export default Entity.extend({
 
   layer: readOnly('parent'),
   scene: readOnly('layer.scene'),
+  container: readOnly('scene'),
 
   render: render('scene/layer/node'),
 

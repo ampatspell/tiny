@@ -14,7 +14,6 @@ export default Node.extend(DraggableMixin, {
   project: null,
 
   frame:  readOnly('model.render.frame'),
-  editable: readOnly('model.render.editable'),
   draggable: readOnly('model.render.draggable'),
 
   props: computed('frame', 'draggable', function() {
@@ -30,11 +29,9 @@ export default Node.extend(DraggableMixin, {
     e.cancelBubble = true;
     this.model.select();
     if(this.isDoubleClick()) {
-      if(this.editable) {
-        // TODO: editable returns false on node
-        // needs node.render.container // node -> scene, layer -> scene
-        // node.render.container.editable
-        this.model.edit();
+      let container = this.model.container;
+      if(container.render.editable) {
+        container.edit();
       }
     }
   }

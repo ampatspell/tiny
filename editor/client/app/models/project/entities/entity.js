@@ -21,6 +21,10 @@ const parent = () => computed('project.content.models.@each.id', '_parent', func
   return project.content.models.findBy('id', _parent);
 }).readOnly();
 
+export const self = () => computed(function() {
+  return this;
+}).readOnly();
+
 export default EmberObject.extend(DocMixin, {
 
   project: null,
@@ -41,6 +45,7 @@ export default EmberObject.extend(DocMixin, {
   entities: entities('project/entities/entity'),
 
   _renderAbsolute: readOnly('render.absolute'),
+  _renderHidden: readOnly('render.hidden'),
 
   async load() {
   },

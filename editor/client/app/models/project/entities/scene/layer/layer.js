@@ -15,6 +15,7 @@ export default Entity.extend({
   typeName: 'Layer',
 
   scene: readOnly('parent'),
+  container: readOnly('scene'),
 
   render: render('scene/layer'),
   properties: properties(),

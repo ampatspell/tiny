@@ -1,4 +1,4 @@
-import Entity, { data, render } from './entity';
+import Entity, { data, render, self } from './entity';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 
@@ -7,6 +7,8 @@ const typed = name => model().named(`project/entities/scene/${name}`).mapping(mo
 export default Entity.extend({
 
   typeName: 'Scene',
+
+  container: self(),
 
   background: data('background'),
 

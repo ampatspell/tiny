@@ -20,6 +20,14 @@ export default EmberObject.extend({
     return this._model;
   }).readOnly(),
 
+  highlight: computed('model.render.highlight.@each._renderHidden', function() {
+    let highlight = this.get('model.render.highlight');
+    if(!highlight) {
+      return;
+    }
+    return highlight.filter(model => !model._renderHidden);
+  }).readOnly(),
+
   editing: computed('_editing.render.editable', function() {
     let { _editing } = this;
     if(!_editing || !_editing.render.editable) {
@@ -32,7 +40,10 @@ export default EmberObject.extend({
     if(this._normalizeModel(_model) === this._model) {
       return;
     }
-    this.edit(null);
+    if(!_model || _model.container !== this._editing) {
+      this.edit(null);
+    }
+    setGlobal({ model: _model });
     this.setProperties({ _model });
   },
 
