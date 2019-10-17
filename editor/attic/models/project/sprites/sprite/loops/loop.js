@@ -37,23 +37,23 @@ export default EmberObject.extend(DocMixin, {
   // async load() {
   // },
 
-  _withFrames(cb) {
-    let frames = A(this._frames).slice();
-    cb(frames);
-    this.update({ frames });
-  },
+  // _withFrames(cb) {
+  //   let frames = A(this._frames).slice();
+  //   cb(frames);
+  //   this.update({ frames });
+  // },
 
-  addFrame(frame) {
-    if(!frame) {
-      return;
-    }
-    let { id } = frame;
-    this._withFrames(frames => frames.push(id));
-  },
+  // addFrame(frame) {
+  //   if(!frame) {
+  //     return;
+  //   }
+  //   let { id } = frame;
+  //   this._withFrames(frames => frames.push(id));
+  // },
 
-  removeFrameAtIndex(idx) {
-    this._withFrames(frames => frames.removeAt(idx));
-  },
+  // removeFrameAtIndex(idx) {
+  //   this._withFrames(frames => frames.removeAt(idx));
+  // },
 
   //
 

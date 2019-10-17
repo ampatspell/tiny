@@ -2,6 +2,7 @@ import Entity, { data } from '../entity';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { properties } from '../../properties';
+import { A } from '@ember/array';
 
 export default Entity.extend({
 
@@ -29,5 +30,25 @@ export default Entity.extend({
     }
     return frames.map(frame => frame && frame.previewRendered);
   }).readOnly(),
+
+  //
+
+  _withFrames(cb) {
+    let frames = A(this._frames).slice();
+    cb(frames);
+    this.update({ frames });
+  },
+
+  addFrame(frame) {
+    if(!frame) {
+      return;
+    }
+    let { id } = frame;
+    this._withFrames(frames => frames.push(id));
+  },
+
+  removeFrameAtIndex(idx) {
+    this._withFrames(frames => frames.removeAt(idx));
+  },
 
 });

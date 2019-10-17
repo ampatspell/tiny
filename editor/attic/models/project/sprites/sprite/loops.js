@@ -38,17 +38,17 @@ export default EmberObject.extend({
   //   await all(this.models.map(model => model.load({ type })));
   // },
 
-  async create() {
-    let frames = this.sprite.frames.ordered.map(frame => frame.id);
+  // async create() {
+  //   let frames = this.sprite.frames.ordered.map(frame => frame.id);
 
-    let doc = this.ref.doc().new({
-      identifier: 'new-loop',
-      frames
-    });
+  //   let doc = this.ref.doc().new({
+  //     identifier: 'new-loop',
+  //     frames
+  //   });
 
-    await doc.save();
-    return this.models.findBy('id', doc.id);
-  },
+  //   await doc.save();
+  //   return this.models.findBy('id', doc.id);
+  // },
 
   //
 

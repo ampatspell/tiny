@@ -71,7 +71,8 @@ export default Frames.extend(SettingsMixin, {
 
   //
 
-  async didCreate() {
+  async didCreate(frame) {
+    this.select(frame);
   },
 
   async create(opts) {
@@ -93,6 +94,30 @@ export default Frames.extend(SettingsMixin, {
     let bytes = new Uint8Array(heart);
     let frame = await this.create({ bytes, identifier: 'heart' });
     return frame;
-  }
+  },
+
+  async reindex(hole) {
+    let delta = 0;
+    this.ordered.forEach((frame, idx) => {
+      if(idx === hole) {
+        delta = 1;
+      }
+      frame.update({ index: idx + delta });
+    });
+  },
+
+  async duplicate(frame) {
+    let { index, bytes } = frame;
+    index = index + 1;
+    await this.reindex(index);
+    return await this.create({ index, bytes });
+  },
+
+  async createOrDuplicate(frame) {
+    if(frame) {
+      return await this.duplicate(frame);
+    }
+    return await this.create();
+  },
 
 });

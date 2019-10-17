@@ -76,9 +76,9 @@ export default EmberObject.extend(SettingsMixin, {
   //   await all(this.models.map(model => model.load({ type })));
   // },
 
-  async didCreateFrame(frame) {
-    this.select(frame);
-  },
+  // async didCreateFrame(frame) {
+  //   this.select(frame);
+  // },
 
   // async create(opts) {
   //   let { index, bytes, identifier } = assign({ index: 0, identifier: null }, opts);
@@ -109,19 +109,19 @@ export default EmberObject.extend(SettingsMixin, {
   //   });
   // },
 
-  async reindex(hole) {
-    await this.store.batch(batch => {
-      let delta = 0;
-      this.ordered.forEach((frame, idx) => {
-        let { doc } = frame;
-        if(idx === hole) {
-          delta = 1;
-        }
-        doc.set('data.index', idx + delta);
-        batch.save(doc);
-      });
-    });
-  },
+  // async reindex(hole) {
+  //   await this.store.batch(batch => {
+  //     let delta = 0;
+  //     this.ordered.forEach((frame, idx) => {
+  //       let { doc } = frame;
+  //       if(idx === hole) {
+  //         delta = 1;
+  //       }
+  //       doc.set('data.index', idx + delta);
+  //       batch.save(doc);
+  //     });
+  //   });
+  // },
 
   // async reorder(indexes) {
   //   let { selected } = this;
@@ -136,19 +136,19 @@ export default EmberObject.extend(SettingsMixin, {
   //   });
   // },
 
-  async duplicate(frame) {
-    let { index, bytes } = frame;
-    index = index + 1;
-    await this.reindex(index);
-    return await this.create({ index, bytes });
-  },
+  // async duplicate(frame) {
+  //   let { index, bytes } = frame;
+  //   index = index + 1;
+  //   await this.reindex(index);
+  //   return await this.create({ index, bytes });
+  // },
 
-  async createOrDuplicate(frame) {
-    if(frame) {
-      return await this.duplicate(frame);
-    }
-    return await this.create();
-  },
+  // async createOrDuplicate(frame) {
+  //   if(frame) {
+  //     return await this.duplicate(frame);
+  //   }
+  //   return await this.create();
+  // },
 
   async createOrDuplicateSelected() {
     return await this.createOrDuplicate(this.selected);
