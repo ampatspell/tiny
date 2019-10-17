@@ -1,7 +1,3 @@
-import Sprite, { data } from '../sprite';
-import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
-
 export default Sprite.extend({
 
   // typeName: 'Sprite Frame Node',

@@ -1,12 +1,3 @@
-import EmberObject, { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
-import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
-import { all } from 'rsvp';
-import { assign } from '@ember/polyfills';
-import { delta } from 'editor/utils/computed';
-import { heart } from 'editor/utils/frame';
-import SettingsMixin from './frames/-settings';
-
 export default EmberObject.extend(SettingsMixin, {
 
   // typeName: 'Frames',

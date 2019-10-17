@@ -1,12 +1,3 @@
-import EmberObject, { computed } from '@ember/object';
-import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
-import createSettingsMixin from '../-settings';
-import { all } from 'rsvp';
-import { assign } from '@ember/polyfills';
-import MoveMixin from '../-move';
-
-const SettingsMixin = createSettingsMixin('project', 'sprites');
-
 export default EmberObject.extend(SettingsMixin, MoveMixin, {
 
   // typeGroup: 'sprites',

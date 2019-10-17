@@ -1,13 +1,3 @@
-import Node, { data } from '../../node';
-import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
-
-export {
-  data
-}
-
-// const _size = Object.freeze({ width: 8, height: 8 });
-
 export default Node.extend({
 
   // typeName: 'Sprite Node',

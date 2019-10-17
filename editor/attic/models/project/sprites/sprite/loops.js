@@ -1,8 +1,3 @@
-import EmberObject, { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
-import { observed, models, resolveObservers } from 'ember-cli-zuglet/lifecycle';
-import { all } from 'rsvp';
-
 export default EmberObject.extend({
 
   // typeName: 'Loops',

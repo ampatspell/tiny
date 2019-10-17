@@ -1,10 +1,3 @@
-import EmberObject from '@ember/object';
-import { readOnly } from '@ember/object/computed';
-import DocMixin, { data } from 'editor/models/-doc';
-import { properties } from 'editor/models/properties';
-import { model } from 'ember-cli-zuglet/lifecycle';
-import { Pixel, toIndex } from 'editor/utils/pixel';
-
 export default EmberObject.extend(DocMixin, {
 
   // typeGroup: 'sprites/sprite/frame',

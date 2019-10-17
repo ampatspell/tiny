@@ -1,12 +1,3 @@
-import EmberObject from '@ember/object';
-import { readOnly, or } from '@ember/object/computed';
-import { all } from 'rsvp';
-import { model } from 'ember-cli-zuglet/lifecycle';
-import DocMixin, { data } from 'editor/models/-doc';
-import { properties } from 'editor/models/properties';
-import { selected, editing } from '../-selection';
-import { assign } from '@ember/polyfills';
-
 export default EmberObject.extend(DocMixin, {
 
   // typeGroup: 'sprites/sprite',
@@ -38,8 +29,8 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  isSelected: selected(),
-  isEditing: editing(),
+  // isSelected: selected(),
+  // isEditing: editing(),
 
   //
 

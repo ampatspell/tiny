@@ -1,10 +1,3 @@
-import EmberObject, { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
-import DocMixin, { data } from 'editor/models/-doc';
-import { properties } from 'editor/models/properties';
-import { model } from 'ember-cli-zuglet/lifecycle';
-import { A } from '@ember/array';
-
 export default EmberObject.extend(DocMixin, {
 
   // typeGroup: 'sprites/sprite/loop',

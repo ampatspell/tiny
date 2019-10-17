@@ -1,14 +1,3 @@
-import EmberObject, { computed } from '@ember/object';
-import { readOnly, or } from '@ember/object/computed';
-import DocMixin, { data } from 'editor/models/-doc';
-import { properties } from 'editor/models/properties';
-import { model } from 'ember-cli-zuglet/lifecycle';
-import { assign } from '@ember/polyfills';
-
-export {
-  data
-}
-
 export default EmberObject.extend(DocMixin, {
 
   // isNode: true,
@@ -40,23 +29,23 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  selections: computed('scene', function() {
-    let { scene } = this;
-    return [ this, scene ];
-  }).readOnly(),
+  // selections: computed('scene', function() {
+  //   let { scene } = this;
+  //   return [ this, scene ];
+  // }).readOnly(),
 
   //
 
   // async load() {
   // },
 
-  async moveUp() {
-    await this.nodes.moveUp(this);
-  },
+  // async moveUp() {
+  //   await this.nodes.moveUp(this);
+  // },
 
-  async moveDown() {
-    await this.nodes.moveDown(this);
-  },
+  // async moveDown() {
+  //   await this.nodes.moveDown(this);
+  // },
 
   //
 
