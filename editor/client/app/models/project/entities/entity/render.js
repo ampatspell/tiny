@@ -1,6 +1,6 @@
 import Render from '../../-render';
 import { computed } from '@ember/object';
-import { readOnly, or } from '@ember/object/computed';
+import { or } from '@ember/object/computed';
 
 export const absolute = () => computed('model.parent.render.absolute', 'frame', function() {
   let { model: { parent: { render: { absolute } } }, frame } = this;

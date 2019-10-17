@@ -1,8 +1,8 @@
-import Node from '../../../../-node';
+import Node from '../../../-node';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
-const observe = [ 'frame', 'stroke' ];
+const observe = [ 'frame' ];
 
 export default Node.extend({
 
@@ -10,12 +10,10 @@ export default Node.extend({
   observe,
 
   model: null,
-
-  opacity: 0.75,
+  stroke: null,
 
   inset: readOnly('model.render.highlightInset'),
   absolute: readOnly('model.render.absolute'),
-  editing: readOnly('model.isEditing'),
 
   frame: computed('absolute', 'inset', function() {
     let { absolute, inset } = this;
@@ -29,14 +27,6 @@ export default Node.extend({
       width: absolute.width + (2 * inset),
       height: absolute.height + (2 * inset)
     };
-  }).readOnly(),
-
-  stroke: computed('opacity', 'editing', function() {
-    let { opacity, editing } = this;
-    if(editing) {
-      return `rgba(255,102,97,${opacity})`;
-    }
-    return `rgba(96,190,253,${opacity})`
   }).readOnly(),
 
   props: computed('frame', 'stroke', function() {

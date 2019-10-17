@@ -5,28 +5,34 @@ export default EmberObject.extend({
 
   project: null,
 
-  _normalize(model) {
+  _normalizeModel(model) {
     return model || this.project;
   },
 
-  model: normalized('_normalize'),
-  editing: null,
+  _normalizeEditing(model) {
+    return model || null;
+  },
+
+  model: normalized('_normalizeModel'),
+  editing: normalized('_normalizeEditing'),
 
   select(model) {
-    if(this._normalize(model) === this.model) {
+    if(this._normalizeModel(model) === this.model) {
       return;
     }
     this.setProperties({ model });
-    setGlobal({ selection: model });
+  },
+
+  edit(editing) {
+    if(this._normalizeEditing(editing) === this.editing) {
+      return;
+    }
+    this.setProperties({ editing });
   },
 
   deselect() {
+    this.edit(null);
     this.select(null);
   },
-
-  edit(model) {
-    model = model || null;
-    this.setProperties({ editing: model });
-  }
 
 });

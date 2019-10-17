@@ -25,8 +25,6 @@ export default Render.extend({
   absolute: bounds('model.entities.visible', '_renderAbsolute'),
 
   highlight: null,
-  draggable: false,
-
-  selection: readOnly('model.selection.model.render.highlight')
+  draggable: false
 
 });
