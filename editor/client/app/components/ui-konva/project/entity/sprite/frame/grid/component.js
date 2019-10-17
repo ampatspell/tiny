@@ -21,8 +21,6 @@ export default Node.extend({
 
   selected: readOnly('sprite.isSelected'),
   editing: readOnly('sprite.isEditing'),
-  // TODO: render.editable
-  editable: and('editing', 'sprite.render.editable', 'model'),
 
   pixel: readOnly('sprite.render.pixel'),
   frame: readOnly('sprite.render.frame'),
@@ -115,7 +113,7 @@ export default Node.extend({
   },
 
   onMousedown(e) {
-    if(!this.editable) {
+    if(!this.editing) {
       return;
     }
     e.cancelBubble = true;
