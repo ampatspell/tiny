@@ -41,90 +41,90 @@ export default EmberObject.extend(MoveMixin, {
     await this.layer.onDidCreateNode(node);
   },
 
-  async create(opts) {
-    let last = this.ordered.lastObject;
-    let index = 0;
-    if(last) {
-      index = last.index + 1;
-    }
+  // async create(opts) {
+  //   let last = this.ordered.lastObject;
+  //   let index = 0;
+  //   if(last) {
+  //     index = last.index + 1;
+  //   }
 
-    opts = assign({}, opts, { index });
-    let doc = this.ref.doc().new(opts);
+  //   opts = assign({}, opts, { index });
+  //   let doc = this.ref.doc().new(opts);
 
-    await doc.save();
-    let model = this.models.findBy('id', doc.id);
-    await this.didCreate(model);
-    return model;
-  },
+  //   await doc.save();
+  //   let model = this.models.findBy('id', doc.id);
+  //   await this.didCreate(model);
+  //   return model;
+  // },
 
-  async _createSprite(type, cb) {
-    // let { sprite } = this;
-    let sprite = null;
+  // async _createSprite(type, cb) {
+  //   // let { sprite } = this;
+  //   let sprite = null;
 
-    let opts = cb(sprite);
-    if(!opts) {
-      return;
-    }
+  //   let opts = cb(sprite);
+  //   if(!opts) {
+  //     return;
+  //   }
 
-    let identifier = null;
-    if(sprite) {
-      identifier = sprite.identifier;
-    }
+  //   let identifier = null;
+  //   if(sprite) {
+  //     identifier = sprite.identifier;
+  //   }
 
-    await this.create({
-      type: `sprite/${type}`,
-      position: {
-        x: 0,
-        y: 0,
-      },
-      alignment: {
-        vertical: 'top',
-        horizontal: 'left'
-      },
-      flip: {
-        horizontal: false,
-        vertical: false
-      },
-      sprite: identifier,
-      ...opts
-    });
-  },
+  //   await this.create({
+  //     type: `sprite/${type}`,
+  //     position: {
+  //       x: 0,
+  //       y: 0,
+  //     },
+  //     alignment: {
+  //       vertical: 'top',
+  //       horizontal: 'left'
+  //     },
+  //     flip: {
+  //       horizontal: false,
+  //       vertical: false
+  //     },
+  //     sprite: identifier,
+  //     ...opts
+  //   });
+  // },
 
-  async createSpriteFrame()  {
-    await this._createSprite('frame', sprite => {
-      let frame;
-      if(sprite) {
-        frame = sprite.get('frames.firstObject.identifier');
-      }
-      frame = frame || null;
-      return { frame };
-    });
-  },
+  // async createSpriteFrame()  {
+  //   await this._createSprite('frame', sprite => {
+  //     let frame;
+  //     if(sprite) {
+  //       frame = sprite.get('frames.firstObject.identifier');
+  //     }
+  //     frame = frame || null;
+  //     return { frame };
+  //   });
+  // },
 
-  async createSpriteLoop() {
-    await this._createSprite('loop', sprite => {
-      let loop = null;
-      if(sprite) {
-        loop = sprite.get('loops.firstObject.identifier') || null;
-      }
-      return { loop };
-    });
-  },
+  // async createSpriteLoop() {
+  //   await this._createSprite('loop', sprite => {
+  //     let loop = null;
+  //     if(sprite) {
+  //       loop = sprite.get('loops.firstObject.identifier') || null;
+  //     }
+  //     return { loop };
+  //   });
+  // },
 
-  async createFill() {
-    await this.create({
-      type: 'fill',
-      position: {
-        x: 0,
-        y: 0,
-      },
-      size: {
-        width: 8,
-        height: 8
-      },
-      color: 'black'
-    });
-  },
+  // async createFill() {
+  //   await this.create({
+  //     type: 'fill',
+  //     position: {
+  //       x: 0,
+  //       y: 0,
+  //     },
+  //     size: {
+  //       width: 8,
+  //       height: 8
+  //     },
+  //     color: 'black'
+  //   });
+  // },
 
   // onParentResized(id, diff) {
   //   this.models.forEach(model => model.onParentResized(id, diff));
