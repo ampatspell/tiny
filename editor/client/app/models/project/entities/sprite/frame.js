@@ -9,6 +9,7 @@ export default Entity.extend({
 
   typeName: 'Sprite Frame',
 
+  sprite: readOnly('parent'),
   size: readOnly('parent.size'),
 
   bytes: data('bytes'),
@@ -105,6 +106,66 @@ export default Entity.extend({
       }
       bytes[index] = value === 1 ? 2 : 1;
     }));
-  }
+  },
+
+  //
+
+  _select(bytes, frame) {
+    let { size } = this;
+    let cols = [];
+    for(let y = frame.y; y < frame.y + frame.height; y++) {
+      let row = [];
+      cols.push(row);
+      for(let x = frame.x; x < frame.x + frame.width; x++) {
+        let index = toIndex(x, y, size);
+        row.push(bytes[index]);
+      }
+    }
+    return cols;
+  },
+
+  _clear(bytes, frame) {
+    let { size } = this;
+    for(let y = frame.y; y < frame.y + frame.height; y++) {
+      for(let x = frame.x; x < frame.x + frame.width; x++) {
+        let index = toIndex(x, y, size);
+        bytes[index] = Pixel.transparent;
+      }
+    }
+  },
+
+  _write(bytes, target, selection) {
+    let { size } = this;
+    for(let y = 0; y < selection.length; y++) {
+      let ty = target.y + y;
+      if(ty < 0 || ty > size.height - 1) {
+        continue;
+      }
+      let row = selection[y];
+      for(let x = 0; x < row.length; x++) {
+        let tx = target.x + x;
+        if(tx < 0 || tx > size.width - 1) {
+          continue;
+        }
+        let value = row[x];
+        if(value === Pixel.transparent) {
+          continue;
+        }
+        let index = toIndex(tx, ty, size);
+        bytes[index] = value;
+      }
+    }
+  },
+
+  beginMove(source) {
+    let pristine = this.bytes.slice();
+    let selection = this._select(pristine, source);
+    return target => {
+      let bytes = pristine.slice();
+      this._clear(bytes, source);
+      this._write(bytes, target, selection);
+      this._replaceBytes(bytes);
+    }
+  },
 
 });
