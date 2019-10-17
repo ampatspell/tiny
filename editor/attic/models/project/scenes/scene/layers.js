@@ -34,21 +34,21 @@ export default EmberObject.extend(SettingsMixin, MoveMixin, {
   //   await all(this.models.map(model => model.load({ type })));
   // },
 
-  async create(opts) {
-    let last = this.ordered.lastObject;
-    let index = 0;
-    if(last) {
-      index = last.index + 1;
-    }
+  // async create(opts) {
+  //   let last = this.ordered.lastObject;
+  //   let index = 0;
+  //   if(last) {
+  //     index = last.index + 1;
+  //   }
 
-    opts = assign({}, opts, { index });
-    let doc = this.ref.doc().new(opts);
+  //   opts = assign({}, opts, { index });
+  //   let doc = this.ref.doc().new(opts);
 
-    await doc.save();
-    let model = this.models.findBy('id', doc.id);
-    await this.scene.onDidCreateLayer(model);
-    return model;
-  },
+  //   await doc.save();
+  //   let model = this.models.findBy('id', doc.id);
+  //   await this.scene.onDidCreateLayer(model);
+  //   return model;
+  // },
 
   // onParentResized(id, diff) {
   //   this.models.forEach(model => model.onParentResized(id, diff));
