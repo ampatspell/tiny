@@ -4,11 +4,6 @@
   flex-direction: column;
   border-right: 1px solid #ddd;
   background: #fff;
-  > .preview {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
   > .details {
     margin-top: 2px;
   }
