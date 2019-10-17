@@ -37,6 +37,18 @@ export default Entity.extend({
     this.update({ position, size });
   },
 
+  //
+
+  async didCreateLayer(layer) {
+    await this.project.didCreateLayer(layer);
+  },
+
+  async didCreateNode(model) {
+    await this.project.didCreateNode(model);
+  },
+
+  //
+
   onClick() {
     let selection = this.project.selection.model;
     if(selection && selection.scene === this) {

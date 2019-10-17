@@ -91,12 +91,6 @@ export default EmberObject.extend(DocMixin, {
 
   //
 
-  async willDelete() {
-    await this.project.willDeleteEntity(this);
-  },
-
-  //
-
   onClick() {
     this.select();
   },

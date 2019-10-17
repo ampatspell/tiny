@@ -11,7 +11,7 @@ export default Nodes.extend({
   },
 
   async didCreate(model) {
-    model.select();
+    await this.model.didCreateNode(model);
   },
 
   async create(opts) {

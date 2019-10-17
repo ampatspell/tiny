@@ -11,8 +11,8 @@ export default Layers.extend({
     this.models.forEach(model => model.onParentResized(id, diff));
   },
 
-  didCreate(model) {
-    model.select();
+  async didCreate(model) {
+    await this.model.didCreateLayer(model);
   },
 
   async create(opts) {

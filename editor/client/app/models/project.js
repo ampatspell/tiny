@@ -80,12 +80,17 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
     this.select(scene);
   },
 
-  didCreateSprite(sprite) {
-    this.select(sprite);
+  didCreateLayer(layer) {
+    this.select(layer);
   },
 
-  willDeleteEntity() {
-    this.select(null);
+  didCreateNode(node) {
+    this.select(node);
+    node.scene.edit();
+  },
+
+  didCreateSprite(sprite) {
+    this.select(sprite);
   },
 
   //

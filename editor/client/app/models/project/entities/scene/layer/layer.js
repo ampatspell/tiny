@@ -41,6 +41,10 @@ export default Entity.extend({
 
   onParentResized(id, diff) {
     this.nodes.onParentResized(id, diff);
+  },
+
+  async didCreateNode(model) {
+    await this.scene.didCreateNode(model);
   }
 
 });
