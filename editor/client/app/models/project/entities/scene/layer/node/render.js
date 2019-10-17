@@ -32,4 +32,6 @@ export default Render.extend({
     return [ scene, model ];
   }).readOnly(),
 
+  editable: readOnly('model.scene.render.editable')
+
 });

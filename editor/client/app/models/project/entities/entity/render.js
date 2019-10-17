@@ -12,6 +12,14 @@ export const absolute = () => computed('model.parent.render.absolute', 'frame', 
   };
 }).readOnly();
 
+export const editable = () => computed('locked', 'hidden', 'model', function() {
+  let { locked, hidden, model } = this;
+  if(locked || hidden) {
+    return;
+  }
+  return model;
+}).readOnly();
+
 export default Render.extend({
 
   hidden: or('model.hidden', 'model.parent.render.hidden'),

@@ -1,4 +1,4 @@
-import Render from '../entity/render';
+import Render, { editable } from '../entity/render';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
@@ -41,6 +41,8 @@ export default Render.extend({
   highlight: computed('model', function() {
     let { model } = this;
     return [ model ];
-  }).readOnly()
+  }).readOnly(),
+
+  editable: editable()
 
 });

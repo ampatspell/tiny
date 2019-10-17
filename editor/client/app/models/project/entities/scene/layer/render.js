@@ -29,9 +29,7 @@ export default Render.extend({
 
   absolute: absolute(),
 
-  highlight: computed('model.scene', function() {
-    let { model: { scene } } = this;
-    return [ scene ];
-  }).readOnly(),
+  highlight: readOnly('model.scene.render.highlight'),
+  editable: readOnly('model.scene.render.editable'),
 
 });
