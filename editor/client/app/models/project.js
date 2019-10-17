@@ -95,45 +95,60 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   //
 
+  _willDeleteEntity(entity, prop) {
+    let selection = this.selection.model;
+    if(selection) {
+      if(selection === entity || selection[prop] === entity) {
+        this.select(null);
+      }
+    }
+    this.edit(null);
+  },
+
   willDeleteScene(scene) {
+    this._willDeleteEntity(scene, 'scene');
   },
 
   willDeleteLayer(layer) {
+    this._willDeleteEntity(layer, 'layer');
   },
 
   willDeleteNode(node) {
+    this._willDeleteEntity(node, 'node');
   },
 
   willDeleteSprite(sprite) {
+    this._willDeleteEntity(sprite, 'sprite');
   },
 
-  willDeleteFrame(frame) {
+  willDeleteFrame() {
   },
 
-  willDeleteLoop(loop) {
+  willDeleteLoop() {
   },
 
   //
 
-  // onShortcutDigit(pixel) {
-  //   if(pixel < 1) {
-  //     return;
-  //   }
-  //   let selection = this.selection;
-  //   if(selection && selection.onShortcutDigit) {
-  //     selection.onShortcutDigit(pixel);
-  //   } else {
-  //     this.update({ pixel });
-  //   }
-  // },
+  onShortcutDigit(value) {
+    if(value < 1) {
+      return;
+    }
+    let selection = this.selection.model;
+    if(selection && selection !== this && selection.onShortcutDigit) {
+      selection.onShortcutDigit(value);
+    } else {
+      this.update({ pixel: value });
+    }
+  },
 
-  // onShortcutEscape() {
-  //   if(this.editing) {
-  //     this.edit();
-  //   } else {
-  //     this.deselect();
-  //   }
-  // },
+  onShortcutEscape() {
+    let { selection } = this;
+    if(selection.editing) {
+      selection.edit(null);
+    } else {
+      selection.select(null);
+    }
+  },
 
   // _selectionRenderDetails() {
   //   return this.get('selection.render.details') || this.get('selection');

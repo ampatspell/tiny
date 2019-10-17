@@ -54,6 +54,12 @@ export default Entity.extend({
 
   //
 
+  onShortcutDigit(value) {
+    this.update({ pixel: value });
+  },
+
+  //
+
   async willDeleteFrame(frame) {
     await all([
       this.frames.willDeleteFrame(frame),

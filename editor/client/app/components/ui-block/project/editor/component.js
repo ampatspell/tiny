@@ -53,7 +53,7 @@ export default Component.extend(KeyboardMixin, {
   //
 
   onDigit(value) {
-    // this.project.onShortcutDigit(value);
+    this.project.onShortcutDigit(value);
   },
 
   onUp() {
@@ -73,7 +73,7 @@ export default Component.extend(KeyboardMixin, {
   },
 
   onEscape() {
-    // this.project.onShortcutEscape();
+    this.project.onShortcutEscape();
   },
 
   //
