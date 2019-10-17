@@ -5,10 +5,10 @@ export default Component.extend({
 
   actions: {
     createGridLayer() {
-      this.model.layers.create({ type: 'grid', grid: { width: 8, height: 8 } });
+      this.model.layers.createGridLayer();
     },
     createPixelLayer() {
-      this.model.layers.create({ type: 'pixel' });
+      this.model.layers.createPixelLayer();
     }
   }
 
