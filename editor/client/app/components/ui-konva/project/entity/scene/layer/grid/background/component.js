@@ -30,9 +30,6 @@ export default Node.extend({
 
   frame: computed('size', 'pixel', function() {
     let { pixel, size } = this;
-    if(!size) { // TODO: deleted parent
-      return;
-    }
     return {
       x: 0,
       y: 0,
