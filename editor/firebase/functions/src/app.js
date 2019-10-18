@@ -22,14 +22,8 @@ module.exports = class Application {
       },
       projects: {
         onDelete: this.require('./triggers/projects/on-delete'),
-        sprites: {
-          onDelete: this.require('./triggers/projects/sprites/on-delete')
-        },
-        scenes: {
-          onDelete: this.require('./triggers/projects/scenes/on-delete'),
-          layers: {
-            onDelete: this.require('./triggers/projects/scenes/layers/on-delete')
-          }
+        entities: {
+          onDelete: this.require('./triggers/projects/entities/on-delete')
         }
       }
     };
