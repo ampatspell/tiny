@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { delta } from 'editor/utils/computed';
 import { assign } from '@ember/polyfills';
 import { heart } from 'editor/utils/frame';
+import { all } from 'rsvp';
 
 const Frames = filteredEntities('sprite/frame');
 const SettingsMixin = settings('model', 'frames');
@@ -135,7 +136,11 @@ export default Frames.extend(SettingsMixin, {
   },
 
   async didDeleteFrame() {
-    this.reindex();
+    await this.reindex();
+  },
+
+  async delete() {
+    await all(this.models.map(frame => frame.delete()));
   }
 
 });

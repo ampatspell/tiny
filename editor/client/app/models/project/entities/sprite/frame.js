@@ -170,10 +170,11 @@ export default Entity.extend({
 
   async willDelete() {
     await this.sprite.willDeleteFrame(this);
+    this._sprite = this.sprite;
   },
 
   async didDelete() {
-    await this.sprite.didDeleteFrame(this);
+    await this._sprite.didDeleteFrame(this);
   }
 
 });

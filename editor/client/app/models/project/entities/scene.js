@@ -69,6 +69,7 @@ export default Entity.extend({
   //
 
   async willDelete() {
+    await this.layers.delete();
     await this.project.willDeleteScene(this);
   }
 

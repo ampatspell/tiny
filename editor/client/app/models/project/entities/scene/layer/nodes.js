@@ -1,4 +1,5 @@
 import filteredEntities from '../../../-filtered-entities';
+import { all } from 'rsvp';
 
 const Nodes = filteredEntities('scene/layer/node');
 
@@ -64,6 +65,7 @@ export default Nodes.extend({
   createSpriteFrameNode()  {
     return this._createSpriteNode('frame', sprite => {
       let frame = null;
+      // TODO: sprite
       if(sprite) {
       }
       return { frame };
@@ -73,10 +75,15 @@ export default Nodes.extend({
   createSpriteLoopNode() {
     return this._createSpriteNode('loop', sprite => {
       let loop = null;
+      // TODO: sprite
       if(sprite) {
       }
       return { loop };
     });
   },
+
+  async delete() {
+    await all(this.models.map(node => node.delete()));
+  }
 
 });

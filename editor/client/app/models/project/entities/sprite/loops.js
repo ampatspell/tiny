@@ -45,6 +45,10 @@ export default Loops.extend({
     if(this.selected === loop) {
       this.select(null);
     }
+  },
+
+  async delete() {
+    await all(this.models.map(loop => loop.delete()));
   }
 
 });
