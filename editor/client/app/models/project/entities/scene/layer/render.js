@@ -18,7 +18,11 @@ export default Render.extend({
   pixel: readOnly('model.project.pixel'),
 
   frame: computed('model.{position,size}', 'pixel', function() {
-    let { model: { position: { x, y }, size: { width, height } }, pixel } = this;
+    let { model: { position: { x, y }, size }, pixel } = this;
+    if(!size) { // TODO: deleted parent
+      return;
+    }
+    let { width, height } = size;
     return {
       x: x * pixel,
       y: y * pixel,

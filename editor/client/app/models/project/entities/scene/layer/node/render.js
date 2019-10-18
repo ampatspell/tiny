@@ -34,6 +34,9 @@ export default Render.extend({
 
   draggable: computed('isSpacePressed', 'locked', 'hidden', 'model.scene.isEditing', function() {
     let { isSpacePressed, locked, hidden, model: { scene } } = this;
+    if(!scene) { // TODO: deleted parent
+      return;
+    }
     return !isSpacePressed && !locked && !hidden && scene.isEditing;
   }).readOnly()
 

@@ -18,6 +18,9 @@ export default Node.extend(DraggableMixin, {
 
   props: computed('frame', 'draggable', function() {
     let { frame, draggable } = this;
+    if(!frame) { // TODO: deleted parent
+      return;
+    }
     return {
       x: frame.x,
       y: frame.y,

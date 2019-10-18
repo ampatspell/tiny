@@ -17,7 +17,8 @@ export default Scenes.extend({
       identifier,
       position,
       size,
-      background
+      background,
+      expanded
     } = assign({
       identifier: 'new-scene',
       position: {
@@ -32,7 +33,7 @@ export default Scenes.extend({
       expanded: true
     }, opts);
 
-    let model = await this.createModel({ type: 'scene', identifier, position, size, background });
+    let model = await this.createModel({ type: 'scene', identifier, position, size, background, expanded });
     await this.didCreate(model);
     return model;
   }
