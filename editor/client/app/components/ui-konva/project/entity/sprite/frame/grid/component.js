@@ -1,6 +1,6 @@
 import Node from '../../../../../-node';
 import { Pixel, fromIndex, toIndex } from 'editor/utils/pixel';
-import { readOnly, not, and } from '@ember/object/computed';
+import { readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 
 const observe = [ 'frame', 'sceneFunc', 'hitFunc' ];
