@@ -18,10 +18,18 @@ export default EmberObject.extend({
     doc: path => owner._adding.findBy('path', path)
   })),
 
-  models: models('query.content')
+  _models: models('query.content')
     .object('data.type')
     .named(doc => `project/entities/${doc.get('data.type')}`)
     .mapping((doc, { project }) => ({ project, doc })),
+
+  models: computed('_models.@each.{id,_parent}', function() {
+    let models = this._models;
+    return models.filter(model => {
+      let { _parent } = model;
+      return _parent === null || !!models.findBy('id', _parent);
+    });
+  }).readOnly(),
 
   async load() {
     await resolveObservers(this.query);
