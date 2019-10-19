@@ -1,6 +1,7 @@
 import Render from '../../-render';
 import { computed } from '@ember/object';
 import { or, readOnly } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export const absolute = () => computed('model.parent.render.absolute', 'frame', function() {
   let { model: { parent: { render: { absolute } } }, frame } = this;
@@ -23,6 +24,18 @@ export default Render.extend({
   locked: or('model.locked', 'model.parent.render.locked'),
 
   isSpacePressed: readOnly('model.project.editor.isSpacePressed'),
-  isAltPressed:   readOnly('model.project.editor.isAltPressed')
+  isAltPressed:   readOnly('model.project.editor.isAltPressed'),
+
+  dialogs: service(),
+
+  async delete() {
+    let message = this.deleteConfirmation;
+    let fn = () => this.model.delete();
+    if(message) {
+      await this.dialogs.alert(message, 'Cancel', 'Delete', fn);
+      return;
+    }
+    fn();
+  }
 
 });
