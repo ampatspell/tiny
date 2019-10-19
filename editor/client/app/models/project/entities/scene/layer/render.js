@@ -30,6 +30,6 @@ export default Render.extend({
 
   absolute: absolute(),
 
-  highlight: readOnly('model.scene.render.highlight'),
+  highlight: readOnly('model.scene.render.highlight')
 
 });
