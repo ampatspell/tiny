@@ -1,5 +1,5 @@
 let { properties } = require('../util/lazy');
-let { pick, compact } = require('../util/object');
+let { pick } = require('../util/object');
 let assert = require('assert');
 
 class ExportService {
