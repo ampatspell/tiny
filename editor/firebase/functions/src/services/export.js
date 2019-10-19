@@ -1,10 +1,43 @@
 let { properties } = require('../util/lazy');
-let { pick } = require('../util/object');
+let { pick, compact } = require('../util/object');
+let assert = require('assert');
 
 class ExportService {
 
   constructor(app) {
     this.app = app;
+    this.mapping = this._createMapping();
+  }
+
+  _createMapping() {
+    let make = (keys, fn) => data => {
+      data = pick(data, keys);
+      if(fn) {
+        data = fn(data);
+      }
+      return data;
+    };
+
+    let base = [ 'identiifer', 'index' ];
+    let child = [ ...base, 'parent' ];
+    let node = [ ...child, 'position' ];
+    let sprite = [ ...node, 'alignment', 'flip', 'sprite' ];
+    return {
+      'scene':                         make([ ...base, 'name', 'background', 'size' ]),
+      'scene/layer/grid':              make([ ...child, 'grid' ]),
+      'scene/layer/pixel':             make([ ...child ]),
+      'scene/layer/node/fill':         make([ ...node, 'size', 'color' ]),
+      'scene/layer/node/sprite/frame': make([ ...sprite, 'frame' ]),
+      'scene/layer/node/sprite/loop':  make([ ...sprite, 'loop' ]),
+      'sprite':                        make([ ...base, 'size' ]),
+      'sprite/frame':                  make([ ...child, 'bytes' ], data => {
+        if(data.bytes) {
+          data.bytes = [ ...data.bytes ];
+        }
+        return data;
+      }),
+      'sprite/loop':                   make([ ...child, 'frames' ])
+    };
   }
 
   async _exportProperties(snapshot) {
@@ -31,110 +64,24 @@ class ExportService {
     }, {});
   }
 
-  async _exportSpriteFrame(frame) {
-    let data = frame.data();
+  async _exportEntity(entity) {
+    let data = entity.data();
     if(!data) {
       return;
     }
 
-    let bytes = data.bytes || null;
-    if(bytes) {
-      bytes = [ ...bytes ];
-    }
+    let properties = await this._exportProperties(entity);
 
-    return Object.assign(pick(data, [ 'identifier' ]), { _id: frame.id, bytes });
+    let { type } = data;
+    let mapping = this.mapping[type];
+    assert(!!mapping, `unsupported entity '${type}'`);
+
+    let { id } = entity;
+    return Object.assign({ id, type }, mapping(data), { properties });
   }
 
-  async _exportSpriteLoop(loop) {
-    let data = loop.data();
-    if(!data) {
-      return;
-    }
-    return Object.assign(pick(data, [ 'identifier', 'frames' ]), { _id: loop.id });
-  }
-
-  async _exportSpriteFrames(frames) {
-    return await Promise.all(frames.docs.map(snapshot => this._exportSpriteFrame(snapshot)));
-  }
-
-  async _exportSpriteLoops(loops) {
-    return await Promise.all(loops.docs.map(snapshot => this._exportSpriteLoop(snapshot)));
-  }
-
-  async _exportSprite(sprite) {
-    let data = sprite.data();
-    if(!data) {
-      return;
-    }
-
-    let [ frames, loops ] = await Promise.all([
-      this._exportSpriteFrames(await sprite.ref.collection('frames').orderBy('index', 'asc').get()),
-      this._exportSpriteLoops(await sprite.ref.collection('loops').get()),
-    ]);
-
-    loops.map(loop => {
-      loop.frames = loop.frames.map(id => {
-        let frame = frames.find(frame => frame._id === id);
-        return frames.indexOf(frame);
-      });
-    });
-
-    return Object.assign(pick(data, [ 'identifier', 'size' ]), { _id: sprite.id, frames, loops });
-  }
-
-  async _exportSprites(sprites) {
-    return await Promise.all(sprites.docs.map(snapshot => this._exportSprite(snapshot)));
-  }
-
-  async _exportSceneLayerNode(node) {
-    let data = node.data();
-    if(!data) {
-      return;
-    }
-
-    let properties = await this._exportProperties(node);
-
-    return Object.assign(pick(data, [ 'type', 'sprite', 'frame', 'position', 'alignment', 'flip', 'loop', 'color' ]), { _id: node.id, properties });
-  }
-
-  async _exportSceneLayerNodes(nodes) {
-    return await Promise.all(nodes.docs.map(snapshot => this._exportSceneLayerNode(snapshot)));
-  }
-
-  async _exportSceneLayer(layer) {
-    let data = layer.data();
-    if(!data) {
-      return;
-    }
-
-    let [ nodes, properties ] = await Promise.all([
-      this._exportSceneLayerNodes(await layer.ref.collection('nodes').orderBy('index', 'asc').get()),
-      this._exportProperties(layer)
-    ]);
-
-    return Object.assign(pick(data, [ 'identifier', 'type', 'grid' ]), { _id: layer.id, nodes, properties });
-  }
-
-  async _exportSceneLayers(layers) {
-    return await Promise.all(layers.docs.map(snapshot => this._exportSceneLayer(snapshot)));
-  }
-
-  async _exportScene(scene) {
-    let data = scene.data();
-    if(!data) {
-      return;
-    }
-
-    let [ layers, properties ] = await Promise.all([
-      this._exportSceneLayers(await scene.ref.collection('layers').orderBy('index', 'asc').get()),
-      this._exportProperties(scene)
-    ]);
-
-    return Object.assign(pick(data, [ 'identifier', 'background', 'name', 'size' ]), { _id: scene.id, layers, properties });
-  }
-
-  async _exportScenes(scenes) {
-    return await Promise.all(scenes.docs.map(snapshot => this._exportScene(snapshot)));
+  async _exportEntities(entities) {
+    return await Promise.all(entities.docs.map(snapshot => this._exportEntity(snapshot)));
   }
 
   async exportProject(project) {
@@ -143,13 +90,12 @@ class ExportService {
       return;
     }
 
-    let [ sprites, scenes, properties ] = await Promise.all([
-      this._exportSprites(await project.ref.collection('sprites').get()),
-      this._exportScenes(await project.ref.collection('scenes').orderBy('index', 'desc').get()),
+    let [ entities, properties ] = await Promise.all([
+      this._exportEntities(await project.ref.collection('entities').get()),
       this._exportProperties(project)
     ]);
 
-    return Object.assign(pick(data, [ 'title' ]), { _id: project.id, properties, sprites, scenes });
+    return Object.assign(pick(data, [ 'title' ]), { id: project.id, properties, entities });
   }
 
   async byToken(token) {
