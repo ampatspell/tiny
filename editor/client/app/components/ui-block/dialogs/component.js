@@ -10,7 +10,7 @@ export default Component.extend({
   dialogs: service(),
   label: null,
 
-  model: computed('dialogs.models.firstObject', function() {
+  model: computed('dialogs.models.firstObject.presenter', function() {
     let model = this.dialogs.models.firstObject;
     if(!model || model.presenter !== this) {
       return;

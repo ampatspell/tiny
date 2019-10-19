@@ -35,7 +35,7 @@ export default Render.extend({
       await this.dialogs.alert(message, 'Cancel', 'Delete', fn);
       return;
     }
-    fn();
+    await fn();
   }
 
 });
