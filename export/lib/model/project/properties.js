@@ -1,7 +1,20 @@
 class Properties {
 
-  constructor(json) {
+  constructor(parent, json) {
+    Object.defineProperty(this, 'parent', { value: parent });
     Object.defineProperty(this, 'json', { value: json });
+  }
+
+  inspect() {
+    let values = '';
+    if(this.any) {
+      values = ` ${this.keys.join(', ')} `;
+    }
+    return `Properties {${values}}`;
+  }
+
+  get any() {
+    return this.keys.length > 0;
   }
 
   get all() {

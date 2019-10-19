@@ -8,6 +8,10 @@ run(config, async runtime => {
 
   let project = await runtime.project();
 
+  console.log(require('util').inspect(project, { depth: 10 }));
+
+  return;
+
   project.loops = [];
   project.sprites.forEach((sprite, s) => {
     sprite.variable = `sprite_${s}`;
