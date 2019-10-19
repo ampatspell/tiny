@@ -107,9 +107,13 @@ export default Node.extend({
   },
 
   updatePixelForEvent(e) {
+    let { model } = this;
+    if(!model) {
+      return;
+    }
     let { index } = this.pixelForRelativePointerPosition();
     let value = this.targetPixelValueForEvent(e);
-    this.model.setPixel(index, value);
+    model.setPixel(index, value);
   },
 
   onMousedown(e) {
