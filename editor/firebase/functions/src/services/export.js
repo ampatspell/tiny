@@ -18,7 +18,7 @@ class ExportService {
       return data;
     };
 
-    let base = [ 'identiifer', 'index' ];
+    let base = [ 'identifier', 'index' ];
     let child = [ ...base, 'parent' ];
     let node = [ ...child, 'position' ];
     let sprite = [ ...node, 'alignment', 'flip', 'sprite' ];
