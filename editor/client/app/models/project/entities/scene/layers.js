@@ -31,10 +31,6 @@ export default Layers.extend({
   createPixelLayer(opts) {
     opts = assign({ type: 'scene/layer/pixel' }, opts);
     return this.create(opts);
-  },
-
-  async delete() {
-    await all(this.models.map(layer => layer.delete()));
   }
 
 });

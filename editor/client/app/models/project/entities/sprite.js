@@ -86,8 +86,6 @@ export default Entity.extend({
   },
 
   async willDelete() {
-    await this.frames.delete();
-    await this.loops.delete();
     await this.project.willDeleteSprite(this);
   }
 

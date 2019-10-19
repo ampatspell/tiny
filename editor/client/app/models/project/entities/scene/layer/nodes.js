@@ -80,10 +80,6 @@ export default Nodes.extend({
       }
       return { loop };
     });
-  },
-
-  async delete() {
-    await all(this.models.map(node => node.delete()));
   }
 
 });

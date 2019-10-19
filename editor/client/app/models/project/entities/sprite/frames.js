@@ -137,10 +137,6 @@ export default Frames.extend(SettingsMixin, {
 
   async didDeleteFrame() {
     await this.reindex();
-  },
-
-  async delete() {
-    await all(this.models.map(frame => frame.delete()));
   }
 
 });

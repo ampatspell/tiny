@@ -54,7 +54,6 @@ export default Entity.extend({
   //
 
   async willDelete() {
-    await this.nodes.delete();
     await this.scene.willDeleteLayer(this);
   }
 
