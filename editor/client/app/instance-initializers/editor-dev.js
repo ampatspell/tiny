@@ -5,6 +5,16 @@ export default {
   after: 'editor:store',
   initialize: app => { // eslint-disable-line no-unused-vars
     window.setGlobal = setGlobal;
+
+    window.rebuild = async () => {
+      let project = app.lookup('route:projects/project').currentModel.project;
+      let scene = await project.scenes.create();
+      let layer = await scene.layers.createPixelLayer();
+      await layer.nodes.createFillNode({ x: 0, y: 0 });
+      await layer.nodes.createFillNode({ x: 8, y: 8 });
+      await scene.delete();
+    }
+
     window.migrate = async id => {
       let store = app.lookup('service:store');
 
