@@ -18,7 +18,15 @@ const parent = () => computed('project.content.models.@each.id', '_parent', func
   if(_parent === null) {
     return project;
   }
-  return project.content.models.findBy('id', _parent);
+  let parent = project.content.models.findBy('id', _parent);
+  if(!parent) {
+    let cached = this.__parent;
+    if(cached && cached.id === _parent) {
+      return cached;
+    }
+  }
+  this.__parent = parent;
+  return parent;
 }).readOnly();
 
 export const self = () => computed(function() {
