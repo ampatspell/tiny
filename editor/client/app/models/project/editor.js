@@ -39,6 +39,10 @@ export default EmberObject.extend({
   center() {
     let { project: { render: { absolute: project } }, size } = this;
 
+    if(!project) {
+      return;
+    }
+
     let calc = (a, s) => Math.round((size[s] / 2) - (project[s] / 2) - project[a]);
 
     let origin = {
@@ -51,6 +55,10 @@ export default EmberObject.extend({
 
   fit() {
     let { project: { pixel, render: { absolute: project } }, size } = this;
+
+    if(!project) {
+      return;
+    }
 
     let calc = s => Math.floor((size[s] * pixel) / project[s]);
 
