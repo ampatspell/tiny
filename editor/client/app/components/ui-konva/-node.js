@@ -6,7 +6,6 @@ import { capitalize } from '@ember/string';
 import { assert } from '@ember/debug';
 import { A } from '@ember/array';
 import { assign } from '@ember/polyfills';
-import { cancel, next } from '@ember/runloop';
 import Konva from 'konva';
 
 export default Component.extend(Parent, Events, {
@@ -143,13 +142,8 @@ export default Component.extend(Parent, Events, {
 
   //
 
-  cancelObservedPropertyDidChange() {
-    cancel(this._observedPropertyDidChange);
-  },
-
   observedPropertyDidChange() {
-    cancel(this._observedPropertyDidChange);
-    this._observedPropertyDidChange = next(() => this.updateNodeAttributesAndDraw());
+    this.updateNodeAttributesAndDraw();
   },
 
   startObservingProperties() {
@@ -158,7 +152,6 @@ export default Component.extend(Parent, Events, {
 
   stopObservingProperties() {
     A(this.observe).forEach(key => this.removeObserver(key, this, this.observedPropertyDidChange, true));
-    this.cancelObservedPropertyDidChange();
   },
 
   //
