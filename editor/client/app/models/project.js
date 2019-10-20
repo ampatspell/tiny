@@ -61,7 +61,6 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
 
   async load({ type }) {
     if(type === 'detail') {
-      setGlobal({ project: this });
       await this.content.load();
     }
   },

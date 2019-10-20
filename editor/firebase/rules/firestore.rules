@@ -29,37 +29,6 @@ service cloud.firestore {
         allow write: if isProjectOwner();
       }
 
-      // TODO: Remove
-      match /sprites/{sprite} {
-        allow read: if isProjectOwner();
-        allow write: if isProjectOwner();
-
-        match /frames/{frame} {
-          allow read: if isProjectOwner();
-          allow write: if isProjectOwner();
-        }
-
-        match /loops/{frame} {
-          allow read: if isProjectOwner();
-          allow write: if isProjectOwner();
-        }
-      }
-
-      // TODO: Remove
-      match /scenes/{scene} {
-        allow read: if isProjectOwner();
-        allow write: if isProjectOwner();
-
-        match /layers/{layer} {
-          allow read: if isProjectOwner();
-          allow write: if isProjectOwner();
-
-          match /nodes/{frame} {
-            allow read: if isProjectOwner();
-            allow write: if isProjectOwner();
-          }
-        }
-      }
     }
 
   }
