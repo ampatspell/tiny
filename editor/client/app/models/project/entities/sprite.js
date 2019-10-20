@@ -1,5 +1,4 @@
 import Entity, { data, render, self } from './entity';
-import { properties } from '../properties';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { assign } from '@ember/polyfills';
 import { all } from 'rsvp';
@@ -14,7 +13,6 @@ export default Entity.extend({
 
   pixel: data('pixel'),
   background: data('background'),
-  properties: properties(),
 
   render: render('sprite'),
 

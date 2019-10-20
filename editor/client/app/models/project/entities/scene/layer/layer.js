@@ -1,5 +1,4 @@
 import Entity, { data, render } from '../../entity';
-import { properties } from '../../../properties';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { readOnly } from '@ember/object/computed';
 import { selectedChildEntity } from '../../../-selection';
@@ -18,7 +17,6 @@ export default Entity.extend({
   container: readOnly('scene'),
 
   render: render('scene/layer'),
-  properties: properties(),
 
   position: Object.freeze({ x: 0, y: 0 }),
   size: readOnly('scene.size'),

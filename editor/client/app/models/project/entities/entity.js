@@ -4,6 +4,7 @@ import DocMixin, { doc, data } from '../../-doc';
 import { entities } from '../-entities';
 import { render as _render } from '../-render';
 import { isSelected, isEditing } from '../-selection';
+import { properties } from '../properties';
 
 const render = name => _render(`project/entities/${name}`);
 
@@ -46,6 +47,8 @@ export default EmberObject.extend(DocMixin, {
 
   _parent: data('parent'),
   parent: parent(),
+
+  properties: properties(),
 
   isSelected: isSelected(),
   isEditing: isEditing(),

@@ -1,6 +1,7 @@
 import Entity, { data, render } from '../../../entity';
 import { readOnly } from '@ember/object/computed';
 import { assign } from '@ember/polyfills';
+import { properties } from '../../../../properties';
 
 export {
   data
@@ -21,6 +22,8 @@ export default Entity.extend({
   layer: readOnly('parent'),
   scene: readOnly('layer.scene'),
   container: readOnly('scene'),
+
+  properties: properties(),
 
   render: render('scene/layer/node'),
 

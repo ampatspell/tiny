@@ -1,7 +1,6 @@
 import Entity, { data } from '../entity';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { properties } from '../../properties';
 import { A } from '@ember/array';
 
 export default Entity.extend({
@@ -10,8 +9,6 @@ export default Entity.extend({
 
   sprite: readOnly('parent'),
   size: readOnly('sprite.size'),
-
-  properties: properties(),
 
   _frames: data('frames.serialized'),
 

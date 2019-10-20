@@ -1,7 +1,6 @@
 import Entity, { data, render } from '../entity';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { properties } from '../../properties';
 import { model } from 'ember-cli-zuglet/lifecycle';
 import { Pixel, toIndex } from 'editor/utils/pixel';
 
@@ -14,7 +13,6 @@ export default Entity.extend({
 
   bytes: data('bytes'),
 
-  properties: properties(),
   preview: model().named('project/entities/sprite/frame/preview').mapping(frame => ({ frame })),
 
   previewRendered: readOnly('preview.rendered'),
