@@ -6,6 +6,7 @@ class SpriteLoop extends Entity {
   link() {
     super.link();
     this.sprite = this.parent;
+    this.index = this.sprite.loops.models.indexOf(this);
     this.frames = new Entities(this, this.json.frames.map(id => this.sprite.frames.byId(id)));
   }
 

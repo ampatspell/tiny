@@ -1,7 +1,9 @@
 const Properties = require('./properties');
 const { sortBy } = require('../../util/array');
+const util = require('util');
 const Sprites = require('./entities/sprites');
 const Scenes = require('./entities/scenes');
+const classify = require("underscore.string/classify");
 
 class Project {
 
@@ -16,7 +18,8 @@ class Project {
       let Class = require(`./entities/${type}`);
       return new Class(this, hash);
     };
-    let models = sortBy(entities, 'index').map(hash => entity(hash));
+
+    let models = entities.map(hash => entity(hash));
     Object.defineProperty(this, 'models', { value: models });
 
     this.sprites = new Sprites(this, models.filter(model => model.type === 'sprite'));
@@ -24,6 +27,18 @@ class Project {
 
     this.sprites.link();
     this.scenes.link();
+  }
+
+  sortBy(array, key, direction) {
+    return sortBy(array, key, direction);
+  }
+
+  classify(string) {
+    return classify(string);
+  }
+
+  dir(arg, depth=5) {
+    return util.inspect(arg, { colors: true, depth });
   }
 
   entityById(id) {

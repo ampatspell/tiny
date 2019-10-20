@@ -1,5 +1,4 @@
 const Properties = require('../properties')
-const classify = require("underscore.string/classify");
 
 class Entity {
 
@@ -11,7 +10,7 @@ class Entity {
     this.type = type;
     if(identifier) {
       this.identifier = identifier;
-      this.classifiedIdentifier = classify(identifier);
+      this.classifiedIdentifier = project.classify(identifier);
     }
     Object.defineProperty(this, '_parent', { value: parent });
     properties = new Properties(this, properties);

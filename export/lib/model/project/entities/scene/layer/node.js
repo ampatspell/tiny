@@ -14,6 +14,7 @@ class Node extends Entity {
   link() {
     super.link();
     this.layer = this.parent;
+    this.index = this.layer.nodes.models.indexOf(this);
   }
 
 }

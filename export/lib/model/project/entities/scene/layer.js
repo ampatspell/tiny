@@ -1,5 +1,5 @@
 const Entity = require('../entity');
-const Entities = require('../entities');
+const Nodes = require('./layer/nodes');
 
 class Layer extends Entity {
 
@@ -10,7 +10,8 @@ class Layer extends Entity {
   link() {
     super.link();
     this.scene = this.parent;
-    this.nodes = new Entities(this, this.models.filter(model => model.baseType === 'scene/layer/node'));
+    this.index = this.scene.layers.models.indexOf(this);
+    this.nodes = new Nodes(this, this.models.filter(model => model.baseType === 'scene/layer/node'));
     this.nodes.link();
   }
 
