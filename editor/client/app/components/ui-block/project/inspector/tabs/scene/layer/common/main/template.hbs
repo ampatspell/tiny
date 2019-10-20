@@ -1,0 +1,25 @@
+{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
+
+  {{ui-block/project/inspector/tabs/section/header sidebar=sidebar model=model}}
+
+  {{#sidebar.section as |section|}}
+    {{ui-block/project/inspector/tabs/section/item/identifier section=section model=model}}
+    {{yield (hash
+      position="section"
+      section=section
+    )}}
+  {{/sidebar.section}}
+
+  {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=model}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Add Fill Node" action=(action "createFillNode")}}
+      {{actions.button value="Add Sprite Node" action=(action "createSpriteFrameNode")}}
+      {{actions.button value="Add Loop Node" action=(action "createSpriteLoopNode")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+  {{ui-block/project/inspector/tabs/section/move-remove sidebar=sidebar model=model}}
+
+{{/ui-block/sidebar}}

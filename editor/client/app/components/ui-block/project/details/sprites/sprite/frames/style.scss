@@ -1,0 +1,20 @@
+.ui-block-project-details-sprites-sprite-frames {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    > .frames {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

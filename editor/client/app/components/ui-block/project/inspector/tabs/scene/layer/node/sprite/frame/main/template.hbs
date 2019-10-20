@@ -1,0 +1,18 @@
+{{#ui-block/project/inspector/tabs/scene/layer/node/sprite/common/main model=model as |common|}}
+
+  {{#if (eq common.position "section")}}
+
+    {{#if frames}}
+      {{common.section.dropdown label="Frame" items=frames selected=frame update=(action "frame")}}
+      {{#if model.spriteFrame}}
+        {{#common.section.custom}}
+          {{ui-block/sprites/preview/frame model=model.spriteFrame pixel=2 class="preview padded"}}
+        {{/common.section.custom}}
+      {{/if}}
+    {{else}}
+      {{common.section.placeholder value="Sprite doesn't have any frames with identifiers"}}
+    {{/if}}
+
+  {{/if}}
+
+{{/ui-block/project/inspector/tabs/scene/layer/node/sprite/common/main}}

@@ -6,7 +6,7 @@ export default Component.extend(TickMixin, {
   classNameBindings: [ ':loop' ],
 
   index: 0,
-  frames: readOnly('model._framesPreviewRendered'),
+  frames: readOnly('model.previewRendered'),
 
   onTick() {
     let { frames, index } = this;

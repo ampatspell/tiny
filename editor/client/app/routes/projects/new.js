@@ -38,7 +38,9 @@ export default Route.extend(BreadcrumbsMixin, {
       let doc = store.collection('projects').doc().new({
         owner,
         title,
-        pixel: 4
+        pixel: 4,
+        expanded: true,
+        locked: false
       });
       await doc.save();
       this.didSave(doc.id);

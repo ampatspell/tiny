@@ -1,0 +1,13 @@
+<div class="index">
+  {{#if frame}}
+    #{{frame.index}}
+    {{#if frame.identifier}}
+      – {{frame.identifier}}
+    {{/if}}
+  {{else}}
+    Missing frame
+  {{/if}}
+</div>
+<div class="actions">
+  {{fa-icon "trash-alt" prefix="far" class="action" click=(action "remove")}}
+</div>

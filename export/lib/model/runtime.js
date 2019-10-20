@@ -2,7 +2,7 @@ const path = require('path');
 const fetch = require('../util/fetch');
 const write = require('../util/write');
 const Cache = require('./cache');
-const Project = require('./project');
+const { Project } = require('./project');
 const ejs = require('../util/ejs');
 
 class Runtime {

@@ -1,0 +1,5 @@
+{{#ui-block/project/inspector/tabs/scene/layer/common/main model=model as |common|}}
+  {{#if (eq common.position "section")}}
+    {{ui-block/project/inspector/tabs/section/item/grid section=common.section model=model}}
+  {{/if}}
+{{/ui-block/project/inspector/tabs/scene/layer/common/main}}

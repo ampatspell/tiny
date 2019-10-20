@@ -1,0 +1,17 @@
+{{ui-konva/project/entity/sprite/frame/selection/overlay
+  model=model
+  state=state
+  begin=(action "beginDraw")
+  end=(action "endDraw")
+  update=(action "updateDraw")
+}}
+
+{{#if hasSelection}}
+  {{ui-konva/project/entity/sprite/frame/selection/selection
+    model=model
+    state=state
+    begin=(action "beginMove")
+    move=(action "updateMove")
+    end=(action "endMove")
+  }}
+{{/if}}

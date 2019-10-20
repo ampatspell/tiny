@@ -37,7 +37,35 @@ export default EmberObject.extend({
   size: readOnly('component.size'),
 
   center() {
-    this.component.center();
+    let { project: { render: { absolute: project } }, size } = this;
+
+    if(!project) {
+      return;
+    }
+
+    let calc = (a, s) => Math.round((size[s] / 2) - (project[s] / 2) - project[a]);
+
+    let origin = {
+      x: calc('x', 'width'),
+      y: calc('y', 'height')
+    };
+
+    this.project.update({ origin });
+  },
+
+  fit() {
+    let { project: { pixel, render: { absolute: project } }, size } = this;
+
+    if(!project) {
+      return;
+    }
+
+    let calc = s => Math.floor((size[s] * pixel) / project[s]);
+
+    pixel = Math.min(Math.max(1, Math.min(calc('width'), calc('height'))), 8);
+
+    this.project.update({ pixel });
+    this.center();
   }
 
 });

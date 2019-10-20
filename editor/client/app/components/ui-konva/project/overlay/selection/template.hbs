@@ -1,5 +1,3 @@
-{{#each project.render.selection as |model|}}
-  {{#unless model.isEditing}}
-    {{ui-konva/project/overlay/selection/item model=model}}
-  {{/unless}}
+{{#each models as |model|}}
+  {{ui-konva/project/overlay/-highlight stroke=stroke model=model}}
 {{/each}}

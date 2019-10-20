@@ -112,10 +112,25 @@ let project = runtime.project();
 
 * `project.title` → `String`
 * `project.properties` → `Properties`
+* `project.models` → `Array<Sprite|Scene|Layer|Node>`
 * `project.sprites` → `Array<Sprite>`
 * `project.scenes` → `Array<Scene>`
-* `project.spriteByIdentifier(identifier)` → `Sprite`
-* `project.sceneByIdentifier(identifier)` → `Scene`
+
+### Entity
+
+``` javascript
+let project = runtime.project();
+project.models.forEach(entity => {
+  //
+});
+```
+
+* `entity.id` → `String`
+* `entity.type` → `String`
+* `entity.identifier` → `String`
+* `entity.classified` → `String`
+* `entity.index` → `Number`
+* `entity.properties` → `Properties`
 
 ### Sprite
 
@@ -126,27 +141,21 @@ project.sprites.forEach(sprite => {
 });
 ```
 
-* `sprite.index` → `Number`
-* `sprite.identifier` → `String`
 * `sprite.size` → `{ width, height }`
 * `sprite.frames` → `Array<Frame>`
 * `sprite.loops` → `Array<Loop>`
-* `sprite.frameByIdentifier(identifier)` → `Frame`
-* `sprite.loopByIdentifier(identifier)` → `Loop`
 * `sprite.toPlusMaskString()` → `String`
 
 ### Frame
 
 ``` javascript
 let project = runtime.project();
-let sprite = project.spriteByIdentifier('weirdo');
+let sprite = project.sprites.byIdentifier('weirdo');
 sprite.frames.forEach(frame => {
   //
 });
 ```
 
-* `frame.index` → `Number`
-* `frame.identifier` → `String`
 * `frame.bytes` → `Array<Number>`
 * `frame.toPlusMaskString()` → `String`
 
@@ -156,14 +165,12 @@ See Bytes section below for `frame.bytes` value meanings.
 
 ``` javascript
 let project = runtime.project();
-let sprite = project.spriteByIdentifier('weirdo');
+let sprite = project.sprites.byIdentifier('weirdo');
 sprite.loops.forEach(loop => {
   //
 });
 ```
 
-* `loop.index` → `Number`
-* `loop.identifier` → `String`
 * `loop.frames` → `Array<Frame>`
 * `loop.toFrameIndexes()` → `Array<Number>`
 * `loop.toFrameIndexesString()` → `String`
@@ -177,13 +184,10 @@ project.scenes.forEach(scene => {
 });
 ```
 
-* `scene.identifier` → `String`
 * `scene.background` → `black`, `white`, `transparent`
 * `scene.name` → `String`
 * `scene.size` → `{ width, height }`
 * `scene.layers` → `Array<Layer>`
-* `scene.layerByIdentifier(identifier)` → `Layer`
-* `scene.properties` → `Properties`
 
 ### Layer
 
@@ -199,18 +203,15 @@ scene.layers.forEach(layer => {
 * `layer.type` → `pixel`, `grid`
 * `layer.grid` → `{ width, heigt }` if type is `grid`
 * `layer.nodes` → `Array<Node>`
-* `layer.properties` → `Properties`
 
 ### Node
 
 ``` javascript
 let project = runtime.project();
-let scene = project.sceneByIdentifier('01');
-let layer = scene.layerByIdentifier('background');
+let scene = project.scenes.byIdentifier('01');
+let layer = scene.layers.byIdentifier('background');
 ```
 
-* `node.identifier` → `String`
-* `node.type` → `fill`, `sprite/frame`, `sprite/loop`
 * `node.position` → `{ x, y }`
 * `node.alignment` → `{ horizontal: 'left', vertical: 'top' }`
 * `node.flip` → `{ horizontal: false', vertical: false }`
@@ -218,7 +219,6 @@ let layer = scene.layerByIdentifier('background');
 * `node.sprite` → `Sprite` (for `sprite/..` types)
 * `node.frame` → `Frame` (for `sprite/frame` type)
 * `node.loop` → `Loop` (for `sprite/loop` type)
-* `properties.properties` → `Properties`
 
 ## Properties
 

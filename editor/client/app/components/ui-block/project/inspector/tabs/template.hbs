@@ -1,0 +1,13 @@
+{{#ui-block/tabs class="tabs" selected=tab select=(action "tab") as |tabs|}}
+  {{#each definitions as |definition|}}
+    {{tabs.tab
+      label=definition.label
+      key=definition.id
+      component=(component
+        (concat "ui-block/project/inspector/tabs/" definition.component)
+        model=model
+        project=project
+        selectTab=(action "tab")
+      )}}
+  {{/each}}
+{{/ui-block/tabs}}

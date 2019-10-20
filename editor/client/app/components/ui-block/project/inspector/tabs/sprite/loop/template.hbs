@@ -1,0 +1,57 @@
+{{#ui-block/sidebar class="content" disabled=model.render.locked as |sidebar|}}
+
+  {{#if loop}}
+
+    {{#sidebar.section class="no-border" as |section|}}
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.type value=loop.typeName}}
+          {{content.identifier value=loop.identifier}}
+        {{/header.content}}
+      {{/section.header}}
+      {{ui-block/sprites/preview/loop model=loop class="padded"}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section as |section|}}
+      {{ui-block/project/inspector/tabs/section/item/identifier section=section model=loop}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section class="loops" as |section|}}
+
+      {{#section.custom class="section"}}
+        {{#ui-block/dragula class="dragula" disabled=section.disabled onDrop=(action "reorder") options=(hash direction="vertical") as |dragula|}}
+          {{#dragula.container class="container"}}
+            {{#each loop.frames as |frame idx|}}
+              {{ui-block/project/inspector/tabs/sprite/loop/frame frame=frame disabled=section.disabled remove=(action "removeFrame" idx)}}
+            {{/each}}
+          {{/dragula.container}}
+        {{/ui-block/dragula}}
+      {{/section.custom}}
+
+      {{#section.actions as |actions|}}
+        {{#if frame}}
+          {{actions.button value=(concat "Add frame #" frame.index) disabled=section.disabled action=(action "addFrame")}}
+        {{else}}
+          {{actions.button value="No frames" disabled=true}}
+        {{/if}}
+      {{/section.actions}}
+
+    {{/sidebar.section}}
+
+    {{#sidebar.section as |section|}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Delete Loop" action=(action "deleteLoop")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+    {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=loop}}
+
+  {{else}}
+
+    {{#sidebar.section as |section|}}
+      {{section.placeholder value="No loop selected"}}
+    {{/sidebar.section}}
+
+  {{/if}}
+
+{{/ui-block/sidebar}}

@@ -1,0 +1,99 @@
+.ui-block-project-sidebar-tree {
+
+  .ui-block-project-sidebar-tree-entity {
+    > .entity {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 5px 8px 5px 0;
+      border-bottom: 1px solid fade-out(#000, 0.9);
+      > .expand {
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin: 0 10px 0 10px;
+        > .icon {
+          width: 12px;
+        }
+        transition: opacity 0.2s ease-in-out;
+      }
+      > .content {
+        flex: 1;
+        overflow: hidden;
+        > .line {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          &.strong {
+            font-weight: 600;
+          }
+        }
+        transition: opacity 0.2s ease-in-out;
+      }
+      > .accessories {
+        display: flex;
+        flex-direction: row;
+        > .icon {
+          margin-left: 7px;
+          width: 15px;
+          opacity: 0.2;
+          transition: opacity 0.2s ease-in-out;
+        }
+      }
+    }
+    &.render-hidden {
+      > .entity {
+        > .expand,
+        > .content {
+          opacity: 0.2;
+        }
+      }
+    }
+    &.hidden {
+      > .entity {
+        > .accessories {
+          > .hidden {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+    &.locked {
+      > .entity {
+        > .accessories {
+          > .lock {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+    &.selected {
+      > .entity {
+        background: fade-out(#000, 0.96);
+      }
+    }
+  }
+
+  @mixin level($level) {
+    > .entity {
+      > .expand {
+        width: 12px + ($level * 10px);
+      }
+    }
+  }
+
+  .ui-block-project-sidebar-tree-entity {
+    @include level(0);
+    .ui-block-project-sidebar-tree-entity {
+      @include level(1);
+      .ui-block-project-sidebar-tree-entity {
+        @include level(2);
+        .ui-block-project-sidebar-tree-entity {
+          @include level(3);
+        }
+      }
+    }
+  }
+
+}

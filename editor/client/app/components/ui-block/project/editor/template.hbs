@@ -4,28 +4,27 @@
     {{#ui-konva/stage
       class="stage"
       size=autosized
-      position=project.position
+      origin=project.origin
       update=(action "update")
       created=(action "created")
       destroying=(action "destroying")
+      dragStart=(action "dragStart")
+      dragEnd=(action "dragEnd")
       onClick=(action "deselect")
       draggable=isSpacePressed
     }}
 
-      {{#ui-konva/layer zIndex=0}}
-        {{ui-konva/project/scenes project=project disabled=isSpacePressed}}
+      {{#ui-konva/layer}}
+        {{ui-konva/project/entity project=project model=project}}
       {{/ui-konva/layer}}
 
-      {{#ui-konva/layer zIndex=1}}
-        {{ui-konva/project/sprites project=project disabled=isSpacePressed}}
-      {{/ui-konva/layer}}
-
-      {{#ui-konva/layer zIndex=2}}
+      {{#ui-konva/layer}}
         {{ui-konva/project/overlay/selection project=project}}
-        {{ui-konva/project/overlay/editing project=project disabled=isSpacePressed}}
-        {{ui-konva/project/overlay/resize project=project disabled=(not isSpacePressed)}}
+        {{ui-konva/project/overlay/editing project=project}}
+        {{ui-konva/project/overlay/resize project=project}}
       {{/ui-konva/layer}}
 
     {{/ui-konva/stage}}
+
   {{/ui-konva/autosized}}
 </div>

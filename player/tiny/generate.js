@@ -8,11 +8,11 @@ run(config, async runtime => {
 
   let project = await runtime.project();
 
-  project.loops = [];
-  project.sprites.forEach((sprite, s) => {
-    sprite.variable = `sprite_${s}`;
-    sprite.loops.forEach((loop, l) => {
-      loop.variable = `${sprite.variable}_loop_${l}`;
+  project.loops = project.array();
+  project.sprites.forEach(sprite => {
+    sprite.variable = `sprite${sprite.classified}`;
+    sprite.loops.forEach(loop => {
+      loop.variable = `${sprite.variable}Loop${loop.classified}`;
       project.loops.push(loop);
     });
   });
@@ -24,31 +24,31 @@ run(config, async runtime => {
   };
 
   let layerClasses = {
-    'grid': 'GridLayer',
-    'pixel': 'PixelLayer'
+    'scene/layer/grid': 'GridLayer',
+    'scene/layer/pixel': 'PixelLayer'
   };
 
   let nodeClasses = {
-    'sprite/loop': 'SpriteLoopNode',
-    'sprite/frame': 'SpriteFrameNode',
-    'fill': 'FillNode'
+    'scene/layer/node/sprite/loop': 'SpriteLoopNode',
+    'scene/layer/node/sprite/frame': 'SpriteFrameNode',
+    'scene/layer/node/fill': 'FillNode'
   };
 
   project.scenes.forEach(scene => {
     scene.className = 'Scene';
-    scene.namespace = `Scene_${scene.index}`;
+    scene.namespace = `Scene${scene.classified}`;
     scene.backgroundType = backgrounds[scene.background];
     scene.sizeof = [];
     scene.sizeof.push(`sizeof(${scene.className})`);
     scene.sizeof.push(`(sizeof(Layer*) * ${scene.layers.length})`);
     scene.layers.forEach(layer => {
       layer.className = layerClasses[layer.type];
-      layer.variable = `layer_${layer.index}`;
+      layer.variable = `layer${layer.classified}`;
       scene.sizeof.push(`sizeof(${layer.className})`);
       scene.sizeof.push(`(sizeof(Node*) * ${layer.nodes.length})`);
       layer.nodes.forEach(node => {
         node.className = nodeClasses[node.type];
-        node.variable = `${layer.variable}_node_${node.index}`;
+        node.variable = `${layer.variable}Node${node.classified}`;
         scene.sizeof.push(`sizeof(${node.className})`);
       });
     });

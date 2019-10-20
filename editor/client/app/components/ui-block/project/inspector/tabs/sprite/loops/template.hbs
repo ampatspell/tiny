@@ -1,0 +1,26 @@
+{{#ui-block/sidebar class="content" disabled=model.render.locked as |sidebar|}}
+
+  {{#sidebar.section class="section" as |section|}}
+    {{#section.header as |header|}}
+      {{#header.content as |content|}}
+        {{content.type value="Loops"}}
+      {{/header.content}}
+    {{/section.header}}
+    {{#if model.loops.ordered}}
+      {{#section.custom class="loops"}}
+        {{#each model.loops.ordered as |loop|}}
+          {{ui-block/project/inspector/tabs/sprite/loops/loop loop=loop selected=(eq model.loops.selected loop) select=(action "select" loop)}}
+        {{/each}}
+      {{/section.custom}}
+    {{else}}
+      {{section.placeholder value="No loops"}}
+    {{/if}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Add new loop" action=(action "createLoop")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+{{/ui-block/sidebar}}

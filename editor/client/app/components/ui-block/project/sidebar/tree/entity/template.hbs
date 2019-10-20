@@ -1,0 +1,25 @@
+<div class="entity">
+  {{#if expandable}}
+    <div class="expand" {{action "expanded" bubbles=false}} role="button">
+      {{#if expanded}}
+        {{fa-icon "angle-down" class="icon"}}
+      {{else}}
+        {{fa-icon "angle-right" class="icon"}}
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="expand"></div>
+  {{/if}}
+  {{component (concat "ui-block/project/sidebar/tree/entity/" model.render.treeComponentName) model=model class="content"}}
+  <div class="accessories">
+    <div class="icon hidden" {{action "hidden" bubbles=false}} role="button">{{fa-icon (if hidden "eye-slash" "eye") prefix="far"}}</div>
+    <div class="icon lock" {{action "locked" bubbles=false}} role="button">{{fa-icon (if locked "lock" "lock-open")}}</div>
+  </div>
+</div>
+{{#if entities}}
+  <div class="entities">
+    {{#each entities as |entity|}}
+      {{ui-block/project/sidebar/tree/entity model=entity project=project}}
+    {{/each}}
+  </div>
+{{/if}}

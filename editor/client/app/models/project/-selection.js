@@ -1,29 +1,19 @@
 import { computed } from '@ember/object';
 
-export const selected = () => computed('project.selection', function() {
-  return this.project.selection === this;
+export const isSelected = () => computed('project.selection.model', function() {
+  let model = this.get('project.selection.model');
+  return model === this;
 }).readOnly();
 
-export const editing = () => computed('project.editing', function() {
-  return this.project.editing === this;
+export const isEditing = () => computed('project.selection.editing', function() {
+  let model = this.get('project.selection.editing');
+  return model === this;
 }).readOnly();
 
-export const selectedChild = (parentKey, typeKey) => {
-  let dep = `project.selection.${parentKey}`;
-  if(typeKey) {
-    dep = `${dep}.${typeKey}`;
+export const selectedChildEntity = parentKey => computed(`project.selection.model.${parentKey}`, function() {
+  let model = this.get('project.selection.model');
+  if(model && model.get(parentKey) === this) {
+    return this;
   }
-  return computed(dep, function() {
-    let { project: { selection } } = this;
-    if(!selection) {
-      return;
-    }
-    if(selection.get(parentKey) !== this) {
-      return;
-    }
-    if(typeKey && selection.get(typeKey) !== true) {
-      return;
-    }
-    return selection;
-  }).readOnly();
-}
+  return null;
+}).readOnly();

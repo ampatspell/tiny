@@ -1,0 +1,48 @@
+{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
+
+  {{#if frame}}
+
+    {{#sidebar.section class="no-border" as |section|}}
+      {{#section.header as |header|}}
+        {{#header.content as |content|}}
+          {{content.type value=frame.typeName}}
+          {{content.identifier value=frame.description}}
+        {{/header.content}}
+      {{/section.header}}
+      {{ui-block/sprites/preview/frame model=frame class="padded"}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section as |section|}}
+      {{ui-block/project/inspector/tabs/section/item/identifier section=section model=frame}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section as |section|}}
+      {{#section.actions type="grid" as |actions|}}
+        {{actions.button value="Clear" action=(action "fill" 0)}}
+        {{actions.button value="Fill" action=(action "fill" 2)}}
+        {{actions.button value="Invert" action=(action "invert")}}
+      {{/section.actions}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Duplicate" action=(action "createFrame")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+    {{ui-block/project/inspector/tabs/section/properties sidebar=sidebar model=frame}}
+
+    {{ui-block/project/inspector/tabs/section/remove sidebar=sidebar model=frame}}
+
+  {{else}}
+
+    {{#sidebar.section as |section|}}
+      {{section.placeholder value="No frames"}}
+    {{/sidebar.section}}
+
+    {{#sidebar.section as |section|}}
+      {{#section.actions as |actions|}}
+        {{actions.button value="Create first frame" action=(action "createFrame")}}
+      {{/section.actions}}
+    {{/sidebar.section}}
+
+  {{/if}}
+
+{{/ui-block/sidebar}}

@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
 import KeyboardMixin from 'editor/utils/keyboard';
+import { inject as service } from '@ember/service';
 
 const stage = cb => function(...args) {
   let { stage } = this;
@@ -16,6 +17,8 @@ export default Component.extend(KeyboardMixin, {
   stage: null,
   size: readOnly('stage.size'),
 
+  tick: service(),
+
   actions: {
     update(props) {
       this.project.update(props);
@@ -27,7 +30,13 @@ export default Component.extend(KeyboardMixin, {
       this.onDestroying();
     },
     deselect() {
-      this.project.deselect();
+      this.project.selection.deselect();
+    },
+    dragStart() {
+      this._resume = this.tick.suspend();
+    },
+    dragEnd() {
+      this._resume && this._resume();
     }
   },
 
@@ -68,10 +77,6 @@ export default Component.extend(KeyboardMixin, {
   },
 
   //
-
-  center: stage(function(stage) {
-    stage.center();
-  }),
 
   toDataURL: stage(function(stage) {
     return stage.toDataURL();

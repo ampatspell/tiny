@@ -3,6 +3,9 @@ import { next } from 'editor/utils/runloop';
 
 export default Component.extend({
   classNameBindings: [ ':ui-dialog-alert' ],
+  attributeBindings: [ 'tabindex' ],
+
+  tabindex: 0,
 
   actions: {
     async invoke(action) {
@@ -24,6 +27,11 @@ export default Component.extend({
 
     await next();
     await fn();
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+    this.element.focus();
   }
 
 });

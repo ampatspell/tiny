@@ -1,0 +1,29 @@
+.ui-block-project-inspector-tabs-sprite-loop-frame {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+  border-bottom: 1px solid fade-out(#000, 0.9);
+  &:last-child {
+    border-bottom: none;
+  }
+  > .index {
+    flex: 1;
+  }
+  > .actions {
+    font-size: 12px;
+  }
+  background: #fff;
+  position: relative;
+  &.gu-mirror {
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border: 1px solid fade-out(#000, 0.8);
+      box-shadow: 0 1px 2px fade-out(#000, 0.9);
+    }
+  }
+}

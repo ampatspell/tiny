@@ -5,16 +5,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  > .tabs {
+  > .content {
     flex: 1;
-    > .content {
-      > .overflow {
-        > .tree,
-        > .sprites {
-          flex: 1;
-        }
-      }
-    }
   }
   > .pixel {
     padding: 10px;

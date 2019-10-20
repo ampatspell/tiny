@@ -7,16 +7,16 @@ export default Component.extend({
 
   role: 'button',
 
-  isSelected: computed('id', 'selected', function() {
-    let { id, selected } = this;
-    return id === selected;
+  isSelected: computed('key', 'selected', function() {
+    let { key, selected } = this;
+    return key === selected;
   }).readOnly(),
 
   click() {
     if(this.isSelected) {
       return;
     }
-    this.select(this.id);
+    this.select(this.key);
   }
 
 });

@@ -37,7 +37,14 @@ export const className = opts => {
 export const delta = (arrayKey, currentKey, value, ring=true) => computed(`${arrayKey}.[]`, currentKey, function() {
   let array = this[arrayKey];
   let current = this[currentKey];
-  let index = array.indexOf(current) + value;
+  if(!current) {
+    return;
+  }
+  let index = array.indexOf(current);
+  if(index === -1) {
+    return;
+  }
+  index = index + value;
   if(index < 0) {
     if(ring) {
       return array.lastObject;
@@ -51,4 +58,50 @@ export const delta = (arrayKey, currentKey, value, ring=true) => computed(`${arr
     return;
   }
   return array.objectAt(index);
+}).readOnly();
+
+export const normalized = normalize => computed({
+  get(key) {
+    let value = this[`_${key}`];
+    return this[normalize].call(this, value);
+  },
+  set(key, value) {
+    value = this[normalize].call(this, value);
+    this[`_${key}`] = value;
+    return value;
+  }
+});
+
+export const bounds = (arrayKey, propertyKey) => computed(`${arrayKey}.@each.${propertyKey}`, function() {
+  let models = this.get(arrayKey);
+
+  if(models.length === 0) {
+    return;
+  }
+
+  let box = {
+    min: {
+      x: Number.POSITIVE_INFINITY,
+      y: Number.POSITIVE_INFINITY,
+    },
+    max: {
+      x: Number.NEGATIVE_INFINITY,
+      y: Number.NEGATIVE_INFINITY,
+    }
+  };
+
+  models.forEach(model => {
+    let frame = model.get(propertyKey);
+    box.min.x = Math.min(box.min.x, frame.x);
+    box.min.y = Math.min(box.min.y, frame.y);
+    box.max.x = Math.max(box.max.x, frame.x + frame.width);
+    box.max.y = Math.max(box.max.y, frame.y + frame.height);
+  });
+
+  return {
+    x:      box.min.x,
+    y:      box.min.y,
+    width:  box.max.x - box.min.x,
+    height: box.max.y - box.min.y,
+  };
 }).readOnly();

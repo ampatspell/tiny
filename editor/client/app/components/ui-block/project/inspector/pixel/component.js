@@ -15,7 +15,12 @@ export default Component.extend({
       this.project.update({ pixel });
     },
     center() {
-      this.project.editor.center();
+      let { project: { editor } } = this;
+      editor && editor.center();
+    },
+    fit() {
+      let { project: { editor } } = this;
+      editor && editor.fit();
     }
   }
 

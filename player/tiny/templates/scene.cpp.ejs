@@ -9,10 +9,10 @@ constexpr uint8_t _scene[] PROGMEM = {
 
 <% scene.layers.forEach(layer => { -%>
 constexpr uint8_t <%= layer.variable %>[] PROGMEM = {
-<% if (layer.type === 'grid') { -%>
+<% if (layer.type === 'scene/layer/grid') { -%>
   <%= layer.grid.width %>, // grid width
   <%= layer.grid.height %>, // grid height
-<% } else if (layer.type === 'pixel') { -%>
+<% } else if (layer.type === 'scene/layer/pixel') { -%>
 <% } -%>
 };
 
@@ -20,11 +20,11 @@ constexpr uint8_t <%= layer.variable %>[] PROGMEM = {
 constexpr uint8_t <%= node.variable %>[] PROGMEM = {
   <%= node.position.x %>, // x
   <%= node.position.y %>, // y
-<% if (node.type.startsWith('sprite/')) { -%>
+<% if (node.type.startsWith('scene/layer/node/sprite')) { -%>
   <%= node.sprite.index -%>, // sprite
-<% if (node.type === 'sprite/frame') { -%>
+<% if (node.type === 'scene/layer/node/sprite/frame') { -%>
   <%= node.frame.index -%> // frame
-<% } else if (node.type === 'sprite/loop') { -%>
+<% } else if (node.type === 'scene/layer/node/sprite/loop') { -%>
   <%= node.loop.index -%> // loop
 <% } -%>
 <% } -%>

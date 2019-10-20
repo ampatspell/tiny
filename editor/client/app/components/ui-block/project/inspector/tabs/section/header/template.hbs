@@ -1,0 +1,19 @@
+{{#sidebar.section class=(join "ui-block-project-insepctor-tabs-section-header" class delimiter=" ") as |section|}}
+
+  {{#section.header as |header|}}
+    {{#header.content as |content|}}
+      {{content.type value=type}}
+      {{#if identifier}}
+        {{content.identifier value=identifier}}
+      {{else}}
+        {{content.identifier value="No identifier" class="placeholder"}}
+      {{/if}}
+    {{/header.content}}
+    {{#if lock}}
+      {{header.lock locked=model.locked update=(action "locked")}}
+    {{/if}}
+  {{/section.header}}
+
+  {{yield section}}
+
+{{/sidebar.section}}

@@ -1,27 +1,31 @@
 import EmberObject, { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import DocMixin, { data } from './-doc';
 import { model } from 'ember-cli-zuglet/lifecycle';
-import { all } from 'rsvp';
-import { properties } from './properties';
+import { properties } from './project/properties';
 import { EditorMixin } from './project/editor';
 import { split } from 'editor/utils/object';
+import { render } from './project/-render';
+import { entities } from './project/-entities';
 
 const position = def => computed({
-  get() {
-    return this._position || def;
+  get(key) {
+    return this[`_${key}`] || def;
   },
-  set(_, value) {
-    this._position = value;
+  set(key, value) {
+    this[`_${key}`] = value;
     return value;
   }
 });
 
+const selected = () => computed('selection.model', function() {
+  return this.selection.model === this;
+}).readOnly();
+
 export default EmberObject.extend(DocMixin, EditorMixin, {
 
-  typeGroup: 'project',
+  type: 'project',
+  baseType: 'project',
   typeName: 'Project',
-  baseTypeName: 'Project',
 
   projects: null,
   doc: null,
@@ -30,23 +34,25 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   pixel: data('pixel'),
   token: data('token'),
 
-  hidden: data('hidden'),
-  locked: data('locked'),
-  chainHidden: readOnly('hidden'),
-  chainLocked: readOnly('locked'),
-
+  origin: position({ x: 0, y: 0 }),
   properties: properties(),
+  render: render('project'),
 
-  sprites: model().named('project/sprites').mapping(project => ({ project })),
-  scenes: model().named('project/scenes').mapping(project => ({ project })),
-  render: model().named('project/render').mapping(model => ({ model })),
+  content: model().named('project/content').mapping(project => ({ project })),
 
-  position: position({ x: 0, y: 0 }),
+  entities: entities('project'),
+
+  scenes: model().named('project/scenes').mapping(model => ({ model })),
+  sprites: model().named('project/sprites').mapping(model => ({ model })),
+
+  selection: model().named('project/selection').mapping(project => ({ project })),
+
+  isSelected: selected(),
 
   //
 
   update(props) {
-    let [ local, remote ] = split(props, [ 'position' ]);
+    let [ local, remote ] = split(props, [ 'origin' ]);
     this.setProperties(local);
     this._super(remote);
   },
@@ -56,161 +62,116 @@ export default EmberObject.extend(DocMixin, EditorMixin, {
   async load({ type }) {
     if(type === 'detail') {
       setGlobal({ project: this });
-      await all([
-        this.sprites.load({ type }),
-        this.scenes.load({ type })
-      ]);
+      await this.content.load();
     }
+  },
+
+  select() {
+    return this.selection.select(...arguments);
+  },
+
+  edit() {
+    return this.selection.edit(...arguments);
   },
 
   //
 
-  selection: null,
-  editing: null,
-
-  select(selection) {
-    selection = selection || null;
-    this.setProperties({ selection });
-    return selection;
+  didCreateScene(scene) {
+    this.select(scene);
   },
 
-  deselect() {
-    this.select(null);
+  didCreateLayer(layer) {
+    this.select(layer);
+  },
+
+  didCreateNode(node) {
+    this.select(node);
+    node.scene.edit();
+  },
+
+  didCreateSprite(sprite) {
+    this.select(sprite);
+  },
+
+  //
+
+  _willDeleteEntity(entity, prop, next) {
+    let selection = this.selection.model;
+    if(selection) {
+      if(selection === entity || selection[prop] === entity) {
+        this.select(next);
+      }
+    }
     this.edit(null);
   },
 
-  edit(editing) {
-    editing = editing || null;
-    this.setProperties({ editing });
+  willDeleteScene(scene) {
+    this._willDeleteEntity(scene, 'scene', null);
+  },
+
+  willDeleteLayer(layer) {
+    this._willDeleteEntity(layer, 'layer', layer.scene);
+  },
+
+  willDeleteNode(node) {
+    this._willDeleteEntity(node, 'node', node.layer);
+  },
+
+  willDeleteSprite(sprite) {
+    this._willDeleteEntity(sprite, 'sprite', null);
+  },
+
+  willDeleteFrame() {
+  },
+
+  willDeleteLoop() {
   },
 
   //
 
-  onShortcutDigit(pixel) {
-    if(pixel < 1) {
+  onShortcutDigit(value) {
+    if(value < 1) {
       return;
     }
-    let selection = this.selection;
-    if(selection && selection.onShortcutDigit) {
-      selection.onShortcutDigit(pixel);
+    let selection = this.selection.model;
+    if(selection && selection !== this && selection.onShortcutDigit) {
+      selection.onShortcutDigit(value);
     } else {
-      this.update({ pixel });
+      this.update({ pixel: value });
     }
   },
 
   onShortcutEscape() {
-    if(this.editing) {
-      this.edit();
+    let { selection } = this;
+    if(selection.editing) {
+      selection.edit(null);
     } else {
-      this.deselect();
+      selection.select(null);
     }
   },
 
-  _selectionRenderDetails() {
-    return this.get('selection.render.details') || this.get('selection');
-  },
-
-  _invokeShortcut(model, name) {
-    if(!model) {
-      return false;
+  _invokeShortcut(name) {
+    let model = this.selection.model;
+    if(model && model !== this) {
+      let fn = model[name];
+      fn && fn.call(model);
     }
-    let fn = model[name];
-    if(!fn) {
-      return false;
-    }
-    fn.call(model);
-    return true;
   },
 
   onShortcutUp() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutUp');
+    this._invokeShortcut('onShortcutUp');
   },
 
   onShortcutDown() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutDown');
+    this._invokeShortcut('onShortcutDown');
   },
 
   onShortcutLeft() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutLeft');
+    this._invokeShortcut('onShortcutLeft');
   },
 
   onShortcutRight() {
-    this._invokeShortcut(this._selectionRenderDetails(), 'onShortcutRight');
+    this._invokeShortcut('onShortcutRight');
   },
-
-  //
-
-  onWillDeleteEditable(model, next) {
-    let { selection, editing } = this;
-    if(selection !== model) {
-      return;
-    }
-    selection = next;
-    if(editing === model) {
-      editing = null;
-    }
-    this.setProperties({ selection, editing });
-  },
-
-  async onWillDeleteSprite(sprite) {
-    this.onWillDeleteEditable(sprite, this.sprites);
-  },
-
-  async onWillDeleteScene(scene) {
-    this.onWillDeleteEditable(scene, this.scenes);
-  },
-
-  async onWillDeleteLayer(layer) {
-    this.onWillDeleteEditable(layer, layer.scene);
-  },
-
-  async onWillDeleteNode(node) {
-    this.onWillDeleteEditable(node, node.layer);
-  },
-
-  async onDidCreateScene(scene) {
-    this.select(scene);
-  },
-
-  async onDidCreateLayer(layer) {
-    this.select(layer);
-  },
-
-  async onDidCreateNode(node) {
-    let scene = node.scene;
-    this.select(node);
-    this.edit(scene);
-  },
-
-  async onDidCreateSprite(sprite) {
-    this.select(sprite);
-    this.edit(null);
-  },
-
-  //
-
-  // updatePixel(next) {
-  //   let { position, pixel, editor: { size } } = this;
-
-  //   if(pixel === next) {
-  //     return;
-  //   }
-
-  //   // let calc = (x, width) => {
-  //   //   let mid = (size[width] / 2);
-  //   //   let p = mid / pixel;
-  //   //   let n = mid / next;
-  //   //   let v = p - n;
-  //   //   let r = position[x] - v;
-  //   //   return Math.round(r);
-  //   // };
-
-  //   // position = {
-  //   //   x: calc('x', 'width'),
-  //   //   y: calc('y', 'height')
-  //   // };
-
-  //   this.update({ pixel: next });
-  // }
 
 });

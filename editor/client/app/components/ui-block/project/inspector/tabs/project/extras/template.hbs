@@ -1,0 +1,18 @@
+{{#ui-block/sidebar disabled=model.render.locked as |sidebar|}}
+
+  {{ui-block/project/inspector/tabs/section/header sidebar=sidebar model=model identifier=model.title}}
+
+  {{#sidebar.section as |section|}}
+    {{section.input label="Export token" value=model.token update=(action "update" "token")}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Generate New Token" action=(action "generateToken")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+  {{#sidebar.section as |section|}}
+    {{#section.actions as |actions|}}
+      {{actions.button value="Delete Project" action=(action "delete")}}
+    {{/section.actions}}
+  {{/sidebar.section}}
+
+{{/ui-block/sidebar}}
