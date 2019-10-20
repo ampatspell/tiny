@@ -1,6 +1,6 @@
 {
   "name": "tiny-client",
-  "version": "0.22.2",
+  "version": "0.22.3",
   "private": true,
   "description": "Arduboy sprite and scene editor",
   "repository": "",
