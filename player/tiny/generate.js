@@ -8,15 +8,11 @@ run(config, async runtime => {
 
   let project = await runtime.project();
 
-  console.log(require('util').inspect(project, { depth: 10 }));
-
-  return;
-
-  project.loops = [];
-  project.sprites.forEach((sprite, s) => {
-    sprite.variable = `sprite_${s}`;
-    sprite.loops.forEach((loop, l) => {
-      loop.variable = `${sprite.variable}_loop_${l}`;
+  project.loops = project.array();
+  project.sprites.forEach(sprite => {
+    sprite.variable = `Sprite${sprite.classified}`;
+    sprite.loops.forEach(loop => {
+      loop.variable = `${sprite.variable}Loop${loop.classified}`;
       project.loops.push(loop);
     });
   });
@@ -40,19 +36,19 @@ run(config, async runtime => {
 
   project.scenes.forEach(scene => {
     scene.className = 'Scene';
-    scene.namespace = `Scene_${scene.index}`;
+    scene.namespace = `Scene${scene.classified}`;
     scene.backgroundType = backgrounds[scene.background];
     scene.sizeof = [];
     scene.sizeof.push(`sizeof(${scene.className})`);
     scene.sizeof.push(`(sizeof(Layer*) * ${scene.layers.length})`);
     scene.layers.forEach(layer => {
       layer.className = layerClasses[layer.type];
-      layer.variable = `layer_${layer.index}`;
+      layer.variable = `Layer${layer.classified}`;
       scene.sizeof.push(`sizeof(${layer.className})`);
       scene.sizeof.push(`(sizeof(Node*) * ${layer.nodes.length})`);
       layer.nodes.forEach(node => {
         node.className = nodeClasses[node.type];
-        node.variable = `${layer.variable}_node_${node.index}`;
+        node.variable = `${layer.variable}Node${node.classified}`;
         scene.sizeof.push(`sizeof(${node.className})`);
       });
     });
