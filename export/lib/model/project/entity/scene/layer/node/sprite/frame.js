@@ -2,9 +2,9 @@ const SpriteNode = require('../sprite');
 
 class SpriteFrameNode extends SpriteNode {
 
-  link() {
-    super.link();
-    this.frame = this.sprite.frames.byIdentifier(this.json.frame);
+  bind() {
+    super.bind();
+    this.frame = this.sprite.frames.find(frame => frame.identifier === this.json.frame);
   }
 
 }
