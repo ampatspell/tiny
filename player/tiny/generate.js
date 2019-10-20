@@ -10,7 +10,7 @@ run(config, async runtime => {
 
   project.loops = project.array();
   project.sprites.forEach(sprite => {
-    sprite.variable = `Sprite${sprite.classified}`;
+    sprite.variable = `sprite${sprite.classified}`;
     sprite.loops.forEach(loop => {
       loop.variable = `${sprite.variable}Loop${loop.classified}`;
       project.loops.push(loop);
@@ -43,7 +43,7 @@ run(config, async runtime => {
     scene.sizeof.push(`(sizeof(Layer*) * ${scene.layers.length})`);
     scene.layers.forEach(layer => {
       layer.className = layerClasses[layer.type];
-      layer.variable = `Layer${layer.classified}`;
+      layer.variable = `layer${layer.classified}`;
       scene.sizeof.push(`sizeof(${layer.className})`);
       scene.sizeof.push(`(sizeof(Node*) * ${layer.nodes.length})`);
       layer.nodes.forEach(node => {
