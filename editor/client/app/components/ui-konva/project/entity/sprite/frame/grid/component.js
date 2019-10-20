@@ -20,7 +20,7 @@ export default Node.extend({
   sprite: null,
 
   selected: readOnly('sprite.isSelected'),
-  editing: readOnly('sprite.isEditing'),
+  editing: readOnly('sprite.render.pixels'),
 
   pixel: readOnly('sprite.render.pixel'),
   frame: readOnly('sprite.render.frame'),
