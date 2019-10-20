@@ -21,7 +21,7 @@ class ExportService {
     let base = [ 'identifier', 'index' ];
     let child = [ ...base, 'parent' ];
     let node = [ ...child, 'position' ];
-    let sprite = [ ...node, 'alignment', 'flip', 'sprite' ];
+    let sprite = [ ...node, 'alignment', 'flip', 'invert', 'omit', 'sprite' ];
     return {
       'scene':                         make([ ...base, 'name', 'background', 'size' ]),
       'scene/layer/grid':              make([ ...child, 'grid' ]),
