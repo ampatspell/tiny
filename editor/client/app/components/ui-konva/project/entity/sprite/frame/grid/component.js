@@ -43,27 +43,50 @@ export default Node.extend({
         ctx.fillRect(0, 0, size.width * pixel, size.height * pixel);
       }
 
-      if(!bytes) {
-        return;
+      //
+
+      if(bytes) {
+        bytes.forEach((byte, idx) => {
+          if(byte === Pixel.transparent) {
+            return;
+          }
+
+          let c;
+          if(byte === Pixel.black) {
+            c = '#000';
+          } else {
+            c = '#fff';
+          }
+
+          let { x, y } = fromIndex(idx, size);
+
+          ctx.fillStyle = c;
+          ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
+        });
       }
 
-      bytes.forEach((byte, idx) => {
-        if(byte === Pixel.transparent) {
-          return;
+      if(pixel > 3) {
+        let line = (x1, y1, x2, y2) => {
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
         }
 
-        let c;
-        if(byte === Pixel.black) {
-          c = '#000';
-        } else {
-          c = '#fff';
+        ctx.strokeStyle = `rgba(210,210,210,0.2)`;
+
+        let ph = size.height * pixel;
+        for(let x = 0; x < size.width; x++) {
+          let px = x * pixel + 0.5;
+          line(px, 0, px, ph);
         }
 
-        let { x, y } = fromIndex(idx, size);
-
-        ctx.fillStyle = c;
-        ctx.fillRect(x * pixel, y * pixel, pixel, pixel);
-      });
+        let pw = size.width * pixel;
+        for(let y = 0; y < size.height; y++) {
+          let py = y * pixel + 0.5;
+          line(0, py, pw, py);
+        }
+      }
     }
   }).readOnly(),
 
