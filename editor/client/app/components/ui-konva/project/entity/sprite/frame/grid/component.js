@@ -76,13 +76,13 @@ export default Node.extend({
         ctx.strokeStyle = `rgba(210,210,210,0.2)`;
 
         let ph = size.height * pixel;
-        for(let x = 0; x < size.width; x++) {
+        for(let x = 1; x < size.width; x++) {
           let px = x * pixel + 0.5;
           line(px, 0, px, ph);
         }
 
         let pw = size.width * pixel;
-        for(let y = 0; y < size.height; y++) {
+        for(let y = 1; y < size.height; y++) {
           let py = y * pixel + 0.5;
           line(0, py, pw, py);
         }
