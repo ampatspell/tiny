@@ -16,9 +16,8 @@ const canvas = () => computed('size', function() {
   return canvas;
 }).readOnly();
 
-const render = (canvasKey, invert) => computed(canvasKey, 'bytes', function() {
-  let canvas = this[canvasKey];
-  let bytes = this.bytes;
+const rendered = () => computed('canvas', 'bytes', function() {
+  let { canvas, bytes } = this;
   if(!canvas || !bytes) {
     return;
   }
@@ -38,9 +37,9 @@ const render = (canvasKey, invert) => computed(canvasKey, 'bytes', function() {
     } else {
       a = 255;
       if(byte === Pixel.black) {
-        c = invert ? 255 : 0;
+        c = 0;
       } else {
-        c = invert ? 0 : 255;
+        c = 255;
       }
     }
     let i = idx * 4;
@@ -62,11 +61,8 @@ export default EmberObject.extend({
   size: readOnly('frame.size'),
   bytes: readOnly('frame.bytes'),
 
-  _rendered: canvas(),
-  _inverted: canvas(),
-
-  rendered: render('_rendered', false),
-  inverted: render('_inverted', true),
+  canvas: canvas(),
+  rendered: rendered(),
 
   url: computed('rendered', function() {
     return this.rendered.toDataURL();
