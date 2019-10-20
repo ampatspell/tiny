@@ -4,7 +4,6 @@ import { computed } from '@ember/object';
 import { delta } from 'editor/utils/computed';
 import { assign } from '@ember/polyfills';
 import { heart } from 'editor/utils/frame';
-import { all } from 'rsvp';
 
 const Frames = filteredEntities('sprite/frame');
 const SettingsMixin = settings('model', 'frames');

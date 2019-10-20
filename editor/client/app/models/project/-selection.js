@@ -15,4 +15,5 @@ export const selectedChildEntity = parentKey => computed(`project.selection.mode
   if(model && model.get(parentKey) === this) {
     return this;
   }
+  return null;
 }).readOnly();

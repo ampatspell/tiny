@@ -1,5 +1,4 @@
 import filteredEntities from '../../../-filtered-entities';
-import { all } from 'rsvp';
 
 const Nodes = filteredEntities('scene/layer/node');
 

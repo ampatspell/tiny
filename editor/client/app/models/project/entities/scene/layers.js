@@ -1,6 +1,5 @@
 import filteredEntities from '../../-filtered-entities';
 import { assign } from '@ember/polyfills';
-import { all } from 'rsvp';
 
 const Layers = filteredEntities('scene/layer');
 
