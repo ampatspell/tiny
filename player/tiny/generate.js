@@ -24,14 +24,14 @@ run(config, async runtime => {
   };
 
   let layerClasses = {
-    'grid': 'GridLayer',
-    'pixel': 'PixelLayer'
+    'scene/layer/grid': 'GridLayer',
+    'scene/layer/pixel': 'PixelLayer'
   };
 
   let nodeClasses = {
-    'sprite/loop': 'SpriteLoopNode',
-    'sprite/frame': 'SpriteFrameNode',
-    'fill': 'FillNode'
+    'scene/layer/node/sprite/loop': 'SpriteLoopNode',
+    'scene/layer/node/sprite/frame': 'SpriteFrameNode',
+    'scene/layer/node/fill': 'FillNode'
   };
 
   project.scenes.forEach(scene => {
