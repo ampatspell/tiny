@@ -1,7 +1,7 @@
 const Entity = require('../entity');
 const array = require('./array');
 
-const filtered = (scene, type) => array(scene.project.sortBy(scene.models.filter(model => model.baseType === type), 'json.index', 'desc'));
+const filtered = (scene, type) => array(scene.project.sortBy(scene.models.filter(model => model.baseType === type), 'json.index', 'asc'));
 
 class Scene extends Entity {
 

@@ -1,7 +1,7 @@
 const Entity = require('../../entity');
 const array = require('../array');
 
-const filtered = (layer, type) => array(layer.project.sortBy(layer.models.filter(model => model.baseType === type), 'json.index', 'desc'));
+const filtered = (layer, type) => array(layer.project.sortBy(layer.models.filter(model => model.baseType === type), 'json.index', 'asc'));
 
 class Layer extends Entity {
 
