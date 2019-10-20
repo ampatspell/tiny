@@ -219,6 +219,8 @@ let layer = scene.layers.byIdentifier('background');
 * `node.sprite` → `Sprite` (for `sprite/..` types)
 * `node.frame` → `Frame` (for `sprite/frame` type)
 * `node.loop` → `Loop` (for `sprite/loop` type)
+* `node.invert` → `Boolean` (for `sprite/..` type)
+* `node.omit` → `String`  (for `sprite/..` type)
 
 ## Properties
 
