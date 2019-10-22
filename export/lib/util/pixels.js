@@ -31,6 +31,7 @@ const toHexStrings = array => array.map(value => `0x${value.toString(16).padStar
 const toDrawPlusMaskString = (bytes, size) => toHexStrings(toDrawPlusMaskArray(bytes, size)).join(', ');
 
 module.exports = {
+  pixel,
   toDrawPlusMaskArray,
   toHexStrings,
   toDrawPlusMaskString

@@ -9,8 +9,16 @@ class SpriteFrame extends Entity {
     Object.defineProperty(this, 'bytes', { value: this.json.bytes });
   }
 
+  get size() {
+    return this.parent.size;
+  }
+
+  pixel(x, y) {
+    return pixels.pixel(this.bytes, x, y, this.size);
+  }
+
   toPlusMaskString() {
-    return pixels.toDrawPlusMaskString(this.bytes, this.parent.size);
+    return pixels.toDrawPlusMaskString(this.bytes, this.size);
   }
 
 }
