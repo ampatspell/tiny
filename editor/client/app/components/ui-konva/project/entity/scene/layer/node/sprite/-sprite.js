@@ -12,6 +12,8 @@ export default Node.extend({
 
   sprite: readOnly('model.sprite'),
   flip: readOnly('model.flip'),
+  invert: readOnly('model.invert'),
+  omit: readOnly('model.omit'),
   pixel: readOnly('model.project.pixel'),
   frame: readOnly('_frame'),
 
@@ -29,8 +31,8 @@ export default Node.extend({
     return { element, ctx };
   }).readOnly(),
 
-  content: computed('rendered', 'canvas', 'flip', function() {
-    let { canvas, rendered, flip } = this;
+  content: computed('rendered', 'canvas', 'flip', 'invert', 'omit', function() {
+    let { canvas, rendered, flip, invert, omit } = this;
 
     if(!canvas) {
       return;
@@ -46,6 +48,32 @@ export default Node.extend({
 
     ctx.clearRect(0, 0, element.width, element.height);
     drawImageFlipped(ctx, rendered, flip.horizontal, flip.vertical);
+
+    if(invert || omit) {
+      let imageData = ctx.getImageData(0, 0, element.width, element.height);
+      let data = imageData.data;
+      for(let i = 0; i < data.length; i += 4) {
+        let color = data[i];
+        if(invert)  {
+          color = color === 0 ? 255 : 0;
+          data[i + 0] = color;
+          data[i + 1] = color;
+          data[i + 2] = color;
+        }
+        if(omit) {
+          if(omit === 'black') {
+            if(color === 0) {
+              data[i + 3] = 0;
+            }
+          } else if(omit === 'white') {
+            if(color === 255) {
+              data[i + 3] = 0;
+            }
+          }
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
 
     return element;
   }).readOnly(),

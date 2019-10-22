@@ -22,6 +22,11 @@
       {{/common.sidebar.section}}
 
       {{#common.sidebar.section as |section|}}
+        {{ui-block/project/inspector/tabs/section/item/invert section=section model=model}}
+        {{ui-block/project/inspector/tabs/section/item/omit section=section model=model}}
+      {{/common.sidebar.section}}
+
+      {{#common.sidebar.section as |section|}}
         {{ui-block/project/inspector/tabs/section/item/alignment section=section model=model}}
         {{ui-block/project/inspector/tabs/section/item/flip section=section model=model}}
       {{/common.sidebar.section}}

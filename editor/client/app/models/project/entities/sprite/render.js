@@ -53,6 +53,11 @@ export default Render.extend({
   resizable: computed('isSpacePressed', 'locked', 'hidden', 'model.isEditing', function() {
     let { isSpacePressed, locked, hidden, model: { isEditing } } = this;
     return isSpacePressed && !locked && !hidden && isEditing;
-  }).readOnly()
+  }).readOnly(),
+
+  pixels: computed('isSpacePressed', 'locked', 'hidden', 'model.isEditing', function() {
+    let { isSpacePressed, locked, hidden, model: { isEditing } } = this;
+    return !isSpacePressed && !locked && !hidden && isEditing;
+  }).readOnly(),
 
 });

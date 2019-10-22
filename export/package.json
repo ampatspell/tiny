@@ -1,7 +1,7 @@
 {
   "name": "tiny-export",
   "description": "Export tool for Tiny - Arduboy sprite and scene editor",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "index.js",
   "keywords": [
     "arduboy",

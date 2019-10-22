@@ -14,6 +14,8 @@ export default Node.extend({
 
   alignment: data('alignment.serialized'),
   flip: data('flip.serialized'),
+  invert: data('invert'),
+  omit: data('omit'),
 
   _sprite: data('sprite'),
   sprites: readOnly('project.sprites.identified'),
