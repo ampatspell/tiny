@@ -1,24 +1,16 @@
 const Entity = require('../../entity');
-const pixels = require('../../../../util/pixels');
+const Bytes = require('../../bytes');
 
 class SpriteFrame extends Entity {
 
   bind() {
     super.bind();
     this.index = this.parent.frames.indexOf(this);
-    Object.defineProperty(this, 'bytes', { value: this.json.bytes });
+    this.bytes = new Bytes(this, new Uint8Array(this.json.bytes), this.size);
   }
 
   get size() {
     return this.parent.size;
-  }
-
-  pixel(x, y) {
-    return pixels.pixel(this.bytes, x, y, this.size);
-  }
-
-  toPlusMaskString() {
-    return pixels.toDrawPlusMaskString(this.bytes, this.size);
   }
 
 }

@@ -1,4 +1,5 @@
-const pixel = (bytes, x, y, size) => bytes[y * size.width + x];
+const index = (x, y, size) => (y * size.width) + x;
+const pixel = (bytes, x, y, size) => bytes[index(x, y, size)];
 
 const toDrawPlusMaskArray = (bytes, size) => {
   let { width, height } = size;
@@ -26,13 +27,32 @@ const toDrawPlusMaskArray = (bytes, size) => {
   return data;
 };
 
-const toHexStrings = array => array.map(value => `0x${value.toString(16).padStart(2, '0')}`);
+const toDrawBitmapArray = (bytes, size) => {
+  let { width, height } = size;
+  let data = [];
+  for(let x = 0; x < width; x++) {
+    let byte = 0;
+    for(let y = 0; y < height; y++) {
+      let px = pixel(bytes, x, y, size);
+      if(px !== 0) {
+        byte |= (1 << y);
+      }
+    }
+    data.push(byte);
+  }
+  return data;
+}
 
+const toHexStrings = array => array.map(value => `0x${value.toString(16).padStart(2, '0')}`);
 const toDrawPlusMaskString = (bytes, size) => toHexStrings(toDrawPlusMaskArray(bytes, size)).join(', ');
+const toDrawBitmapString = (bytes, size) => toHexStrings(toDrawBitmapArray(bytes, size)).join(', ');
 
 module.exports = {
+  index,
   pixel,
   toDrawPlusMaskArray,
   toHexStrings,
-  toDrawPlusMaskString
+  toDrawPlusMaskString,
+  toDrawBitmapArray,
+  toDrawBitmapString
 }

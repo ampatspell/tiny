@@ -15,7 +15,7 @@ class Sprite extends Entity {
 
   toPlusMaskString() {
     let { size, frames } = this;
-    let data = frames.map(frame => frame.toPlusMaskString())
+    let data = frames.map(frame => frame.bytes.toPlusMaskString())
     return [
       `${size.width}, ${size.height},`,
       data.join(',\n')

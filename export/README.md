@@ -156,10 +156,20 @@ sprite.frames.forEach(frame => {
 });
 ```
 
-* `frame.bytes` → `Array<Number>`
-* `frame.toPlusMaskString()` → `String`
+* `frame.bytes` → `Bytes`
 
-See Bytes section below for `frame.bytes` value meanings.
+### Bytes
+
+``` javascript
+let project = runtime.project();
+let frame = project.sprites.byIdentifier('weirdo').frames.byIdentifier('idle');
+let bytes = frame.bytes;
+```
+
+* `bytes.size` → `{ width, height }`
+* `bytes.raw` → `Array<Number>`
+* `bytes.toPlusMaskString()` → `String`
+* `bytes.toBitmapString()` → `String`
 
 ### Loop
 
