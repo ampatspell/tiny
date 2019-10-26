@@ -45,9 +45,9 @@ export default Render.extend({
 
   editable: editable(),
 
-  draggable: computed('isSpacePressed', 'locked', 'hidden', 'model.isEditing', function() {
-    let { isSpacePressed, locked, hidden, model: { isEditing } } = this;
-    return !isSpacePressed && !locked && !hidden && !isEditing;
+  draggable: computed('isSpacePressed', 'hidden', 'model.isEditing', function() {
+    let { isSpacePressed, hidden, model: { isEditing } } = this;
+    return !isSpacePressed && !hidden && !isEditing;
   }).readOnly(),
 
   resizable: computed('isSpacePressed', 'locked', 'hidden', 'model.isEditing', function() {
