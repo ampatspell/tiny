@@ -45,9 +45,11 @@ export const createStorage = async (opts: CreateFilesOptions) => {
         throw new Error('Unsupported body');
       }
       await writeFile(path, bytes);
+      console.log('[storage] stored', key);
     };
     const drop = async () => {
       await remove(path);
+      console.log('[storage] dropped', key);
     };
     const toReadableStream = () => {
       return createReadableStream(path);

@@ -6,6 +6,7 @@ import { migrateToLatest } from './migration';
 import type { DB } from '#lib/schema';
 import { dirname } from 'node:path';
 import { mkdir } from 'node:fs/promises';
+import { round } from '#lib/cave/utils';
 
 export type CreateDatabaseOptions = {
   filename: string;
@@ -24,19 +25,13 @@ export const createDatabase = async (opts: CreateDatabaseOptions) => {
     dialect,
     plugins: [new CamelCasePlugin()],
     log: (event) => {
+      const prefix = '[sql]';
+      const ms = `${round(event.queryDurationMillis)}ms`;
+      const sql = event.query.sql;
       if (event.level === 'error') {
-        console.error('[db]', {
-          durationMs: event.queryDurationMillis,
-          error: event.error,
-          sql: event.query.sql,
-          params: event.query.parameters,
-        });
+        console.error(prefix, ms, sql, event.error);
       } else {
-        console.log('[db]', {
-          durationMs: event.queryDurationMillis,
-          sql: event.query.sql,
-          params: event.query.parameters,
-        });
+        console.error(prefix, ms, sql);
       }
     },
   });

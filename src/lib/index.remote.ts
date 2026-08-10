@@ -1,8 +1,8 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
 import { getDatabase } from './cave/server/database/database';
-import { getStorage } from './cave/server/storage/storage';
 import { uid } from './cave/server/utils';
+import { getFiles } from './cave/server/files';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
@@ -31,29 +31,17 @@ export const updateIndexFile = command(
   }),
   async ({ file }) => {
     const db = getDatabase();
-    const storage = getStorage();
+    const files = getFiles();
 
     const index = await db.selectFrom('index').selectAll().executeTakeFirstOrThrow();
     let id = index.backgroundId;
 
     if (id) {
-      await Promise.all([db.deleteFrom('files').where('id', '==', id).execute(), storage.file(id).drop()]);
+      await files.drop(id);
     }
 
     id = uid();
-    await Promise.all([
-      db.updateTable('index').set({ backgroundId: id }).execute(),
-      storage.file(id).store(file),
-      db
-        .insertInto('files')
-        .values({
-          id,
-          contentType: file.type,
-          name: file.name,
-          size: file.size,
-        })
-        .execute(),
-    ]);
+    await Promise.all([db.updateTable('index').set({ backgroundId: id }).execute(), files.store(id, file)]);
 
     void getIndex().refresh();
   },
