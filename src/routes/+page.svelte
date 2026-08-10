@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     padding: 50px;
+    font-size: 21px;
     background: var(--background);
     background-repeat: no-repeat;
     background-position: center;

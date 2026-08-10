@@ -12,7 +12,7 @@ export const GET: RequestHandler = async ({ params: { id } }) => {
         status: 200,
         headers: {
           'Cache-Control': 'public, max-age=31536000',
-          'Content-Type': record.content_type,
+          'Content-Type': record.contentType,
           'Content-Length': String(record.size),
         },
       });
