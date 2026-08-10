@@ -2,8 +2,8 @@ import { Kysely, SqliteDialect } from 'kysely';
 import SQLite from 'better-sqlite3';
 import { getRequestEvent } from '$app/server';
 import { generateSchema } from './codegen';
-import type { DB } from './schema';
 import { migrateToLatest } from './migration';
+import type { DB } from '#lib/schema';
 
 export type CreateDatabaseOptions = {
   filename: string;
