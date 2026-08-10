@@ -13,7 +13,7 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "flc": "npm run format && npm run check && npm run lint",
-    "gen": "npx tsx ./src/lib/cave/database/-gen.ts"
+    "gen": "npx tsx ./src/lib/cave/server/database/-gen.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

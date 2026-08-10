@@ -1,5 +1,5 @@
-import { getDatabase } from '#lib/cave/database/database';
-import { getStorage } from '#lib/cave/storage/storage';
+import { getDatabase } from '#lib/cave/server/database/database';
+import { getStorage } from '#lib/cave/server/storage/storage';
 import { error, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ params: { id } }) => {

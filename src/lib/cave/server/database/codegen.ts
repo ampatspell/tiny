@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import dedent from 'dedent';
 import launchEditor from 'launch-editor';
 
-const root = join(import.meta.dirname, '..', '..');
+const root = join(import.meta.dirname, '..', '..', '..');
 
 export type GenerateSchemaOptions = {
   filename: string;

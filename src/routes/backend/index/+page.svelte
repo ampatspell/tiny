@@ -2,15 +2,24 @@
   import Button from '#lib/cave/components/button.svelte';
   import Files from '#lib/cave/components/files.svelte';
   import Input from '#lib/cave/components/input.svelte';
-  import { getIndex, updateIndex } from '#lib/index.remote';
+  import { run } from '#lib/cave/utils';
+  import { getIndex, updateIndexFile, updateIndexProperties } from '#lib/index.remote';
 
   let data = $derived(await getIndex());
   let file = $state<File>();
   let onFiles = (files: File[]) => {
     file = files[0];
   };
+
   let onSave = async () => {
-    await updateIndex({ title: data.index.title, file });
+    await Promise.all([
+      updateIndexProperties({ title: data.index.title }),
+      run(async () => {
+        if (file) {
+          await updateIndexFile({ file });
+        }
+      }),
+    ]);
   };
 </script>
 

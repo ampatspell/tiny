@@ -1,4 +1,4 @@
-import type { Database } from '#lib/cave/database/database.ts';
+import type { Database } from '#lib/cave/server/database/database.ts';
 import type { Storage } from '#lib/cave/storage/storage.ts';
 
 declare global {

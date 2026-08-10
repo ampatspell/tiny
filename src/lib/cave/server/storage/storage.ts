@@ -1,10 +1,10 @@
 import resolvePath from 'resolve-path';
 import { pathExists, remove } from 'fs-extra';
 import fastFolderSize from 'fast-folder-size';
-import { defer } from '../utils';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { getRequestEvent } from '$app/server';
 import { createReadableStream } from '@sveltejs/kit/node';
+import { defer } from '#lib/cave/utils';
 
 export type CreateFilesOptions = {
   base: string;
