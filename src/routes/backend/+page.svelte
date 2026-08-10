@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Button from '#lib/button.svelte';
-  import Input from '#lib/input.svelte';
-  import { getIndex, updateIndex } from '#lib/kysely/index.remote';
+  import Button from '#lib/cave/components/button.svelte';
+  import Input from '#lib/cave/components/input.svelte';
+  import { getIndex, updateIndex } from '#lib/index.remote';
   import { resolve } from '$app/paths';
 
   let index = $derived(await getIndex());

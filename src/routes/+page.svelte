@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getIndex } from '#lib/kysely/index.remote';
+  import { getIndex } from '#lib/index.remote';
   import { resolve } from '$app/paths';
 
   let index = $derived(await getIndex());

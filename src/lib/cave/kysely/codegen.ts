@@ -5,6 +5,8 @@ import { format } from 'date-fns';
 import dedent from 'dedent';
 import launchEditor from 'launch-editor';
 
+const root = join(import.meta.dirname, '..', '..');
+
 export type GenerateSchemaOptions = {
   filename: string;
 };
@@ -27,7 +29,7 @@ export const generateSchema = async (opts: GenerateSchemaOptions) => {
     typeOnlyImports: true,
   });
 
-  const target = join(import.meta.dirname, 'schema.d.ts');
+  const target = join(root, 'schema.d.ts');
 
   await writeFile(target, schema, 'utf8');
 };
@@ -44,7 +46,7 @@ const template = dedent`
   `;
 
 export const generateMigration = async () => {
-  const dir = join(import.meta.dirname, 'migrations');
+  const dir = join(root, 'migrations');
   const name = [format(new Date(), 'yyyy-MM-dd-HH-mm-ss'), 'migration.ts'].join('-');
   const fullPath = join(dir, name);
 

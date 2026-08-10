@@ -9,7 +9,7 @@ export type MigrateOptions = {
 
 export const migrateToLatest = async (opts: MigrateOptions) => {
   const { db } = opts;
-  const migrationFolder = resolve(import.meta.dirname, 'migrations');
+  const migrationFolder = resolve(import.meta.dirname, '..', '..', 'migrations');
 
   const migrator = new Migrator({
     db,

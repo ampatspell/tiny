@@ -1,7 +1,7 @@
 import * as v from 'valibot';
-import { uid } from '#lib/utils';
 import { command, query } from '$app/server';
-import { getDatabase } from './database';
+import { getDatabase } from './cave/kysely/database';
+import { uid } from './cave/utils';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
@@ -12,7 +12,7 @@ export const getIndex = query(async () => {
   return index;
 });
 
-export const updateIndex = command(v.object({ title: v.string() }), async ({ title }) => {
+export const updateIndex = command(v.strictObject({ title: v.string() }), async ({ title }) => {
   const db = getDatabase();
   await db.updateTable('index').set({ title }).execute();
   void getIndex().refresh();

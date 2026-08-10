@@ -1,4 +1,4 @@
-import { createDatabase } from '#lib/kysely/database';
+import { createDatabase } from '#lib/cave/kysely/database';
 import type { Handle } from '@sveltejs/kit';
 
 const db = createDatabase({ filename: 'main.db' });

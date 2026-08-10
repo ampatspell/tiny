@@ -1,4 +1,4 @@
-import type { Database } from '#lib/kysely/database';
+import type { Database } from '#lib/cave/kysely/database.ts';
 
 declare global {
   namespace App {
