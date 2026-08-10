@@ -1,27 +1,34 @@
 <script lang="ts">
   import Button from '#lib/cave/components/button.svelte';
+  import Files from '#lib/cave/components/files.svelte';
   import Input from '#lib/cave/components/input.svelte';
   import { getIndex, updateIndex } from '#lib/index.remote';
-  import { resolve } from '$app/paths';
 
   let index = $derived(await getIndex());
+  let file = $state<File>();
+  let onFiles = (files: File[]) => {
+    file = files[0];
+  };
   let onSave = async () => {
-    await updateIndex({ title: index.title });
+    await updateIndex({ title: index.title, file });
   };
 </script>
 
 <div class="page">
-  <div class="row">{index.id} {index.title}</div>
   <div class="row">
     <Input value={index.title} onInput={(value) => (index.title = value)} />
+  </div>
+  <div class="row">
+    <Files isMultiple={false} {onFiles} />
+  </div>
+  <div class="row">
     <Button label="Save" onClick={onSave} />
   </div>
-  <div class="row"><a href={resolve('/')}>index</a></div>
 </div>
 
 <style lang="scss">
   .page {
-    padding: 50px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -29,6 +36,7 @@
       display: flex;
       flex-direction: row;
       gap: 10px;
+      max-width: 300px;
     }
   }
 </style>

@@ -1,7 +1,8 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
-import { getDatabase } from './cave/kysely/database';
+import { getDatabase } from './cave/database/database';
 import { uid } from './cave/utils';
+import { getStorage } from './cave/storage/storage';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
@@ -12,8 +13,18 @@ export const getIndex = query(async () => {
   return index;
 });
 
-export const updateIndex = command(v.strictObject({ title: v.string() }), async ({ title }) => {
-  const db = getDatabase();
-  await db.updateTable('index').set({ title }).execute();
-  void getIndex().refresh();
-});
+export const updateIndex = command(
+  v.strictObject({
+    title: v.string(),
+    file: v.optional(v.file()),
+  }),
+  async ({ title, file }) => {
+    const db = getDatabase();
+    const storage = getStorage();
+    await db.updateTable('index').set({ title }).execute();
+    if (file) {
+      await storage.file(`index-background`).store(file);
+    }
+    void getIndex().refresh();
+  },
+);

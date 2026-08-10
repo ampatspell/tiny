@@ -4,13 +4,17 @@ import { getRequestEvent } from '$app/server';
 import { generateSchema } from './codegen';
 import { migrateToLatest } from './migration';
 import type { DB } from '#lib/schema';
+import { dirname } from 'node:path';
+import { mkdir } from 'node:fs/promises';
 
 export type CreateDatabaseOptions = {
   filename: string;
 };
 
-export const createDatabase = (opts: CreateDatabaseOptions) => {
+export const createDatabase = async (opts: CreateDatabaseOptions) => {
   const { filename } = opts;
+
+  await mkdir(dirname(filename), { recursive: true });
 
   const dialect = new SqliteDialect({
     database: new SQLite(filename),
@@ -21,15 +25,12 @@ export const createDatabase = (opts: CreateDatabaseOptions) => {
     log: ['query', 'error'],
   });
 
-  const prepare = async () => {
-    await migrateToLatest({ db });
-    await generateSchema({ filename });
-    return db;
-  };
+  await migrateToLatest({ db });
+  await generateSchema({ filename });
 
-  return prepare();
+  return db;
 };
 
-export type Database = ReturnType<typeof createDatabase> extends Promise<infer T> ? T : never;
+export type Database = Awaited<ReturnType<typeof createDatabase>>;
 
 export const getDatabase = () => getRequestEvent().locals.db;
