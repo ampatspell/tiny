@@ -24,3 +24,7 @@ export const defer = <T>() => {
     reject: reject!,
   };
 };
+
+export const run = <T>(cb: () => T): T => {
+  return cb();
+};

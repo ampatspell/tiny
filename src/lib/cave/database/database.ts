@@ -22,7 +22,22 @@ export const createDatabase = async (opts: CreateDatabaseOptions) => {
 
   const db = new Kysely<DB>({
     dialect,
-    log: ['query', 'error'],
+    log: (event) => {
+      if (event.level === 'error') {
+        console.error('[db]', {
+          durationMs: event.queryDurationMillis,
+          error: event.error,
+          sql: event.query.sql,
+          params: event.query.parameters,
+        });
+      } else {
+        console.log('[db]', {
+          durationMs: event.queryDurationMillis,
+          sql: event.query.sql,
+          params: event.query.parameters,
+        });
+      }
+    },
   });
 
   await migrateToLatest({ db });
