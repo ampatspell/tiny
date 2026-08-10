@@ -1,13 +1,11 @@
 {
-	"extends": "$app/tsconfig",
-	"compilerOptions": {
-		"rewriteRelativeImportExtensions": true,
-		"sourceMap": true,
-		"strict": true,
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext"
-	},
-	"include": [
-		"src"
-	]
+  "extends": "$app/tsconfig",
+  "compilerOptions": {
+    "rewriteRelativeImportExtensions": true,
+    "sourceMap": true,
+    "strict": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  },
+  "include": ["src"]
 }

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Backend from '#lib/cave/components/backend/backend.svelte';
-  import type { NavigationItems } from '#lib/cave/components/backend/navigation.svelte';
   import LucideCat from '#lib/icons/lucide--cat.svelte';
   import TablerAppWindow from '#lib/icons/tabler--app-window.svelte';
   import TablerCircleChevronLeft from '#lib/icons/tabler--circle-chevron-left.svelte';
   import { resolve } from '$app/paths';
+  import Backend from '@ampatspell/cave/components/backend/backend.svelte';
+  import { type NavigationItems } from '@ampatspell/cave/components/backend/navigation.svelte';
 
   let { children } = $props();
 

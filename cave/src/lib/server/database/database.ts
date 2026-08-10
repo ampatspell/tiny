@@ -1,19 +1,21 @@
 import { CamelCasePlugin, Kysely, SqliteDialect } from 'kysely';
 import SQLite from 'better-sqlite3';
-import { getRequestEvent } from '$app/server';
-import { generateSchema } from './codegen';
-import { migrateToLatest } from './migration';
-import type { DB } from '#lib/schema';
+import { generateSchema } from './codegen.js';
+import { migrateToLatest } from './migration.js';
 import { dirname } from 'node:path';
 import { mkdir } from 'node:fs/promises';
-import { round } from '#lib/cave/utils';
+import { round } from '#lib/utils.js';
+import { getRequestEvent } from '$app/server';
+import type { DB } from './schema.js';
 
 export type CreateDatabaseOptions = {
   filename: string;
+  migrations: string;
+  schema: string;
 };
 
 export const createDatabase = async (opts: CreateDatabaseOptions) => {
-  const { filename } = opts;
+  const { filename, migrations, schema } = opts;
 
   await mkdir(dirname(filename), { recursive: true });
 
@@ -36,12 +38,12 @@ export const createDatabase = async (opts: CreateDatabaseOptions) => {
     },
   });
 
-  await migrateToLatest({ db });
-  await generateSchema({ filename });
+  await migrateToLatest({ db, base: migrations });
+  await generateSchema({ filename, base: schema });
 
   return db;
 };
 
 export type Database = Awaited<ReturnType<typeof createDatabase>>;
 
-export const getDatabase = () => getRequestEvent().locals.db;
+export const getDatabase = (): Database => getRequestEvent().locals.db;

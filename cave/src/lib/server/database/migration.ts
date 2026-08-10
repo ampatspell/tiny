@@ -1,15 +1,15 @@
 import { FileMigrationProvider, Migrator } from 'kysely/migration';
-import path, { resolve } from 'node:path';
-import type { Database } from './database';
+import path from 'node:path';
+import type { Database } from './database.js';
 import fs from 'node:fs/promises';
 
 export type MigrateOptions = {
   db: Database;
+  base: string;
 };
 
 export const migrateToLatest = async (opts: MigrateOptions) => {
-  const { db } = opts;
-  const migrationFolder = resolve(import.meta.dirname, '..', '..', '..', 'migrations');
+  const { db, base: migrationFolder } = opts;
 
   const migrator = new Migrator({
     db,

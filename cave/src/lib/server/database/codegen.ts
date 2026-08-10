@@ -5,14 +5,13 @@ import { format } from 'date-fns';
 import dedent from 'dedent';
 import launchEditor from 'launch-editor';
 
-const root = join(import.meta.dirname, '..', '..', '..');
-
 export type GenerateSchemaOptions = {
   filename: string;
+  base: string;
 };
 
 export const generateSchema = async (opts: GenerateSchemaOptions) => {
-  const { filename: connectionString } = opts;
+  const { filename: connectionString, base } = opts;
   const dialect = new SqliteDialect();
 
   const db = await dialect.introspector.connect({
@@ -29,7 +28,7 @@ export const generateSchema = async (opts: GenerateSchemaOptions) => {
     typeOnlyImports: true,
   });
 
-  const target = join(root, 'schema.d.ts');
+  const target = join(base, 'schema.d.ts');
 
   await writeFile(target, schema, 'utf8');
 };
@@ -45,12 +44,11 @@ const template = dedent`
   }
   `;
 
-export const generateMigration = async () => {
-  const dir = join(root, 'migrations');
+export const generateMigration = async ({ root }: { root: string }) => {
   const name = [format(new Date(), 'yyyy-MM-dd-HH-mm-ss'), 'migration.ts'].join('-');
-  const fullPath = join(dir, name);
+  const fullPath = join(root, name);
 
-  await mkdir(dir, { recursive: true });
+  await mkdir(root, { recursive: true });
   await writeFile(fullPath, template, 'utf-8');
 
   launchEditor(fullPath);

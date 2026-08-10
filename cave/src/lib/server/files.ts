@@ -1,6 +1,6 @@
 import { getRequestEvent } from '$app/server';
-import type { Database } from './database/database';
-import type { Storage } from './storage';
+import type { Database } from './database/database.js';
+import type { Storage } from './storage.js';
 
 export type CreateFilesOptions = {
   db: Database;

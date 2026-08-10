@@ -1,8 +1,8 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
-import { getDatabase } from './cave/server/database/database';
-import { uid } from './cave/server/utils';
-import { getFiles } from './cave/server/files';
+import { getDatabase } from '@ampatspell/cave/server/database';
+import { getFiles } from '@ampatspell/cave/server/files';
+import { uid } from '@ampatspell/cave/server/utils';
 
 export const getIndex = query(async () => {
   const db = getDatabase();

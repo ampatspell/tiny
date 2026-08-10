@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Icon from '#lib/cave/components/icon.svelte';
   import LucideCat from '#lib/icons/lucide--cat.svelte';
+  import Icon from '@ampatspell/cave/components/icon.svelte';
 </script>
 
 <div class="page">

@@ -4,7 +4,7 @@ import fastFolderSize from 'fast-folder-size';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { getRequestEvent } from '$app/server';
 import { createReadableStream } from '@sveltejs/kit/node';
-import { defer } from '#lib/cave/utils';
+import { defer } from '#lib/utils.js';
 
 export type CreateFilesOptions = {
   base: string;
@@ -23,7 +23,7 @@ export const createStorage = async (opts: CreateFilesOptions) => {
 
   const total = () => {
     const { reject, resolve, promise } = defer<number>();
-    fastFolderSize(base, (err, bytes) => {
+    fastFolderSize.default(base, (err, bytes) => {
       if (err) {
         return reject(err);
       }
