@@ -23,4 +23,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 /main.db
-/src/lib/kysely/schema.d.ts
+/src/lib/schema.d.ts
