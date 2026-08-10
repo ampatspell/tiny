@@ -1,5 +1,5 @@
 {
-  "name": "canonical",
+  "name": "@ampatspell/canonical",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -42,6 +42,7 @@
     "#lib/*": "./src/lib/*"
   },
   "dependencies": {
+    "@ampatspell/cave": "0.0.1",
     "better-sqlite3": "^12.11.1",
     "date-fns": "^4.4.0",
     "dedent": "^1.7.2",

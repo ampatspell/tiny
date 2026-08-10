@@ -1,0 +1,10 @@
+{
+  "name": "workspace",
+  "private": true,
+  "scripts": {
+  },
+  "workspaces": [
+    "./cave",
+    "./canonical"
+  ]
+}
