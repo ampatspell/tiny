@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { getUid } from '#lib/random.remote';
+  import { getIndex } from '#lib/kysely/index.remote';
+  import { resolve } from '$app/paths';
 
-  let uid = $derived(await getUid());
+  let index = $derived(await getIndex());
 </script>
 
 <div class="page">
-  <div class="row">{uid.uid}</div>
+  <div class="row">{index.id} {index.title}</div>
+  <div class="row"><a href={resolve('/backend')}>backend</a></div>
 </div>
 
 <style lang="scss">

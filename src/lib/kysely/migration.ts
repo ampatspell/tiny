@@ -35,6 +35,4 @@ export const migrateToLatest = async (opts: MigrateOptions) => {
     console.error(error);
     process.exit(1);
   }
-
-  await db.destroy();
 };
