@@ -3,9 +3,9 @@
   import Files from '#lib/cave/components/files.svelte';
   import Input from '#lib/cave/components/input.svelte';
   import { run } from '#lib/cave/utils';
-  import { getIndex, updateIndexFile, updateIndexProperties } from '#lib/index.remote';
+  import { getIndex, updateIndex, updateIndexFile } from '#lib/index.remote';
 
-  let data = $derived(await getIndex());
+  let index = $derived(await getIndex());
   let file = $state<File>();
   let onFiles = (files: File[]) => {
     file = files[0];
@@ -13,7 +13,7 @@
 
   let onSave = async () => {
     await Promise.all([
-      updateIndexProperties({ title: data.index.title }),
+      updateIndex({ title: index.title }),
       run(async () => {
         if (file) {
           await updateIndexFile({ file });
@@ -24,9 +24,9 @@
 </script>
 
 <div class="page">
-  <div class="row">{data.background?.name} ({data.background?.content_type})</div>
+  <div class="row">{index.backgroundId}</div>
   <div class="row">
-    <Input value={data.index.title} onInput={(value) => (data.index.title = value)} />
+    <Input value={index.title} onInput={(value) => (index.title = value)} />
   </div>
   <div class="row">
     <Files isMultiple={false} {onFiles} />

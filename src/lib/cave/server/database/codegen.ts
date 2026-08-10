@@ -25,7 +25,7 @@ export const generateSchema = async (opts: GenerateSchemaOptions) => {
     dialect,
     runtimeEnums: false,
     singularize: true,
-    camelCase: false,
+    camelCase: true,
     typeOnlyImports: true,
   });
 

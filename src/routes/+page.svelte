@@ -1,10 +1,10 @@
 <script lang="ts">
   import { getIndex } from '#lib/index.remote';
-  import { resolve } from '$app/paths';
 
-  let data = $derived(await getIndex());
+  let index = $derived(await getIndex());
+
   let background = $derived.by(() => {
-    const id = data.background?.id;
+    const id = index.backgroundId;
     if (id) {
       return `url("/files/${id}")`;
     }
@@ -12,8 +12,7 @@
 </script>
 
 <div class={['page', background && 'has-background']} style:--background={background}>
-  <div class="row">{data.index.id} {data.index.title}</div>
-  <div class="row"><a href={resolve('/backend')}>backend</a></div>
+  <div class="row">{index.title}</div>
 </div>
 
 <style lang="scss">

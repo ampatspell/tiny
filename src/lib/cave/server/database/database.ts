@@ -1,4 +1,4 @@
-import { Kysely, SqliteDialect } from 'kysely';
+import { CamelCasePlugin, Kysely, SqliteDialect } from 'kysely';
 import SQLite from 'better-sqlite3';
 import { getRequestEvent } from '$app/server';
 import { generateSchema } from './codegen';
@@ -22,6 +22,7 @@ export const createDatabase = async (opts: CreateDatabaseOptions) => {
 
   const db = new Kysely<DB>({
     dialect,
+    plugins: [new CamelCasePlugin()],
     log: (event) => {
       if (event.level === 'error') {
         console.error('[db]', {

@@ -10,16 +10,10 @@ export const getIndex = query(async () => {
   if (!index) {
     index = await db.insertInto('index').values({ id: uid(), title: 'maybe' }).returningAll().executeTakeFirstOrThrow();
   }
-
-  let background;
-  if (index.background_id) {
-    background = await db.selectFrom('files').selectAll().where('id', '==', index.background_id).executeTakeFirst();
-  }
-
-  return { index, background };
+  return index;
 });
 
-export const updateIndexProperties = command(
+export const updateIndex = command(
   v.strictObject({
     title: v.string(),
   }),
@@ -40,24 +34,21 @@ export const updateIndexFile = command(
     const storage = getStorage();
 
     const index = await db.selectFrom('index').selectAll().executeTakeFirstOrThrow();
-    let id = index.background_id;
+    let id = index.backgroundId;
 
     if (id) {
-      await Promise.all([
-        db.deleteFrom('files').where('id', '==', index.background_id).execute(),
-        storage.file(id).drop(),
-      ]);
+      await Promise.all([db.deleteFrom('files').where('id', '==', id).execute(), storage.file(id).drop()]);
     }
 
     id = uid();
     await Promise.all([
-      db.updateTable('index').set({ background_id: id }).execute(),
+      db.updateTable('index').set({ backgroundId: id }).execute(),
       storage.file(id).store(file),
       db
         .insertInto('files')
         .values({
           id,
-          content_type: file.type,
+          contentType: file.type,
           name: file.name,
           size: file.size,
         })
