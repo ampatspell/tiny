@@ -5,7 +5,9 @@
     "sourceMap": true,
     "strict": true,
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "declarationMap": true,
+    "declaration": true
   },
   "include": ["src"]
 }
