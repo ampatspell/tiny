@@ -7,11 +7,10 @@ process.on('SIGINT', () => {
   process.exit(1);
 });
 
-const positionals = parseArgs({
-  allowPositionals: true,
-}).positionals;
+const positionals = parseArgs({ allowPositionals: true }).positionals;
+const cwd = process.cwd();
 
-const tools = await createTools({ cwd: process.cwd() });
+const tools = await createTools({ cwd });
 
 const tasks = ['add-migration', 'generate-schema', 'migrate-to-latest', 'link-tiny'] as const;
 type Task = symbol | (typeof tasks)[number];
