@@ -1,13 +1,11 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
-import { getDatabase } from '@ampatspell/tiny/server/database';
 import { getFiles } from '@ampatspell/tiny/server/files';
 import { uid } from '@ampatspell/tiny/server/utils';
-import type { Kysely } from 'kysely';
+import { getDatabase } from './tmp';
 
 export const getIndex = query(async () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const db = getDatabase() as Kysely<any>;
+  const db = getDatabase();
   let index = await db.selectFrom('index').selectAll().limit(1).executeTakeFirst();
   if (!index) {
     index = await db.insertInto('index').values({ id: uid(), title: 'maybe' }).returningAll().executeTakeFirstOrThrow();
@@ -20,8 +18,7 @@ export const updateIndex = command(
     title: v.string(),
   }),
   async ({ title }) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const db = getDatabase() as Kysely<any>;
+    const db = getDatabase();
     await db.updateTable('index').set({ title }).execute();
 
     void getIndex().refresh();
@@ -33,8 +30,7 @@ export const updateIndexFile = command(
     file: v.file(),
   }),
   async ({ file }) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const db = getDatabase() as Kysely<any>;
+    const db = getDatabase();
     const files = getFiles();
 
     const index = await db.selectFrom('index').selectAll().executeTakeFirstOrThrow();

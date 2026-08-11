@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getIndex } from '#lib/index.remote';
+  import { getIndex } from '$lib/index.remote';
 
   let index = $derived(await getIndex());
 

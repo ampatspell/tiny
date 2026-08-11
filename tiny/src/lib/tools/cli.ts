@@ -24,9 +24,9 @@ if (tools) {
       showInstructions: false,
       message: 'Pick a task',
       options: [
-        { value: 'add-migration', label: 'Create a new migration file' },
-        { value: 'generate-schema', label: 'Generate schema.d.ts from database' },
-        { value: 'migrate-to-latest', label: 'Migrate database to the latest' },
+        { value: 'add-migration', label: 'Add a new migration file' },
+        { value: 'migrate-to-latest', label: 'Migrate database to the latest version' },
+        { value: 'generate-schema', label: 'Generate schema.d.ts from current database state' },
         { value: 'link-tiny', label: 'Link tiny to this project', disabled: tools.project.isTiny },
       ],
     });

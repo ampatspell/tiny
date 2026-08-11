@@ -4,7 +4,7 @@ import fastFolderSize from 'fast-folder-size';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { getRequestEvent } from '$app/server';
 import { createReadableStream } from '@sveltejs/kit/node';
-import { defer } from '#lib/utils.js';
+import { defer } from '$lib/utils.js';
 
 export type CreateFilesOptions = {
   base: string;

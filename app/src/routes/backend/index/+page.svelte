@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getIndex, updateIndex, updateIndexFile } from '#lib/index.remote';
+  import { getIndex, updateIndex, updateIndexFile } from '$lib/index.remote';
   import Button from '@ampatspell/tiny/components/button.svelte';
   import Files from '@ampatspell/tiny/components/files.svelte';
   import Input from '@ampatspell/tiny/components/input.svelte';

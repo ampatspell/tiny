@@ -9,6 +9,8 @@
 </script>
 
 <script lang="ts">
+  import type { ResolvedPathname } from '$app/types';
+
   import type { Component } from 'svelte';
 
   let {
@@ -21,7 +23,7 @@
     icon: Component;
     size?: IconSize;
     onClick?: (e: MouseEvent) => void;
-    route?: string;
+    route?: ResolvedPathname;
     element?: HTMLElement;
   } = $props();
 

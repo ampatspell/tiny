@@ -1,7 +1,10 @@
-import type { Database } from '#lib/cave/server/database/database';
-import type { Files } from '#lib/cave/server/files';
-import type { Storage } from '#lib/cave/storage/storage';
+// See https://svelte.dev/docs/kit/types#app.d.ts
 
+import type { Database } from "@ampatspell/tiny/server/database";
+import type { Files } from "@ampatspell/tiny/server/files";
+import type { Storage } from "@ampatspell/tiny/server/storage";
+
+// for information about these interfaces
 declare global {
   namespace App {
     // interface Error {}

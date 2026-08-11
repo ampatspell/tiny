@@ -6,12 +6,18 @@ export default defineConfig({
   plugins: [
     sveltekit({
       compilerOptions: {
-        runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true),
+        runes: ({ filename }) => {
+          return filename.split(/[/\\]/).includes('node_modules') ? undefined : true;
+        },
         experimental: { async: true },
       },
       adapter: adapter(),
-      experimental: { remoteFunctions: true },
-      inspector: true, // opt+x
+      experimental: {
+        explicitEnvironmentVariables: true,
+        handleRenderingErrors: true,
+        remoteFunctions: true,
+        sendWarningsToBrowser: true,
+      },
     }),
   ],
 });

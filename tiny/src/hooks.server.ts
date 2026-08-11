@@ -1,14 +1,10 @@
-import { createServices } from '#lib/server/services.js';
 import type { Handle } from '@sveltejs/kit';
-import { join } from 'node:path';
+import { STORAGE_ROOT } from '$app/env/private';
+import { createServices } from '$lib/server/services.js';
 
 export const handle: Handle = async ({ event, resolve }) => {
-  const base = join(import.meta.dirname, 'lib', 'server', 'database');
-
   const { db, files, storage } = await createServices({
-    base: '.local',
-    schema: base,
-    migrations: join(base, 'migrations'),
+    base: STORAGE_ROOT,
   });
 
   event.locals.db = db;

@@ -1,4 +1,4 @@
-import { getDatabase } from '@ampatspell/tiny/server/database';
+import { getDatabase } from '$lib/tmp';
 import { getStorage } from '@ampatspell/tiny/server/storage';
 import { error, type RequestHandler } from '@sveltejs/kit';
 
