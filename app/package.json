@@ -1,5 +1,5 @@
 {
-  "name": "@ampatspell/canonical",
+  "name": "@ampatspell/app",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -43,7 +43,7 @@
     "#lib/*": "./src/lib/*"
   },
   "dependencies": {
-    "@ampatspell/cave": "../cave",
+    "@ampatspell/tiny": "../tiny",
     "valibot": "^1.4.2"
   }
 }
