@@ -14,8 +14,8 @@ export const createServices = async (opts: CreateServicesOptions) => {
   const [db, storage] = await Promise.all([
     createDatabase({
       filename: join(base, 'main.db'),
-      migrations,
-      schema,
+      migrationsRoot: migrations,
+      schemaRoot: schema,
     }),
     createStorage({ base: join(base, 'storage') }),
   ]);

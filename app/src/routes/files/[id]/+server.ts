@@ -1,5 +1,5 @@
-import { getDatabase } from '@ampatspell/cave/server/database';
-import { getStorage } from '@ampatspell/cave/server/storage';
+import { getDatabase } from '@ampatspell/tiny/server/database';
+import { getStorage } from '@ampatspell/tiny/server/storage';
 import { error, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ params: { id } }) => {

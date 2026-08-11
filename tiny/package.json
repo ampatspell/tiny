@@ -14,6 +14,9 @@
     "flc": "npm run format && npm run check && npm run lint",
     "gen": "npx tsx ./src/lib/server/database/-gen.ts"
   },
+  "bin": {
+    "tiny": "src/lib/tools/cli.ts"
+  },
   "files": [
     "dist",
     "!dist/**/*.test.*",
@@ -113,6 +116,7 @@
     "vite": "^8.0.16"
   },
   "dependencies": {
+    "@clack/prompts": "^1.7.0",
     "@sveltejs/kit": "next",
     "better-sqlite3": "^12.11.1",
     "date-fns": "^4.4.0",
@@ -123,6 +127,7 @@
     "kysely-codegen": "^0.20.0",
     "launch-editor": "^2.14.1",
     "resolve-path": "^1.4.0",
+    "tinyexec": "^1.3.0",
     "valibot": "^1.4.2"
   },
   "keywords": [

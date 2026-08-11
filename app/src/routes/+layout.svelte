@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Dark from '@ampatspell/cave/components/dark.svelte';
+  import Dark from '@ampatspell/tiny/components/dark.svelte';
 
   let { children } = $props();
 </script>

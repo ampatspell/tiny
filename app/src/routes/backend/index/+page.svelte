@@ -1,9 +1,9 @@
 <script lang="ts">
   import { getIndex, updateIndex, updateIndexFile } from '#lib/index.remote';
-  import Button from '@ampatspell/cave/components/button.svelte';
-  import Files from '@ampatspell/cave/components/files.svelte';
-  import Input from '@ampatspell/cave/components/input.svelte';
-  import { run } from '@ampatspell/cave/utils';
+  import Button from '@ampatspell/tiny/components/button.svelte';
+  import Files from '@ampatspell/tiny/components/files.svelte';
+  import Input from '@ampatspell/tiny/components/input.svelte';
+  import { run } from '@ampatspell/tiny/utils';
 
   let index = $derived(await getIndex());
   let file = $state<File>();

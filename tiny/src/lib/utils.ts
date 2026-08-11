@@ -30,3 +30,7 @@ export const round = (value: number, decimals = 2) => {
   const be = parts[1] ? Number(parts[1]) : 0;
   return Number(`${parts[0]}e${be - decimals}`);
 };
+
+export function isTruthy<T>(value?: T | undefined | null | false): value is T {
+  return !!value;
+}

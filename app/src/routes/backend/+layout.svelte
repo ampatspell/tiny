@@ -3,8 +3,8 @@
   import TablerAppWindow from '#lib/icons/tabler--app-window.svelte';
   import TablerCircleChevronLeft from '#lib/icons/tabler--circle-chevron-left.svelte';
   import { resolve } from '$app/paths';
-  import Backend from '@ampatspell/cave/components/backend/backend.svelte';
-  import { type NavigationItems } from '@ampatspell/cave/components/backend/navigation.svelte';
+  import Backend from '@ampatspell/tiny/components/backend/backend.svelte';
+  import { type NavigationItems } from '@ampatspell/tiny/components/backend/navigation.svelte';
 
   let { children } = $props();
 

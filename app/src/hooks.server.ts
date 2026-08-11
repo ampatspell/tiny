@@ -1,6 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import { STORAGE_PATH } from '$app/env/private';
-import { createServices } from '@ampatspell/cave/server/services';
+import { createServices } from '@ampatspell/tiny/server/services';
 import { join } from 'node:path';
 
 export const handle: Handle = async ({ event, resolve }) => {

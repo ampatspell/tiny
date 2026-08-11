@@ -1,26 +1,23 @@
 import { CamelCasePlugin, Kysely, SqliteDialect } from 'kysely';
 import SQLite from 'better-sqlite3';
-import { generateSchema } from './codegen.js';
-import { migrateToLatest } from './migration.js';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { mkdir } from 'node:fs/promises';
 import { round } from '#lib/utils.js';
-import { getRequestEvent } from '$app/server';
 import type { DB } from './schema.js';
 
 export type CreateDatabaseOptions = {
-  filename: string;
-  migrations: string;
-  schema: string;
+  connectionString: string;
+  verbose?: boolean;
 };
 
-export const createDatabase = async (opts: CreateDatabaseOptions) => {
-  const { filename, migrations, schema } = opts;
+export const connectionStringForStorageRoot = (root: string) => join(root, 'tiny.db');
 
-  await mkdir(dirname(filename), { recursive: true });
+export const createDatabase = async (opts: CreateDatabaseOptions) => {
+  const { connectionString, verbose } = opts;
+  await mkdir(dirname(connectionString), { recursive: true });
 
   const dialect = new SqliteDialect({
-    database: new SQLite(filename),
+    database: new SQLite(connectionString),
   });
 
   const db = new Kysely<DB>({
@@ -32,18 +29,13 @@ export const createDatabase = async (opts: CreateDatabaseOptions) => {
       const sql = event.query.sql;
       if (event.level === 'error') {
         console.error(prefix, ms, sql, event.error);
-      } else {
+      } else if (verbose) {
         console.error(prefix, ms, sql);
       }
     },
   });
 
-  await migrateToLatest({ db, base: migrations });
-  await generateSchema({ filename, base: schema });
-
   return db;
 };
 
 export type Database = Awaited<ReturnType<typeof createDatabase>>;
-
-export const getDatabase = (): Database => getRequestEvent().locals.db;
