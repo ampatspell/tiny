@@ -1,26 +1,40 @@
 #! /usr/bin/env npx tsx
-import { select } from '@clack/prompts';
+import { isCancel, outro, select } from '@clack/prompts';
 import { createTools } from './tools.ts';
+import { parseArgs } from 'node:util';
 
 process.on('SIGINT', () => {
   process.exit(1);
 });
 
+const positionals = parseArgs({
+  allowPositionals: true,
+}).positionals;
+
 const tools = await createTools({ cwd: process.cwd() });
 
-if (tools) {
-  const task = await select({
-    showInstructions: false,
-    message: 'Pick a task',
-    options: [
-      { value: 'generate-migration', label: 'Create a new migration file' },
-      { value: 'generate-schema', label: 'Generate schema.d.ts from database' },
-      { value: 'migrate-to-latest', label: 'Migrate database to the latest' },
-      { value: 'link-tiny', label: 'Link tiny to this project', disabled: tools.project.isTiny },
-    ],
-  });
+const tasks = ['add-migration', 'generate-schema', 'migrate-to-latest', 'link-tiny'] as const;
+type Task = symbol | (typeof tasks)[number];
 
-  if (task === 'generate-migration') {
+if (tools) {
+  let task: Task;
+  if (positionals.length === 1) {
+    task = positionals[0] as Task;
+  } else {
+    task = await select({
+      showInstructions: false,
+      message: 'Pick a task',
+      options: [
+        { value: 'add-migration', label: 'Create a new migration file' },
+        { value: 'generate-schema', label: 'Generate schema.d.ts from database' },
+        { value: 'migrate-to-latest', label: 'Migrate database to the latest' },
+        { value: 'link-tiny', label: 'Link tiny to this project', disabled: tools.project.isTiny },
+      ],
+    });
+  }
+  if (isCancel(task)) {
+    outro('Bye');
+  } else if (task === 'add-migration') {
     await tools.commands.generateNewMigrationFile();
   } else if (task === 'generate-schema') {
     await tools.commands.generateSchemaFromDatabase();
@@ -28,6 +42,9 @@ if (tools) {
     await tools.commands.migrateDatabaseToLatest();
   } else if (task === 'link-tiny') {
     await tools.commands.linkTinyToProject();
+  } else {
+    outro(`Unknown command '${String(task)}'. Valid ones are ${tasks.join(', ')}.`);
+    process.exit(1);
   }
 } else {
   process.exit(1);
