@@ -6,8 +6,6 @@ RUN apk update
 RUN apk add --no-cache coreutils
 
 ARG GITHUB_TOKEN
-ARG STORAGE_ROOT
-ENV STORAGE_ROOT=$STORAGE_ROOT
 
 COPY package*.json .
 COPY .npmrc .
