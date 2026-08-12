@@ -1,7 +1,7 @@
 <script lang="ts" module>
   export type IconSize = 'small' | 'regular' | 'medium' | 'large';
   export const iconSizes: { [key in IconSize]: number } = {
-    small: 12,
+    small: 14,
     regular: 16,
     medium: 18,
     large: 32,
@@ -20,7 +20,7 @@
     route,
     element = $bindable(),
   }: {
-    icon: Component;
+    icon: Component | undefined;
     size?: IconSize;
     onClick?: (e: MouseEvent) => void;
     route?: ResolvedPathname;
@@ -42,12 +42,14 @@
   </div>
 {/snippet}
 
-{#if route}
-  <a class="link" href={route}>
+{#if Icon}
+  {#if route}
+    <a class="link" href={route}>
+      {@render content()}
+    </a>
+  {:else}
     {@render content()}
-  </a>
-{:else}
-  {@render content()}
+  {/if}
 {/if}
 
 <style lang="scss">

@@ -21,6 +21,6 @@
 </script>
 
 <Button {onClick} {isBusy}>
-  <Icon {icon} />
   {label}
+  <Icon {icon} size="small" />
 </Button>
