@@ -57,8 +57,9 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
   const pkg = await loadPackageJSON(root);
   const env = await loadEnv(root);
   const name = pkg.name as string;
+  const storageRoot = env.storageRoot;
 
-  const connectionString = connectionStringForStorageRoot(env.storageRoot);
+  const connectionString = connectionStringForStorageRoot(storageRoot);
 
   const database = {
     connectionString,
@@ -78,6 +79,7 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
     env,
     isTiny,
     migrationsRoot,
+    storageRoot,
     schemaRoot,
     database,
   };

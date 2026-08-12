@@ -67,10 +67,9 @@ export const createTools = async (opts: { cwd: string }) => {
     project = await createProject({ impl: await createConsumerProjectImpl({ root }) });
   }
 
-  log.info([project.name, project.root].join('\n'));
+  log.info([project.name, project.root, project.env.storageRoot].join('\n'));
 
   if (!project.isTiny) {
-    log.info(['.env', `STORAGE_ROOT = ${project.env.storageRoot}`].join('\n'));
     await copyMigrations(tiny, project);
   }
 
