@@ -1,15 +1,14 @@
 <script lang="ts">
   import Editor from '$lib/playground/index/editor.svelte';
   import Index from '$lib/playground/index/index.svelte';
+  import Screen from '$lib/playground/screen.svelte';
 </script>
 
 <div class="page">
-  <div class="editor">
-    <Editor />
-  </div>
-  <div class="render">
+  <Editor />
+  <Screen>
     <Index />
-  </div>
+  </Screen>
 </div>
 
 <style lang="scss">
@@ -17,13 +16,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    > .editor {
-      padding: 15px;
-    }
-    > .render {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+    gap: 15px;
+    padding: 15px;
   }
 </style>
