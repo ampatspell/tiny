@@ -24,18 +24,13 @@ WORKDIR /app
 RUN apk --no-cache add curl
 
 COPY --from=builder /app/build build/
-COPY --from=builder /app/src src/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
-
-RUN echo './src/lib/tools/cli.ts migrate-to-latest' > /app/entrypoint.sh && \
-    echo 'node build' >> /app/entrypoint.sh && \
-    chmod +x /app/entrypoint.sh
 
 EXPOSE 3000
 
 ENV NODE_ENV=production
-CMD [ "./entrypoint.sh" ]
+CMD [ "node", "build" ]
 
 HEALTHCHECK \
   --interval=1m \
