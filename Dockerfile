@@ -11,6 +11,8 @@ COPY package*.json .
 COPY .npmrc .
 RUN npm ci
 COPY . .
+RUN echo 'STORAGE_ROOT=/storage' > .env && \
+    echo 'BODY_SIZE_LIMIT=134217728' >> .env
 
 RUN npm run build
 RUN npm prune --production
@@ -25,8 +27,7 @@ COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY --from=builder /app/src/lib/server/database/migrations src/lib/server/database/migrations/
 COPY package.json .
-RUN echo 'STORAGE_ROOT=/storage' > .env && \
-    echo 'BODY_SIZE_LIMIT=134217728' >> .env
+COPY .env .
 
 EXPOSE 3000
 
