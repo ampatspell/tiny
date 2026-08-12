@@ -30,7 +30,7 @@ const lookupTiny = async (dir: string) => {
 const copyMigrations = async (source: Project, target: Project) => {
   const sources = await readdir(source.migrationsRoot);
   for (const path of sources) {
-    if (parse(path).ext === '.ts') {
+    if (parse(path).ext === '.ts' && path.includes('-tiny-')) {
       await copy(join(source.migrationsRoot, path), join(target.migrationsRoot, path), { preserveTimestamps: true });
     }
   }

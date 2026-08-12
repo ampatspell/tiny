@@ -10,6 +10,13 @@ export interface File {
   size: number;
 }
 
+export interface Index {
+  backgroundId: string | null;
+  id: string;
+  title: string;
+}
+
 export interface DB {
   files: File;
+  index: Index;
 }

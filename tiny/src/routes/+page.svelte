@@ -1,3 +1,31 @@
-<h1>Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+  import Icon from '$lib/components/icon.svelte';
+  import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
+</script>
+
+<div class="page">
+  <div class="content">
+    <Icon icon={LucideCat} />
+    <div class="label">Tiny playground</div>
+  </div>
+</div>
+
+<style lang="scss">
+  .page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    > .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      > .label {
+        font-size: var(--dark-font-size-small);
+      }
+    }
+  }
+</style>
