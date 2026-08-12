@@ -11,8 +11,7 @@ COPY package*.json .
 COPY .npmrc .
 RUN npm ci
 COPY . .
-RUN echo 'STORAGE_ROOT=/storage' > .env && \
-    echo 'BODY_SIZE_LIMIT=134217728' >> .env
+RUN echo 'STORAGE_ROOT=/storage' > .env
 
 RUN npm run build
 RUN npm prune --production
@@ -32,6 +31,8 @@ COPY package.json .
 EXPOSE 3000
 
 ENV NODE_ENV=production
+ENV BODY_SIZE_LIMIT=134217728
+
 CMD [ "node", "build" ]
 
 HEALTHCHECK \
