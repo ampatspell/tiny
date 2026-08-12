@@ -15,8 +15,6 @@ RUN npm ci
 COPY . .
 
 RUN npm run build
-RUN npx tiny migrate-to-latest
-RUN npx tiny generate-schema
 RUN npm prune --production
 
 FROM node:24-alpine
@@ -29,10 +27,14 @@ COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
 
+RUN echo 'npx tiny migrate-to-latest' > /app/entrypoint.sh && \
+    echo 'node build' >> /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
+
 EXPOSE 3000
 
 ENV NODE_ENV=production
-CMD [ "node", "build" ]
+CMD [ "entrypoint.sh" ]
 
 HEALTHCHECK \
   --interval=1m \
