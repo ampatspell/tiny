@@ -2,5 +2,10 @@ services:
   tiny:
     build: .
     environment:
-      STORAGE_ROOT: /data
+      STORAGE_ROOT: /storage
       BODY_SIZE_LIMIT: 134217728
+    volumes:
+      - "storage:/storage"
+
+volumes:
+  storage:
