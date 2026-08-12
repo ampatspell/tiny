@@ -4,5 +4,3 @@ services:
     environment:
       STORAGE_ROOT: /data
       BODY_SIZE_LIMIT: 134217728
-    ports:
-      - 3000:3000
