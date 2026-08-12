@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
-import { uid } from '@ampatspell/tiny/server/utils';
 import { getDatabase, getFiles } from '$lib/server/handle.js';
+import { uid } from '$lib/server/utils.js';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
