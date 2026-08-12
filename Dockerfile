@@ -12,6 +12,8 @@ COPY .npmrc .
 RUN npm ci
 COPY . .
 
+ENV STORAGE_ROOT
+
 RUN npm run build
 RUN npm prune --production
 
