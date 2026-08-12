@@ -24,6 +24,7 @@ WORKDIR /app
 RUN apk --no-cache add curl
 
 COPY --from=builder /app/build build/
+COPY --from=builder /app/src src/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
 
