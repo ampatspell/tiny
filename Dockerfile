@@ -26,6 +26,7 @@ RUN apk --no-cache add curl
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
+COPY .env .
 
 EXPOSE 3000
 
