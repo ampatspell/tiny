@@ -8,6 +8,7 @@ import type { DB } from './database/schema.js';
 
 export const createHandle = ({ storageRoot }: { storageRoot: string }): Handle => {
   return async ({ event, resolve }) => {
+    console.log('storageRoot:', storageRoot);
     const { db, files, storage } = await createServices({
       base: storageRoot,
     });
