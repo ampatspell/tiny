@@ -27,7 +27,7 @@ COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
 
-RUN echo 'npx tiny migrate-to-latest' > /app/entrypoint.sh && \
+RUN echo 'npx tsx ./src/lib/tools/cli.ts migrate-to-latest' > /app/entrypoint.sh && \
     echo 'node build' >> /app/entrypoint.sh && \
     chmod +x /app/entrypoint.sh
 

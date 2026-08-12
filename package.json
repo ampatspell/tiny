@@ -13,6 +13,9 @@
     "format": "prettier --write .",
     "flc": "npm run format && npm run check && npm run lint"
   },
+  "bin": {
+    "tiny": "npx tsx ./src/lib/tools/cli.ts"
+  },
   "files": [
     "dist",
     "!dist/**/*.test.*",
