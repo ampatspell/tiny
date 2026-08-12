@@ -6,8 +6,6 @@ RUN apk update
 RUN apk add --no-cache coreutils
 
 ARG GITHUB_TOKEN
-ARG STORAGE_ROOT
-ENV STORAGE_ROOT=$STORAGE_ROOT
 
 COPY package*.json .
 COPY .npmrc .
@@ -27,6 +25,8 @@ COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY --from=builder /app/src/lib/server/database/migrations src/lib/server/database/migrations/
 COPY package.json .
+RUN echo 'STORAGE_ROOT=/storage' > .env && \
+    echo 'BODY_SIZE_LIMIT=134217728' >> .env
 
 EXPOSE 3000
 
