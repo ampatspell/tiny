@@ -25,7 +25,6 @@ COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY --from=builder /app/src/lib/server/database/migrations src/lib/server/database/migrations/
 COPY package.json .
-COPY .env .
 
 EXPOSE 3000
 
@@ -38,3 +37,6 @@ HEALTHCHECK \
   --start-period=5s \
   --retries=10 \
   CMD curl -f http://localhost:3000 || exit 1
+
+# STORAGE_ROOT=data
+# BODY_SIZE_LIMIT=134217728
