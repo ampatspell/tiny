@@ -26,7 +26,7 @@ RUN apk --no-cache add curl
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY --from=builder /app/src/lib/server/database/migrations src/lib/server/database/migrations/
-COPY --from=builder .env .
+COPY --from=builder /app/.env .
 COPY package.json .
 
 EXPOSE 3000
