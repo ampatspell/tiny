@@ -34,7 +34,7 @@ RUN echo 'npx tiny migrate-to-latest' > /app/entrypoint.sh && \
 EXPOSE 3000
 
 ENV NODE_ENV=production
-CMD [ "entrypoint.sh" ]
+CMD [ "./entrypoint.sh" ]
 
 HEALTHCHECK \
   --interval=1m \
