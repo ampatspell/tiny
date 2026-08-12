@@ -2,7 +2,7 @@ services:
   tiny:
     build: .
     volumes:
-      - "storage:/app/storage"
+      - "storage:/storage"
 
 volumes:
   storage:
