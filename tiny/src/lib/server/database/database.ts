@@ -12,7 +12,7 @@ export type CreateDatabaseOptions = {
 
 export const connectionStringForStorageRoot = (root: string) => join(root, 'tiny.db');
 
-export const createDatabase = async (opts: CreateDatabaseOptions) => {
+export const createDatabase = async <D extends DB = DB>(opts: CreateDatabaseOptions) => {
   const { connectionString, verbose } = opts;
   await mkdir(dirname(connectionString), { recursive: true });
 
@@ -20,7 +20,7 @@ export const createDatabase = async (opts: CreateDatabaseOptions) => {
     database: new SQLite(connectionString),
   });
 
-  const db = new Kysely<DB>({
+  const db = new Kysely<D>({
     dialect,
     plugins: [new CamelCasePlugin()],
     log: (event) => {
@@ -38,4 +38,4 @@ export const createDatabase = async (opts: CreateDatabaseOptions) => {
   return db;
 };
 
-export type Database = Awaited<ReturnType<typeof createDatabase>>;
+export type Database<D extends DB = DB> = Awaited<ReturnType<typeof createDatabase<D>>>;
