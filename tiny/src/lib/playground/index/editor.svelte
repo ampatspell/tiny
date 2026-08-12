@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Button from '$lib/components/button.svelte';
   import Files from '$lib/components/files.svelte';
   import Input from '$lib/components/input.svelte';
   import { getIndex, updateIndex, updateIndexFile } from '$lib/playground/index/index.remote.js';
   import { run } from '$lib/utils.js';
+  import BusyButton from '../busy-button.svelte';
 
   let index = $derived(await getIndex());
   let file = $state<File>();
@@ -31,7 +31,7 @@
     <Files isMultiple={false} {onFiles} />
   </div>
   <div class="row">
-    <Button label="Save" onClick={onSave} />
+    <BusyButton label="Save" onClick={onSave} />
   </div>
 </div>
 

@@ -8,12 +8,14 @@
   let {
     label,
     isDisabled: _isDisabled,
+    isBusy: _isBusy,
     onClick,
     children,
     type: _type,
     element = $bindable(),
   }: {
     isDisabled?: boolean;
+    isBusy?: boolean;
     onClick: (e: MouseEvent) => void;
     label?: string;
     children?: Snippet;
@@ -25,14 +27,17 @@
     onClick(e);
   };
 
+  let isBusy = $derived(_isBusy ?? false);
   let isDisabled = $derived(_isDisabled ?? false);
+  let isBusyOrDisabled = $derived(isBusy || isDisabled);
   let type = $derived(_type ?? 'regular');
 </script>
 
 <button
   class={['button', `type-${type}`]}
   class:disabled={isDisabled}
-  disabled={isDisabled}
+  class:busy={isBusy}
+  disabled={isBusyOrDisabled}
   {onclick}
   bind:this={element}
 >
@@ -63,12 +68,17 @@
     justify-content: center;
     white-space: nowrap;
     gap: 8px;
-    transition: 0.15s ease-in-out opacity;
+    transition:
+      0.15s ease-in-out opacity,
+      0.1s ease-in-out background-color;
     &.type-regular {
       max-width: max-content;
     }
     &.type-fill {
       width: 100%;
+    }
+    &.busy {
+      background-color: #000;
     }
     &.disabled {
       opacity: 0.25;
