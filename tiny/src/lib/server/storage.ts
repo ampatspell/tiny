@@ -2,7 +2,6 @@ import resolvePath from 'resolve-path';
 import { pathExists, remove } from 'fs-extra';
 import fastFolderSize from 'fast-folder-size';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { getRequestEvent } from '$app/server';
 import { createReadableStream } from '@sveltejs/kit/node';
 import { defer } from '$lib/utils.js';
 
@@ -73,5 +72,3 @@ export const createStorage = async (opts: CreateFilesOptions) => {
 };
 
 export type Storage = Awaited<ReturnType<typeof createStorage>>;
-
-export const getStorage = () => getRequestEvent().locals.storage;

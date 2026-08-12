@@ -53,6 +53,10 @@
       "types": "./dist/server/services.d.ts",
       "svelte": "./dist/server/services.js"
     },
+    "./server/handle": {
+      "types": "./dist/server/handle.d.ts",
+      "svelte": "./dist/server/handle.js"
+    },
     "./components/backend/backend.svelte": {
       "types": "./dist/components/backend/backend.svelte.d.ts",
       "svelte": "./dist/components/backend/backend.svelte"
@@ -87,12 +91,12 @@
     }
   },
   "peerDependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "^5.0.0",
+    "@sveltejs/kit": "^2.63.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@sveltejs/adapter-node": "^5.5.7",
-    "@sveltejs/kit": "^2.63.0",
     "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "@types/node": "^24",

@@ -14,6 +14,7 @@ export default defineConfig({
       adapter: adapter(),
       experimental: {
         explicitEnvironmentVariables: true,
+        handleRenderingErrors: true,
         remoteFunctions: true,
         sendWarningsToBrowser: true,
       },

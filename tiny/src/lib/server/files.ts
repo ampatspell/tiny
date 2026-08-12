@@ -1,4 +1,4 @@
-import { getRequestEvent } from '$app/server';
+import { error } from '@sveltejs/kit';
 import type { Database } from './database/database.js';
 import type { Storage } from './storage.js';
 
@@ -25,12 +25,32 @@ export const createFiles = async (opts: CreateFilesOptions) => {
     console.log('[files] dropped', id);
   };
 
+  const stream = async ({ id }: { id: string | undefined }) => {
+    if (id) {
+      const record = await db.selectFrom('files').selectAll().where('id', '==', id).executeTakeFirst();
+      if (record) {
+        const stream = storage.file(id).toReadableStream();
+        return new Response(stream, {
+          status: 200,
+          headers: {
+            'Cache-Control': 'public, max-age=31536000',
+            'Content-Type': record.contentType,
+            'Content-Length': String(record.size),
+          },
+        });
+      } else {
+        throw error(404, 'File not found');
+      }
+    } else {
+      throw error(500, 'Invalid request');
+    }
+  };
+
   return {
     store,
     drop,
+    stream,
   };
 };
 
 export type Files = Awaited<ReturnType<typeof createFiles>>;
-
-export const getFiles = () => getRequestEvent().locals.files;

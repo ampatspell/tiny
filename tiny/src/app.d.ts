@@ -9,9 +9,11 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      db: Database;
-      storage: Storage;
-      files: Files;
+      tiny: {
+        db: Database;
+        storage: Storage;
+        files: Files;
+      };
     }
     // interface PageData {}
     // interface PageState {}

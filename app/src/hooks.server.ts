@@ -1,15 +1,4 @@
-import type { Handle } from '@sveltejs/kit';
-import { createServices } from '@ampatspell/tiny/server/services';
 import { STORAGE_ROOT } from '$app/env/private';
+import { createHandle } from '@ampatspell/tiny/server/handle';
 
-export const handle: Handle = async ({ event, resolve }) => {
-  const { db, files, storage } = await createServices({
-    base: STORAGE_ROOT,
-  });
-
-  event.locals.db = db;
-  event.locals.storage = storage;
-  event.locals.files = files;
-
-  return await resolve(event);
-};
+export const handle = createHandle({ storageRoot: STORAGE_ROOT });

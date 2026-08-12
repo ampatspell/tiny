@@ -1,8 +1,8 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { Database } from "@ampatspell/tiny/server/database";
-import type { Files } from "@ampatspell/tiny/server/files";
-import type { Storage } from "@ampatspell/tiny/server/storage";
+import type { Database } from '@ampatspell/tiny/server/database';
+import type { Files } from '@ampatspell/tiny/server/files';
+import type { Storage } from '@ampatspell/tiny/server/storage';
 
 // for information about these interfaces
 declare global {

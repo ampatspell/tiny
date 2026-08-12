@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>cave</title>
+  <title>tiny</title>
 </svelte:head>
 
 <Dark>
