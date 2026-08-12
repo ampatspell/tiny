@@ -1,10 +1,9 @@
 import { join, resolve } from 'node:path';
 import { loadPackageJSON } from './utils.ts';
-import { readFile } from 'node:fs/promises';
-import { parseEnv } from 'node:util';
 import { exists } from 'fs-extra';
 import { log } from '@clack/prompts';
 import { connectionStringForStorageRoot, createDatabase, type Database } from '../server/database/database.ts';
+import { loadEnvFile } from 'node:process';
 
 type ProjectImpl = {
   isTiny: boolean;
@@ -40,19 +39,16 @@ export const createConsumerProjectImpl = async (opts: { root: string }): Promise
 const loadEnv = async (root: string) => {
   const path = join(root, '.env');
   if (await exists(path)) {
-    const env = parseEnv(await readFile(path, 'utf-8'));
-    const storageRoot = env.STORAGE_ROOT;
-    if (storageRoot) {
-      return {
-        storageRoot: resolve(join(root, storageRoot)),
-      };
-    }
-    log.error(`STORAGE_ROOT is required in .env`);
-    process.exit(1);
-  } else {
-    log.error(`.env file is required ${process.env.STORAGE_ROOT}`);
-    process.exit(1);
+    loadEnvFile(path);
   }
+  const storageRoot = process.env.STORAGE_ROOT;
+  if (storageRoot) {
+    return {
+      storageRoot: resolve(join(root, storageRoot)),
+    };
+  }
+  log.error(`STORAGE_ROOT environment variable is required`);
+  process.exit(1);
 };
 
 export const createProject = async (opts: { impl: ProjectImpl }) => {
