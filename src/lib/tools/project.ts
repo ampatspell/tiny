@@ -50,7 +50,7 @@ const loadEnv = async (root: string) => {
     log.error(`STORAGE_ROOT is required in .env`);
     process.exit(1);
   } else {
-    log.error(`.env file is required`);
+    log.error(`.env file is required ${process.env.STORAGE_ROOT}`);
     process.exit(1);
   }
 };
