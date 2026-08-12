@@ -6,13 +6,12 @@ RUN apk update
 RUN apk add --no-cache coreutils
 
 ARG GITHUB_TOKEN
+ARG STORAGE_ROOT
 
 COPY package*.json .
 COPY .npmrc .
 RUN npm ci
 COPY . .
-
-ENV STORAGE_ROOT
 
 RUN npm run build
 RUN npm prune --production
