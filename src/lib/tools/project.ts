@@ -1,4 +1,4 @@
-import { join, resolve } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { loadPackageJSON } from './utils.ts';
 import { exists } from 'fs-extra';
 import { log } from '@clack/prompts';
@@ -44,7 +44,7 @@ const loadEnv = async (root: string) => {
   const storageRoot = process.env.STORAGE_ROOT;
   if (storageRoot) {
     return {
-      storageRoot: resolve(join(root, storageRoot)),
+      storageRoot: resolve(relative(root, storageRoot)),
     };
   }
   log.error(`STORAGE_ROOT environment variable is required`);
