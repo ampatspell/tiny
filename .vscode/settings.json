@@ -1,4 +1,11 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["codegen", "introspector", "kysely", "Tabler", "tinyexec"]
+  "cSpell.words": [
+    "codegen",
+    "introspector",
+    "kysely",
+    "runed",
+    "Tabler",
+    "tinyexec"
+  ]
 }

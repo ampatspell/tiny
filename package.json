@@ -123,6 +123,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^1.7.0",
+    "@floating-ui/dom": "^1.8.0",
     "better-sqlite3": "^12.11.1",
     "date-fns": "^4.4.0",
     "dedent": "^1.7.2",
@@ -132,6 +133,7 @@
     "kysely-codegen": "^0.20.0",
     "launch-editor": "^2.14.1",
     "resolve-path": "^1.4.0",
+    "runed": "^0.37.1",
     "tinyexec": "^1.3.0",
     "tsx": "^4.23.12",
     "valibot": "^1.4.2"
