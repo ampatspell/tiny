@@ -7,16 +7,28 @@ export type CreateServicesOptions = {
   base: string;
 };
 
-export const createServices = async (opts: CreateServicesOptions) => {
+const _createServices = async (opts: CreateServicesOptions) => {
   const { base } = opts;
   const [db, storage] = await Promise.all([
     createDatabase({ connectionString: connectionStringForStorageRoot(base), verbose: true }),
     createStorage({ base: join(base, 'storage') }),
   ]);
   const files = await createFiles({ db, storage });
+
   return {
     db,
     storage,
     files,
   };
+};
+
+type Services = Awaited<ReturnType<typeof _createServices>>;
+
+let promise: Promise<Services>;
+
+export const createServices = async (opts: CreateServicesOptions) => {
+  if (!promise) {
+    promise = _createServices(opts);
+  }
+  return promise;
 };

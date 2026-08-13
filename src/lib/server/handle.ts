@@ -6,7 +6,7 @@ import type { Storage } from './storage.ts';
 import type { Database } from './database/database.ts';
 import type { DB } from './database/schema.js';
 
-export const createHandle = ({ storageRoot }: { storageRoot: string }): Handle => {
+export const createHandle = ({ storageRoot = '.local' }: { storageRoot: string | undefined }): Handle => {
   return async ({ event, resolve }) => {
     const { db, files, storage } = await createServices({
       base: storageRoot,
