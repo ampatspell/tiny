@@ -14,7 +14,9 @@
 
   let onSave = async () => {
     let data = props.pack();
-    await updateIndex(data);
+    if (data) {
+      await updateIndex(data);
+    }
   };
 </script>
 

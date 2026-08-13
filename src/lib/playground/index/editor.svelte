@@ -2,10 +2,18 @@
   import Files from '$lib/components/files.svelte';
   import Input from '$lib/components/input.svelte';
   import { getIndex, updateIndex, updateIndexFile } from '$lib/playground/index/index.remote.js';
+  import { usePropertiesContext } from '$lib/properties/context.svelte.js';
+  import { useDataProperties, DataProperty } from '$lib/properties/data.svelte.js';
   import { run } from '$lib/utils.js';
   import BusyButton from '../busy-button.svelte';
 
+  usePropertiesContext();
   let index = $derived(await getIndex());
+  let props = useDataProperties(() => index);
+
+  let title = props.property('title');
+  let description = props.property('description');
+
   let file = $state<File>();
   let onFiles = (files: File[]) => {
     file = files[0];
@@ -13,20 +21,35 @@
 
   let onSave = async () => {
     await Promise.all([
-      updateIndex({ title: index.title }),
+      run(async () => {
+        let data = props.pack();
+        if (data) {
+          await updateIndex(data);
+        }
+      }),
       run(async () => {
         if (file) {
           await updateIndexFile({ file });
+          file = undefined;
         }
       }),
     ]);
   };
 </script>
 
-<div class="editor">
+<!-- eslint-disable-next-line @typescript-eslint/no-explicit-any -->
+{#snippet input(prop: DataProperty<any, string>)}
   <div class="row">
-    <Input value={index.title} onInput={(value) => (index.title = value)} />
+    <div class="label">{prop.key}</div>
+    <div class="input">
+      <Input value={prop.value} onInput={prop.update} />
+    </div>
   </div>
+{/snippet}
+
+<div class="editor">
+  {@render input(title)}
+  {@render input(description)}
   <div class="row">
     <Files isMultiple={false} {onFiles} />
   </div>
@@ -42,9 +65,12 @@
     gap: 10px;
     > .row {
       display: flex;
-      flex-direction: row;
-      gap: 10px;
+      flex-direction: column;
+      gap: 2px;
       max-width: 300px;
+      > .label {
+        font-size: var(--dark-font-size-small);
+      }
     }
   }
 </style>

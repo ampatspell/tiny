@@ -46,6 +46,9 @@ export class DataProperties<D extends Record<string, unknown> = Record<string, u
         data[prop.key] = prop.value;
       }
     });
+    if (Object.keys(data).length === 0) {
+      return undefined;
+    }
     return data as Partial<D>;
   };
 }
