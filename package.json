@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && npm run prepack",
+    "build": "vite build && npm run prepack && npm run build:cli",
+    "build:cli": "vite build -c vite.cli.config.ts --mode production && chmod +x ./.cli/cli.js",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "prepack": "svelte-kit sync && svelte-package && publint",
@@ -13,10 +14,10 @@
     "format": "prettier --write .",
     "flc": "npm run format && npm run check && npm run lint",
     "start": "npx tsx src/lib/tools/cli.ts migrate-to-latest && node build",
-    "cli": "npx tsx src/lib/tools/cli.ts"
+    "cli": "./.cli/cli.js"
   },
   "bin": {
-    "tiny": "src/lib/tools/cli.ts"
+    "tiny": ".cli/cli.js"
   },
   "files": [
     "dist",

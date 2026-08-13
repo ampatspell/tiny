@@ -1,4 +1,3 @@
-#! /usr/bin/env npx tsx
 import { isCancel, outro, select } from '@clack/prompts';
 import { createTools } from './tools.ts';
 import { parseArgs } from 'node:util';
