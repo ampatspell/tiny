@@ -1,5 +1,6 @@
 services:
   tiny:
+    container_name: tiny
     build: .
     volumes:
       - storage:/storage
