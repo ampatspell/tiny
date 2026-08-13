@@ -12,7 +12,8 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "flc": "npm run format && npm run check && npm run lint",
-    "start": "npx tsx src/lib/tools/cli.ts migrate-to-latest && node build"
+    "start": "npx tsx src/lib/tools/cli.ts migrate-to-latest && node build",
+    "cli": "npx tsx src/lib/tools/cli.ts"
   },
   "bin": {
     "tiny": "src/lib/tools/cli.ts"

@@ -1,26 +1,31 @@
 <script lang="ts">
-  import Button from '$lib/components/button.svelte';
   import Input from '$lib/components/input.svelte';
-  import { usePropertiesContext } from './context.svelte.ts';
-  import { useProperty } from './property.svelte.ts';
+  import BusyButton from '$lib/playground/busy-button.svelte';
+  import { getIndex, updateIndex } from '$lib/playground/index/index.remote.js';
+  import { usePropertiesContext } from '$lib/properties/context.svelte.js';
+  import { useDataProperties } from '$lib/properties/data.svelte.js';
 
-  const context = usePropertiesContext();
+  let context = usePropertiesContext();
+  let index = $derived(await getIndex());
+  let props = useDataProperties(() => index);
 
-  const title = useProperty<string>({
-    value: 'Hello',
-    validate: (value: string) => {
-      if (!value.trim()) {
-        return 'Is required';
-      }
-    },
-  });
+  let title = props.property('title');
+  let description = props.property('description');
+
+  let onSave = async () => {
+    let data = props.pack();
+    await updateIndex(data);
+  };
 </script>
 
 <div class="page">
-  <div class="row"><Input value={title.value} onInput={title.update} /></div>
-  <div class="row">value={title.value} isDirty={title.isDirty} isValid={title.isValid} error={title.error}</div>
-  <div class="row">isTouched={title.isTouched} isValid={title.touched.isValid} error={title.touched.error}</div>
-  <div class="row"><Button label="Touch" onClick={() => context.touch()} /></div>
+  <div class="row"><Input value={title.value} onInput={(value) => title.update(value)} /></div>
+  <div class="row"><Input value={description.value} onInput={(value) => description.update(value)} /></div>
+  <div class="row">{title.isDirty}</div>
+  <div class="row">isTouched={context.isTouched} isDirty={context.isDirty} isValid={context.touched.isValid}</div>
+  <div class="row">
+    <BusyButton label="Save" onClick={onSave} />
+  </div>
 </div>
 
 <style lang="scss">

@@ -17,10 +17,12 @@ export class Properties {
   }
 
   readonly all = $derived.by(() => this._all());
+  readonly dirty = $derived.by(() => this.all.filter((prop) => prop.isDirty));
   readonly valid = $derived.by(() => this.all.filter((prop) => prop.isValid));
   readonly errored = $derived.by(() => this.all.filter((prop) => !prop.isValid));
 
   readonly isValid = $derived.by(() => this.errored.length === 0);
+  readonly isDirty = $derived.by(() => this.dirty.length > 0);
 }
 
 export class TouchedProperties {
@@ -69,6 +71,7 @@ export class PropertiesContext {
 
   readonly errors = $derived.by(() => this.properties.errored.map((p) => p.error).filter(isTruthy));
   readonly isValid = $derived.by(() => this.properties.isValid);
+  readonly isDirty = $derived.by(() => this.properties.isDirty);
 
   touch = () => {
     this.isTouched = true;

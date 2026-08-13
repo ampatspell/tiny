@@ -11,8 +11,13 @@ export interface File {
 }
 
 export interface Index {
+  backgroundColor: string;
   backgroundId: string | null;
+  description: string;
   id: string;
+  indexBackgroundColor: string;
+  indexTextColor: string;
+  textColor: string;
   title: string;
 }
 

@@ -1,6 +1,6 @@
 import { extract, onCleanup, type MaybeGetter } from 'runed';
-import { untrack } from 'svelte';
 import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
+import { untrack } from 'svelte';
 
 export class TouchedProperty {
   private readonly _property: Property;
@@ -44,6 +44,7 @@ export class Property<T = any> {
         untrack(() => this.update(external));
       }
     });
+
     this.context = usePropertiesContext();
     const cancel = this.context._register(this);
     onCleanup(() => cancel());
@@ -84,8 +85,9 @@ export class Property<T = any> {
 
   readonly isDirty = $derived.by(() => this.current !== this.external);
   readonly isValid = $derived.by(() => !this.error);
+
   readonly isTouched = $derived.by(() => this.context.isTouched);
   readonly touched = new TouchedProperty(this);
 }
 
-export const useProperty = <T>(opts: UsePropertyOptions<T>) => new Property(opts);
+export const useProperty = <T>(opts: UsePropertyOptions<T>) => new Property<T>(opts);
