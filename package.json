@@ -129,7 +129,6 @@
     "better-sqlite3": "^12.11.1",
     "date-fns": "^4.4.0",
     "dedent": "^1.7.2",
-    "fast-folder-size": "^2.4.0",
     "fs-extra": "^11.4.0",
     "kysely": "^0.29.4",
     "kysely-codegen": "^0.20.0",
