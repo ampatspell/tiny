@@ -1,23 +1,39 @@
-import { extract, type MaybeGetter } from 'runed';
+import { extract, onCleanup, type MaybeGetter } from 'runed';
 import { untrack } from 'svelte';
+import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
+
+export class TouchedProperty {
+  private readonly _property: Property;
+
+  constructor(property: Property) {
+    this._property = property;
+  }
+
+  private readonly isTouched = $derived.by(() => this._property.context.isTouched);
+
+  readonly isValid = $derived.by(() => (this.isTouched ? this._property.isValid : true));
+  readonly error = $derived.by(() => (this.isTouched ? this._property.error : undefined));
+}
 
 export type PropertyUpdatePair<T> = { before: T; after: T };
 
 export type UsePropertyOptions<T> = {
-  value: MaybeGetter<T>;
-  passive?: MaybeGetter<boolean>;
-  willUpdate?: (opts: PropertyUpdatePair<T>) => void;
-  didUpdate?: (opts: PropertyUpdatePair<T>) => void;
-  onRollback?: () => void;
-  validate?: (value: T) => string | boolean | undefined;
+  readonly value: MaybeGetter<T>;
+  readonly passive?: MaybeGetter<boolean>;
+  readonly willUpdate?: (opts: PropertyUpdatePair<T>) => void;
+  readonly didUpdate?: (opts: PropertyUpdatePair<T>) => void;
+  readonly onRollback?: () => void;
+  readonly validate?: (value: T) => string | boolean | undefined;
 };
 
-export class Property<T> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export class Property<T = any> {
   private readonly _opts: UsePropertyOptions<T>;
   readonly passive = $derived.by(() => extract(this._opts.passive, false));
   private readonly external = $derived.by(() => extract(this._opts.value));
   private current: T;
   readonly value = $derived.by(() => this.current);
+  readonly context: PropertiesContext;
 
   constructor(opts: UsePropertyOptions<T>) {
     this._opts = opts;
@@ -28,9 +44,12 @@ export class Property<T> {
         untrack(() => this.update(external));
       }
     });
+    this.context = usePropertiesContext();
+    const cancel = this.context._register(this);
+    onCleanup(() => cancel());
   }
 
-  update(after: T) {
+  readonly update = (after: T) => {
     const before = this.current;
     if (before !== after) {
       const pair = { before, after };
@@ -38,11 +57,11 @@ export class Property<T> {
       this.current = after;
       this._opts.didUpdate?.(pair);
     }
-  }
+  };
 
-  rollback() {
+  readonly rollback = () => {
     this.update(this.external);
-  }
+  };
 
   readonly error = $derived.by(() => {
     const fn = this._opts.validate;
@@ -65,6 +84,8 @@ export class Property<T> {
 
   readonly isDirty = $derived.by(() => this.current !== this.external);
   readonly isValid = $derived.by(() => !this.error);
+  readonly isTouched = $derived.by(() => this.context.isTouched);
+  readonly touched = new TouchedProperty(this);
 }
 
 export const useProperty = <T>(opts: UsePropertyOptions<T>) => new Property(opts);
