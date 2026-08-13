@@ -38,10 +38,7 @@
     initial = value;
   };
 
-  let onblur = (e: Event) => {
-    let input = targetAsInput(e);
-    input.value = value ?? '';
-    initial = undefined;
+  let onblur = () => {
     onBlur?.();
   };
 

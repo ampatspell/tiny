@@ -5,6 +5,8 @@
   import Dark from '$lib/components/dark.svelte';
   import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
+  import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
+  import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
 
   let { children } = $props();
 
@@ -16,6 +18,14 @@
     {
       icon: TablerAppWindow,
       route: resolve('/index'),
+    },
+    {
+      icon: TablerFileText,
+      route: resolve('/properties'),
+    },
+    {
+      icon: TablerBalloon,
+      route: resolve('/floating'),
     },
   ];
 </script>
