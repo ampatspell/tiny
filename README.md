@@ -1,6 +1,1 @@
 # Tiny
-
-```
-STORAGE_ROOT=/data
-BODY_SIZE_LIMIT=134217728
-```
