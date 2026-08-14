@@ -1,13 +1,10 @@
 <script lang="ts">
-  import Header from '$lib/components/backend/header/header.svelte';
-  import Title from '$lib/components/backend/header/title.svelte';
+  import Icon from '$lib/components/icon.svelte';
+  import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
 </script>
 
 <div class="page">
-  <Header>
-    <Title label="Nothing selected" />
-  </Header>
-  <div class="content"></div>
+  <Icon icon={TablerFileText} />
 </div>
 
 <style lang="scss">
@@ -15,5 +12,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 </style>
