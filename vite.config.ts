@@ -5,13 +5,11 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [
     sveltekit({
+      adapter: adapter(),
       compilerOptions: {
-        runes: ({ filename }) => {
-          return filename.split(/[/\\]/).includes('node_modules') ? undefined : true;
-        },
+        runes: true,
         experimental: { async: true },
       },
-      adapter: adapter(),
       experimental: {
         explicitEnvironmentVariables: true,
         handleRenderingErrors: true,

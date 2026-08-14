@@ -1,7 +1,7 @@
 <script lang="ts">
   import Files from '$lib/components/files.svelte';
   import Input from '$lib/components/input.svelte';
-  import { getIndex, updateIndex, updateIndexFile } from '$lib/playground/index/index.remote.js';
+  import { getIndex, updateIndex, updateIndexFile } from './index.remote.js';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
   import { useDataProperties, DataProperty } from '$lib/properties/data.svelte.js';
   import { run } from '$lib/utils.js';
