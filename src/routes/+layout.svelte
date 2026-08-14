@@ -21,7 +21,7 @@
     },
     {
       icon: TablerFileText,
-      route: resolve('/properties'),
+      route: resolve('/list'),
     },
     {
       icon: TablerBalloon,
