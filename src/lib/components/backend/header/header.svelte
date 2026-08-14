@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { children, right }: { children?: Snippet; right?: Snippet } = $props();
+  let { children, end }: { children?: Snippet; end?: Snippet } = $props();
 </script>
 
 <div class="header">
   <div class="section left">{@render children?.()}</div>
-  {#if right}
-    <div class="section right">{@render right?.()}</div>
+  {#if end}
+    <div class="section right">{@render end?.()}</div>
   {/if}
 </div>
 

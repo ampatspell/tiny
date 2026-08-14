@@ -1,14 +1,16 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { top }: { top?: Snippet } = $props();
+  let { top, children }: { top?: Snippet; children?: Snippet } = $props();
 </script>
 
 <div class="list">
   {@render top?.()}
   <div class="content">
     <div class="overflow">
-      <div class="content">list</div>
+      <div class="content">
+        {@render children?.()}
+      </div>
     </div>
   </div>
 </div>
