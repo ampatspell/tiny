@@ -9,6 +9,7 @@ import { generateMigrationFile } from './generate-migrations-file.ts';
 import { generateSchemaFromDatabase } from './generate-schema-from-database.ts';
 import { migrateDatabaseToLatest } from './migrate-database-to-latest.ts';
 import { linkTinyToProject } from './link-tiny-to-project.ts';
+import { bootstrapProject } from './bootstrap-project.ts';
 
 const findRoot = async (current: string) => {
   if (await exists(join(current, 'package.json'))) {
@@ -69,7 +70,7 @@ export const createTools = async (opts: { cwd: string }) => {
 
   log.info([project.name, project.root].join('\n'));
 
-  log.info(['.env', `STORAGE_ROOT = ${project.env.storageRoot}`].join('\n'));
+  log.info(['.env', `STORAGE_ROOT=${project.env.storageRoot}`].join('\n'));
 
   if (!project.isTiny) {
     await copyMigrations(tiny, project);
@@ -79,6 +80,7 @@ export const createTools = async (opts: { cwd: string }) => {
     generateNewMigrationFile: () => generateMigrationFile(project),
     generateSchemaFromDatabase: () => generateSchemaFromDatabase(project),
     migrateDatabaseToLatest: () => migrateDatabaseToLatest(project),
+    bootstrapProject: () => bootstrapProject(project),
     linkTinyToProject: () => linkTinyToProject(tiny, project),
   };
 
