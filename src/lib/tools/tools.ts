@@ -69,7 +69,7 @@ export const createTools = async (opts: { cwd: string }) => {
 
   log.info([project.name, project.root].join('\n'));
 
-  log.info(['.env', `STORAGE_ROOT = ${project.env.storageRoot}`].join('\n'));
+  log.info(['.env', `STORAGE_ROOT=${project.env.storageRoot}`].join('\n'));
 
   if (!project.isTiny) {
     await copyMigrations(tiny, project);
