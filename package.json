@@ -1,6 +1,6 @@
 {
   "name": "@ampatspell/tiny",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run prepack && npm run build:cli",
@@ -14,7 +14,10 @@
     "format": "prettier --write .",
     "flc": "npm run format && npm run check && npm run lint",
     "start": "npx tsx src/lib/tools/cli.ts migrate-to-latest && node build",
-    "cli": "./.cli/cli.js"
+    "cli": "./.cli/cli.js",
+    "tags": "git push --follow-tags",
+    "minor": "npm version minor; npm run tags",
+    "patch": "npm version patch; npm run tags"
   },
   "bin": {
     "tiny": ".cli/cli.js"

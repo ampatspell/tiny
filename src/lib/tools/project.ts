@@ -53,7 +53,7 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
   const { impl } = opts;
   const { root, isTiny, migrationsRoot, schemaRoot } = impl;
   const pkg = await loadPackageJSON(root);
-  const env = !isTiny ? await loadEnv(root) : undefined;
+  const env = await loadEnv(root);
   const name = pkg.name as string;
   const storageRoot = env?.storageRoot;
 

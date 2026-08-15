@@ -8,8 +8,8 @@ import dedent from 'dedent';
 export const bootstrapProject = async (project: Project) => {
   const root = project.root;
   {
-    log.step('Install kysely and valibot');
-    await x('npm', ['install', 'valibot', 'kysely', '--save']);
+    log.step('Install kysely, valibot and better-sqlite3');
+    await x('npm', ['install', 'valibot', 'kysely', 'better-sqlite3', '--save']);
   }
   {
     log.step('Install sass-embedded and @sveltejs/adapter-node');
