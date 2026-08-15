@@ -12,8 +12,8 @@ export const bootstrapProject = async (project: Project) => {
     await x('npm', ['install', 'valibot', 'kysely', '--save']);
   }
   {
-    log.step('Install sass-embedded');
-    await x('npm', ['install', 'sass-embedded', '--save-dev']);
+    log.step('Install sass-embedded and @sveltejs/adapter-node');
+    await x('npm', ['install', 'sass-embedded', '@sveltejs/adapter-node', '--save-dev']);
   }
   {
     log.step('Add .local to .gitignore');
@@ -21,6 +21,14 @@ export const bootstrapProject = async (project: Project) => {
     let string = await readFile(path, 'utf-8');
     string = [string, '/.local', ''].join('\n');
     await writeFile(path, string);
+  }
+  {
+    log.step('Update package.json');
+    const path = join(root, 'package.json');
+    const json = JSON.parse(await readFile(path, 'utf-8'));
+    json.scripts.flc = 'npm run format && npm run check && npm run lint';
+    json.scripts.start = 'tiny migrate-to-latest && node build';
+    await writeFile(path, JSON.stringify(json, null, 2));
   }
 
   const write = async ({ filename, content }: { filename: string; content: string }) => {
@@ -36,6 +44,85 @@ export const bootstrapProject = async (project: Project) => {
       {
         "editor.formatOnSave": true,
       }
+    `,
+  });
+
+  await write({
+    filename: 'Dockerfile',
+    content: dedent`
+      FROM node:24-alpine
+
+      WORKDIR /app
+
+      ARG GITHUB_TOKEN
+
+      RUN apk update
+      RUN apk add --no-cache coreutils curl
+
+      COPY package*.json .
+      COPY .npmrc .
+      RUN npm ci
+      COPY . .
+
+      RUN npm run build
+
+      EXPOSE 3000
+
+      ENV NODE_ENV=production
+      CMD [ "npm", "start" ]
+
+      HEALTHCHECK \
+        --interval=1m \
+        --timeout=10s \
+        --start-period=5s \
+        --retries=10 \
+        CMD curl -f http://localhost:3000 || exit 1
+    `,
+  });
+
+  await write({
+    filename: 'vite.config.ts',
+    content: dedent`
+      import adapter from '@sveltejs/adapter-node';
+      import { sveltekit } from '@sveltejs/kit/vite';
+      import { defineConfig } from 'vite';
+
+      export default defineConfig({
+        plugins: [
+          sveltekit({
+            compilerOptions: {
+              runes: true,
+              experimental: {
+                async: true,
+              },
+            },
+            adapter: adapter(),
+            experimental: {
+              explicitEnvironmentVariables: true,
+              handleRenderingErrors: true,
+              remoteFunctions: true,
+              sendWarningsToBrowser: true
+            }
+          })
+        ]
+      });
+    `,
+  });
+
+  await write({
+    filename: 'prettier.config.js',
+    content: dedent`
+      /** @type {import("prettier").Config} */
+      const config = {
+        useTabs: false,
+        singleQuote: true,
+        trailingComma: 'all',
+        printWidth: 120,
+        plugins: ['prettier-plugin-svelte'],
+        overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }]
+      };
+
+      export default config;
     `,
   });
 
