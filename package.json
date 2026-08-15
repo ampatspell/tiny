@@ -16,8 +16,8 @@
     "start": "npx tsx src/lib/tools/cli.ts migrate-to-latest && node build",
     "cli": "./.cli/cli.js",
     "tags": "git push --follow-tags",
-    "minor": "npm version minor; npm run tags",
-    "patch": "npm version patch; npm run tags"
+    "minor": "npm version minor && npm run tags",
+    "patch": "npm version patch && npm run tags"
   },
   "bin": {
     "tiny": ".cli/cli.js"
