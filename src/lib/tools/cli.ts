@@ -11,7 +11,7 @@ const cwd = process.cwd();
 
 const tools = await createTools({ cwd });
 
-const tasks = ['add-migration', 'generate-schema', 'migrate-to-latest', 'link-tiny', 'bootstrap-project'] as const;
+const tasks = ['add-migration', 'generate-schema', 'migrate-to-latest', 'bootstrap-project'] as const;
 type Task = symbol | (typeof tasks)[number];
 
 if (tools) {
@@ -27,7 +27,6 @@ if (tools) {
         { value: 'migrate-to-latest', label: 'Migrate database to the latest version' },
         { value: 'generate-schema', label: 'Generate schema.d.ts from current database state' },
         { value: 'bootstrap-project', label: 'Bootstrap this project', disabled: tools.project.isTiny },
-        { value: 'link-tiny', label: 'Link tiny to this project', disabled: tools.project.isTiny },
       ],
     });
   }
@@ -41,8 +40,6 @@ if (tools) {
     await tools.commands.migrateDatabaseToLatest();
   } else if (task === 'bootstrap-project') {
     await tools.commands.bootstrapProject();
-  } else if (task === 'link-tiny') {
-    await tools.commands.linkTinyToProject();
   } else {
     outro(`Unknown command '${String(task)}'. Valid ones are ${tasks.join(', ')}.`);
     process.exit(1);

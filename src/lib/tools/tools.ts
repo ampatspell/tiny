@@ -8,7 +8,6 @@ import { createConsumerProjectImpl, createProject, createTinyProjectImpl, type P
 import { generateMigrationFile } from './generate-migrations-file.ts';
 import { generateSchemaFromDatabase } from './generate-schema-from-database.ts';
 import { migrateDatabaseToLatest } from './migrate-database-to-latest.ts';
-import { linkTinyToProject } from './link-tiny-to-project.ts';
 import { bootstrapProject } from './bootstrap-project.ts';
 
 const findRoot = async (current: string) => {
@@ -70,7 +69,9 @@ export const createTools = async (opts: { cwd: string }) => {
 
   log.info([project.name, project.root].join('\n'));
 
-  log.info(['.env', `STORAGE_ROOT=${project.env.storageRoot}`].join('\n'));
+  if (project.env) {
+    log.info(['.env', `STORAGE_ROOT=${project.env.storageRoot}`].join('\n'));
+  }
 
   if (!project.isTiny) {
     await copyMigrations(tiny, project);
@@ -81,7 +82,6 @@ export const createTools = async (opts: { cwd: string }) => {
     generateSchemaFromDatabase: () => generateSchemaFromDatabase(project),
     migrateDatabaseToLatest: () => migrateDatabaseToLatest(project),
     bootstrapProject: () => bootstrapProject(project),
-    linkTinyToProject: () => linkTinyToProject(tiny, project),
   };
 
   return {

@@ -47,24 +47,28 @@ const loadEnv = async (root: string) => {
       storageRoot: resolve(relative(root, storageRoot)),
     };
   }
-  log.error(`STORAGE_ROOT environment variable is required`);
-  process.exit(1);
 };
 
 export const createProject = async (opts: { impl: ProjectImpl }) => {
   const { impl } = opts;
   const { root, isTiny, migrationsRoot, schemaRoot } = impl;
   const pkg = await loadPackageJSON(root);
-  const env = await loadEnv(root);
+  const env = !isTiny ? await loadEnv(root) : undefined;
   const name = pkg.name as string;
-  const storageRoot = env.storageRoot;
+  const storageRoot = env?.storageRoot;
 
-  const connectionString = connectionStringForStorageRoot(storageRoot);
+  const connectionString = () => {
+    if (!storageRoot) {
+      log.error(`STORAGE_ROOT environment variable is required`);
+      process.exit(1);
+    }
+    return connectionStringForStorageRoot(storageRoot);
+  };
 
   const database = {
     connectionString,
     with: async <T>(cb: (database: Database) => Promise<T>) => {
-      const db = await createDatabase({ connectionString });
+      const db = await createDatabase({ connectionString: connectionString() });
       try {
         return await cb(db);
       } finally {
