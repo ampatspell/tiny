@@ -88,6 +88,7 @@
     --color: #fff;
     --background: #333;
     position: fixed;
+    z-index: 1;
     max-width: 320px;
     padding: 4px 8px;
     color: var(--color);
