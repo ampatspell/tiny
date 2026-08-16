@@ -1,7 +1,7 @@
 import { isCancel, outro, select } from '@clack/prompts';
 import { createTools } from './tools.ts';
 import { parseArgs } from 'node:util';
-import { run } from '../utils.js';
+import { run } from '../utils/utils.ts';
 
 process.on('SIGINT', () => {
   process.exit(1);

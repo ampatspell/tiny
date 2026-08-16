@@ -1,4 +1,3 @@
-import { isTruthy } from '../utils.ts';
 import { format } from 'date-fns';
 import dedent from 'dedent';
 import launchEditor from 'launch-editor';
@@ -6,6 +5,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { Project } from './project.ts';
 import { outro } from '@clack/prompts';
+import { isTruthy } from '../utils/array.ts';
 
 const template = dedent`
   /* eslint-disable @typescript-eslint/no-explicit-any */

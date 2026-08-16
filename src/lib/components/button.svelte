@@ -12,7 +12,6 @@
     onClick,
     children,
     type: _type,
-    element = $bindable(),
   }: {
     isDisabled?: boolean;
     isBusy?: boolean;
@@ -20,7 +19,6 @@
     label?: string;
     children?: Snippet;
     type?: ButtonType;
-    element?: HTMLButtonElement;
   } = $props();
 
   let onclick = (e: MouseEvent) => {
@@ -31,6 +29,9 @@
   let isDisabled = $derived(_isDisabled ?? false);
   let isBusyOrDisabled = $derived(isBusy || isDisabled);
   let type = $derived(_type ?? 'regular');
+
+  let element = $state<HTMLButtonElement>();
+  export { element };
 </script>
 
 <button

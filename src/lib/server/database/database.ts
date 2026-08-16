@@ -2,7 +2,7 @@ import { CamelCasePlugin, Kysely, SqliteDialect } from 'kysely';
 import SQLite from 'better-sqlite3';
 import { dirname, join } from 'node:path';
 import { mkdir } from 'node:fs/promises';
-import { round } from '../../utils.js';
+import { round } from '../../utils/utils.ts';
 import type { DB } from './schema.js';
 
 export type CreateDatabaseOptions = {

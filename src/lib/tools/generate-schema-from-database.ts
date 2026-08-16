@@ -5,7 +5,7 @@ import { writeFile } from 'node:fs/promises';
 import { outro } from '@clack/prompts';
 
 export const generateSchemaFromDatabase = async (project: Project) => {
-  const connectionString = project.database.connectionString;
+  const connectionString = project.database.connectionString();
   const dialect = new SqliteDialect();
 
   const db = await dialect.introspector.connect({
