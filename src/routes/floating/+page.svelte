@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '$lib/components/button.svelte';
   import Card from '$lib/components/card.svelte';
-  import { useFloaters } from './floaters.svelte.ts';
+  import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
 
   let floaters = useFloaters();
 
