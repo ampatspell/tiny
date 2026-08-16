@@ -231,5 +231,10 @@ export const bootstrapProject = async (project: Project) => {
     `,
   });
 
-  outro('Base setup and demo was added');
+  {
+    log.step('Delete .svelte-kit');
+    await x('rm', ['-rf', join(root, '.svelte-kit')]);
+  }
+
+  outro('Alright, done');
 };
