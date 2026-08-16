@@ -1,6 +1,7 @@
 {
   "name": "@ampatspell/tiny",
   "version": "0.1.2",
+  "license": "MIT",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run prepack && npm run build:cli",
