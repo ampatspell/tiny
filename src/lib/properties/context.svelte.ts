@@ -1,6 +1,6 @@
 import { getContext, hasContext, setContext } from 'svelte';
 import type { Property, PropertyUpdatePair } from './property.svelte.ts';
-import { addObject, isTruthy, removeObject } from '$lib/utils.js';
+import { addObject, isTruthy, removeObject } from '$lib/utils/array.js';
 
 export type UpdateParams<T> = [property: Property<T>, pair: PropertyUpdatePair<T>];
 

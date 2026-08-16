@@ -7,6 +7,8 @@
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
   import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
   import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
+  import Floaters from './floating/floaters.svelte';
+  import { createFloaters } from './floating/floaters.svelte.ts';
 
   let { children } = $props();
 
@@ -28,11 +30,15 @@
       route: resolve('/floating'),
     },
   ];
+
+  const floaters = createFloaters();
 </script>
 
 <svelte:head>
   <title>tiny</title>
 </svelte:head>
+
+<Floaters {floaters} />
 
 <Dark>
   <Backend {items}>

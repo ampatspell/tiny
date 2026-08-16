@@ -39,9 +39,21 @@
       "types": "./dist/index.d.ts",
       "svelte": "./dist/index.js"
     },
-    "./utils": {
-      "types": "./dist/utils.d.ts",
-      "svelte": "./dist/utils.js"
+    "./utils/array": {
+      "types": "./dist/utils/array.d.ts",
+      "svelte": "./dist/utils/array.js"
+    },
+    "./utils/object": {
+      "types": "./dist/utils/object.d.ts",
+      "svelte": "./dist/utils/object.js"
+    },
+    "./utils/promise": {
+      "types": "./dist/utils/promise.d.ts",
+      "svelte": "./dist/utils/promise.js"
+    },
+    "./utils/utils": {
+      "types": "./dist/utils/utils.d.ts",
+      "svelte": "./dist/utils/utils.js"
     },
     "./server/utils": {
       "types": "./dist/server/utils.d.ts",
