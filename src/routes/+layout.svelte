@@ -3,12 +3,12 @@
   import Backend from '$lib/components/backend/backend.svelte';
   import type { NavigationItems } from '$lib/components/backend/navigation.svelte';
   import Dark from '$lib/components/dark.svelte';
+  import Floaters from '$lib/components/floating/floaters.svelte';
+  import { createFloaters } from '$lib/components/floating/floaters.svelte.js';
   import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
   import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
   import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
-  import Floaters from './floating/floaters.svelte';
-  import { createFloaters } from './floating/floaters.svelte.ts';
 
   let { children } = $props();
 
