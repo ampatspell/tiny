@@ -3,7 +3,6 @@ import SQLite from 'better-sqlite3';
 import { dirname, join } from 'node:path';
 import { mkdir } from 'node:fs/promises';
 import { round } from '../../utils/utils.ts';
-import type { DB } from './schema.js';
 
 export type CreateDatabaseOptions = {
   connectionString: string;
@@ -12,7 +11,7 @@ export type CreateDatabaseOptions = {
 
 export const connectionStringForStorageRoot = (root: string) => join(root, 'tiny.db');
 
-export const createDatabase = async <D extends DB = DB>(opts: CreateDatabaseOptions) => {
+export const createDatabase = async <D>(opts: CreateDatabaseOptions) => {
   const { connectionString, verbose } = opts;
   await mkdir(dirname(connectionString), { recursive: true });
 
@@ -38,4 +37,4 @@ export const createDatabase = async <D extends DB = DB>(opts: CreateDatabaseOpti
   return db;
 };
 
-export type Database<D extends DB = DB> = Awaited<ReturnType<typeof createDatabase<D>>>;
+export type Database<D> = Awaited<ReturnType<typeof createDatabase<D>>>;

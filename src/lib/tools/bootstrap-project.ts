@@ -159,6 +159,18 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
+    filename: 'src/lib/services.ts',
+    content: dedent`
+      import { createServiceGetters } from '@ampatspell/tiny/server/handle';
+      import type { DB } from './schema';
+
+      const { getDatabase, getFiles, getStorage } = createServiceGetters<DB>();
+
+      export { getDatabase, getFiles, getStorage };
+    `,
+  });
+
+  await write({
     filename: 'src/routes/files/[id]/+server.ts',
     content: dedent`
       import { getFiles } from '@ampatspell/tiny/server/handle';
@@ -173,7 +185,7 @@ export const bootstrapProject = async (project: Project) => {
     content: dedent`
       import { query } from '$app/server';
       import { sql } from 'kysely';
-      import { getDatabase } from '@ampatspell/tiny/server/handle';
+      import { getDatabase } from './services';
 
       export const getMessage = query(async () => {
         const db = getDatabase();

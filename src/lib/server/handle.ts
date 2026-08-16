@@ -4,7 +4,6 @@ import { createServices } from './services.ts';
 import type { Files } from './files.ts';
 import type { Storage } from './storage.ts';
 import type { Database } from './database/database.ts';
-import type { DB } from './database/schema.js';
 
 export const createHandle = ({ storageRoot = '.local' }: { storageRoot: string | undefined }): Handle => {
   return async ({ event, resolve }) => {
@@ -20,7 +19,7 @@ export const createHandle = ({ storageRoot = '.local' }: { storageRoot: string |
 
 const getLocal = () => getRequestEvent().locals.tiny;
 
-export const createGetters = <D extends DB>() => {
+export const createServiceGetters = <D>() => {
   const getDatabase = () => getLocal().db as unknown as Database<D>;
   const getStorage = () => getLocal().storage as Storage;
   const getFiles = () => getLocal().files as Files;
@@ -30,7 +29,3 @@ export const createGetters = <D extends DB>() => {
     getFiles,
   };
 };
-
-const { getDatabase, getFiles, getStorage } = createGetters<DB>();
-
-export { getDatabase, getFiles, getStorage };
