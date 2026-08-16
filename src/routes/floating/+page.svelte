@@ -3,7 +3,6 @@
   import Card from '$lib/components/card.svelte';
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
   import { basic } from '$lib/components/floating/position.js';
-  import Tooltip from '$lib/components/floating/tooltip.svelte';
 
   let floaters = useFloaters();
 
@@ -14,7 +13,7 @@
       position: basic,
       snippet: hey,
       request: {
-        label: 'Hey there',
+        label: 'Hey there. This floats.',
       },
       close: 'closed',
     });
@@ -35,7 +34,7 @@
   <Card width="fit">
     <div class="floater">
       <div class="row">{request.label}</div>
-      <div class="row">
+      <div class="row actions">
         <Button label="Cancel" onClick={() => close()} />
         <Button label="Ok" onClick={() => resolve('ok')} />
       </div>
@@ -45,14 +44,13 @@
 
 <div class="page">
   <div class="row">
-    <Tooltip label="This is tooltip">
-      <Button bind:this={button} label="Open" {onClick} />
-    </Tooltip>
+    <Button bind:this={button} label="Open floater" {onClick} />
   </div>
 </div>
 
 <style lang="scss">
   .floater {
+    width: 200px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -61,6 +59,9 @@
       display: flex;
       flex-direction: row;
       gap: 5px;
+      &.actions {
+        justify-content: flex-end;
+      }
     }
   }
 
@@ -69,6 +70,6 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    padding: 10px;
+    padding: 25px;
   }
 </style>

@@ -1,6 +1,6 @@
 import { flip, offset, shift, type ComputePositionConfig } from '@floating-ui/dom';
 
 export const basic: ComputePositionConfig = {
-  placement: 'bottom-end',
+  placement: 'bottom-start',
   middleware: [offset(5), flip(), shift({ padding: 5 })],
 };
