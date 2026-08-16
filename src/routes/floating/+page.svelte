@@ -1,14 +1,14 @@
 <script lang="ts">
   import Button from '$lib/components/button.svelte';
   import Card from '$lib/components/card.svelte';
-  import { useFloaters } from './models.svelte.ts';
+  import { useFloaters } from './floaters.svelte.ts';
 
   let floaters = useFloaters();
 
   let button = $state<Button>();
   let onClick = async () => {
     let floater = floaters.open({
-      relative: () => button?.element,
+      reference: () => button?.element,
       snippet: hey,
       request: {
         label: 'Hey there',

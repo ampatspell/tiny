@@ -14,3 +14,17 @@ export const round = (value: number, decimals = 2) => {
   const be = parts[1] ? Number(parts[1]) : 0;
   return Number(`${parts[0]}e${be - decimals}`);
 };
+
+export const px = (value: number | undefined) => {
+  if (typeof value === 'number' && !isNaN(value)) {
+    return `${value}px`;
+  }
+};
+
+export function elementContainsEventTarget(el: HTMLElement | undefined, e: Event) {
+  if (el instanceof HTMLElement) {
+    const target = e.target as Node;
+    return el.contains(target);
+  }
+  return false;
+}
