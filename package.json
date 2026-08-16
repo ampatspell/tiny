@@ -87,6 +87,30 @@
       "types": "./dist/components/backend/navigation.svelte.d.ts",
       "svelte": "./dist/components/backend/navigation.svelte"
     },
+    "./components/floating/floater.svelte": {
+      "types": "./dist/components/floating/floater.svelte.d.ts",
+      "svelte": "./dist/components/floating/floater.svelte"
+    },
+    "./components/floating/floater": {
+      "types": "./dist/components/floating/floater.svelte.d.ts",
+      "svelte": "./dist/components/floating/floater.svelte.js"
+    },
+    "./components/floating/floaters.svelte": {
+      "types": "./dist/components/floating/floaters.svelte.d.ts",
+      "svelte": "./dist/components/floating/floaters.svelte"
+    },
+    "./components/floating/floaters": {
+      "types": "./dist/components/floating/floaters.svelte.d.ts",
+      "svelte": "./dist/components/floating/floaters.svelte.js"
+    },
+    "./components/floating/position": {
+      "types": "./dist/components/floating/position.d.ts",
+      "svelte": "./dist/components/floating/position.js"
+    },
+    "./components/floating/tooltip.svelte": {
+      "types": "./dist/components/floating/tooltip.svelte.d.ts",
+      "svelte": "./dist/components/floating/tooltip.svelte"
+    },
     "./components/button.svelte": {
       "types": "./dist/components/button.svelte.d.ts",
       "svelte": "./dist/components/button.svelte"
