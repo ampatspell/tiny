@@ -16,6 +16,10 @@ export class Floater<Req = any, Res = any> {
     this._deferred = defer<Res>();
   }
 
+  get position() {
+    return this._opts.position;
+  }
+
   get reference() {
     return this._opts.reference();
   }

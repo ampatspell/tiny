@@ -2,9 +2,11 @@ import { addObject, removeObject } from '$lib/utils/array.js';
 import type { MaybeGetter } from 'runed';
 import { createContext, tick, type Snippet } from 'svelte';
 import { Floater } from './floater.svelte.ts';
+import type { ComputePositionConfig } from '@floating-ui/dom';
 
 export type FloaterOpenOptions<Req, Res> = {
   reference: () => HTMLElement | undefined;
+  position: ComputePositionConfig;
   snippet: Snippet<
     [
       {
@@ -26,9 +28,9 @@ export class Floaters {
     removeObject(this.all, floater);
   };
 
-  readonly open = <Req, Res>({ reference, snippet, request, close }: FloaterOpenOptions<Req, Res>) => {
+  readonly open = <Req, Res>({ reference, position, snippet, request, close }: FloaterOpenOptions<Req, Res>) => {
     const { onClosed } = this;
-    const floater = new Floater({ reference, snippet, request, close, onClosed });
+    const floater = new Floater({ reference, position, snippet, request, close, onClosed });
     addObject(this.all, floater);
     return floater;
   };

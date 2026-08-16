@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Floater } from './floater.svelte.ts';
-  import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
+  import { autoUpdate, computePosition } from '@floating-ui/dom';
   import { elementContainsEventTarget, px } from '$lib/utils/utils.js';
   import { on } from 'svelte/events';
 
@@ -34,10 +34,7 @@
 
   const update = async () => {
     if (reference && element) {
-      position = await computePosition(reference, element, {
-        placement: 'bottom-end',
-        middleware: [offset(6), flip(), shift({ padding: 5 })],
-      });
+      position = await computePosition(reference, element, floater.position);
     }
   };
 

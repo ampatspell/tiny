@@ -1,6 +1,7 @@
 <script module lang="ts">
   export type NavigationItem = {
     icon: Component;
+    tooltip: string;
     route: ResolvedPathname;
   };
 
@@ -15,6 +16,7 @@
   import type { ResolvedPathname } from '$app/types';
   import type { Component } from 'svelte';
   import Icon from '../icon.svelte';
+  import Tooltip from '../floating/tooltip.svelte';
 
   let { items }: NavigationProps = $props();
 </script>
@@ -23,7 +25,9 @@
   <div class="items">
     {#each items as item (item.icon)}
       <a class="item" href={item.route}>
-        <Icon icon={item.icon} />
+        <Tooltip label={item.tooltip} offset={14}>
+          <Icon icon={item.icon} />
+        </Tooltip>
       </a>
     {/each}
   </div>

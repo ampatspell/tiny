@@ -16,18 +16,22 @@
     {
       icon: LucideCat,
       route: resolve('/'),
+      tooltip: 'Home',
     },
     {
       icon: TablerAppWindow,
       route: resolve('/index'),
+      tooltip: 'Index demo',
     },
     {
       icon: TablerFileText,
       route: resolve('/list'),
+      tooltip: 'List demo',
     },
     {
       icon: TablerBalloon,
       route: resolve('/floating'),
+      tooltip: 'Floaters demo',
     },
   ];
 

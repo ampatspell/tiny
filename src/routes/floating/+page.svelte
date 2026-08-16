@@ -2,6 +2,8 @@
   import Button from '$lib/components/button.svelte';
   import Card from '$lib/components/card.svelte';
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
+  import { basic } from '$lib/components/floating/position.js';
+  import Tooltip from '$lib/components/floating/tooltip.svelte';
 
   let floaters = useFloaters();
 
@@ -9,6 +11,7 @@
   let onClick = async () => {
     let floater = floaters.open({
       reference: () => button?.element,
+      position: basic,
       snippet: hey,
       request: {
         label: 'Hey there',
@@ -42,7 +45,9 @@
 
 <div class="page">
   <div class="row">
-    <Button bind:this={button} label="Open" {onClick} />
+    <Tooltip label="This is tooltip">
+      <Button bind:this={button} label="Open" {onClick} />
+    </Tooltip>
   </div>
 </div>
 
