@@ -1,0 +1,31 @@
+<script lang="ts">
+  import { page } from '$app/state';
+  import Header from '$lib/components/backend/header/header.svelte';
+  import Title from '$lib/components/backend/header/title.svelte';
+  import Json from '$lib/components/json.svelte';
+  import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';
+
+  let id = $derived(page.params.id!);
+
+  let gallery = $derived(await getGalleryById({ id }));
+</script>
+
+{#if gallery}
+  <div class="page">
+    <Header>
+      <Title label={gallery.name} />
+    </Header>
+    <div class="content"><Json data={gallery} /></div>
+  </div>
+{/if}
+
+<style lang="scss">
+  .page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    > .content {
+      padding: 10px;
+    }
+  }
+</style>

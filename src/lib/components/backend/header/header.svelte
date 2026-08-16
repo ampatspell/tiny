@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { children, end }: { children?: Snippet; end?: Snippet } = $props();
+  let { children, accessories }: { children?: Snippet; accessories?: Snippet } = $props();
 </script>
 
 <div class="header">
   <div class="section left">{@render children?.()}</div>
-  {#if end}
-    <div class="section right">{@render end?.()}</div>
+  {#if accessories}
+    <div class="section right">{@render accessories?.()}</div>
   {/if}
 </div>
 
@@ -21,6 +21,10 @@
     border-bottom: 1px solid var(--dark-border-color-1);
     > .section {
       padding: 0 10px;
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      align-items: center;
       &.left {
         flex: 1;
       }

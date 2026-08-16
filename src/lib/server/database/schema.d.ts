@@ -3,11 +3,22 @@
  * Please do not edit it manually.
  */
 
+import type { ColumnType } from 'kysely';
+
+export type Generated<T> =
+  T extends ColumnType<infer S, infer I, infer U> ? ColumnType<S, I | undefined, U> : ColumnType<T, T | undefined, T>;
+
 export interface File {
   contentType: string;
   id: string;
   name: string;
   size: number;
+}
+
+export interface Gallery {
+  id: string;
+  name: Generated<string>;
+  permalink: Generated<string>;
 }
 
 export interface Index {
@@ -23,5 +34,6 @@ export interface Index {
 
 export interface DB {
   files: File;
+  galleries: Gallery;
   index: Index;
 }

@@ -5,12 +5,13 @@
   import Item from '$lib/components/backend/list/item/item.svelte';
   import Label from '$lib/components/backend/list/item/label.svelte';
   import List from '$lib/components/backend/list/list.svelte';
-  import Icon from '$lib/components/icon.svelte';
-  import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
-  import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
+  import Add from '$lib/playground/galleries/add/add.svelte';
+  import { getGalleries } from '$lib/playground/galleries/galleries.remote.js';
   import type { Snippet } from 'svelte';
 
   let { children }: { children?: Snippet } = $props();
+
+  let galleries = $derived(await getGalleries());
 </script>
 
 <div class="page">
@@ -19,16 +20,16 @@
       {#snippet top()}
         <Header>
           <Title label="Galleries" />
+          {#snippet accessories()}
+            <Add />
+          {/snippet}
         </Header>
       {/snippet}
-      <Item route={resolve('/list/[id]', { id: 'inkblot' })}>
-        <Label label="Inkblot" description="/inkblot" />
-        <Icon icon={LucideCat} />
-      </Item>
-      <Item route={resolve('/list/[id]', { id: 'zine-2' })}>
-        <Label label="Zine #2" description="/zine-2" />
-        <Icon icon={TablerFileText} />
-      </Item>
+      {#each galleries as gallery (gallery.id)}
+        <Item route={resolve('/galleries/[id]', { id: gallery.id })}>
+          <Label label={gallery.name} description={gallery.permalink} />
+        </Item>
+      {/each}
     </List>
   </div>
   <div class="detail">

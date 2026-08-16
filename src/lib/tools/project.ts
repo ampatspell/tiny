@@ -67,7 +67,8 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
 
   const database = {
     connectionString,
-    with: async <T>(cb: (database: Database) => Promise<T>) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    with: async <T>(cb: (database: Database<any>) => Promise<T>) => {
       const db = await createDatabase({ connectionString: connectionString() });
       try {
         return await cb(db);

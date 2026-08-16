@@ -55,5 +55,6 @@
     position: fixed;
     top: var(--y);
     left: var(--x);
+    z-index: 1;
   }
 </style>

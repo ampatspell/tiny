@@ -2,6 +2,7 @@
   let {
     isDisabled,
     value,
+    placeholder,
     multiline,
     onEnter,
     onInput,
@@ -9,6 +10,7 @@
   }: {
     isDisabled?: boolean;
     value: string | undefined;
+    placeholder?: string;
     multiline?: boolean;
     onEnter?: (value: string) => void;
     onInput?: (value: string) => void;
@@ -51,9 +53,9 @@
 </script>
 
 {#if multiline}
-  <textarea class="input textarea" {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur}></textarea>
+  <textarea class="input textarea" {placeholder} {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur}></textarea>
 {:else}
-  <input type="text" class="input" {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur} />
+  <input type="text" class="input" {placeholder} {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur} />
 {/if}
 
 <style lang="scss">
@@ -63,6 +65,9 @@
     border: 1px solid var(--dark-border-color-1);
     padding: 5px 5px;
     border-radius: 3px;
+    &::placeholder {
+      color: var(--dark-faded-color-1);
+    }
     &.textarea {
       height: 298px;
       resize: vertical;

@@ -7,5 +7,6 @@
 <style lang="scss">
   .json {
     white-space: pre-wrap;
+    font-size: var(--dark-font-size-small);
   }
 </style>

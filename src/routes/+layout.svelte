@@ -25,8 +25,8 @@
     },
     {
       icon: TablerFileText,
-      route: resolve('/list'),
-      tooltip: 'List demo',
+      route: resolve('/galleries'),
+      tooltip: 'Galleries demo',
     },
     {
       icon: TablerBalloon,
