@@ -7,6 +7,11 @@
   import { useDataProperties } from '$lib/properties/data.svelte.js';
   import { addGallery } from '../galleries.remote.ts';
   import { slug } from '$lib/utils/string.js';
+  import Form from '$lib/components/form/form.svelte';
+  import Header from '$lib/components/form/header.svelte';
+  import Content from '$lib/components/form/content/content.svelte';
+  import Row from '$lib/components/form/content/row.svelte';
+  import Actions from '$lib/components/form/actions.svelte';
 
   let { onDone }: { onDone: (added: string | undefined) => void } = $props();
 
@@ -27,58 +32,15 @@
 </script>
 
 <Card>
-  <div class="form">
-    <div class="header">
-      <div class="title">Add new gallery</div>
-    </div>
-    <div class="content">
-      <div class="row">
-        <Input placeholder="Name" value={name.value} onInput={name.update} />
-      </div>
-      <div class="row">
-        <Input placeholder="Permalink" value={permalink.value} onInput={permalink.update} />
-      </div>
-    </div>
-    <div class="actions">
+  <Form>
+    <Header title="Add new gallery" />
+    <Content>
+      <Row><Input placeholder="Name" value={name.value} onInput={name.update} /></Row>
+      <Row><Input placeholder="Permalink" value={permalink.value} onInput={permalink.update} /></Row>
+    </Content>
+    <Actions>
       <Button label="Cancel" onClick={onCancel} />
       <BusyButton label="Add" onClick={onSave} />
-    </div>
-  </div>
+    </Actions>
+  </Form>
 </Card>
-
-<style lang="scss">
-  .form {
-    padding: 10px;
-    width: 270px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    > .header {
-      display: flex;
-      flex-direction: row;
-      padding: 2px 0 0 0;
-      > .title {
-        font-weight: 600;
-      }
-    }
-
-    > .content {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      > .row {
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-      }
-    }
-
-    > .actions {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      gap: 5px;
-    }
-  }
-</style>
