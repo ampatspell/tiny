@@ -15,10 +15,8 @@
   let permalink = properties.property('permalink');
 
   let onSave = async () => {
-    let data = properties.pack();
-    if (data) {
-      await addGallery(data);
-    }
+    let data = properties.data;
+    await addGallery(data);
     onDone(true);
   };
 </script>
