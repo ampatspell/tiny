@@ -32,7 +32,7 @@
     }
 
     &.variant-regular {
-      --border-radius: 8px;
+      --border-radius: 3px;
       --box-shadow:
         0px 4px 6px -2px rgba(16, 24, 40, 0.06), 0px 12px 32px -4px rgba(16, 24, 40, 0.14),
         0px 2px 8px 0px rgba(0, 0, 0, 0.12);
