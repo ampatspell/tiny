@@ -17,13 +17,19 @@ export class TouchedProperty {
 
 export type PropertyUpdatePair<T> = { before: T; after: T };
 
+export type Validator<T> = {
+  validate: (value: T) => string | boolean | undefined;
+  isRequired: MaybeGetter<boolean>;
+};
+
 export type UsePropertyOptions<T> = {
   readonly value: MaybeGetter<T>;
   readonly passive?: MaybeGetter<boolean>;
   readonly willUpdate?: (opts: PropertyUpdatePair<T>) => void;
   readonly didUpdate?: (opts: PropertyUpdatePair<T>) => void;
   readonly onRollback?: () => void;
-  readonly validate?: (value: T) => string | boolean | undefined;
+  readonly validator?: Validator<T>;
+  readonly meta?: { label?: string; isRequired?: boolean };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,8 +70,10 @@ export class Property<T = any> {
     this.update(this.external);
   };
 
+  readonly validator = $derived.by(() => this._opts.validator);
+
   readonly error = $derived.by(() => {
-    const fn = this._opts.validate;
+    const fn = this.validator?.validate;
     if (fn) {
       const res = fn(this.current);
       if (typeof res === 'string' && res === '') {
@@ -88,6 +96,15 @@ export class Property<T = any> {
 
   readonly isTouched = $derived.by(() => this.context.isTouched);
   readonly touched = new TouchedProperty(this);
+
+  readonly meta = $derived.by(() => {
+    return Object.assign(
+      {
+        isRequired: extract(this.validator?.isRequired),
+      },
+      $state.snapshot(this._opts.meta),
+    );
+  });
 }
 
 export const useProperty = <T>(opts: UsePropertyOptions<T>) => new Property<T>(opts);

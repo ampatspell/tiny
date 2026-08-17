@@ -1,5 +1,6 @@
 import { extract, type MaybeGetter } from 'runed';
 import { Property, type UsePropertyOptions } from './property.svelte.ts';
+import { capitalize } from '$lib/utils/string.js';
 
 export class DataProperty<D extends Record<string, unknown>, K extends keyof D & string> extends Property<D[K]> {
   readonly key: K;
@@ -8,6 +9,7 @@ export class DataProperty<D extends Record<string, unknown>, K extends keyof D &
     super({
       ...opts,
       value: () => extract(data)[key],
+      meta: Object.assign({ label: capitalize(key) }, opts?.meta),
     });
     this.key = key;
   }

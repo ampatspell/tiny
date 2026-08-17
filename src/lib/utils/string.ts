@@ -16,3 +16,9 @@ export function widow(text: string): string {
   const start = words.join(' ').trim();
   return `${start}\u00A0${last}`;
 }
+
+export const capitalize = (string: string) => {
+  const first = string.charAt(0).toUpperCase();
+  const rest = string.slice(1).toLowerCase();
+  return `${first}${rest}`;
+};
