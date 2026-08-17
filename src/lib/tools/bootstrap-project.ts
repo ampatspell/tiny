@@ -90,6 +90,7 @@ export const bootstrapProject = async (project: Project) => {
           pull_policy: build
           environment:
             - STORAGE_ROOT=/data
+            - BODY_SIZE_LIMIT=100M
           volumes:
             - data:/data
           restart: unless-stopped

@@ -8,6 +8,7 @@
   import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
   import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
+  import TablerCode from '$lib/playground/icons/tabler--code.svelte';
   import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
 
   let { children } = $props();
@@ -32,6 +33,11 @@
       icon: TablerBalloon,
       route: resolve('/floating'),
       tooltip: 'Floaters demo',
+    },
+    {
+      icon: TablerCode,
+      route: resolve('/dev'),
+      tooltip: 'Dev',
     },
   ];
 

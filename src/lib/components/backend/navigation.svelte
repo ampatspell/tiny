@@ -25,7 +25,7 @@
   <div class="items">
     {#each items as item (item.icon)}
       <a class="item" href={item.route}>
-        <Tooltip label={item.tooltip} offset={14}>
+        <Tooltip label={item.tooltip} offset={14} placement="right">
           <Icon icon={item.icon} />
         </Tooltip>
       </a>
