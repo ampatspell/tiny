@@ -21,13 +21,13 @@ export const px = (value: number | undefined) => {
   }
 };
 
-export function elementContainsEventTarget(el: HTMLElement | undefined, e: Event) {
+export const elementContainsEventTarget = (el: HTMLElement | undefined, e: Event) => {
   if (el instanceof HTMLElement) {
     const target = e.target as Node;
     return el.contains(target);
   }
   return false;
-}
+};
 
 export const getActiveHTMLElement = () => {
   const el = document.activeElement;

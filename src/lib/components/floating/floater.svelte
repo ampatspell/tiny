@@ -16,7 +16,7 @@
       if (!elementContainsEventTarget(element, e)) {
         floater.close();
       }
-      if (e.target === reference) {
+      if (elementContainsEventTarget(reference, e)) {
         e.stopPropagation();
       }
     }
