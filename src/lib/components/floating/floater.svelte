@@ -22,8 +22,8 @@
     }
   };
 
-  let onKey = () => {
-    if (!getActiveInputElement()) {
+  let onKey = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && !getActiveInputElement()) {
       floater.close();
     }
   };

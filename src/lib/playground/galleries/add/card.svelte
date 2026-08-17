@@ -27,15 +27,19 @@
 </script>
 
 <Card>
-  <div class="content">
-    <div class="row title">Add new gallery</div>
-    <div class="row">
-      <Input placeholder="Name" value={name.value} onInput={name.update} />
+  <div class="form">
+    <div class="header">
+      <div class="title">Add new gallery</div>
     </div>
-    <div class="row">
-      <Input placeholder="Permalink" value={permalink.value} onInput={permalink.update} />
+    <div class="content">
+      <div class="row">
+        <Input placeholder="Name" value={name.value} onInput={name.update} />
+      </div>
+      <div class="row">
+        <Input placeholder="Permalink" value={permalink.value} onInput={permalink.update} />
+      </div>
     </div>
-    <div class="row actions">
+    <div class="actions">
       <Button label="Cancel" onClick={onCancel} />
       <BusyButton label="Add" onClick={onSave} />
     </div>
@@ -43,19 +47,38 @@
 </Card>
 
 <style lang="scss">
-  .content {
+  .form {
     padding: 10px;
     width: 270px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    > .row {
+
+    > .header {
       display: flex;
-      &.actions {
+      flex-direction: row;
+      padding: 2px 0 0 0;
+      > .title {
+        font-weight: 600;
+      }
+    }
+
+    > .content {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      > .row {
+        display: flex;
         flex-direction: row;
         gap: 5px;
-        justify-content: flex-end;
       }
+    }
+
+    > .actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 5px;
     }
   }
 </style>
