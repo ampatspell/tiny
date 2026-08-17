@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { Floater } from './floater.svelte.ts';
   import { autoUpdate, computePosition } from '@floating-ui/dom';
-  import { elementContainsEventTarget, px } from '$lib/utils/utils.js';
-  import { on } from 'svelte/events';
+  import { elementContainsEventTarget, getActiveInputElement, px } from '$lib/utils/utils.js';
 
   let { floater }: { floater: Floater } = $props();
 
@@ -12,23 +11,22 @@
 
   let element = $state<HTMLDivElement>();
 
-  $effect(() => {
-    return on(
-      document.body,
-      'click',
-      (e) => {
-        if (element) {
-          if (!elementContainsEventTarget(element, e)) {
-            floater.close();
-          }
-          if (e.target === reference) {
-            e.stopPropagation();
-          }
-        }
-      },
-      { capture: true },
-    );
-  });
+  let onWindowClick = (e: MouseEvent) => {
+    if (element) {
+      if (!elementContainsEventTarget(element, e)) {
+        floater.close();
+      }
+      if (e.target === reference) {
+        e.stopPropagation();
+      }
+    }
+  };
+
+  let onKey = (e: KeyboardEvent) => {
+    if (!getActiveInputElement()) {
+      floater.close();
+    }
+  };
 
   let position = $state<{ x: number; y: number }>();
 
@@ -40,11 +38,12 @@
 
   $effect(() => {
     if (reference && element) {
-      update();
       return autoUpdate(reference, element, () => update());
     }
   });
 </script>
+
+<svelte:window onclickcapture={onWindowClick} onkeydown={onKey} />
 
 <div class="floater" style:--x={px(position?.x)} style:--y={px(position?.y)} bind:this={element}>
   {@render snippet(opts)}
@@ -55,6 +54,5 @@
     position: fixed;
     top: var(--y);
     left: var(--x);
-    z-index: 1;
   }
 </style>

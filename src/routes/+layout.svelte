@@ -41,17 +41,17 @@
     },
   ];
 
-  const floaters = createFloaters();
+  let floaters = createFloaters();
 </script>
 
 <svelte:head>
   <title>tiny</title>
 </svelte:head>
 
-<Floaters {floaters} />
-
 <Dark>
   <Backend {items}>
     {@render children()}
   </Backend>
 </Dark>
+
+<Floaters {floaters} />

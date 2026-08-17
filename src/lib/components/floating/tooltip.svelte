@@ -110,13 +110,21 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    max-width: 320px;
     padding: 4px 8px;
     color: var(--color);
     background: var(--background);
     font-size: 11px;
     border-radius: 3px;
     cursor: default;
+    > .content {
+      max-width: 320px;
+      min-width: 0;
+      > .label {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
     > .arrow {
       position: absolute;
       background: var(--background);

@@ -18,7 +18,7 @@
       position: basic,
       reference: () => button?.element,
       request: undefined,
-      close: undefined,
+      close: null,
     }).response;
 
     if (id) {

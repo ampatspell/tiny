@@ -3,6 +3,7 @@
   import Card from '$lib/components/card.svelte';
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
   import { basic } from '$lib/components/floating/position.js';
+  import Tooltip from '$lib/components/floating/tooltip.svelte';
 
   let floaters = useFloaters();
 
@@ -44,7 +45,9 @@
 
 <div class="page">
   <div class="row">
-    <Button bind:this={button} label="Open floater" {onClick} />
+    <Tooltip label="Now with tooltips" placement="right">
+      <Button bind:this={button} label="Open floater" {onClick} />
+    </Tooltip>
   </div>
 </div>
 
