@@ -3,6 +3,7 @@
 :root {
   --dark-font-family: 'Ubuntu Mono', monospace;
   --dark-font-size: 15px;
+  --dark-font-size-medium: 14px;
   --dark-font-size-small: 13px;
   --dark-font-weight: 400;
   --dark-color: #{color.adjust(#000, $alpha: -0.2)};

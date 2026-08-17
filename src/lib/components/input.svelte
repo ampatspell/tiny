@@ -65,6 +65,7 @@
     border: 1px solid var(--dark-border-color-1);
     padding: 5px 5px;
     border-radius: 3px;
+    font-size: var(--dark-font-size-medium);
     &::placeholder {
       color: var(--dark-faded-color-1);
     }
