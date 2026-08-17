@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button, { type ButtonType } from './button.svelte';
+  import Button, { type ButtonType } from './button/button.svelte';
 
   let {
     isDisabled,

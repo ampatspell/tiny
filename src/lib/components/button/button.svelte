@@ -1,10 +1,20 @@
 <script lang="ts" module>
   export type ButtonType = 'regular' | 'fill';
   export type ButtonVariant = 'regular' | 'light';
+
+  class ButtonContext {
+    label = $state(false);
+    icon = $state(false);
+  }
+
+  let [getButtonContext, setButtonContext] = createContext<ButtonContext>();
+
+  export { getButtonContext, setButtonContext };
 </script>
 
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  import { createContext, type Snippet } from 'svelte';
+  import Label from './label.svelte';
 
   let {
     label,
@@ -28,6 +38,8 @@
     onClick(e);
   };
 
+  let context = setButtonContext(new ButtonContext());
+
   let isBusy = $derived(_isBusy ?? false);
   let isDisabled = $derived(_isDisabled ?? false);
   let isBusyOrDisabled = $derived(isBusy || isDisabled);
@@ -37,7 +49,7 @@
 </script>
 
 <button
-  class={['button', `type-${type}`, `variant-${variant}`]}
+  class={['button', `type-${type}`, `variant-${variant}`, context.label && 'has-label']}
   class:disabled={isDisabled}
   class:busy={isBusy}
   disabled={isBusyOrDisabled}
@@ -47,7 +59,7 @@
   {#if children}
     {@render children()}
   {:else}
-    {label}
+    <Label {label} />
   {/if}
 </button>
 
@@ -64,6 +76,11 @@
       --outline: var(--dark-border-color-1);
     }
 
+    --padding: 5px;
+    &.has-label {
+      --padding: 4px 8px;
+    }
+
     appearance: none;
     outline: none;
     border: none;
@@ -76,7 +93,7 @@
     width: 100%;
     font-weight: 600;
     line-height: 1;
-    padding: 5px 8px;
+    padding: var(--padding);
     border-radius: 3px;
     display: flex;
     flex-direction: row;

@@ -1,6 +1,7 @@
 <script lang="ts">
-  import Button from '$lib/components/button.svelte';
-  import Icon from '$lib/components/icon.svelte';
+  import Button from '$lib/components/button/button.svelte';
+  import Icon from '$lib/components/button/icon.svelte';
+  import Label from '$lib/components/button/label.svelte';
   import TablerCloudUp from './icons/tabler--cloud-up.svelte';
   import TablerCloud from './icons/tabler--cloud.svelte';
 
@@ -21,6 +22,6 @@
 </script>
 
 <Button {onClick} {isBusy}>
-  {label}
-  <Icon {icon} size="small" />
+  <Label {label} />
+  <Icon {icon} />
 </Button>

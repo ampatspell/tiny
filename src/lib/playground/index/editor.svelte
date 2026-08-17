@@ -22,7 +22,7 @@
   let onSave = async () => {
     await Promise.all([
       run(async () => {
-        let data = props.pack();
+        let data = props.dirty;
         if (data) {
           await updateIndex(data);
         }

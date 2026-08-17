@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$lib/components/button.svelte';
+  import Button from '$lib/components/button/button.svelte';
   import Card from '$lib/components/card.svelte';
   import Input from '$lib/components/input.svelte';
   import BusyButton from '$lib/playground/busy-button.svelte';

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Button from '$lib/components/button.svelte';
+  import Button from '$lib/components/button/button.svelte';
+  import Icon from '$lib/components/button/icon.svelte';
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
   import { basic } from '$lib/components/floating/position.js';
   import Tooltip from '$lib/components/floating/tooltip.svelte';
-  import Icon from '$lib/components/icon.svelte';
   import TablerSquareRoundedPlus from '../../icons/tabler--square-rounded-plus.svelte';
   import Card from './card.svelte';
 

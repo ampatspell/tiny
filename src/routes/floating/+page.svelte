@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$lib/components/button.svelte';
+  import Button from '$lib/components/button/button.svelte';
   import Card from '$lib/components/card.svelte';
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
   import { basic } from '$lib/components/floating/position.js';

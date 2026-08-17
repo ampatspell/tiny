@@ -4,7 +4,6 @@ import type { Storage } from './storage.js';
 import type { DB } from './database/schema.js';
 
 export type CreateFilesOptions = {
-  // TODO: DB
   db: Database<DB>;
   storage: Storage;
 };
