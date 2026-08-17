@@ -22,7 +22,7 @@
     }
   };
 
-  let onKey = (e: KeyboardEvent) => {
+  let onKey = () => {
     if (!getActiveInputElement()) {
       floater.close();
     }
