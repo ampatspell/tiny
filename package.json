@@ -52,6 +52,10 @@
       "types": "./dist/utils/promise.d.ts",
       "svelte": "./dist/utils/promise.js"
     },
+    "./utils/string": {
+      "types": "./dist/utils/string.d.ts",
+      "svelte": "./dist/utils/string.js"
+    },
     "./utils/utils": {
       "types": "./dist/utils/utils.d.ts",
       "svelte": "./dist/utils/utils.js"
