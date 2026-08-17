@@ -112,9 +112,17 @@
       "types": "./dist/components/floating/tooltip.svelte.d.ts",
       "svelte": "./dist/components/floating/tooltip.svelte"
     },
-    "./components/button.svelte": {
-      "types": "./dist/components/button.svelte.d.ts",
-      "svelte": "./dist/components/button.svelte"
+    "./components/button/button.svelte": {
+      "types": "./dist/components/button/button.svelte.d.ts",
+      "svelte": "./dist/components/button/button.svelte"
+    },
+    "./components/button/label.svelte": {
+      "types": "./dist/components/button/label.svelte.d.ts",
+      "svelte": "./dist/components/button/label.svelte"
+    },
+    "./components/button/icon.svelte": {
+      "types": "./dist/components/button/icon.svelte.d.ts",
+      "svelte": "./dist/components/button/icon.svelte"
     },
     "./components/dark.svelte": {
       "types": "./dist/components/dark.svelte.d.ts",
