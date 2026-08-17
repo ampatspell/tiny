@@ -7,6 +7,7 @@ import dedent from 'dedent';
 
 export const bootstrapProject = async (project: Project) => {
   const root = project.root;
+  const dir = dirname(root);
   {
     log.step('Install kysely, valibot and better-sqlite3');
     await x('npm', ['install', 'valibot', 'kysely', 'better-sqlite3', '--save']);
@@ -77,6 +78,24 @@ export const bootstrapProject = async (project: Project) => {
         --start-period=5s \
         --retries=10 \
         CMD curl -f http://localhost:3000 || exit 1
+    `,
+  });
+
+  await write({
+    filename: 'docker-compose.yml',
+    content: dedent`
+      services:
+        ${dir}:
+          build: .
+          pull_policy: build
+          environment:
+            - STORAGE_ROOT=/data
+          volumes:
+            - data:/data
+          restart: unless-stopped
+
+      volumes:
+        data:
     `,
   });
 
