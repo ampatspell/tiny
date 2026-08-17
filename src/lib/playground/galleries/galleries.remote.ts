@@ -19,14 +19,17 @@ export const addGallery = command(
     permalink: v.optional(v.string()),
   }),
   async (props) => {
-    await getDatabase()
+    const { id } = await getDatabase()
       .insertInto('galleries')
       .values({
         id: uid(),
         ...props,
       })
-      .execute();
+      .returning('id')
+      .executeTakeFirstOrThrow();
 
     getGalleries().refresh();
+
+    return id;
   },
 );

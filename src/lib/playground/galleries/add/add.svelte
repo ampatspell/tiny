@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+  import { resolve } from '$app/paths';
   import Button from '$lib/components/button/button.svelte';
   import Icon from '$lib/components/button/icon.svelte';
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
@@ -11,17 +13,21 @@
   let button = $state<Button>();
 
   let onAdd = async () => {
-    await floaters.open({
+    let id = await floaters.open({
       snippet,
       position: basic,
       reference: () => button?.element,
       request: undefined,
-      close: false,
+      close: undefined,
     }).response;
+
+    if (id) {
+      await goto(resolve('/galleries/[id]', { id }));
+    }
   };
 </script>
 
-{#snippet snippet({ resolve }: { resolve: (res: boolean) => void })}
+{#snippet snippet({ resolve }: { resolve: (res: string | undefined) => void })}
   <Card onDone={resolve} />
 {/snippet}
 

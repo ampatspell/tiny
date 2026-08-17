@@ -8,7 +8,7 @@
   import { addGallery } from '../galleries.remote.ts';
   import { slug } from '$lib/utils/string.js';
 
-  let { onDone }: { onDone: (added: boolean) => void } = $props();
+  let { onDone }: { onDone: (added: string | undefined) => void } = $props();
 
   usePropertiesContext();
   let properties = useDataProperties({ name: '', permalink: '' });
@@ -19,9 +19,11 @@
 
   let onSave = async () => {
     let data = properties.data;
-    await addGallery(data);
-    onDone(true);
+    let id = await addGallery(data);
+    onDone(id);
   };
+
+  let onCancel = () => onDone(undefined);
 </script>
 
 <Card>
@@ -34,7 +36,7 @@
       <Input placeholder="Permalink" value={permalink.value} onInput={permalink.update} />
     </div>
     <div class="row actions">
-      <Button label="Cancel" onClick={() => onDone(false)} />
+      <Button label="Cancel" onClick={onCancel} />
       <BusyButton label="Add" onClick={onSave} />
     </div>
   </div>
