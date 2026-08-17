@@ -1,9 +1,11 @@
 import { error } from '@sveltejs/kit';
 import type { Database } from './database/database.js';
 import type { Storage } from './storage.js';
+import type { DB } from './database/schema.js';
 
 export type CreateFilesOptions = {
-  db: Database;
+  // TODO: DB
+  db: Database<DB>;
   storage: Storage;
 };
 
