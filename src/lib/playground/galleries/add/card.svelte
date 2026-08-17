@@ -6,12 +6,15 @@
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
   import { useDataProperties } from '$lib/properties/data.svelte.js';
   import { addGallery } from '../galleries.remote.ts';
+  import { slug } from '$lib/utils/string.js';
 
   let { onDone }: { onDone: (added: boolean) => void } = $props();
 
   usePropertiesContext();
   let properties = useDataProperties({ name: '', permalink: '' });
-  let name = properties.property('name');
+  let name = properties.property('name', {
+    didUpdate: ({ after }) => permalink.update(slug(after, { replacement: '-' })),
+  });
   let permalink = properties.property('permalink');
 
   let onSave = async () => {
