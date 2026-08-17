@@ -31,7 +31,7 @@
   <Card onDone={resolve} />
 {/snippet}
 
-<Tooltip label="Add new gallery">
+<Tooltip label="Add new gallery" placement="right">
   <Button bind:this={button} variant="light" onClick={onAdd}>
     <Icon icon={TablerSquareRoundedPlus} />
   </Button>

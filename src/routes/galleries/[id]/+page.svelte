@@ -3,6 +3,7 @@
   import Header from '$lib/components/backend/header/header.svelte';
   import Title from '$lib/components/backend/header/title.svelte';
   import Json from '$lib/components/json.svelte';
+  import Delete from '$lib/playground/galleries/delete/delete.svelte';
   import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';
 
   let id = $derived(page.params.id!);
@@ -14,6 +15,9 @@
   <div class="page">
     <Header>
       <Title label={gallery.name} />
+      {#snippet accessories()}
+        <Delete {gallery} />
+      {/snippet}
     </Header>
     <div class="content"><Json data={gallery} /></div>
   </div>

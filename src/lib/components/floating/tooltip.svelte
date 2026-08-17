@@ -3,15 +3,25 @@
   import {
     arrow as arrowMiddleware,
     computePosition,
-    flip,
     offset as offsetMiddleware,
-    shift,
     type OffsetOptions,
+    type Placement,
   } from '@floating-ui/dom';
   import { Debounced } from 'runed';
   import type { Snippet } from 'svelte';
 
-  let { children, label, offset }: { children?: Snippet; label?: string; offset?: OffsetOptions } = $props();
+  let {
+    children,
+    label,
+    offset,
+    placement = 'top',
+  }: {
+    children?: Snippet;
+    label?: string;
+    offset?: OffsetOptions;
+    placement?: Placement;
+  } = $props();
+
   let reference = $state<HTMLDivElement>();
   let tooltip = $state<HTMLDivElement>();
   let arrow = $state<HTMLDivElement>();
@@ -23,19 +33,20 @@
   let tooltipStyle = $state<string>();
   let arrowStyle = $state<string>();
 
-  let join = (obj: Record<string, unknown>) =>
-    Object.keys(obj)
+  let join = (obj: Record<string, unknown>) => {
+    return Object.keys(obj)
       .reduce<string[]>((arr, key) => {
         return [...arr, `${key}: ${obj[key]}`];
       }, [])
       .join('; ');
+  };
 
   $effect(() => {
     if (isShown && reference && tooltip && arrow) {
       computePosition(reference, tooltip, {
-        placement: 'right',
+        placement,
         strategy: 'fixed',
-        middleware: [offsetMiddleware(offset ?? 5), flip(), shift({ padding: 5 }), arrowMiddleware({ element: arrow })],
+        middleware: [offsetMiddleware(offset ?? 5), arrowMiddleware({ element: arrow })],
       }).then(({ x, y, placement, middlewareData }) => {
         tooltipStyle = join({ left: px(x), top: px(y) });
         const arrow = middlewareData.arrow!;
@@ -55,7 +66,12 @@
   });
 </script>
 
-<svelte:window onclick={() => (show.reference = false)} />
+<svelte:window
+  onclick={() => {
+    show.reference = false;
+    show.tooltip = false;
+  }}
+/>
 
 {#if isShown}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -91,13 +107,16 @@
     --background: #333;
     position: fixed;
     z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     max-width: 320px;
     padding: 4px 8px;
     color: var(--color);
     background: var(--background);
-    font-size: 12px;
+    font-size: 11px;
     border-radius: 3px;
-    font-weight: 600;
+    cursor: default;
     > .arrow {
       position: absolute;
       background: var(--background);
