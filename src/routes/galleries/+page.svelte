@@ -1,18 +1,6 @@
 <script lang="ts">
-  import Icon from '$lib/components/icon.svelte';
-  import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
+  import Placeholder from '$lib/components/placeholder.svelte';
+  import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
 </script>
 
-<div class="page">
-  <Icon icon={TablerFileText} />
-</div>
-
-<style lang="scss">
-  .page {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-</style>
+<Placeholder icon={TablerPhoto} label="Your galleries" />

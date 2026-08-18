@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import Header from '$lib/components/backend/header/header.svelte';
-  import Title from '$lib/components/backend/header/title.svelte';
+  import Header from '$lib/components/header/header.svelte';
+  import Title from '$lib/components/header/title.svelte';
   import CancelButton from '$lib/playground/cancel-button.svelte';
   import Delete from '$lib/playground/galleries/delete/delete.svelte';
   import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';

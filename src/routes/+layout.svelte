@@ -9,7 +9,7 @@
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
   import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
   import TablerCode from '$lib/playground/icons/tabler--code.svelte';
-  import TablerFileText from '$lib/playground/icons/tabler--file-text.svelte';
+  import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
 
   let { children } = $props();
 
@@ -25,7 +25,7 @@
       tooltip: 'Index demo',
     },
     {
-      icon: TablerFileText,
+      icon: TablerPhoto,
       route: resolve('/galleries'),
       tooltip: 'Galleries demo',
     },

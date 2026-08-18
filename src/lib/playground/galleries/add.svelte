@@ -8,9 +8,9 @@
   import Row from '$lib/components/form/content/row.svelte';
   import Actions from '$lib/components/form/actions.svelte';
   import Input from '$lib/components/properties/input.svelte';
-  import { useGalleryProperties } from '../gallery.svelte.ts';
+  import { useGalleryProperties } from './gallery.svelte.ts';
 
-  let { onDone }: { onDone: (added: string | undefined) => void } = $props();
+  let { onDone }: { onDone: (id: string | undefined) => void } = $props();
 
   let properties = useGalleryProperties({
     isNew: true,
