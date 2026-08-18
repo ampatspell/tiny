@@ -11,7 +11,9 @@ const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) 
   const opts = options(_opts);
   const properties = useDataProperties({ data: getter(() => opts.data) });
   const name = properties.property('name', {
-    didUpdate: ({ after }) => permalink.update(slug(after, { replacement: '-' })),
+    didUpdate: ({ after }) => {
+      permalink.update(slug(after, { replacement: '-' }));
+    },
     validator: notBlank(),
   });
   const permalink = properties.property('permalink');
@@ -79,12 +81,15 @@ export const useEditGalleryProperties = (_opts: OptionsInput<UseEditGalleryPrope
     }
   };
 
+  const rollback = () => properties.rollback();
+
   return options(
     {
       name: getter(() => name),
       permalink: getter(() => permalink),
       isDirty: getter(() => isDirty),
       save,
+      rollback,
     },
     {
       name: 'EditGalleryProperties',

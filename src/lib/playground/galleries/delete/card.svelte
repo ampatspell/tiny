@@ -6,7 +6,7 @@
   import Row from '$lib/components/form/content/row.svelte';
   import Button from '$lib/components/button/button.svelte';
   import Actions from '$lib/components/form/actions.svelte';
-  import { widow } from '$lib/utils/string.js';
+  import Label from '$lib/components/form/content/label.svelte';
 
   let { onDone }: { onDone: (confirmed: boolean) => void } = $props();
 </script>
@@ -15,7 +15,9 @@
   <Form>
     <Header title="Delete gallery" />
     <Content>
-      <Row>{widow('Sure you want to delete this gallery?')}</Row>
+      <Row>
+        <Label value="Sure you want to delete this gallery?" />
+      </Row>
     </Content>
     <Actions>
       <Button label="Cancel" onClick={() => onDone(false)} />

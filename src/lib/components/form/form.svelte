@@ -11,7 +11,9 @@
 <style lang="scss">
   .form {
     padding: 10px;
-    width: 270px;
+    min-width: 270px;
+    max-width: 320px;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     gap: 10px;

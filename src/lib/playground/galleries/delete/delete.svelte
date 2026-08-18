@@ -35,7 +35,7 @@
   <Card onDone={resolve} />
 {/snippet}
 
-<Tooltip label="Delete this gallery" placement="left">
+<Tooltip label="Delete this gallery" placement="bottom-end">
   <Button bind:this={button} variant="light" onClick={onDelete}>
     <Icon icon={TablerTrashX} />
   </Button>

@@ -18,8 +18,7 @@
       },
       close: 'closed',
     });
-    let res = await floater.response;
-    console.log(res);
+    await floater.response;
   };
 </script>
 

@@ -7,7 +7,7 @@ import { addObject } from '$lib/utils/array.js';
 export type UseDataPropertyOptions<D extends Record<string, unknown>, K extends keyof D & string> = {
   data: D;
   key: K;
-  opts?: Omit<UsePropertyOptions<D[K]>, 'value'>;
+  prop?: Omit<UsePropertyOptions<D[K]>, 'value'>;
 };
 
 export const useDataProperty = <D extends Record<string, unknown>, K extends keyof D & string>(
@@ -18,9 +18,9 @@ export const useDataProperty = <D extends Record<string, unknown>, K extends key
   const key = $derived(opts.key);
 
   const property = useProperty<D[K]>({
-    ...opts,
+    ...opts.prop,
     value: getter(() => data[key]),
-    meta: getter(() => Object.assign({ label: capitalize(key) }, opts.opts?.meta)),
+    meta: getter(() => Object.assign({ label: capitalize(key) }, opts.prop?.meta)),
   });
 
   const value = $derived(property.value);
@@ -78,7 +78,7 @@ export const useDataProperties = <D extends Record<string, unknown>>(
     const prop = useDataProperty<D, K>({
       data: getter(() => opts.data),
       key,
-      opts: propertyOptions,
+      prop: propertyOptions,
     });
     addObject(properties, prop as unknown as DataProperty<D, string>);
     return prop;

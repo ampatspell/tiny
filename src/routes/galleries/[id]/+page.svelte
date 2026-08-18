@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import Header from '$lib/components/backend/header/header.svelte';
   import Title from '$lib/components/backend/header/title.svelte';
+  import Button from '$lib/components/button/button.svelte';
   import BusyButton from '$lib/playground/busy-button.svelte';
   import Delete from '$lib/playground/galleries/delete/delete.svelte';
   import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';
@@ -15,6 +16,7 @@
   let gallery = $derived(await getGalleryById({ id }));
   let properties = useEditGalleryProperties({ data: getter(() => gallery) });
   let onSave = () => properties.save();
+  let onCancel = () => properties.rollback();
 </script>
 
 {#if gallery}
@@ -24,6 +26,7 @@
       {#snippet accessories()}
         {#if properties.isDirty}
           <BusyButton label="Save" onClick={onSave} />
+          <Button label="Cancel" onClick={onCancel} />
         {/if}
         <Delete {gallery} />
       {/snippet}
