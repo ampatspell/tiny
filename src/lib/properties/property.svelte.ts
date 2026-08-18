@@ -50,16 +50,6 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
   let current = $state<T>(external);
   const value = $derived(current);
 
-  $effect.pre(() => {
-    if (!passive) {
-      untrack(() => update(external));
-    }
-  });
-
-  const context = usePropertiesContext();
-  const cancel = context._register({});
-  onCleanup(() => cancel());
-
   const update = (after: T) => {
     const before = current;
     if (before !== after) {
@@ -95,7 +85,7 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
   });
   const isDirty = $derived(current !== external);
   const isValid = $derived(!error);
-  const isTouched = $derived(context.isTouched);
+  const isTouched = $derived.by(() => context.isTouched);
   const touched = useTouchedProperty({
     context: getter(() => context),
     error: getter(() => error),
@@ -110,18 +100,44 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
     );
   });
 
-  return {
-    context,
-    value,
+  const identity = options({
+    value: getter(() => value),
     update,
     rollback,
-    isDirty,
-    isValid,
-    isTouched,
-    touched,
-    meta,
-  };
+    isDirty: getter(() => isDirty),
+    isValid: getter(() => isValid),
+    error: getter(() => error),
+    isTouched: getter(() => isTouched),
+    touched: getter(() => touched),
+    meta: getter(() => meta),
+  });
+
+  const context = usePropertiesContext();
+  const cancel = context._register(identity);
+  onCleanup(() => cancel());
+
+  $effect.pre(() => {
+    if (!passive) {
+      void external;
+      untrack(() => update(external));
+    }
+  });
+
+  return identity;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Property<T = any> = ReturnType<typeof useProperty<T>>;
+export type Property<T = any> = {
+  value: T;
+  update: (after: T) => void;
+  rollback: () => void;
+  isDirty: boolean;
+  isValid: boolean;
+  error: string | undefined;
+  isTouched: boolean;
+  touched: TouchedProperty;
+  meta: {
+    label?: string | undefined;
+    isRequired?: boolean | undefined;
+  };
+};

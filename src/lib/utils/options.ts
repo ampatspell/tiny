@@ -16,14 +16,14 @@ export type OptionsInput<T> = {
   [K in keyof T]: T[K] | OptionsGetter<T[K]>;
 };
 
-class Options<T> {
+export class Options<T> {
   constructor(args: OptionsInput<T>) {
     for (const key in args) {
       const arg = args[key];
       if (arg instanceof OptionsGetter) {
-        Object.defineProperty(this, key, { get: () => arg.value });
+        Object.defineProperty(this, key, { get: () => arg.value, enumerable: true });
       } else {
-        Object.defineProperty(this, key, { get: () => arg });
+        Object.defineProperty(this, key, { get: () => arg, enumerable: true });
       }
     }
   }

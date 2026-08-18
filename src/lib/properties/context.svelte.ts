@@ -1,6 +1,7 @@
 import { getContext, hasContext, setContext } from 'svelte';
 import type { Property, PropertyUpdatePair } from './property.svelte.ts';
 import { addObject, isTruthy, removeObject } from '$lib/utils/array.js';
+import { getter, options, type OptionsInput } from '$lib/utils/options.js';
 
 export type UpdateParams<T> = [property: Property<T>, pair: PropertyUpdatePair<T>];
 
@@ -9,93 +10,123 @@ export type Parent = {
   didUpdate: (...args: UpdateParams<unknown>) => void;
 };
 
-export class Properties {
-  private readonly _all: () => Property[];
+export type UsePropertiesOptions = {
+  all: Property[];
+};
 
-  constructor(all: () => Property[]) {
-    this._all = all;
-  }
+export const useProperties = (_opts: OptionsInput<UsePropertiesOptions>) => {
+  const opts = options(_opts);
 
-  readonly all = $derived.by(() => this._all());
-  readonly dirty = $derived.by(() => this.all.filter((prop) => prop.isDirty));
-  readonly valid = $derived.by(() => this.all.filter((prop) => prop.isValid));
-  readonly errored = $derived.by(() => this.all.filter((prop) => !prop.isValid));
+  const all = $derived(opts.all);
+  const dirty = $derived(all.filter((prop) => prop.isDirty));
+  const valid = $derived(all.filter((prop) => prop.isValid));
+  const errored = $derived(all.filter((prop) => !prop.isValid));
 
-  readonly isValid = $derived.by(() => this.errored.length === 0);
-  readonly isDirty = $derived.by(() => this.dirty.length > 0);
-}
+  const isValid = $derived(errored.length === 0);
+  const isDirty = $derived(dirty.length > 0);
 
-export class TouchedProperties {
-  private readonly _properties: Properties;
-  private readonly _isTouched: () => boolean;
+  return {
+    all,
+    dirty,
+    valid,
+    errored,
+    isValid,
+    isDirty,
+  };
+};
 
-  constructor(properties: Properties, isTouched: () => boolean) {
-    this._properties = properties;
-    this._isTouched = isTouched;
-  }
+export type Properties = ReturnType<typeof useProperties>;
 
-  private isTouched = $derived.by(() => this._isTouched());
+export type UseTouchedPropertiesOptions = {
+  properties: Properties;
+  isTouched: boolean;
+};
 
-  readonly all = $derived.by(() => this._properties.all);
-  readonly valid = $derived.by(() => (this.isTouched ? this._properties.valid : this.all));
-  readonly errored = $derived.by(() => (this.isTouched ? this._properties.errored : this.all));
+export const useTouchedProperties = (_opts: OptionsInput<UseTouchedPropertiesOptions>) => {
+  const opts = options(_opts);
+  const isTouched = $derived(opts.isTouched);
+  const properties = $derived(opts.properties);
 
-  readonly isValid = $derived.by(() => (this.isTouched ? this._properties.isValid : true));
-}
+  const all = $derived(properties.all);
+  const valid = $derived(isTouched ? properties.valid : all);
+  const errored = $derived(isTouched ? properties.errored : all);
+
+  const isValid = $derived(isTouched ? properties.isValid : true);
+
+  return {
+    all,
+    valid,
+    errored,
+    isValid,
+  };
+};
+
+export type TouchedProperties = ReturnType<typeof useTouchedProperties>;
 
 export type UsePropertiesContextOptions = {
   parent?: Parent | undefined;
 } & Partial<Parent>;
 
-export class PropertiesContext {
-  private readonly _opts: UsePropertiesContextOptions;
-  constructor(opts: UsePropertiesContextOptions) {
-    this._opts = opts;
-  }
+const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions>) => {
+  const opts = options(_opts);
 
-  readonly willUpdate = (property: Property<unknown>, pair: PropertyUpdatePair<unknown>) => {
-    this._opts.willUpdate?.(property, pair);
-    this._opts.parent?.willUpdate(property, pair);
+  const willUpdate = (property: Property<unknown>, pair: PropertyUpdatePair<unknown>) => {
+    opts.willUpdate?.(property, pair);
+    opts.parent?.willUpdate(property, pair);
   };
 
-  readonly didUpdate = (property: Property<unknown>, pair: PropertyUpdatePair<unknown>) => {
-    this._opts.didUpdate?.(property, pair);
-    this._opts.parent?.didUpdate(property, pair);
+  const didUpdate = (property: Property<unknown>, pair: PropertyUpdatePair<unknown>) => {
+    opts.didUpdate?.(property, pair);
+    opts.parent?.didUpdate(property, pair);
   };
 
-  isTouched = $state(false);
+  let isTouched = $state(false);
+  const _registered = $state.raw<Property[]>([]);
+  const properties = useProperties({ all: getter(() => _registered) });
+  const touched = useTouchedProperties({ properties, isTouched: getter(() => isTouched) });
 
-  private _registered = $state<Property[]>([]);
-  readonly properties = new Properties(() => this._registered);
-  readonly touched = new TouchedProperties(this.properties, () => this.isTouched);
-
-  readonly errors = $derived.by(() => this.properties.errored.map((p) => p.error).filter(isTruthy));
-  readonly isValid = $derived.by(() => this.properties.isValid);
-  readonly isDirty = $derived.by(() => this.properties.isDirty);
-
-  touch = () => {
-    this.isTouched = true;
-    return this.isValid;
+  const errors = $derived.by(() => properties.errored.map((p) => p.error).filter(isTruthy));
+  const isValid = $derived.by(() => properties.isValid);
+  const isDirty = $derived.by(() => properties.isDirty);
+  const touch = () => {
+    isTouched = true;
+    return isValid;
   };
 
-  rollback = () => {
-    this.properties.all.forEach((property) => property.rollback());
+  const rollback = () => {
+    properties.all.forEach((property) => property.rollback());
   };
 
-  readonly _register = (property: Property) => {
-    addObject(this._registered, property);
+  const _register = (property: Property) => {
+    addObject(_registered, property);
     return () => {
-      removeObject(this._registered, property);
+      removeObject(_registered, property);
     };
   };
-}
+
+  return options({
+    willUpdate,
+    didUpdate,
+    isTouched: getter(() => isTouched),
+    properties: getter(() => properties),
+    touched: getter(() => touched),
+    errors: getter(() => errors),
+    isValid: getter(() => isValid),
+    isDirty: getter(() => isDirty),
+    touch,
+    rollback,
+    _register,
+  });
+};
+
+export type PropertiesContext = ReturnType<typeof createPropertiesContext>;
 
 const key = 'properties-context';
 
 export const usePropertiesContext = () => {
   let context;
   if (!hasContext(key)) {
-    context = setContext(key, new PropertiesContext({}));
+    context = setContext(key, createPropertiesContext({}));
   } else {
     context = getContext(key) as PropertiesContext;
   }
@@ -104,5 +135,5 @@ export const usePropertiesContext = () => {
 
 export const nestPropertiesContext = (opts: Omit<UsePropertiesContextOptions, 'parent'> = {}) => {
   const parent = getContext(key) as PropertiesContext | undefined;
-  return setContext(key, new PropertiesContext({ ...opts, parent }));
+  return setContext(key, createPropertiesContext({ ...opts, parent }));
 };

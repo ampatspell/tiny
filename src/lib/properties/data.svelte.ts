@@ -1,26 +1,8 @@
-import { extract, type MaybeGetter } from 'runed';
-import { Property, type UsePropertyOptions } from './property.svelte.ts';
+import { useProperty, type UsePropertyOptions } from './property.svelte.ts';
 import { capitalize } from '$lib/utils/string.js';
 import { usePropertiesContext } from './context.svelte.ts';
 import { getter, options, type OptionsInput } from '$lib/utils/options.js';
-
-export class DataProperty<D extends Record<string, unknown>, K extends keyof D & string> extends Property<D[K]> {
-  readonly key: K;
-
-  constructor(data: MaybeGetter<D>, key: K, opts?: Omit<UsePropertyOptions<D[K]>, 'value'>) {
-    super({
-      ...opts,
-      value: () => extract(data)[key],
-      meta: Object.assign({ label: capitalize(key) }, opts?.meta),
-    });
-    this.key = key;
-  }
-
-  pack(data: Partial<D>) {
-    data[this.key] = this.value;
-    return data;
-  }
-}
+import { SvelteSet } from 'svelte/reactivity';
 
 export type UseDataPropertyOptions<D extends Record<string, unknown>, K extends keyof D & string> = {
   data: D;
@@ -29,12 +11,50 @@ export type UseDataPropertyOptions<D extends Record<string, unknown>, K extends 
 };
 
 export const useDataProperty = <D extends Record<string, unknown>, K extends keyof D & string>(
-  _opts: UseDataPropertyOptions<D, K>,
+  _opts: OptionsInput<UseDataPropertyOptions<D, K>>,
 ) => {
-  return {};
+  const opts = options(_opts);
+  const data = $derived(opts.data);
+  const key = $derived(opts.key);
+
+  const property = useProperty<D[K]>({
+    ...opts,
+    value: getter(() => data[key]),
+    meta: getter(() => Object.assign({ label: capitalize(key) }, opts.opts?.meta)),
+  });
+
+  const value = $derived(property.value);
+  const update = property.update;
+  const meta = $derived(property.meta);
+  const error = $derived(property.error);
+  const isDirty = $derived(property.isDirty);
+  const isTouched = $derived(property.isTouched);
+  const isValid = $derived(property.isValid);
+  const rollback = property.rollback;
+  const touched = $derived(property.touched);
+
+  const pack = (data: Partial<D>) => {
+    data[key] = value;
+    return data;
+  };
+
+  return options({
+    key: getter(() => key),
+    data: getter(() => data),
+    value: getter(() => value),
+    update,
+    rollback,
+    isDirty: getter(() => isDirty),
+    isValid: getter(() => isValid),
+    error: getter(() => error),
+    isTouched: getter(() => isTouched),
+    touched: getter(() => touched),
+    meta: getter(() => meta),
+    pack,
+  });
 };
 
-export type UseDataProperty<D extends Record<string, unknown>, K extends keyof D & string> = ReturnType<
+export type DataProperty<D extends Record<string, unknown>, K extends keyof D & string> = ReturnType<
   typeof useDataProperty<D, K>
 >;
 
@@ -47,11 +67,14 @@ export const useDataProperties = <D extends Record<string, unknown>>(
 ) => {
   const opts = options(_opts);
   const context = usePropertiesContext();
-  const properties: DataProperty<D, string>[] = [];
-
+  const properties = new SvelteSet<DataProperty<D, string>>();
   const property = <K extends keyof D & string>(key: K, propertyOptions?: Omit<UsePropertyOptions<D[K]>, 'value'>) => {
-    const prop = useDataProperty<D, K>(opts.data, key, propertyOptions);
-    properties.push(prop as unknown as DataProperty<D, string>);
+    const prop = useDataProperty<D, K>({
+      data: getter(() => opts.data),
+      key,
+      opts: propertyOptions,
+    });
+    properties.add(prop as unknown as DataProperty<D, string>);
     return prop;
   };
 
@@ -99,4 +122,4 @@ export const useDataProperties = <D extends Record<string, unknown>>(
   });
 };
 
-export type UseDataProperties<D extends Record<string, unknown>> = ReturnType<typeof useDataProperties<D>>;
+export type DataProperties<D extends Record<string, unknown>> = ReturnType<typeof useDataProperties<D>>;
