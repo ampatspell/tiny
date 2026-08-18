@@ -26,7 +26,7 @@
 
 <Card>
   <Form>
-    <Header title="Add new gallery" />
+    <Header title="New gallery" />
     <Content>
       <Row>
         <Input property={name} />
