@@ -2,7 +2,7 @@
   import Button from '$lib/components/button/button.svelte';
   import Icon from '$lib/components/button/icon.svelte';
   import Label from '$lib/components/button/label.svelte';
-  import TablerCloudUp from './icons/tabler--cloud-up.svelte';
+  import TablerCloudFilled from './icons/tabler--cloud-filled.svelte';
   import TablerCloud from './icons/tabler--cloud.svelte';
 
   let { label, onClick: _onClick }: { label: string; onClick: () => Promise<void> } = $props();
@@ -18,7 +18,7 @@
     }
   };
 
-  let icon = $derived(isBusy ? TablerCloudUp : TablerCloud);
+  let icon = $derived(isBusy ? TablerCloudFilled : TablerCloud);
 </script>
 
 <Button {onClick} {isBusy}>

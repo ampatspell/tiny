@@ -2,12 +2,12 @@
   import { page } from '$app/state';
   import Header from '$lib/components/backend/header/header.svelte';
   import Title from '$lib/components/backend/header/title.svelte';
-  import Button from '$lib/components/button/button.svelte';
-  import BusyButton from '$lib/playground/busy-button.svelte';
+  import CancelButton from '$lib/playground/cancel-button.svelte';
   import Delete from '$lib/playground/galleries/delete/delete.svelte';
   import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';
   import { useEditGalleryProperties } from '$lib/playground/galleries/gallery.svelte.js';
   import Properties from '$lib/playground/galleries/properties.svelte';
+  import SaveButton from '$lib/playground/save-button.svelte';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
   import { getter } from '$lib/utils/options.svelte.js';
 
@@ -25,8 +25,8 @@
       <Title label={gallery.name} />
       {#snippet accessories()}
         {#if properties.isDirty}
-          <BusyButton label="Save" onClick={onSave} />
-          <Button label="Cancel" onClick={onCancel} />
+          <SaveButton {onSave} />
+          <CancelButton {onCancel} />
         {/if}
         <Delete {gallery} />
       {/snippet}
