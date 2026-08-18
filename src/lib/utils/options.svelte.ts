@@ -45,7 +45,7 @@ export const serialize = (obj: unknown) => {
 
 export const options = <T extends object>(
   args: OptionsInput<T>,
-  meta?: { name: string; serialized: (keyof T)[] },
+  meta?: { name: string; serialized?: (keyof T)[] },
 ): T => {
   if (isOptions(args)) {
     return args as T;
@@ -67,7 +67,7 @@ export const options = <T extends object>(
 
   const serialized = $derived.by(() => {
     const hash: Record<PropertyKey, unknown> = {};
-    meta.serialized.forEach((key) => {
+    (meta.serialized ?? []).forEach((key) => {
       const value = obj[key];
       if (value !== undefined) {
         hash[key] = value;

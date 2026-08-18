@@ -3,9 +3,9 @@
   import Row from '$lib/components/form/content/row.svelte';
   import Form from '$lib/components/form/form.svelte';
   import Input from '$lib/components/properties/input.svelte';
-  import type { UseEditGalleryProperties } from './gallery.svelte.ts';
+  import type { EditGalleryProperties } from './gallery.svelte.ts';
 
-  let { properties }: { properties: UseEditGalleryProperties } = $props();
+  let { properties }: { properties: EditGalleryProperties } = $props();
   let { name, permalink } = $derived(properties);
 </script>
 

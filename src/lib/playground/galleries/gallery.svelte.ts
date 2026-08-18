@@ -22,9 +22,9 @@ const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) 
   };
 };
 
-export type UseNewGalleryPropertiesOptions = { onSaved: (id: string) => void };
+export type NewGalleryPropertiesOptions = { onSaved: (id: string) => void };
 
-export const useNewGalleryProperties = (_opts: OptionsInput<UseNewGalleryPropertiesOptions>) => {
+export const useNewGalleryProperties = (_opts: OptionsInput<NewGalleryPropertiesOptions>) => {
   const opts = options(_opts);
   const base = useGalleryProperties({ data: { name: '', permalink: '' } });
   const properties = $derived(base.properties);
@@ -40,11 +40,16 @@ export const useNewGalleryProperties = (_opts: OptionsInput<UseNewGalleryPropert
       onSaved(id);
     }
   };
-  return options({
-    name: getter(() => name),
-    permalink: getter(() => permalink),
-    save,
-  });
+  return options(
+    {
+      name: getter(() => name),
+      permalink: getter(() => permalink),
+      save,
+    },
+    {
+      name: 'NewGalleryProperties',
+    },
+  );
 };
 
 export type UseEditGalleryPropertiesOptions = {
@@ -74,12 +79,17 @@ export const useEditGalleryProperties = (_opts: OptionsInput<UseEditGalleryPrope
     }
   };
 
-  return options({
-    name: getter(() => name),
-    permalink: getter(() => permalink),
-    isDirty: getter(() => isDirty),
-    save,
-  });
+  return options(
+    {
+      name: getter(() => name),
+      permalink: getter(() => permalink),
+      isDirty: getter(() => isDirty),
+      save,
+    },
+    {
+      name: 'EditGalleryProperties',
+    },
+  );
 };
 
-export type UseEditGalleryProperties = ReturnType<typeof useEditGalleryProperties>;
+export type EditGalleryProperties = ReturnType<typeof useEditGalleryProperties>;
