@@ -2,8 +2,8 @@ import * as v from 'valibot';
 import { command, query } from '$app/server';
 import { getDatabase } from '../services.ts';
 import { uid } from '$lib/server/utils.js';
-import type { RemoteResource } from '@sveltejs/kit';
 import { omit } from '$lib/utils/object.js';
+import type { QueryResponse } from '$lib/utils/utils.js';
 
 export const getGalleries = query(async () => {
   const db = getDatabase();
@@ -15,7 +15,7 @@ export const getGalleryById = query(v.strictObject({ id: v.string() }), async ({
   return await db.selectFrom('galleries').where('id', '==', id).selectAll().executeTakeFirstOrThrow();
 });
 
-export type GalleryData = ReturnType<typeof getGalleryById> extends RemoteResource<infer R> ? R : undefined;
+export type GalleryData = QueryResponse<typeof getGalleryById>;
 
 export const addGallery = command(
   v.strictObject({
