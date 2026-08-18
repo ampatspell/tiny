@@ -1,14 +1,28 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+  import type { ResolvedPathname } from '$app/types';
   import type { Snippet } from 'svelte';
 
-  let { top, children }: { top?: Snippet; children?: Snippet } = $props();
+  let { top, children, route }: { top?: Snippet; children?: Snippet; route?: ResolvedPathname } = $props();
+
+  let list = $state<HTMLElement>();
+
+  let onclick = (e: MouseEvent) => {
+    if (e.target === list) {
+      if (route) {
+        goto(route);
+      }
+    }
+  };
 </script>
 
-<div class="list">
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="list" {onclick}>
   {@render top?.()}
   <div class="content">
     <div class="overflow">
-      <div class="content">
+      <div class="content" bind:this={list}>
         {@render children?.()}
       </div>
     </div>

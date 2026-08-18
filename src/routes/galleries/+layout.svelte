@@ -18,7 +18,7 @@
 
 <div class="page">
   <div class="sidebar">
-    <List>
+    <List route={resolve('/galleries')}>
       {#snippet top()}
         <Header>
           <Title label="Galleries" />
