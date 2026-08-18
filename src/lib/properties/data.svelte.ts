@@ -38,20 +38,26 @@ export const useDataProperty = <D extends Record<string, unknown>, K extends key
     return data;
   };
 
-  return options({
-    key: getter(() => key),
-    data: getter(() => data),
-    value: getter(() => value),
-    update,
-    rollback,
-    isDirty: getter(() => isDirty),
-    isValid: getter(() => isValid),
-    error: getter(() => error),
-    isTouched: getter(() => isTouched),
-    touched: getter(() => touched),
-    meta: getter(() => meta),
-    pack,
-  });
+  return options(
+    {
+      key: getter(() => key),
+      data: getter(() => data),
+      value: getter(() => value),
+      update,
+      rollback,
+      isDirty: getter(() => isDirty),
+      isValid: getter(() => isValid),
+      error: getter(() => error),
+      isTouched: getter(() => isTouched),
+      touched: getter(() => touched),
+      meta: getter(() => meta),
+      pack,
+    },
+    {
+      name: 'DataProperty',
+      serialized: ['key', 'value', 'isDirty', 'isValid'],
+    },
+  );
 };
 
 export type DataProperty<D extends Record<string, unknown>, K extends keyof D & string> = ReturnType<
@@ -107,19 +113,25 @@ export const useDataProperties = <D extends Record<string, unknown>>(
   const isValid = $derived(context.isValid);
   const isDirty = $derived(context.isDirty);
 
-  return options({
-    context,
-    property,
-    data: getter(() => data),
-    dirty: getter(() => dirty),
-    touch,
-    rollback,
-    touched: getter(() => touched),
-    errors: getter(() => errors),
-    isTouched: getter(() => isTouched),
-    isValid: getter(() => isValid),
-    isDirty: getter(() => isDirty),
-  });
+  return options(
+    {
+      context,
+      property,
+      data: getter(() => data),
+      dirty: getter(() => dirty),
+      touch,
+      rollback,
+      touched: getter(() => touched),
+      errors: getter(() => errors),
+      isTouched: getter(() => isTouched),
+      isValid: getter(() => isValid),
+      isDirty: getter(() => isDirty),
+    },
+    {
+      name: 'DataProperties',
+      serialized: ['isDirty', 'isValid'],
+    },
+  );
 };
 
 export type DataProperties<D extends Record<string, unknown>> = ReturnType<typeof useDataProperties<D>>;

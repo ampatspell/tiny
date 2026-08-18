@@ -104,19 +104,25 @@ const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions
     };
   };
 
-  return options({
-    willUpdate,
-    didUpdate,
-    isTouched: getter(() => isTouched),
-    properties: getter(() => properties),
-    touched: getter(() => touched),
-    errors: getter(() => errors),
-    isValid: getter(() => isValid),
-    isDirty: getter(() => isDirty),
-    touch,
-    rollback,
-    _register,
-  });
+  return options(
+    {
+      willUpdate,
+      didUpdate,
+      isTouched: getter(() => isTouched),
+      properties: getter(() => properties),
+      touched: getter(() => touched),
+      errors: getter(() => errors),
+      isValid: getter(() => isValid),
+      isDirty: getter(() => isDirty),
+      touch,
+      rollback,
+      _register,
+    },
+    {
+      name: 'PropertiesContext',
+      serialized: ['isDirty', 'isValid'],
+    },
+  );
 };
 
 export type PropertiesContext = ReturnType<typeof createPropertiesContext>;
