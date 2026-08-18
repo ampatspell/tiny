@@ -6,10 +6,11 @@
   import { useDataProperties, DataProperty } from '$lib/properties/data.svelte.js';
   import BusyButton from '../busy-button.svelte';
   import { run } from '$lib/utils/utils.js';
+  import { getter } from '$lib/utils/options.js';
 
   usePropertiesContext();
   let index = $derived(await getIndex());
-  let props = useDataProperties(() => index);
+  let props = useDataProperties({ data: getter(() => index) });
 
   let title = props.property('title');
   let description = props.property('description');

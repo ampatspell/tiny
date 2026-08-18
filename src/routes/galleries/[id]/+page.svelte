@@ -8,11 +8,12 @@
   import { useEditGalleryProperties } from '$lib/playground/galleries/gallery.svelte.js';
   import Properties from '$lib/playground/galleries/properties.svelte';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
+  import { getter } from '$lib/utils/options.js';
 
   let id = $derived(page.params.id!);
   usePropertiesContext();
   let gallery = $derived(await getGalleryById({ id }));
-  let properties = useEditGalleryProperties({ data: () => gallery });
+  let properties = useEditGalleryProperties({ data: getter(() => gallery) });
   let onSave = () => properties.save();
 </script>
 

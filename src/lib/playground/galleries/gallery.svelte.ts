@@ -1,16 +1,15 @@
-import { extract, type MaybeGetter } from 'runed';
 import { addGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
 import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
 import type { OmitId } from '$lib/utils/utils.js';
 import { slug } from '$lib/utils/string.js';
-import { getter, options } from '$lib/utils/options.js';
+import { getter, options, type OptionsInput } from '$lib/utils/options.js';
 
-export type UseGalleryPropertiesOptions = { data: MaybeGetter<OmitId<GalleryData>> };
+export type UseGalleryPropertiesOptions = { data: OmitId<GalleryData> };
 
-const useGalleryProperties = (_opts: UseGalleryPropertiesOptions) => {
+const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) => {
   const opts = options(_opts);
-  const properties = useDataProperties(opts.data);
+  const properties = useDataProperties({ data: getter(() => opts.data) });
   const name = properties.property('name', {
     didUpdate: ({ after }) => permalink.update(slug(after, { replacement: '-' })),
     validator: notBlank(),
@@ -25,7 +24,8 @@ const useGalleryProperties = (_opts: UseGalleryPropertiesOptions) => {
 
 export type UseNewGalleryPropertiesOptions = { onSaved: (id: string) => void };
 
-export const useNewGalleryProperties = (opts: UseNewGalleryPropertiesOptions) => {
+export const useNewGalleryProperties = (_opts: OptionsInput<UseNewGalleryPropertiesOptions>) => {
+  const opts = options(_opts);
   const base = useGalleryProperties({ data: { name: '', permalink: '' } });
   const properties = $derived(base.properties);
 
@@ -48,14 +48,15 @@ export const useNewGalleryProperties = (opts: UseNewGalleryPropertiesOptions) =>
 };
 
 export type UseEditGalleryPropertiesOptions = {
-  data: MaybeGetter<GalleryData>;
+  data: GalleryData;
   onSaved?: () => void;
 };
 
-export const useEditGalleryProperties = (opts: UseEditGalleryPropertiesOptions) => {
-  const base = useGalleryProperties({ data: opts.data });
+export const useEditGalleryProperties = (_opts: OptionsInput<UseEditGalleryPropertiesOptions>) => {
+  const opts = options(_opts);
+  const data = $derived(opts.data);
+  const base = useGalleryProperties({ data: getter(() => data) });
   const properties = $derived(base.properties);
-  const data = $derived(extract(opts.data));
   const id = $derived(data.id);
 
   const name = $derived(base.name);
