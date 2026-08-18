@@ -3,6 +3,7 @@ import { command, query } from '$app/server';
 import { getDatabase } from '../services.ts';
 import { uid } from '$lib/server/utils.js';
 import type { RemoteResource } from '@sveltejs/kit';
+import { omit } from '$lib/utils/object.js';
 
 export const getGalleries = query(async () => {
   const db = getDatabase();
@@ -34,6 +35,24 @@ export const addGallery = command(
     getGalleries().refresh();
 
     return id;
+  },
+);
+
+export const updateGallery = command(
+  v.strictObject({
+    id: v.string(),
+    name: v.optional(v.string()),
+    permalink: v.optional(v.string()),
+  }),
+  async (props) => {
+    await getDatabase()
+      .updateTable('galleries')
+      .set(omit(props, ['id']))
+      .where('id', '==', props.id)
+      .execute();
+
+    getGalleries().refresh();
+    getGalleryById({ id: props.id }).refresh();
   },
 );
 

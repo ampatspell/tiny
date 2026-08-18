@@ -43,3 +43,11 @@ export const description = (object: object, serialized?: Record<PropertyKey, unk
   const props = serializedToString(serialized);
   return `<${nameOf(object)}:${guidFor(object)}${props ? ` {${props}}` : ''}>`;
 };
+
+export const omit = <T extends object, K extends keyof T>(obj: T, keys: K[]): Omit<T, K> => {
+  const result = { ...obj };
+  for (const key of keys) {
+    delete result[key];
+  }
+  return result;
+};

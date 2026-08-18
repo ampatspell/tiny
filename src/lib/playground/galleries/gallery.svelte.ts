@@ -1,38 +1,57 @@
-import type { MaybeGetter } from 'runed';
-import type { GalleryData } from './galleries.remote.ts';
-import { useDataProperties, type DataProperties } from '$lib/properties/data.svelte.js';
-import type { Property } from '$lib/properties/property.svelte.js';
+import { extract, type MaybeGetter } from 'runed';
+import { addGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
+import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
 import slug from 'slug';
 
-export type Data = Omit<GalleryData, 'id'>;
+const useGalleryProperties = ({ data }: { data: MaybeGetter<Omit<GalleryData, 'id'>> }) => {
+  const properties = useDataProperties(data);
 
-export type UsedGalleryPropertiesOptions = {
-  data: MaybeGetter<Data>;
+  const name = properties.property('name', {
+    didUpdate: ({ after }) => permalink.update(slug(after, { replacement: '-' })),
+    validator: notBlank(),
+  });
+
+  const permalink = properties.property('permalink');
+
+  return { properties, name, permalink };
 };
 
-export class UsedGalleryProperties {
-  private readonly _opts: UsedGalleryPropertiesOptions;
-  private readonly _properties: DataProperties<Data>;
+export const useNewGalleryProperties = ({ onSaved }: { onSaved: (id: string) => void }) => {
+  const base = useGalleryProperties({ data: { name: '', permalink: '' } });
+  const { properties } = base;
 
-  readonly name: Property<string>;
-  readonly permalink: Property<string>;
+  const save = async () => {
+    if (properties.touch()) {
+      const data = properties.data;
+      const id = await addGallery(data);
+      onSaved(id);
+    }
+  };
 
-  constructor(opts: UsedGalleryPropertiesOptions) {
-    this._opts = opts;
-    this._properties = useDataProperties(this._opts.data);
-    this.name = this._properties.property('name', {
-      didUpdate: ({ after }) => this.permalink.update(slug(after, { replacement: '-' })),
-      validator: notBlank(),
-    });
-    this.permalink = this._properties.property('permalink');
-  }
+  return { ...base, save };
+};
 
-  readonly touch = () => this._properties.touch();
-  readonly data = $derived.by(() => this._properties.data);
-  readonly dirty = $derived.by(() => this._properties.dirty);
-}
+export const useEditGalleryProperties = ({
+  data,
+  onSaved,
+}: {
+  data: MaybeGetter<GalleryData>;
+  onSaved: () => void;
+}) => {
+  const id = $derived(extract(data).id);
+  const base = useGalleryProperties({ data });
+  const { properties } = base;
 
-export const useGalleryProperties = (opts: UsedGalleryPropertiesOptions) => {
-  return new UsedGalleryProperties(opts);
+  const save = async () => {
+    if (properties.touch()) {
+      const data = properties.dirty;
+      if (data) {
+        await updateGallery({ id, ...data });
+        onSaved();
+      }
+    }
+  };
+
+  return { ...base, save };
 };
