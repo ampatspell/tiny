@@ -2,12 +2,18 @@
   import { page } from '$app/state';
   import Header from '$lib/components/backend/header/header.svelte';
   import Title from '$lib/components/backend/header/title.svelte';
+  import BusyButton from '$lib/playground/busy-button.svelte';
   import Delete from '$lib/playground/galleries/delete/delete.svelte';
   import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';
+  import { useEditGalleryProperties } from '$lib/playground/galleries/gallery.svelte.js';
   import Properties from '$lib/playground/galleries/properties.svelte';
+  import { usePropertiesContext } from '$lib/properties/context.svelte.js';
 
   let id = $derived(page.params.id!);
+  usePropertiesContext();
   let gallery = $derived(await getGalleryById({ id }));
+  let properties = useEditGalleryProperties({ data: () => gallery });
+  let onSave = () => properties.save();
 </script>
 
 {#if gallery}
@@ -15,11 +21,14 @@
     <Header>
       <Title label={gallery.name} />
       {#snippet accessories()}
+        {#if properties.isDirty}
+          <BusyButton label="Save" onClick={onSave} />
+        {/if}
         <Delete {gallery} />
       {/snippet}
     </Header>
     <div class="content">
-      <Properties {gallery} />
+      <Properties {properties} />
     </div>
   </div>
 {/if}

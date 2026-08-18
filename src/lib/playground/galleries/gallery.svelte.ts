@@ -52,6 +52,8 @@ export const useEditGalleryProperties = ({
     name = $derived(base.name);
     permalink = $derived(base.permalink);
 
+    isDirty = $derived(base.properties.isDirty);
+
     save = async () => {
       if (properties.touch()) {
         const data = properties.dirty;
@@ -65,3 +67,5 @@ export const useEditGalleryProperties = ({
   }
   return new UseEditGalleryProperties();
 };
+
+export type UseEditGalleryProperties = ReturnType<typeof useEditGalleryProperties>;
