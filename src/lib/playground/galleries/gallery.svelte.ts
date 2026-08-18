@@ -37,7 +37,7 @@ export const useEditGalleryProperties = ({
   onSaved,
 }: {
   data: MaybeGetter<GalleryData>;
-  onSaved: () => void;
+  onSaved?: () => void;
 }) => {
   const id = $derived(extract(data).id);
   const base = useGalleryProperties({ data });
@@ -48,7 +48,7 @@ export const useEditGalleryProperties = ({
       const data = properties.dirty;
       if (data) {
         await updateGallery({ id, ...data });
-        onSaved();
+        onSaved?.();
       }
     }
   };
