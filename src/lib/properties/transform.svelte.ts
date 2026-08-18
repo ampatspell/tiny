@@ -1,4 +1,4 @@
-import { getter } from '$lib/utils/options.svelte.ts';
+import { getter } from '$lib/utils/options.svelte.js';
 import { useProperty, type Property } from './property.svelte.ts';
 
 export type Transformer<S, T> = {
