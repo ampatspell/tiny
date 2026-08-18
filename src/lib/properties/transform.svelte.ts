@@ -1,3 +1,4 @@
+import { getter } from '$lib/utils/options.svelte.js';
 import { useProperty, type Property } from './property.svelte.ts';
 
 export type Transformer<S, T> = {
@@ -8,7 +9,7 @@ export type Transformer<S, T> = {
 export const transform = <S, T>(property: Property<S>, transformer: Transformer<S, T>) => {
   const { rollback: onRollback } = property;
   return useProperty<T>({
-    value: () => transformer.toTarget(property.value),
+    value: getter(() => transformer.toTarget(property.value)),
     didUpdate: ({ after }) => property.update(transformer.toSource(after)),
     onRollback,
   });

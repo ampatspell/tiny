@@ -1,19 +1,29 @@
 import { extract, onCleanup, type MaybeGetter } from 'runed';
 import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 import { untrack } from 'svelte';
+import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
-export class TouchedProperty {
-  private readonly _property: Property;
+export type UseTouchedPropertyOptions = {
+  context: PropertiesContext;
+  isValid: boolean;
+  error: string | undefined;
+};
 
-  constructor(property: Property) {
-    this._property = property;
-  }
+export const useTouchedProperty = (_opts: OptionsInput<UseTouchedPropertyOptions>) => {
+  const opts = options(_opts);
 
-  private readonly isTouched = $derived.by(() => this._property.context.isTouched);
+  const isTouched = $derived(opts.context.isTouched);
+  const isValid = $derived(isTouched ? opts.isValid : true);
+  const error = $derived(isTouched ? opts.error : undefined);
 
-  readonly isValid = $derived.by(() => (this.isTouched ? this._property.isValid : true));
-  readonly error = $derived.by(() => (this.isTouched ? this._property.error : undefined));
-}
+  return options({
+    isTouched: getter(() => isTouched),
+    isValid: getter(() => isValid),
+    error: getter(() => error),
+  });
+};
+
+export type TouchedProperty = ReturnType<typeof useTouchedProperty>;
 
 export type PropertyUpdatePair<T> = { before: T; after: T };
 
@@ -23,8 +33,8 @@ export type Validator<T> = {
 };
 
 export type UsePropertyOptions<T> = {
-  readonly value: MaybeGetter<T>;
-  readonly passive?: MaybeGetter<boolean>;
+  readonly value: T;
+  readonly passive?: boolean;
   readonly willUpdate?: (opts: PropertyUpdatePair<T>) => void;
   readonly didUpdate?: (opts: PropertyUpdatePair<T>) => void;
   readonly onRollback?: () => void;
@@ -33,49 +43,32 @@ export type UsePropertyOptions<T> = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class Property<T = any> {
-  private readonly _opts: UsePropertyOptions<T>;
-  readonly passive = $derived.by(() => extract(this._opts.passive, false));
-  private readonly external = $derived.by(() => extract(this._opts.value));
-  private current: T;
-  readonly value = $derived.by(() => this.current);
-  readonly context: PropertiesContext;
+export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>) => {
+  const opts = options(_opts);
+  const passive = $derived(opts.passive ?? false);
+  const external = $derived(opts.value);
+  let current = $state<T>(external);
+  const value = $derived(current);
 
-  constructor(opts: UsePropertyOptions<T>) {
-    this._opts = opts;
-    this.current = $state(this.external);
-    $effect.pre(() => {
-      if (!this.passive) {
-        const external = this.external;
-        untrack(() => this.update(external));
-      }
-    });
-
-    this.context = usePropertiesContext();
-    const cancel = this.context._register(this);
-    onCleanup(() => cancel());
-  }
-
-  readonly update = (after: T) => {
-    const before = this.current;
+  const update = (after: T) => {
+    const before = current;
     if (before !== after) {
       const pair = { before, after };
-      this._opts.willUpdate?.(pair);
-      this.current = after;
-      this._opts.didUpdate?.(pair);
+      opts.willUpdate?.(pair);
+      current = after;
+      opts.didUpdate?.(pair);
     }
   };
 
-  readonly rollback = () => {
-    this.update(this.external);
+  const rollback = () => {
+    update(external);
   };
 
-  readonly validator = $derived.by(() => this._opts.validator);
-
-  readonly error = $derived.by(() => {
-    const fn = this.validator?.validate;
+  const validator = $derived(opts.validator);
+  const error = $derived.by(() => {
+    const fn = validator?.validate;
     if (fn) {
-      const res = fn(this.current);
+      const res = fn(current);
       if (typeof res === 'string' && res === '') {
         throw new Error(`Don't use blank string as an validation result. It is ambiguous`);
       }
@@ -90,21 +83,67 @@ export class Property<T = any> {
     }
     return undefined;
   });
-
-  readonly isDirty = $derived.by(() => this.current !== this.external);
-  readonly isValid = $derived.by(() => !this.error);
-
-  readonly isTouched = $derived.by(() => this.context.isTouched);
-  readonly touched = new TouchedProperty(this);
-
-  readonly meta = $derived.by(() => {
+  const isDirty = $derived(current !== external);
+  const isValid = $derived(!error);
+  const isTouched = $derived.by(() => context.isTouched);
+  const touched = useTouchedProperty({
+    context: getter(() => context),
+    error: getter(() => error),
+    isValid: getter(() => isValid),
+  });
+  const meta = $derived.by(() => {
     return Object.assign(
       {
-        isRequired: extract(this.validator?.isRequired),
+        isRequired: extract(validator?.isRequired),
       },
-      $state.snapshot(this._opts.meta),
+      $state.snapshot(opts.meta),
     );
   });
-}
 
-export const useProperty = <T>(opts: UsePropertyOptions<T>) => new Property<T>(opts);
+  const identity = options(
+    {
+      value: getter(() => value),
+      update,
+      rollback,
+      isDirty: getter(() => isDirty),
+      isValid: getter(() => isValid),
+      error: getter(() => error),
+      isTouched: getter(() => isTouched),
+      touched: getter(() => touched),
+      meta: getter(() => meta),
+    },
+    {
+      name: 'Property',
+      serialized: ['value', 'isDirty', 'isValid'],
+    },
+  );
+
+  const context = usePropertiesContext();
+  const cancel = context._register(identity);
+  onCleanup(() => cancel());
+
+  $effect.pre(() => {
+    if (!passive) {
+      void external;
+      untrack(() => update(external));
+    }
+  });
+
+  return identity;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Property<T = any> = {
+  value: T;
+  update: (after: T) => void;
+  rollback: () => void;
+  isDirty: boolean;
+  isValid: boolean;
+  error: string | undefined;
+  isTouched: boolean;
+  touched: TouchedProperty;
+  meta: {
+    label?: string | undefined;
+    isRequired?: boolean | undefined;
+  };
+};

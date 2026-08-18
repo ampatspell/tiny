@@ -3,13 +3,14 @@
   import Input from '$lib/components/input.svelte';
   import { getIndex, updateIndex, updateIndexFile } from './index.remote.js';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
-  import { useDataProperties, DataProperty } from '$lib/properties/data.svelte.js';
+  import { useDataProperties, type DataProperty } from '$lib/properties/data.svelte.js';
   import BusyButton from '../busy-button.svelte';
   import { run } from '$lib/utils/utils.js';
+  import { getter } from '$lib/utils/options.svelte.js';
 
   usePropertiesContext();
   let index = $derived(await getIndex());
-  let props = useDataProperties(() => index);
+  let props = useDataProperties({ data: getter(() => index) });
 
   let title = props.property('title');
   let description = props.property('description');

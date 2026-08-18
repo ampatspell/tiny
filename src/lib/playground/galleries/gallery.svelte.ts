@@ -1,16 +1,15 @@
-import { extract, type MaybeGetter } from 'runed';
 import { addGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
 import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
 import type { OmitId } from '$lib/utils/utils.js';
 import { slug } from '$lib/utils/string.js';
-import { getter, options } from '$lib/utils/options.js';
+import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
-export type UseGalleryPropertiesOptions = { data: MaybeGetter<OmitId<GalleryData>> };
+export type UseGalleryPropertiesOptions = { data: OmitId<GalleryData> };
 
-const useGalleryProperties = (_opts: UseGalleryPropertiesOptions) => {
+const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) => {
   const opts = options(_opts);
-  const properties = useDataProperties(opts.data);
+  const properties = useDataProperties({ data: getter(() => opts.data) });
   const name = properties.property('name', {
     didUpdate: ({ after }) => permalink.update(slug(after, { replacement: '-' })),
     validator: notBlank(),
@@ -23,9 +22,10 @@ const useGalleryProperties = (_opts: UseGalleryPropertiesOptions) => {
   };
 };
 
-export type UseNewGalleryPropertiesOptions = { onSaved: (id: string) => void };
+export type NewGalleryPropertiesOptions = { onSaved: (id: string) => void };
 
-export const useNewGalleryProperties = (opts: UseNewGalleryPropertiesOptions) => {
+export const useNewGalleryProperties = (_opts: OptionsInput<NewGalleryPropertiesOptions>) => {
+  const opts = options(_opts);
   const base = useGalleryProperties({ data: { name: '', permalink: '' } });
   const properties = $derived(base.properties);
 
@@ -40,22 +40,28 @@ export const useNewGalleryProperties = (opts: UseNewGalleryPropertiesOptions) =>
       onSaved(id);
     }
   };
-  return options({
-    name: getter(() => name),
-    permalink: getter(() => permalink),
-    save,
-  });
+  return options(
+    {
+      name: getter(() => name),
+      permalink: getter(() => permalink),
+      save,
+    },
+    {
+      name: 'NewGalleryProperties',
+    },
+  );
 };
 
 export type UseEditGalleryPropertiesOptions = {
-  data: MaybeGetter<GalleryData>;
+  data: GalleryData;
   onSaved?: () => void;
 };
 
-export const useEditGalleryProperties = (opts: UseEditGalleryPropertiesOptions) => {
-  const base = useGalleryProperties({ data: opts.data });
+export const useEditGalleryProperties = (_opts: OptionsInput<UseEditGalleryPropertiesOptions>) => {
+  const opts = options(_opts);
+  const data = $derived(opts.data);
+  const base = useGalleryProperties({ data: getter(() => data) });
   const properties = $derived(base.properties);
-  const data = $derived(extract(opts.data));
   const id = $derived(data.id);
 
   const name = $derived(base.name);
@@ -73,12 +79,17 @@ export const useEditGalleryProperties = (opts: UseEditGalleryPropertiesOptions) 
     }
   };
 
-  return options({
-    name: getter(() => name),
-    permalink: getter(() => permalink),
-    isDirty: getter(() => isDirty),
-    save,
-  });
+  return options(
+    {
+      name: getter(() => name),
+      permalink: getter(() => permalink),
+      isDirty: getter(() => isDirty),
+      save,
+    },
+    {
+      name: 'EditGalleryProperties',
+    },
+  );
 };
 
-export type UseEditGalleryProperties = ReturnType<typeof useEditGalleryProperties>;
+export type EditGalleryProperties = ReturnType<typeof useEditGalleryProperties>;
