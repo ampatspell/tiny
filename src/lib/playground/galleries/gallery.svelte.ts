@@ -1,4 +1,4 @@
-import { addGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
+import { addGallery, deleteGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
 import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
 import type { OmitId } from '$lib/utils/utils.js';
@@ -57,6 +57,13 @@ export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOpt
     }
   };
 
+  const destroy = async () => {
+    if (!opts.isNew) {
+      const id = opts.data.id;
+      await deleteGallery({ id });
+    }
+  };
+
   const rollback = () => properties.rollback();
 
   return options(
@@ -67,6 +74,7 @@ export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOpt
       permalink,
       save,
       rollback,
+      destroy,
     },
     {
       name: 'GalleryProperties',

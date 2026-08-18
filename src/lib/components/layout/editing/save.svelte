@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BusyButton from './busy-button.svelte';
+  import BusyButton from '$lib/playground/busy-button.svelte';
 
   let { onSave }: { onSave: () => Promise<void> } = $props();
 </script>
