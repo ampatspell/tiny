@@ -1,6 +1,7 @@
 import { extract, type MaybeGetter } from 'runed';
 import { Property, type UsePropertyOptions } from './property.svelte.ts';
 import { capitalize } from '$lib/utils/string.js';
+import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 
 export class DataProperty<D extends Record<string, unknown>, K extends keyof D & string> extends Property<D[K]> {
   readonly key: K;
@@ -31,9 +32,11 @@ export const useDataProperty = <D extends Record<string, unknown>, K extends key
 export class DataProperties<D extends Record<string, unknown> = Record<string, unknown>> {
   private readonly __data: MaybeGetter<D>;
   private _properties: DataProperty<D, string>[] = [];
+  private _context: PropertiesContext;
 
   constructor(data: MaybeGetter<D>) {
     this.__data = data;
+    this._context = usePropertiesContext();
   }
 
   readonly _data = $derived.by(() => extract(this.__data));
@@ -64,7 +67,16 @@ export class DataProperties<D extends Record<string, unknown> = Record<string, u
     }
     return data as Partial<D>;
   });
+
+  readonly touch = () => this._context.touch();
+  readonly rollback = () => this._context.rollback();
+  readonly touched = $derived.by(() => this._context.touched);
+  readonly errors = $derived.by(() => this._context.errors);
+  readonly isTouched = $derived.by(() => this._context.isTouched);
+  readonly isValid = $derived.by(() => this._context.isValid);
+  readonly isDirty = $derived.by(() => this._context.isDirty);
 }
 
-export const useDataProperties = <D extends Record<string, unknown>>(data: MaybeGetter<D>) =>
-  new DataProperties<D>(data);
+export const useDataProperties = <D extends Record<string, unknown>>(data: MaybeGetter<D>) => {
+  return new DataProperties<D>(data);
+};
