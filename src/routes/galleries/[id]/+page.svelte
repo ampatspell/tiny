@@ -8,7 +8,7 @@
   import { useEditGalleryProperties } from '$lib/playground/galleries/gallery.svelte.js';
   import Properties from '$lib/playground/galleries/properties.svelte';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
-  import { getter } from '$lib/utils/options.js';
+  import { getter } from '$lib/utils/options.svelte.js';
 
   let id = $derived(page.params.id!);
   usePropertiesContext();

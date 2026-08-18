@@ -3,7 +3,7 @@ import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
 import type { OmitId } from '$lib/utils/utils.js';
 import { slug } from '$lib/utils/string.js';
-import { getter, options, type OptionsInput } from '$lib/utils/options.js';
+import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
 export type UseGalleryPropertiesOptions = { data: OmitId<GalleryData> };
 

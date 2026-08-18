@@ -1,7 +1,7 @@
 import { extract, onCleanup, type MaybeGetter } from 'runed';
 import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 import { untrack } from 'svelte';
-import { getter, options, type OptionsInput } from '$lib/utils/options.js';
+import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
 export type UseTouchedPropertyOptions = {
   context: PropertiesContext;
@@ -100,17 +100,23 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
     );
   });
 
-  const identity = options({
-    value: getter(() => value),
-    update,
-    rollback,
-    isDirty: getter(() => isDirty),
-    isValid: getter(() => isValid),
-    error: getter(() => error),
-    isTouched: getter(() => isTouched),
-    touched: getter(() => touched),
-    meta: getter(() => meta),
-  });
+  const identity = options(
+    {
+      value: getter(() => value),
+      update,
+      rollback,
+      isDirty: getter(() => isDirty),
+      isValid: getter(() => isValid),
+      error: getter(() => error),
+      isTouched: getter(() => isTouched),
+      touched: getter(() => touched),
+      meta: getter(() => meta),
+    },
+    {
+      name: 'Property',
+      serialized: ['value', 'isDirty', 'isValid'],
+    },
+  );
 
   const context = usePropertiesContext();
   const cancel = context._register(identity);

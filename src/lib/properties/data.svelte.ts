@@ -1,8 +1,8 @@
 import { useProperty, type UsePropertyOptions } from './property.svelte.ts';
 import { capitalize } from '$lib/utils/string.js';
 import { usePropertiesContext } from './context.svelte.ts';
-import { getter, options, type OptionsInput } from '$lib/utils/options.js';
-import { SvelteSet } from 'svelte/reactivity';
+import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
+import { addObject } from '$lib/utils/array.js';
 
 export type UseDataPropertyOptions<D extends Record<string, unknown>, K extends keyof D & string> = {
   data: D;
@@ -67,14 +67,14 @@ export const useDataProperties = <D extends Record<string, unknown>>(
 ) => {
   const opts = options(_opts);
   const context = usePropertiesContext();
-  const properties = new SvelteSet<DataProperty<D, string>>();
+  const properties = $state<DataProperty<D, string>[]>([]);
   const property = <K extends keyof D & string>(key: K, propertyOptions?: Omit<UsePropertyOptions<D[K]>, 'value'>) => {
     const prop = useDataProperty<D, K>({
       data: getter(() => opts.data),
       key,
       opts: propertyOptions,
     });
-    properties.add(prop as unknown as DataProperty<D, string>);
+    addObject(properties, prop as unknown as DataProperty<D, string>);
     return prop;
   };
 

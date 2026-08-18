@@ -1,7 +1,7 @@
 import { getContext, hasContext, setContext } from 'svelte';
 import type { Property, PropertyUpdatePair } from './property.svelte.ts';
 import { addObject, isTruthy, removeObject } from '$lib/utils/array.js';
-import { getter, options, type OptionsInput } from '$lib/utils/options.js';
+import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
 export type UpdateParams<T> = [property: Property<T>, pair: PropertyUpdatePair<T>];
 
@@ -25,14 +25,14 @@ export const useProperties = (_opts: OptionsInput<UsePropertiesOptions>) => {
   const isValid = $derived(errored.length === 0);
   const isDirty = $derived(dirty.length > 0);
 
-  return {
-    all,
-    dirty,
-    valid,
-    errored,
-    isValid,
-    isDirty,
-  };
+  return options({
+    all: getter(() => all),
+    dirty: getter(() => dirty),
+    valid: getter(() => valid),
+    errored: getter(() => errored),
+    isValid: getter(() => isValid),
+    isDirty: getter(() => isDirty),
+  });
 };
 
 export type Properties = ReturnType<typeof useProperties>;
@@ -53,12 +53,12 @@ export const useTouchedProperties = (_opts: OptionsInput<UseTouchedPropertiesOpt
 
   const isValid = $derived(isTouched ? properties.isValid : true);
 
-  return {
-    all,
-    valid,
-    errored,
-    isValid,
-  };
+  return options({
+    all: getter(() => all),
+    valid: getter(() => valid),
+    errored: getter(() => errored),
+    isValid: getter(() => isValid),
+  });
 };
 
 export type TouchedProperties = ReturnType<typeof useTouchedProperties>;
@@ -81,13 +81,13 @@ const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions
   };
 
   let isTouched = $state(false);
-  const _registered = $state.raw<Property[]>([]);
-  const properties = useProperties({ all: getter(() => _registered) });
+  const registered = $state<Property[]>([]);
+  const properties = useProperties({ all: getter(() => registered) });
   const touched = useTouchedProperties({ properties, isTouched: getter(() => isTouched) });
 
-  const errors = $derived.by(() => properties.errored.map((p) => p.error).filter(isTruthy));
-  const isValid = $derived.by(() => properties.isValid);
-  const isDirty = $derived.by(() => properties.isDirty);
+  const errors = $derived(properties.errored.map((p) => p.error).filter(isTruthy));
+  const isValid = $derived(properties.isValid);
+  const isDirty = $derived(properties.isDirty);
   const touch = () => {
     isTouched = true;
     return isValid;
@@ -98,9 +98,9 @@ const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions
   };
 
   const _register = (property: Property) => {
-    addObject(_registered, property);
+    addObject(registered, property);
     return () => {
-      removeObject(_registered, property);
+      removeObject(registered, property);
     };
   };
 

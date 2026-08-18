@@ -6,7 +6,7 @@
   import { useDataProperties, type DataProperty } from '$lib/properties/data.svelte.js';
   import BusyButton from '../busy-button.svelte';
   import { run } from '$lib/utils/utils.js';
-  import { getter } from '$lib/utils/options.js';
+  import { getter } from '$lib/utils/options.svelte.js';
 
   usePropertiesContext();
   let index = $derived(await getIndex());
