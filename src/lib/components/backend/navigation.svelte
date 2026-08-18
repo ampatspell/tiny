@@ -17,14 +17,25 @@
   import type { Component } from 'svelte';
   import Icon from '../icon.svelte';
   import Tooltip from '../floating/tooltip.svelte';
+  import { page } from '$app/state';
 
   let { items }: NavigationProps = $props();
+  let route = $derived(page.url.pathname);
+
+  let eq = ['/'];
+  const isCurrent = (item: NavigationItem) => {
+    if (eq.includes(item.route)) {
+      return item.route === route;
+    } else {
+      return route.startsWith(item.route);
+    }
+  };
 </script>
 
 <div class="navigation">
   <div class="items">
     {#each items as item (item.icon)}
-      <a class="item" href={item.route}>
+      <a class={['item', isCurrent(item) && 'current']} href={item.route}>
         <Tooltip label={item.tooltip} offset={14} placement="right">
           <Icon icon={item.icon} />
         </Tooltip>
@@ -53,6 +64,9 @@
         font-size: var(--dark-font-size-small);
         text-decoration: none;
         &:hover {
+          background: #222;
+        }
+        &.current {
           background: #111;
         }
       }
