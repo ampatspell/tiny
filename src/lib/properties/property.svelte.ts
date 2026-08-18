@@ -1,4 +1,4 @@
-import { extract, onCleanup, type MaybeGetter } from 'runed';
+import { onCleanup } from 'runed';
 import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 import { untrack } from 'svelte';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
@@ -29,7 +29,7 @@ export type PropertyUpdatePair<T> = { before: T; after: T };
 
 export type Validator<T> = {
   validate: (value: T) => string | boolean | undefined;
-  isRequired: MaybeGetter<boolean>;
+  isRequired: boolean;
 };
 
 export type UsePropertyOptions<T> = {
@@ -39,7 +39,7 @@ export type UsePropertyOptions<T> = {
   readonly didUpdate?: (opts: PropertyUpdatePair<T>) => void;
   readonly onRollback?: () => void;
   readonly validator?: Validator<T>;
-  readonly meta?: { label?: string; isRequired?: boolean };
+  readonly meta?: { label?: string; description?: string; isRequired?: boolean };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,12 +92,7 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
     isValid: getter(() => isValid),
   });
   const meta = $derived.by(() => {
-    return Object.assign(
-      {
-        isRequired: extract(validator?.isRequired),
-      },
-      $state.snapshot(opts.meta),
-    );
+    return Object.assign({ isRequired: validator?.isRequired }, $state.snapshot(opts.meta));
   });
 
   const identity = options(
@@ -144,6 +139,7 @@ export type Property<T = any> = {
   touched: TouchedProperty;
   meta: {
     label?: string | undefined;
+    description?: string | undefined;
     isRequired?: boolean | undefined;
   };
 };

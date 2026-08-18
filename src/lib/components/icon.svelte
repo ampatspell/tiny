@@ -1,6 +1,7 @@
 <script lang="ts" module>
-  export type IconSize = 'small' | 'regular' | 'medium' | 'large';
+  export type IconSize = 'tiny' | 'small' | 'regular' | 'medium' | 'large';
   export const iconSizes: { [key in IconSize]: number } = {
+    tiny: 11,
     small: 14,
     regular: 16,
     medium: 18,

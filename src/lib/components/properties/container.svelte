@@ -1,22 +1,34 @@
 <script lang="ts">
   import type { Property } from '$lib/properties/property.svelte.js';
   import type { Snippet } from 'svelte';
+  import Icon from '../icon.svelte';
+  import Tooltip from '../floating/tooltip.svelte';
+  import TablerInfoCircle from '$lib/playground/icons/tabler--info-circle.svelte';
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let { property, children }: { property: Property<any>; children?: Snippet } = $props();
+  let label = $derived(property.meta.label);
+  let isRequired = $derived(property.meta.isRequired);
+  let description = $derived(property.meta.description);
+  let error = $derived(property.touched.error);
 </script>
 
 <div class="property">
-  {#if property.meta.label}
+  {#if label}
     <div class="header">
       <div class="content">
-        <div class="label">{property.meta.label}</div>
-        {#if property.meta.isRequired}
+        <div class="label">{label}</div>
+        {#if isRequired}
           <div class="required">*</div>
         {/if}
       </div>
-      {#if property.touched.error}
-        <div class="error">{property.touched.error}</div>
+      {#if error}
+        <div class="error">{error}</div>
+      {/if}
+      {#if description}
+        <Tooltip label={description}>
+          <Icon icon={TablerInfoCircle} size="tiny" />
+        </Tooltip>
       {/if}
     </div>
   {/if}
@@ -32,6 +44,7 @@
     > .header {
       display: flex;
       flex-direction: row;
+      align-items: center;
       font-size: var(--dark-font-size-small);
       gap: 5px;
       > .content {

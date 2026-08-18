@@ -32,7 +32,11 @@ export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOpt
     },
     validator: notBlank(),
   });
-  const permalink = properties.property('permalink');
+  const permalink = properties.property('permalink', {
+    meta: {
+      description: 'Part after /gallery in public URL',
+    },
+  });
 
   const save = async () => {
     if (properties.touch()) {

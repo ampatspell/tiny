@@ -17,7 +17,9 @@
     data: { name: '', permalink: '' },
     onSaved: (id) => onDone(id),
   });
+
   let { name, permalink } = properties;
+
   let onSave = () => properties.save();
   let onCancel = () => onDone(undefined);
 </script>

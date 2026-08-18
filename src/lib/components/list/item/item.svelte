@@ -2,10 +2,10 @@
   import type { ResolvedPathname } from '$app/types';
   import type { Snippet } from 'svelte';
 
-  let { route, children }: { route: ResolvedPathname; children?: Snippet } = $props();
+  let { route, isCurrent, children }: { route: ResolvedPathname; isCurrent: boolean; children?: Snippet } = $props();
 </script>
 
-<a class="item" href={route}>
+<a class={['item', isCurrent && 'current']} href={route}>
   {@render children?.()}
 </a>
 
@@ -18,5 +18,9 @@
     padding: 0 10px;
     text-decoration: none;
     border-bottom: 1px solid var(--dark-border-color-2);
+    transition: 0.15s ease-in-out background-color;
+    &.current {
+      background: var(--dark-selected-background-color-1);
+    }
   }
 </style>

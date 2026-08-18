@@ -116,6 +116,7 @@
     font-size: 11px;
     border-radius: 3px;
     cursor: default;
+    user-select: none;
     > .content {
       max-width: 320px;
       min-width: 0;

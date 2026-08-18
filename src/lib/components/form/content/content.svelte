@@ -12,6 +12,6 @@
   .content {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
   }
 </style>
