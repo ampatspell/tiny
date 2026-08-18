@@ -5,67 +5,94 @@ import { notBlank } from '$lib/properties/validator.svelte.js';
 import type { OmitId } from '$lib/utils/utils.js';
 import { slug } from '$lib/utils/string.js';
 
-const useGalleryProperties = ({ data }: { data: MaybeGetter<OmitId<GalleryData>> }) => {
-  class UseGalleryProperties {
-    properties = useDataProperties(data);
-    name = this.properties.property('name', {
-      didUpdate: ({ after }) => this.permalink.update(slug(after, { replacement: '-' })),
-      validator: notBlank(),
-    });
-    permalink = this.properties.property('permalink');
-  }
-  return new UseGalleryProperties();
+export type UseGalleryPropertiesOptions = { data: MaybeGetter<OmitId<GalleryData>> };
+
+export class UseGalleryProperties {
+  constructor(private opts: UseGalleryPropertiesOptions) {}
+
+  private data = $derived.by(() => extract(this.opts.data));
+
+  properties = useDataProperties(this.data);
+
+  name = this.properties.property('name', {
+    didUpdate: ({ after }) => this.permalink.update(slug(after, { replacement: '-' })),
+    validator: notBlank(),
+  });
+
+  permalink = this.properties.property('permalink');
+}
+
+const useGalleryProperties = (opts: UseGalleryPropertiesOptions) => {
+  return new UseGalleryProperties(opts);
 };
 
-export const useNewGalleryProperties = ({ onSaved }: { onSaved: (id: string) => void }) => {
-  const base = useGalleryProperties({ data: { name: '', permalink: '' } });
-  const { properties } = base;
+export type UseNewGalleryPropertiesOptions = { onSaved: (id: string) => void };
 
-  class UseNewGalleryProperties {
-    name = $derived(base.name);
-    permalink = $derived(base.permalink);
+export class UseNewGalleryProperties {
+  private base: UseGalleryProperties;
 
-    save = async () => {
-      if (properties.touch()) {
-        const data = properties.data;
-        const id = await addGallery(data);
-        onSaved(id);
-      }
-    };
+  constructor(private opts: UseNewGalleryPropertiesOptions) {
+    this.base = useGalleryProperties({ data: { name: '', permalink: '' } });
   }
-  return new UseNewGalleryProperties();
+
+  private properties = $derived.by(() => this.base.properties);
+
+  name = $derived.by(() => this.base.name);
+  permalink = $derived.by(() => this.base.permalink);
+
+  save = async () => {
+    const {
+      properties,
+      opts: { onSaved },
+    } = this;
+    if (properties.touch()) {
+      const data = properties.data;
+      const id = await addGallery(data);
+      onSaved(id);
+    }
+  };
+}
+
+export const useNewGalleryProperties = (opts: UseNewGalleryPropertiesOptions) => {
+  return new UseNewGalleryProperties(opts);
 };
 
-export const useEditGalleryProperties = ({
-  data,
-  onSaved,
-}: {
+export type UseEditGalleryPropertiesOptions = {
   data: MaybeGetter<GalleryData>;
   onSaved?: () => void;
-}) => {
-  const base = useGalleryProperties({ data });
-  const { properties } = base;
-
-  class UseEditGalleryProperties {
-    id = $derived(extract(data).id);
-
-    name = $derived(base.name);
-    permalink = $derived(base.permalink);
-
-    isDirty = $derived(base.properties.isDirty);
-
-    save = async () => {
-      if (properties.touch()) {
-        const data = properties.dirty;
-        if (data) {
-          const { id } = this;
-          await updateGallery({ id, ...data });
-          onSaved?.();
-        }
-      }
-    };
-  }
-  return new UseEditGalleryProperties();
 };
 
-export type UseEditGalleryProperties = ReturnType<typeof useEditGalleryProperties>;
+export class UseEditGalleryProperties {
+  private base: UseGalleryProperties;
+
+  constructor(private opts: UseEditGalleryPropertiesOptions) {
+    this.base = useGalleryProperties({ data: opts.data });
+  }
+
+  private properties = $derived.by(() => this.base.properties);
+  data = $derived.by(() => extract(this.opts.data));
+  id = $derived(this.data.id);
+
+  name = $derived.by(() => this.base.name);
+  permalink = $derived.by(() => this.base.permalink);
+  isDirty = $derived.by(() => this.base.properties.isDirty);
+
+  save = async () => {
+    const {
+      properties,
+      opts: { onSaved },
+    } = this;
+    if (properties.touch()) {
+      const data = properties.dirty;
+      if (data) {
+        const { id } = this;
+        await updateGallery({ id, ...data });
+        onSaved?.();
+      }
+    }
+  };
+}
+
+export const useEditGalleryProperties = (opts: UseEditGalleryPropertiesOptions) => {
+  return new UseEditGalleryProperties(opts);
+};
