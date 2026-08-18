@@ -8,11 +8,15 @@
   import Row from '$lib/components/form/content/row.svelte';
   import Actions from '$lib/components/form/actions.svelte';
   import Input from '$lib/components/properties/input.svelte';
-  import { useNewGalleryProperties } from '../gallery.svelte.ts';
+  import { useGalleryProperties } from '../gallery.svelte.ts';
 
   let { onDone }: { onDone: (added: string | undefined) => void } = $props();
 
-  let properties = useNewGalleryProperties({ onSaved: (id) => onDone(id) });
+  let properties = useGalleryProperties({
+    isNew: true,
+    data: { name: '', permalink: '' },
+    onSaved: (id) => onDone(id),
+  });
   let { name, permalink } = properties;
   let onSave = () => properties.save();
   let onCancel = () => onDone(undefined);

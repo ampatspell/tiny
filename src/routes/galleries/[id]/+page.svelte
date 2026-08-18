@@ -5,7 +5,7 @@
   import CancelButton from '$lib/playground/cancel-button.svelte';
   import Delete from '$lib/playground/galleries/delete/delete.svelte';
   import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';
-  import { useEditGalleryProperties } from '$lib/playground/galleries/gallery.svelte.js';
+  import { useGalleryProperties } from '$lib/playground/galleries/gallery.svelte.js';
   import Properties from '$lib/playground/galleries/properties.svelte';
   import SaveButton from '$lib/playground/save-button.svelte';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
@@ -14,7 +14,7 @@
   let id = $derived(page.params.id!);
   usePropertiesContext();
   let gallery = $derived(await getGalleryById({ id }));
-  let properties = useEditGalleryProperties({ data: getter(() => gallery) });
+  let properties = useGalleryProperties({ isNew: false, data: getter(() => gallery) });
   let onSave = () => properties.save();
   let onCancel = () => properties.rollback();
 </script>

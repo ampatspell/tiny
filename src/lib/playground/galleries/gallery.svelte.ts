@@ -5,11 +5,27 @@ import type { OmitId } from '$lib/utils/utils.js';
 import { slug } from '$lib/utils/string.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
-export type UseGalleryPropertiesOptions = { data: OmitId<GalleryData> };
+export type UseGalleryPropertiesOptions = {
+  onSaved?: (id: string) => void;
+} & (
+  | {
+      isNew: true;
+      data: OmitId<GalleryData>;
+    }
+  | {
+      isNew: false;
+      data: GalleryData;
+    }
+);
 
-const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) => {
+export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) => {
   const opts = options(_opts);
-  const properties = useDataProperties({ data: getter(() => opts.data) });
+  const isNew = $derived(opts.isNew);
+  const data = $derived(opts.data);
+
+  const properties = useDataProperties({ data: getter(() => data) });
+  const isDirty = $derived(properties.isDirty);
+
   const name = properties.property('name', {
     didUpdate: ({ after }) => {
       permalink.update(slug(after, { replacement: '-' }));
@@ -17,66 +33,22 @@ const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) 
     validator: notBlank(),
   });
   const permalink = properties.property('permalink');
-  return {
-    properties,
-    name,
-    permalink,
-  };
-};
-
-export type NewGalleryPropertiesOptions = { onSaved: (id: string) => void };
-
-export const useNewGalleryProperties = (_opts: OptionsInput<NewGalleryPropertiesOptions>) => {
-  const opts = options(_opts);
-  const base = useGalleryProperties({ data: { name: '', permalink: '' } });
-  const properties = $derived(base.properties);
-
-  const name = $derived(base.name);
-  const permalink = $derived(base.permalink);
 
   const save = async () => {
-    const { onSaved } = opts;
     if (properties.touch()) {
-      const data = properties.data;
-      const id = await addGallery(data);
-      onSaved(id);
-    }
-  };
-  return options(
-    {
-      name: getter(() => name),
-      permalink: getter(() => permalink),
-      save,
-    },
-    {
-      name: 'NewGalleryProperties',
-    },
-  );
-};
-
-export type UseEditGalleryPropertiesOptions = {
-  data: GalleryData;
-  onSaved?: () => void;
-};
-
-export const useEditGalleryProperties = (_opts: OptionsInput<UseEditGalleryPropertiesOptions>) => {
-  const opts = options(_opts);
-  const data = $derived(opts.data);
-  const base = useGalleryProperties({ data: getter(() => data) });
-  const properties = $derived(base.properties);
-  const id = $derived(data.id);
-
-  const name = $derived(base.name);
-  const permalink = $derived(base.permalink);
-  const isDirty = $derived(base.properties.isDirty);
-
-  const save = async () => {
-    const { onSaved } = opts;
-    if (properties.touch()) {
-      const data = properties.dirty;
-      if (data) {
-        await updateGallery({ id, ...data });
-        onSaved?.();
+      let id;
+      if (opts.isNew) {
+        const data = properties.data;
+        id = await addGallery(data);
+      } else {
+        const data = properties.dirty;
+        if (data) {
+          id = opts.data.id;
+          await updateGallery({ id, ...data });
+        }
+      }
+      if (id) {
+        opts.onSaved?.(id);
       }
     }
   };
@@ -85,16 +57,18 @@ export const useEditGalleryProperties = (_opts: OptionsInput<UseEditGalleryPrope
 
   return options(
     {
-      name: getter(() => name),
-      permalink: getter(() => permalink),
+      isNew: getter(() => isNew),
       isDirty: getter(() => isDirty),
+      name,
+      permalink,
       save,
       rollback,
     },
     {
-      name: 'EditGalleryProperties',
+      name: 'GalleryProperties',
+      serialized: ['isNew', 'isDirty'],
     },
   );
 };
 
-export type EditGalleryProperties = ReturnType<typeof useEditGalleryProperties>;
+export type GalleryProperties = ReturnType<typeof useGalleryProperties>;
