@@ -23,6 +23,14 @@ export const px = (value: number | undefined) => {
   }
 };
 
+export const recordToStyle = (obj: Record<string, unknown>) => {
+  return Object.keys(obj)
+    .reduce<string[]>((arr, key) => {
+      return [...arr, `${key}: ${obj[key]}`];
+    }, [])
+    .join('; ');
+};
+
 export const elementContainsEventTarget = (el: HTMLElement | undefined, e: Event) => {
   if (el instanceof HTMLElement) {
     const target = e.target as Node;

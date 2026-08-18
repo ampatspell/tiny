@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { px } from '$lib/utils/utils.js';
+  import { px, recordToStyle } from '$lib/utils/utils.js';
   import {
     arrow as arrowMiddleware,
     computePosition,
@@ -33,14 +33,6 @@
   let tooltipStyle = $state<string>();
   let arrowStyle = $state<string>();
 
-  let join = (obj: Record<string, unknown>) => {
-    return Object.keys(obj)
-      .reduce<string[]>((arr, key) => {
-        return [...arr, `${key}: ${obj[key]}`];
-      }, [])
-      .join('; ');
-  };
-
   $effect(() => {
     if (isShown && reference && tooltip && arrow) {
       computePosition(reference, tooltip, {
@@ -48,7 +40,7 @@
         strategy: 'fixed',
         middleware: [offsetMiddleware(offset ?? 5), arrowMiddleware({ element: arrow })],
       }).then(({ x, y, placement, middlewareData }) => {
-        tooltipStyle = join({ left: px(x), top: px(y) });
+        tooltipStyle = recordToStyle({ left: px(x), top: px(y) });
         const arrow = middlewareData.arrow!;
         const side = {
           top: 'bottom',
@@ -56,7 +48,7 @@
           bottom: 'top',
           left: 'right',
         }[placement.split('-')[0]!];
-        arrowStyle = join({
+        arrowStyle = recordToStyle({
           left: px(arrow.x),
           top: px(arrow.y),
           [side!]: px(-2),

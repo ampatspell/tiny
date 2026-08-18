@@ -10,6 +10,9 @@
   import { goto } from '$app/navigation';
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
   import { confirm } from '$lib/components/floating/layout/confirmation.svelte';
+  import Section from '$lib/components/layout/editing/section.svelte';
+  import Placeholder from '$lib/components/placeholder.svelte';
+  import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
 
   let id = $derived(page.params.id!);
   let floaters = useFloaters();
@@ -18,15 +21,14 @@
   let properties = useGalleryProperties({ isNew: false, data: getter(() => gallery) });
 
   let onDelete = async (reference: HTMLElement) => {
-    if (
-      await confirm({
-        floaters,
-        reference,
-        title: 'Delete?',
-        description: 'Sure you want to delete this gallery?',
-        confirm: 'Delete',
-      })
-    ) {
+    let ok = await confirm({
+      floaters,
+      reference,
+      title: 'Delete?',
+      description: 'Sure you want to delete this gallery?',
+      confirm: 'Delete',
+    });
+    if (ok) {
       await properties.destroy();
       goto(resolve('/galleries'), { replaceState: true });
     }
@@ -34,5 +36,10 @@
 </script>
 
 <Editing label={gallery.name} {properties} {onDelete}>
-  <Properties {properties} />
+  <Section>
+    <Properties {properties} />
+  </Section>
+  <Section title="Photographs" height="fill">
+    <Placeholder icon={TablerPhoto} label="Section is coming" />
+  </Section>
 </Editing>
