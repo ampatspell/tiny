@@ -1,5 +1,22 @@
 <script lang="ts">
-  import Placeholder from '$lib/components/layout/placeholder/placeholder.svelte';
+  import Button from '$lib/components/button/button.svelte';
+  import { pickFile } from '$lib/utils/files.svelte.js';
+
+  const onClick = async () => {
+    let res = await pickFile({
+      accept: ['image/png', 'image/jpeg'],
+    });
+
+    console.log(res);
+  };
 </script>
 
-<Placeholder />
+<div class="dev">
+  <Button label="Pick" {onClick} />
+</div>
+
+<style lang="scss">
+  .dev {
+    padding: 10px;
+  }
+</style>
