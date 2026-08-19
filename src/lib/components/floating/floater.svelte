@@ -16,9 +16,8 @@
       if (!elementContainsEventTarget(element, e)) {
         floater.close();
       }
-      if (elementContainsEventTarget(reference, e)) {
-        e.stopPropagation();
-      }
+      e.preventDefault();
+      e.stopPropagation();
     }
   };
 
