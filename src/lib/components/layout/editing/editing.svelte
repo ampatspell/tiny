@@ -1,55 +1,30 @@
-<script lang="ts">
+<script lang="ts" generics="M extends Model, P extends Properties">
   import Header from '$lib/components/header/header.svelte';
   import Title from '$lib/components/header/title.svelte';
   import type { Snippet } from 'svelte';
   import Delete from './button/delete.svelte';
-  import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
-  import { confirm } from '$lib/components/floating/layout/confirmation.svelte';
   import Save from './button/save.svelte';
   import Discard from './button/discard.svelte';
+  import type { EditingLayout, Model, Properties } from './editing.svelte.ts';
 
   let {
-    label,
-    properties,
-    onDelete,
+    layout,
     children,
   }: {
-    label: string;
-    properties: {
-      isDirty: boolean;
-      save: () => Promise<void>;
-      rollback: () => void;
-    };
-    onDelete: (reference: HTMLElement) => Promise<void>;
+    layout: EditingLayout<M, P>;
     children: Snippet;
   } = $props();
 
-  let floaters = useFloaters();
-
-  let onSave = () => properties.save();
-  let onDiscard = async (reference: HTMLElement) => {
-    let ok = await confirm({
-      floaters,
-      reference,
-      title: 'Discard?',
-      description: 'Sure you want discard all your changes?',
-      confirm: 'Discard',
-    });
-    if (ok) {
-      properties.rollback();
-    }
-  };
+  let label = $derived(layout.title);
 </script>
 
 <div class="editing">
   <Header>
     <Title {label} />
     {#snippet accessories()}
-      {#if properties.isDirty}
-        <Save {onSave} />
-        <Discard {onDiscard} />
-      {/if}
-      <Delete {onDelete} />
+      <Save {layout} />
+      <Discard {layout} />
+      <Delete {layout} />
     {/snippet}
   </Header>
   <div class="content">

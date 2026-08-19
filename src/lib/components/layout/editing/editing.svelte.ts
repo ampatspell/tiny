@@ -1,0 +1,36 @@
+import type { ResolvedPathname } from '$app/types';
+import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
+
+export type Model = { id: string };
+
+export type Properties = {
+  isDirty: boolean;
+  save: () => Promise<void>;
+  rollback: () => void;
+  destroy: () => Promise<void>;
+};
+
+export type EditingLayoutOptions<M extends Model, P extends Properties> = {
+  title: string;
+  route: ResolvedPathname;
+  model: M;
+  properties: P;
+};
+
+export const useEditingLayout = <M extends Model, P extends Properties>(
+  _opts: OptionsInput<EditingLayoutOptions<M, P>>,
+) => {
+  const opts = options(_opts);
+
+  const title = $derived(opts.title);
+  const properties = $derived(opts.properties);
+  const route = $derived(opts.route);
+
+  return options({
+    title: getter(() => title),
+    properties: getter(() => properties),
+    route: getter(() => route),
+  });
+};
+
+export type EditingLayout<M extends Model, P extends Properties> = ReturnType<typeof useEditingLayout<M, P>>;

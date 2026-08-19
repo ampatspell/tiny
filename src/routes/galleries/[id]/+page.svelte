@@ -6,36 +6,27 @@
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
   import { getter } from '$lib/utils/options.svelte.js';
   import Editing from '$lib/components/layout/editing/editing.svelte';
-  import { resolve } from '$app/paths';
-  import { goto } from '$app/navigation';
-  import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
-  import { confirm } from '$lib/components/floating/layout/confirmation.svelte';
   import Section from '$lib/components/layout/editing/section.svelte';
   import Placeholder from '$lib/components/placeholder.svelte';
   import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
+  import { useEditingLayout } from '$lib/components/layout/editing/editing.svelte.js';
+  import { resolve } from '$app/paths';
+
+  usePropertiesContext();
 
   let id = $derived(page.params.id!);
-  let floaters = useFloaters();
-  usePropertiesContext();
   let gallery = $derived(await getGalleryById({ id }));
   let properties = useGalleryProperties({ isNew: false, data: getter(() => gallery) });
 
-  let onDelete = async (reference: HTMLElement) => {
-    let ok = await confirm({
-      floaters,
-      reference,
-      title: 'Delete?',
-      description: 'Sure you want to delete this gallery?',
-      confirm: 'Delete',
-    });
-    if (ok) {
-      await properties.destroy();
-      goto(resolve('/galleries'), { replaceState: true });
-    }
-  };
+  let layout = useEditingLayout({
+    title: getter(() => gallery.name),
+    route: resolve('/galleries'),
+    model: getter(() => gallery),
+    properties,
+  });
 </script>
 
-<Editing label={gallery.name} {properties} {onDelete}>
+<Editing {layout}>
   <Section>
     <Properties {properties} />
   </Section>
