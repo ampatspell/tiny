@@ -26,10 +26,11 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
 
   const save = async () => {
     if (properties.touch()) {
-      const data = properties.dirty;
-      if (data) {
-        await updateIndex(data);
+      const dirty = properties.dirty;
+      if (dirty) {
+        await updateIndex(dirty);
       }
+      return data.id;
     }
   };
 

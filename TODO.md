@@ -1,9 +1,13 @@
 ## TODO
 
-- [ ] Render floater + it's children floaters
+- [ ] Image resizing
+- [ ] Save & discard uploads
+- [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
-- [ ] Dialog form
-- [ ] Page with list of records on the left
+- [ ] User authorization and authentication
+- [x] Render floater + it's children floaters
+- [x] Dialog form
+- [x] Page with list of records on the left
 - [x] use* functions returning `options` instead of classes
 - [x] Fix tooltip
 - [x] Button with only an icon

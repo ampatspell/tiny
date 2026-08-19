@@ -5,7 +5,7 @@ export type Model = { id: string };
 
 export type Properties = {
   isDirty: boolean;
-  save: () => Promise<void>;
+  save: () => Promise<string | undefined>;
   rollback: () => void;
   destroy?: () => Promise<void>;
 };

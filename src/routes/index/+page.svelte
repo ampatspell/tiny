@@ -1,17 +1,14 @@
 <script lang="ts">
-  import Content from '$lib/components/form/content/content.svelte';
-  import Row from '$lib/components/form/content/row.svelte';
-  import Form from '$lib/components/form/form.svelte';
   import Editing from '$lib/components/layout/editing/editing.svelte';
   import { useEditingLayout } from '$lib/components/layout/editing/editing.svelte.js';
   import Section from '$lib/components/layout/editing/section.svelte';
-  import Input from '$lib/components/properties/input.svelte';
   import { getIndex } from '$lib/playground/index/index.remote.js';
   import Index from '$lib/playground/index/index.svelte';
   import { useIndexProperties } from '$lib/playground/index/index.svelte.js';
   import Screen from '$lib/components/screen.svelte';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
   import { getter } from '$lib/utils/options.svelte.js';
+  import Form from '$lib/playground/index/form.svelte';
 
   usePropertiesContext();
   let data = $derived(await getIndex());
@@ -22,23 +19,11 @@
     properties,
     data: getter(() => data),
   });
-
-  let title = $derived(properties.title);
-  let description = $derived(properties.description);
 </script>
 
 <Editing {layout}>
   <Section>
-    <Form>
-      <Content>
-        <Row>
-          <Input property={title} />
-        </Row>
-        <Row>
-          <Input property={description} />
-        </Row>
-      </Content>
-    </Form>
+    <Form {properties} />
   </Section>
   <Section height="fill">
     <div class="screen">
