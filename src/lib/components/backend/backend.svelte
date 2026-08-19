@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import Navigation, { type NavigationItems } from './navigation.svelte';
+  import Navigation from './navigation.svelte';
 
-  let { items, children }: { items: NavigationItems; children: Snippet } = $props();
+  let { children }: { children: Snippet } = $props();
 </script>
 
 <div class="backend">
   <div class="navigation">
-    <Navigation {items} />
+    <Navigation />
   </div>
   <div class="content">
     {@render children()}

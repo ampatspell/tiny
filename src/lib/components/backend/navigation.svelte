@@ -1,43 +1,17 @@
-<script module lang="ts">
-  export type NavigationItem = {
-    icon: Component;
-    tooltip: string;
-    route: ResolvedPathname;
-  };
-
-  export type NavigationItems = NavigationItem[];
-
-  export type NavigationProps = {
-    items: NavigationItems;
-  };
-</script>
-
 <script lang="ts">
-  import type { ResolvedPathname } from '$app/types';
-  import type { Component } from 'svelte';
   import Icon from '../icon.svelte';
+  import { useBackend } from './backend.svelte.ts';
   import Tooltip from '../floating/tooltip.svelte';
-  import { page } from '$app/state';
 
-  let { items }: NavigationProps = $props();
-  let route = $derived(page.url.pathname);
-
-  let eq = ['/'];
-  const isCurrent = (item: NavigationItem) => {
-    if (eq.includes(item.route)) {
-      return item.route === route;
-    } else {
-      return route.startsWith(item.route);
-    }
-  };
+  let backend = useBackend();
 </script>
 
 <div class="navigation">
   <div class="items">
-    {#each items as item (item.icon)}
-      <a class={['item', isCurrent(item) && 'current']} href={item.route}>
-        <Tooltip label={item.tooltip} offset={14} placement="right">
-          <Icon icon={item.icon} />
+    {#each backend.sections as section (section.icon)}
+      <a class={['item', section.isCurrent && 'current']} href={section.route}>
+        <Tooltip label={section.name} offset={14} placement="right">
+          <Icon icon={section.icon} />
         </Tooltip>
       </a>
     {/each}

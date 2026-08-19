@@ -1,4 +1,4 @@
-import type { ResolvedPathname } from '$app/types';
+import { useBackend } from '$lib/components/backend/backend.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
 export type Model = { id: string };
@@ -12,7 +12,6 @@ export type Properties = {
 
 export type EditingLayoutOptions<M extends Model, P extends Properties> = {
   title: string;
-  route: ResolvedPathname;
   model: M;
   properties: P;
 };
@@ -21,10 +20,13 @@ export const useEditingLayout = <M extends Model, P extends Properties>(
   _opts: OptionsInput<EditingLayoutOptions<M, P>>,
 ) => {
   const opts = options(_opts);
+  const backend = useBackend();
+
+  const section = $derived(backend.section);
+  const route = $derived(section.route);
 
   const title = $derived(opts.title);
   const properties = $derived(opts.properties);
-  const route = $derived(opts.route);
 
   return options({
     title: getter(() => title),

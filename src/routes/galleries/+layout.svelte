@@ -4,7 +4,6 @@
   import { getGalleries, type GalleryData } from '$lib/playground/galleries/galleries.remote.js';
   import type { Snippet } from 'svelte';
   import { useListLayout } from '$lib/components/layout/list/list.svelte.js';
-  import { resolve } from '$app/paths';
   import { getter } from '$lib/utils/options.svelte.js';
   import Label from '$lib/components/list/item/label.svelte';
   import Add from '$lib/playground/galleries/add.svelte';
@@ -15,10 +14,7 @@
   let galleries = $derived(await getGalleries());
 
   let layout = useListLayout({
-    title: 'Galleries',
     selected: getter(() => id),
-    index: resolve('/galleries'),
-    select: (id) => resolve('/galleries/[id]', { id }),
     models: getter(() => galleries),
     item,
     add,

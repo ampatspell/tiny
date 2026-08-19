@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Placeholder from '$lib/components/placeholder.svelte';
-  import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
+  import Placeholder from '$lib/components/layout/placeholder/placeholder.svelte';
 </script>
 
-<Placeholder icon={TablerPhoto} label="Your galleries" />
+<Placeholder />

@@ -1,4 +1,4 @@
-import type { ResolvedPathname } from '$app/types';
+import { useBackend } from '$lib/components/backend/backend.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 import type { Snippet } from 'svelte';
 
@@ -7,10 +7,7 @@ export type Model = {
 };
 
 export type UseListLayoutOptions<M extends Model> = {
-  title: string;
   selected: string | undefined;
-  index: ResolvedPathname;
-  select: (id: string) => ResolvedPathname;
   models: M[];
   item: Snippet<[model: M]>;
   add: Snippet<[onDone: (id: string | undefined) => void]>;
@@ -18,11 +15,15 @@ export type UseListLayoutOptions<M extends Model> = {
 
 export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayoutOptions<M>>) => {
   const opts = options(_opts);
+  const backend = useBackend();
 
-  const title = $derived(opts.title);
+  const section = $derived(backend.section);
+  const title = $derived(section.name);
+  const icon = $derived(section.icon);
+  const index = $derived(section.route);
+  const select = $derived(section.select);
+
   const selected = $derived(opts.selected);
-  const index = $derived(opts.index);
-  const select = $derived(opts.select);
   const models = $derived(opts.models);
   const item = $derived(opts.item);
   const add = $derived(opts.add);
@@ -30,9 +31,10 @@ export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayout
   return options(
     {
       title: getter(() => title),
-      selected: getter(() => selected),
+      icon: getter(() => icon),
       index: getter(() => index),
       select: getter(() => select),
+      selected: getter(() => selected),
       models: getter(() => models),
       item: getter(() => item),
       add: getter(() => add),

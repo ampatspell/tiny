@@ -40,7 +40,7 @@ const [get, set] = createContext<Floaters>();
 
 export const useFloaters = () => get();
 
-export const createFloaters = () => {
+export const setFloaters = () => {
   const floaters = new Floaters();
   return set(floaters);
 };
