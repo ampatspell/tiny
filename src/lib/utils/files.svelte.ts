@@ -1,4 +1,26 @@
 import { defer } from '$lib/utils/promise.js';
+import { getter, options } from './options.svelte.ts';
+
+const createModel = (file: File) => {
+  const name = file.name;
+  const contentType = file.type;
+  const size = file.size;
+
+  const url = $derived(URL.createObjectURL(file));
+
+  return options(
+    {
+      file,
+      name,
+      contentType,
+      size,
+      url: getter(() => url),
+    },
+    { name: 'FileModel', serialized: ['name'] },
+  );
+};
+
+export type FileModel = ReturnType<typeof createModel>;
 
 export type PickFilesOptions = {
   multiple?: boolean;
@@ -7,7 +29,7 @@ export type PickFilesOptions = {
 
 export type Picked = {
   status: 'picked';
-  files: File[];
+  models: FileModel[];
 };
 
 export type Cancelled = {
@@ -26,7 +48,8 @@ export const pickFiles = (opts: PickFilesOptions): Promise<Picked | Cancelled> =
 
   const change = () => {
     const files = [...(input.files ?? [])];
-    deferred.resolve({ status: 'picked', files });
+    const models = files.map((file) => createModel(file));
+    deferred.resolve({ status: 'picked', models });
     input.value = '';
   };
 
@@ -44,7 +67,7 @@ export const pickFiles = (opts: PickFilesOptions): Promise<Picked | Cancelled> =
 export const pickFile = async (opts: Omit<PickFilesOptions, 'multiple'>) => {
   const result = await pickFiles(opts);
   if (result.status === 'picked') {
-    const [file] = result.files;
-    return file;
+    const [model] = result.models;
+    return model;
   }
 };
