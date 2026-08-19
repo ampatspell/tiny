@@ -5,9 +5,7 @@ import type { OmitId } from '$lib/utils/utils.js';
 import { slug } from '$lib/utils/string.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
-export type UseGalleryPropertiesOptions = {
-  onSaved?: (id: string) => void;
-} & (
+export type UseGalleryPropertiesOptions =
   | {
       isNew: true;
       data: OmitId<GalleryData>;
@@ -15,8 +13,7 @@ export type UseGalleryPropertiesOptions = {
   | {
       isNew: false;
       data: GalleryData;
-    }
-);
+    };
 
 export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOptions>) => {
   const opts = options(_opts);
@@ -51,9 +48,7 @@ export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOpt
           await updateGallery({ id, ...data });
         }
       }
-      if (id) {
-        opts.onSaved?.(id);
-      }
+      return id;
     }
   };
 

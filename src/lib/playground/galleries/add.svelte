@@ -15,12 +15,17 @@
   let properties = useGalleryProperties({
     isNew: true,
     data: { name: '', permalink: '' },
-    onSaved: (id) => onDone(id),
   });
 
   let { name, permalink } = properties;
 
-  let onSave = () => properties.save();
+  let onSave = async () => {
+    let id = await properties.save();
+    if (id) {
+      onDone(id);
+    }
+  };
+
   let onCancel = () => onDone(undefined);
 </script>
 

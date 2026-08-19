@@ -14,10 +14,10 @@
   let onWindowClick = (e: MouseEvent) => {
     if (element) {
       if (!elementContainsEventTarget(element, e)) {
+        e.preventDefault();
+        e.stopPropagation();
         floater.close();
       }
-      e.preventDefault();
-      e.stopPropagation();
     }
   };
 
