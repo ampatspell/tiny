@@ -68,10 +68,6 @@
       "types": "./dist/server/database/database.d.ts",
       "svelte": "./dist/server/database/database.js"
     },
-    "./server/files": {
-      "types": "./dist/server/files.d.ts",
-      "svelte": "./dist/server/files.js"
-    },
     "./server/storage": {
       "types": "./dist/server/storage.d.ts",
       "svelte": "./dist/server/storage.js"
