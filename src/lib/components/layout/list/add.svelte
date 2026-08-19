@@ -21,7 +21,9 @@
     }).response;
 
     if (id) {
-      await goto(layout.select(id));
+      if (layout.select) {
+        await goto(layout.select(id));
+      }
     }
   };
 

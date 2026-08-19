@@ -3,6 +3,19 @@ import { usePropertiesContext, type PropertiesContext } from './context.svelte.t
 import { untrack } from 'svelte';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
+export const hashCodeTag = Symbol('hash-code');
+
+const hasHashCodeTag = (obj: unknown) => {
+  return typeof obj === 'object' && obj !== null && hashCodeTag in obj;
+};
+
+export const equals = (a: unknown, b: unknown) => {
+  if (hasHashCodeTag(a) && hasHashCodeTag(b)) {
+    return a[hashCodeTag] === b[hashCodeTag];
+  }
+  return a === b;
+};
+
 export type UseTouchedPropertyOptions = {
   context: PropertiesContext;
   isValid: boolean;
@@ -39,7 +52,11 @@ export type UsePropertyOptions<T> = {
   readonly didUpdate?: (opts: PropertyUpdatePair<T>) => void;
   readonly onRollback?: () => void;
   readonly validator?: Validator<T>;
-  readonly meta?: { label?: string; description?: string; isRequired?: boolean };
+  readonly meta?: {
+    label?: string;
+    description?: string;
+    isRequired?: boolean;
+  };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,7 +69,7 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
 
   const update = (after: T) => {
     const before = current;
-    if (before !== after) {
+    if (!equals(before, after)) {
       const pair = { before, after };
       opts.willUpdate?.(pair);
       current = after;
@@ -83,7 +100,8 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
     }
     return undefined;
   });
-  const isDirty = $derived(current !== external);
+
+  const isDirty = $derived(!equals(current, external));
   const isValid = $derived(!error);
   const isTouched = $derived.by(() => context.isTouched);
   const touched = useTouchedProperty({

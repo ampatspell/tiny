@@ -2,7 +2,15 @@
   import type { ResolvedPathname } from '$app/types';
   import type { Snippet } from 'svelte';
 
-  let { route, isCurrent, children }: { route: ResolvedPathname; isCurrent: boolean; children?: Snippet } = $props();
+  let {
+    route,
+    isCurrent,
+    children,
+  }: {
+    route: ResolvedPathname | undefined;
+    isCurrent: boolean;
+    children?: Snippet;
+  } = $props();
 </script>
 
 <a class={['item', isCurrent && 'current']} href={route}>

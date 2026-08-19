@@ -10,11 +10,11 @@ export type Parent = {
   didUpdate: (...args: UpdateParams<unknown>) => void;
 };
 
-export type UsePropertiesOptions = {
+type UsePropertiesOptions = {
   all: Property[];
 };
 
-export const useProperties = (_opts: OptionsInput<UsePropertiesOptions>) => {
+const useProperties = (_opts: OptionsInput<UsePropertiesOptions>) => {
   const opts = options(_opts);
 
   const all = $derived(opts.all);
@@ -37,12 +37,12 @@ export const useProperties = (_opts: OptionsInput<UsePropertiesOptions>) => {
 
 export type Properties = ReturnType<typeof useProperties>;
 
-export type UseTouchedPropertiesOptions = {
+type UseTouchedPropertiesOptions = {
   properties: Properties;
   isTouched: boolean;
 };
 
-export const useTouchedProperties = (_opts: OptionsInput<UseTouchedPropertiesOptions>) => {
+const useTouchedProperties = (_opts: OptionsInput<UseTouchedPropertiesOptions>) => {
   const opts = options(_opts);
   const isTouched = $derived(opts.isTouched);
   const properties = $derived(opts.properties);

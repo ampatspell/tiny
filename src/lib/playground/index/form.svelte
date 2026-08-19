@@ -4,20 +4,25 @@
   import Content from '$lib/components/form/content/content.svelte';
   import Row from '$lib/components/form/content/row.svelte';
   import Input from '$lib/components/properties/input.svelte';
+  import File from '$lib/components/properties/file.svelte';
 
   let { properties }: { properties: IndexProperties } = $props();
 
   let title = $derived(properties.title);
   let description = $derived(properties.description);
+  let background = $derived(properties.background);
 </script>
 
-<Form>
+<Form size="regular">
   <Content>
     <Row>
       <Input property={title} />
     </Row>
     <Row>
       <Input property={description} />
+    </Row>
+    <Row>
+      <File property={background} />
     </Row>
   </Content>
 </Form>

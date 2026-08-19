@@ -5,7 +5,7 @@
   import TablerCloudFilled from '$lib/playground/icons/tabler--cloud-filled.svelte';
   import TablerCloud from '$lib/playground/icons/tabler--cloud.svelte';
 
-  let { label, onClick: _onClick }: { label: string; onClick: () => Promise<void> } = $props();
+  let { label, onClick: _onClick }: { label: string; onClick: () => Promise<unknown> } = $props();
 
   let isBusy = $state(false);
 

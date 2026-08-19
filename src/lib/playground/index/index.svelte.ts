@@ -1,7 +1,9 @@
 import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
+import { createOptionalRemoteFile } from '$lib/utils/files.svelte.js';
+import { split } from '$lib/utils/object.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
-import { updateIndex, type IndexData } from './index.remote.ts';
+import { updateIndex, updateIndexFile, type IndexData } from './index.remote.ts';
 
 export type UseIndexPropertiesOptions = {
   data: IndexData;
@@ -12,15 +14,16 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
 
   const data = $derived(opts.data);
 
-  const properties = useDataProperties({ data: getter(() => data) });
+  const properties = useDataProperties({
+    data: getter(() => ({
+      ...data,
+      background: createOptionalRemoteFile(data.background),
+    })),
+  });
+
   const title = properties.property('title', { validator: notBlank() });
   const description = properties.property('description');
-
-  // let file = $state<File>();
-  //   let onFiles = (files: File[]) => {
-  //     file = files[0];
-  //   };
-  // await updateIndexFile({ file });
+  const background = properties.property('background');
 
   const isDirty = $derived(properties.isDirty);
 
@@ -28,7 +31,14 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
     if (properties.touch()) {
       const dirty = properties.dirty;
       if (dirty) {
-        await updateIndex(dirty);
+        const [data, files] = split(dirty, ['background']);
+        if (Object.keys(data).length) {
+          await updateIndex(data);
+        }
+        const file = files.background;
+        if (file) {
+          await updateIndexFile({ file: file.file });
+        }
       }
       return data.id;
     }
@@ -40,6 +50,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
     {
       title,
       description,
+      background,
       isDirty: getter(() => isDirty),
       save,
       rollback,

@@ -11,6 +11,7 @@
 <style lang="scss">
   .screen {
     flex: 1;
+    width: 100%;
     max-width: 1024px;
     max-height: 576px;
     border: 1px solid #eee;
