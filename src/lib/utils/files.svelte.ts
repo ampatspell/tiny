@@ -1,4 +1,5 @@
 import { resolve } from '$app/paths';
+import { hashCodeTag } from '$lib/properties/property.svelte.js';
 import { defer } from '$lib/utils/promise.js';
 import { getter, options, type OptionsInput } from './options.svelte.ts';
 
@@ -22,16 +23,20 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
   const url = $derived(resolve('/files/[id]', { id }));
   const isImage = $derived(createIsImage(contentType));
 
+  const hashCode = $derived(`remote-file-${id}`);
+
   return options(
     {
       type: 'remote' as const,
       data,
+      file: undefined,
       id: getter(() => id),
       name: getter(() => name),
       contentType: getter(() => contentType),
       size: getter(() => size),
       url: getter(() => url),
       isImage: getter(() => isImage),
+      [hashCodeTag]: getter(() => hashCode),
     },
     {
       name: 'RemoteFileModel',
@@ -44,7 +49,7 @@ export type RemoteFile = ReturnType<typeof createRemoteFile>;
 
 export const createOptionalRemoteFile = <D extends FileData = FileData>(opts: OptionsInput<D> | undefined) => {
   if (opts) {
-    return createRemoteFile<D>(opts);
+    return createRemoteFile<D>(opts) as UniversalFile;
   }
 };
 
@@ -60,6 +65,7 @@ const createLocalFile = (file: File) => {
     {
       type: 'local' as const,
       file,
+      data: undefined,
       name,
       contentType,
       size,

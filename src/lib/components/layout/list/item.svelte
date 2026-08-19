@@ -12,8 +12,14 @@
 
   let item = $derived(layout.item);
   let selected = $derived(layout.selected);
+  let route = $derived.by(() => {
+    if (layout.select) {
+      return layout.select(model.id);
+    }
+  });
+  let isCurrent = $derived(model.id === selected);
 </script>
 
-<Item route={layout.select(model.id)} isCurrent={model.id === selected}>
+<Item {route} {isCurrent}>
   {@render item(model)}
 </Item>

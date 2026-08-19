@@ -4,16 +4,13 @@
   import Content from '$lib/components/form/content/content.svelte';
   import Row from '$lib/components/form/content/row.svelte';
   import Input from '$lib/components/properties/input.svelte';
-  import File from '$lib/components/file.svelte';
-  import type { LocalFile, UniversalFile } from '$lib/utils/files.svelte.js';
+  import File from '$lib/components/properties/file.svelte';
 
   let { properties }: { properties: IndexProperties } = $props();
 
   let title = $derived(properties.title);
   let description = $derived(properties.description);
-
-  let file = $state<UniversalFile>();
-  let onSelected = (next: LocalFile | undefined) => (file = next);
+  let background = $derived(properties.background);
 </script>
 
 <Form size="regular">
@@ -25,7 +22,7 @@
       <Input property={description} />
     </Row>
     <Row>
-      <File {file} {onSelected} />
+      <File property={background} />
     </Row>
   </Content>
 </Form>

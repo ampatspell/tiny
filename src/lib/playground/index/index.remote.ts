@@ -58,7 +58,7 @@ export const updateIndex = command(
 
 export const updateIndexFile = command(
   v.strictObject({
-    file: v.file(),
+    file: v.optional(v.file()),
   }),
   async ({ file }) => {
     const db = getDatabase();
@@ -71,8 +71,12 @@ export const updateIndexFile = command(
       await files.drop(id);
     }
 
-    id = uid();
-    await Promise.all([db.updateTable('index').set({ backgroundId: id }).execute(), files.store(id, file)]);
+    if (file) {
+      id = uid();
+      await Promise.all([db.updateTable('index').set({ backgroundId: id }).execute(), files.store(id, file)]);
+    } else {
+      await db.updateTable('index').set({ backgroundId: null }).execute();
+    }
 
     void getIndex().refresh();
   },
