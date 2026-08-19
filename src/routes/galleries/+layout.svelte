@@ -26,7 +26,13 @@
 </script>
 
 {#snippet item(gallery: GalleryData)}
-  <Label label={gallery.name} description={gallery.permalink} />
+  <Label
+    label={gallery.name}
+    description={{
+      value: gallery.permalink,
+      placeholder: 'No permalink',
+    }}
+  />
 {/snippet}
 
 {#snippet add(onDone: (id: string | undefined) => void)}

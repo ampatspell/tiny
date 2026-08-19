@@ -1,12 +1,26 @@
 <script lang="ts">
-  let { label, description }: { label: string; description?: string } = $props();
+  type Description = {
+    value: string | undefined;
+    placeholder: string | undefined;
+  };
+
+  let { label, description: _description }: { label: string; description?: string | Description } = $props();
+
+  let description = $derived.by<Description>(() => {
+    if (typeof _description === 'object') {
+      return _description;
+    } else {
+      return {
+        value: _description,
+        placeholder: undefined,
+      };
+    }
+  });
 </script>
 
 <div class="label">
   <div class="value">{label}</div>
-  {#if description}
-    <div class="description">{description}</div>
-  {/if}
+  <div class={['description', !description.value && 'blank']}>{description.value || description.placeholder}</div>
 </div>
 
 <style lang="scss">
@@ -27,6 +41,9 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      &.blank {
+        opacity: 0.5;
+      }
     }
   }
 </style>
