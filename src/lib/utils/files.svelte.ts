@@ -1,16 +1,64 @@
+import { resolve } from '$app/paths';
 import { defer } from '$lib/utils/promise.js';
-import { getter, options } from './options.svelte.ts';
+import { getter, options, type OptionsInput } from './options.svelte.ts';
 
-const createModel = (file: File) => {
+const createIsImage = (contentType: string) => contentType.startsWith('image/');
+
+export type FileData = {
+  id: string;
+  name: string;
+  contentType: string;
+  size: number;
+};
+
+export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsInput<D>) => {
+  const data = options(_opts);
+
+  const id = $derived(data.id);
+  const name = $derived(data.name);
+  const contentType = $derived(data.contentType);
+  const size = $derived(data.size);
+
+  const url = $derived(resolve('/files/[id]', { id }));
+  const isImage = $derived(createIsImage(contentType));
+
+  return options(
+    {
+      type: 'remote' as const,
+      data,
+      id: getter(() => id),
+      name: getter(() => name),
+      contentType: getter(() => contentType),
+      size: getter(() => size),
+      url: getter(() => url),
+      isImage: getter(() => isImage),
+    },
+    {
+      name: 'RemoteFileModel',
+      serialized: ['id', 'name', 'contentType'],
+    },
+  );
+};
+
+export type RemoteFile = ReturnType<typeof createRemoteFile>;
+
+export const createOptionalRemoteFile = <D extends FileData = FileData>(opts: OptionsInput<D> | undefined) => {
+  if (opts) {
+    return createRemoteFile<D>(opts);
+  }
+};
+
+const createLocalFile = (file: File) => {
   const name = file.name;
   const contentType = file.type;
   const size = file.size;
 
   const url = $derived(URL.createObjectURL(file));
-  const isImage = $derived(contentType.startsWith('image/'));
+  const isImage = $derived(createIsImage(contentType));
 
   return options(
     {
+      type: 'local' as const,
       file,
       name,
       contentType,
@@ -19,13 +67,15 @@ const createModel = (file: File) => {
       isImage: getter(() => isImage),
     },
     {
-      name: 'FileModel',
+      name: 'LocalFileModel',
       serialized: ['name', 'contentType'],
     },
   );
 };
 
-export type FileModel = ReturnType<typeof createModel>;
+export type LocalFile = ReturnType<typeof createLocalFile>;
+
+export type UniversalFile = LocalFile | RemoteFile;
 
 export type PickFilesOptions = {
   multiple?: boolean;
@@ -34,7 +84,7 @@ export type PickFilesOptions = {
 
 export type Picked = {
   status: 'picked';
-  models: FileModel[];
+  models: LocalFile[];
 };
 
 export type Cancelled = {
@@ -53,7 +103,7 @@ export const pickFiles = (opts: PickFilesOptions): Promise<Picked | Cancelled> =
 
   const change = () => {
     const files = [...(input.files ?? [])];
-    const models = files.map((file) => createModel(file));
+    const models = files.map((file) => createLocalFile(file));
     deferred.resolve({ status: 'picked', models });
     input.value = '';
   };

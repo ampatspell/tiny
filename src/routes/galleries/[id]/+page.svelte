@@ -27,7 +27,7 @@
 
 <Editing {layout}>
   <Section>
-    <Form>
+    <Form size="regular">
       <Properties {properties} />
     </Form>
   </Section>
