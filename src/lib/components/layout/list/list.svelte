@@ -1,32 +1,33 @@
-<script lang="ts">
-  import type { ResolvedPathname } from '$app/types';
+<script lang="ts" generics="M extends Model">
   import type { Snippet } from 'svelte';
-  import Header from '../../header/header.svelte';
-  import Title from '../../header/title.svelte';
+  import type { ListLayout, Model } from './list.svelte.js';
   import List from '../../list/list.svelte';
-  import Add from './add.svelte';
+  import Header from './header.svelte';
+  import SplitView from '$lib/components/split-view.svelte';
+  import Item from './item.svelte';
 
   let {
-    route,
-    title,
-    onAdd,
+    layout,
     children,
   }: {
-    route: ResolvedPathname;
-    title: string;
-    onAdd: (reference: HTMLElement) => void;
+    layout: ListLayout<M>;
     children: Snippet;
   } = $props();
+
+  let route = $derived(layout.index);
+  let models = $derived(layout.models);
 </script>
 
-<List {route}>
-  {#snippet header()}
-    <Header>
-      <Title label={title} />
-      {#snippet accessories()}
-        <Add {onAdd} />
+<SplitView>
+  {#snippet sidebar()}
+    <List {route}>
+      {#snippet header()}
+        <Header {layout} />
       {/snippet}
-    </Header>
+      {#each models as model (model.id)}
+        <Item {layout} {model} />
+      {/each}
+    </List>
   {/snippet}
   {@render children()}
-</List>
+</SplitView>

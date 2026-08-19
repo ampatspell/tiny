@@ -1,7 +1,17 @@
-<script lang="ts">
+<script lang="ts" generics="M extends Model, P extends Properties">
   import BusyButton from '$lib/playground/busy-button.svelte';
+  import type { EditingLayout, Model, Properties } from '../editing.svelte.ts';
 
-  let { onSave }: { onSave: () => Promise<void> } = $props();
+  let {
+    layout,
+  }: {
+    layout: EditingLayout<M, P>;
+  } = $props();
+
+  let properties = $derived(layout.properties);
+  let onClick = () => properties.save();
 </script>
 
-<BusyButton label="Save" onClick={onSave} />
+{#if properties.isDirty}
+  <BusyButton label="Save" {onClick} />
+{/if}
