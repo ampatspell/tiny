@@ -68,6 +68,10 @@
       "types": "./dist/server/database/database.d.ts",
       "svelte": "./dist/server/database/database.js"
     },
+    "./server/files": {
+      "types": "./dist/server/files.d.ts",
+      "svelte": "./dist/server/files.js"
+    },
     "./server/storage": {
       "types": "./dist/server/storage.d.ts",
       "svelte": "./dist/server/storage.js"
@@ -127,10 +131,6 @@
     "./components/dark.svelte": {
       "types": "./dist/components/dark.svelte.d.ts",
       "svelte": "./dist/components/dark.svelte"
-    },
-    "./components/files.svelte": {
-      "types": "./dist/components/files.svelte.d.ts",
-      "svelte": "./dist/components/files.svelte"
     },
     "./components/icon.svelte": {
       "types": "./dist/components/icon.svelte.d.ts",
