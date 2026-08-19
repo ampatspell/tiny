@@ -3,7 +3,9 @@
   import {
     arrow as arrowMiddleware,
     computePosition,
+    flip,
     offset as offsetMiddleware,
+    shift,
     type OffsetOptions,
     type Placement,
   } from '@floating-ui/dom';
@@ -38,7 +40,7 @@
       computePosition(reference, tooltip, {
         placement,
         strategy: 'fixed',
-        middleware: [offsetMiddleware(offset ?? 5), arrowMiddleware({ element: arrow })],
+        middleware: [offsetMiddleware(offset ?? 5), flip(), shift({ padding: 5 }), arrowMiddleware({ element: arrow })],
       }).then(({ x, y, placement, middlewareData }) => {
         tooltipStyle = recordToStyle({ left: px(x), top: px(y) });
         const arrow = middlewareData.arrow!;
@@ -51,7 +53,7 @@
         arrowStyle = recordToStyle({
           left: px(arrow.x),
           top: px(arrow.y),
-          [side!]: px(-2),
+          [side!]: px(-3),
         });
       });
     }
@@ -119,10 +121,11 @@
       }
     }
     > .arrow {
+      --size: 6px;
       position: absolute;
       background: var(--background);
-      width: 3px;
-      height: 3px;
+      width: var(--size);
+      height: var(--size);
       transform: rotate(45deg);
     }
     box-shadow:
