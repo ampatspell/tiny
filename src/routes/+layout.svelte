@@ -30,7 +30,7 @@
       },
 
       {
-        name: 'Dev',
+        name: 'In development',
         icon: TablerCode,
         route: resolve('/dev'),
       },
