@@ -1,5 +1,5 @@
 <script lang="ts" generics="M extends Model, P extends Properties">
-  import BusyButton from '$lib/playground/busy-button.svelte';
+  import Busy from '$lib/components/button/specific/busy.svelte';
   import type { EditingLayout, Model, Properties } from '../editing.svelte.ts';
 
   let {
@@ -13,5 +13,5 @@
 </script>
 
 {#if properties.isDirty}
-  <BusyButton label="Save" {onClick} />
+  <Busy label="Save" {onClick} />
 {/if}

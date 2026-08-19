@@ -2,8 +2,8 @@
   import Button from '$lib/components/button/button.svelte';
   import Icon from '$lib/components/button/icon.svelte';
   import Label from '$lib/components/button/label.svelte';
-  import TablerCloudFilled from './icons/tabler--cloud-filled.svelte';
-  import TablerCloud from './icons/tabler--cloud.svelte';
+  import TablerCloudFilled from '$lib/playground/icons/tabler--cloud-filled.svelte';
+  import TablerCloud from '$lib/playground/icons/tabler--cloud.svelte';
 
   let { label, onClick: _onClick }: { label: string; onClick: () => Promise<void> } = $props();
 
