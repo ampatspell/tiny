@@ -23,7 +23,6 @@
       --max: 450px;
       --width: auto;
     }
-
     display: flex;
     flex-direction: column;
     gap: 10px;
