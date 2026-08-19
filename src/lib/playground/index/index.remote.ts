@@ -6,6 +6,7 @@ import type { QueryResponse } from '$lib/utils/utils.js';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
+
   let index = await db.selectFrom('index').selectAll().limit(1).executeTakeFirst();
   if (!index) {
     index = await db
@@ -22,7 +23,18 @@ export const getIndex = query(async () => {
       .returningAll()
       .executeTakeFirstOrThrow();
   }
-  return index;
+
+  let background;
+  if (index.backgroundId) {
+    background = await db
+      .selectFrom('files')
+      .selectAll()
+      .where('id', '==', index.backgroundId)
+      .limit(1)
+      .executeTakeFirst();
+  }
+
+  return { ...index, background };
 });
 
 export type IndexData = QueryResponse<typeof getIndex>;

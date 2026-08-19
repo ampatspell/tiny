@@ -1,4 +1,4 @@
-import { CamelCasePlugin, Kysely, SqliteDialect } from 'kysely';
+import { CamelCasePlugin, Kysely, ParseJSONResultsPlugin, SqliteDialect } from 'kysely';
 import SQLite from 'better-sqlite3';
 import { dirname, join } from 'node:path';
 import { mkdir } from 'node:fs/promises';
@@ -21,7 +21,7 @@ export const createDatabase = async <D>(opts: CreateDatabaseOptions) => {
 
   const db = new Kysely<D>({
     dialect,
-    plugins: [new CamelCasePlugin()],
+    plugins: [new CamelCasePlugin(), new ParseJSONResultsPlugin()],
     log: (event) => {
       const prefix = '[sql]';
       const ms = `${round(event.queryDurationMillis)}ms`;

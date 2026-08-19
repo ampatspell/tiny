@@ -7,6 +7,7 @@ const createModel = (file: File) => {
   const size = file.size;
 
   const url = $derived(URL.createObjectURL(file));
+  const isImage = $derived(contentType.startsWith('image/'));
 
   return options(
     {
@@ -15,8 +16,12 @@ const createModel = (file: File) => {
       contentType,
       size,
       url: getter(() => url),
+      isImage: getter(() => isImage),
     },
-    { name: 'FileModel', serialized: ['name'] },
+    {
+      name: 'FileModel',
+      serialized: ['name', 'contentType'],
+    },
   );
 };
 
