@@ -1,14 +1,17 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import Navigation from './navigation.svelte';
+  import { page } from '$app/state';
 
   let { children }: { children: Snippet } = $props();
 </script>
 
 <div class="backend">
-  <div class="navigation">
-    <Navigation />
-  </div>
+  {#if !page.error}
+    <div class="navigation">
+      <Navigation />
+    </div>
+  {/if}
   <div class="content">
     {@render children()}
   </div>

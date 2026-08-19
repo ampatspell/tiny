@@ -21,7 +21,7 @@
   let layout = useEditingLayout({
     title: getter(() => gallery.name),
     route: resolve('/galleries'),
-    model: getter(() => gallery),
+    data: getter(() => gallery),
     properties,
   });
 </script>

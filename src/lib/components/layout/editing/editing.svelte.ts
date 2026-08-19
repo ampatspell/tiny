@@ -7,12 +7,12 @@ export type Properties = {
   isDirty: boolean;
   save: () => Promise<void>;
   rollback: () => void;
-  destroy: () => Promise<void>;
+  destroy?: () => Promise<void>;
 };
 
 export type EditingLayoutOptions<M extends Model, P extends Properties> = {
   title: string;
-  model: M;
+  data: M;
   properties: P;
 };
 

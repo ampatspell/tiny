@@ -21,14 +21,16 @@
       floaters,
       reference,
       title: 'Delete?',
-      description: 'Sure you want to delete this gallery?',
+      description: 'Sure you want to delete it?',
       confirm: 'Delete',
     });
     if (ok) {
-      await properties.destroy();
+      await properties.destroy?.();
       goto(route, { replaceState: true });
     }
   };
 </script>
 
-<Light label="Delete" icon={TablerTrashX} {onClick} />
+{#if properties.destroy}
+  <Light label="Delete" icon={TablerTrashX} {onClick} />
+{/if}

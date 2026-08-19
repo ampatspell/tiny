@@ -4,7 +4,6 @@
   import Backend from '$lib/components/layout/backend/backend.svelte';
   import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
-  import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
   import TablerCode from '$lib/playground/icons/tabler--code.svelte';
   import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
   import type { Snippet } from 'svelte';
@@ -29,11 +28,7 @@
         route: resolve('/galleries'),
         select: (id) => resolve('/galleries/[id]', { id }),
       },
-      {
-        name: 'Floaters',
-        icon: TablerBalloon,
-        route: resolve('/floating'),
-      },
+
       {
         name: 'Dev',
         icon: TablerCode,
