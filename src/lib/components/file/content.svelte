@@ -2,12 +2,14 @@
   import type { UniversalFile } from '$lib/utils/files.svelte.js';
   import { url } from '$lib/utils/utils.js';
   import { fade } from 'svelte/transition';
-  import Overlay from './overlay.svelte';
+  import Description from './description.svelte';
 
   let {
     file,
+    onDelete,
   }: {
     file: UniversalFile;
+    onDelete: () => void;
   } = $props();
 </script>
 
@@ -19,7 +21,7 @@
       {/key}
     </div>
   {/if}
-  <Overlay {file} />
+  <Description {file} {onDelete} />
 </div>
 
 <style lang="scss">

@@ -19,7 +19,13 @@
 
   let onclick = async () => {
     let file = await pickFile({ accept });
-    onSelected(file);
+    if (file) {
+      onSelected(file);
+    }
+  };
+
+  let onDelete = () => {
+    onSelected(undefined);
   };
 </script>
 
@@ -27,7 +33,7 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="file" style:--height={px(height)} bind:clientWidth {onclick}>
   {#if file}
-    <Content {file} />
+    <Content {file} {onDelete} />
   {:else}
     <Blank />
   {/if}
@@ -44,5 +50,6 @@
     display: flex;
     flex-direction: column;
     font-size: var(--dark-font-size-small);
+    position: relative;
   }
 </style>

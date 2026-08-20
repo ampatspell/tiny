@@ -1,18 +1,34 @@
 <script lang="ts">
-  import type { UniversalFile } from '$lib/utils/files.svelte.js';
-  import { formatBytes } from '$lib/utils/utils.js';
+  import type { Component } from 'svelte';
+  import Icon from '../icon.svelte';
+  import TablerCircleX from '$lib/playground/icons/tabler--circle-x.svelte';
 
   let {
-    file,
+    icon,
+    label,
+    hover,
+    onDelete: _onDelete,
   }: {
-    file: UniversalFile;
+    icon: Component;
+    label: string;
+    hover?: boolean;
+    onDelete?: () => void;
   } = $props();
 
-  let hover = $derived(file.isImage);
+  let onDelete = (e: MouseEvent) => {
+    e.stopPropagation();
+    _onDelete?.();
+  };
 </script>
 
 <div class={['overlay', hover && 'on-hover']}>
-  <div class="caption">{file.name} ({formatBytes(file.size)})</div>
+  <Icon {icon} size="medium" />
+  <div class="label">{label}</div>
+  {#if _onDelete}
+    <div class="delete">
+      <Icon icon={TablerCircleX} onClick={onDelete} />
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -23,16 +39,23 @@
     bottom: 0;
     right: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
     min-width: 0;
-    > .caption {
-      padding: 10px;
+    > .label {
+      padding: 0 10px;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+    }
+    > .delete {
+      opacity: 0;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      transition: 0.15s ease-in-out opacity;
     }
     &.on-hover {
       opacity: 0;
@@ -40,6 +63,11 @@
       backdrop-filter: blur(1px);
       transition: 0.15s ease-in-out opacity;
       &:hover {
+        opacity: 1;
+      }
+    }
+    &:hover {
+      > .delete {
         opacity: 1;
       }
     }
