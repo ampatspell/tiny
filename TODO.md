@@ -1,6 +1,10 @@
 ## TODO
 
+- [ ] Do default list/single layouts based on backend config
+- [ ] Color picker property
+- [ ] Markdown property
 - [ ] Clear file
+- [ ] Show non-image files
 - [ ] Prepare data for editing and back to update flow
 - [ ] Image resizing
 - [ ] Drag and drop reordering in grid and list
