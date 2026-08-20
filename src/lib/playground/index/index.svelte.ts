@@ -13,6 +13,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
   const opts = options(_opts);
 
   const data = $derived(opts.data);
+  const id = $derived(data.id);
 
   const properties = useDataProperties({
     data: getter(() => ({
@@ -42,6 +43,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
           }
         }),
       ]);
+      return id;
     }
   };
 

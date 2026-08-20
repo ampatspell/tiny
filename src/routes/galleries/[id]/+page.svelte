@@ -5,7 +5,7 @@
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
   import { getter } from '$lib/utils/options.svelte.js';
   import Editing from '$lib/components/layout/editing/editing.svelte';
-  import Section from '$lib/components/layout/editing/section.svelte';
+  import Section from '$lib/components/page/section.svelte';
   import Placeholder from '$lib/components/placeholder.svelte';
   import { useEditingLayout } from '$lib/components/layout/editing/editing.svelte.js';
   import Form from '$lib/components/form/form.svelte';
