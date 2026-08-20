@@ -20,7 +20,6 @@
 
   let layout = useEditingLayout({
     title: getter(() => gallery.name),
-    data: getter(() => gallery),
     properties,
   });
 </script>

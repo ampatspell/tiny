@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import Dark from '$lib/components/dark.svelte';
   import Placeholder from '$lib/components/placeholder.svelte';
   import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
   import { isTruthy } from '$lib/utils/array.js';
@@ -11,4 +12,6 @@
   });
 </script>
 
-<Placeholder icon={TablerBalloon} {label} />
+<Dark>
+  <Placeholder icon={TablerBalloon} {label} />
+</Dark>

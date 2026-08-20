@@ -10,7 +10,7 @@
   <div class="items">
     {#each backend.sections as section (section.icon)}
       <a class={['item', section.isCurrent && 'current']} href={section.route}>
-        <Tooltip label={section.name} offset={14} placement="right">
+        <Tooltip label={section.name} offset={16} placement="right">
           <Icon icon={section.icon} />
         </Tooltip>
       </a>

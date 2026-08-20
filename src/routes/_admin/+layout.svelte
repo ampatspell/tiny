@@ -4,7 +4,6 @@
   import Backend from '$lib/components/layout/backend/backend.svelte';
   import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
-  import TablerBanana from '$lib/playground/icons/tabler--banana.svelte';
   import TablerCode from '$lib/playground/icons/tabler--code.svelte';
   import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
   import type { Snippet } from 'svelte';
@@ -14,31 +13,25 @@
   setBackend({
     sections: [
       {
-        name: 'Home',
+        name: 'Public',
         icon: LucideCat,
         route: resolve('/'),
       },
       {
-        name: 'Dynamic',
-        icon: TablerBanana,
-        route: resolve('/dynamic'),
-      },
-      {
         name: 'Index',
         icon: TablerAppWindow,
-        route: resolve('/index'),
+        route: resolve('/_admin/index'),
       },
       {
         name: 'Galleries',
         icon: TablerPhoto,
-        route: resolve('/galleries'),
-        select: (id) => resolve('/galleries/[id]', { id }),
+        route: resolve('/_admin/galleries'),
+        select: (id) => resolve('/_admin/galleries/[id]', { id }),
       },
-
       {
         name: 'In development',
         icon: TablerCode,
-        route: resolve('/dev'),
+        route: resolve('/_admin/dev'),
       },
     ],
   });

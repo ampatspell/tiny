@@ -15,7 +15,6 @@
   let layout = useEditingLayout({
     title: getter(() => data.title ?? 'Index'),
     properties,
-    data: getter(() => data),
   });
 </script>
 

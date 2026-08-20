@@ -10,15 +10,12 @@ export type Properties = {
   destroy?: () => Promise<void>;
 };
 
-export type EditingLayoutOptions<M extends Model, P extends Properties> = {
+export type EditingLayoutOptions<P extends Properties> = {
   title: string;
-  data: M;
   properties: P;
 };
 
-export const useEditingLayout = <M extends Model, P extends Properties>(
-  _opts: OptionsInput<EditingLayoutOptions<M, P>>,
-) => {
+export const useEditingLayout = <P extends Properties>(_opts: OptionsInput<EditingLayoutOptions<P>>) => {
   const opts = options(_opts);
   const backend = useBackend();
 
@@ -35,4 +32,4 @@ export const useEditingLayout = <M extends Model, P extends Properties>(
   });
 };
 
-export type EditingLayout<M extends Model, P extends Properties> = ReturnType<typeof useEditingLayout<M, P>>;
+export type EditingLayout<P extends Properties> = ReturnType<typeof useEditingLayout<P>>;
