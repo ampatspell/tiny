@@ -38,7 +38,7 @@
 </script>
 
 <svelte:head>
-  <title>Tiny</title>
+  <title>Tiny backend</title>
 </svelte:head>
 
 <Backend>
