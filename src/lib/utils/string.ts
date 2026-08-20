@@ -1,6 +1,7 @@
 import slug from 'slug';
+import { sentenceCase } from 'text-sentence-case';
 
-export { slug };
+export { slug, sentenceCase };
 
 export function widow(text: string): string {
   text = text.trim();

@@ -1,5 +1,5 @@
 import { useProperty, type UsePropertyOptions } from './property.svelte.ts';
-import { capitalize } from '$lib/utils/string.js';
+import { sentenceCase } from '$lib/utils/string.js';
 import { usePropertiesContext } from './context.svelte.ts';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 import { addObject } from '$lib/utils/array.js';
@@ -22,7 +22,7 @@ export const useDataProperty = <D extends Record<string, unknown>, K extends key
   const property = useProperty<D[K]>({
     ...opts.prop,
     value: getter(() => data[key]),
-    meta: getter(() => Object.assign({ label: capitalize(key) }, opts.prop?.meta)),
+    meta: getter(() => Object.assign({ label: sentenceCase(key) }, opts.prop?.meta)),
   });
 
   const value = $derived(property.value);

@@ -12,6 +12,7 @@ export const transform = <S, T>(property: Property<S>, transformer: Transformer<
     value: getter(() => transformer.toTarget(property.value)),
     didUpdate: ({ after }) => property.update(transformer.toSource(after)),
     onRollback,
+    meta: getter(() => property.meta),
   });
 };
 

@@ -186,6 +186,7 @@
     "resolve-path": "^1.4.0",
     "runed": "^0.37.1",
     "slug": "^12.0.1",
+    "text-sentence-case": "^1.2.11",
     "tinyexec": "^1.3.0",
     "tsx": "^4.23.12",
     "valibot": "^1.4.2"

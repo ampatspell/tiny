@@ -110,7 +110,7 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
     isValid: getter(() => isValid),
   });
   const meta = $derived.by(() => {
-    return Object.assign({ isRequired: validator?.isRequired }, $state.snapshot(opts.meta));
+    return { isRequired: validator?.isRequired ?? false, ...opts.meta };
   });
 
   const identity = options(
