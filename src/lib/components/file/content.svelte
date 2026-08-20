@@ -32,14 +32,14 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 15px;
       position: relative;
       > .content {
+        --padding: 15px;
         position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+        top: var(--padding);
+        left: var(--padding);
+        bottom: var(--padding);
+        right: var(--padding);
         background: var(--url);
         background-repeat: no-repeat;
         background-position: center;
