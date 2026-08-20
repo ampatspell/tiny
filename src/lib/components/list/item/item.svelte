@@ -8,7 +8,7 @@
     children,
   }: {
     route: ResolvedPathname | undefined;
-    isCurrent: boolean;
+    isCurrent?: boolean;
     children?: Snippet;
   } = $props();
 </script>
@@ -22,11 +22,13 @@
     min-height: 36px;
     display: flex;
     flex-direction: row;
+    gap: 10px;
     align-items: center;
     padding: 0 10px;
     text-decoration: none;
     border-bottom: 1px solid var(--dark-border-color-2);
     transition: 0.15s ease-in-out background-color;
+    &:hover,
     &.current {
       background: var(--dark-selected-background-color-1);
     }
