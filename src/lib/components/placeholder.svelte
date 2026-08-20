@@ -16,6 +16,7 @@
 
 <style lang="scss">
   .placeholder {
+    cursor: default;
     flex: 1;
     display: flex;
     flex-direction: column;

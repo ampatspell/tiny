@@ -15,6 +15,7 @@
 
 <style lang="scss">
   .header {
+    cursor: default;
     display: flex;
     flex-direction: row;
     gap: 5px;

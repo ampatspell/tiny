@@ -13,6 +13,7 @@
 
 <style lang="scss">
   .header {
+    cursor: default;
     height: 36px;
     display: flex;
     flex-direction: row;

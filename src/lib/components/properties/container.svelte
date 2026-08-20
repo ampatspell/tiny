@@ -19,7 +19,9 @@
       <div class="content">
         <div class="label">{label}</div>
         {#if isRequired}
-          <div class="required">*</div>
+          <Tooltip label="Required">
+            <div class="required">*</div>
+          </Tooltip>
         {/if}
       </div>
       {#if error}
@@ -41,6 +43,7 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+    cursor: default;
     > .header {
       display: flex;
       flex-direction: row;
