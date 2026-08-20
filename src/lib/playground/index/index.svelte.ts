@@ -1,8 +1,8 @@
 import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
-import { createOptionalRemoteFile } from '$lib/utils/files.svelte.js';
-import { split } from '$lib/utils/object.js';
+import { asFile } from '$lib/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
+import { run } from '$lib/utils/utils.js';
 import { updateIndex, updateIndexFile, type IndexData } from './index.remote.ts';
 
 export type UseIndexPropertiesOptions = {
@@ -17,7 +17,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
   const properties = useDataProperties({
     data: getter(() => ({
       ...data,
-      background: createOptionalRemoteFile(data.background),
+      background: asFile(data.background),
     })),
   });
 
@@ -29,18 +29,19 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
 
   const save = async () => {
     if (properties.touch()) {
-      const dirty = properties.dirty;
-      if (dirty) {
-        const [data, files] = split(dirty, ['background']);
-        if (Object.keys(data).length) {
-          await updateIndex(data);
-        }
-        const file = files.background;
-        if (file) {
-          await updateIndexFile({ file: file.file });
-        }
-      }
-      return data.id;
+      const { omit: data, pick: files } = properties.with('background').dirty;
+      await Promise.all([
+        run(async () => {
+          if (data) {
+            await updateIndex(data);
+          }
+        }),
+        run(async () => {
+          if (files) {
+            await updateIndexFile({ file: files.background?.file });
+          }
+        }),
+      ]);
     }
   };
 

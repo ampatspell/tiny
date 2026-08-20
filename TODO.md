@@ -3,13 +3,13 @@
 - [ ] Do default list/single layouts based on backend config
 - [ ] Color picker property
 - [ ] Markdown property
-- [ ] Clear file
-- [ ] Show non-image files
-- [ ] Prepare data for editing and back to update flow
 - [ ] Image resizing
 - [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
 - [ ] User authorization and authentication
+- [x] Clear file
+- [x] Show non-image files
+- [x] Prepare data for editing and back to update flow
 - [x] Save & discard uploads
 - [x] Render floater + it's children floaters
 - [x] Dialog form

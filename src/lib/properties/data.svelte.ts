@@ -3,6 +3,8 @@ import { capitalize } from '$lib/utils/string.js';
 import { usePropertiesContext } from './context.svelte.ts';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 import { addObject } from '$lib/utils/array.js';
+import { hasKeys } from '$lib/utils/utils.js';
+import { omit, pick } from '$lib/utils/object.js';
 
 export type UseDataPropertyOptions<D extends Record<string, unknown>, K extends keyof D & string> = {
   data: D;
@@ -113,12 +115,45 @@ export const useDataProperties = <D extends Record<string, unknown>>(
   const isValid = $derived(context.isValid);
   const isDirty = $derived(context.isDirty);
 
+  const withKeys = (...keys: (keyof D & string)[]) => {
+    const dataOmit = $derived.by(() => omit(data, keys));
+    const dataPick = $derived.by(() => pick(data, keys));
+    const dirtyOmit = $derived.by(() => {
+      if (dirty) {
+        const object = omit(dirty, keys);
+        if (hasKeys(object)) {
+          return object;
+        }
+      }
+    });
+    const dirtyPick = $derived.by(() => {
+      if (dirty) {
+        const object = pick(dirty, keys);
+        if (hasKeys(object)) {
+          return object;
+        }
+      }
+    });
+
+    return {
+      data: options({
+        omit: getter(() => dataOmit),
+        pick: getter(() => dataPick),
+      }),
+      dirty: options({
+        omit: getter(() => dirtyOmit),
+        pick: getter(() => dirtyPick),
+      }),
+    };
+  };
+
   return options(
     {
       context,
       property,
       data: getter(() => data),
       dirty: getter(() => dirty),
+      with: withKeys,
       touch,
       rollback,
       touched: getter(() => touched),

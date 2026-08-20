@@ -64,7 +64,7 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
   const opts = options(_opts);
   const passive = $derived(opts.passive ?? false);
   const external = $derived(opts.value);
-  let current = $state<T>(external);
+  let current = $state<T>(untrack(() => external));
   const value = $derived(current);
 
   const update = (after: T) => {
