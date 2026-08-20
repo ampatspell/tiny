@@ -4,6 +4,7 @@
   import Backend from '$lib/components/layout/backend/backend.svelte';
   import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
+  import TablerBanana from '$lib/playground/icons/tabler--banana.svelte';
   import TablerCode from '$lib/playground/icons/tabler--code.svelte';
   import TablerPhoto from '$lib/playground/icons/tabler--photo.svelte';
   import type { Snippet } from 'svelte';
@@ -16,6 +17,11 @@
         name: 'Home',
         icon: LucideCat,
         route: resolve('/'),
+      },
+      {
+        name: 'Dynamic',
+        icon: TablerBanana,
+        route: resolve('/dynamic'),
       },
       {
         name: 'Index',

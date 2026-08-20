@@ -1,7 +1,7 @@
 <script lang="ts">
   import Editing from '$lib/components/layout/editing/editing.svelte';
   import { useEditingLayout } from '$lib/components/layout/editing/editing.svelte.js';
-  import Section from '$lib/components/layout/editing/section.svelte';
+  import Section from '$lib/components/page/section.svelte';
   import { getIndex } from '$lib/playground/index/index.remote.js';
   import { useIndexProperties } from '$lib/playground/index/index.svelte.js';
   import { usePropertiesContext } from '$lib/properties/context.svelte.js';
