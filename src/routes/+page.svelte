@@ -3,7 +3,7 @@
   import Dark from '$lib/components/dark.svelte';
   import Icon from '$lib/components/icon.svelte';
   import Screen from '$lib/components/screen.svelte';
-  import TablerBalloon from '$lib/playground/icons/tabler--balloon.svelte';
+  import TablerBalloon from '$lib/icons/tabler--balloon.svelte';
   import Index from '$lib/playground/index/index.svelte';
 </script>
 

@@ -1,14 +1,14 @@
-<script lang="ts" generics="M extends Model, P extends Properties">
+<script lang="ts" generics="P extends Properties">
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
   import { confirm } from '$lib/components/floating/layout/confirmation.svelte';
-  import TablerCircleX from '$lib/playground/icons/tabler--circle-x.svelte';
-  import type { EditingLayout, Model, Properties } from '../editing.svelte.ts';
+  import TablerCircleX from '$lib/icons/tabler--circle-x.svelte';
+  import type { EditingLayout, Properties } from '../editing.svelte.ts';
   import Light from './light.svelte';
 
   let {
     layout,
   }: {
-    layout: EditingLayout<M, P>;
+    layout: EditingLayout<P>;
   } = $props();
 
   let floaters = useFloaters();

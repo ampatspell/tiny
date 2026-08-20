@@ -5,7 +5,7 @@
   import { useFloaters } from '$lib/components/floating/floaters.svelte.js';
   import { basic } from '$lib/components/floating/position.js';
   import Tooltip from '$lib/components/floating/tooltip.svelte';
-  import TablerSquareRoundedPlus from '$lib/playground/icons/tabler--square-rounded-plus.svelte';
+  import TablerSquareRoundedPlus from '$lib/icons/tabler--square-rounded-plus.svelte';
   import type { ListLayout, Model } from './list.svelte.ts';
 
   let { layout }: { layout: ListLayout<M> } = $props();

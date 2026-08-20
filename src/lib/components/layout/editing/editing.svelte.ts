@@ -1,8 +1,6 @@
 import { useBackend } from '$lib/components/backend/backend.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
 
-export type Model = { id: string };
-
 export type Properties = {
   isDirty: boolean;
   save: () => Promise<string | undefined>;

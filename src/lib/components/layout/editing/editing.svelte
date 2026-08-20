@@ -1,16 +1,16 @@
-<script lang="ts" generics="M extends Model, P extends Properties">
+<script lang="ts" generics=" P extends Properties">
   import type { Snippet } from 'svelte';
   import Delete from './button/delete.svelte';
   import Save from './button/save.svelte';
   import Discard from './button/discard.svelte';
-  import type { EditingLayout, Model, Properties } from './editing.svelte.ts';
+  import type { EditingLayout, Properties } from './editing.svelte.ts';
   import Page from '$lib/components/page/page.svelte';
 
   let {
     layout,
     children,
   }: {
-    layout: EditingLayout<M, P>;
+    layout: EditingLayout<P>;
     children: Snippet;
   } = $props();
 

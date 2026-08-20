@@ -3,7 +3,7 @@
   import type { Snippet } from 'svelte';
   import Icon from '../icon.svelte';
   import Tooltip from '../floating/tooltip.svelte';
-  import TablerInfoCircle from '$lib/playground/icons/tabler--info-circle.svelte';
+  import TablerInfoCircle from '$lib/icons/tabler--info-circle.svelte';
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let { property, children }: { property: Property<any>; children?: Snippet } = $props();

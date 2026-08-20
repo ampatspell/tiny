@@ -1,11 +1,11 @@
-<script lang="ts" generics="M extends Model, P extends Properties">
+<script lang="ts" generics=" P extends Properties">
   import Busy from '$lib/components/button/specific/busy.svelte';
-  import type { EditingLayout, Model, Properties } from '../editing.svelte.ts';
+  import type { EditingLayout, Properties } from '../editing.svelte.ts';
 
   let {
     layout,
   }: {
-    layout: EditingLayout<M, P>;
+    layout: EditingLayout<P>;
   } = $props();
 
   let properties = $derived(layout.properties);

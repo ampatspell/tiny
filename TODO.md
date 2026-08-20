@@ -1,12 +1,12 @@
 ## TODO
 
-- [ ] Do default list/single layouts based on backend config
 - [ ] Color picker property
 - [ ] Markdown property
 - [ ] Image resizing
 - [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
 - [ ] User authorization and authentication
+- [ ] Clean up separation between tiny and demos
 - [x] Clear file
 - [x] Show non-image files
 - [x] Prepare data for editing and back to update flow
