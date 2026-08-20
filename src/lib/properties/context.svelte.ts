@@ -1,4 +1,4 @@
-import { getContext, hasContext, setContext } from 'svelte';
+import { getContext, hasContext, setContext, untrack } from 'svelte';
 import type { Property, PropertyUpdatePair } from './property.svelte.ts';
 import { addObject, isTruthy, removeObject } from '$lib/utils/array.js';
 import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
@@ -98,9 +98,9 @@ const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions
   };
 
   const _register = (property: Property) => {
-    addObject(registered, property);
+    untrack(() => addObject(registered, property));
     return () => {
-      removeObject(registered, property);
+      untrack(() => removeObject(registered, property));
     };
   };
 

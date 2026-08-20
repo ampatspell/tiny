@@ -29,7 +29,7 @@ export const toOptional = <T>(property: Property<T>, fallback: T) => {
   });
 };
 
-const integerToString = (number: number | undefined) => {
+const _integerToString = (number: number | undefined) => {
   if (typeof number === 'number') {
     if (!isNaN(number) && number !== Infinity) {
       return String(number);
@@ -38,7 +38,7 @@ const integerToString = (number: number | undefined) => {
   return '';
 };
 
-const stringToInteger = (string: string) => {
+const _stringToInteger = (string: string) => {
   const number = parseInt(string);
   if (!isNaN(number) && number !== Infinity) {
     return number;
@@ -48,6 +48,6 @@ const stringToInteger = (string: string) => {
 
 export const optionalIntegerToString = (source: Property<number | undefined>): Property<string> =>
   transform(source, {
-    toSource: (value) => stringToInteger(value),
-    toTarget: (value) => integerToString(value),
+    toSource: (value) => _stringToInteger(value),
+    toTarget: (value) => _integerToString(value),
   });

@@ -12,6 +12,7 @@ export const up = async (db: Kysely<any>) => {
     .addColumn('background_color', 'text', (col) => col.notNull())
     .addColumn('text_color', 'text', (col) => col.notNull())
     .addColumn('background_id', 'text')
+    .addColumn('background_offset', 'numeric', (col) => col.notNull())
     .execute();
 };
 

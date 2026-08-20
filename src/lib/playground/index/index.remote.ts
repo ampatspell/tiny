@@ -19,6 +19,7 @@ export const getIndex = query(async () => {
         textColor: '#000',
         indexBackgroundColor: '#fff',
         indexTextColor: '#000',
+        backgroundOffset: 0,
       })
       .returningAll()
       .executeTakeFirstOrThrow();
@@ -47,6 +48,7 @@ export const updateIndex = command(
     textColor: v.optional(v.string()),
     indexBackgroundColor: v.optional(v.string()),
     indexTextColor: v.optional(v.string()),
+    backgroundOffset: v.optional(v.number()),
   }),
   async (props) => {
     const db = getDatabase();

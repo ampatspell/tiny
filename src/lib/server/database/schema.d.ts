@@ -3,10 +3,11 @@
  * Please do not edit it manually.
  */
 
-import type { ColumnType } from 'kysely';
+import type { ColumnType } from "kysely";
 
-export type Generated<T> =
-  T extends ColumnType<infer S, infer I, infer U> ? ColumnType<S, I | undefined, U> : ColumnType<T, T | undefined, T>;
+export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
+  ? ColumnType<S, I | undefined, U>
+  : ColumnType<T, T | undefined, T>;
 
 export interface File {
   contentType: string;
@@ -24,6 +25,7 @@ export interface Gallery {
 export interface Index {
   backgroundColor: string;
   backgroundId: string | null;
+  backgroundOffset: number;
   description: string;
   id: string;
   indexBackgroundColor: string;

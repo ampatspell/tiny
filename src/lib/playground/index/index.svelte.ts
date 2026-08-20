@@ -25,6 +25,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
   const title = properties.property('title', { validator: notBlank() });
   const description = properties.property('description');
   const background = properties.property('background');
+  const backgroundOffset = properties.property('backgroundOffset');
 
   const isDirty = $derived(properties.isDirty);
 
@@ -54,6 +55,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
       title,
       description,
       background,
+      backgroundOffset,
       isDirty: getter(() => isDirty),
       save,
       rollback,

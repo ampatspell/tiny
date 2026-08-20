@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Number input
 - [ ] Color picker property
 - [ ] Markdown property
 - [ ] Image resizing
