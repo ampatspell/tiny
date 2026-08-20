@@ -5,6 +5,7 @@
   import Row from '$lib/components/form/content/row.svelte';
   import Input from '$lib/components/properties/input.svelte';
   import File from '$lib/components/properties/file.svelte';
+  import { images } from '$lib/utils/files.svelte.js';
 
   let { properties }: { properties: IndexProperties } = $props();
 
@@ -22,7 +23,7 @@
       <Input property={description} />
     </Row>
     <Row>
-      <File property={background} />
+      <File property={background} accept={images} />
     </Row>
   </Content>
 </Form>

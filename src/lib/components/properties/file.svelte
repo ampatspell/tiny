@@ -4,11 +4,11 @@
   import File from '$lib/components/file/file.svelte';
   import Container from './container.svelte';
 
-  let { property }: { property: Property<UniversalFile | undefined> } = $props();
+  let { property, accept }: { property: Property<UniversalFile | undefined>; accept?: string[] } = $props();
   let file = $derived(property.value);
   let onSelected = (next: LocalFile | undefined) => property.update(next);
 </script>
 
 <Container {property}>
-  <File {file} {onSelected} />
+  <File {file} {onSelected} {accept} />
 </Container>

@@ -3,6 +3,8 @@ import { hashCodeTag } from '$lib/properties/property.svelte.js';
 import { defer } from '$lib/utils/promise.js';
 import { getter, options, type OptionsInput } from './options.svelte.ts';
 
+export const images = ['image/png', 'image/jpeg'];
+
 const createIsImage = (contentType: string) => contentType.startsWith('image/');
 
 export type FileData = {
