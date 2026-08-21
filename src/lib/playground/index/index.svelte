@@ -1,21 +1,15 @@
 <script lang="ts">
-  import { px } from '$lib/utils/utils.js';
+  import { asFile } from '$lib/utils/files.svelte.js';
+  import { px, url } from '$lib/utils/utils.js';
   import { getIndex } from './index.remote.js';
 
   let index = $derived(await getIndex());
-
-  let background = $derived.by(() => {
-    const id = index.backgroundId;
-    if (id) {
-      return `url("/files/${id}")`;
-    }
-  });
-
+  let background = $derived(asFile(index.background));
   let offset = $derived(index.backgroundOffset);
 </script>
 
 <div class={['page', background && 'has-background']}>
-  <div class="background" style:--background={background} style:--offset={px(offset)}></div>
+  <div class="background" style:--background={url(background?.url)} style:--offset={px(offset)}></div>
   <div class="title">{index.title}</div>
   <div class="description">{index.description}</div>
 </div>

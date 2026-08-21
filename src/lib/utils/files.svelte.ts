@@ -1,5 +1,6 @@
 import { resolve } from '$app/paths';
 import { hashCodeTag } from '$lib/properties/property.svelte.js';
+import { type Variants } from '$lib/server/files.js';
 import { defer } from '$lib/utils/promise.js';
 import { getter, options, type OptionsInput } from './options.svelte.ts';
 
@@ -10,8 +11,7 @@ const createIsImage = (contentType: string) => contentType.startsWith('image/');
 export type FileData = {
   id: string;
   name: string;
-  contentType: string;
-  size: number;
+  variants: Variants;
 };
 
 export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsInput<D>) => {
@@ -19,10 +19,11 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
 
   const id = $derived(data.id);
   const name = $derived(data.name);
-  const contentType = $derived(data.contentType);
-  const size = $derived(data.size);
+  const variant = $derived(data.variants['original']!);
+  const contentType = $derived(variant.contentType);
+  const size = $derived(variant.size);
 
-  const url = $derived(resolve('/files/[id]', { id }));
+  const url = $derived(resolve('/files/[id]-[variant]', { id, variant: '2048x2048' }));
   const isImage = $derived(createIsImage(contentType));
 
   const hashCode = $derived(`remote-file-${id}`);

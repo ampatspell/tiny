@@ -1,4 +1,3 @@
-// TODO: @cush/relative
 import resolvePath from 'resolve-path';
 import { pathExists, remove } from 'fs-extra';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -19,19 +18,14 @@ export const createStorage = async (opts: CreateFilesOptions) => {
     return resolvePath(base, key);
   };
 
-  const total = async () => {
-    // TODO: fast-folder-size replacement
-    return 0;
-  };
-
   const file = (key: string) => {
     const path = getPaths(key);
     const exists = () => pathExists(path);
-    const store = async (body: string | Blob) => {
+    const store = async (body: string | Blob | Buffer) => {
       let bytes;
       if (body instanceof Blob) {
         bytes = await body.bytes();
-      } else if (typeof body === 'string') {
+      } else if (body instanceof Buffer || typeof body === 'string') {
         bytes = body;
       } else {
         throw new Error('Unsupported body');
@@ -59,7 +53,6 @@ export const createStorage = async (opts: CreateFilesOptions) => {
     };
   };
   return {
-    total,
     file,
   };
 };

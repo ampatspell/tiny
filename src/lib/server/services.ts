@@ -2,9 +2,30 @@ import { join } from 'node:path';
 import { connectionStringForStorageRoot, createDatabase } from './database/database.js';
 import { createFiles } from './files.js';
 import { createStorage } from './storage.js';
+import type { Sharp } from 'sharp';
 
 export type CreateServicesOptions = {
   base: string;
+};
+
+const jpeg = (size: number) => {
+  return {
+    id: `${size}x${size}`,
+    process: async (sharp: Sharp) => {
+      const thumbnail = sharp
+        .resize({
+          width: size,
+          height: size,
+          fit: 'inside',
+          withoutEnlargement: true,
+        })
+        .jpeg({ quality: 80 });
+      return {
+        thumbnail,
+        contentType: 'image/jpeg',
+      };
+    },
+  };
 };
 
 const _createServices = async (opts: CreateServicesOptions) => {
@@ -15,7 +36,11 @@ const _createServices = async (opts: CreateServicesOptions) => {
     createStorage({ base: join(base, 'storage') }),
   ]);
 
-  const files = await createFiles({ db, storage });
+  const files = await createFiles({
+    db,
+    storage,
+    thumbnails: [jpeg(100), jpeg(1024), jpeg(2048)],
+  });
 
   return {
     db,
