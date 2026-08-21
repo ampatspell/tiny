@@ -21,7 +21,7 @@ export const createStorage = async (opts: CreateFilesOptions) => {
   const file = (key: string) => {
     const path = getPaths(key);
     const exists = () => pathExists(path);
-    const store = async (body: string | Blob) => {
+    const store = async (body: string | Blob | Buffer) => {
       let bytes;
       if (body instanceof Blob) {
         bytes = await body.bytes();

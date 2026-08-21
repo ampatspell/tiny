@@ -10,20 +10,9 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   : ColumnType<T, T | undefined, T>;
 
 export interface File {
-  contentType: string;
-  height: number | null;
   id: string;
   name: string;
-  size: number;
-  width: number | null;
-}
-
-export interface FileThumbnail {
-  fileId: string;
-  height: number | null;
-  id: string;
-  type: string;
-  width: number | null;
+  variants: string;
 }
 
 export interface Gallery {
@@ -46,7 +35,6 @@ export interface Index {
 
 export interface DB {
   files: File;
-  fileThumbnails: FileThumbnail;
   galleries: Gallery;
   index: Index;
 }
