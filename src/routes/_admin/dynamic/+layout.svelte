@@ -2,6 +2,7 @@
   import { createManyEntity, createOneEntity, setDynamic } from '$lib/dynamic/dynamic.svelte.js';
   import Layout from '$lib/dynamic/layout.svelte';
   import TablerPhoto from '$lib/icons/tabler--photo.svelte';
+  import GalleriesLayout from '$lib/playground/galleries-layout.svelte';
   import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
   import IndexContent from '$lib/playground/index-content.svelte';
 
@@ -19,6 +20,7 @@
         id: 'galleries',
         name: 'Galleries',
         icon: TablerPhoto,
+        layout: GalleriesLayout,
       }),
     ],
   });

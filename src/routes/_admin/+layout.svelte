@@ -29,9 +29,9 @@
         select: (id) => resolve('/_admin/galleries/[id]', { id }),
       },
       {
-        name: 'In development',
+        name: 'Dynamic',
         icon: TablerCode,
-        route: resolve('/_admin/dev'),
+        route: resolve('/_admin/dynamic'),
       },
     ],
   });

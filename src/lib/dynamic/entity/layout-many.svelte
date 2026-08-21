@@ -9,6 +9,10 @@
     entity: DynamicManyEntity;
     children: Snippet;
   } = $props();
+
+  let Layout = $derived(entity.layout);
 </script>
 
-{@render children()}
+<Layout>
+  {@render children()}
+</Layout>

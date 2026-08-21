@@ -16,7 +16,10 @@
   usePropertiesContext();
   let id = $derived(page.params.id!);
   let gallery = $derived(await getGalleryById({ id }));
-  let properties = useGalleryProperties({ isNew: false, data: getter(() => gallery) });
+  let properties = useGalleryProperties({
+    isNew: false,
+    data: getter(() => gallery),
+  });
 
   let layout = useEditingLayout({
     title: getter(() => gallery.name),

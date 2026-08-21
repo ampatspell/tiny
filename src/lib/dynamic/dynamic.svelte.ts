@@ -11,8 +11,6 @@ export type DynamicOneEntityOptions = DynamicEntityOptions & {
   content: Component;
 };
 
-export type DynamicManyEntityOptions = DynamicEntityOptions & {};
-
 export const createOneEntity = (_opts: OptionsInput<DynamicOneEntityOptions>) => {
   const opts = options(_opts);
 
@@ -35,12 +33,17 @@ export const createOneEntity = (_opts: OptionsInput<DynamicOneEntityOptions>) =>
 
 export type DynamicOneEntity = ReturnType<typeof createOneEntity>;
 
+export type DynamicManyEntityOptions = DynamicEntityOptions & {
+  layout: Component;
+};
+
 export const createManyEntity = (_opts: OptionsInput<DynamicManyEntityOptions>) => {
   const opts = options(_opts);
 
   const id = $derived(opts.id);
   const name = $derived(opts.name);
   const icon = $derived(opts.icon);
+  const layout = $derived(opts.layout);
 
   return options(
     {
@@ -48,6 +51,7 @@ export const createManyEntity = (_opts: OptionsInput<DynamicManyEntityOptions>) 
       id: getter(() => id),
       name: getter(() => name),
       icon: getter(() => icon),
+      layout: getter(() => layout),
     },
     { name: 'DynamicManyEntity', serialized: ['id'] },
   );
