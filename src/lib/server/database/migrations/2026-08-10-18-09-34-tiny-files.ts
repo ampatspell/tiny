@@ -6,8 +6,11 @@ export const up = async (db: Kysely<any>) => {
     .createTable('files')
     .addColumn('id', 'text', (col) => col.notNull().primaryKey())
     .addColumn('name', 'text', (col) => col.notNull())
-    .addColumn('size', 'integer', (col) => col.notNull())
-    .addColumn('content_type', 'text', (col) => col.notNull())
+    .addColumn('variants', 'jsonb', (col) => col.notNull())
+    // .addColumn('size', 'integer', (col) => col.notNull())
+    // .addColumn('content_type', 'text', (col) => col.notNull())
+    // .addColumn('width', 'integer')
+    // .addColumn('height', 'integer')
     .execute();
 };
 

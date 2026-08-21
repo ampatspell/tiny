@@ -1,15 +1,12 @@
+import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-node';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
     sveltekit({
       adapter: adapter(),
-      compilerOptions: {
-        runes: true,
-        experimental: { async: true },
-      },
+      compilerOptions: { runes: true, experimental: { async: true } },
       experimental: {
         explicitEnvironmentVariables: true,
         handleRenderingErrors: true,
@@ -18,4 +15,18 @@ export default defineConfig({
       },
     }),
   ],
+  test: {
+    expect: { requireAssertions: true },
+    projects: [
+      {
+        extends: './vite.config.ts',
+        test: {
+          name: 'server',
+          environment: 'node',
+          include: ['src/**/*.{test,spec}.{js,ts}'],
+          exclude: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+        },
+      },
+    ],
+  },
 });

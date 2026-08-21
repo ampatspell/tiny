@@ -18,7 +18,9 @@
     "cli": "./.cli/cli.js",
     "tags": "git push --follow-tags",
     "minor": "npm version minor && npm run tags",
-    "patch": "npm version patch && npm run tags"
+    "patch": "npm version patch && npm run tags",
+    "test:unit": "vitest",
+    "test": "npm run test:unit -- --run"
   },
   "bin": {
     "tiny": ".cli/cli.js"
@@ -171,7 +173,8 @@
     "svelte-check": "^4.7.6",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",
-    "vite": "^8.2.1"
+    "vite": "^8.2.1",
+    "vitest": "^4.1.8"
   },
   "dependencies": {
     "@clack/prompts": "^1.7.0",
@@ -185,6 +188,7 @@
     "launch-editor": "^2.14.1",
     "resolve-path": "^1.4.0",
     "runed": "^0.37.1",
+    "sharp": "^0.35.3",
     "slug": "^12.0.1",
     "text-sentence-case": "^1.2.11",
     "tinyexec": "^1.3.0",

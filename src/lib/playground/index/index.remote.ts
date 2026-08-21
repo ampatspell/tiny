@@ -27,12 +27,7 @@ export const getIndex = query(async () => {
 
   let background;
   if (index.backgroundId) {
-    background = await db
-      .selectFrom('files')
-      .selectAll()
-      .where('id', '==', index.backgroundId)
-      .limit(1)
-      .executeTakeFirst();
+    background = await getFiles().byId(index.backgroundId);
   }
 
   return { ...index, background };
