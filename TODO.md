@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Editors based on module exported snippets
 - [ ] Number input
 - [ ] Color picker property
 - [ ] Markdown property
