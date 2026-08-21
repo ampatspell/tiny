@@ -6,7 +6,7 @@ import { images } from '$lib/utils/files.svelte.js';
 import sharp, { type Sharp } from 'sharp';
 import { uid } from './utils.ts';
 
-type Meta = {
+export type Meta = {
   id: string;
   contentType: string;
   width: number | undefined;
@@ -14,7 +14,7 @@ type Meta = {
   size: number;
 };
 
-type Variants = { [key: string]: Meta };
+export type Variants = { [key: string]: Meta };
 
 export type FileThumbnailOptions = {
   id: string;
@@ -30,12 +30,12 @@ export type CreateFilesOptions = {
   thumbnails: FileThumbnailOptions[];
 };
 
-const ORIGINAL = 'original';
+export const ORIGINAL = 'original';
 
 export const createFiles = async (opts: CreateFilesOptions) => {
   const { db, storage } = opts;
 
-  const store = async (fileId: string, file: File) => {
+  const store = async (id: string, file: File) => {
     const { type, name, size } = file;
 
     let contentType;
@@ -50,10 +50,14 @@ export const createFiles = async (opts: CreateFilesOptions) => {
       contentType = type;
     }
 
-    const id = uid();
-
     const variants: Variants = {
-      [ORIGINAL]: { id, contentType, width, height, size },
+      [ORIGINAL]: {
+        id,
+        contentType,
+        width,
+        height,
+        size,
+      },
     };
 
     const [record] = await Promise.all([
@@ -68,31 +72,43 @@ export const createFiles = async (opts: CreateFilesOptions) => {
         .executeTakeFirstOrThrow(),
       storage.file(id).store(file),
     ]);
-
-    console.log('[files] stored', fileId, name, contentType);
     return record;
   };
 
   const drop = async (id: string) => {
-    // TODO: drop thumbnails
-    await Promise.all([db.deleteFrom('files').where('id', '==', id).execute(), storage.file(id).drop()]);
-    console.log('[files] dropped', id);
+    const rec = await db.selectFrom('files').where('id', '==', id).selectAll().executeTakeFirst();
+    if (rec) {
+      const variants = rec.variants as unknown as Variants;
+      const ids = [id, ...Object.keys(variants).map((key) => variants[key].id)];
+      await Promise.all([
+        db.deleteFrom('files').where('id', '==', id).execute(),
+        ...ids.map((id) => storage.file(id).drop()),
+      ]);
+    }
+  };
+
+  const parsed = (rec: FileSchema) => {
+    return {
+      ...rec,
+      variants: rec.variants as unknown as Variants,
+    };
+  };
+
+  const byId = async (id: string) => {
+    const rec = await db.selectFrom('files').selectAll().where('id', '==', id).executeTakeFirst();
+    if (rec) {
+      return parsed(rec);
+    }
   };
 
   const resolve = async ({ id: fileId, variant = ORIGINAL }: { id: string | undefined; variant?: string }) => {
     if (fileId) {
-      const parsed = (rec: FileSchema) => {
-        return {
-          ...rec,
-          variants: JSON.parse(rec.variants) as Variants,
-        };
-      };
-      const rec = await db.selectFrom('files').selectAll().where('id', '==', fileId).executeTakeFirst();
+      const rec = await byId(fileId);
       if (rec) {
         if (variant === ORIGINAL) {
-          return parsed(rec);
+          return rec;
         } else {
-          const variants: Variants = JSON.parse(rec.variants);
+          const variants = rec.variants;
           const original = variants[ORIGINAL]!;
           if (images.includes(original.contentType)) {
             const definition = opts.thumbnails.find((thumbnail) => thumbnail.id === variant);
@@ -103,6 +119,7 @@ export const createFiles = async (opts: CreateFilesOptions) => {
             const { thumbnail, contentType } = await definition.process(original);
             const { data, info } = await thumbnail.toBuffer({ resolveWithObject: true });
             const { width, height, size } = info;
+
             const id = uid();
             variants[definition.id] = {
               id,
@@ -111,6 +128,7 @@ export const createFiles = async (opts: CreateFilesOptions) => {
               width,
               height,
             };
+
             const [rec] = await Promise.all([
               db
                 .updateTable('files')
@@ -120,9 +138,10 @@ export const createFiles = async (opts: CreateFilesOptions) => {
                 .executeTakeFirstOrThrow(),
               storage.file(id).store(data),
             ]);
+
             return parsed(rec);
           } else {
-            return parsed(rec);
+            return rec;
           }
         }
       } else {
@@ -136,7 +155,7 @@ export const createFiles = async (opts: CreateFilesOptions) => {
   const stream = async ({ id, variant: variantId = ORIGINAL }: { id: string | undefined; variant?: string }) => {
     const rec = await resolve({ id, variant: variantId });
     const variant = rec.variants[variantId]!;
-    const stream = storage.file(rec.id).toReadableStream();
+    const stream = storage.file(variant.id).toReadableStream();
     return new Response(stream, {
       status: 200,
       headers: {
@@ -150,8 +169,8 @@ export const createFiles = async (opts: CreateFilesOptions) => {
   return {
     store,
     drop,
+    byId,
     stream,
-    resolve,
   };
 };
 

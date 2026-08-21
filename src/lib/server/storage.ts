@@ -25,7 +25,7 @@ export const createStorage = async (opts: CreateFilesOptions) => {
       let bytes;
       if (body instanceof Blob) {
         bytes = await body.bytes();
-      } else if (typeof body === 'string') {
+      } else if (body instanceof Buffer || typeof body === 'string') {
         bytes = body;
       } else {
         throw new Error('Unsupported body');
