@@ -1,4 +1,3 @@
-// TODO: @cush/relative
 import resolvePath from 'resolve-path';
 import { pathExists, remove } from 'fs-extra';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -17,11 +16,6 @@ export const createStorage = async (opts: CreateFilesOptions) => {
       throw new Error(`Invalid file key ${key}`);
     }
     return resolvePath(base, key);
-  };
-
-  const total = async () => {
-    // TODO: fast-folder-size replacement
-    return 0;
   };
 
   const file = (key: string) => {
@@ -59,7 +53,6 @@ export const createStorage = async (opts: CreateFilesOptions) => {
     };
   };
   return {
-    total,
     file,
   };
 };
