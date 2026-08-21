@@ -1,10 +1,9 @@
 ## TODO
 
-- [ ] Editors based on module exported snippets
+- [ ] Image thumbnails
 - [ ] Number input
 - [ ] Color picker property
 - [ ] Markdown property
-- [ ] Image resizing
 - [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
 - [ ] User authorization and authentication
