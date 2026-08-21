@@ -23,7 +23,7 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
   const contentType = $derived(variant.contentType);
   const size = $derived(variant.size);
 
-  const url = $derived(resolve('/files/[id]-[variant]', { id, variant: '2048x2048' }));
+  const url = $derived(resolve('/files/[id]/[variant]', { id, variant: '2048x2048' }));
   const isImage = $derived(createIsImage(contentType));
 
   const hashCode = $derived(`remote-file-${id}`);
