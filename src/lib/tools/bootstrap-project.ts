@@ -191,12 +191,12 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
-    filename: 'src/routes/files/[id]/+server.ts',
+    filename: 'src/routes/files/[id]/[variant]/+server.ts',
     content: dedent`
       import { getFiles } from '@ampatspell/tiny/server/handle';
       import { type RequestHandler } from '@sveltejs/kit';
 
-      export const GET: RequestHandler = ({ params: { id } }) => getFiles().stream({ id });
+      export const GET: RequestHandler = ({ params: { id, variant } }) => getFiles().stream({ id, variant });
     `,
   });
 
