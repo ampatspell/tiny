@@ -1,12 +1,16 @@
 <script lang="ts">
-  import Placeholder from '$lib/components/placeholder.svelte';
   import { useEntityContext } from './layout.svelte';
+  import PageMany from './page-many.svelte';
+  import PageOne from './page-one.svelte';
 
   let context = useEntityContext();
-  let entity = $derived(context.entity!);
-
-  let icon = $derived(entity.icon);
-  let label = $derived(entity.name);
+  let entity = $derived(context.entity);
 </script>
 
-<Placeholder {icon} {label} />
+{#if entity}
+  {#if entity.type === 'one'}
+    <PageOne {entity} />
+  {:else if entity.type === 'many'}
+    <PageMany {entity} />
+  {/if}
+{/if}

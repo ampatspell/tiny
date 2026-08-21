@@ -2,8 +2,8 @@
   import type { Snippet } from 'svelte';
   import type { DynamicOneEntity } from '../dynamic.svelte.ts';
 
+  // eslint-disable-next-line svelte/no-unused-props
   let {
-    entity,
     children,
   }: {
     entity: DynamicOneEntity;

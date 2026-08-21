@@ -7,7 +7,9 @@ export type DynamicEntityOptions = {
   icon: Component;
 };
 
-export type DynamicOneEntityOptions = DynamicEntityOptions & {};
+export type DynamicOneEntityOptions = DynamicEntityOptions & {
+  content: Component;
+};
 
 export type DynamicManyEntityOptions = DynamicEntityOptions & {};
 
@@ -17,6 +19,7 @@ export const createOneEntity = (_opts: OptionsInput<DynamicOneEntityOptions>) =>
   const id = $derived(opts.id);
   const name = $derived(opts.name);
   const icon = $derived(opts.icon);
+  const content = $derived(opts.content);
 
   return options(
     {
@@ -24,6 +27,7 @@ export const createOneEntity = (_opts: OptionsInput<DynamicOneEntityOptions>) =>
       id: getter(() => id),
       name: getter(() => name),
       icon: getter(() => icon),
+      content: getter(() => content),
     },
     { name: 'DynamicOneEntity', serialized: ['id'] },
   );

@@ -1,13 +1,26 @@
 <script lang="ts">
-  import { setDynamic } from '$lib/dynamic/dynamic.svelte.js';
-  import { galleries } from '$lib/playground/galleries.svelte';
+  import { createManyEntity, createOneEntity, setDynamic } from '$lib/dynamic/dynamic.svelte.js';
   import Layout from '$lib/dynamic/layout.svelte';
-  import { index } from '$lib/playground/index.svelte';
+  import TablerPhoto from '$lib/icons/tabler--photo.svelte';
+  import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
+  import IndexContent from '$lib/playground/index-content.svelte';
 
   let { children } = $props();
 
   setDynamic({
-    entities: [index, galleries],
+    entities: [
+      createOneEntity({
+        id: 'index',
+        name: 'Index',
+        icon: TablerAppWindow,
+        content: IndexContent,
+      }),
+      createManyEntity({
+        id: 'galleries',
+        name: 'Galleries',
+        icon: TablerPhoto,
+      }),
+    ],
   });
 </script>
 
