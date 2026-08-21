@@ -75,18 +75,6 @@ export const createFiles = async (opts: CreateFilesOptions) => {
     return record;
   };
 
-  const drop = async (id: string) => {
-    const rec = await db.selectFrom('files').where('id', '==', id).selectAll().executeTakeFirst();
-    if (rec) {
-      const variants = rec.variants as unknown as Variants;
-      const ids = [id, ...Object.keys(variants).map((key) => variants[key].id)];
-      await Promise.all([
-        db.deleteFrom('files').where('id', '==', id).execute(),
-        ...ids.map((id) => storage.file(id).drop()),
-      ]);
-    }
-  };
-
   const parsed = (rec: FileSchema) => {
     return {
       ...rec,
@@ -98,6 +86,18 @@ export const createFiles = async (opts: CreateFilesOptions) => {
     const rec = await db.selectFrom('files').selectAll().where('id', '==', id).executeTakeFirst();
     if (rec) {
       return parsed(rec);
+    }
+  };
+
+  const drop = async (id: string) => {
+    const rec = await byId(id);
+    if (rec) {
+      const variants = rec.variants as unknown as Variants;
+      const ids = [id, ...Object.keys(variants).map((key) => variants[key].id)];
+      await Promise.all([
+        db.deleteFrom('files').where('id', '==', id).execute(),
+        ...ids.map((id) => storage.file(id).drop()),
+      ]);
     }
   };
 
