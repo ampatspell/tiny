@@ -1,6 +1,6 @@
 import { resolve } from '$app/paths';
 import { hashCodeTag } from '$lib/properties/property.svelte.js';
-import { type Variants } from '$lib/server/files.js';
+import type { FileData } from '$lib/server/files.js';
 import { defer } from '$lib/utils/promise.js';
 import { getter, options, type OptionsInput } from './options.svelte.ts';
 
@@ -8,10 +8,13 @@ export const images = ['image/png', 'image/jpeg'];
 
 const createIsImage = (contentType: string) => contentType.startsWith('image/');
 
-export type FileData = {
+export type Variant = {
   id: string;
-  name: string;
-  variants: Variants;
+  variant: string;
+  contentType: string;
+  size: number;
+  width: number | undefined;
+  height: number | undefined;
 };
 
 export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsInput<D>) => {
@@ -19,7 +22,7 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
 
   const id = $derived(data.id);
   const name = $derived(data.name);
-  const original = $derived(data.variants['original']!);
+  const original = $derived(data.variants.find((variant) => variant.variant === 'original')!);
   const contentType = $derived(original.contentType);
   const size = $derived(original.size);
 

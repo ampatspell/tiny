@@ -49,4 +49,4 @@ run(async () => {
   } else {
     process.exit(1);
   }
-});
+}).catch((err) => console.log(err.stack));
