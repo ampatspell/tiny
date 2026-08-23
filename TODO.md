@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Separate property from it's presentation model, remove transformers
 - [ ] Number input
 - [ ] Color picker property
 - [ ] Markdown property
