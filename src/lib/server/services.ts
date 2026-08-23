@@ -1,35 +1,20 @@
 import { join } from 'node:path';
 import { connectionStringForStorageRoot, createDatabase } from './database/database.js';
-import { createFiles } from './files.js';
+import { createFiles, type FileThumbnailOptions } from './files.js';
 import { createStorage } from './storage.js';
-import type { Sharp } from 'sharp';
 
 export type CreateServicesOptions = {
   base: string;
-};
-
-const jpeg = (size: number) => {
-  return {
-    id: `${size}x${size}`,
-    process: async (sharp: Sharp) => {
-      const thumbnail = sharp
-        .resize({
-          width: size,
-          height: size,
-          fit: 'inside',
-          withoutEnlargement: true,
-        })
-        .jpeg({ quality: 80 });
-      return {
-        thumbnail,
-        contentType: 'image/jpeg',
-      };
-    },
+  files: {
+    thumbnails: FileThumbnailOptions[];
   };
 };
 
 const _createServices = async (opts: CreateServicesOptions) => {
-  const { base } = opts;
+  const {
+    base,
+    files: { thumbnails },
+  } = opts;
 
   const [db, storage] = await Promise.all([
     createDatabase({ connectionString: connectionStringForStorageRoot(base), verbose: true }),
@@ -39,7 +24,7 @@ const _createServices = async (opts: CreateServicesOptions) => {
   const files = await createFiles({
     db,
     storage,
-    thumbnails: [jpeg(100), jpeg(1024), jpeg(2048)],
+    thumbnails,
   });
 
   return {

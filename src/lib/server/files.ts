@@ -8,6 +8,26 @@ import { uid } from './utils.ts';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
 import { run } from '$lib/utils/utils.js';
 
+export const jpeg = (size: number, id = `${size}x${size}`) => {
+  return {
+    id,
+    process: async (sharp: Sharp) => {
+      const thumbnail = sharp
+        .resize({
+          width: size,
+          height: size,
+          fit: 'inside',
+          withoutEnlargement: true,
+        })
+        .jpeg({ quality: 80 });
+      return {
+        thumbnail,
+        contentType: 'image/jpeg',
+      };
+    },
+  };
+};
+
 export type FileThumbnailOptions = {
   id: string;
   process: (original: Sharp) => Promise<{

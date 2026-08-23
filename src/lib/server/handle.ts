@@ -1,14 +1,20 @@
 import { getRequestEvent } from '$app/server';
 import type { Handle } from '@sveltejs/kit';
 import { createServices } from './services.ts';
-import type { Files } from './files.ts';
+import type { Files, FileThumbnailOptions } from './files.ts';
 import type { Storage } from './storage.ts';
 import type { Database } from './database/database.ts';
 
-export const createHandle = ({ storageRoot = '.local' }: { storageRoot: string | undefined }): Handle => {
+export const createHandle = (opts: {
+  storageRoot: string | undefined;
+  files: {
+    thumbnails: FileThumbnailOptions[];
+  };
+}): Handle => {
   return async ({ event, resolve }) => {
     const { db, files, storage } = await createServices({
-      base: storageRoot,
+      base: opts.storageRoot ?? '.local',
+      files: opts.files,
     });
 
     event.locals.tiny = { db, files, storage };

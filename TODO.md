@@ -1,13 +1,14 @@
 ## TODO
 
-- [ ] Image thumbnails
 - [ ] Number input
 - [ ] Color picker property
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
 - [ ] User authorization and authentication
-- [ ] Clean up separation between tiny and demos
+- [ ] Clean separation between libs, tiny and demos
+- [ ] Some unit tests for db, files, …
+- [x] Image thumbnails
 - [x] Clear file
 - [x] Show non-image files
 - [x] Prepare data for editing and back to update flow
