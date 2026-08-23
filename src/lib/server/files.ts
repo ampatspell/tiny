@@ -6,6 +6,7 @@ import { images } from '$lib/utils/files.svelte.js';
 import sharp, { type Sharp } from 'sharp';
 import { uid } from './utils.ts';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
+import { run } from '$lib/utils/utils.js';
 
 export type FileThumbnailOptions = {
   id: string;
@@ -74,9 +75,13 @@ export const createFiles = async (opts: CreateFilesOptions) => {
     const rec = await byId(id);
     if (rec) {
       await Promise.all([
-        db.deleteFrom('files').where('id', '==', id).execute(),
-        db.deleteFrom('fileVariants').where('fileId', '==', id).execute(),
-        ...rec.variants.map((variant) => storage.file(variant.id).drop()),
+        run(async () => {
+          await db.deleteFrom('fileVariants').where('fileId', '==', id).execute();
+          await db.deleteFrom('files').where('id', '==', id).execute();
+        }),
+        run(async () => {
+          await Promise.all(rec.variants.map((variant) => storage.file(variant.id).drop()));
+        }),
       ]);
     }
   };
