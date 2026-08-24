@@ -13,7 +13,7 @@ describe('storage services', () => {
       expect(await exists(dir)).toStrictEqual(true);
     });
   });
-  it('expects valid key', async () => {
+  it('expects a valid key', async () => {
     await withTemporaryFolder(async (dir) => {
       const { storage } = await createStorageServices({ dir: join(dir, 'storage') });
       ['.', '!', '/', '$'].forEach((char) => {
