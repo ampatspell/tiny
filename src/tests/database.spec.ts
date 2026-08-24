@@ -1,7 +1,7 @@
 import { createDatabaseServices } from '$lib/next/database/server/database.js';
 import { sql } from 'kysely';
 import { describe, it, expect } from 'vitest';
-import { withTemporaryFolder } from './utils.ts';
+import { withTemporaryFolder } from './helpers/utils.ts';
 import { join } from 'node:path';
 import dedent from 'dedent';
 import { mkdir, writeFile } from 'node:fs/promises';

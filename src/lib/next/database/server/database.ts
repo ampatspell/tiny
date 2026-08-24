@@ -124,3 +124,4 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
 };
 
 export type DatabaseServices<D = unknown> = Awaited<ReturnType<typeof createDatabaseServices<D>>>;
+export type Database<D = unknown> = DatabaseServices<D>['kysely'];

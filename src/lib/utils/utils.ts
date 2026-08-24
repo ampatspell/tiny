@@ -1,5 +1,7 @@
 import type { RemoteResource } from '@sveltejs/kit';
 
+export const images = ['image/png', 'image/jpeg'];
+
 export const run = <T>(cb: () => T): T => {
   return cb();
 };

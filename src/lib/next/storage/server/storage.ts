@@ -71,3 +71,6 @@ export const createStorageServices = async (opts: CreateStorageServicesOptions) 
     storage,
   };
 };
+
+export type StorageServices = Awaited<ReturnType<typeof createStorageServices>>;
+export type Storage = StorageServices['storage'];
