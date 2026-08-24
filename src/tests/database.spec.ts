@@ -30,6 +30,40 @@ describe('database', () => {
     });
   });
 
+  describe('kysely', () => {
+    it('works', async () => {
+      await withTemporaryFolder(async (dir) => {
+        interface Duck {
+          id: string;
+          name: string;
+        }
+
+        interface DB {
+          ducks: Duck;
+        }
+
+        const { kysely: db } = await createDatabaseServices<DB>({
+          filename: join(dir, 'test.db'),
+          migrations: join(dir, 'migrations'),
+        });
+
+        await db.schema
+          .createTable('ducks')
+          .addColumn('id', 'text', (col) => col.notNull().primaryKey())
+          .addColumn('name', 'text', (col) => col.notNull())
+          .execute();
+
+        const ret = await db
+          .insertInto('ducks')
+          .returningAll()
+          .values({ id: 'yellow', name: 'Yellow' })
+          .executeTakeFirstOrThrow();
+
+        expect(ret).toStrictEqual({ id: 'yellow', name: 'Yellow' });
+      });
+    });
+  });
+
   it('generates schema from database', async () => {
     await withTemporaryFolder(async (dir) => {
       const services = await createDatabaseServices({
@@ -49,7 +83,6 @@ describe('database', () => {
           name: string;
         }
       `;
-
       const generated = await services.schema.generate();
       expect(generated.includes(duck)).toStrictEqual(true);
     });
