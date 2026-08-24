@@ -3,6 +3,7 @@
   import type { Property } from '$lib/properties/property.svelte.js';
   import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
   import { untrack } from 'svelte';
+  import Container from '../container.svelte';
 
   const integerToString = (number: number | undefined) => {
     if (typeof number === 'number') {
@@ -53,6 +54,7 @@
     };
 
     return options({
+      property: getter(() => property),
       value: getter(() => local),
       onInput,
       onBlur,
@@ -64,6 +66,10 @@
 
 <script lang="ts">
   let { editor }: { editor: NumberPropertyEditor } = $props();
+
+  let property = $derived(editor.property);
 </script>
 
-<Input value={editor.value} onInput={editor.onInput} onBlur={editor.onBlur} />
+<Container {property}>
+  <Input value={editor.value} onInput={editor.onInput} onBlur={editor.onBlur} />
+</Container>
