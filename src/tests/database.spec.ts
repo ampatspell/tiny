@@ -1,0 +1,97 @@
+import { createDatabaseServices } from '$lib/database/server/database.js';
+import { sql } from 'kysely';
+import { describe, it, expect } from 'vitest';
+import { withTemporaryFolder } from './utils.ts';
+import { join } from 'node:path';
+import dedent from 'dedent';
+import { mkdir, writeFile } from 'node:fs/promises';
+
+describe('database', () => {
+  it('creates database service', async () => {
+    await withTemporaryFolder(async (dir) => {
+      const services = await createDatabaseServices({
+        filename: ':memory:',
+        migrations: join(dir, 'migrations'),
+      });
+      expect(services.filename).toStrictEqual(':memory:');
+      expect(services.sqlite.memory).toStrictEqual(true);
+    });
+  });
+
+  it('creates working kysely', async () => {
+    await withTemporaryFolder(async (dir) => {
+      const services = await createDatabaseServices({
+        filename: ':memory:',
+        migrations: join(dir, 'migrations'),
+      });
+      expect(await sql`select 'Hello' as message`.execute(services.kysely)).toStrictEqual({
+        rows: [{ message: 'Hello' }],
+      });
+    });
+  });
+
+  it('generates schema from database', async () => {
+    await withTemporaryFolder(async (dir) => {
+      const services = await createDatabaseServices({
+        filename: join(dir, 'test.db'),
+        migrations: join(dir, 'migrations'),
+      });
+
+      await services.kysely.schema
+        .createTable('ducks')
+        .addColumn('id', 'text', (col) => col.notNull().primaryKey())
+        .addColumn('name', 'text', (col) => col.notNull())
+        .execute();
+
+      const duck = dedent`
+        export interface Duck {
+          id: string;
+          name: string;
+        }
+      `;
+
+      const generated = await services.schema.generate();
+      expect(generated.includes(duck)).toStrictEqual(true);
+    });
+  });
+
+  it('migrates to the latest version', async () => {
+    await withTemporaryFolder(async (dir) => {
+      const migrations = join(dir, 'migrations');
+      const services = await createDatabaseServices({
+        filename: join(dir, 'test.db'),
+        migrations,
+      });
+
+      const migration = dedent`
+          import { Kysely } from 'kysely';
+
+          export const up = async (db: Kysely<any>) => {
+            await db.schema
+              .createTable('ducks')
+              .addColumn('id', 'text', (col) => col.notNull().primaryKey())
+              .addColumn('name', 'text', (col) => col.notNull())
+              .execute();
+          };
+
+          export const down = async (db: Kysely<any>) => {
+          };
+        `;
+
+      await mkdir(migrations, { recursive: true });
+      await writeFile(join(migrations, 'foo.ts'), migration, 'utf-8');
+
+      const migrated = await services.migrate.toLatest();
+      expect(migrated).toStrictEqual(true);
+
+      const generated = await services.schema.generate();
+      const duck = dedent`
+        export interface Duck {
+          id: string;
+          name: string;
+        }
+      `;
+      expect(generated.includes(duck)).toStrictEqual(true);
+    });
+  });
+});
