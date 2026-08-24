@@ -145,7 +145,7 @@ export const createFilesServices = async (opts: CreateFilesServicesOptions) => {
 
     const get = async ({ id: fileId, variant: variantId = ORIGINAL }: { id: string | undefined; variant?: string }) => {
       const file = await resolve({ id: fileId, variant: variantId });
-      const variant = file.variants.find((rec) => rec.variant === variantId)!;
+      const variant = file.variants.find((rec) => rec.variant === variantId)!; // TODO: resolve should just return variant it created
       const stored = storage.file(variant.id);
 
       const load = (...args: Parameters<(typeof stored)['load']>) => {
