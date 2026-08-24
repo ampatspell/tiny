@@ -14,7 +14,7 @@
     multiline?: boolean;
     onEnter?: (value: string) => void;
     onInput?: (value: string) => void;
-    onBlur?: () => void;
+    onBlur?: (value: string) => void;
   } = $props();
 
   let initial: string | undefined;
@@ -40,8 +40,9 @@
     initial = value;
   };
 
-  let onblur = () => {
-    onBlur?.();
+  let onblur = (e: Event) => {
+    let input = targetAsInput(e);
+    onBlur?.(input.value);
   };
 
   let oninput = (e: Event) => {
