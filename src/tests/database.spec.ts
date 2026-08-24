@@ -6,8 +6,8 @@ import { join } from 'node:path';
 import dedent from 'dedent';
 import { mkdir, writeFile } from 'node:fs/promises';
 
-describe('database', () => {
-  it('creates database service', async () => {
+describe('database services', () => {
+  it('creates', async () => {
     await withTemporaryFolder(async (dir) => {
       const services = await createDatabaseServices({
         filename: ':memory:',
@@ -31,7 +31,7 @@ describe('database', () => {
   });
 
   describe('kysely', () => {
-    it('works', async () => {
+    it('works with generic type', async () => {
       await withTemporaryFolder(async (dir) => {
         interface Duck {
           id: string;
