@@ -9,13 +9,13 @@ import path from 'node:path';
 import { FileMigrationProvider, Migrator } from 'kysely/migration';
 
 export type CreateDatabaseServicesOptions = {
-  filename: string;
+  file: string;
   wal?: boolean;
   migrations: string;
 };
 
 export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseServicesOptions) => {
-  const { filename, wal = true, migrations } = opts;
+  const { file: filename, wal = true, migrations } = opts;
 
   const sqlite = await run(async () => {
     if (filename !== ':memory:') {

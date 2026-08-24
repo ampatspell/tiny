@@ -1,4 +1,4 @@
-import { createDatabaseServices } from '$lib/database/server/database.js';
+import { createDatabaseServices } from '$lib/next/database/server/database.js';
 import { sql } from 'kysely';
 import { describe, it, expect } from 'vitest';
 import { withTemporaryFolder } from './utils.ts';
@@ -10,7 +10,7 @@ describe('database services', () => {
   it('creates', async () => {
     await withTemporaryFolder(async (dir) => {
       const services = await createDatabaseServices({
-        filename: ':memory:',
+        file: ':memory:',
         migrations: join(dir, 'migrations'),
       });
       expect(services.filename).toStrictEqual(':memory:');
@@ -21,7 +21,7 @@ describe('database services', () => {
   it('creates working kysely', async () => {
     await withTemporaryFolder(async (dir) => {
       const services = await createDatabaseServices({
-        filename: ':memory:',
+        file: ':memory:',
         migrations: join(dir, 'migrations'),
       });
       expect(await sql`select 'Hello' as message`.execute(services.kysely)).toStrictEqual({
@@ -43,7 +43,7 @@ describe('database services', () => {
         }
 
         const { kysely: db } = await createDatabaseServices<DB>({
-          filename: join(dir, 'test.db'),
+          file: join(dir, 'test.db'),
           migrations: join(dir, 'migrations'),
         });
 
@@ -67,7 +67,7 @@ describe('database services', () => {
   it('generates schema from database', async () => {
     await withTemporaryFolder(async (dir) => {
       const services = await createDatabaseServices({
-        filename: join(dir, 'test.db'),
+        file: join(dir, 'test.db'),
         migrations: join(dir, 'migrations'),
       });
 
@@ -92,7 +92,7 @@ describe('database services', () => {
     await withTemporaryFolder(async (dir) => {
       const migrations = join(dir, 'migrations');
       const services = await createDatabaseServices({
-        filename: join(dir, 'test.db'),
+        file: join(dir, 'test.db'),
         migrations,
       });
 
