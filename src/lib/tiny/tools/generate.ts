@@ -2,7 +2,7 @@ import { log, outro } from '@clack/prompts';
 import type { Project } from './project.ts';
 import { x } from 'tinyexec';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
+import { dirname, join, parse } from 'node:path';
 import dedent from 'dedent';
 import { format } from 'date-fns';
 import launchEditor from 'launch-editor';
@@ -11,7 +11,7 @@ import crypto from 'node:crypto';
 
 export const bootstrapProject = async (project: Project) => {
   const root = project.root;
-  const dir = dirname(root);
+  const dir = parse(root).name;
   const secret = () => {
     const buffer = crypto.randomBytes(32);
     console.log(buffer);
