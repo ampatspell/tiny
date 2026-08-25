@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [banner()],
   build: {
     minify: mode === 'production',
-    target: 'es2015',
+    target: 'node26',
     ssr: true,
     lib: {
       entry: 'src/lib/tiny/tools/cli.ts',

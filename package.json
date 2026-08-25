@@ -462,5 +462,14 @@
   },
   "keywords": [
     "svelte"
-  ]
+  ],
+  "engines": {
+    "node": ">=26"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "better-sqlite3@12.11.1": true,
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true
+  }
 }

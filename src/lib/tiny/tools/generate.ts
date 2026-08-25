@@ -1,18 +1,22 @@
 import { log, outro } from '@clack/prompts';
 import type { Project } from './project.ts';
 import { x } from 'tinyexec';
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import { dirname, join } from 'path';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
 import dedent from 'dedent';
 import { format } from 'date-fns';
 import launchEditor from 'launch-editor';
 import { isTruthy } from '../utils/array.ts';
-import { randomBytes } from 'crypto';
+import crypto from 'node:crypto';
 
 export const bootstrapProject = async (project: Project) => {
   const root = project.root;
   const dir = dirname(root);
-  const secret = () => randomBytes(32).toHex();
+  const secret = () => {
+    const buffer = crypto.randomBytes(32);
+    console.log(buffer);
+    return buffer.toHex();
+  };
 
   {
     log.step('Install kysely, valibot and better-sqlite3');
@@ -35,6 +39,9 @@ export const bootstrapProject = async (project: Project) => {
     const json = JSON.parse(await readFile(path, 'utf-8'));
     json.scripts.flc = 'npm run format && npm run check && npm run lint';
     json.scripts.start = 'tiny migrate-to-latest && node build';
+    json.engines = {
+      node: '>=26',
+    };
     await writeFile(path, JSON.stringify(json, null, 2));
   }
 
@@ -55,9 +62,16 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
+    filename: '.nvm',
+    content: dedent`
+      26
+    `,
+  });
+
+  await write({
     filename: 'Dockerfile',
     content: dedent`
-      FROM node:24-alpine
+      FROM node:26-alpine
 
       WORKDIR /app
 

@@ -1,7 +1,7 @@
 import { intro, log, outro } from '@clack/prompts';
 import { copy, exists } from 'fs-extra';
-import { readdir, realpath, writeFile } from 'fs/promises';
-import { join, parse, resolve } from 'path';
+import { readdir, realpath, writeFile } from 'node:fs/promises';
+import { join, parse, resolve } from 'node:path';
 import { x } from 'tinyexec';
 import { loadPackageJSON } from './utils.ts';
 import { createConsumerProjectImpl, createProject, createTinyProjectImpl, type Project } from './project.ts';
