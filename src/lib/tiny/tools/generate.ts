@@ -175,16 +175,22 @@ export const bootstrapProject = async (project: Project) => {
     filename: 'src/hooks.server.ts',
     content: dedent`
       import { STORAGE_ROOT } from '$app/env/private';
-      import { createHandle } from '@ampatspell/tiny/server/handle';
+      import { jpeg } from '@ampatspell/tiny/server/files/thumbnails';
+      import { createHandle } from '@ampatspell/tiny/server/services/handle';
+      import { createBasicLogger } from '@ampatspell/tiny/server/utils';
 
-      export const handle = createHandle({ storageRoot: STORAGE_ROOT });
+      export const handle = createHandle({
+        dir: STORAGE_ROOT,
+        files: { thumbnails: [jpeg({ size: 100 }), jpeg({ size: 1024 })] },
+        logger: createBasicLogger(),
+      });
     `,
   });
 
   await write({
     filename: 'src/lib/services.ts',
     content: dedent`
-      import { createServiceGetters } from '@ampatspell/tiny/server/handle';
+      import { createServiceGetters } from '@ampatspell/tiny/server/services/handle';
       import type { DB } from './schema';
 
       const { getDatabase, getFiles, getStorage } = createServiceGetters<DB>();
@@ -196,10 +202,13 @@ export const bootstrapProject = async (project: Project) => {
   await write({
     filename: 'src/routes/files/[id]/[variant]/+server.ts',
     content: dedent`
-      import { getFiles } from '@ampatspell/tiny/server/handle';
+      import { getFiles } from '$lib/services';
       import { type RequestHandler } from '@sveltejs/kit';
 
-      export const GET: RequestHandler = ({ params: { id, variant } }) => getFiles().stream({ id, variant });
+      export const GET: RequestHandler = async ({ params: { id, variant } }) => {
+        const file = await getFiles().get({ id, variant });
+        return file.toResponse();
+      };
     `,
   });
 
@@ -222,11 +231,34 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
+    filename: 'src/routes/+error.svelte',
+    content: dedent`
+      <script lang="ts">
+        import { page } from '$app/state';
+        import Dark from '@ampatspell/tiny/dark.svelte';
+        import TablerBalloon from '@ampatspell/tiny/icons/tabler--balloon.svelte';
+        import Placeholder from '@ampatspell/tiny/placeholder.svelte';
+        import { isTruthy } from '@ampatspell/tiny/utils/array';
+
+        let status = $derived(page.status);
+        let error = $derived(page.error?.message ?? 'Unknown error');
+        let label = $derived.by(() => {
+          return [status !== 200 && status, error].filter(isTruthy).join(' ');
+        });
+      </script>
+
+      <Dark>
+        <Placeholder icon={TablerBalloon} {label} />
+      </Dark>
+    `,
+  });
+
+  await write({
     filename: 'src/routes/+layout.svelte',
     content: dedent`
       <script lang="ts">
         import favicon from '$lib/assets/favicon.svg';
-        import Dark from '@ampatspell/tiny/components/dark.svelte';
+        import Dark from '@ampatspell/tiny/dark.svelte';
 
         let { children } = $props();
       </script>
