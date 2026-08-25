@@ -57,6 +57,39 @@ describe('files services', () => {
       await files.store('hello', file);
 
       const hash = await files.get({ id: 'hello', variant: '100x100' });
+
+      expect(hash.file).toStrictEqual({
+        id: 'hello',
+        name: 'film-0663-032.jpg',
+        variants: [
+          {
+            id: hash.file.variants[0].id,
+            variant: 'original',
+            contentType: 'image/jpeg',
+            size: 3508847,
+            width: 3484,
+            height: 2323,
+          },
+          {
+            id: hash.file.variants[1].id,
+            variant: '100x100',
+            contentType: 'image/jpeg',
+            size: 2482,
+            width: 100,
+            height: 67,
+          },
+        ],
+      });
+
+      expect(hash.variant).toStrictEqual({
+        id: hash.variant.id,
+        variant: '100x100',
+        contentType: 'image/jpeg',
+        size: 2482,
+        width: 100,
+        height: 67,
+      });
+
       const original = hash.file.variants.find((v) => v.variant === 'original')!.id;
       const thumbnail = hash.variant.id;
 
