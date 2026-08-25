@@ -5,7 +5,9 @@ npx sv@latest create
 foof
 SvelteKit minimal
 Yes, using TypeScript syntax
-prettier, eslint
+prettier, eslint, experimental
+deselect kit@next
+select async, remote functions, explicit environment variables, rendering error boundaries
 npm
 ```
 

@@ -106,35 +106,6 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
-    filename: 'vite.config.ts',
-    content: dedent`
-      import adapter from '@sveltejs/adapter-node';
-      import { sveltekit } from '@sveltejs/kit/vite';
-      import { defineConfig } from 'vite';
-
-      export default defineConfig({
-        plugins: [
-          sveltekit({
-            compilerOptions: {
-              runes: true,
-              experimental: {
-                async: true,
-              },
-            },
-            adapter: adapter(),
-            experimental: {
-              explicitEnvironmentVariables: true,
-              handleRenderingErrors: true,
-              remoteFunctions: true,
-              sendWarningsToBrowser: true
-            }
-          })
-        ]
-      });
-    `,
-  });
-
-  await write({
     filename: 'prettier.config.js',
     content: dedent`
       /** @type {import("prettier").Config} */
