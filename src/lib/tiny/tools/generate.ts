@@ -42,7 +42,7 @@ export const bootstrapProject = async (project: Project) => {
     json.scripts.flc = 'npm run format && npm run check && npm run lint';
     json.scripts.start = 'tiny migrate-to-latest && node build';
     json.engines = {
-      node,
+      node: `>=${node}`,
     };
     await writeFile(path, JSON.stringify(json, null, 2));
   }
