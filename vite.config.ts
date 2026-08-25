@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-node';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { join } from 'node:path';
 
 export default defineConfig({
   plugins: [
@@ -29,10 +28,5 @@ export default defineConfig({
         },
       },
     ],
-  },
-  resolve: {
-    alias: {
-      'bun:sqlite': join(import.meta.dirname, 'src/empty.js'),
-    },
   },
 });
