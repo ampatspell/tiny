@@ -94,7 +94,7 @@ export const bootstrapProject = async (project: Project) => {
           pull_policy: build
           environment:
             - STORAGE_ROOT=/data
-            - USERS_SECRET=${secret()}
+            - USERS_SECRET=$USERS_SECRET
             - BODY_SIZE_LIMIT=100M
           volumes:
             - data:/data
