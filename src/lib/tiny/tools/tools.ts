@@ -1,13 +1,11 @@
-import { intro, log } from '@clack/prompts';
+import { intro, log, outro } from '@clack/prompts';
 import { copy, exists } from 'fs-extra';
-import { readdir, realpath } from 'fs/promises';
+import { readdir, realpath, writeFile } from 'fs/promises';
 import { join, parse, resolve } from 'path';
 import { x } from 'tinyexec';
 import { loadPackageJSON } from './utils.ts';
 import { createConsumerProjectImpl, createProject, createTinyProjectImpl, type Project } from './project.ts';
 import { generateMigrationFile } from './generate-migrations-file.ts';
-import { generateSchemaFromDatabase } from './generate-schema-from-database.ts';
-import { migrateDatabaseToLatest } from './migrate-database-to-latest.ts';
 import { bootstrapProject } from './bootstrap-project.ts';
 
 const findRoot = async (current: string) => {
@@ -79,8 +77,18 @@ export const createTools = async (opts: { cwd: string }) => {
 
   const commands = {
     generateNewMigrationFile: () => generateMigrationFile(project),
-    generateSchemaFromDatabase: () => generateSchemaFromDatabase(project),
-    migrateDatabaseToLatest: () => migrateDatabaseToLatest(project),
+    generateSchemaFromDatabase: async () => {
+      await project.withServices(async (services) => {
+        const schema = await services.database.schema.generate();
+        await writeFile(join(project.schemaRoot, 'schema.d.ts'), schema, 'utf8');
+        outro('schema.d.ts has been created');
+      });
+    },
+    migrateDatabaseToLatest: async () => {
+      await project.withServices(async (services) => {
+        await services.database.migrate({ migrations: project.migrationsRoot }).toLatest();
+      });
+    },
     bootstrapProject: () => bootstrapProject(project),
   };
 

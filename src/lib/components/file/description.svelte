@@ -1,7 +1,7 @@
 <script lang="ts">
   import TablerPhoto from '$lib/icons/tabler--photo.svelte';
-  import type { UniversalFile } from '$lib/utils/files.svelte.js';
-  import { formatBytes } from '$lib/utils/utils.js';
+  import type { UniversalFile } from '$lib/tiny/utils/files.svelte.js';
+  import { formatBytes } from '$lib/tiny/utils/utils.js';
   import Overlay from './overlay.svelte';
 
   let {

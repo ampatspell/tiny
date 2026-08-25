@@ -1,16 +1,16 @@
-import type { Database } from '$lib/tiny/database/server/database.js';
-import type { Storage } from '$lib/tiny/storage/server/storage.js';
 import type { DB } from '$lib/server/database/schema.js';
-import { uid } from '$lib/server/utils.js';
-import { images, run } from '$lib/utils/utils.js';
+import { images, run } from '$lib/tiny/utils/utils.js';
 import { error } from '@sveltejs/kit';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
 import { default as sharp, type Sharp } from 'sharp';
+import { uid } from '../utils.ts';
+import type { Database } from '../database/database.ts';
+import type { Storage } from '../storage/storage.ts';
 
 export type CreateFilesServicesOptions = {
   db: Database<DB>;
   storage: Storage;
-  thumbnails: FileThumbnailOptions[];
+  thumbnails?: FileThumbnailOptions[];
 };
 
 export type FileThumbnailOptions = {
@@ -101,7 +101,7 @@ export const createFilesServices = async (opts: CreateFilesServicesOptions) => {
           } else {
             const originalVariant = variants.find((variant) => variant.variant === ORIGINAL)!;
             if (images.includes(originalVariant.contentType)) {
-              const definition = opts.thumbnails.find((thumbnail) => thumbnail.id === variant);
+              const definition = opts.thumbnails?.find((thumbnail) => thumbnail.id === variant);
               if (!definition) {
                 throw error(404, 'File variant not found');
               }

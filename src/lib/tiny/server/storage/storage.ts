@@ -1,4 +1,4 @@
-import { run } from '$lib/utils/utils.js';
+import { run } from '$lib/tiny/utils/utils.js';
 import { createReadableStream } from '@sveltejs/kit/node';
 import { pathExists } from 'fs-extra';
 import { mkdir, rm, writeFile, readFile } from 'node:fs/promises';

@@ -3,19 +3,18 @@ import { dirname } from 'node:path';
 import SQLite from 'better-sqlite3';
 import { CamelCasePlugin, Kysely, ParseJSONResultsPlugin, SqliteDialect } from 'kysely';
 import { generate as generateSchema, SqliteDialect as CodegenSqliteDialect } from 'kysely-codegen';
-import { round, run } from '$lib/utils/utils.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { FileMigrationProvider, Migrator } from 'kysely/migration';
+import { round, run } from '$lib/tiny/utils/utils.js';
 
 export type CreateDatabaseServicesOptions = {
   file: string;
   wal?: boolean;
-  migrations: string;
 };
 
 export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseServicesOptions) => {
-  const { file: filename, wal = true, migrations } = opts;
+  const { file: filename, wal = true } = opts;
 
   const sqlite = await run(async () => {
     if (filename !== ':memory:') {
@@ -75,7 +74,7 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
     };
   });
 
-  const migrate = run(() => {
+  const migrate = ({ migrations }: { migrations: string }) => {
     const getMigrator = () => {
       return new Migrator({
         db: db,
@@ -115,7 +114,7 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
     return {
       toLatest,
     };
-  });
+  };
 
   return {
     filename,

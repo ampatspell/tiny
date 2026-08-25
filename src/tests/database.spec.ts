@@ -1,32 +1,26 @@
-import { createDatabaseServices } from '$lib/tiny/database/server/database.js';
 import { sql } from 'kysely';
 import { describe, it, expect } from 'vitest';
 import { withTemporaryFolder } from './helpers/utils.ts';
 import { join, resolve } from 'node:path';
 import dedent from 'dedent';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { createDatabaseServices } from '$lib/tiny/server/database/database.js';
 
 describe('database services', () => {
   it('creates', async () => {
-    await withTemporaryFolder(async (dir) => {
-      const services = await createDatabaseServices({
-        file: ':memory:',
-        migrations: join(dir, 'migrations'),
-      });
-      expect(services.filename).toStrictEqual(':memory:');
-      expect(services.sqlite.memory).toStrictEqual(true);
+    const services = await createDatabaseServices({
+      file: ':memory:',
     });
+    expect(services.filename).toStrictEqual(':memory:');
+    expect(services.sqlite.memory).toStrictEqual(true);
   });
 
   it('creates working kysely', async () => {
-    await withTemporaryFolder(async (dir) => {
-      const services = await createDatabaseServices({
-        file: ':memory:',
-        migrations: join(dir, 'migrations'),
-      });
-      expect(await sql`select 'Hello' as message`.execute(services.db)).toStrictEqual({
-        rows: [{ message: 'Hello' }],
-      });
+    const services = await createDatabaseServices({
+      file: ':memory:',
+    });
+    expect(await sql`select 'Hello' as message`.execute(services.db)).toStrictEqual({
+      rows: [{ message: 'Hello' }],
     });
   });
 
@@ -44,7 +38,6 @@ describe('database services', () => {
 
         const { db: db } = await createDatabaseServices<DB>({
           file: join(dir, 'test.db'),
-          migrations: join(dir, 'migrations'),
         });
 
         await db.schema
@@ -68,7 +61,6 @@ describe('database services', () => {
     await withTemporaryFolder(async (dir) => {
       const services = await createDatabaseServices({
         file: join(dir, 'test.db'),
-        migrations: join(dir, 'migrations'),
       });
 
       await services.db.schema
@@ -93,7 +85,6 @@ describe('database services', () => {
       const migrations = join(dir, 'migrations');
       const services = await createDatabaseServices({
         file: join(dir, 'test.db'),
-        migrations,
       });
 
       const migration = dedent`
@@ -114,7 +105,7 @@ describe('database services', () => {
       await mkdir(migrations, { recursive: true });
       await writeFile(join(migrations, 'foo.ts'), migration, 'utf-8');
 
-      const migrated = await services.migrate.toLatest();
+      const migrated = await services.migrate({ migrations }).toLatest();
       expect(migrated).toStrictEqual(true);
 
       const generated = await services.schema.generate();
@@ -133,9 +124,8 @@ describe('database services', () => {
       const migrations = resolve(join(import.meta.dirname, '../lib/tiny/database/migrations'));
       const services = await createDatabaseServices({
         file: join(dir, 'test.db'),
-        migrations,
       });
-      await services.migrate.toLatest();
+      await services.migrate({ migrations }).toLatest();
       const tables = await services.db.introspection.getTables();
       expect(tables.map((table) => table.name)).toStrictEqual(['file_variants', 'files', 'galleries', 'index']);
     });

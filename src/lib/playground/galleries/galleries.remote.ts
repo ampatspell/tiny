@@ -1,9 +1,9 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
 import { getDatabase } from '../services.ts';
-import { uid } from '$lib/server/utils.js';
-import { omit } from '$lib/utils/object.js';
-import type { QueryResponse } from '$lib/utils/utils.js';
+import type { QueryResponse } from '$lib/tiny/utils/utils.js';
+import { uid } from '$lib/tiny/server/utils.js';
+import { omit } from '$lib/tiny/utils/object.js';
 
 export const getGalleries = query(async () => {
   const db = getDatabase();

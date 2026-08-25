@@ -1,6 +1,6 @@
-import { defer, type Deferred } from '$lib/utils/promise.js';
 import { extract } from 'runed';
 import type { FloaterOpenOptions } from './floaters.svelte.ts';
+import { defer, type Deferred } from '$lib/tiny/utils/promise.js';
 
 export type FloaterOptions<Req, Res> = FloaterOpenOptions<Req, Res> & {
   onClosed: (floater: Floater<Req, Res>) => void;

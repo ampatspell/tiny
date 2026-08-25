@@ -1,7 +1,7 @@
 import { getContext, hasContext, setContext, untrack } from 'svelte';
 import type { Property, PropertyUpdatePair } from './property.svelte.ts';
-import { addObject, isTruthy, removeObject } from '$lib/utils/array.js';
-import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
+import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { addObject, isTruthy, removeObject } from '$lib/tiny/utils/array.js';
 
 export type UpdateParams<T> = [property: Property<T>, pair: PropertyUpdatePair<T>];
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { widow } from '$lib/utils/string.js';
+  import { widow } from '$lib/tiny/utils/string.js';
 
   let { value }: { value: string } = $props();
 </script>

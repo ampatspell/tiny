@@ -1,5 +1,5 @@
 import { useBackend } from '$lib/components/backend/backend.svelte.js';
-import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
+import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 
 export type Properties = {
   isDirty: boolean;

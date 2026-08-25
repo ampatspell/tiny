@@ -1,8 +1,8 @@
 import { useDataProperties } from '$lib/properties/data.svelte.js';
 import { notBlank } from '$lib/properties/validator.svelte.js';
-import { asFile } from '$lib/utils/files.svelte.js';
-import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
-import { run } from '$lib/utils/utils.js';
+import { asFile } from '$lib/tiny/utils/files.svelte.js';
+import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { run } from '$lib/tiny/utils/utils.js';
 import { updateIndex, updateIndexFile, type IndexData } from './index.remote.ts';
 
 export type UseIndexPropertiesOptions = {

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { withServices, withTemporaryFolder } from './helpers/utils.ts';
-import { createServices } from '$lib/tiny/services/server/services.js';
-import { jpeg } from '$lib/tiny/files/server/thumbnails.js';
 import { join } from 'node:path';
 import type { DB } from '$lib/server/database/schema.js';
+import { jpeg } from '$lib/tiny/server/files/thumbnails.js';
+import { createServices } from '$lib/tiny/server/services/services.js';
 
 describe('services', () => {
   it('creates services', async () => {
@@ -22,7 +22,7 @@ describe('services', () => {
       const services = await createServices(opts);
       expect(!!services).toStrictEqual(true);
 
-      services.destroy();
+      await services.destroy();
     });
   });
 
@@ -44,12 +44,12 @@ describe('services', () => {
 
       expect(a.database === b.database).toBeTruthy();
 
-      a.destroy();
+      await a.destroy();
 
       const c = await createServices(opts);
       expect(b.database === c.database).toBeFalsy();
 
-      c.destroy();
+      await c.destroy();
     });
   });
 

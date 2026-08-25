@@ -2,8 +2,8 @@ import { join, relative, resolve } from 'node:path';
 import { loadPackageJSON } from './utils.ts';
 import { exists } from 'fs-extra';
 import { log } from '@clack/prompts';
-import { connectionStringForStorageRoot, createDatabase, type Database } from '../server/database/database.ts';
 import { loadEnvFile } from 'node:process';
+import { createServices, type Services } from '../server/services/services.ts';
 
 type ProjectImpl = {
   isTiny: boolean;
@@ -55,27 +55,25 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
   const pkg = await loadPackageJSON(root);
   const env = await loadEnv(root);
   const name = pkg.name as string;
-  const storageRoot = env?.storageRoot;
 
-  const connectionString = () => {
+  const dir = () => {
+    const storageRoot = env?.storageRoot;
     if (!storageRoot) {
       log.error(`STORAGE_ROOT environment variable is required`);
       process.exit(1);
     }
-    return connectionStringForStorageRoot(storageRoot);
+    return storageRoot;
   };
 
-  const database = {
-    connectionString,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    with: async <T>(cb: (database: Database<any>) => Promise<T>) => {
-      const db = await createDatabase({ connectionString: connectionString() });
-      try {
-        return await cb(db);
-      } finally {
-        db.destroy();
-      }
-    },
+  const withServices = async <T>(cb: (services: Services) => Promise<T>) => {
+    const services = await createServices({
+      dir: dir(),
+    });
+    try {
+      return await cb(services);
+    } finally {
+      await services.destroy();
+    }
   };
 
   return {
@@ -84,9 +82,9 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
     env,
     isTiny,
     migrationsRoot,
-    storageRoot,
+    storageRoot: dir,
     schemaRoot,
-    database,
+    withServices,
   };
 };
 

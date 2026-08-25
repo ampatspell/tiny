@@ -1,7 +1,7 @@
 <script module lang="ts">
   import Input from '$lib/components/input.svelte';
   import type { Property } from '$lib/properties/property.svelte.js';
-  import { getter, options, type OptionsInput } from '$lib/utils/options.svelte.js';
+  import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
   import { untrack } from 'svelte';
   import Container from '../container.svelte';
 

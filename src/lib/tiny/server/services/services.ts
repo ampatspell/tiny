@@ -1,27 +1,26 @@
-import { createDatabaseServices, type Database } from '$lib/tiny/database/server/database.js';
-import { createFilesServices, type FileThumbnailOptions } from '$lib/tiny/files/server/files.js';
-import { createStorageServices } from '$lib/tiny/storage/server/storage.js';
 import type { DB } from '$lib/server/database/schema.js';
 import { join } from 'node:path';
+import { createFilesServices, type FileThumbnailOptions } from '../files/files.ts';
+import { createDatabaseServices, type Database } from '../database/database.ts';
+import { createStorageServices } from '../storage/storage.ts';
 
 export type CreateServicesOptions = {
   dir: string;
-  database: {
+  database?: {
     wal?: boolean;
-    migrations: string;
   };
-  files: {
-    thumbnails: FileThumbnailOptions[];
+  files?: {
+    thumbnails?: FileThumbnailOptions[];
   };
 };
 
-export const _createServices = async <D = unknown>(opts: CreateServicesOptions) => {
+export const _createServices = async <D>(opts: CreateServicesOptions) => {
   const dir = opts.dir;
 
   const [database, storage] = await Promise.all([
     createDatabaseServices<D>({
       file: join(dir, 'tiny.db'),
-      migrations: opts.database.migrations,
+      wal: opts.database?.wal,
     }),
     createStorageServices({
       dir: join(dir, 'storage'),
@@ -31,7 +30,7 @@ export const _createServices = async <D = unknown>(opts: CreateServicesOptions) 
   const files = await createFilesServices({
     db: database.db as unknown as Database<DB>,
     storage: storage.storage,
-    thumbnails: opts.files.thumbnails,
+    thumbnails: opts.files?.thumbnails,
   });
 
   return {
@@ -42,17 +41,19 @@ export const _createServices = async <D = unknown>(opts: CreateServicesOptions) 
   };
 };
 
-export type CreatedServices<D = unknown> = Awaited<ReturnType<typeof _createServices<D>>>;
+type CreatedServices<D> = Awaited<ReturnType<typeof _createServices<D>>>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let promise: Promise<CreatedServices<any>> | undefined;
 
-export const createServices = async <D = unknown>(opts: CreateServicesOptions) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createServices = async <D = any>(opts: CreateServicesOptions) => {
   if (!promise) {
     promise = _createServices<D>(opts);
   }
   const services: CreatedServices<D> = await promise;
-  const destroy = () => {
+  const destroy = async () => {
+    await services.database.db.destroy();
     promise = undefined;
   };
   return {
@@ -61,4 +62,5 @@ export const createServices = async <D = unknown>(opts: CreateServicesOptions) =
   };
 };
 
-export type Services<D = unknown> = Awaited<ReturnType<typeof createServices<D>>>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Services<D = any> = Awaited<ReturnType<typeof createServices<D>>>;

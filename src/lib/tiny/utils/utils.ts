@@ -84,10 +84,6 @@ export const getActiveInputElement = () => {
   }
 };
 
-export const hasKeys = (arg: object) => {
-  return Object.keys(arg).length > 0;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type QueryResponse<T extends (...args: any[]) => any> =
   ReturnType<T> extends RemoteResource<infer R> ? R : undefined;

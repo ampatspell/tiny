@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { pickFile, type LocalFile, type UniversalFile } from '$lib/utils/files.svelte.js';
-  import { px } from '$lib/utils/utils.js';
+  import { pickFile, type LocalFile, type UniversalFile } from '$lib/tiny/utils/files.svelte.js';
+  import { px } from '$lib/tiny/utils/utils.js';
   import Blank from './blank.svelte';
   import Content from './content.svelte';
 

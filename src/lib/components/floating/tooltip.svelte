@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { px, recordToStyle } from '$lib/utils/utils.js';
+  import { px, recordToStyle } from '$lib/tiny/utils/utils.js';
   import {
     arrow as arrowMiddleware,
     computePosition,

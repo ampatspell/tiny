@@ -31,3 +31,7 @@ export const recordToString = (serialized: Record<PropertyKey, unknown>) => {
     })
     .join(', ');
 };
+
+export const hasKeys = (arg: object) => {
+  return Object.keys(arg).length > 0;
+};

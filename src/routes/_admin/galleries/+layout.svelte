@@ -4,9 +4,9 @@
   import { getGalleries, type GalleryData } from '$lib/playground/galleries/galleries.remote.js';
   import type { Snippet } from 'svelte';
   import { useListLayout } from '$lib/components/layout/list/list.svelte.js';
-  import { getter } from '$lib/utils/options.svelte.js';
   import Label from '$lib/components/list/item/label.svelte';
   import Add from '$lib/playground/galleries/add.svelte';
+  import { getter } from '$lib/tiny/utils/options.svelte.js';
 
   let { children }: { children?: Snippet } = $props();
 

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { readTestFileAsFile, withServices } from './helpers/utils.ts';
-import { type Files } from '$lib/tiny/files/server/files.js';
-import { type Database } from '$lib/tiny/database/server/database.js';
-import { type Storage } from '$lib/tiny/storage/server/storage.js';
 import type { DB } from '$lib/server/database/schema.js';
+import type { Files } from '$lib/tiny/server/files/files.js';
+import type { Database } from '$lib/tiny/server/database/database.js';
+import type { Storage } from '$lib/tiny/server/storage/storage.js';
 
 const withFiles = async <T>(cb: (opts: { files: Files; db: Database<DB>; storage: Storage }) => Promise<T>) => {
   return await withServices(async (services) => {

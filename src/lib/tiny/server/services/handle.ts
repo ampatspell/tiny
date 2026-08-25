@@ -1,9 +1,9 @@
 import type { Handle } from '@sveltejs/kit';
 import { createServices, type CreateServicesOptions } from './services.ts';
 import { getRequestEvent } from '$app/server';
-import type { Database } from '$lib/tiny/database/server/database.js';
-import type { Storage } from '$lib/tiny/storage/server/storage.js';
-import type { Files } from '$lib/tiny/files/server/files.js';
+import type { Database } from '../database/database.ts';
+import type { Files } from '../files/files.ts';
+import type { Storage } from '../storage/storage.ts';
 
 export const createHandle = (opts: Omit<CreateServicesOptions, 'dir'> & { dir: string | undefined }): Handle => {
   return async ({ event, resolve }) => {

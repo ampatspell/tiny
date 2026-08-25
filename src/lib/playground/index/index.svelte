@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { asFile } from '$lib/utils/files.svelte.js';
-  import { px, url } from '$lib/utils/utils.js';
+  import { asFile } from '$lib/tiny/utils/files.svelte.js';
+  import { px, url } from '$lib/tiny/utils/utils.js';
   import { getIndex } from './index.remote.js';
 
   let index = $derived(await getIndex());

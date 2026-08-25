@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Property } from '$lib/properties/property.svelte.js';
-  import type { LocalFile, UniversalFile } from '$lib/utils/files.svelte.js';
+  import type { LocalFile, UniversalFile } from '$lib/tiny/utils/files.svelte.js';
   import File from '$lib/components/file/file.svelte';
   import Container from './container.svelte';
 
