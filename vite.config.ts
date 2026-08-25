@@ -29,16 +29,9 @@ export default defineConfig({
       },
     ],
   },
-  ssr: {
-    external: [
-      '@libsql/kysely-libsql',
-      '@tediousjs/connection-string',
-      'bun:sqlite',
-      'tarn',
-      'kysely-bun-sqlite',
-      'tedious',
-      'mysql2',
-      'pg',
-    ],
+  build: {
+    rolldownOptions: {
+      external: ['kysely-codegen'],
+    },
   },
 });
