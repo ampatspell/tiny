@@ -62,7 +62,7 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
-    filename: '.nvm',
+    filename: '.nvmrc',
     content: dedent`
       26
     `,
