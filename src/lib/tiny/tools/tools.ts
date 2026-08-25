@@ -5,8 +5,7 @@ import { join, parse, resolve } from 'path';
 import { x } from 'tinyexec';
 import { loadPackageJSON } from './utils.ts';
 import { createConsumerProjectImpl, createProject, createTinyProjectImpl, type Project } from './project.ts';
-import { generateMigrationFile } from './generate-migrations-file.ts';
-import { bootstrapProject } from './bootstrap-project.ts';
+import { bootstrapProject, generateMigrationFile } from './generate.ts';
 
 const findRoot = async (current: string) => {
   if (await exists(join(current, 'package.json'))) {

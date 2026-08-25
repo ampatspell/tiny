@@ -14,8 +14,8 @@ type ProjectImpl = {
 
 export const createTinyProjectImpl = async (opts: { root: string }): Promise<ProjectImpl> => {
   const { root } = opts;
-  const migrationsRoot = join(root, 'src/lib/server/database/migrations');
-  const schemaRoot = join(root, 'src/lib/server/database');
+  const migrationsRoot = join(root, 'src/lib/tiny/server/database/migrations');
+  const schemaRoot = join(root, 'src/lib/tiny/server/database');
   return {
     isTiny: true,
     root,
