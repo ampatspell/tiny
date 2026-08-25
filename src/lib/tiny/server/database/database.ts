@@ -1,4 +1,4 @@
-// @ts-expect-error Has no types
+// @ts-expect-error Has no better-sqlite3 type
 import SQLite from 'better-sqlite3';
 import { mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
