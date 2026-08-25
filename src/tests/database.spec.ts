@@ -2,7 +2,7 @@ import { createDatabaseServices } from '$lib/next/database/server/database.js';
 import { sql } from 'kysely';
 import { describe, it, expect } from 'vitest';
 import { withTemporaryFolder } from './helpers/utils.ts';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import dedent from 'dedent';
 import { mkdir, writeFile } from 'node:fs/promises';
 
@@ -125,6 +125,19 @@ describe('database services', () => {
         }
       `;
       expect(generated.includes(duck)).toStrictEqual(true);
+    });
+  });
+
+  it('migrates using default migrations', async () => {
+    await withTemporaryFolder(async (dir) => {
+      const migrations = resolve(join(import.meta.dirname, '../lib/next/database/migrations'));
+      const services = await createDatabaseServices({
+        file: join(dir, 'test.db'),
+        migrations,
+      });
+      await services.migrate.toLatest();
+      const tables = await services.kysely.introspection.getTables();
+      expect(tables.map((table) => table.name)).toStrictEqual(['file_variants', 'files', 'galleries', 'index']);
     });
   });
 });

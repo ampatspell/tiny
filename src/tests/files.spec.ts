@@ -37,7 +37,7 @@ const withFiles = async <T>(cb: (opts: { files: Files; db: Database<DB>; storage
     await db.schema.createIndex('file_variants_file_id_index').on('file_variants').column('file_id').execute();
 
     const { storage } = await createStorageServices({ dir: join(dir, 'storage') });
-    const { files } = await createFilesServices({ db, storage, thumbnails: [jpeg(100)] });
+    const { files } = await createFilesServices({ db, storage, thumbnails: [jpeg({ size: 100 })] });
     return await cb({ files, db, storage });
   });
 };

@@ -1,6 +1,8 @@
 import type { Sharp } from 'sharp';
 
-export const jpeg = (size: number, id = `${size}x${size}`) => {
+export const jpeg = (opts: { size: number; id?: string; quality?: number }) => {
+  const { size, id = `${size}x${size}`, quality = 80 } = opts;
+
   const process = async (sharp: Sharp) => {
     const thumbnail = sharp
       .resize({
@@ -9,7 +11,7 @@ export const jpeg = (size: number, id = `${size}x${size}`) => {
         fit: 'inside',
         withoutEnlargement: true,
       })
-      .jpeg({ quality: 80 });
+      .jpeg({ quality });
 
     const contentType = 'image/jpeg';
 
