@@ -121,7 +121,7 @@ describe('database services', () => {
 
   it('migrates using default migrations', async () => {
     await withTemporaryFolder(async (dir) => {
-      const migrations = resolve(join(import.meta.dirname, '../lib/tiny/database/migrations'));
+      const migrations = resolve(join(import.meta.dirname, '../lib/tiny/server/database/migrations'));
       const services = await createDatabaseServices({
         file: join(dir, 'test.db'),
       });

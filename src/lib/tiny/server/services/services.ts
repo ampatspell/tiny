@@ -1,11 +1,13 @@
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { createFilesServices, type FileThumbnailOptions } from '../files/files.ts';
 import { createDatabaseServices, type Database } from '../database/database.ts';
 import { createStorageServices } from '../storage/storage.ts';
 import type { DB } from '../database/schema.js';
+import type { Logger } from '../utils.ts';
 
 export type CreateServicesOptions = {
   dir: string;
+  logger?: Logger;
   database?: {
     wal?: boolean;
   };
@@ -15,15 +17,19 @@ export type CreateServicesOptions = {
 };
 
 export const _createServices = async <D>(opts: CreateServicesOptions) => {
-  const dir = opts.dir;
+  const { dir, logger } = opts;
+
+  logger?.info('services', 'dir:', resolve(dir));
 
   const [database, storage] = await Promise.all([
     createDatabaseServices<D>({
       file: join(dir, 'tiny.db'),
       wal: opts.database?.wal,
+      logger,
     }),
     createStorageServices({
       dir: join(dir, 'storage'),
+      logger,
     }),
   ]);
 

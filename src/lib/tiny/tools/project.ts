@@ -4,6 +4,7 @@ import { exists } from 'fs-extra';
 import { log } from '@clack/prompts';
 import { loadEnvFile } from 'node:process';
 import { createServices, type Services } from '../server/services/services.ts';
+import { createBasicLogger } from '../server/utils.ts';
 
 type ProjectImpl = {
   isTiny: boolean;
@@ -68,6 +69,7 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
   const withServices = async <T>(cb: (services: Services) => Promise<T>) => {
     const services = await createServices({
       dir: dir(),
+      logger: createBasicLogger(),
     });
     try {
       return await cb(services);

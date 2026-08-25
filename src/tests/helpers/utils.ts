@@ -23,7 +23,7 @@ export const readTestFileAsFile = async (name: string, type: string) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const withServices = async <D = unknown, T = any>(cb: (services: Services<D>) => Promise<T>) => {
-  const migrations = join(import.meta.dirname, '../../lib/tiny/database/migrations');
+  const migrations = join(import.meta.dirname, '../../lib/tiny/server/database/migrations');
   await withTemporaryFolder(async (dir) => {
     const opts = {
       dir,

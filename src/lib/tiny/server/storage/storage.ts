@@ -3,13 +3,15 @@ import { createReadableStream } from '@sveltejs/kit/node';
 import { pathExists } from 'fs-extra';
 import { mkdir, rm, writeFile, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import type { Logger } from '../utils.ts';
 
 export type CreateStorageServicesOptions = {
   dir: string;
+  logger?: Logger;
 };
 
 export const createStorageServices = async (opts: CreateStorageServicesOptions) => {
-  const { dir } = opts;
+  const { dir, logger } = opts;
 
   await mkdir(dir, { recursive: true });
 
@@ -38,11 +40,11 @@ export const createStorageServices = async (opts: CreateStorageServicesOptions) 
           throw new Error('Unsupported body');
         }
         await writeFile(path, bytes);
-        console.log('[storage] stored', key);
+        logger?.info('storage', 'stored', key);
       };
       const drop = async () => {
         await rm(path);
-        console.log('[storage] dropped', key);
+        logger?.info('storage', 'dropped', key);
       };
       const toReadableStream = () => {
         return createReadableStream(path);

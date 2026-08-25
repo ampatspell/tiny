@@ -8,14 +8,16 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { FileMigrationProvider, Migrator } from 'kysely/migration';
 import { round, run } from '../../utils/utils.ts';
+import type { Logger } from '../utils.ts';
 
 export type CreateDatabaseServicesOptions = {
   file: string;
   wal?: boolean;
+  logger?: Logger;
 };
 
 export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseServicesOptions) => {
-  const { file: filename, wal = true } = opts;
+  const { file: filename, wal = true, logger } = opts;
 
   const sqlite = await run(async () => {
     if (filename !== ':memory:') {
@@ -35,13 +37,12 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
       dialect,
       plugins: [new CamelCasePlugin(), new ParseJSONResultsPlugin()],
       log: (event) => {
-        const prefix = '[sql]';
         const ms = `${round(event.queryDurationMillis)}ms`;
         const sql = event.query.sql;
         if (event.level === 'error') {
-          console.error(prefix, ms, sql, event.error);
+          logger?.error('db', ms, sql, event.error);
         } else {
-          console.log(prefix, ms, sql);
+          logger?.info('db', ms, sql);
         }
       },
     });
@@ -90,23 +91,21 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
 
     const toLatest = async () => {
       const { error, results } = await getMigrator().migrateToLatest();
-
       results?.forEach((it) => {
         if (it.status === 'Success') {
-          console.log(`Migration ${it.migrationName} was executed successfully`);
+          logger?.info('db', `Migration ${it.migrationName} was executed successfully`);
         } else if (it.status === 'Error') {
-          console.log(`Failed to execute migration ${it.migrationName}`);
+          logger?.info('db', `Failed to execute migration ${it.migrationName}`);
         }
       });
-
       if (error) {
-        console.log(`Failed to migrate to the latest revision: ${error}`);
+        logger?.info('db', `Failed to migrate to the latest revision: ${error}`);
         return false;
       } else {
         if (results?.length) {
-          console.log('Migrated to latest revision');
+          logger?.info('db', 'Migrated to latest revision');
         } else {
-          console.log('No new migrations found');
+          logger?.info('db', 'No new migrations found');
         }
       }
       return true;

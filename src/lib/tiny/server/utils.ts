@@ -8,3 +8,24 @@ export const uid = (length = 16) => {
     .replace(/=/g, '')
     .slice(0, length);
 };
+
+export type Logger = {
+  info: (...data: unknown[]) => void;
+  error: (...data: unknown[]) => void;
+};
+
+export const createBasicLogger = (): Logger => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const wrap = (next: (...args: any[]) => void) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (first: any, ...rest: any[]) => {
+      next(`[${first}]`, ...rest);
+    };
+  };
+  const info = wrap(console.info);
+  const error = wrap(console.error);
+  return {
+    info,
+    error,
+  };
+};
