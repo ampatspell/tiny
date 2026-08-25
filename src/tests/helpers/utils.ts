@@ -1,5 +1,5 @@
-import { jpeg } from '$lib/next/files/server/thumbnails.js';
-import { createServices, type Services } from '$lib/next/services/server/services.js';
+import { jpeg } from '$lib/tiny/files/server/thumbnails.js';
+import { createServices, type Services } from '$lib/tiny/services/server/services.js';
 import { uid } from '$lib/server/utils.js';
 import { mkdir, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -27,7 +27,7 @@ export const withServices = async <D = unknown, T = any>(cb: (services: Services
     const opts = {
       dir,
       database: {
-        migrations: join(import.meta.dirname, '../../lib/next/database/migrations'),
+        migrations: join(import.meta.dirname, '../../lib/tiny/database/migrations'),
         wal: false,
       },
       files: {

@@ -1,4 +1,4 @@
-import { createDatabaseServices } from '$lib/next/database/server/database.js';
+import { createDatabaseServices } from '$lib/tiny/database/server/database.js';
 import { sql } from 'kysely';
 import { describe, it, expect } from 'vitest';
 import { withTemporaryFolder } from './helpers/utils.ts';
@@ -130,7 +130,7 @@ describe('database services', () => {
 
   it('migrates using default migrations', async () => {
     await withTemporaryFolder(async (dir) => {
-      const migrations = resolve(join(import.meta.dirname, '../lib/next/database/migrations'));
+      const migrations = resolve(join(import.meta.dirname, '../lib/tiny/database/migrations'));
       const services = await createDatabaseServices({
         file: join(dir, 'test.db'),
         migrations,

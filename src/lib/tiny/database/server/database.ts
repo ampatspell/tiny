@@ -50,12 +50,6 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
   const schema = run(() => {
     const generate = async () => {
       const dialect = new CodegenSqliteDialect();
-
-      const db = await dialect.introspector.connect({
-        connectionString: filename,
-        dialect,
-      });
-
       return await generateSchema({
         db,
         dialect,
@@ -80,7 +74,7 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
           fs,
           path,
           migrationFolder: migrations,
-          import: (module) => import(module),
+          import: (module) => import(/* @vite-ignore */ module),
         }),
       });
     };

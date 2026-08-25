@@ -27,7 +27,7 @@ export const getIndex = query(async () => {
 
   let background;
   if (index.backgroundId) {
-    background = await getFiles().byId(index.backgroundId);
+    background = await getFiles().data(index.backgroundId);
   }
 
   return { ...index, background };

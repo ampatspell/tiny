@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { withServices, withTemporaryFolder } from './helpers/utils.ts';
-import { createServices } from '$lib/next/services/server/services.js';
-import { jpeg } from '$lib/next/files/server/thumbnails.js';
+import { createServices } from '$lib/tiny/services/server/services.js';
+import { jpeg } from '$lib/tiny/files/server/thumbnails.js';
 import { join } from 'node:path';
 import type { DB } from '$lib/server/database/schema.js';
 

@@ -1,6 +1,6 @@
-import { createDatabaseServices, type Database } from '$lib/next/database/server/database.js';
-import { createFilesServices, type FileThumbnailOptions } from '$lib/next/files/server/files.js';
-import { createStorageServices } from '$lib/next/storage/server/storage.js';
+import { createDatabaseServices, type Database } from '$lib/tiny/database/server/database.js';
+import { createFilesServices, type FileThumbnailOptions } from '$lib/tiny/files/server/files.js';
+import { createStorageServices } from '$lib/tiny/storage/server/storage.js';
 import type { DB } from '$lib/server/database/schema.js';
 import { join } from 'node:path';
 

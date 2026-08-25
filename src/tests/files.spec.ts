@@ -1,44 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { readTestFileAsFile, withTemporaryFolder } from './helpers/utils.ts';
-import { createFilesServices, type Files } from '$lib/next/files/server/files.js';
-import { createDatabaseServices, type Database } from '$lib/next/database/server/database.js';
-import { createStorageServices, type Storage } from '$lib/next/storage/server/storage.js';
-import { join } from 'node:path';
-import { jpeg } from '$lib/next/files/server/thumbnails.js';
+import { readTestFileAsFile, withServices } from './helpers/utils.ts';
+import { type Files } from '$lib/tiny/files/server/files.js';
+import { type Database } from '$lib/tiny/database/server/database.js';
+import { type Storage } from '$lib/tiny/storage/server/storage.js';
 import type { DB } from '$lib/server/database/schema.js';
 
 const withFiles = async <T>(cb: (opts: { files: Files; db: Database<DB>; storage: Storage }) => Promise<T>) => {
-  return await withTemporaryFolder(async (dir) => {
-    const { db: db } = await createDatabaseServices({
-      file: join(dir, 'test.db'),
-      migrations: join(dir, 'migrations'),
-    });
-
-    // TODO: needs actual migration files here
-
-    await db.schema
-      .createTable('files')
-      .addColumn('id', 'text', (col) => col.notNull().primaryKey())
-      .addColumn('name', 'text', (col) => col.notNull())
-      .execute();
-
-    await db.schema
-      .createTable('file_variants')
-      .addColumn('id', 'text', (col) => col.notNull().primaryKey())
-      .addColumn('file_id', 'text', (col) => col.notNull().references('files.id'))
-      .addColumn('variant', 'text', (col) => col.notNull())
-      .addColumn('content_type', 'text', (col) => col.notNull())
-      .addColumn('size', 'numeric', (col) => col.notNull())
-      .addColumn('width', 'numeric')
-      .addColumn('height', 'numeric')
-      .addUniqueConstraint('file_id_variant_unique', ['file_id', 'variant'])
-      .execute();
-
-    await db.schema.createIndex('file_variants_file_id_index').on('file_variants').column('file_id').execute();
-
-    const { storage } = await createStorageServices({ dir: join(dir, 'storage') });
-    const { files } = await createFilesServices({ db, storage, thumbnails: [jpeg({ size: 100 })] });
-    return await cb({ files, db, storage });
+  return await withServices(async (services) => {
+    const db = services.database.db;
+    const files = services.files.files;
+    const storage = services.storage.storage;
+    await cb({ db, files, storage });
   });
 };
 

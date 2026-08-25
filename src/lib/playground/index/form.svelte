@@ -5,9 +5,9 @@
   import Row from '$lib/components/form/content/row.svelte';
   import Input from '$lib/components/properties/input.svelte';
   import File from '$lib/components/properties/file.svelte';
-  import { images } from '$lib/utils/files.svelte.js';
   import { getter } from '$lib/utils/options.svelte.js';
   import Number, { useNumberPropertyEditor } from '$lib/components/properties/editors/number.svelte';
+  import { images } from '$lib/utils/utils.js';
 
   let { properties }: { properties: IndexProperties } = $props();
 

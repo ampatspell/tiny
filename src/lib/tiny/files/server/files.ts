@@ -1,5 +1,5 @@
-import type { Database } from '$lib/next/database/server/database.js';
-import type { Storage } from '$lib/next/storage/server/storage.js';
+import type { Database } from '$lib/tiny/database/server/database.js';
+import type { Storage } from '$lib/tiny/storage/server/storage.js';
 import type { DB } from '$lib/server/database/schema.js';
 import { uid } from '$lib/server/utils.js';
 import { images, run } from '$lib/utils/utils.js';
@@ -177,10 +177,16 @@ export const createFilesServices = async (opts: CreateFilesServicesOptions) => {
       };
     };
 
+    const data = async (id: string) => {
+      const { file } = await get({ id });
+      return file;
+    };
+
     return {
       store,
       drop,
       get,
+      data,
     };
   });
 
@@ -191,3 +197,4 @@ export const createFilesServices = async (opts: CreateFilesServicesOptions) => {
 
 export type FilesServices = Awaited<ReturnType<typeof createFilesServices>>;
 export type Files = FilesServices['files'];
+export type FileData = Awaited<ReturnType<Files['data']>>;
