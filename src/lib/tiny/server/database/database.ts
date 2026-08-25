@@ -40,9 +40,9 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
         const ms = `${round(event.queryDurationMillis)}ms`;
         const sql = event.query.sql;
         if (event.level === 'error') {
-          logger?.error('db', ms, sql, event.error);
+          logger?.error('sql', ms, sql, event.error);
         } else {
-          logger?.info('db', ms, sql);
+          logger?.info('sql', ms, sql);
         }
       },
     });

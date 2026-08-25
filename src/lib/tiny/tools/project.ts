@@ -4,7 +4,6 @@ import { exists } from 'fs-extra';
 import { log } from '@clack/prompts';
 import { loadEnvFile } from 'node:process';
 import { createServices, type Services } from '../server/services/services.ts';
-import { createBasicLogger } from '../server/utils.ts';
 
 type ProjectImpl = {
   isTiny: boolean;
@@ -67,9 +66,20 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
   };
 
   const withServices = async <T>(cb: (services: Services) => Promise<T>) => {
+    const wrap = (next: (message: string) => void, omit: boolean) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (first: any, ...args: any[]) => {
+        if (omit && first !== 'sql') {
+          next([`[${first}]`, ...args].join(' '));
+        }
+      };
+    };
     const services = await createServices({
       dir: dir(),
-      logger: createBasicLogger(),
+      logger: {
+        info: wrap(log.info, true),
+        error: wrap(log.error, false),
+      },
     });
     try {
       return await cb(services);

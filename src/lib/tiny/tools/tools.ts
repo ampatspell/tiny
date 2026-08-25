@@ -80,13 +80,14 @@ export const createTools = async (opts: { cwd: string }) => {
       await project.withServices(async (services) => {
         const schema = await services.database.schema.generate();
         await writeFile(join(project.schemaRoot, 'schema.d.ts'), schema, 'utf8');
-        outro('schema.d.ts has been created');
+        outro('Done');
       });
     },
     migrateDatabaseToLatest: async () => {
       await project.withServices(async (services) => {
         await services.database.migrate({ migrations: project.migrationsRoot }).toLatest();
       });
+      outro('Done');
     },
     bootstrapProject: () => bootstrapProject(project),
   };
