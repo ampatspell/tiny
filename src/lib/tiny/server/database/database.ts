@@ -1,5 +1,6 @@
 import { mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
+// @ts-expect-error Has no types
 import SQLite from 'better-sqlite3';
 import { CamelCasePlugin, Kysely, ParseJSONResultsPlugin, SqliteDialect } from 'kysely';
 import { generate as generateSchema, SqliteDialect as CodegenSqliteDialect } from 'kysely-codegen';
