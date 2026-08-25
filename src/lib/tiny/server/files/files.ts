@@ -1,5 +1,5 @@
 import type { DB } from '$lib/server/database/schema.js';
-import { images, run } from '$lib/tiny/utils/utils.js';
+import { images, run } from '../../utils/utils.ts';
 import { error } from '@sveltejs/kit';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
 import { default as sharp, type Sharp } from 'sharp';

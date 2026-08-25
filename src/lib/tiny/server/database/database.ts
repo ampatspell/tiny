@@ -6,7 +6,7 @@ import { generate as generateSchema, SqliteDialect as CodegenSqliteDialect } fro
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { FileMigrationProvider, Migrator } from 'kysely/migration';
-import { round, run } from '$lib/tiny/utils/utils.js';
+import { round, run } from '../../utils/utils.ts';
 
 export type CreateDatabaseServicesOptions = {
   file: string;
