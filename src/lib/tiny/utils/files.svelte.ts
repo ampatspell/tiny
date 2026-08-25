@@ -1,5 +1,5 @@
 import { resolve } from '$app/paths';
-import { hashCodeTag } from '$lib/properties/property.svelte.js';
+import { hashCodeTag } from '$lib/tiny/properties/property.svelte.js';
 import type { FileData } from '../server/files/files.ts';
 import { getter, options, type OptionsInput } from './options.svelte.ts';
 import { defer } from './promise.ts';

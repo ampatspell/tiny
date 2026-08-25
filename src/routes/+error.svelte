@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import Dark from '$lib/components/dark.svelte';
-  import Placeholder from '$lib/components/placeholder.svelte';
-  import TablerBalloon from '$lib/icons/tabler--balloon.svelte';
+  import Dark from '$lib/tiny/dark.svelte';
+  import TablerBalloon from '$lib/tiny/icons/tabler--balloon.svelte';
+  import Placeholder from '$lib/tiny/placeholder.svelte';
   import { isTruthy } from '$lib/tiny/utils/array.js';
 
   let status = $derived(page.status);

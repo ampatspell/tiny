@@ -1,12 +1,12 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import List from '$lib/components/layout/list/list.svelte';
   import { getGalleries, type GalleryData } from '$lib/playground/galleries/galleries.remote.js';
   import type { Snippet } from 'svelte';
-  import { useListLayout } from '$lib/components/layout/list/list.svelte.js';
-  import Label from '$lib/components/list/item/label.svelte';
   import Add from '$lib/playground/galleries/add.svelte';
   import { getter } from '$lib/tiny/utils/options.svelte.js';
+  import { useListLayout } from '$lib/tiny/layout/list/list.svelte.js';
+  import Label from '$lib/tiny/list/item/label.svelte';
+  import List from '$lib/tiny/layout/list/list.svelte';
 
   let { children }: { children?: Snippet } = $props();
 

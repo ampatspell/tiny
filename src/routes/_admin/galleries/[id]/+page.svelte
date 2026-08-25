@@ -2,15 +2,15 @@
   import { page } from '$app/state';
   import { getGalleryById } from '$lib/playground/galleries/galleries.remote.js';
   import { useGalleryProperties } from '$lib/playground/galleries/gallery.svelte.js';
-  import { usePropertiesContext } from '$lib/properties/context.svelte.js';
-  import Editing from '$lib/components/layout/editing/editing.svelte';
-  import Section from '$lib/components/page/section.svelte';
-  import Placeholder from '$lib/components/placeholder.svelte';
-  import { useEditingLayout } from '$lib/components/layout/editing/editing.svelte.js';
-  import Form from '$lib/components/form/form.svelte';
+  import { usePropertiesContext } from '$lib/tiny/properties/context.svelte.js';
   import Properties from '$lib/playground/galleries/properties.svelte';
-  import { useBackend } from '$lib/components/backend/backend.svelte.js';
   import { getter } from '$lib/tiny/utils/options.svelte.js';
+  import { useBackend } from '$lib/tiny/backend/backend.svelte.js';
+  import { useEditingLayout } from '$lib/tiny/layout/editing/editing.svelte.js';
+  import Editing from '$lib/tiny/layout/editing/editing.svelte';
+  import Section from '$lib/tiny/page/section.svelte';
+  import Form from '$lib/tiny/form/form.svelte';
+  import Placeholder from '$lib/tiny/placeholder.svelte';
 
   let backend = useBackend();
   usePropertiesContext();

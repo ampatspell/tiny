@@ -1,5 +1,5 @@
-import { useDataProperties } from '$lib/properties/data.svelte.js';
-import { notBlank } from '$lib/properties/validator.svelte.js';
+import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
+import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
 import { asFile } from '$lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { run } from '$lib/tiny/utils/utils.js';
