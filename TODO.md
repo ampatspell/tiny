@@ -1,14 +1,18 @@
 ## TODO
 
-- [ ] Separate property from it's presentation model, remove transformers
-- [ ] Number input
+- [ ] User authorization and authentication
+- [ ] Separate property from presentation models
 - [ ] Color picker property
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
-- [ ] User authorization and authentication
-- [ ] Clean separation between libs, tiny and demos
-- [ ] Some unit tests for db, files, …
+- [x] Remove transformers
+- [x] Update bootstrap
+- [x] Services and tools logging
+- [x] Add exports to package.json
+- [x] Clean separation between libs, tiny and demos
+- [x] Some unit tests for db, files, …
+- [x] Number input
 - [x] Image thumbnails
 - [x] Clear file
 - [x] Show non-image files

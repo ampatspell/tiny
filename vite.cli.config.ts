@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => ({
     target: 'es2015',
     ssr: true,
     lib: {
-      entry: 'src/lib/tools/cli.ts',
+      entry: 'src/lib/tiny/tools/cli.ts',
       name: 'cli',
       fileName: () => `cli.js`,
       formats: ['es'],

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
-  import Dark from '$lib/components/dark.svelte';
-  import Icon from '$lib/components/icon.svelte';
-  import Screen from '$lib/components/screen.svelte';
-  import TablerBalloon from '$lib/icons/tabler--balloon.svelte';
+  import TablerBalloon from '$lib/tiny/icons/tabler--balloon.svelte';
   import Index from '$lib/playground/index/index.svelte';
+  import Dark from '$lib/tiny/dark.svelte';
+  import Screen from '$lib/tiny/screen.svelte';
+  import Icon from '$lib/tiny/icon.svelte';
 </script>
 
 <Dark>

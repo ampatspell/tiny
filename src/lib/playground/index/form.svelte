@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { IndexProperties } from './index.svelte.ts';
-  import Form from '$lib/components/form/form.svelte';
-  import Content from '$lib/components/form/content/content.svelte';
-  import Row from '$lib/components/form/content/row.svelte';
-  import Input from '$lib/components/properties/input.svelte';
-  import File from '$lib/components/properties/file.svelte';
-  import { images } from '$lib/utils/files.svelte.js';
-  import { getter } from '$lib/utils/options.svelte.js';
-  import Number, { useNumberPropertyEditor } from '$lib/components/properties/editors/number.svelte';
+  import { getter } from '$lib/tiny/utils/options.svelte.js';
+  import Number, { useNumberPropertyEditor } from '$lib/tiny/properties/editors/number.svelte';
+  import { images } from '$lib/tiny/utils/utils.js';
+  import Input from '$lib/tiny/properties/input.svelte';
+  import File from '$lib/tiny/properties/file.svelte';
+  import Form from '$lib/tiny/form/form.svelte';
+  import Content from '$lib/tiny/form/content/content.svelte';
+  import Row from '$lib/tiny/form/content/row.svelte';
 
   let { properties }: { properties: IndexProperties } = $props();
 

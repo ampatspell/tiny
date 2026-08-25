@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Content from '$lib/components/form/content/content.svelte';
-  import Row from '$lib/components/form/content/row.svelte';
-  import Input from '$lib/components/properties/input.svelte';
+  import Content from '$lib/tiny/form/content/content.svelte';
+  import Row from '$lib/tiny/form/content/row.svelte';
+  import Input from '$lib/tiny/properties/input.svelte';
   import type { GalleryProperties } from './gallery.svelte.ts';
 
   let { properties }: { properties: GalleryProperties } = $props();
