@@ -127,7 +127,13 @@ describe('database services', () => {
       });
       await services.migrate({ migrations }).toLatest();
       const tables = await services.db.introspection.getTables();
-      expect(tables.map((table) => table.name)).toStrictEqual(['file_variants', 'files', 'galleries', 'index']);
+      expect(tables.map((table) => table.name)).toStrictEqual([
+        'file_variants',
+        'files',
+        'galleries',
+        'index',
+        'users',
+      ]);
     });
   });
 });

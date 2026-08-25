@@ -37,9 +37,18 @@ export interface Index {
   title: string;
 }
 
+export interface User {
+  email: string;
+  hash: string | null;
+  id: string;
+  salt: string | null;
+  type: string;
+}
+
 export interface DB {
   files: File;
   fileVariants: FileVariant;
   galleries: Gallery;
   index: Index;
+  users: User;
 }

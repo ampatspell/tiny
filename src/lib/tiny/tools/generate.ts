@@ -7,10 +7,13 @@ import dedent from 'dedent';
 import { format } from 'date-fns';
 import launchEditor from 'launch-editor';
 import { isTruthy } from '../utils/array.ts';
+import { randomBytes } from 'crypto';
 
 export const bootstrapProject = async (project: Project) => {
   const root = project.root;
   const dir = dirname(root);
+  const secret = () => randomBytes(32).toHex();
+
   {
     log.step('Install kysely, valibot and better-sqlite3');
     await x('npm', ['install', 'valibot', 'kysely', 'better-sqlite3', '--save']);
@@ -58,8 +61,6 @@ export const bootstrapProject = async (project: Project) => {
 
       WORKDIR /app
 
-      ARG GITHUB_TOKEN
-
       RUN apk update
       RUN apk add --no-cache coreutils curl
 
@@ -93,6 +94,7 @@ export const bootstrapProject = async (project: Project) => {
           pull_policy: build
           environment:
             - STORAGE_ROOT=/data
+            - USERS_SECRET=${secret()}
             - BODY_SIZE_LIMIT=100M
           volumes:
             - data:/data
@@ -153,6 +155,7 @@ export const bootstrapProject = async (project: Project) => {
     filename: '.env',
     content: dedent`
       STORAGE_ROOT=.local
+      USERS_SECRET=${secret()}
     `,
   });
 
@@ -163,9 +166,16 @@ export const bootstrapProject = async (project: Project) => {
       import { defineEnvVars } from '@sveltejs/kit/env';
       import { building } from '$app/env';
 
+      const string = () => {
+        return building ? v.optional(v.string()) : v.string();
+      };
+
       export const variables = defineEnvVars({
         STORAGE_ROOT: {
-          schema: building ? v.optional(v.string()) : v.string(),
+          schema: string(),
+        },
+        USERS_SECRET: {
+          schema: string(),
         },
       });
     `,
@@ -174,14 +184,19 @@ export const bootstrapProject = async (project: Project) => {
   await write({
     filename: 'src/hooks.server.ts',
     content: dedent`
-      import { STORAGE_ROOT } from '$app/env/private';
+      import { STORAGE_ROOT, USERS_SECRET } from '$app/env/private';
       import { jpeg } from '@ampatspell/tiny/server/files/thumbnails';
       import { createHandle } from '@ampatspell/tiny/server/services/handle';
       import { createBasicLogger } from '@ampatspell/tiny/server/utils';
 
       export const handle = createHandle({
         dir: STORAGE_ROOT,
-        files: { thumbnails: [jpeg({ size: 100 }), jpeg({ size: 1024 })] },
+        users: {
+          secret: USERS_SECRET,
+        },
+        files: {
+          thumbnails: [jpeg({ size: 100 }), jpeg({ size: 1024 })]
+        },
         logger: createBasicLogger(),
       });
     `,
@@ -193,9 +208,9 @@ export const bootstrapProject = async (project: Project) => {
       import { createServiceGetters } from '@ampatspell/tiny/server/services/handle';
       import type { DB } from './schema';
 
-      const { getDatabase, getFiles, getStorage } = createServiceGetters<DB>();
+      const { getDatabase, getFiles, getStorage, getUsers } = createServiceGetters<DB>();
 
-      export { getDatabase, getFiles, getStorage };
+      export { getDatabase, getFiles, getStorage, getUsers };
     `,
   });
 

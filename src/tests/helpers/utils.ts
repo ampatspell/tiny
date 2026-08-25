@@ -33,6 +33,9 @@ export const withServices = async <D = unknown, T = any>(cb: (services: Services
       files: {
         thumbnails: [jpeg({ size: 100 })],
       },
+      users: {
+        secret: 'foobar',
+      },
     };
 
     const services = await createServices<D>(opts);
