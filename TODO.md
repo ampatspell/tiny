@@ -1,14 +1,16 @@
 ## TODO
 
+- [ ] Add exports to package.json
+- [ ] Update bootstrap
 - [ ] Separate property from it's presentation model, remove transformers
-- [ ] Number input
 - [ ] Color picker property
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
 - [ ] User authorization and authentication
-- [ ] Clean separation between libs, tiny and demos
-- [ ] Some unit tests for db, files, …
+- [x] Clean separation between libs, tiny and demos
+- [x] Some unit tests for db, files, …
+- [x] Number input
 - [x] Image thumbnails
 - [x] Clear file
 - [x] Show non-image files
