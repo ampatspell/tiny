@@ -12,6 +12,8 @@ import crypto from 'node:crypto';
 export const bootstrapProject = async (project: Project) => {
   const root = project.root;
   const dir = parse(root).name;
+  const node = '24.19.0';
+
   const secret = () => {
     const buffer = crypto.randomBytes(32);
     console.log(buffer);
@@ -40,7 +42,7 @@ export const bootstrapProject = async (project: Project) => {
     json.scripts.flc = 'npm run format && npm run check && npm run lint';
     json.scripts.start = 'tiny migrate-to-latest && node build';
     json.engines = {
-      node: '>=26',
+      node,
     };
     await writeFile(path, JSON.stringify(json, null, 2));
   }
@@ -64,14 +66,14 @@ export const bootstrapProject = async (project: Project) => {
   await write({
     filename: '.nvmrc',
     content: dedent`
-      26
+      ${node}
     `,
   });
 
   await write({
     filename: 'Dockerfile',
     content: dedent`
-      FROM node:26-alpine
+      FROM node:24-alpine
 
       WORKDIR /app
 
