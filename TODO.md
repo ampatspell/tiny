@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Add exports to package.json
+- [ ] Services and tools logging
 - [ ] Update bootstrap
 - [ ] Separate property from it's presentation model, remove transformers
 - [ ] Color picker property
@@ -8,6 +8,7 @@
 - [ ] Drag and drop reordering in grid and list
 - [ ] Light button states
 - [ ] User authorization and authentication
+- [x] Add exports to package.json
 - [x] Clean separation between libs, tiny and demos
 - [x] Some unit tests for db, files, …
 - [x] Number input
