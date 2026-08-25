@@ -7,9 +7,10 @@ import type { Storage } from '../storage/storage.ts';
 
 export const createHandle = (opts: Omit<CreateServicesOptions, 'dir'> & { dir: string | undefined }): Handle => {
   return async ({ event, resolve }) => {
+    const { dir } = opts;
     const services = await createServices({
       ...opts,
-      dir: opts.dir ?? '.local',
+      dir: dir ?? '.local',
     });
 
     event.locals.tiny = {
