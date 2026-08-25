@@ -1,9 +1,10 @@
 import { join, resolve } from 'node:path';
-import { createFilesServices, type FileThumbnailOptions } from '../files/files.ts';
-import { createDatabaseServices, type Database } from '../database/database.ts';
-import { createStorageServices } from '../storage/storage.ts';
+import { createFiles, type FileThumbnailOptions } from '../files/files.ts';
+import { createDatabaseServices } from '../database/database.ts';
+import { createStorage } from '../storage/storage.ts';
 import type { DB } from '../database/schema.js';
 import type { Logger } from '../utils.ts';
+import { createUsers } from '../users/users.ts';
 
 export type CreateServicesOptions = {
   dir: string;
@@ -13,6 +14,9 @@ export type CreateServicesOptions = {
   };
   files?: {
     thumbnails?: FileThumbnailOptions[];
+  };
+  users?: {
+    secret?: string;
   };
 };
 
@@ -27,23 +31,32 @@ export const _createServices = async <D>(opts: CreateServicesOptions) => {
       wal: opts.database?.wal,
       logger,
     }),
-    createStorageServices({
+    createStorage({
       dir: join(dir, 'storage'),
       logger,
     }),
   ]);
 
-  const files = await createFilesServices({
-    db: database.db as unknown as Database<DB>,
-    storage: storage.storage,
-    thumbnails: opts.files?.thumbnails,
-  });
+  const db = database.as<DB>();
+
+  const [files, users] = await Promise.all([
+    createFiles({
+      db,
+      storage,
+      thumbnails: opts.files?.thumbnails,
+    }),
+    createUsers({
+      db,
+      secret: opts.users?.secret,
+    }),
+  ]);
 
   return {
     dir,
     database,
     storage,
     files,
+    users,
   };
 };
 

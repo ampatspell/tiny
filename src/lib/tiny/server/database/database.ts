@@ -116,10 +116,15 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
     };
   };
 
+  const as = <D>() => {
+    return db as unknown as Kysely<D>;
+  };
+
   return {
     filename,
     sqlite,
     db,
+    as,
     schema,
     migrate,
   };

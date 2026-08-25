@@ -8,8 +8,8 @@ import type { DB } from '$lib/tiny/server/database/schema.js';
 const withFiles = async <T>(cb: (opts: { files: Files; db: Database<DB>; storage: Storage }) => Promise<T>) => {
   return await withServices(async (services) => {
     const db = services.database.db;
-    const files = services.files.files;
-    const storage = services.storage.storage;
+    const files = services.files;
+    const storage = services.storage;
     await cb({ db, files, storage });
   });
 };
