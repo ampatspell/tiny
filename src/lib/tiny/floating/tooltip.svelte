@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { px, recordToStyle } from '$lib/tiny/utils/utils.js';
   import {
     arrow as arrowMiddleware,
     computePosition,
@@ -11,6 +10,7 @@
   } from '@floating-ui/dom';
   import { Debounced } from 'runed';
   import type { Snippet } from 'svelte';
+  import { px, recordToStyle } from '../utils/style.ts';
 
   let {
     children,

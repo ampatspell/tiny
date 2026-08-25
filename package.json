@@ -79,9 +79,17 @@
       "types": "./dist/tiny/utils/array.d.ts",
       "svelte": "./dist/tiny/utils/array.js"
     },
+    "./utils/dom": {
+      "types": "./dist/tiny/utils/dom.d.ts",
+      "svelte": "./dist/tiny/utils/dom.js"
+    },
     "./utils/files": {
       "types": "./dist/tiny/utils/files.svelte.d.ts",
       "svelte": "./dist/tiny/utils/files.svelte.js"
+    },
+    "./utils/number": {
+      "types": "./dist/tiny/utils/number.d.ts",
+      "svelte": "./dist/tiny/utils/number.js"
     },
     "./utils/object": {
       "types": "./dist/tiny/utils/object.d.ts",
@@ -102,6 +110,10 @@
     "./utils/string": {
       "types": "./dist/tiny/utils/string.d.ts",
       "svelte": "./dist/tiny/utils/string.js"
+    },
+    "./utils/style": {
+      "types": "./dist/tiny/utils/style.d.ts",
+      "svelte": "./dist/tiny/utils/style.js"
     },
     "./utils/utils": {
       "types": "./dist/tiny/utils/utils.d.ts",

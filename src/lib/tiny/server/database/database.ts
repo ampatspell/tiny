@@ -7,8 +7,9 @@ import { generate as generateSchema, SqliteDialect as CodegenSqliteDialect } fro
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { FileMigrationProvider, Migrator } from 'kysely/migration';
-import { round, run } from '../../utils/utils.ts';
+import { run } from '../../utils/utils.ts';
 import type { Logger } from '../utils.ts';
+import { round } from '../../utils/number.ts';
 
 export type CreateDatabaseServicesOptions = {
   file: string;

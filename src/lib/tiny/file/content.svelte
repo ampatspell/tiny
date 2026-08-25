@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { UniversalFile } from '$lib/tiny/utils/files.svelte.js';
-  import { url } from '$lib/tiny/utils/utils.js';
   import { fade } from 'svelte/transition';
   import Description from './description.svelte';
+  import { url } from '../utils/style.ts';
+  import type { UniversalFile } from '../utils/files.svelte.ts';
 
   let {
     file,
