@@ -5,6 +5,8 @@
 - [ ] Color picker property
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
+- [ ] Carousel for public side
+- [ ] Picture grid for public side
 - [ ] Light button states
 - [x] Remove transformers
 - [x] Update bootstrap
