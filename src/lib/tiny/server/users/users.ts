@@ -1,9 +1,9 @@
-import { run } from '$lib/tiny/utils/utils.js';
+import { run } from '../../utils/utils.ts';
 import type { Database } from '../database/database.ts';
 import type { DB } from '../database/schema.js';
 import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
-import { omit } from '$lib/tiny/utils/object.js';
+import { omit } from '../../utils/object.ts';
 import jwt from 'jsonwebtoken';
 
 export type TokenPayload = {

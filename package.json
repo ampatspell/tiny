@@ -111,6 +111,14 @@
       "types": "./dist/tiny/server/utils.d.ts",
       "svelte": "./dist/tiny/server/utils.js"
     },
+    "./server/users/handle": {
+      "types": "./dist/tiny/server/users/handle.d.ts",
+      "svelte": "./dist/tiny/server/users/handle.js"
+    },
+    "./server/users/users": {
+      "types": "./dist/tiny/server/users/users.d.ts",
+      "svelte": "./dist/tiny/server/users/users.js"
+    },
     "./server/storage/storage": {
       "types": "./dist/tiny/server/storage/storage.d.ts",
       "svelte": "./dist/tiny/server/storage/storage.js"
