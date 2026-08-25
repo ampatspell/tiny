@@ -1,3 +1,5 @@
+import { jpeg } from '$lib/next/files/server/thumbnails.js';
+import { createServices, type Services } from '$lib/next/services/server/services.js';
 import { uid } from '$lib/server/utils.js';
 import { mkdir, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -17,4 +19,29 @@ export const testFile = (name: string) => join(import.meta.dirname, 'files', nam
 export const readTestFileAsBuffer = (name: string) => readFile(testFile(name));
 export const readTestFileAsFile = async (name: string, type: string) => {
   return new File([await readTestFileAsBuffer(name)], name, { type });
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const withServices = async <D = unknown, T = any>(cb: (services: Services<D>) => Promise<T>) => {
+  await withTemporaryFolder(async (dir) => {
+    const opts = {
+      dir,
+      database: {
+        migrations: join(import.meta.dirname, '../../lib/next/database/migrations'),
+        wal: false,
+      },
+      files: {
+        thumbnails: [jpeg({ size: 100 })],
+      },
+    };
+
+    const services = await createServices<D>(opts);
+
+    try {
+      await services.database.migrate.toLatest();
+      return await cb(services);
+    } finally {
+      services.destroy();
+    }
+  });
 };

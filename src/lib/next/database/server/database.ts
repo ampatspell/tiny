@@ -28,7 +28,7 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
     return sqlite;
   });
 
-  const kysely = run(() => {
+  const db = run(() => {
     const dialect = new SqliteDialect({ database: sqlite });
 
     return new Kysely<D>({
@@ -75,7 +75,7 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
   const migrate = run(() => {
     const getMigrator = () => {
       return new Migrator({
-        db: kysely,
+        db: db,
         provider: new FileMigrationProvider({
           fs,
           path,
@@ -117,11 +117,11 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
   return {
     filename,
     sqlite,
-    kysely,
+    db,
     schema,
     migrate,
   };
 };
 
 export type DatabaseServices<D = unknown> = Awaited<ReturnType<typeof createDatabaseServices<D>>>;
-export type Database<D = unknown> = DatabaseServices<D>['kysely'];
+export type Database<D = unknown> = DatabaseServices<D>['db'];

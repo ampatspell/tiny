@@ -24,7 +24,7 @@ describe('database services', () => {
         file: ':memory:',
         migrations: join(dir, 'migrations'),
       });
-      expect(await sql`select 'Hello' as message`.execute(services.kysely)).toStrictEqual({
+      expect(await sql`select 'Hello' as message`.execute(services.db)).toStrictEqual({
         rows: [{ message: 'Hello' }],
       });
     });
@@ -42,7 +42,7 @@ describe('database services', () => {
           ducks: Duck;
         }
 
-        const { kysely: db } = await createDatabaseServices<DB>({
+        const { db: db } = await createDatabaseServices<DB>({
           file: join(dir, 'test.db'),
           migrations: join(dir, 'migrations'),
         });
@@ -71,7 +71,7 @@ describe('database services', () => {
         migrations: join(dir, 'migrations'),
       });
 
-      await services.kysely.schema
+      await services.db.schema
         .createTable('ducks')
         .addColumn('id', 'text', (col) => col.notNull().primaryKey())
         .addColumn('name', 'text', (col) => col.notNull())
@@ -136,7 +136,7 @@ describe('database services', () => {
         migrations,
       });
       await services.migrate.toLatest();
-      const tables = await services.kysely.introspection.getTables();
+      const tables = await services.db.introspection.getTables();
       expect(tables.map((table) => table.name)).toStrictEqual(['file_variants', 'files', 'galleries', 'index']);
     });
   });

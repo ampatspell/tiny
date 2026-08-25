@@ -9,7 +9,7 @@ import type { DB } from '$lib/server/database/schema.js';
 
 const withFiles = async <T>(cb: (opts: { files: Files; db: Database<DB>; storage: Storage }) => Promise<T>) => {
   return await withTemporaryFolder(async (dir) => {
-    const { kysely: db } = await createDatabaseServices({
+    const { db: db } = await createDatabaseServices({
       file: join(dir, 'test.db'),
       migrations: join(dir, 'migrations'),
     });
