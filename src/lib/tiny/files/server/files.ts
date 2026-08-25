@@ -5,7 +5,7 @@ import { uid } from '$lib/server/utils.js';
 import { images, run } from '$lib/utils/utils.js';
 import { error } from '@sveltejs/kit';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
-import sharp, { type Sharp } from 'sharp';
+import { default as sharp, type Sharp } from 'sharp';
 
 export type CreateFilesServicesOptions = {
   db: Database<DB>;
