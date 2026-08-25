@@ -1,6 +1,7 @@
 ## TODO
 
 - [ ] User authorization and authentication
+- [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Separate property from presentation models
 - [ ] Color picker property
 - [ ] Markdown property
