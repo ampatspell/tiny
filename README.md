@@ -14,6 +14,6 @@ npm install @ampatspell/tiny --save
 ```
 
 ```
-$ tiny
+$ npx tiny
 Bootstrap this project
 ```

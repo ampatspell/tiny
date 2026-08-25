@@ -27,13 +27,25 @@
     "tiny": ".cli/cli.js"
   },
   "files": [
-    "dist",
+    ".cli",
     "src",
+    "!src/lib/playground/**/*",
+    "!src/hooks.server.ts",
+    "!src/env.ts",
+    "!src/app.html",
+    "!src/app.d.ts",
+    "!src/routes/**/*",
+    "!src/tests/**/*",
+    "dist",
     "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
+    "!dist/**/*.spec.*",
+    "!dist/playground/**/*",
+    "!dist/tiny/server/database/migrations/**/*",
+    "!dist/tiny/tools/**/*"
   ],
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "**/*.scss"
   ],
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
