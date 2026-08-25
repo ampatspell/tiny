@@ -85,7 +85,6 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
           fs,
           path,
           migrationFolder: migrations,
-          import: (module) => import(/* @vite-ignore */ module),
         }),
       });
     };

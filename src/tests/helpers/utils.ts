@@ -2,11 +2,10 @@ import { jpeg } from '$lib/tiny/server/files/thumbnails.js';
 import { createServices, type Services } from '$lib/tiny/server/services/services.js';
 import { uid } from '$lib/tiny/server/utils.js';
 import { mkdir, readFile, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 export const withTemporaryFolder = async <T>(cb: (filename: string) => Promise<T>) => {
-  const dir = join(tmpdir(), uid());
+  const dir = join(import.meta.dirname, 'tmp', uid());
   await mkdir(dir, { recursive: true });
   try {
     await cb(dir);
