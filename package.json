@@ -41,110 +41,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "svelte": "./dist/index.js"
-    },
-    "./utils/array": {
-      "types": "./dist/utils/array.d.ts",
-      "svelte": "./dist/utils/array.js"
-    },
-    "./utils/object": {
-      "types": "./dist/utils/object.d.ts",
-      "svelte": "./dist/utils/object.js"
-    },
-    "./utils/promise": {
-      "types": "./dist/utils/promise.d.ts",
-      "svelte": "./dist/utils/promise.js"
-    },
-    "./utils/string": {
-      "types": "./dist/utils/string.d.ts",
-      "svelte": "./dist/utils/string.js"
-    },
-    "./utils/utils": {
-      "types": "./dist/utils/utils.d.ts",
-      "svelte": "./dist/utils/utils.js"
-    },
-    "./server/utils": {
-      "types": "./dist/server/utils.d.ts",
-      "svelte": "./dist/server/utils.js"
-    },
-    "./server/database": {
-      "types": "./dist/server/database/database.d.ts",
-      "svelte": "./dist/server/database/database.js"
-    },
-    "./server/files": {
-      "types": "./dist/server/files.d.ts",
-      "svelte": "./dist/server/files.js"
-    },
-    "./server/storage": {
-      "types": "./dist/server/storage.d.ts",
-      "svelte": "./dist/server/storage.js"
-    },
-    "./server/services": {
-      "types": "./dist/server/services.d.ts",
-      "svelte": "./dist/server/services.js"
-    },
-    "./server/handle": {
-      "types": "./dist/server/handle.d.ts",
-      "svelte": "./dist/server/handle.js"
-    },
-    "./components/backend/backend.svelte": {
-      "types": "./dist/components/backend/backend.svelte.d.ts",
-      "svelte": "./dist/components/backend/backend.svelte"
-    },
-    "./components/backend/navigation.svelte": {
-      "types": "./dist/components/backend/navigation.svelte.d.ts",
-      "svelte": "./dist/components/backend/navigation.svelte"
-    },
-    "./components/floating/floater.svelte": {
-      "types": "./dist/components/floating/floater.svelte.d.ts",
-      "svelte": "./dist/components/floating/floater.svelte"
-    },
-    "./components/floating/floater": {
-      "types": "./dist/components/floating/floater.svelte.d.ts",
-      "svelte": "./dist/components/floating/floater.svelte.js"
-    },
-    "./components/floating/floaters.svelte": {
-      "types": "./dist/components/floating/floaters.svelte.d.ts",
-      "svelte": "./dist/components/floating/floaters.svelte"
-    },
-    "./components/floating/floaters": {
-      "types": "./dist/components/floating/floaters.svelte.d.ts",
-      "svelte": "./dist/components/floating/floaters.svelte.js"
-    },
-    "./components/floating/position": {
-      "types": "./dist/components/floating/position.d.ts",
-      "svelte": "./dist/components/floating/position.js"
-    },
-    "./components/floating/tooltip.svelte": {
-      "types": "./dist/components/floating/tooltip.svelte.d.ts",
-      "svelte": "./dist/components/floating/tooltip.svelte"
-    },
-    "./components/button/button.svelte": {
-      "types": "./dist/components/button/button.svelte.d.ts",
-      "svelte": "./dist/components/button/button.svelte"
-    },
-    "./components/button/label.svelte": {
-      "types": "./dist/components/button/label.svelte.d.ts",
-      "svelte": "./dist/components/button/label.svelte"
-    },
-    "./components/button/icon.svelte": {
-      "types": "./dist/components/button/icon.svelte.d.ts",
-      "svelte": "./dist/components/button/icon.svelte"
-    },
-    "./components/dark.svelte": {
-      "types": "./dist/components/dark.svelte.d.ts",
-      "svelte": "./dist/components/dark.svelte"
-    },
-    "./components/icon.svelte": {
-      "types": "./dist/components/icon.svelte.d.ts",
-      "svelte": "./dist/components/icon.svelte"
-    },
-    "./components/input.svelte": {
-      "types": "./dist/components/input.svelte.d.ts",
-      "svelte": "./dist/components/input.svelte"
-    },
-    "./components/json.svelte": {
-      "types": "./dist/components/json.svelte.d.ts",
-      "svelte": "./dist/components/json.svelte"
     }
   },
   "peerDependencies": {
@@ -156,7 +52,6 @@
     "@sveltejs/adapter-node": "^5.5.7",
     "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^7.2.0",
-    "@types/better-sqlite3": "^9.6.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24",
     "@types/resolve-path": "^1.4.3",
@@ -186,7 +81,6 @@
     "kysely": "^0.29.4",
     "kysely-codegen": "^0.20.0",
     "launch-editor": "^2.14.1",
-    "resolve-path": "^1.4.0",
     "runed": "^0.37.1",
     "sharp": "^0.35.3",
     "slug": "^12.0.1",

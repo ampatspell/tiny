@@ -1,4 +1,3 @@
-import type { DB } from '$lib/server/database/schema.js';
 import { images, run } from '../../utils/utils.ts';
 import { error } from '@sveltejs/kit';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
@@ -6,6 +5,7 @@ import { default as sharp, type Sharp } from 'sharp';
 import { uid } from '../utils.ts';
 import type { Database } from '../database/database.ts';
 import type { Storage } from '../storage/storage.ts';
+import type { DB } from '../database/schema.js';
 
 export type CreateFilesServicesOptions = {
   db: Database<DB>;

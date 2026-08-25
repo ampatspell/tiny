@@ -1,8 +1,8 @@
-import type { DB } from '$lib/server/database/schema.js';
 import { join } from 'node:path';
 import { createFilesServices, type FileThumbnailOptions } from '../files/files.ts';
 import { createDatabaseServices, type Database } from '../database/database.ts';
 import { createStorageServices } from '../storage/storage.ts';
+import type { DB } from '../database/schema.js';
 
 export type CreateServicesOptions = {
   dir: string;
