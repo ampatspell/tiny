@@ -5,6 +5,7 @@ import { join, resolve } from 'node:path';
 import dedent from 'dedent';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { createDatabaseServices } from '$lib/tiny/server/database/database.js';
+import { createDatabaseTools } from '$lib/tiny/tools/database.js';
 
 describe('database services', () => {
   it('creates', async () => {
@@ -59,11 +60,11 @@ describe('database services', () => {
 
   it('generates schema from database', async () => {
     await withTemporaryFolder(async (dir) => {
-      const services = await createDatabaseServices({
+      const database = await createDatabaseServices({
         file: join(dir, 'test.db'),
       });
 
-      await services.db.schema
+      await database.db.schema
         .createTable('ducks')
         .addColumn('id', 'text', (col) => col.notNull().primaryKey())
         .addColumn('name', 'text', (col) => col.notNull())
@@ -75,7 +76,8 @@ describe('database services', () => {
           name: string;
         }
       `;
-      const generated = await services.schema.generate();
+      const tools = await createDatabaseTools({ db: database.db });
+      const generated = await tools.schema.generate();
       expect(generated.includes(duck)).toStrictEqual(true);
     });
   });
@@ -83,7 +85,7 @@ describe('database services', () => {
   it('migrates to the latest version', async () => {
     await withTemporaryFolder(async (dir) => {
       const migrations = join(dir, 'migrations');
-      const services = await createDatabaseServices({
+      const database = await createDatabaseServices({
         file: join(dir, 'test.db'),
       });
 
@@ -105,10 +107,11 @@ describe('database services', () => {
       await mkdir(migrations, { recursive: true });
       await writeFile(join(migrations, 'foo.ts'), migration, 'utf-8');
 
-      const migrated = await services.migrate({ migrations }).toLatest();
+      const tools = await createDatabaseTools({ db: database.db });
+      const migrated = await tools.migrate({ migrations }).toLatest();
       expect(migrated).toStrictEqual(true);
 
-      const generated = await services.schema.generate();
+      const generated = await tools.schema.generate();
       const duck = dedent`
         export interface Duck {
           id: string;
@@ -122,11 +125,12 @@ describe('database services', () => {
   it('migrates using default migrations', async () => {
     await withTemporaryFolder(async (dir) => {
       const migrations = resolve(join(import.meta.dirname, '../lib/tiny/server/database/migrations'));
-      const services = await createDatabaseServices({
+      const database = await createDatabaseServices({
         file: join(dir, 'test.db'),
       });
-      await services.migrate({ migrations }).toLatest();
-      const tables = await services.db.introspection.getTables();
+      const tools = await createDatabaseTools({ db: database.db });
+      await tools.migrate({ migrations }).toLatest();
+      const tables = await database.db.introspection.getTables();
       expect(tables.map((table) => table.name)).toStrictEqual([
         'file_variants',
         'files',

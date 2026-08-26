@@ -1,6 +1,7 @@
 import { jpeg } from '$lib/tiny/server/files/thumbnails.js';
 import { createServices, type Services } from '$lib/tiny/server/services/services.js';
 import { uid } from '$lib/tiny/server/utils.js';
+import { createDatabaseTools } from '$lib/tiny/tools/database.js';
 import { mkdir, readFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 
@@ -38,9 +39,10 @@ export const withServices = async <D = unknown, T = any>(cb: (services: Services
     };
 
     const services = await createServices<D>(opts);
+    const tools = await createDatabaseTools({ db: services.database.as<unknown>() });
 
     try {
-      await services.database.migrate({ migrations }).toLatest();
+      await tools.migrate({ migrations }).toLatest();
       return await cb(services);
     } finally {
       await services.destroy();

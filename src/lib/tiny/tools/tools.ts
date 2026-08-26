@@ -6,6 +6,7 @@ import { x } from 'tinyexec';
 import { loadPackageJSON } from './utils.ts';
 import { createConsumerProjectImpl, createProject, createTinyProjectImpl, type Project } from './project.ts';
 import { bootstrapProject, generateMigrationFile } from './generate.ts';
+import { createDatabaseTools } from './database.ts';
 
 const findRoot = async (current: string) => {
   if (await exists(join(current, 'package.json'))) {
@@ -78,16 +79,18 @@ export const createTools = async (opts: { cwd: string }) => {
     generateNewMigrationFile: () => generateMigrationFile(project),
     generateSchemaFromDatabase: async () => {
       await project.withServices(async (services) => {
-        const schema = await services.database.schema.generate();
-        await writeFile(join(project.schemaRoot, 'schema.d.ts'), schema, 'utf8');
-        outro('Done');
+        const tools = await createDatabaseTools({ db: services.database.db });
+        const schema = await tools.schema.generate();
+        const path = join(project.schemaRoot, 'schema.d.ts');
+        await writeFile(path, schema, 'utf8');
+        outro(`schema.d.ts has been created`);
       });
     },
     migrateDatabaseToLatest: async () => {
       await project.withServices(async (services) => {
-        await services.database.migrate({ migrations: project.migrationsRoot }).toLatest();
+        const tools = await createDatabaseTools({ db: services.database.db });
+        await tools.migrate({ migrations: project.migrationsRoot }).toLatest();
       });
-      outro('Done');
     },
     bootstrapProject: () => bootstrapProject(project),
   };
