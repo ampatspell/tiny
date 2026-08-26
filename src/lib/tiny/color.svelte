@@ -38,7 +38,8 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div bind:this={color} class="color" style:--color={value} onclick={onOpen}>
+<div bind:this={color} class="color" onclick={onOpen}>
+  <div class="content" style:--color={value}></div>
   <input bind:this={input} class="input" type="color" {value} onclick={(e) => e.stopPropagation()} oninput={onInput} />
 </div>
 
@@ -47,9 +48,15 @@
     width: 100%;
     height: 26px;
     border-radius: 3px;
-    background: var(--color);
     position: relative;
     box-shadow: inset 0 0 0 1px var(--tiny-border-color-1);
+    padding: 2px;
+    > .content {
+      width: 100%;
+      height: 100%;
+      border-radius: 2px;
+      background: var(--color);
+    }
     > .input {
       position: absolute;
       top: 27px;
