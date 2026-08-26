@@ -1,15 +1,15 @@
 ## TODO
 
-- [ ] Dropdown relative to the mouse position on click
-- [ ] User authorization and authentication
 - [ ] Separate property from presentation models
-- [ ] File component "remove" & "change" should be dropdown options
+- [ ] User authorization and authentication
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Bootstrapped basic backend with auth and index editing
+- [x] File component "remove" & "change" should be dropdown options
+- [x] Dropdown relative to the mouse position on click
 - [x] Dropdown
 - [x] Broadcast to invalidate other tabs
 - [x] Color picker property
