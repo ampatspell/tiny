@@ -10,7 +10,17 @@
 
   let properties = $derived(layout.properties);
   let onClick = () => properties.save();
+
+  let onkeydown = (e: KeyboardEvent) => {
+    if (properties.isDirty) {
+      if (e.key === 'Enter' && e.metaKey === true) {
+        onClick();
+      }
+    }
+  };
 </script>
+
+<svelte:document {onkeydown} />
 
 {#if properties.isDirty}
   <Busy label="Save" {onClick} />

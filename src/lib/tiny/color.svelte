@@ -13,7 +13,7 @@
   let color = $state<HTMLDivElement>();
   let isOpen = $state(false);
 
-  let onOpen = async () => {
+  let onOpen = () => {
     if (input && !isOpen) {
       isOpen = true;
       input.click();
