@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Dropdown
+- [ ] Dropdown relative to the mouse position on click
 - [ ] User authorization and authentication
 - [ ] Separate property from presentation models
 - [ ] File component "remove" & "change" should be dropdown options
@@ -10,6 +10,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Bootstrapped basic backend with auth and index editing
+- [x] Dropdown
 - [x] Broadcast to invalidate other tabs
 - [x] Color picker property
 - [x] Rename all Dark components and variables to Tiny
