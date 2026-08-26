@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Component } from 'svelte';
   import Icon from '../icon.svelte';
-  import TablerCircleX from '$lib/tiny/icons/tabler--circle-x.svelte';
+  import TablerX from '../icons/tabler--x.svelte';
 
   let {
     icon,
@@ -26,7 +26,7 @@
   <div class="label">{label}</div>
   {#if _onDelete}
     <div class="delete">
-      <Icon icon={TablerCircleX} onClick={onDelete} />
+      <Icon icon={TablerX} onClick={onDelete} />
     </div>
   {/if}
 </div>
@@ -54,7 +54,7 @@
       opacity: 0;
       position: absolute;
       top: 5px;
-      left: 5px;
+      right: 5px;
       transition: 0.15s ease-in-out opacity;
     }
     &.on-hover {

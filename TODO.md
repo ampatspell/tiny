@@ -2,7 +2,7 @@
 
 - [ ] User authorization and authentication
 - [ ] Bootstrapped basic backend with auth and index editing
-- [ ] Separate property from presentation models
+- [ ] Separate property from presentation models)
 - [ ] Dropdown
 - [ ] File component "remove" & "change" should be dropdown options
 - [ ] Markdown property

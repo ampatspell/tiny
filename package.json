@@ -316,6 +316,10 @@
       "types": "./dist/tiny/icons/tabler--trash-x.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--trash-x.svelte"
     },
+    "./icons/tabler--x.svelte": {
+      "types": "./dist/tiny/icons/tabler--x.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--x.svelte"
+    },
     "./header/header.svelte": {
       "types": "./dist/tiny/header/header.svelte.d.ts",
       "svelte": "./dist/tiny/header/header.svelte"
