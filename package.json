@@ -20,6 +20,7 @@
     "minor": "npm version minor && npm run tags",
     "patch": "npm version patch && npm run tags",
     "test:unit": "vitest",
+    "test:coverage": "vitest --coverage",
     "test": "npm run test:unit -- --run",
     "exports": "tsx ./src/lib/tiny/tools/exports.ts"
   },
@@ -426,6 +427,7 @@
     "@types/node": "^24",
     "@types/resolve-path": "^1.4.3",
     "@types/slug": "^5.0.9",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-svelte": "^3.23.0",
