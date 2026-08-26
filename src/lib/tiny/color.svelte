@@ -45,7 +45,7 @@
 <style lang="scss">
   .color {
     width: 100%;
-    height: 23px;
+    height: 26px;
     border-radius: 3px;
     background: var(--color);
     position: relative;
