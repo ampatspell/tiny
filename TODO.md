@@ -5,12 +5,12 @@
 - [ ] Separate property from presentation models
 - [ ] Dropdown
 - [ ] File component "remove" & "change" should be dropdown options
-- [ ] Color picker property
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
+- [x] Color picker property
 - [x] Rename all Dark components and variables to Tiny
 - [x] Remove transformers
 - [x] Update bootstrap
