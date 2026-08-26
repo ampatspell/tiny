@@ -24,7 +24,7 @@ export const signUp = command(
   }),
   async ({ email, password }) => {
     const users = getUsers();
-    await users.create({ email, password, type: 'subscriber' });
+    await users.create({ email, password });
     await signIn({ email, password });
     getCurrent().refresh();
   },

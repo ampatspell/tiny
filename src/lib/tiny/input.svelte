@@ -1,6 +1,11 @@
+<script module lang="ts">
+  export type InputType = 'text' | 'password';
+</script>
+
 <script lang="ts">
   let {
     isDisabled,
+    type,
     value,
     placeholder,
     multiline,
@@ -9,6 +14,7 @@
     onBlur,
   }: {
     isDisabled?: boolean;
+    type?: InputType;
     value: string | undefined;
     placeholder?: string;
     multiline?: boolean;
@@ -56,7 +62,7 @@
 {#if multiline}
   <textarea class="input textarea" {placeholder} {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur}></textarea>
 {:else}
-  <input type="text" class="input" {placeholder} {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur} />
+  <input type={type ?? 'text'} class="input" {placeholder} {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur} />
 {/if}
 
 <style lang="scss">

@@ -40,9 +40,12 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
   });
 
-  const create = async ({ email, password, type }: { email: string; password: string; type: string }) => {
+  const create = async ({ email, password, type }: { email: string; password: string; type?: string }) => {
     const { salt, hash } = crypto.create({ password });
-
+    if (!type) {
+      const { count } = await db.selectFrom('users').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
+      type = count === 0 ? 'admin' : 'subscriber';
+    }
     const result = await db
       .insertInto('users')
       .returningAll()
