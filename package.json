@@ -60,9 +60,9 @@
       "types": "./dist/tiny/card.svelte.d.ts",
       "svelte": "./dist/tiny/card.svelte"
     },
-    "./dark.svelte": {
-      "types": "./dist/tiny/dark.svelte.d.ts",
-      "svelte": "./dist/tiny/dark.svelte"
+    "./color.svelte": {
+      "types": "./dist/tiny/color.svelte.d.ts",
+      "svelte": "./dist/tiny/color.svelte"
     },
     "./icon.svelte": {
       "types": "./dist/tiny/icon.svelte.d.ts",
@@ -87,6 +87,10 @@
     "./split-view.svelte": {
       "types": "./dist/tiny/split-view.svelte.d.ts",
       "svelte": "./dist/tiny/split-view.svelte"
+    },
+    "./tiny.svelte": {
+      "types": "./dist/tiny/tiny.svelte.d.ts",
+      "svelte": "./dist/tiny/tiny.svelte"
     },
     "./utils/array": {
       "types": "./dist/tiny/utils/array.d.ts",
@@ -183,6 +187,10 @@
     "./properties/validator": {
       "types": "./dist/tiny/properties/validator.svelte.d.ts",
       "svelte": "./dist/tiny/properties/validator.svelte.js"
+    },
+    "./properties/color.svelte": {
+      "types": "./dist/tiny/properties/color.svelte.d.ts",
+      "svelte": "./dist/tiny/properties/color.svelte"
     },
     "./properties/container.svelte": {
       "types": "./dist/tiny/properties/container.svelte.d.ts",
