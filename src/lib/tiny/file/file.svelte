@@ -20,6 +20,8 @@
     onSelected: (model: LocalFile | undefined) => void;
   } = $props();
 
+  let isImage = $derived(accept && !accept.find((mime) => !mime.startsWith('image/')));
+  let type = $derived(isImage ? 'image' : 'file');
   let clientWidth = $state<number>();
   let height = $derived(round(((clientWidth ?? 0) / 3) * 2, 0));
 
@@ -43,13 +45,13 @@
       let items: Item[] = [
         {
           icon: TablerCircleX,
-          label: 'Remove file',
+          label: `Remove ${type}`,
           state: 'critical',
           perform: () => onDelete(),
         },
         {
           icon: TablerPhoto,
-          label: 'Replace file',
+          label: `Replace ${type}`,
           perform: () => onPick(),
         },
       ];
@@ -79,7 +81,7 @@
   {#if file}
     <Content {file} isBusy={isOpen} />
   {:else}
-    <Blank />
+    <Blank {type} />
   {/if}
 </div>
 

@@ -23,3 +23,10 @@ export const capitalize = (string: string) => {
   const rest = string.slice(1).toLowerCase();
   return `${first}${rest}`;
 };
+
+const aeiou = ['a', 'e', 'i', 'o', 'u'];
+
+export const aan = (string: string) => {
+  const an = aeiou.includes(string.toLowerCase()[0]);
+  return an ? 'an' : 'a';
+};
