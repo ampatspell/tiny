@@ -14,7 +14,7 @@
   let onAdd = async (reference: HTMLElement) => {
     let id = await floaters.open({
       snippet,
-      position: basic,
+      position: basic(),
       reference: () => reference,
       request: undefined,
       close: null,

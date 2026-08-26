@@ -6,10 +6,8 @@
 
   let {
     file,
-    onDelete,
   }: {
     file: UniversalFile;
-    onDelete: () => void;
   } = $props();
 </script>
 
@@ -21,7 +19,7 @@
       {/key}
     </div>
   {/if}
-  <Description {file} {onDelete} />
+  <Description {file} />
 </div>
 
 <style lang="scss">

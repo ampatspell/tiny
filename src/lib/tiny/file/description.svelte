@@ -6,10 +6,8 @@
 
   let {
     file,
-    onDelete,
   }: {
     file: UniversalFile;
-    onDelete: () => void;
   } = $props();
 
   let hover = $derived(file.isImage);
@@ -17,4 +15,4 @@
   let icon = TablerPhoto;
 </script>
 
-<Overlay {icon} {label} {hover} {onDelete} />
+<Overlay {icon} {label} {hover} />

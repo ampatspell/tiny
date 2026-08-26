@@ -15,7 +15,7 @@
       snippet,
       request: opts,
       reference: () => opts.reference,
-      position: basic,
+      position: basic(),
       close: false,
     }).response;
   };
