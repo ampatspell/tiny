@@ -8,6 +8,6 @@
 
 <style lang="scss">
   .label {
-    font-size: var(--tiny-font-size-medium);
+    font-size: var(--tiny-font-size-small);
   }
 </style>

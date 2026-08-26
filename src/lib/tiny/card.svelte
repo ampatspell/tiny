@@ -1,6 +1,6 @@
 <script module lang="ts">
   export type CardWidth = 'fit' | 'flex';
-  export type CardVariant = 'regular' | 'rounded';
+  export type CardVariant = 'regular';
 </script>
 
 <script lang="ts">
@@ -26,17 +26,11 @@
       --width: 100%;
     }
 
-    &.variant-regular,
-    &.variant-rounded {
+    &.variant-regular {
+      --border-radius: 6px;
       --box-shadow:
         0px 4px 6px -2px rgba(16, 24, 40, 0.06), 0px 12px 32px -4px rgba(16, 24, 40, 0.14),
         0px 2px 8px 0px rgba(0, 0, 0, 0.12);
-    }
-    &.variant-regular {
-      --border-radius: 3px;
-    }
-    &.variant-rounded {
-      --border-radius: 6px;
     }
 
     flex: 1;

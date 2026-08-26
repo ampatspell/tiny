@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Component } from 'svelte';
   import Icon from '../icon.svelte';
-  import { isbn } from 'valibot';
 
   let {
     icon,

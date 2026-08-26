@@ -40,7 +40,7 @@
   request: DropdownOptions;
   resolve: (item: DropdownItem | undefined) => void;
 })}
-  <Card width="fit" variant="rounded">
+  <Card width="fit">
     <Content>
       {#each request.items as item (item.label)}
         <Item state={item.state} onClick={() => resolve(item)}>

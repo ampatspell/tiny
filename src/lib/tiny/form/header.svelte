@@ -21,6 +21,7 @@
     gap: 5px;
     padding: 2px 0 0 0;
     > .title {
+      font-size: var(--tiny-font-size-small);
       font-weight: 600;
       flex: 1;
     }
