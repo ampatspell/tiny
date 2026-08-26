@@ -64,6 +64,10 @@
       "types": "./dist/tiny/card.svelte.d.ts",
       "svelte": "./dist/tiny/card.svelte"
     },
+    "./center.svelte": {
+      "types": "./dist/tiny/center.svelte.d.ts",
+      "svelte": "./dist/tiny/center.svelte"
+    },
     "./color.svelte": {
       "types": "./dist/tiny/color.svelte.d.ts",
       "svelte": "./dist/tiny/color.svelte"

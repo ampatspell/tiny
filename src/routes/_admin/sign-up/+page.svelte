@@ -1,6 +1,7 @@
 <script lang="ts">
   import { useSignUp } from '$lib/playground/auth/auth.svelte.js';
   import Button from '$lib/tiny/button/button.svelte';
+  import Center from '$lib/tiny/center.svelte';
   import Actions from '$lib/tiny/form/actions.svelte';
   import Row from '$lib/tiny/form/content/row.svelte';
   import Form from '$lib/tiny/form/form.svelte';
@@ -10,7 +11,7 @@
   let model = useSignUp();
 </script>
 
-<div class="page">
+<Center>
   <Form size="small">
     <Header title="Sign up" />
     <Row>
@@ -23,14 +24,4 @@
       <Button label="Sign up" onClick={model.perform} />
     </Actions>
   </Form>
-</div>
-
-<style lang="scss">
-  .page {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-</style>
+</Center>
