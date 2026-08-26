@@ -59,10 +59,8 @@
     }
     > .input {
       position: absolute;
-      top: 27px;
-      left: 0;
-      width: 0;
-      height: 0;
+      top: 2px;
+      left: 2px;
       padding: 0;
       opacity: 0;
       border: none;
