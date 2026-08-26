@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Rename all Dark components and variables to Tiny
 - [ ] User authorization and authentication
 - [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Separate property from presentation models
@@ -12,6 +11,7 @@
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
+- [x] Rename all Dark components and variables to Tiny
 - [x] Remove transformers
 - [x] Update bootstrap
 - [x] Services and tools logging

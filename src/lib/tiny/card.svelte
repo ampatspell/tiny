@@ -40,7 +40,7 @@
 
     width: var(--width);
     overflow: hidden;
-    background: var(--dark-white-color);
+    background: var(--tiny-white-color);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
   }

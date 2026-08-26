@@ -19,7 +19,7 @@
     flex-direction: row;
     gap: 5px;
     align-items: center;
-    border-bottom: 1px solid var(--dark-border-color-1);
+    border-bottom: 1px solid var(--tiny-border-color-1);
     > .section {
       padding: 0 10px;
       display: flex;

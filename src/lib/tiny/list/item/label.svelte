@@ -28,7 +28,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    font-size: var(--dark-font-size-small);
+    font-size: var(--tiny-font-size-small);
     gap: 1px;
     min-width: 0;
     > .value {

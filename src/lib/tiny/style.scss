@@ -1,20 +1,20 @@
 @use 'sass:color';
 
 :root {
-  --dark-font-family: 'Ubuntu Mono', monospace;
-  --dark-font-size: 15px;
-  --dark-font-size-medium: 14px;
-  --dark-font-size-small: 13px;
-  --dark-font-weight: 400;
-  --dark-color: #{color.adjust(#000, $alpha: -0.2)};
-  --dark-faded-color-1: #{color.adjust(#000, $alpha: -0.5)};
-  --dark-white-color: #fff;
-  --dark-border-color-1: #{color.adjust(#000, $alpha: -0.9)};
-  --dark-border-color-2: #{color.adjust(#000, $alpha: -0.94)};
-  --dark-selected-background-color-1: #{color.adjust(#000, $alpha: -0.96)};
-  --dark-selected-background-color-2: #{color.adjust(#000, $alpha: -0.92)};
-  --dark-accent-color-1: #{color.adjust(#ff6660, $alpha: -0.7)};
-  --dark-accent-color-2: #ff6660;
+  --tiny-font-family: 'Ubuntu Mono', monospace;
+  --tiny-font-size: 15px;
+  --tiny-font-size-medium: 14px;
+  --tiny-font-size-small: 13px;
+  --tiny-font-weight: 400;
+  --tiny-color: #{color.adjust(#000, $alpha: -0.2)};
+  --tiny-faded-color-1: #{color.adjust(#000, $alpha: -0.5)};
+  --tiny-white-color: #fff;
+  --tiny-border-color-1: #{color.adjust(#000, $alpha: -0.9)};
+  --tiny-border-color-2: #{color.adjust(#000, $alpha: -0.94)};
+  --tiny-selected-background-color-1: #{color.adjust(#000, $alpha: -0.96)};
+  --tiny-selected-background-color-2: #{color.adjust(#000, $alpha: -0.92)};
+  --tiny-accent-color-1: #{color.adjust(#ff6660, $alpha: -0.7)};
+  --tiny-accent-color-2: #ff6660;
 }
 
 *,
@@ -68,9 +68,9 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--dark-white-color);
-  font-family: var(--dark-font-family);
-  font-size: var(--dark-font-size);
+  background: var(--tiny-white-color);
+  font-family: var(--tiny-font-family);
+  font-size: var(--tiny-font-size);
 }
 
 a {
@@ -85,6 +85,6 @@ a:visited {
 }
 
 #svelte-inspector-host {
-  font-family: var(--dark-font-family);
+  font-family: var(--tiny-font-family);
   font-size: 12px;
 }

@@ -2,12 +2,12 @@
   import { resolve } from '$app/paths';
   import TablerBalloon from '$lib/tiny/icons/tabler--balloon.svelte';
   import Index from '$lib/playground/index/index.svelte';
-  import Dark from '$lib/tiny/dark.svelte';
+  import Tiny from '$lib/tiny/tiny.svelte';
   import Screen from '$lib/tiny/screen.svelte';
   import Icon from '$lib/tiny/icon.svelte';
 </script>
 
-<Dark>
+<Tiny>
   <div class="page">
     <Screen>
       <Index />
@@ -15,8 +15,9 @@
   </div>
   <a href={resolve('/_admin')} class="edit">
     <Icon icon={TablerBalloon} />
+    <div class="label">open backend</div>
   </a>
-</Dark>
+</Tiny>
 
 <style lang="scss">
   .page {
@@ -30,5 +31,9 @@
     position: absolute;
     bottom: 20px;
     left: 20px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
   }
 </style>

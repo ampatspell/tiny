@@ -26,11 +26,11 @@
     align-items: center;
     padding: 0 10px;
     text-decoration: none;
-    border-bottom: 1px solid var(--dark-border-color-2);
+    border-bottom: 1px solid var(--tiny-border-color-2);
     transition: 0.15s ease-in-out background-color;
     &:hover,
     &.current {
-      background: var(--dark-selected-background-color-1);
+      background: var(--tiny-selected-background-color-1);
     }
   }
 </style>

@@ -66,14 +66,14 @@
 <style lang="scss">
   .button {
     &.variant-regular {
-      --background: var(--dark-color);
-      --color: var(--dark-white-color);
+      --background: var(--tiny-color);
+      --color: var(--tiny-white-color);
       --outline: transparent;
     }
     &.variant-light {
-      --background: var(--dark-white-color);
-      --color: var(--dark-color);
-      --outline: var(--dark-border-color-1);
+      --background: var(--tiny-white-color);
+      --color: var(--tiny-color);
+      --outline: var(--tiny-border-color-1);
     }
 
     --padding: 5px;
@@ -86,8 +86,8 @@
     border: none;
     background: var(--background);
     color: var(--color);
-    font-family: var(--dark-font-family);
-    font-size: var(--dark-font-size);
+    font-family: var(--tiny-font-family);
+    font-size: var(--tiny-font-size);
     outline: 1px solid var(--outline);
     outline-offset: -1px;
     width: 100%;

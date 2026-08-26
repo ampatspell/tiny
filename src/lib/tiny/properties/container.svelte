@@ -55,7 +55,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      font-size: var(--dark-font-size-small);
+      font-size: var(--tiny-font-size-small);
       gap: 5px;
       > .content {
         display: flex;
@@ -65,7 +65,7 @@
       }
       > .error {
         white-space: nowrap;
-        color: var(--dark-accent-color-2);
+        color: var(--tiny-accent-color-2);
       }
     }
   }

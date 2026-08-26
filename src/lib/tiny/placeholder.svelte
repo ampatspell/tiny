@@ -29,7 +29,7 @@
       justify-content: center;
       gap: 10px;
       > .label {
-        font-size: var(--dark-font-size-small);
+        font-size: var(--tiny-font-size-small);
       }
     }
   }

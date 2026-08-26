@@ -35,7 +35,7 @@
         padding: 10px;
         gap: 5px;
         align-items: center;
-        font-size: var(--dark-font-size-small);
+        font-size: var(--tiny-font-size-small);
         text-decoration: none;
         &:hover {
           background: #222;

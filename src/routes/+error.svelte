@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import Dark from '$lib/tiny/dark.svelte';
+  import Tiny from '$lib/tiny/tiny.svelte';
   import TablerBalloon from '$lib/tiny/icons/tabler--balloon.svelte';
   import Placeholder from '$lib/tiny/placeholder.svelte';
   import { isTruthy } from '$lib/tiny/utils/array.js';
@@ -12,6 +12,6 @@
   });
 </script>
 
-<Dark>
+<Tiny>
   <Placeholder icon={TablerBalloon} {label} />
-</Dark>
+</Tiny>

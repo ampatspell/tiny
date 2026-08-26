@@ -27,7 +27,7 @@
   .section {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid var(--dark-border-color-1);
+    border-bottom: 1px solid var(--tiny-border-color-1);
     > .header {
       cursor: default;
       padding: 10px 10px 5px 10px;

@@ -43,13 +43,13 @@
   .file {
     user-select: none;
     width: 100%;
-    border: 1px solid var(--dark-border-color-1);
+    border: 1px solid var(--tiny-border-color-1);
     border-radius: 3px;
     overflow: hidden;
     height: var(--height);
     display: flex;
     flex-direction: column;
-    font-size: var(--dark-font-size-small);
+    font-size: var(--tiny-font-size-small);
     position: relative;
   }
 </style>

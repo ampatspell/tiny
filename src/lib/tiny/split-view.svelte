@@ -22,7 +22,7 @@
       width: 320px;
       display: flex;
       flex-direction: column;
-      border-right: 1px solid var(--dark-border-color-1);
+      border-right: 1px solid var(--tiny-border-color-1);
     }
     > .content {
       flex: 1;

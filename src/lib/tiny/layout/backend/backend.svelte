@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Dark from '$lib/tiny/dark.svelte';
+  import Tiny from '$lib/tiny/tiny.svelte';
   import Floaters from '$lib/tiny/floating/floaters.svelte';
   import { setFloaters } from '$lib/tiny/floating/floaters.svelte.js';
   import Backend from '$lib/tiny/backend/backend.svelte';
@@ -10,10 +10,10 @@
   let floaters = setFloaters();
 </script>
 
-<Dark>
+<Tiny>
   <Backend>
     {@render children()}
   </Backend>
-</Dark>
+</Tiny>
 
 <Floaters {floaters} />
