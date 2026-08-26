@@ -8,21 +8,22 @@ import type { Kysely } from 'kysely';
 
 export type CreateDatabaseToolsOptions = {
   db: Kysely<unknown>;
+  verbose?: boolean;
 };
 
 export const createDatabaseTools = async (opts: CreateDatabaseToolsOptions) => {
-  const { db } = opts;
+  const { db, verbose } = opts;
 
   const schema = run(() => {
     const generate = async () => {
-      // // https://github.com/RobinBlomberg/kysely-codegen/blob/master/src/generator/generator/singularizer.ts#L20
-      // // `sharp` for some reason doesn't have path prop there
-      // Object.values(require.cache)
-      //   .filter((mod) => mod && !mod.path)
-      //   .forEach((mod) => {
-      //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      //     (mod as any).path = '';
-      //   });
+      // https://github.com/RobinBlomberg/kysely-codegen/blob/master/src/generator/generator/singularizer.ts#L20
+      // `sharp` for some reason doesn't have path prop there in vitest
+      Object.values(require.cache)
+        .filter((mod) => mod && !mod.path)
+        .forEach((mod) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (mod as any).path = '';
+        });
 
       const dialect = new CodegenSqliteDialect();
       return await generateSchema({
@@ -56,24 +57,25 @@ export const createDatabaseTools = async (opts: CreateDatabaseToolsOptions) => {
 
     const toLatest = async () => {
       const { error, results } = await getMigrator().migrateToLatest();
-      results?.forEach((it) => {
-        if (it.status === 'Success') {
-          log.info(`Migration ${it.migrationName} was executed successfully`);
-        } else if (it.status === 'Error') {
-          log.info(`Failed to execute migration ${it.migrationName}`);
-        }
-      });
-      if (error) {
-        log.info(`Failed to migrate to the latest revision: ${error}`);
-        return false;
-      } else {
-        if (results?.length) {
-          outro('Migrated to latest revision');
+      if (verbose) {
+        results?.forEach((it) => {
+          if (it.status === 'Success') {
+            log.info(`Migration ${it.migrationName} was executed successfully`);
+          } else if (it.status === 'Error') {
+            log.info(`Failed to execute migration ${it.migrationName}`);
+          }
+        });
+        if (error) {
+          log.info(`Failed to migrate to the latest revision: ${error}`);
         } else {
-          outro('No new migrations found');
+          if (results?.length) {
+            outro('Migrated to latest revision');
+          } else {
+            outro('No new migrations found');
+          }
         }
       }
-      return true;
+      return !error;
     };
 
     return {

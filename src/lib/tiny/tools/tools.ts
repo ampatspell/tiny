@@ -79,7 +79,7 @@ export const createTools = async (opts: { cwd: string }) => {
     generateNewMigrationFile: () => generateMigrationFile(project),
     generateSchemaFromDatabase: async () => {
       await project.withServices(async (services) => {
-        const tools = await createDatabaseTools({ db: services.database.db });
+        const tools = await createDatabaseTools({ db: services.database.db, verbose: true });
         const schema = await tools.schema.generate();
         const path = join(project.schemaRoot, 'schema.d.ts');
         await writeFile(path, schema, 'utf8');
@@ -88,7 +88,7 @@ export const createTools = async (opts: { cwd: string }) => {
     },
     migrateDatabaseToLatest: async () => {
       await project.withServices(async (services) => {
-        const tools = await createDatabaseTools({ db: services.database.db });
+        const tools = await createDatabaseTools({ db: services.database.db, verbose: true });
         await tools.migrate({ migrations: project.migrationsRoot }).toLatest();
       });
     },
