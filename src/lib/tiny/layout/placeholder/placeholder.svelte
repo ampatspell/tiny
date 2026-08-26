@@ -4,8 +4,8 @@
 
   let backend = useBackend();
   let section = $derived(backend.section);
-  let icon = $derived(section.icon);
-  let label = $derived(section.name);
+  let icon = $derived(section?.icon);
+  let label = $derived(section?.name);
 </script>
 
 <Placeholder {icon} {label} />

@@ -280,10 +280,6 @@
       "types": "./dist/tiny/layout/editing/button/save.svelte.d.ts",
       "svelte": "./dist/tiny/layout/editing/button/save.svelte"
     },
-    "./layout/backend/backend.svelte": {
-      "types": "./dist/tiny/layout/backend/backend.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/backend/backend.svelte"
-    },
     "./icons/tabler--balloon.svelte": {
       "types": "./dist/tiny/icons/tabler--balloon.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--balloon.svelte"

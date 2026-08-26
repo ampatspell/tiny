@@ -1,8 +1,8 @@
 <script lang="ts">
   import Floater from './floater.svelte';
-  import type { Floaters } from './floaters.svelte.ts';
+  import { useFloaters } from './floaters.svelte.ts';
 
-  let { floaters }: { floaters: Floaters } = $props();
+  let floaters = useFloaters();
 </script>
 
 {#each floaters.all as floater (floater)}

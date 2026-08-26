@@ -13,7 +13,7 @@
       <Index />
     </Screen>
   </div>
-  <a href={resolve('/_admin')} class="edit">
+  <a href={resolve('/_admin/(content)')} class="edit">
     <Icon icon={TablerBalloon} />
     <div class="label">open backend</div>
   </a>

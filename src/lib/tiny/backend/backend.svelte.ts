@@ -1,7 +1,9 @@
+import { match } from '$app/paths';
 import { page } from '$app/state';
 import type { ResolvedPathname } from '$app/types';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { createContext, type Component } from 'svelte';
+import { run } from '../utils/utils.ts';
 
 const [get, set] = createContext<Backend>();
 
@@ -20,18 +22,32 @@ export const createSection = (_opts: OptionsInput<SectionOptions>) => {
 
   const icon = $derived(opts.icon);
   const name = $derived(opts.name);
-  const route = $derived(opts.route);
   const select = $derived(opts.select);
+  const route = $derived(opts.route);
+  let id = $state<string>();
 
-  const pathname = $derived(page.url.pathname);
+  $effect(() => {
+    void route;
+    run(async () => {
+      const matched = await match(route);
+      if (matched) {
+        id = matched.id;
+      }
+    });
+  });
+
   const eq = ['/'];
 
   const isCurrent = $derived.by(() => {
-    if (eq.includes(route)) {
-      return route === pathname;
-    } else {
-      return pathname.startsWith(route);
+    const route = page.route.id;
+    if (id && route) {
+      if (eq.includes(id)) {
+        return id === route;
+      } else {
+        return route.startsWith(id);
+      }
     }
+    return false;
   });
 
   return options(
@@ -58,9 +74,16 @@ const createBackend = (_opts: OptionsInput<BackendOptions>) => {
   const sections = $derived(opts.sections.map((section) => createSection(section)));
 
   const section = $derived.by(() => {
-    const section = sections.find((section) => section.isCurrent);
+    let section = sections.find((section) => section.isCurrent);
     if (!section) {
-      throw new Error('Missing section for current route');
+      // TODO: this is weird
+      section = {
+        icon: sections[0].icon,
+        isCurrent: true,
+        name: 'Loading…',
+        route: '/',
+        select: () => '/',
+      };
     }
     return section;
   });
