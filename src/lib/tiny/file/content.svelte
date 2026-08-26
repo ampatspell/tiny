@@ -6,8 +6,10 @@
 
   let {
     file,
+    isBusy,
   }: {
     file: UniversalFile;
+    isBusy?: boolean;
   } = $props();
 </script>
 
@@ -19,7 +21,7 @@
       {/key}
     </div>
   {/if}
-  <Description {file} />
+  <Description {file} {isBusy} />
 </div>
 
 <style lang="scss">

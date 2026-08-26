@@ -1,9 +1,11 @@
 <script lang="ts">
   import { useFloaters } from '../floating/floaters.svelte.ts';
-  import { dropdown } from '../floating/layout/dropdown.svelte';
+  import { dropdown, type DropdownItem } from '../floating/layout/dropdown.svelte';
+  import { mouse } from '../floating/position.ts';
   import TablerCircleX from '../icons/tabler--circle-x.svelte';
   import TablerPhoto from '../icons/tabler--photo.svelte';
   import { pickFile, type LocalFile, type UniversalFile } from '../utils/files.svelte.ts';
+  import { round } from '../utils/number.ts';
   import { px } from '../utils/style.ts';
   import Blank from './blank.svelte';
   import Content from './content.svelte';
@@ -19,7 +21,7 @@
   } = $props();
 
   let clientWidth = $state<number>();
-  let height = $derived(((clientWidth ?? 0) / 3) * 2);
+  let height = $derived(round(((clientWidth ?? 0) / 3) * 2, 0));
 
   let onPick = async () => {
     let file = await pickFile({ accept });
@@ -32,32 +34,38 @@
     onSelected(undefined);
   };
 
-  let reference = $state<HTMLElement>();
   let floaters = useFloaters();
+  let isOpen = $state(false);
 
   const onclick = async () => {
     if (file) {
-      if (reference) {
-        let items = [
-          {
-            icon: TablerCircleX,
-            label: 'Remove file',
-            perform: () => onDelete(),
-          },
-          {
-            icon: TablerPhoto,
-            label: 'Replace file',
-            perform: () => onPick(),
-          },
-        ];
+      type Item = DropdownItem & { perform: () => void };
+      let items: Item[] = [
+        {
+          icon: TablerCircleX,
+          label: 'Remove file',
+          state: 'critical',
+          perform: () => onDelete(),
+        },
+        {
+          icon: TablerPhoto,
+          label: 'Replace file',
+          perform: () => onPick(),
+        },
+      ];
 
+      isOpen = true;
+      try {
         let selected = await dropdown({
           floaters,
-          reference,
+          reference: document.body,
           items,
+          position: mouse(),
         });
 
         selected?.perform();
+      } finally {
+        isOpen = false;
       }
     } else {
       onPick();
@@ -67,9 +75,9 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div bind:this={reference} class="file" style:--height={px(height)} bind:clientWidth {onclick}>
+<div class="file" style:--height={px(height)} bind:clientWidth {onclick}>
   {#if file}
-    <Content {file} />
+    <Content {file} isBusy={isOpen} />
   {:else}
     <Blank />
   {/if}

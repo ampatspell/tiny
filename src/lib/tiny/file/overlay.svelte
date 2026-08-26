@@ -1,19 +1,22 @@
 <script lang="ts">
   import type { Component } from 'svelte';
   import Icon from '../icon.svelte';
+  import { isbn } from 'valibot';
 
   let {
     icon,
     label,
     hover,
+    isBusy,
   }: {
     icon: Component;
     label: string;
     hover?: boolean;
+    isBusy?: boolean;
   } = $props();
 </script>
 
-<div class={['overlay', hover && 'on-hover']}>
+<div class={['overlay', hover && 'on-hover', isBusy && 'is-busy']}>
   <Icon {icon} size="medium" />
   <div class="label">{label}</div>
 </div>
@@ -45,6 +48,9 @@
       &:hover {
         opacity: 1;
       }
+    }
+    &.is-busy {
+      opacity: 1;
     }
   }
 </style>

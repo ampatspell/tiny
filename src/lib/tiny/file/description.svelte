@@ -6,8 +6,10 @@
 
   let {
     file,
+    isBusy,
   }: {
     file: UniversalFile;
+    isBusy?: boolean;
   } = $props();
 
   let hover = $derived(file.isImage);
@@ -15,4 +17,4 @@
   let icon = TablerPhoto;
 </script>
 
-<Overlay {icon} {label} {hover} />
+<Overlay {icon} {label} {hover} {isBusy} />

@@ -5,18 +5,21 @@
   import type { Floaters } from '../floaters.svelte.ts';
   import Content from '$lib/tiny/dropdown/content/content.svelte';
   import Icon from '$lib/tiny/dropdown/content/item/icon.svelte';
-  import Item from '$lib/tiny/dropdown/content/item/item.svelte';
+  import Item, { type ItemState } from '$lib/tiny/dropdown/content/item/item.svelte';
   import Label from '$lib/tiny/dropdown/content/item/label.svelte';
+  import type { ComputePositionConfig } from '@floating-ui/dom';
 
   export type DropdownItem = {
     icon?: Component;
     label: string;
+    state?: ItemState;
   };
 
   export type DropdownOptions<I extends DropdownItem = DropdownItem> = {
     floaters: Floaters;
     reference: HTMLElement;
     items: I[];
+    position?: ComputePositionConfig;
   };
 
   export const dropdown = async <I extends DropdownItem = DropdownItem>(opts: DropdownOptions<I>) => {
@@ -24,7 +27,7 @@
       snippet,
       request: opts as DropdownOptions,
       reference: () => opts.reference,
-      position: basic(),
+      position: opts.position ?? basic(),
       close: null,
     }).response) as I | undefined;
   };
@@ -37,10 +40,10 @@
   request: DropdownOptions;
   resolve: (item: DropdownItem | undefined) => void;
 })}
-  <Card width="fit">
+  <Card width="fit" variant="rounded">
     <Content>
       {#each request.items as item (item.label)}
-        <Item onClick={() => resolve(item)}>
+        <Item state={item.state} onClick={() => resolve(item)}>
           <Icon icon={item.icon} />
           <Label label={item.label} />
         </Item>
