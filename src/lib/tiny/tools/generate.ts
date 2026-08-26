@@ -260,18 +260,21 @@ export const bootstrapProject = async (project: Project) => {
     content: dedent`
       <script lang="ts">
         import favicon from '$lib/assets/favicon.svg';
-        import Dark from '@ampatspell/tiny/dark.svelte';
+        import Tiny from '@ampatspell/tiny/tiny.svelte';
+        import { setBroadcastChannel } from '@ampatspell/tiny/broadcast';
 
         let { children } = $props();
+
+        setBroadcastChannel();
       </script>
 
       <svelte:head>
         <link rel="icon" href={favicon} />
       </svelte:head>
 
-      <Dark>
+      <Tiny>
         {@render children()}
-      </Dark>
+      </Tiny>
     `,
   });
 

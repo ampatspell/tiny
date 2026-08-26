@@ -10,6 +10,7 @@
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
+- [x] Broadcast to invalidate other tabs
 - [x] Color picker property
 - [x] Rename all Dark components and variables to Tiny
 - [x] Remove transformers

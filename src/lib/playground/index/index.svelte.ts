@@ -1,3 +1,4 @@
+import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
 import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
 import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
 import { asFile } from '$lib/tiny/utils/files.svelte.js';
@@ -14,6 +15,8 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
 
   const data = $derived(opts.data);
   const id = $derived(data.id);
+
+  const broadcast = useBroadcastChannel();
 
   const properties = useDataProperties({
     data: getter(() => ({
@@ -48,6 +51,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
           }
         }),
       ]);
+      broadcast.notifyDidSave();
       return id;
     }
   };
