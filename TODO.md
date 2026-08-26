@@ -1,15 +1,15 @@
 ## TODO
 
-- [ ] User authorization and authentication
-- [ ] Bootstrapped basic backend with auth and index editing
-- [ ] Separate property from presentation models)
 - [ ] Dropdown
+- [ ] User authorization and authentication
+- [ ] Separate property from presentation models
 - [ ] File component "remove" & "change" should be dropdown options
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
+- [ ] Bootstrapped basic backend with auth and index editing
 - [x] Broadcast to invalidate other tabs
 - [x] Color picker property
 - [x] Rename all Dark components and variables to Tiny
