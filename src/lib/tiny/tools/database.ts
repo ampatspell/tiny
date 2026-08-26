@@ -15,14 +15,14 @@ export const createDatabaseTools = async (opts: CreateDatabaseToolsOptions) => {
 
   const schema = run(() => {
     const generate = async () => {
-      // https://github.com/RobinBlomberg/kysely-codegen/blob/master/src/generator/generator/singularizer.ts#L20
-      // `sharp` for some reason doesn't have path prop there
-      Object.values(require.cache)
-        .filter((mod) => mod && !mod.path)
-        .forEach((mod) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (mod as any).path = '';
-        });
+      // // https://github.com/RobinBlomberg/kysely-codegen/blob/master/src/generator/generator/singularizer.ts#L20
+      // // `sharp` for some reason doesn't have path prop there
+      // Object.values(require.cache)
+      //   .filter((mod) => mod && !mod.path)
+      //   .forEach((mod) => {
+      //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      //     (mod as any).path = '';
+      //   });
 
       const dialect = new CodegenSqliteDialect();
       return await generateSchema({
