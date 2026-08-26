@@ -8,28 +8,34 @@
   import Form from '$lib/tiny/form/form.svelte';
   import Content from '$lib/tiny/form/content/content.svelte';
   import Row from '$lib/tiny/form/content/row.svelte';
+  import Color from '$lib/tiny/properties/color.svelte';
 
   let { properties }: { properties: IndexProperties } = $props();
 
-  let title = $derived(properties.title);
-  let description = $derived(properties.description);
-  let background = $derived(properties.background);
   let backgroundOffset = useNumberPropertyEditor({ property: getter(() => properties.backgroundOffset) });
 </script>
 
 <Form size="regular">
   <Content>
     <Row>
-      <Input property={title} />
+      <Input property={properties.title} />
     </Row>
     <Row>
-      <Input property={description} />
+      <Input property={properties.description} />
     </Row>
     <Row>
-      <File property={background} accept={images} />
+      <File property={properties.background} accept={images} />
     </Row>
     <Row>
       <Number editor={backgroundOffset} />
+    </Row>
+    <Row>
+      <Color property={properties.indexBackgroundColor} />
+      <Color property={properties.indexTextColor} />
+    </Row>
+    <Row>
+      <Color property={properties.backgroundColor} />
+      <Color property={properties.textColor} />
     </Row>
   </Content>
 </Form>

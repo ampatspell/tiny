@@ -26,6 +26,10 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
   const description = properties.property('description');
   const background = properties.property('background');
   const backgroundOffset = properties.property('backgroundOffset');
+  const indexBackgroundColor = properties.property('indexBackgroundColor');
+  const indexTextColor = properties.property('indexTextColor');
+  const backgroundColor = properties.property('backgroundColor');
+  const textColor = properties.property('textColor');
 
   const isDirty = $derived(properties.isDirty);
 
@@ -56,6 +60,10 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
       description,
       background,
       backgroundOffset,
+      indexBackgroundColor,
+      indexTextColor,
+      backgroundColor,
+      textColor,
       isDirty: getter(() => isDirty),
       save,
       rollback,
