@@ -380,6 +380,10 @@
       "types": "./dist/tiny/floating/layout/confirmation.svelte.d.ts",
       "svelte": "./dist/tiny/floating/layout/confirmation.svelte"
     },
+    "./floating/layout/dropdown.svelte": {
+      "types": "./dist/tiny/floating/layout/dropdown.svelte.d.ts",
+      "svelte": "./dist/tiny/floating/layout/dropdown.svelte"
+    },
     "./file/blank.svelte": {
       "types": "./dist/tiny/file/blank.svelte.d.ts",
       "svelte": "./dist/tiny/file/blank.svelte"
@@ -399,6 +403,22 @@
     "./file/overlay.svelte": {
       "types": "./dist/tiny/file/overlay.svelte.d.ts",
       "svelte": "./dist/tiny/file/overlay.svelte"
+    },
+    "./dropdown/content/content.svelte": {
+      "types": "./dist/tiny/dropdown/content/content.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/content.svelte"
+    },
+    "./dropdown/content/item/icon.svelte": {
+      "types": "./dist/tiny/dropdown/content/item/icon.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/item/icon.svelte"
+    },
+    "./dropdown/content/item/item.svelte": {
+      "types": "./dist/tiny/dropdown/content/item/item.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/item/item.svelte"
+    },
+    "./dropdown/content/item/label.svelte": {
+      "types": "./dist/tiny/dropdown/content/item/label.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/item/label.svelte"
     },
     "./button/button.svelte": {
       "types": "./dist/tiny/button/button.svelte.d.ts",
