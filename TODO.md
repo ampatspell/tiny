@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Rename all Dark components and variables to Tiny
 - [ ] User authorization and authentication
 - [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Separate property from presentation models
