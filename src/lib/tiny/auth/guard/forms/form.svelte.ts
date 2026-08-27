@@ -1,21 +1,23 @@
 import { goto } from '$app/navigation';
 import { resolve } from '$app/paths';
 import type { ResolvedPathname } from '$app/types';
+import { useBroadcastChannel, type BroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
 import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
 import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
-import { signIn, signUp } from '$lib/tiny/auth/auth.remote.js';
+import { signIn, signUp } from '../../auth.svelte.ts';
 
 export const useForm = (opts: {
-  perform: (data: { email: string; password: string }) => Promise<void>;
+  perform: (data: { channel: BroadcastChannel; email: string; password: string }) => Promise<void>;
   route: ResolvedPathname;
 }) => {
+  const channel = useBroadcastChannel();
   const properties = useDataProperties({ data: { email: '', password: '' } });
   const email = properties.property('email', { validator: notBlank() });
   const password = properties.property('password', { validator: notBlank() });
 
   const perform = async () => {
     if (properties.touch()) {
-      await opts.perform(properties.data);
+      await opts.perform({ channel, ...properties.data });
       goto(opts.route);
     }
   };

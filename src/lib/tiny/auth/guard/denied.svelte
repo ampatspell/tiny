@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { resolve } from '$app/paths';
+  import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
   import Button from '$lib/tiny/button/button.svelte';
   import TablerBalloon from '$lib/tiny/icons/tabler--balloon.svelte';
   import Placeholder from '$lib/tiny/placeholder.svelte';
-  import { signOut } from '../auth.remote.ts';
+  import { signOut } from '../auth.svelte.ts';
+
+  let channel = useBroadcastChannel();
 
   let onSignOut = async () => {
-    await goto(resolve('/'));
-    await signOut();
+    await signOut({ channel });
   };
 </script>
 

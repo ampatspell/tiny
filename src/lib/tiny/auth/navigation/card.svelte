@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { resolve } from '$app/paths';
+  import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
   import Button from '$lib/tiny/button/button.svelte';
   import Card from '$lib/tiny/card.svelte';
   import Actions from '$lib/tiny/form/actions.svelte';
@@ -10,13 +9,14 @@
   import Form from '$lib/tiny/form/form.svelte';
   import Header from '$lib/tiny/form/header.svelte';
   import type { TokenPayload } from '$lib/tiny/server/users/users.js';
-  import { signOut } from '../auth.remote.ts';
+  import { signOut } from '../auth.svelte.ts';
 
   let { token }: { token: TokenPayload } = $props();
 
+  let channel = useBroadcastChannel();
+
   let onSignOut = async () => {
-    await goto(resolve('/'));
-    await signOut();
+    await signOut({ channel });
   };
 </script>
 
