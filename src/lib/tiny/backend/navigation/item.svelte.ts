@@ -1,8 +1,6 @@
-import { match } from '$app/paths';
 import { page } from '$app/state';
 import type { ResolvedPathname } from '$app/types';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
-import { run } from '$lib/tiny/utils/utils.js';
 import type { Component } from 'svelte';
 
 export type NavigationItemOptions = {
@@ -19,27 +17,16 @@ export const createItem = (_opts: OptionsInput<NavigationItemOptions>) => {
   const name = $derived(opts.name);
   const select = $derived(opts.select);
   const route = $derived(opts.route);
-  let id = $state<string>();
-
-  $effect(() => {
-    void route;
-    run(async () => {
-      const matched = await match(route);
-      if (matched) {
-        id = matched.id;
-      }
-    });
-  });
 
   const eq = ['/'];
 
   const isCurrent = $derived.by(() => {
-    const route = page.route.id;
-    if (id && route) {
-      if (eq.includes(id)) {
-        return id === route;
+    const pathname = page.url.pathname;
+    if (pathname) {
+      if (eq.includes(route)) {
+        return route === pathname;
       } else {
-        return route.startsWith(id);
+        return pathname.startsWith(route);
       }
     }
     return false;

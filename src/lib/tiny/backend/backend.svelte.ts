@@ -1,6 +1,6 @@
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { createContext } from 'svelte';
-import { createItem, type Item, type NavigationItemOptions } from './navigation/item.svelte.ts';
+import { createItem, type NavigationItemOptions } from './navigation/item.svelte.ts';
 
 const [get, set] = createContext<Backend>();
 
@@ -16,18 +16,10 @@ const createBackend = (_opts: OptionsInput<BackendOptions>) => {
 
   const items = $derived(opts.items.map((section) => createItem(section)));
 
-  const placeholder: Item = {
-    icon: items[0].icon,
-    isCurrent: true,
-    name: 'Loading…',
-    route: '/',
-    select: () => '/',
-  };
-
   const item = $derived.by(() => {
-    let section = items.find((section) => section.isCurrent);
+    const section = items.find((section) => section.isCurrent);
     if (!section) {
-      section = placeholder;
+      throw new Error('Current backend session not defined');
     }
     return section;
   });
