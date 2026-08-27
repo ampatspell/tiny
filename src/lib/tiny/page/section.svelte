@@ -32,7 +32,7 @@
       cursor: default;
       padding: 10px 10px 5px 10px;
       > .title {
-        font-weight: 600;
+        font-weight: 700;
       }
     }
     > .content {

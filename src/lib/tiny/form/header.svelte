@@ -22,7 +22,7 @@
     padding: 2px 0 0 0;
     > .title {
       font-size: var(--tiny-font-size-small);
-      font-weight: 600;
+      font-weight: 700;
       flex: 1;
     }
     > .accessories {

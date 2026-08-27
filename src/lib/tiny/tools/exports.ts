@@ -12,6 +12,7 @@ run(async () => {
       svelte: './dist/index.js',
     },
   };
+
   for await (const entry of glob(pattern)) {
     const path = relative(dir, entry);
     const clean = path.substring(0, path.indexOf('.'));
@@ -25,6 +26,11 @@ run(async () => {
         exports[`./${clean}`] = {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
           svelte: `./dist/tiny/${clean}.svelte.js`,
+        };
+      } else if (path.endsWith('.remote.ts')) {
+        exports[`./${clean}.remote`] = {
+          types: `./dist/tiny/${clean}.remote.d.ts`,
+          svelte: `./dist/tiny/${clean}.remote.js`,
         };
       } else if (path.endsWith('.ts')) {
         exports[`./${clean}`] = {

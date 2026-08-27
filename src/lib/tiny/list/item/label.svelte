@@ -32,7 +32,7 @@
     gap: 1px;
     min-width: 0;
     > .value {
-      font-weight: 600;
+      font-weight: 700;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

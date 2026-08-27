@@ -6,12 +6,14 @@
   import TablerCode from '$lib/playground/icons/tabler--code.svelte';
   import type { Snippet } from 'svelte';
   import { setBackend } from '$lib/tiny/backend/backend.svelte.js';
-  import Backend from '$lib/tiny/layout/backend/backend.svelte';
+  import Floaters from '$lib/tiny/floating/floaters.svelte';
+  import { setFloaters } from '$lib/tiny/floating/floaters.svelte.js';
+  import Backend from '$lib/tiny/backend/backend.svelte';
 
   let { children }: { children: Snippet } = $props();
 
   setBackend({
-    sections: [
+    items: [
       {
         name: 'Public',
         icon: LucideCat,
@@ -20,21 +22,23 @@
       {
         name: 'Index',
         icon: TablerAppWindow,
-        route: resolve('/_admin/index'),
+        route: resolve('/(tiny)/_admin/(nav)/index'),
       },
       {
         name: 'Galleries',
         icon: TablerPhoto,
-        route: resolve('/_admin/galleries'),
-        select: (id) => resolve('/_admin/galleries/[id]', { id }),
+        route: resolve('/(tiny)/_admin/(nav)/galleries'),
+        select: (id) => resolve('/(tiny)/_admin/(nav)/galleries/[id]', { id }),
       },
       {
         name: 'In development',
         icon: TablerCode,
-        route: resolve('/_admin/dev'),
+        route: resolve('/(tiny)/_admin/(nav)/dev'),
       },
     ],
   });
+
+  setFloaters();
 </script>
 
 <svelte:head>
@@ -44,3 +48,5 @@
 <Backend>
   {@render children()}
 </Backend>
+
+<Floaters />

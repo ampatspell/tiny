@@ -17,8 +17,8 @@ export const useEditingLayout = <P extends Properties>(_opts: OptionsInput<Editi
   const opts = options(_opts);
   const backend = useBackend();
 
-  const section = $derived(backend.section);
-  const route = $derived(section.route);
+  const item = $derived(backend.item);
+  const route = $derived(item.route);
 
   const title = $derived(opts.title);
   const properties = $derived(opts.properties);

@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 import { command, getRequestEvent, query } from '$app/server';
-import { getUsers } from '../services.ts';
+import { getUsers } from '../server/services/getters.ts';
 
 export const signIn = command(
   v.strictObject({
@@ -12,7 +12,7 @@ export const signIn = command(
     const token = await users.token.create({ email, password });
     if (token) {
       getRequestEvent().cookies.set('tiny', token, { path: '/' });
-      getCurrent().refresh();
+      getToken().refresh();
     }
   },
 );
@@ -24,20 +24,20 @@ export const signUp = command(
   }),
   async ({ email, password }) => {
     const users = getUsers();
-    await users.create({ email, password, type: 'subscriber' });
+    await users.create({ email, password });
     await signIn({ email, password });
-    getCurrent().refresh();
+    getToken().refresh();
   },
 );
 
-export const getCurrent = query(async () => {
+export const signOut = command(async () => {
+  getRequestEvent().cookies.delete('tiny', { path: '/' });
+  getToken().refresh();
+});
+
+export const getToken = query(async () => {
   const token = getRequestEvent().cookies.get('tiny');
   if (token) {
     return await getUsers().token.verify(token);
   }
-});
-
-export const signOut = command(async () => {
-  getRequestEvent().cookies.delete('tiny', { path: '/' });
-  getCurrent().refresh();
 });

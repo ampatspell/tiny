@@ -35,12 +35,14 @@
     gap: 8px;
     height: 36px;
     min-height: 36px;
-    padding: 0 15px;
+    padding: 0 18px 0 15px;
     min-width: 0;
     border-radius: 3px;
     cursor: default;
     border-bottom: 1px solid var(--tiny-border-color-2);
-    transition: 0.1s ease-in-out color;
+    transition:
+      0.15s ease-in-out background-color,
+      0.15s ease-in-out color;
     &:hover {
       color: var(--hover-color);
       background: var(--tiny-selected-background-color-1);

@@ -17,11 +17,11 @@ export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayout
   const opts = options(_opts);
   const backend = useBackend();
 
-  const section = $derived(backend.section);
-  const title = $derived(section.name);
-  const icon = $derived(section.icon);
-  const index = $derived(section.route);
-  const select = $derived(section.select);
+  const nav = $derived(backend.item);
+  const title = $derived(nav.name);
+  const icon = $derived(nav.icon);
+  const index = $derived(nav.route);
+  const select = $derived(nav.select);
 
   const selected = $derived(opts.selected);
   const models = $derived(opts.models);

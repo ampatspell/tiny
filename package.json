@@ -64,6 +64,10 @@
       "types": "./dist/tiny/card.svelte.d.ts",
       "svelte": "./dist/tiny/card.svelte"
     },
+    "./center.svelte": {
+      "types": "./dist/tiny/center.svelte.d.ts",
+      "svelte": "./dist/tiny/center.svelte"
+    },
     "./color.svelte": {
       "types": "./dist/tiny/color.svelte.d.ts",
       "svelte": "./dist/tiny/color.svelte"
@@ -155,6 +159,10 @@
     "./server/storage/storage": {
       "types": "./dist/tiny/server/storage/storage.d.ts",
       "svelte": "./dist/tiny/server/storage/storage.js"
+    },
+    "./server/services/getters": {
+      "types": "./dist/tiny/server/services/getters.d.ts",
+      "svelte": "./dist/tiny/server/services/getters.js"
     },
     "./server/services/handle": {
       "types": "./dist/tiny/server/services/handle.d.ts",
@@ -280,10 +288,6 @@
       "types": "./dist/tiny/layout/editing/button/save.svelte.d.ts",
       "svelte": "./dist/tiny/layout/editing/button/save.svelte"
     },
-    "./layout/backend/backend.svelte": {
-      "types": "./dist/tiny/layout/backend/backend.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/backend/backend.svelte"
-    },
     "./icons/tabler--balloon.svelte": {
       "types": "./dist/tiny/icons/tabler--balloon.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--balloon.svelte"
@@ -315,6 +319,10 @@
     "./icons/tabler--trash-x.svelte": {
       "types": "./dist/tiny/icons/tabler--trash-x.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--trash-x.svelte"
+    },
+    "./icons/tabler--user-square-rounded.svelte": {
+      "types": "./dist/tiny/icons/tabler--user-square-rounded.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--user-square-rounded.svelte"
     },
     "./icons/tabler--x.svelte": {
       "types": "./dist/tiny/icons/tabler--x.svelte.d.ts",
@@ -444,9 +452,25 @@
       "types": "./dist/tiny/backend/backend.svelte.d.ts",
       "svelte": "./dist/tiny/backend/backend.svelte"
     },
-    "./backend/navigation.svelte": {
-      "types": "./dist/tiny/backend/navigation.svelte.d.ts",
-      "svelte": "./dist/tiny/backend/navigation.svelte"
+    "./backend/navigation/item": {
+      "types": "./dist/tiny/backend/navigation/item.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/item.svelte.js"
+    },
+    "./backend/navigation/item.svelte": {
+      "types": "./dist/tiny/backend/navigation/item.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/item.svelte"
+    },
+    "./backend/navigation/navigation.svelte": {
+      "types": "./dist/tiny/backend/navigation/navigation.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/navigation.svelte"
+    },
+    "./backend/navigation/session.svelte": {
+      "types": "./dist/tiny/backend/navigation/session.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/session.svelte"
+    },
+    "./auth/auth.remote": {
+      "types": "./dist/tiny/auth/auth.remote.d.ts",
+      "svelte": "./dist/tiny/auth/auth.remote.js"
     }
   },
   "peerDependencies": {
@@ -482,6 +506,7 @@
   "dependencies": {
     "@clack/prompts": "^1.7.0",
     "@floating-ui/dom": "^1.8.0",
+    "@fontsource/ubuntu-mono": "^5.3.0",
     "better-sqlite3": "^12.11.1",
     "date-fns": "^4.4.0",
     "dedent": "^1.7.2",

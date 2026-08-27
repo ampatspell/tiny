@@ -1,17 +1,20 @@
 import { browser } from '$app/env';
 import {
   flip,
-  offset,
+  offset as _offset,
   shift,
   type ComputePositionConfig,
   type Middleware,
   type MiddlewareReturn,
+  type OffsetOptions,
+  type Placement,
 } from '@floating-ui/dom';
 
-export const basic = (): ComputePositionConfig => {
+export const basic = (opts?: { placement?: Placement; offset?: OffsetOptions }): ComputePositionConfig => {
+  const { placement = 'bottom-start', offset = 3 } = opts ?? {};
   return {
-    placement: 'bottom-start',
-    middleware: [offset(3), flip(), shift({ padding: 5 })],
+    placement,
+    middleware: [_offset(offset), flip(), shift({ padding: 5 })],
   };
 };
 
@@ -34,6 +37,6 @@ export const mouse = (): ComputePositionConfig => {
   };
   return {
     placement: 'bottom-start',
-    middleware: [middleware, offset(10), flip(), shift({ padding: 5 })],
+    middleware: [middleware, _offset(10), flip(), shift({ padding: 5 })],
   };
 };

@@ -1,14 +1,10 @@
 <script lang="ts">
+  import '@fontsource/ubuntu-mono/400.css';
+  import '@fontsource/ubuntu-mono/700.css';
   import './reset.scss';
   import './style.scss';
 
   let { children } = $props();
 </script>
-
-<svelte:head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet" />
-</svelte:head>
 
 {@render children()}

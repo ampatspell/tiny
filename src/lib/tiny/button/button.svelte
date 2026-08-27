@@ -91,7 +91,7 @@
     outline: 1px solid var(--outline);
     outline-offset: -1px;
     width: 100%;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1;
     padding: var(--padding);
     border-radius: 3px;
