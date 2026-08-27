@@ -7,13 +7,16 @@
   import type { ValidateFunction } from './guard.svelte.ts';
   import Denied from './denied.svelte';
 
-  let { children, validate }: { children: Snippet; validate: ValidateFunction } = $props();
+  let { children, validate }: { children: Snippet; validate?: ValidateFunction } = $props();
 
   let token = $derived(await getToken());
 
   let resolution = $derived.by(() => {
-    let url = page.url;
-    return validate({ url, token });
+    if (validate) {
+      let url = page.url;
+      return validate({ url, token });
+    }
+    return 'allowed';
   });
 </script>
 
