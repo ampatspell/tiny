@@ -148,10 +148,6 @@
       "types": "./dist/tiny/server/utils.d.ts",
       "svelte": "./dist/tiny/server/utils.js"
     },
-    "./server/users/handle": {
-      "types": "./dist/tiny/server/users/handle.d.ts",
-      "svelte": "./dist/tiny/server/users/handle.js"
-    },
     "./server/users/users": {
       "types": "./dist/tiny/server/users/users.d.ts",
       "svelte": "./dist/tiny/server/users/users.js"
@@ -475,6 +471,38 @@
     "./auth/navigation/item.svelte": {
       "types": "./dist/tiny/auth/navigation/item.svelte.d.ts",
       "svelte": "./dist/tiny/auth/navigation/item.svelte"
+    },
+    "./auth/guard/guard": {
+      "types": "./dist/tiny/auth/guard/guard.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/guard.svelte.js"
+    },
+    "./auth/guard/denied.svelte": {
+      "types": "./dist/tiny/auth/guard/denied.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/denied.svelte"
+    },
+    "./auth/guard/guard.svelte": {
+      "types": "./dist/tiny/auth/guard/guard.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/guard.svelte"
+    },
+    "./auth/guard/sign-in.svelte": {
+      "types": "./dist/tiny/auth/guard/sign-in.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/sign-in.svelte"
+    },
+    "./auth/guard/forms/form": {
+      "types": "./dist/tiny/auth/guard/forms/form.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/forms/form.svelte.js"
+    },
+    "./auth/guard/forms/form.svelte": {
+      "types": "./dist/tiny/auth/guard/forms/form.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/forms/form.svelte"
+    },
+    "./auth/guard/forms/sign-in.svelte": {
+      "types": "./dist/tiny/auth/guard/forms/sign-in.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/forms/sign-in.svelte"
+    },
+    "./auth/guard/forms/sign-up.svelte": {
+      "types": "./dist/tiny/auth/guard/forms/sign-up.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/guard/forms/sign-up.svelte"
     }
   },
   "peerDependencies": {
