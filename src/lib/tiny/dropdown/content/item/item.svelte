@@ -40,7 +40,9 @@
     border-radius: 3px;
     cursor: default;
     border-bottom: 1px solid var(--tiny-border-color-2);
-    transition: 0.1s ease-in-out color;
+    transition:
+      0.15s ease-in-out background-color,
+      0.15s ease-in-out color;
     &:hover {
       color: var(--hover-color);
       background: var(--tiny-selected-background-color-1);
