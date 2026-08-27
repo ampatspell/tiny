@@ -7,6 +7,10 @@
   import Icon from '$lib/tiny/icon.svelte';
 </script>
 
+<svelte:head>
+  <title>Welcome to Tiny</title>
+</svelte:head>
+
 <Tiny>
   <div class="page">
     <Screen>
