@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] `<Select />` component
 - [ ] Separate property from presentation models
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list

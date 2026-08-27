@@ -33,13 +33,17 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    height: 36px;
-    min-height: 36px;
-    padding: 0 18px 0 15px;
+    --height: 28px;
+    height: var(--height);
+    min-height: var(--height);
+    padding: 0 10px 0 8px;
     min-width: 0;
     border-radius: 3px;
     cursor: default;
     border-bottom: 1px solid var(--tiny-border-color-2);
+    &:last-child {
+      border-bottom: 1px solid transparent;
+    }
     transition:
       0.15s ease-in-out background-color,
       0.15s ease-in-out color;
