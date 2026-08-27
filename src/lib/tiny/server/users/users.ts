@@ -5,7 +5,6 @@ import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
 import { omit } from '../../utils/object.ts';
 import jwt from 'jsonwebtoken';
-import type { RequestEvent } from '@sveltejs/kit';
 
 export type TokenPayload = {
   id: string;
@@ -106,49 +105,10 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
   });
 
-  const request = (event: RequestEvent) => {
-    const name = 'tiny';
-    const opts = {
-      path: '/',
-    };
-
-    const signIn = async ({ email, password }: { email: string; password: string }) => {
-      const payload = await token.create({ email, password });
-      if (payload) {
-        event.cookies.set(name, payload, opts);
-        return payload;
-      }
-    };
-
-    const signUp = async ({ email, password }: { email: string; password: string }) => {
-      await create({ email, password });
-      return await signIn({ email, password });
-    };
-
-    const signOut = async () => {
-      event.cookies.delete(name, opts);
-    };
-
-    const getToken = async () => {
-      const payload = event.cookies.get(name);
-      if (payload) {
-        return await token.verify(payload);
-      }
-    };
-
-    return {
-      signUp,
-      signIn,
-      signOut,
-      getToken,
-    };
-  };
-
   return {
     create,
     verify,
     token,
-    request,
   };
 };
 

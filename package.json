@@ -72,6 +72,10 @@
       "types": "./dist/tiny/color.svelte.d.ts",
       "svelte": "./dist/tiny/color.svelte"
     },
+    "./entrypoint.svelte": {
+      "types": "./dist/tiny/entrypoint.svelte.d.ts",
+      "svelte": "./dist/tiny/entrypoint.svelte"
+    },
     "./icon.svelte": {
       "types": "./dist/tiny/icon.svelte.d.ts",
       "svelte": "./dist/tiny/icon.svelte"
@@ -147,6 +151,10 @@
     "./server/utils": {
       "types": "./dist/tiny/server/utils.d.ts",
       "svelte": "./dist/tiny/server/utils.js"
+    },
+    "./server/users/request-event": {
+      "types": "./dist/tiny/server/users/request-event.d.ts",
+      "svelte": "./dist/tiny/server/users/request-event.js"
     },
     "./server/users/users": {
       "types": "./dist/tiny/server/users/users.d.ts",
