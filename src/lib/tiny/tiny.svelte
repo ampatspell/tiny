@@ -1,4 +1,8 @@
 <script lang="ts">
+  import '@fontsource/ubuntu-mono/400.css';
+  import '@fontsource/ubuntu-mono/700.css';
+  import mono400 from '@fontsource/ubuntu-mono/400.css?url';
+  import mono700 from '@fontsource/ubuntu-mono/700.css?url';
   import './reset.scss';
   import './style.scss';
 
@@ -6,9 +10,8 @@
 </script>
 
 <svelte:head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" href={mono400} crossorigin="anonymous" />
+  <link rel="preload" as="font" type="font/woff2" href={mono700} crossorigin="anonymous" />
 </svelte:head>
 
 {@render children()}

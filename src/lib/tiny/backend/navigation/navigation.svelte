@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useBackend } from '../backend.svelte.ts';
   import Item from './item.svelte';
-  import Session from './session.svelte';
+  import Auth from '../../auth/navigation/item.svelte';
 
   let backend = useBackend();
 </script>
@@ -13,7 +13,7 @@
     {/each}
   </div>
   <div class="items">
-    <Session />
+    <Auth />
   </div>
 </div>
 
