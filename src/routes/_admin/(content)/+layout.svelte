@@ -13,7 +13,7 @@
   let { children }: { children: Snippet } = $props();
 
   setBackend({
-    sections: [
+    items: [
       {
         name: 'Public',
         icon: LucideCat,

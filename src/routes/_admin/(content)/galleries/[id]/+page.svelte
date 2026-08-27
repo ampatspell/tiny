@@ -31,6 +31,6 @@
     </Form>
   </Section>
   <Section title="Photographs" height="fill">
-    <Placeholder icon={backend.section.icon} label="Section is coming" />
+    <Placeholder icon={backend.item.icon} label="Section is coming" />
   </Section>
 </Editing>
