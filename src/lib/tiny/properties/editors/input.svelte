@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
   import Input from '$lib/tiny/input.svelte';
   import Container from '../container.svelte';
-  import type { InputEditor } from './input.svelte.ts';
+  import type { InputEditor } from './editor.svelte.ts';
 
   let { editor }: { editor: InputEditor<T> } = $props();
 

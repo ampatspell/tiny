@@ -6,9 +6,9 @@
   import Form from '$lib/tiny/form/form.svelte';
   import { usePropertiesContext } from '$lib/tiny/properties/context.svelte.js';
   import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
+  import { useStringEditor } from '$lib/tiny/properties/editors/editor.svelte.js';
   import Input from '$lib/tiny/properties/editors/input.svelte';
   import { useNumberEditor } from '$lib/tiny/properties/editors/number.svelte.js';
-  import { useStringEditor } from '$lib/tiny/properties/editors/string.svelte.js';
 
   usePropertiesContext();
   let properties = useDataProperties({ data: { name: 'hello', cats: 1 } });

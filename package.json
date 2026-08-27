@@ -224,17 +224,13 @@
       "types": "./dist/tiny/properties/input.svelte.d.ts",
       "svelte": "./dist/tiny/properties/input.svelte"
     },
-    "./properties/editors/input": {
-      "types": "./dist/tiny/properties/editors/input.svelte.d.ts",
-      "svelte": "./dist/tiny/properties/editors/input.svelte.js"
+    "./properties/editors/editor": {
+      "types": "./dist/tiny/properties/editors/editor.svelte.d.ts",
+      "svelte": "./dist/tiny/properties/editors/editor.svelte.js"
     },
     "./properties/editors/number": {
       "types": "./dist/tiny/properties/editors/number.svelte.d.ts",
       "svelte": "./dist/tiny/properties/editors/number.svelte.js"
-    },
-    "./properties/editors/string": {
-      "types": "./dist/tiny/properties/editors/string.svelte.d.ts",
-      "svelte": "./dist/tiny/properties/editors/string.svelte.js"
     },
     "./properties/editors/input.svelte": {
       "types": "./dist/tiny/properties/editors/input.svelte.d.ts",
