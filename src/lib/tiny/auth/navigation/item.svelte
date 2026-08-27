@@ -1,11 +1,11 @@
 <script lang="ts">
-  import TablerUserSquareRounded from '$lib/tiny/icons/tabler--user-square-rounded.svelte';
   import Item from '../../backend/navigation/item.svelte';
   import { useFloaters } from '$lib/tiny/floating/floaters.svelte.js';
   import { getToken } from '$lib/tiny/auth/auth.remote.js';
   import { basic } from '$lib/tiny/floating/position.js';
   import Card from './card.svelte';
   import type { TokenPayload } from '$lib/tiny/server/users/users.js';
+  import TablerUser from '$lib/tiny/icons/tabler--user.svelte';
 
   let floaters = useFloaters();
   let token = $derived(await getToken());
@@ -29,7 +29,7 @@
 </script>
 
 {#if token}
-  <Item bind:this={item} icon={TablerUserSquareRounded} {onClick} />
+  <Item bind:this={item} icon={TablerUser} {onClick} />
 {/if}
 
 {#snippet snippet({ request: { token } }: { request: { token: TokenPayload } })}
