@@ -11,9 +11,11 @@
   let {
     title,
     model,
+    secondary,
   }: {
     title: string;
     model: { email: Property<string>; password: Property<string>; perform: () => void };
+    secondary: { label: string; onClick: () => void };
   } = $props();
 </script>
 
@@ -27,7 +29,21 @@
       <Input property={model.password} type="password" />
     </Row>
     <Actions>
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="secondary" onclick={secondary.onClick}>{secondary.label}</div>
       <Button label={title} onClick={model.perform} />
     </Actions>
   </Form>
 </Center>
+
+<style lang="scss">
+  .secondary {
+    flex: 1;
+    font-size: var(--tiny-font-size-small);
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+</style>

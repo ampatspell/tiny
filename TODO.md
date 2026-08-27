@@ -1,13 +1,13 @@
 ## TODO
 
 - [ ] Separate property from presentation models
-- [ ] User authorization and authentication
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Bootstrapped basic backend with auth and index editing
+- [x] User authorization and authentication
 - [x] File component "remove" & "change" should be dropdown options
 - [x] Dropdown relative to the mouse position on click
 - [x] Dropdown

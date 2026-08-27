@@ -8,7 +8,7 @@ export const up = async (db: Kysely<any>) => {
     .addColumn('email', 'text', (col) => col.notNull())
     .addColumn('salt', 'text')
     .addColumn('hash', 'text')
-    .addColumn('type', 'text', (col) => col.notNull())
+    .addColumn('role', 'text', (col) => col.notNull())
     .addUniqueConstraint('file_id_variant_unique', ['email'])
     .execute();
 

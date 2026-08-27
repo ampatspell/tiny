@@ -1,6 +1,7 @@
 import * as v from 'valibot';
-import { command, getRequestEvent, query } from '$app/server';
+import { command, query } from '$app/server';
 import { getUsers } from '../server/services/getters.ts';
+import { redirect } from '@sveltejs/kit';
 
 export const signIn = command(
   v.strictObject({
@@ -9,9 +10,7 @@ export const signIn = command(
   }),
   async ({ email, password }) => {
     const users = getUsers();
-    const token = await users.token.create({ email, password });
-    if (token) {
-      getRequestEvent().cookies.set('tiny', token, { path: '/' });
+    if (await users.request.signIn({ email, password })) {
       getToken().refresh();
     }
   },
@@ -23,21 +22,17 @@ export const signUp = command(
     password: v.string(),
   }),
   async ({ email, password }) => {
-    const users = getUsers();
-    await users.create({ email, password });
-    await signIn({ email, password });
-    getToken().refresh();
+    if (await getUsers().request.signUp({ email, password })) {
+      getToken().refresh();
+    }
   },
 );
 
 export const signOut = command(async () => {
-  getRequestEvent().cookies.delete('tiny', { path: '/' });
+  await getUsers().request.signOut();
   getToken().refresh();
 });
 
 export const getToken = query(async () => {
-  const token = getRequestEvent().cookies.get('tiny');
-  if (token) {
-    return await getUsers().token.verify(token);
-  }
+  return getUsers().request.getToken();
 });

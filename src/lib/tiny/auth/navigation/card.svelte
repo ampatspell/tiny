@@ -10,9 +10,6 @@
   import Form from '$lib/tiny/form/form.svelte';
   import Header from '$lib/tiny/form/header.svelte';
   import type { TokenPayload } from '$lib/tiny/server/users/users.js';
-  import Icon from '../../button/icon.svelte';
-  import ButtonLabel from '../../button/label.svelte';
-  import TablerX from '../../icons/tabler--x.svelte';
   import { signOut } from '../auth.remote.ts';
 
   let { token }: { token: TokenPayload } = $props();
@@ -28,13 +25,10 @@
     <Header title={token.email} />
     <Content>
       <Row>
-        <FormLabel value={token.type} />
+        <FormLabel value={token.role} />
       </Row>
       <Actions>
-        <Button onClick={onSignOut}>
-          <Icon icon={TablerX} />
-          <ButtonLabel label="Sign out" />
-        </Button>
+        <Button label="Sign out" onClick={onSignOut} />
       </Actions>
     </Content>
   </Form>

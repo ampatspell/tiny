@@ -5,11 +5,12 @@ import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
 import { omit } from '../../utils/object.ts';
 import jwt from 'jsonwebtoken';
+import { getRequestEvent } from '$app/server';
 
 export type TokenPayload = {
   id: string;
   email: string;
-  type: string;
+  role: string;
 };
 
 export type CreateUsersOptions = {
@@ -40,16 +41,16 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
   });
 
-  const create = async ({ email, password, type }: { email: string; password: string; type?: string }) => {
+  const create = async ({ email, password, role }: { email: string; password: string; role?: string }) => {
     const { salt, hash } = crypto.create({ password });
-    if (!type) {
+    if (!role) {
       const { count } = await db.selectFrom('users').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
-      type = count === 0 ? 'admin' : 'subscriber';
+      role = count === 0 ? 'admin' : 'subscriber';
     }
     const result = await db
       .insertInto('users')
       .returningAll()
-      .values({ id: uid(), email, type, hash, salt })
+      .values({ id: uid(), email, role, hash, salt })
       .executeTakeFirstOrThrow();
 
     return omit(result, ['hash', 'salt']);
@@ -58,9 +59,9 @@ export const createUsers = async (opts: CreateUsersOptions) => {
   const verify = async ({ email, password }: { email: string; password: string }) => {
     const record = await db.selectFrom('users').where('email', '==', email).selectAll().executeTakeFirst();
     if (record) {
-      const { id, type, salt, hash } = record;
+      const { id, role, salt, hash } = record;
       if (hash && salt && crypto.verify({ hash, salt, password })) {
-        return { id, email, type };
+        return { id, email, role };
       }
     }
   };
@@ -105,10 +106,49 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
   });
 
+  const request = run(() => {
+    const name = 'tiny';
+    const opts = {
+      path: '/',
+    };
+
+    const signIn = async ({ email, password }: { email: string; password: string }) => {
+      const payload = await token.create({ email, password });
+      if (payload) {
+        getRequestEvent().cookies.set(name, payload, opts);
+        return payload;
+      }
+    };
+
+    const signUp = async ({ email, password }: { email: string; password: string }) => {
+      await create({ email, password });
+      return await signIn({ email, password });
+    };
+
+    const signOut = async () => {
+      getRequestEvent().cookies.delete(name, opts);
+    };
+
+    const getToken = async () => {
+      const payload = getRequestEvent().cookies.get(name);
+      if (payload) {
+        return await token.verify(payload);
+      }
+    };
+
+    return {
+      signUp,
+      signIn,
+      signOut,
+      getToken,
+    };
+  });
+
   return {
     create,
     verify,
     token,
+    request,
   };
 };
 

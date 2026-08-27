@@ -15,7 +15,7 @@
   </div>
   <a href={resolve('/(tiny)/_admin')} class="edit">
     <Icon icon={TablerBalloon} />
-    <div class="label">open backend</div>
+    <div class="label">open backend (admin/admin)</div>
   </a>
 </Tiny>
 

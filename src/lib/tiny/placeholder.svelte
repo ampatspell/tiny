@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Component } from 'svelte';
+  import type { Component, Snippet } from 'svelte';
   import Icon from './icon.svelte';
 
-  let { icon, label }: { icon?: Component; label?: string } = $props();
+  let { icon, label, children }: { icon?: Component; label?: string; children?: Snippet } = $props();
 </script>
 
 <div class="placeholder">
@@ -10,6 +10,11 @@
     <Icon {icon} size="large" />
     {#if label}
       <div class="label">{label}</div>
+    {/if}
+    {#if children}
+      <div class="actions">
+        {@render children()}
+      </div>
     {/if}
   </div>
 </div>
@@ -30,6 +35,14 @@
       gap: 10px;
       > .label {
         font-size: var(--tiny-font-size-small);
+      }
+      > .actions {
+        padding: 10px 0 0 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
       }
     }
   }
