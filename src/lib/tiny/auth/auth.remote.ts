@@ -1,7 +1,6 @@
 import * as v from 'valibot';
-import { command, query } from '$app/server';
+import { command, getRequestEvent, query } from '$app/server';
 import { getUsers } from '../server/services/getters.ts';
-import { redirect } from '@sveltejs/kit';
 
 export const signIn = command(
   v.strictObject({
@@ -10,7 +9,7 @@ export const signIn = command(
   }),
   async ({ email, password }) => {
     const users = getUsers();
-    if (await users.request.signIn({ email, password })) {
+    if (await users.request(getRequestEvent()).signIn({ email, password })) {
       getToken().refresh();
     }
   },
@@ -22,17 +21,17 @@ export const signUp = command(
     password: v.string(),
   }),
   async ({ email, password }) => {
-    if (await getUsers().request.signUp({ email, password })) {
+    if (await getUsers().request(getRequestEvent()).signUp({ email, password })) {
       getToken().refresh();
     }
   },
 );
 
 export const signOut = command(async () => {
-  await getUsers().request.signOut();
+  await getUsers().request(getRequestEvent()).signOut();
   getToken().refresh();
 });
 
 export const getToken = query(async () => {
-  return getUsers().request.getToken();
+  return getUsers().request(getRequestEvent()).getToken();
 });

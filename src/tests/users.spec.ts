@@ -7,7 +7,7 @@ describe('users', () => {
       const result = await services.users.create({
         email: 'zeeba@gmail.com',
         password: 'huluu',
-        type: 'admin',
+        role: 'admin',
       });
 
       expect(result.id).toBeTruthy();
@@ -20,7 +20,7 @@ describe('users', () => {
       await services.users.create({
         email: 'zeeba@gmail.com',
         password: 'huluu',
-        type: 'admin',
+        role: 'admin',
       });
 
       {
@@ -44,7 +44,7 @@ describe('users', () => {
       await services.users.create({
         email: 'zeeba@gmail.com',
         password: 'huluu',
-        type: 'admin',
+        role: 'admin',
       });
 
       const token = await services.users.token.create({
@@ -59,7 +59,7 @@ describe('users', () => {
         exp: (data as Record<string, unknown>).exp,
         iat: (data as Record<string, unknown>).iat,
         id: data.id,
-        type: 'admin',
+        role: 'admin',
       });
     });
   });

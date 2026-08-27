@@ -5,7 +5,7 @@ import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
 import { omit } from '../../utils/object.ts';
 import jwt from 'jsonwebtoken';
-import { getRequestEvent } from '$app/server';
+import type { RequestEvent } from '@sveltejs/kit';
 
 export type TokenPayload = {
   id: string;
@@ -106,7 +106,7 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
   });
 
-  const request = run(() => {
+  const request = (event: RequestEvent) => {
     const name = 'tiny';
     const opts = {
       path: '/',
@@ -115,7 +115,7 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     const signIn = async ({ email, password }: { email: string; password: string }) => {
       const payload = await token.create({ email, password });
       if (payload) {
-        getRequestEvent().cookies.set(name, payload, opts);
+        event.cookies.set(name, payload, opts);
         return payload;
       }
     };
@@ -126,11 +126,11 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
 
     const signOut = async () => {
-      getRequestEvent().cookies.delete(name, opts);
+      event.cookies.delete(name, opts);
     };
 
     const getToken = async () => {
-      const payload = getRequestEvent().cookies.get(name);
+      const payload = event.cookies.get(name);
       if (payload) {
         return await token.verify(payload);
       }
@@ -142,7 +142,7 @@ export const createUsers = async (opts: CreateUsersOptions) => {
       signOut,
       getToken,
     };
-  });
+  };
 
   return {
     create,
