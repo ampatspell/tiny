@@ -1,12 +1,12 @@
 import * as v from 'valibot';
-import { command, query } from '$app/server';
+import { command, getRequestEvent, query } from '$app/server';
 import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
 import { uid } from '$lib/tiny/server/utils.js';
 import type { QueryResponse } from '$lib/tiny/utils/utils.js';
+import { assertRole } from '$lib/tiny/server/users/assert.js';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
-
   let index = await db.selectFrom('index').selectAll().limit(1).executeTakeFirst();
   if (!index) {
     index = await db
@@ -46,6 +46,8 @@ export const updateIndex = command(
     backgroundOffset: v.optional(v.number()),
   }),
   async (props) => {
+    assertRole(getRequestEvent(), 'admin');
+
     const db = getDatabase();
     await db.updateTable('index').set(props).execute();
 
@@ -58,6 +60,8 @@ export const updateIndexFile = command(
     file: v.optional(v.file()),
   }),
   async ({ file }) => {
+    assertRole(getRequestEvent(), 'admin');
+
     const db = getDatabase();
     const files = getFiles();
 

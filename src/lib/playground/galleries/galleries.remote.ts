@@ -1,9 +1,10 @@
 import * as v from 'valibot';
-import { command, query } from '$app/server';
+import { command, getRequestEvent, query } from '$app/server';
 import { getDatabase } from '../../tiny/server/services/getters.ts';
 import type { QueryResponse } from '$lib/tiny/utils/utils.js';
 import { uid } from '$lib/tiny/server/utils.js';
 import { omit } from '$lib/tiny/utils/object.js';
+import { assertRole } from '$lib/tiny/server/users/assert.js';
 
 export const getGalleries = query(async () => {
   const db = getDatabase();
@@ -23,6 +24,8 @@ export const addGallery = command(
     permalink: v.optional(v.string()),
   }),
   async (props) => {
+    assertRole(getRequestEvent(), 'admin');
+
     const { id } = await getDatabase()
       .insertInto('galleries')
       .values({
@@ -45,6 +48,8 @@ export const updateGallery = command(
     permalink: v.optional(v.string()),
   }),
   async (props) => {
+    assertRole(getRequestEvent(), 'admin');
+
     await getDatabase()
       .updateTable('galleries')
       .set(omit(props, ['id']))
@@ -57,6 +62,8 @@ export const updateGallery = command(
 );
 
 export const deleteGallery = command(v.strictObject({ id: v.string() }), async ({ id }) => {
+  assertRole(getRequestEvent(), 'admin');
+
   await getDatabase().deleteFrom('galleries').where('id', '==', id).execute();
   getGalleries().refresh();
 });
