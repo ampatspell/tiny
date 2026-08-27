@@ -1,7 +1,10 @@
 ## TODO
 
-- [ ] `<Select />` component
 - [ ] Separate property from presentation models
+- [ ] Meta should be moved from properties to editors
+- [ ] Users section with form to change password, role
+- [ ] resend.com integration
+- [ ] `<Select />` component
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
