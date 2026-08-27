@@ -46,7 +46,7 @@ export const updateIndex = command(
     backgroundOffset: v.optional(v.number()),
   }),
   async (props) => {
-    assertRole('admin');
+    await assertRole('admin');
 
     const db = getDatabase();
     await db.updateTable('index').set(props).execute();
@@ -60,7 +60,7 @@ export const updateIndexFile = command(
     file: v.optional(v.file()),
   }),
   async ({ file }) => {
-    assertRole('admin');
+    await assertRole('admin');
 
     const db = getDatabase();
     const files = getFiles();

@@ -24,7 +24,7 @@ export const addGallery = command(
     permalink: v.optional(v.string()),
   }),
   async (props) => {
-    assertRole('admin');
+    await assertRole('admin');
 
     const { id } = await getDatabase()
       .insertInto('galleries')
@@ -48,7 +48,7 @@ export const updateGallery = command(
     permalink: v.optional(v.string()),
   }),
   async (props) => {
-    assertRole('admin');
+    await assertRole('admin');
 
     await getDatabase()
       .updateTable('galleries')
@@ -62,7 +62,7 @@ export const updateGallery = command(
 );
 
 export const deleteGallery = command(v.strictObject({ id: v.string() }), async ({ id }) => {
-  assertRole('admin');
+  await assertRole('admin');
 
   await getDatabase().deleteFrom('galleries').where('id', '==', id).execute();
   getGalleries().refresh();
