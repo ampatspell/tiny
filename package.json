@@ -464,13 +464,17 @@
       "types": "./dist/tiny/backend/navigation/navigation.svelte.d.ts",
       "svelte": "./dist/tiny/backend/navigation/navigation.svelte"
     },
-    "./backend/navigation/session.svelte": {
-      "types": "./dist/tiny/backend/navigation/session.svelte.d.ts",
-      "svelte": "./dist/tiny/backend/navigation/session.svelte"
-    },
     "./auth/auth.remote": {
       "types": "./dist/tiny/auth/auth.remote.d.ts",
       "svelte": "./dist/tiny/auth/auth.remote.js"
+    },
+    "./auth/navigation/card.svelte": {
+      "types": "./dist/tiny/auth/navigation/card.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/navigation/card.svelte"
+    },
+    "./auth/navigation/item.svelte": {
+      "types": "./dist/tiny/auth/navigation/item.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/navigation/item.svelte"
     }
   },
   "peerDependencies": {
