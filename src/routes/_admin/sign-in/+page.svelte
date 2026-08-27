@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Auth from '$lib/playground/auth/auth.svelte';
+  import Form from '$lib/playground/auth/form.svelte';
   import { useSignIn } from '$lib/playground/auth/auth.svelte.js';
 
   let model = useSignIn();
 </script>
 
-<Auth {model} title="Sign in" />
+<Form {model} title="Sign in" />
