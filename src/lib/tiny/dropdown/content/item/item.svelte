@@ -35,7 +35,7 @@
     gap: 8px;
     height: 36px;
     min-height: 36px;
-    padding: 0 15px;
+    padding: 0 18px 0 15px;
     min-width: 0;
     border-radius: 3px;
     cursor: default;

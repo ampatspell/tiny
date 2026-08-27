@@ -29,7 +29,7 @@
   let arrow = $state<HTMLDivElement>();
 
   let show = $state({ reference: false, tooltip: false });
-  let _isShown = new Debounced(() => show.reference || show.tooltip, 100);
+  let _isShown = new Debounced(() => label && (show.reference || show.tooltip), 100);
   let isShown = $derived(_isShown.current);
 
   let tooltipStyle = $state<string>();

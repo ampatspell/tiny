@@ -3,7 +3,7 @@ import { resolve } from '$app/paths';
 import type { ResolvedPathname } from '$app/types';
 import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
 import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
-import { signIn, signUp } from './auth.remote.ts';
+import { signIn, signUp } from '$lib/tiny/auth/auth.remote.js';
 
 export const useForm = (opts: {
   perform: (data: { email: string; password: string }) => Promise<void>;

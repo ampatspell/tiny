@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
-  import { getCurrent, signOut } from '$lib/playground/auth/auth.remote.js';
+  import { getToken, signOut } from '$lib/tiny/auth/auth.remote.js';
   import Button from '$lib/tiny/button/button.svelte';
   import Content from '$lib/tiny/form/content/content.svelte';
   import Label from '$lib/tiny/form/content/label.svelte';
@@ -9,7 +9,7 @@
   import Form from '$lib/tiny/form/form.svelte';
   import Header from '$lib/tiny/form/header.svelte';
 
-  let user = $derived(await getCurrent());
+  let user = $derived(await getToken());
   let onSignOut = async () => {
     await signOut();
     goto(resolve('/'));

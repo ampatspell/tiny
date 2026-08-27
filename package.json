@@ -160,6 +160,10 @@
       "types": "./dist/tiny/server/storage/storage.d.ts",
       "svelte": "./dist/tiny/server/storage/storage.js"
     },
+    "./server/services/getters": {
+      "types": "./dist/tiny/server/services/getters.d.ts",
+      "svelte": "./dist/tiny/server/services/getters.js"
+    },
     "./server/services/handle": {
       "types": "./dist/tiny/server/services/handle.d.ts",
       "svelte": "./dist/tiny/server/services/handle.js"
@@ -316,6 +320,10 @@
       "types": "./dist/tiny/icons/tabler--trash-x.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--trash-x.svelte"
     },
+    "./icons/tabler--user-square-rounded.svelte": {
+      "types": "./dist/tiny/icons/tabler--user-square-rounded.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--user-square-rounded.svelte"
+    },
     "./icons/tabler--x.svelte": {
       "types": "./dist/tiny/icons/tabler--x.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--x.svelte"
@@ -444,9 +452,25 @@
       "types": "./dist/tiny/backend/backend.svelte.d.ts",
       "svelte": "./dist/tiny/backend/backend.svelte"
     },
-    "./backend/navigation.svelte": {
-      "types": "./dist/tiny/backend/navigation.svelte.d.ts",
-      "svelte": "./dist/tiny/backend/navigation.svelte"
+    "./backend/navigation/item": {
+      "types": "./dist/tiny/backend/navigation/item.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/item.svelte.js"
+    },
+    "./backend/navigation/item.svelte": {
+      "types": "./dist/tiny/backend/navigation/item.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/item.svelte"
+    },
+    "./backend/navigation/navigation.svelte": {
+      "types": "./dist/tiny/backend/navigation/navigation.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/navigation.svelte"
+    },
+    "./backend/navigation/session.svelte": {
+      "types": "./dist/tiny/backend/navigation/session.svelte.d.ts",
+      "svelte": "./dist/tiny/backend/navigation/session.svelte"
+    },
+    "./auth/auth.remote": {
+      "types": "./dist/tiny/auth/auth.remote.d.ts",
+      "svelte": "./dist/tiny/auth/auth.remote.js"
     }
   },
   "peerDependencies": {

@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
-import { getDatabase, getFiles } from '../services.js';
+import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
 import { uid } from '$lib/tiny/server/utils.js';
 import type { QueryResponse } from '$lib/tiny/utils/utils.js';
 

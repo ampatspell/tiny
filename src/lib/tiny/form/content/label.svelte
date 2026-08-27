@@ -1,7 +1,7 @@
 <script lang="ts">
   import { widow } from '$lib/tiny/utils/string.js';
 
-  let { value }: { value: string } = $props();
+  let { value = '' }: { value: string | undefined } = $props();
 </script>
 
 <div class="label">{widow(value)}</div>
