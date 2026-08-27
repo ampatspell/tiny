@@ -27,7 +27,7 @@ export const useForm = (opts: {
   };
 };
 
-const route = resolve('/_admin/(content)');
+const route = resolve('/(tiny)/_admin/(nav)');
 
 export const useSignIn = () => useForm({ perform: (data) => signIn(data), route });
 export const useSignUp = () => useForm({ perform: (data) => signUp(data), route });

@@ -6,7 +6,15 @@ export default defineConfig({
   plugins: [
     sveltekit({
       adapter: adapter(),
-      compilerOptions: { runes: true, experimental: { async: true } },
+      inspector: {
+        toggleKeyCombo: 'alt-x',
+      },
+      compilerOptions: {
+        runes: true,
+        experimental: {
+          async: true,
+        },
+      },
       experimental: {
         explicitEnvironmentVariables: true,
         handleRenderingErrors: true,
@@ -16,7 +24,9 @@ export default defineConfig({
     }),
   ],
   test: {
-    expect: { requireAssertions: true },
+    expect: {
+      requireAssertions: true,
+    },
     projects: [
       {
         extends: './vite.config.ts',

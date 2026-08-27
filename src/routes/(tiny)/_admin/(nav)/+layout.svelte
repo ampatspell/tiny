@@ -22,18 +22,18 @@
       {
         name: 'Index',
         icon: TablerAppWindow,
-        route: resolve('/_admin/(content)/index'),
+        route: resolve('/(tiny)/_admin/(nav)/index'),
       },
       {
         name: 'Galleries',
         icon: TablerPhoto,
-        route: resolve('/_admin/(content)/galleries'),
-        select: (id) => resolve('/_admin/(content)/galleries/[id]', { id }),
+        route: resolve('/(tiny)/_admin/(nav)/galleries'),
+        select: (id) => resolve('/(tiny)/_admin/(nav)/galleries/[id]', { id }),
       },
       {
         name: 'In development',
         icon: TablerCode,
-        route: resolve('/_admin/(content)/dev'),
+        route: resolve('/(tiny)/_admin/(nav)/dev'),
       },
     ],
   });
