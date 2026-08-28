@@ -2,7 +2,7 @@ import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svel
 import { untrack } from 'svelte';
 import type { InputField } from './input.svelte.ts';
 import { Input } from './imports.ts';
-import type { Property } from '../properties/property.svelte.ts';
+import { createMeta, type FieldOptions } from './field.svelte.ts';
 
 const integerToString = (number: number | undefined) => {
   if (typeof number === 'number') {
@@ -21,13 +21,13 @@ const stringToInteger = (string: string) => {
   return undefined;
 };
 
-export const numberField = (
-  _opts: OptionsInput<{ property: Property<number>; fallback?: number }>,
-): InputField<number> => {
+export const numberField = (_opts: OptionsInput<FieldOptions<number> & { fallback?: number }>): InputField<number> => {
   const opts = options(_opts);
   const fallback = $derived(opts.fallback ?? 0);
   const property = $derived(opts.property);
   const value = $derived(integerToString(property.value) ?? '');
+  const meta = createMeta(opts);
+
   let local = $state<string>(untrack(() => value));
 
   $effect(() => {
@@ -59,9 +59,10 @@ export const numberField = (
       component: Input,
       property: getter(() => property),
       value: getter(() => local),
+      type: 'text',
       onInput,
       onBlur,
-      type: 'text',
+      meta,
     },
     { name: 'NumberField' },
   );

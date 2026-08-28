@@ -13,9 +13,9 @@
     children?: Snippet;
   } = $props();
 
-  let label = $derived(field.property.meta.label);
-  let isRequired = $derived(field.property.meta.isRequired);
-  let description = $derived(field.property.meta.description);
+  let label = $derived(field.meta.label);
+  let isRequired = $derived(field.meta.isRequired);
+  let description = $derived(field.meta.description);
   let error = $derived(field.property.touched.error);
 </script>
 

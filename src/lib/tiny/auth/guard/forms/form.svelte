@@ -3,7 +3,7 @@
   import Center from '$lib/tiny/center.svelte';
   import type { InputField } from '$lib/tiny/fields/input.svelte.js';
   import Actions from '$lib/tiny/form/actions.svelte';
-  import Field from '$lib/tiny/form/content/field.svelte';
+  import Fields from '$lib/tiny/form/content/fields.svelte';
   import Form from '$lib/tiny/form/form.svelte';
   import Header from '$lib/tiny/form/header.svelte';
 
@@ -21,8 +21,8 @@
 <Center>
   <Form size="small">
     <Header {title} />
-    <Field field={model.email} />
-    <Field field={model.password} />
+    <Fields field={model.email} />
+    <Fields field={model.password} />
     <Actions>
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->

@@ -1,9 +1,8 @@
 import { Color, Input } from './imports.ts';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import type { Component } from 'svelte';
-import type { Field } from './field.svelte.ts';
+import { createMeta, type Field, type FieldOptions } from './field.svelte.ts';
 import type { InputType } from '$lib/tiny/input.js';
-import type { Property } from '../properties/property.svelte.ts';
 
 export type InputField<T> = Field<T> & {
   value: string;
@@ -23,7 +22,7 @@ export const createInputField = <T>({
   fromString: (value: string) => T;
   component: Component<{ field: InputField<T> }>;
 }) => {
-  return (_opts: OptionsInput<{ property: Property<T>; type?: InputType }>): InputField<T> => {
+  return (_opts: OptionsInput<FieldOptions<T> & { type?: InputType }>): InputField<T> => {
     const opts = options(_opts);
 
     const property = $derived(opts.property);
@@ -31,15 +30,17 @@ export const createInputField = <T>({
     const onInput = (value: string) => property.update(fromString(value));
     const onBlur = (value: string) => property.update(fromString(value));
     const type = $derived(opts.type ?? 'text');
+    const meta = createMeta(opts);
 
     return options(
       {
+        component,
         property: getter(() => property),
         value: getter(() => value),
         onInput,
         onBlur,
         type,
-        component,
+        meta,
       },
       { name },
     );
