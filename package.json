@@ -276,6 +276,10 @@
       "types": "./dist/tiny/layout/editing/button/save.svelte.d.ts",
       "svelte": "./dist/tiny/layout/editing/button/save.svelte"
     },
+    "./icons/lucide--cat.svelte": {
+      "types": "./dist/tiny/icons/lucide--cat.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/lucide--cat.svelte"
+    },
     "./icons/tabler--balloon.svelte": {
       "types": "./dist/tiny/icons/tabler--balloon.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--balloon.svelte"
