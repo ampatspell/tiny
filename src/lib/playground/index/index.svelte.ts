@@ -1,5 +1,5 @@
 import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
-import { useDataFields } from '$lib/tiny/properties/editors/data.svelte.js';
+import { useDataFields } from '$lib/tiny/fields/data.svelte.js';
 import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
 import { asFile } from '$lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';

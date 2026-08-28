@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Property } from '$lib/tiny/properties/property.svelte.js';
   import type { Snippet } from 'svelte';
-  import Icon from '../icon.svelte';
   import TablerInfoCircle from '$lib/tiny/icons/tabler--info-circle.svelte';
   import Tooltip from '../floating/tooltip.svelte';
+  import Icon from '../icon.svelte';
 
   let {
     property,

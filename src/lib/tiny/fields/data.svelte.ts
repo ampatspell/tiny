@@ -1,11 +1,12 @@
+import type { InputType } from '$lib/tiny/input.js';
 import type { UniversalFile } from '$lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { run } from '$lib/tiny/utils/utils.js';
-import { useDataProperties, type UseDataPropertiesOptions } from '../data.svelte.js';
-import type { Property, UsePropertyOptions } from '../property.svelte.ts';
+import { useDataProperties, type UseDataPropertiesOptions } from '../properties/data.svelte.ts';
+import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
 import { fileField } from './file.svelte.ts';
-import { useNumberEditor } from './number.svelte.ts';
-import { colorField, stringField } from './string.svelte.ts';
+import { colorField, stringField } from './input.svelte.ts';
+import { numberField } from './number.svelte.ts';
 
 export type StringKey<T> = {
   [K in keyof T]: T[K] extends string ? K & string : never;
@@ -30,14 +31,14 @@ export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsI
       return property as Property<T>;
     };
 
-    const string = <K extends StringKey<D>>(key: K, opts?: PropertyOpts<K>) => {
+    const string = <K extends StringKey<D>>(key: K, opts?: PropertyOpts<K> & { type?: InputType }) => {
       const property = as<string>(properties.property(key, opts));
-      return stringField({ property });
+      return stringField({ property, type: opts?.type });
     };
 
     const number = <K extends NumberKey<D>>(key: K, opts?: PropertyOpts<K>) => {
       const property = as<number>(properties.property(key, opts));
-      return useNumberEditor({ property });
+      return numberField({ property });
     };
 
     const color = <K extends StringKey<D>>(key: K, opts?: PropertyOpts<K>) => {

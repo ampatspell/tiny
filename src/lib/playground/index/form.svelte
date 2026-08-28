@@ -3,7 +3,7 @@
   import Form from '$lib/tiny/form/form.svelte';
   import Content from '$lib/tiny/form/content/content.svelte';
   import Row from '$lib/tiny/form/content/row.svelte';
-  import Field from '$lib/tiny/properties/editors/field.svelte';
+  import Field from '$lib/tiny/fields/field.svelte';
 
   let { properties }: { properties: IndexProperties } = $props();
   let fields = $derived(properties.fields);

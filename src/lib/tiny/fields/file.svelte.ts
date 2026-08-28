@@ -1,6 +1,6 @@
 import type { UniversalFile } from '$lib/tiny/utils/files.svelte.js';
 import { options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
-import type { Property } from '../property.svelte.ts';
+import type { Property } from '../properties/property.svelte.ts';
 import type { Field } from './field.svelte.ts';
 import { File } from './imports.ts';
 
@@ -10,11 +10,14 @@ export const fileField = (
   const opts = options(_opts);
 
   const property = $derived(opts.property);
+  const update = (next: UniversalFile | undefined) => property.update(next);
+
   const accept = $derived(opts.accept);
 
   return options(
     {
       property,
+      update,
       accept,
       component: File,
     },

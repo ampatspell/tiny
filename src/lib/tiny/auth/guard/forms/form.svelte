@@ -1,12 +1,12 @@
 <script lang="ts">
   import Button from '$lib/tiny/button/button.svelte';
   import Center from '$lib/tiny/center.svelte';
+  import Field from '$lib/tiny/fields/field.svelte';
+  import type { InputField } from '$lib/tiny/fields/input.svelte.js';
   import Actions from '$lib/tiny/form/actions.svelte';
   import Row from '$lib/tiny/form/content/row.svelte';
   import Form from '$lib/tiny/form/form.svelte';
   import Header from '$lib/tiny/form/header.svelte';
-  import Input from '$lib/tiny/properties/input.svelte';
-  import type { Property } from '$lib/tiny/properties/property.svelte.js';
 
   let {
     title,
@@ -14,7 +14,7 @@
     secondary,
   }: {
     title: string;
-    model: { email: Property<string>; password: Property<string>; perform: () => void };
+    model: { email: InputField<string>; password: InputField<string>; perform: () => void };
     secondary: { label: string; onClick: () => void };
   } = $props();
 </script>
@@ -23,10 +23,10 @@
   <Form size="small">
     <Header {title} />
     <Row>
-      <Input property={model.email} />
+      <Field field={model.email} />
     </Row>
     <Row>
-      <Input property={model.password} type="password" />
+      <Field field={model.password} />
     </Row>
     <Actions>
       <!-- svelte-ignore a11y_click_events_have_key_events -->
