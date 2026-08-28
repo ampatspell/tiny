@@ -1,6 +1,6 @@
 {
   "name": "@ampatspell/tiny",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "license": "MIT",
   "scripts": {
     "dev": "vite dev",
