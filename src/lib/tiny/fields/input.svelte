@@ -9,8 +9,6 @@
   let type = $derived(field.type);
 </script>
 
-InputField
-
 <Container {property}>
   <Input value={field.value} onInput={field.onInput} onBlur={field.onBlur} {type} />
 </Container>
