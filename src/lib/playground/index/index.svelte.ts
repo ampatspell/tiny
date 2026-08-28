@@ -30,7 +30,9 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
       title: all.field.string('title', { validator: notBlank() }),
       description: all.field.string('description'),
       background: all.field.file('background', { accept: images }),
-      backgroundOffset: all.field.number('backgroundOffset'),
+      backgroundOffset: all.field.number('backgroundOffset', {
+        meta: { description: 'Negative values crops the image' },
+      }),
       indexBackgroundColor: all.field.color('indexBackgroundColor'),
       indexTextColor: all.field.color('indexTextColor'),
       backgroundColor: all.field.color('backgroundColor'),
