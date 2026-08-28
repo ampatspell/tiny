@@ -25,7 +25,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
     })),
   });
 
-  const title = fields.field.string('title', { validator: notBlank(), passive: true });
+  const title = fields.field.string('title', { validator: notBlank() });
   const description = fields.field.string('description');
   const background = fields.field.file('background', { accept: images });
   const backgroundOffset = fields.field.number('backgroundOffset', {
