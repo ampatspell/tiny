@@ -3,6 +3,7 @@
   import type { Field } from './field.svelte.ts';
 
   let { field }: { field: E } = $props();
+
   let Impl = $derived(field.component);
 </script>
 
