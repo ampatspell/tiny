@@ -21,21 +21,25 @@ run(async () => {
         exports[`./${clean}.svelte`] = {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
           svelte: `./dist/tiny/${clean}.svelte`,
+          default: `./dist/tiny/${clean}.svelte`,
         };
       } else if (path.endsWith('.svelte.ts')) {
         exports[`./${clean}`] = {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
           svelte: `./dist/tiny/${clean}.svelte.js`,
+          default: `./dist/tiny/${clean}.svelte.js`,
         };
       } else if (path.endsWith('.remote.ts')) {
         exports[`./${clean}.remote`] = {
           types: `./dist/tiny/${clean}.remote.d.ts`,
           svelte: `./dist/tiny/${clean}.remote.js`,
+          default: `./dist/tiny/${clean}.remote.js`,
         };
       } else if (path.endsWith('.ts')) {
         exports[`./${clean}`] = {
           types: `./dist/tiny/${clean}.d.ts`,
           svelte: `./dist/tiny/${clean}.js`,
+          default: `./dist/tiny/${clean}.js`,
         };
       }
     }
