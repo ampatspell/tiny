@@ -18,33 +18,29 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
 
   const broadcast = useBroadcastChannel();
 
-  const fields = run(() => {
-    const all = useDataFields({
-      data: getter(() => ({
-        ...data,
-        background: asFile(data.background),
-      })),
-    });
-    return {
-      all,
-      title: all.field.string('title', { validator: notBlank() }),
-      description: all.field.string('description'),
-      background: all.field.file('background', { accept: images }),
-      backgroundOffset: all.field.number('backgroundOffset', {
-        meta: { description: 'Negative values crops the image' },
-      }),
-      indexBackgroundColor: all.field.color('indexBackgroundColor'),
-      indexTextColor: all.field.color('indexTextColor'),
-      backgroundColor: all.field.color('backgroundColor'),
-      textColor: all.field.color('textColor'),
-    };
+  const fields = useDataFields({
+    data: getter(() => ({
+      ...data,
+      background: asFile(data.background),
+    })),
   });
 
-  const isDirty = $derived(fields.all.isDirty);
+  const title = fields.field.string('title', { validator: notBlank(), passive: true });
+  const description = fields.field.string('description');
+  const background = fields.field.file('background', { accept: images });
+  const backgroundOffset = fields.field.number('backgroundOffset', {
+    meta: { description: 'Negative values crop the image' },
+  });
+  const indexBackgroundColor = fields.field.color('indexBackgroundColor');
+  const indexTextColor = fields.field.color('indexTextColor');
+  const backgroundColor = fields.field.color('backgroundColor');
+  const textColor = fields.field.color('textColor');
+
+  const isDirty = $derived(fields.isDirty);
 
   const save = async () => {
-    if (fields.all.touch()) {
-      const { omit: data, pick: files } = fields.all.with('background').dirty;
+    if (fields.touch()) {
+      const { omit: data, pick: files } = fields.with('background').dirty;
       await Promise.all([
         run(async () => {
           if (data) {
@@ -62,11 +58,19 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
     }
   };
 
-  const rollback = () => fields.all.rollback();
+  const rollback = () => fields.rollback();
 
   return options(
     {
       fields,
+      title,
+      description,
+      background,
+      backgroundOffset,
+      indexBackgroundColor,
+      indexTextColor,
+      backgroundColor,
+      textColor,
       isDirty: getter(() => isDirty),
       save,
       rollback,

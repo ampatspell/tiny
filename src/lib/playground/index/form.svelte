@@ -5,16 +5,15 @@
   import Fields from '$lib/tiny/form/content/fields.svelte';
 
   let { properties }: { properties: IndexProperties } = $props();
-  let fields = $derived(properties.fields);
 </script>
 
 <Form size="regular">
   <Content>
-    <Fields field={fields.title} />
-    <Fields field={fields.description} />
-    <Fields field={fields.background} />
-    <Fields field={fields.backgroundOffset} />
-    <Fields fields={[fields.indexBackgroundColor, fields.indexTextColor]} />
-    <Fields fields={[fields.backgroundColor, fields.textColor]} />
+    <Fields field={properties.title} />
+    <Fields field={properties.description} />
+    <Fields field={properties.background} />
+    <Fields field={properties.backgroundOffset} />
+    <Fields fields={[properties.indexBackgroundColor, properties.indexTextColor]} />
+    <Fields fields={[properties.backgroundColor, properties.textColor]} />
   </Content>
 </Form>
