@@ -9,8 +9,7 @@
     field,
     children,
   }: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    field: Field<any>;
+    field: Field;
     children?: Snippet;
   } = $props();
 

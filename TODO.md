@@ -10,6 +10,7 @@
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
+- [ ] Button state which looks like a link (auth forms)
 - [ ] Bootstrapped basic backend with auth and index editing
 - [x] User authorization and authentication
 - [x] File component "remove" & "change" should be dropdown options

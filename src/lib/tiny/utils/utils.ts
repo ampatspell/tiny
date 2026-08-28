@@ -7,7 +7,9 @@ export const run = <T>(cb: () => T): T => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type QueryResponse<T extends (...args: any[]) => any> =
+export type Any = any;
+
+export type QueryResponse<T extends (...args: Any[]) => Any> =
   ReturnType<T> extends RemoteResource<infer R> ? R : undefined;
 
 export type OmitId<T> = Omit<T, 'id'>;
