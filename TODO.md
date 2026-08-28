@@ -8,7 +8,7 @@
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
 - [ ] `<Select />` component
-- [ ] Markdown property
+- [ ] Markdown property (MDsveX maybe?)
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
