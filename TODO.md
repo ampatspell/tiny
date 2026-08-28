@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Proper `<form/>` element to support submits with enter
 - [ ] `tiny/server/users/users.js:72:21` JsonWebTokenError: invalid signature
 - [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Fix `await getFiles().get` variants lookup
