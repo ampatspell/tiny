@@ -6,14 +6,19 @@
   import Form from '$lib/tiny/form/form.svelte';
   import { usePropertiesContext } from '$lib/tiny/properties/context.svelte.js';
   import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
-  import { useStringEditor } from '$lib/tiny/properties/editors/editor.svelte.js';
-  import Input from '$lib/tiny/properties/editors/input.svelte';
+  import Field from '$lib/tiny/properties/editors/field.svelte';
   import { useNumberEditor } from '$lib/tiny/properties/editors/number.svelte.js';
+  import { stringField } from '$lib/tiny/properties/editors/string.svelte.js';
 
   usePropertiesContext();
   let properties = useDataProperties({ data: { name: 'hello', cats: 1 } });
   let name = properties.property('name');
   let cats = properties.property('cats');
+
+  let editors = {
+    name: stringField({ property: name }),
+    cats: useNumberEditor({ property: cats }),
+  };
 
   let onClick = () => {
     if (properties.touch()) {
@@ -27,10 +32,10 @@
   <Form>
     <Content>
       <Row>
-        <Input editor={useStringEditor({ property: name })} />
+        <Field field={editors.name} />
       </Row>
       <Row>
-        <Input editor={useNumberEditor({ property: cats })} />
+        <Field field={editors.cats} />
       </Row>
       <Actions>
         <Button label="Save" {onClick} />

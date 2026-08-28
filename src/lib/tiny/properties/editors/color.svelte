@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-  import Input from '$lib/tiny/input.svelte';
+  import Color from '$lib/tiny/color.svelte';
   import Container from '../container.svelte';
   import type { InputEditor } from './input.svelte.ts';
 
@@ -9,5 +9,5 @@
 </script>
 
 <Container {property}>
-  <Input value={field.value} onInput={field.onInput} onBlur={field.onBlur} />
+  <Color value={field.value} onInput={field.onInput} />
 </Container>

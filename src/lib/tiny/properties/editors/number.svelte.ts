@@ -1,7 +1,8 @@
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { untrack } from 'svelte';
 import type { Property } from '../property.svelte.ts';
-import type { InputEditor } from './editor.svelte.ts';
+import type { InputEditor } from './input.svelte.ts';
+import { Input } from './imports.ts';
 
 const integerToString = (number: number | undefined) => {
   if (typeof number === 'number') {
@@ -55,6 +56,7 @@ export const useNumberEditor = (
 
   return options(
     {
+      component: Input,
       property: getter(() => property),
       value: getter(() => local),
       onInput,

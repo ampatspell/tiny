@@ -1,9 +1,9 @@
 import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
-import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
+import { useDataFields } from '$lib/tiny/properties/editors/data.svelte.js';
 import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
 import { asFile } from '$lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
-import { run } from '$lib/tiny/utils/utils.js';
+import { images, run } from '$lib/tiny/utils/utils.js';
 import { updateIndex, updateIndexFile, type IndexData } from './index.remote.ts';
 
 export type UseIndexPropertiesOptions = {
@@ -18,27 +18,31 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
 
   const broadcast = useBroadcastChannel();
 
-  const properties = useDataProperties({
-    data: getter(() => ({
-      ...data,
-      background: asFile(data.background),
-    })),
+  const fields = run(() => {
+    const all = useDataFields({
+      data: getter(() => ({
+        ...data,
+        background: asFile(data.background),
+      })),
+    });
+    return {
+      all,
+      title: all.field.string('title', { validator: notBlank() }),
+      description: all.field.string('description'),
+      background: all.field.file('background', { accept: images }),
+      backgroundOffset: all.field.number('backgroundOffset'),
+      indexBackgroundColor: all.field.color('indexBackgroundColor'),
+      indexTextColor: all.field.color('indexTextColor'),
+      backgroundColor: all.field.color('backgroundColor'),
+      textColor: all.field.color('textColor'),
+    };
   });
 
-  const title = properties.property('title', { validator: notBlank() });
-  const description = properties.property('description');
-  const background = properties.property('background');
-  const backgroundOffset = properties.property('backgroundOffset');
-  const indexBackgroundColor = properties.property('indexBackgroundColor');
-  const indexTextColor = properties.property('indexTextColor');
-  const backgroundColor = properties.property('backgroundColor');
-  const textColor = properties.property('textColor');
-
-  const isDirty = $derived(properties.isDirty);
+  const isDirty = $derived(fields.all.isDirty);
 
   const save = async () => {
-    if (properties.touch()) {
-      const { omit: data, pick: files } = properties.with('background').dirty;
+    if (fields.all.touch()) {
+      const { omit: data, pick: files } = fields.all.with('background').dirty;
       await Promise.all([
         run(async () => {
           if (data) {
@@ -56,18 +60,11 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
     }
   };
 
-  const rollback = () => properties.rollback();
+  const rollback = () => fields.all.rollback();
 
   return options(
     {
-      title,
-      description,
-      background,
-      backgroundOffset,
-      indexBackgroundColor,
-      indexTextColor,
-      backgroundColor,
-      textColor,
+      fields,
       isDirty: getter(() => isDirty),
       save,
       rollback,
