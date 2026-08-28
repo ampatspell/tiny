@@ -18,25 +18,25 @@ run(async () => {
     const clean = path.substring(0, path.indexOf('.'));
     if (!ignore.find((ignore) => path.startsWith(ignore))) {
       if (path.endsWith('.svelte')) {
-        exports[`./${clean}.svelte`] = {
+        exports[`./tiny/${clean}.svelte`] = {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
           svelte: `./dist/tiny/${clean}.svelte`,
           default: `./dist/tiny/${clean}.svelte`,
         };
       } else if (path.endsWith('.svelte.ts')) {
-        exports[`./${clean}`] = {
+        exports[`./tiny/${clean}`] = {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
           svelte: `./dist/tiny/${clean}.svelte.js`,
           default: `./dist/tiny/${clean}.svelte.js`,
         };
       } else if (path.endsWith('.remote.ts')) {
-        exports[`./${clean}.remote`] = {
+        exports[`./tiny/${clean}.remote`] = {
           types: `./dist/tiny/${clean}.remote.d.ts`,
           svelte: `./dist/tiny/${clean}.remote.js`,
           default: `./dist/tiny/${clean}.remote.js`,
         };
       } else if (path.endsWith('.ts')) {
-        exports[`./${clean}`] = {
+        exports[`./tiny/${clean}`] = {
           types: `./dist/tiny/${clean}.d.ts`,
           svelte: `./dist/tiny/${clean}.js`,
           default: `./dist/tiny/${clean}.js`,
