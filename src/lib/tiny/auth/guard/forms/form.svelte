@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '$lib/tiny/button/button.svelte';
   import Center from '$lib/tiny/center.svelte';
-  import type { InputField } from '$lib/tiny/fields/input.svelte.js';
+  import type { InputField } from '$lib/tiny/fields/input/field.svelte.js';
   import Actions from '$lib/tiny/form/actions.svelte';
   import Fields from '$lib/tiny/form/content/fields.svelte';
   import Form from '$lib/tiny/form/form.svelte';

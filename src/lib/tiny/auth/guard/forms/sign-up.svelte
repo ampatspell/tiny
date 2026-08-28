@@ -1,6 +1,6 @@
 <script lang="ts">
   import Form from './form.svelte';
-  import { useSignUp } from './form.svelte.ts';
+  import { useSignUp } from './model.svelte.ts';
 
   let { onSignIn }: { onSignIn: () => void } = $props();
 

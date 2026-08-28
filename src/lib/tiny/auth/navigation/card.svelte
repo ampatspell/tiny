@@ -9,7 +9,7 @@
   import Form from '$lib/tiny/form/form.svelte';
   import Header from '$lib/tiny/form/header.svelte';
   import type { TokenPayload } from '$lib/tiny/server/users/users.js';
-  import { signOut } from '../auth.svelte.ts';
+  import { signOut } from '../utils.svelte.ts';
 
   let { token }: { token: TokenPayload } = $props();
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Floater from './floater.svelte';
-  import { useFloaters } from './floaters.svelte.ts';
+  import Floater from '../floater/floater.svelte';
+  import { useFloaters } from './model.svelte.ts';
 
   let floaters = useFloaters();
 </script>

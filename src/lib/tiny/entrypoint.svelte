@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import type { ValidateFunction } from './auth/guard/guard.svelte.ts';
+  import type { ValidateFunction } from './auth/guard/validate.svelte.ts';
   import Guard from './auth/guard/guard.svelte';
   import { setBroadcastChannel } from './broadcast.svelte.ts';
 

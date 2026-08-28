@@ -1,8 +1,8 @@
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { untrack } from 'svelte';
-import type { InputField } from './input.svelte.ts';
-import { Input } from './imports.ts';
-import { createMeta, type FieldOptions } from './field.svelte.ts';
+import type { InputField } from './field.svelte.ts';
+import { Input } from '../imports.ts';
+import { createMeta, type FieldOptions } from '../utils.svelte.ts';
 
 const integerToString = (number: number | undefined) => {
   if (typeof number === 'number') {

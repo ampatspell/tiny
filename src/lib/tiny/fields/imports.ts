@@ -1,5 +1,7 @@
-import Color from './color.svelte';
-import Input from './input.svelte';
-import File from './file.svelte';
+import type { InputType } from '../input.svelte';
+import File from './file/file.svelte';
+import Color from './input/color.svelte';
+import Input from './input/input.svelte';
 
-export { Color, Input, File };
+export type { InputType };
+export { File, Color, Input };

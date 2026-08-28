@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Container from './container.svelte';
-  import type { FileEditor } from './file.svelte.ts';
+  import Container from '../container.svelte';
   import File from '$lib/tiny/file/file.svelte';
   import type { LocalFile } from '$lib/tiny/utils/files.svelte.js';
+  import type { FileField } from './field.svelte.ts';
 
-  let { field }: { field: FileEditor } = $props();
+  let { field }: { field: FileField } = $props();
 
   let property = $derived(field.property);
   let accept = $derived(field.accept);

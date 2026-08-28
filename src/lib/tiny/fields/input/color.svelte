@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
   import Color from '$lib/tiny/color.svelte';
-  import Container from './container.svelte';
-  import type { InputField } from './input.svelte.ts';
+  import Container from '../container.svelte';
+  import type { InputField } from './field.svelte.ts';
 
   let { field }: { field: InputField<T> } = $props();
 </script>

@@ -12,11 +12,9 @@ import crypto from 'node:crypto';
 export const bootstrapProject = async (project: Project) => {
   const root = project.root;
   const dir = parse(root).name;
-  const node = '24.19.0';
 
   const secret = () => {
     const buffer = crypto.randomBytes(32);
-    console.log(buffer);
     return buffer.toHex();
   };
 
@@ -41,9 +39,6 @@ export const bootstrapProject = async (project: Project) => {
     const json = JSON.parse(await readFile(path, 'utf-8'));
     json.scripts.flc = 'npm run format && npm run check && npm run lint';
     json.scripts.start = 'tiny migrate-to-latest && node build';
-    json.engines = {
-      node: `>=${node}`,
-    };
     await writeFile(path, JSON.stringify(json, null, 2));
   }
 
@@ -60,13 +55,6 @@ export const bootstrapProject = async (project: Project) => {
       {
         "editor.formatOnSave": true,
       }
-    `,
-  });
-
-  await write({
-    filename: '.nvmrc',
-    content: dedent`
-      ${node}
     `,
   });
 
@@ -215,61 +203,23 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
-    filename: 'src/lib/hello.remote.ts',
+    filename: 'src/routes/(tiny)/layout.ts',
     content: dedent`
-      import { query } from '$app/server';
-      import { sql } from 'kysely';
-      import { getDatabase } from './services';
-
-      export const getMessage = query(async () => {
-        const db = getDatabase();
-        const {
-          rows: [{ message }],
-        } = await sql<{ message: string }>\`select 'Welcome to Tiny' as message\`.execute(db);
-
-        return message;
-      });
+      export const ssr = false;
     `,
   });
 
   await write({
-    filename: 'src/routes/+error.svelte',
+    filename: 'src/routes/(tiny)/+layout.svelte',
     content: dedent`
       <script lang="ts">
-        import { page } from '$app/state';
-        import Dark from '@ampatspell/tiny/dark.svelte';
-        import TablerBalloon from '@ampatspell/tiny/icons/tabler--balloon.svelte';
-        import Placeholder from '@ampatspell/tiny/placeholder.svelte';
-        import { isTruthy } from '@ampatspell/tiny/utils/array';
-
-        let status = $derived(page.status);
-        let error = $derived(page.error?.message ?? 'Unknown error');
-        let label = $derived.by(() => {
-          return [status !== 200 && status, error].filter(isTruthy).join(' ');
-        });
-      </script>
-
-      <Dark>
-        <Placeholder icon={TablerBalloon} {label} />
-      </Dark>
-    `,
-  });
-
-  await write({
-    filename: 'src/routes/+layout.svelte',
-    content: dedent`
-      <script lang="ts">
-        import favicon from '$lib/assets/favicon.svg';
         import Tiny from '@ampatspell/tiny/tiny.svelte';
-        import { setBroadcastChannel } from '@ampatspell/tiny/broadcast';
 
         let { children } = $props();
-
-        setBroadcastChannel();
       </script>
 
       <svelte:head>
-        <link rel="icon" href={favicon} />
+        <title>Welcome to Tiny</title>
       </svelte:head>
 
       <Tiny>
@@ -279,34 +229,138 @@ export const bootstrapProject = async (project: Project) => {
   });
 
   await write({
-    filename: 'src/routes/+page.svelte',
+    filename: 'src/routes/(tiny)/_admin/(nav)/+layout.svelte',
     content: dedent`
       <script lang="ts">
-        import { getMessage } from '$lib/hello.remote';
+        import { resolve } from '$app/paths';
+        import TablerPhoto from '$lib/tiny/icons/tabler--photo.svelte';
+        import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
+        import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
+        import TablerCode from '$lib/playground/icons/tabler--code.svelte';
+        import type { Snippet } from 'svelte';
+        import { setBackend } from '$lib/tiny/backend/backend.svelte.js';
+        import Floaters from '$lib/tiny/floating/floaters.svelte';
+        import { setFloaters } from '$lib/tiny/floating/floaters.svelte.js';
+        import Backend from '$lib/tiny/backend/backend.svelte';
 
-        let message = $derived(await getMessage());
+        let { children }: { children: Snippet } = $props();
+
+        setBackend({
+          items: [
+            {
+              name: 'Public',
+              icon: LucideCat,
+              route: resolve('/'),
+            },
+          ],
+        });
+
+        setFloaters();
       </script>
 
-      <div class="page">
-        <div class="welcome">{message}</div>
-      </div>
+      <svelte:head>
+        <title>Tiny backend</title>
+      </svelte:head>
 
-      <style lang="scss">
-        .page {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
-      </style>
+      <Backend>
+        {@render children()}
+      </Backend>
+
+      <Floaters />
     `,
   });
 
-  {
-    log.step('Delete .svelte-kit');
-    await x('rm', ['-rf', join(root, '.svelte-kit')]);
-  }
+  await write({
+    filename: 'src/routes/(tiny)/_admin/(nav)/+page.svelte',
+    content: dedent`
+      <script lang="ts">
+        import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
+        import Placeholder from '$lib/tiny/placeholder.svelte';
+      </script>
+
+      <Placeholder icon={LucideCat} label="Welcome to Tiny" />
+    `,
+  });
+
+  // await write({
+  //   filename: 'src/lib/hello.remote.ts',
+  //   content: dedent`
+  //     import { query } from '$app/server';
+  //     import { sql } from 'kysely';
+  //     import { getDatabase } from './services';
+
+  //     export const getMessage = query(async () => {
+  //       const db = getDatabase();
+  //       const {
+  //         rows: [{ message }],
+  //       } = await sql<{ message: string }>\`select 'Welcome to Tiny' as message\`.execute(db);
+
+  //       return message;
+  //     });
+  //   `,
+  // });
+
+  await write({
+    filename: 'src/routes/+error.svelte',
+    content: dedent`
+      <script lang="ts">
+        import Error from '@ampatspell/tiny/error.svelte';
+      </script>
+
+      <Error />
+    `,
+  });
+
+  await write({
+    filename: 'src/routes/+layout.svelte',
+    content: dedent`
+      <script lang="ts">
+        import Entrypoint from '@ampatspell/tiny/entrypoint.svelte';
+        import { validatePrefix } from '@ampatspell/tiny/auth/guard/validate';
+
+        let { children } = $props();
+
+        let validate = validatePrefix({
+          prefix: '/_admin',
+          role: 'admin',
+        });
+      </script>
+
+      <Entrypoint {validate}>
+        {@render children()}
+      </Entrypoint>
+    `,
+  });
+
+  // await write({
+  //   filename: 'src/routes/+page.svelte',
+  //   content: dedent`
+  //     <script lang="ts">
+  //       import { getMessage } from '$lib/hello.remote';
+
+  //       let message = $derived(await getMessage());
+  //     </script>
+
+  //     <div class="page">
+  //       <div class="welcome">{message}</div>
+  //     </div>
+
+  //     <style lang="scss">
+  //       .page {
+  //         flex: 1;
+  //         display: flex;
+  //         flex-direction: column;
+  //         align-items: center;
+  //         justify-content: center;
+  //       }
+  //     </style>
+  //   `,
+  // });
+
+  // {
+  //   log.step('Delete .svelte-kit');
+  //   await x('rm', ['-rf', join(root, '.svelte-kit')]);
+  // }
 
   outro('Alright, done');
 };

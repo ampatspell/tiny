@@ -1,9 +1,9 @@
 <script lang="ts" generics=" P extends Properties">
   import { goto } from '$app/navigation';
-  import { useFloaters } from '$lib/tiny/floating/floaters.svelte.js';
+  import { useFloaters } from '$lib/tiny/floating/floaters/model.svelte.js';
   import { confirm } from '$lib/tiny/floating/layout/confirmation.svelte';
   import TablerTrashX from '$lib/tiny/icons/tabler--trash-x.svelte';
-  import type { EditingLayout, Properties } from '../editing.svelte.ts';
+  import type { EditingLayout, Properties } from '../layout.svelte.ts';
   import Light from './light.svelte';
 
   let {

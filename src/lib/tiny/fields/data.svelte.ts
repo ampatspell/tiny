@@ -1,14 +1,14 @@
 import { sentenceCase } from '$lib/tiny/utils/string.js';
-import type { InputType } from '$lib/tiny/input.js';
 import type { UniversalFile } from '$lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { run } from '$lib/tiny/utils/utils.js';
 import { useDataProperties, type UseDataPropertiesOptions } from '../properties/data.svelte.ts';
 import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
-import type { BaseFieldOptions } from './field.svelte.ts';
-import { fileField } from './file.svelte.ts';
-import { colorField, stringField } from './input.svelte.ts';
-import { numberField } from './number.svelte.ts';
+import { fileField } from './file/field.svelte.ts';
+import { colorField, stringField } from './input/field.svelte.ts';
+import { numberField } from './input/number.svelte.ts';
+import type { BaseFieldOptions } from './utils.svelte.ts';
+import type { InputType } from './imports.ts';
 
 export type StringKey<T> = {
   [K in keyof T]: T[K] extends string ? K & string : never;

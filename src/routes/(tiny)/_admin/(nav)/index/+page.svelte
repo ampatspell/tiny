@@ -5,8 +5,8 @@
   import Form from '$lib/playground/index/form.svelte';
   import { getter } from '$lib/tiny/utils/options.svelte.js';
   import Section from '$lib/tiny/page/section.svelte';
-  import { useEditingLayout } from '$lib/tiny/layout/editing/editing.svelte.js';
   import Editing from '$lib/tiny/layout/editing/editing.svelte';
+  import { useEditingLayout } from '$lib/tiny/layout/editing/layout.svelte.js';
 
   usePropertiesContext();
   let data = $derived(await getIndex());

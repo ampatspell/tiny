@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useBackend } from '$lib/tiny/backend/backend.svelte.js';
+  import { useBackend } from '$lib/tiny/backend/context.svelte.js';
   import Placeholder from '$lib/tiny/placeholder.svelte';
 
   let backend = useBackend();

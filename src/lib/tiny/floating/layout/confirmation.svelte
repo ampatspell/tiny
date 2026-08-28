@@ -1,6 +1,4 @@
 <script module lang="ts">
-  import { type Floaters } from '../floaters.svelte.ts';
-
   type ConfirmOptions = {
     floaters: Floaters;
     reference: HTMLElement;
@@ -31,6 +29,7 @@
   import Label from '$lib/tiny/form/content/label.svelte';
   import Actions from '$lib/tiny/form/actions.svelte';
   import Button from '$lib/tiny/button/button.svelte';
+  import type { Floaters } from '../floaters/model.svelte.ts';
 </script>
 
 {#snippet snippet({ request, resolve }: { request: ConfirmOptions; resolve: (ok: boolean) => void })}

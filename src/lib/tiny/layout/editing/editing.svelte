@@ -4,7 +4,7 @@
   import Save from './button/save.svelte';
   import Discard from './button/discard.svelte';
   import Page from '$lib/tiny/page/page.svelte';
-  import type { EditingLayout, Properties } from './editing.svelte.ts';
+  import type { EditingLayout, Properties } from './layout.svelte.ts';
 
   let {
     layout,

@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: row;
     > .sidebar {
-      width: 320px;
+      width: 260px;
       display: flex;
       flex-direction: column;
       border-right: 1px solid var(--tiny-border-color-1);

@@ -1,6 +1,6 @@
 <script lang="ts" generics=" P extends Properties">
   import Busy from '$lib/tiny/button/specific/busy.svelte';
-  import type { EditingLayout, Properties } from '../editing.svelte.ts';
+  import type { EditingLayout, Properties } from '../layout.svelte.ts';
 
   let {
     layout,

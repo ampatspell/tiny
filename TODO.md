@@ -1,5 +1,7 @@
 ## TODO
 
+- [ ] `tiny/server/users/users.js:72:21` JsonWebTokenError: invalid signature
+- [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Fix `await getFiles().get` variants lookup
 - [ ] Remote file variant urls
 - [ ] Users section with form to change password, role
@@ -11,7 +13,6 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
-- [ ] Bootstrapped basic backend with auth and index editing
 - [x] Separate property from presentation models
 - [x] Meta should be moved from properties to editors
 - [x] User authorization and authentication

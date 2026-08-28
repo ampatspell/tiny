@@ -1,6 +1,6 @@
 <script lang="ts" generics="M extends Model">
   import type { Snippet } from 'svelte';
-  import type { ListLayout, Model } from './list.svelte.js';
+  import type { ListLayout, Model } from './layout.svelte.ts';
   import List from '../../list/list.svelte';
   import Header from './header.svelte';
   import Item from './item.svelte';

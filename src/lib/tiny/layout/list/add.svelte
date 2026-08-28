@@ -2,11 +2,11 @@
   import { goto } from '$app/navigation';
   import Button from '$lib/tiny/button/button.svelte';
   import Icon from '$lib/tiny/button/icon.svelte';
-  import { useFloaters } from '$lib/tiny/floating/floaters.svelte.js';
+  import { useFloaters } from '$lib/tiny/floating/floaters/model.svelte.js';
   import { basic } from '$lib/tiny/floating/position.js';
   import Tooltip from '$lib/tiny/floating/tooltip.svelte';
   import TablerSquareRoundedPlus from '$lib/tiny/icons/tabler--square-rounded-plus.svelte';
-  import type { ListLayout, Model } from './list.svelte.ts';
+  import type { ListLayout, Model } from './layout.svelte.ts';
 
   let { layout }: { layout: ListLayout<M> } = $props();
 

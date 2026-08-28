@@ -4,7 +4,7 @@
   import { page } from '$app/state';
   import Tiny from '$lib/tiny/tiny.svelte';
   import SignIn from './sign-in.svelte';
-  import type { ValidateFunction } from './guard.svelte.ts';
+  import type { ValidateFunction } from './validate.svelte.ts';
   import Denied from './denied.svelte';
 
   let { children, validate }: { children: Snippet; validate?: ValidateFunction } = $props();

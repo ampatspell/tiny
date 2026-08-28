@@ -1,5 +1,5 @@
 <script lang="ts" generics="M extends Model">
-  import { type ListLayout, type Model } from './list.svelte.ts';
+  import { type ListLayout, type Model } from './layout.svelte.ts';
   import Item from '$lib/tiny/list/item/item.svelte';
 
   let {

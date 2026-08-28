@@ -1,6 +1,6 @@
 import type { MaybeGetter } from 'runed';
 import { createContext, tick, type Snippet } from 'svelte';
-import { Floater } from './floater.svelte.ts';
+import { Floater } from '../floater/model.svelte.ts';
 import type { ComputePositionConfig } from '@floating-ui/dom';
 import { addObject, removeObject } from '$lib/tiny/utils/array.js';
 

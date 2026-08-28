@@ -1,6 +1,6 @@
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { createContext } from 'svelte';
-import { createItem, type NavigationItemOptions } from './navigation/item.svelte.ts';
+import { createItem, type NavigationItemOptions } from './navigation/model.svelte.ts';
 
 const [get, set] = createContext<Backend>();
 

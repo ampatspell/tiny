@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { validatePrefix } from '$lib/tiny/auth/guard/guard.svelte.js';
+  import { validatePrefix } from '$lib/tiny/auth/guard/validate.svelte.js';
   import Entrypoint from '$lib/tiny/entrypoint.svelte';
 
   let { children } = $props();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useFloaters } from '../floating/floaters.svelte.ts';
+  import { useFloaters } from '../floating/floaters/model.svelte.ts';
   import { dropdown, type DropdownItem } from '../floating/layout/dropdown.svelte';
   import { mouse } from '../floating/position.ts';
   import TablerCircleX from '../icons/tabler--circle-x.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useBackend } from '../backend.svelte.ts';
+  import { useBackend } from '../context.svelte.ts';
   import Item from './item.svelte';
   import Auth from '../../auth/navigation/item.svelte';
 

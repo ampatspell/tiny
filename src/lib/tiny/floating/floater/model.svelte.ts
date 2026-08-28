@@ -1,5 +1,5 @@
 import { extract } from 'runed';
-import type { FloaterOpenOptions } from './floaters.svelte.ts';
+import type { FloaterOpenOptions } from '../floaters/model.svelte.ts';
 import { defer, type Deferred } from '$lib/tiny/utils/promise.js';
 
 export type FloaterOptions<Req, Res> = FloaterOpenOptions<Req, Res> & {

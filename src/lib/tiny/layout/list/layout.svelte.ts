@@ -1,6 +1,6 @@
-import { useBackend } from '$lib/tiny/backend/backend.svelte.js';
 import type { Snippet } from 'svelte';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { useBackend } from '$lib/tiny/backend/context.svelte.js';
 
 export type Model = {
   id: string;

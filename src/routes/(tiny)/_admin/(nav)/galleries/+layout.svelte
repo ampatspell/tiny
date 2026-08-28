@@ -4,9 +4,9 @@
   import type { Snippet } from 'svelte';
   import Add from '$lib/playground/galleries/add.svelte';
   import { getter } from '$lib/tiny/utils/options.svelte.js';
-  import { useListLayout } from '$lib/tiny/layout/list/list.svelte.js';
   import Label from '$lib/tiny/list/item/label.svelte';
   import List from '$lib/tiny/layout/list/list.svelte';
+  import { useListLayout } from '$lib/tiny/layout/list/layout.svelte.js';
 
   let { children }: { children?: Snippet } = $props();
 
