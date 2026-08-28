@@ -12,6 +12,6 @@
   let onSelected = (next: LocalFile | undefined) => property.update(next);
 </script>
 
-<Container {property}>
+<Container {field}>
   <File {file} {onSelected} {accept} />
 </Container>

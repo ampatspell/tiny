@@ -1,23 +1,23 @@
 <script lang="ts">
-  import type { Property } from '$lib/tiny/properties/property.svelte.js';
   import type { Snippet } from 'svelte';
   import TablerInfoCircle from '$lib/tiny/icons/tabler--info-circle.svelte';
   import Tooltip from '../floating/tooltip.svelte';
   import Icon from '../icon.svelte';
+  import type { Field } from './field.svelte.ts';
 
   let {
-    property,
+    field,
     children,
   }: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    property: Property<any>;
+    field: Field<any>;
     children?: Snippet;
   } = $props();
 
-  let label = $derived(property.meta.label);
-  let isRequired = $derived(property.meta.isRequired);
-  let description = $derived(property.meta.description);
-  let error = $derived(property.touched.error);
+  let label = $derived(field.property.meta.label);
+  let isRequired = $derived(field.property.meta.isRequired);
+  let description = $derived(field.property.meta.description);
+  let error = $derived(field.property.touched.error);
 </script>
 
 <div class="property">

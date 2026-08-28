@@ -4,11 +4,8 @@
   import type { InputField } from './input.svelte.ts';
 
   let { field }: { field: InputField<T> } = $props();
-
-  let property = $derived(field.property);
 </script>
 
-InputField
-<Container {property}>
+<Container {field}>
   <Color value={field.value} onInput={field.onInput} />
 </Container>
