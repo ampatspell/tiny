@@ -1,8 +1,6 @@
-<script module lang="ts">
-  export type InputType = 'text' | 'password';
-</script>
-
 <script lang="ts">
+  import type { InputType } from './input.ts';
+
   let {
     isDisabled,
     type,

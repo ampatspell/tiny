@@ -1,7 +1,6 @@
 <script lang="ts">
   import Content from '$lib/tiny/form/content/content.svelte';
-  import Row from '$lib/tiny/form/content/row.svelte';
-  import Input from '$lib/tiny/properties/input.svelte';
+  import Fields from '$lib/tiny/form/content/fields.svelte';
   import type { GalleryProperties } from './gallery.svelte.ts';
 
   let { properties }: { properties: GalleryProperties } = $props();
@@ -9,10 +8,6 @@
 </script>
 
 <Content>
-  <Row>
-    <Input property={name} />
-  </Row>
-  <Row>
-    <Input property={permalink} />
-  </Row>
+  <Fields field={name} />
+  <Fields field={permalink} />
 </Content>

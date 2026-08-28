@@ -52,11 +52,6 @@ export type UsePropertyOptions<T> = {
   readonly didUpdate?: (opts: PropertyUpdatePair<T>) => void;
   readonly onRollback?: () => void;
   readonly validator?: Validator<T>;
-  readonly meta?: {
-    label?: string;
-    description?: string;
-    isRequired?: boolean;
-  };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,8 +104,9 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
     error: getter(() => error),
     isValid: getter(() => isValid),
   });
+
   const meta = $derived.by(() => {
-    return { isRequired: validator?.isRequired ?? false, ...opts.meta };
+    return { isRequired: validator?.isRequired ?? false };
   });
 
   const identity = options(
@@ -156,8 +152,6 @@ export type Property<T = any> = {
   isTouched: boolean;
   touched: TouchedProperty;
   meta: {
-    label?: string | undefined;
-    description?: string | undefined;
-    isRequired?: boolean | undefined;
+    isRequired: boolean;
   };
 };

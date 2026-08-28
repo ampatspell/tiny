@@ -1,12 +1,16 @@
 ## TODO
 
-- [ ] `<Select />` component
 - [ ] Separate property from presentation models
+- [ ] Meta should be moved from properties to editors
+- [ ] Users section with form to change password, role
+- [ ] resend.com integration
+- [ ] `<Select />` component
 - [ ] Markdown property
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
+- [ ] Button state which looks like a link (auth forms)
 - [ ] Bootstrapped basic backend with auth and index editing
 - [x] User authorization and authentication
 - [x] File component "remove" & "change" should be dropdown options

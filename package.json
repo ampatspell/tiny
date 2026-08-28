@@ -76,6 +76,10 @@
       "types": "./dist/tiny/entrypoint.svelte.d.ts",
       "svelte": "./dist/tiny/entrypoint.svelte"
     },
+    "./error.svelte": {
+      "types": "./dist/tiny/error.svelte.d.ts",
+      "svelte": "./dist/tiny/error.svelte"
+    },
     "./icon.svelte": {
       "types": "./dist/tiny/icon.svelte.d.ts",
       "svelte": "./dist/tiny/icon.svelte"
@@ -220,9 +224,17 @@
       "types": "./dist/tiny/properties/input.svelte.d.ts",
       "svelte": "./dist/tiny/properties/input.svelte"
     },
-    "./properties/editors/number.svelte": {
+    "./properties/editors/editor": {
+      "types": "./dist/tiny/properties/editors/editor.svelte.d.ts",
+      "svelte": "./dist/tiny/properties/editors/editor.svelte.js"
+    },
+    "./properties/editors/number": {
       "types": "./dist/tiny/properties/editors/number.svelte.d.ts",
-      "svelte": "./dist/tiny/properties/editors/number.svelte"
+      "svelte": "./dist/tiny/properties/editors/number.svelte.js"
+    },
+    "./properties/editors/input.svelte": {
+      "types": "./dist/tiny/properties/editors/input.svelte.d.ts",
+      "svelte": "./dist/tiny/properties/editors/input.svelte"
     },
     "./page/page.svelte": {
       "types": "./dist/tiny/page/page.svelte.d.ts",
@@ -324,13 +336,9 @@
       "types": "./dist/tiny/icons/tabler--trash-x.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--trash-x.svelte"
     },
-    "./icons/tabler--user-square-rounded.svelte": {
-      "types": "./dist/tiny/icons/tabler--user-square-rounded.svelte.d.ts",
-      "svelte": "./dist/tiny/icons/tabler--user-square-rounded.svelte"
-    },
-    "./icons/tabler--x.svelte": {
-      "types": "./dist/tiny/icons/tabler--x.svelte.d.ts",
-      "svelte": "./dist/tiny/icons/tabler--x.svelte"
+    "./icons/tabler--user.svelte": {
+      "types": "./dist/tiny/icons/tabler--user.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--user.svelte"
     },
     "./header/header.svelte": {
       "types": "./dist/tiny/header/header.svelte.d.ts",
@@ -471,6 +479,10 @@
     "./auth/auth.remote": {
       "types": "./dist/tiny/auth/auth.remote.d.ts",
       "svelte": "./dist/tiny/auth/auth.remote.js"
+    },
+    "./auth/auth": {
+      "types": "./dist/tiny/auth/auth.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/auth.svelte.js"
     },
     "./auth/navigation/card.svelte": {
       "types": "./dist/tiny/auth/navigation/card.svelte.d.ts",

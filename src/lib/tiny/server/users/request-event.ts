@@ -13,7 +13,8 @@ export const getUsersForRequestEvent = () => {
     const users = getUsers();
     const payload = await users.token.create({ email, password });
     if (payload) {
-      event.cookies.set(name, payload, opts);
+      // 1 year
+      event.cookies.set(name, payload, { ...opts, maxAge: 60 * 60 * 24 * 365, sameSite: 'strict' });
       return payload;
     }
   };

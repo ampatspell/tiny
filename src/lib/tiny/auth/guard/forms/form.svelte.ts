@@ -2,7 +2,7 @@ import { goto } from '$app/navigation';
 import { resolve } from '$app/paths';
 import type { ResolvedPathname } from '$app/types';
 import { useBroadcastChannel, type BroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
-import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
+import { useDataFields } from '$lib/tiny/fields/data.svelte.js';
 import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
 import { signIn, signUp } from '../../auth.svelte.ts';
 
@@ -11,13 +11,20 @@ export const useForm = (opts: {
   route: ResolvedPathname;
 }) => {
   const channel = useBroadcastChannel();
-  const properties = useDataProperties({ data: { email: '', password: '' } });
-  const email = properties.property('email', { validator: notBlank() });
-  const password = properties.property('password', { validator: notBlank() });
+
+  const fields = useDataFields({
+    data: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const email = fields.field.string('email', { validator: notBlank() });
+  const password = fields.field.string('password', { validator: notBlank(), type: 'password' });
 
   const perform = async () => {
-    if (properties.touch()) {
-      await opts.perform({ channel, ...properties.data });
+    if (fields.touch()) {
+      await opts.perform({ channel, ...fields.data });
       goto(opts.route);
     }
   };
@@ -29,6 +36,7 @@ export const useForm = (opts: {
   };
 };
 
+// TODO: route
 const route = resolve('/(tiny)/_admin/(nav)');
 
 export const useSignIn = () => useForm({ perform: (data) => signIn(data), route });

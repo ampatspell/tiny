@@ -1,9 +1,9 @@
 import { addGallery, deleteGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
-import { useDataProperties } from '$lib/tiny/properties/data.svelte.js';
 import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
 import type { OmitId } from '$lib/tiny/utils/utils.js';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
 import { slug } from '$lib/tiny/utils/string.js';
+import { useDataFields } from '$lib/tiny/fields/data.svelte.js';
 
 export type UseGalleryPropertiesOptions =
   | {
@@ -20,29 +20,30 @@ export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOpt
   const isNew = $derived(opts.isNew);
   const data = $derived(opts.data);
 
-  const properties = useDataProperties({ data: getter(() => data) });
-  const isDirty = $derived(properties.isDirty);
+  const fields = useDataFields({ data: getter(() => data) });
+  const isDirty = $derived(fields.isDirty);
 
-  const name = properties.property('name', {
+  const name = fields.field.string('name', {
     didUpdate: ({ after }) => {
-      permalink.update(slug(after, { replacement: '-' }));
+      permalink.property.update(slug(after, { replacement: '-' }));
     },
     validator: notBlank(),
   });
-  const permalink = properties.property('permalink', {
+
+  const permalink = fields.field.string('permalink', {
     meta: {
       description: 'Part after /gallery in public URL',
     },
   });
 
   const save = async () => {
-    if (properties.touch()) {
+    if (fields.touch()) {
       let id;
       if (opts.isNew) {
-        const data = properties.data;
+        const data = fields.data;
         id = await addGallery(data);
       } else {
-        const data = properties.dirty;
+        const data = fields.dirty;
         if (data) {
           id = opts.data.id;
           await updateGallery({ id, ...data });
@@ -59,7 +60,7 @@ export const useGalleryProperties = (_opts: OptionsInput<UseGalleryPropertiesOpt
     }
   };
 
-  const rollback = () => properties.rollback();
+  const rollback = () => fields.rollback();
 
   return options(
     {

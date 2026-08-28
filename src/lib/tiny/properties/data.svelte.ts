@@ -1,7 +1,6 @@
 import { useProperty, type UsePropertyOptions } from './property.svelte.ts';
 import { usePropertiesContext } from './context.svelte.ts';
 import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
-import { sentenceCase } from '$lib/tiny/utils/string.js';
 import { hasKeys, omit, pick } from '$lib/tiny/utils/object.js';
 import { addObject } from '$lib/tiny/utils/array.js';
 
@@ -21,7 +20,6 @@ export const useDataProperty = <D extends Record<string, unknown>, K extends key
   const property = useProperty<D[K]>({
     ...opts.prop,
     value: getter(() => data[key]),
-    meta: getter(() => Object.assign({ label: sentenceCase(key) }, opts.prop?.meta)),
   });
 
   const value = $derived(property.value);

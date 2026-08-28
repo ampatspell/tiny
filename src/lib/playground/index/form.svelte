@@ -1,41 +1,20 @@
 <script lang="ts">
   import type { IndexProperties } from './index.svelte.ts';
-  import { getter } from '$lib/tiny/utils/options.svelte.js';
-  import Number, { useNumberPropertyEditor } from '$lib/tiny/properties/editors/number.svelte';
-  import { images } from '$lib/tiny/utils/utils.js';
-  import Input from '$lib/tiny/properties/input.svelte';
-  import File from '$lib/tiny/properties/file.svelte';
   import Form from '$lib/tiny/form/form.svelte';
   import Content from '$lib/tiny/form/content/content.svelte';
-  import Row from '$lib/tiny/form/content/row.svelte';
-  import Color from '$lib/tiny/properties/color.svelte';
+  import Fields from '$lib/tiny/form/content/fields.svelte';
 
   let { properties }: { properties: IndexProperties } = $props();
-
-  let backgroundOffset = useNumberPropertyEditor({ property: getter(() => properties.backgroundOffset) });
+  let fields = $derived(properties.fields);
 </script>
 
 <Form size="regular">
   <Content>
-    <Row>
-      <Input property={properties.title} />
-    </Row>
-    <Row>
-      <Input property={properties.description} />
-    </Row>
-    <Row>
-      <File property={properties.background} accept={images} />
-    </Row>
-    <Row>
-      <Number editor={backgroundOffset} />
-    </Row>
-    <Row>
-      <Color property={properties.indexBackgroundColor} />
-      <Color property={properties.indexTextColor} />
-    </Row>
-    <Row>
-      <Color property={properties.backgroundColor} />
-      <Color property={properties.textColor} />
-    </Row>
+    <Fields field={fields.title} />
+    <Fields field={fields.description} />
+    <Fields field={fields.background} />
+    <Fields field={fields.backgroundOffset} />
+    <Fields fields={[fields.indexBackgroundColor, fields.indexTextColor]} />
+    <Fields fields={[fields.backgroundColor, fields.textColor]} />
   </Content>
 </Form>
