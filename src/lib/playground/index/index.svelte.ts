@@ -37,6 +37,7 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
   const textColor = fields.field.color('textColor');
 
   const isDirty = $derived(fields.isDirty);
+  const rollback = () => fields.rollback();
 
   const save = async () => {
     if (fields.touch()) {
@@ -57,8 +58,6 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
       return id;
     }
   };
-
-  const rollback = () => fields.rollback();
 
   return options(
     {

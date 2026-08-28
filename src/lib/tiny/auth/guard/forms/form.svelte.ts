@@ -1,5 +1,3 @@
-import { goto } from '$app/navigation';
-import { resolve } from '$app/paths';
 import type { ResolvedPathname } from '$app/types';
 import { useBroadcastChannel, type BroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
 import { useDataFields } from '$lib/tiny/fields/data.svelte.js';
@@ -8,7 +6,6 @@ import { signIn, signUp } from '../../auth.svelte.ts';
 
 export const useForm = (opts: {
   perform: (data: { channel: BroadcastChannel; email: string; password: string }) => Promise<void>;
-  route: ResolvedPathname;
 }) => {
   const channel = useBroadcastChannel();
 
@@ -25,7 +22,6 @@ export const useForm = (opts: {
   const perform = async () => {
     if (fields.touch()) {
       await opts.perform({ channel, ...fields.data });
-      goto(opts.route);
     }
   };
 
@@ -36,11 +32,8 @@ export const useForm = (opts: {
   };
 };
 
-// TODO: route
-const route = resolve('/(tiny)/_admin/(nav)');
-
-export const useSignIn = () => useForm({ perform: (data) => signIn(data), route });
-export const useSignUp = () => useForm({ perform: (data) => signUp(data), route });
+export const useSignIn = () => useForm({ perform: (data) => signIn(data) });
+export const useSignUp = () => useForm({ perform: (data) => signUp(data) });
 
 export type FormOptions = {
   route: ResolvedPathname;
