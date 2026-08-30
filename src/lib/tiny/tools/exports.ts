@@ -14,20 +14,27 @@ run(async () => {
     './package.json': './package.json',
   };
 
+  const add = (name: string, content: Record<string, unknown>) => {
+    if (exports[name]) {
+      console.log('Duplicate export', name);
+    }
+    exports[name] = content;
+  };
+
   for await (const entry of glob(pattern)) {
     const path = relative(dir, entry);
     const clean = path.substring(0, path.indexOf('.'));
     if (!ignore.find((ignore) => path.startsWith(ignore))) {
       if (path.endsWith('.svelte')) {
-        exports[`./${clean}.svelte`] = {
+        add(`./${clean}`, {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
           svelte: `./dist/tiny/${clean}.svelte`,
-        };
+        });
       } else if (path.endsWith('.svelte.ts')) {
-        exports[`./${clean}`] = {
+        add(`./${clean}`, {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
           svelte: `./dist/tiny/${clean}.svelte.js`,
-        };
+        });
       } else if (path.endsWith('.remote.ts')) {
         exports[`./${clean}.remote`] = {
           types: `./dist/tiny/${clean}.remote.d.ts`,
