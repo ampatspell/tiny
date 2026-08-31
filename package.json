@@ -28,9 +28,9 @@
     "tiny": ".cli/cli.js"
   },
   "files": [
-    ".cli",
+    "dist",
     "src",
-    "dist"
+    ".cli"
   ],
   "sideEffects": [
     "**/*.css",
