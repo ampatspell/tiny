@@ -1,6 +1,6 @@
 <script lang="ts">
-  import SignIn from './forms/sign-in.svelte';
-  import SignUp from './forms/sign-up.svelte';
+  import SignInForm from './forms/sign-in.svelte';
+  import SignUpForm from './forms/sign-up.svelte';
 
   let form = $state<'sign-in' | 'sign-up'>('sign-in');
 
@@ -14,7 +14,7 @@
 </script>
 
 {#if form === 'sign-in'}
-  <SignIn {onSignUp} />
+  <SignInForm {onSignUp} />
 {:else if form === 'sign-up'}
-  <SignUp {onSignIn} />
+  <SignUpForm {onSignIn} />
 {/if}

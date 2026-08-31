@@ -4,7 +4,7 @@
   import type { InputField } from '$lib/tiny/fields/input/field.svelte.js';
   import Actions from '$lib/tiny/form/actions.svelte';
   import Fields from '$lib/tiny/form/content/fields.svelte';
-  import Form from '$lib/tiny/form/form.svelte';
+  import TinyForm from '$lib/tiny/form/form.svelte';
   import Header from '$lib/tiny/form/header.svelte';
 
   let {
@@ -19,7 +19,7 @@
 </script>
 
 <Center>
-  <Form size="small">
+  <TinyForm size="small">
     <Header {title} />
     <Fields field={model.email} />
     <Fields field={model.password} />
@@ -29,7 +29,7 @@
       <div class="secondary" onclick={secondary.onClick}>{secondary.label}</div>
       <Button label={title} onClick={model.perform} />
     </Actions>
-  </Form>
+  </TinyForm>
 </Center>
 
 <style lang="scss">

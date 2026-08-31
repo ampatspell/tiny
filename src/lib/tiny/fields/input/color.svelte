@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-  import Color from '$lib/tiny/color.svelte';
+  import TinyColor from '$lib/tiny/color.svelte';
   import Container from '../container.svelte';
   import type { InputField } from './field.svelte.ts';
 
@@ -7,5 +7,5 @@
 </script>
 
 <Container {field}>
-  <Color value={field.value} onInput={field.onInput} />
+  <TinyColor value={field.value} onInput={field.onInput} />
 </Container>

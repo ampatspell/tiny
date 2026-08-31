@@ -1,6 +1,6 @@
 <script lang="ts">
   import { useBackend } from '$lib/tiny/backend/context.svelte.js';
-  import Placeholder from '$lib/tiny/placeholder.svelte';
+  import TinyPlaceholder from '$lib/tiny/placeholder.svelte';
 
   let backend = useBackend();
   let item = $derived(backend.item);
@@ -8,4 +8,4 @@
   let label = $derived(item.name);
 </script>
 
-<Placeholder {icon} {label} />
+<TinyPlaceholder {icon} {label} />
