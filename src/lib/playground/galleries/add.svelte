@@ -1,12 +1,12 @@
 <script lang="ts">
   import { useGalleryProperties } from './gallery.svelte.ts';
   import Properties from './properties.svelte';
-  import Card from '$lib/tiny/card.svelte';
-  import Button from '$lib/tiny/button/button.svelte';
-  import Busy from '$lib/tiny/button/specific/busy.svelte';
-  import Form from '$lib/tiny/form/form.svelte';
-  import Header from '$lib/tiny/form/header.svelte';
-  import Actions from '$lib/tiny/form/actions.svelte';
+  import Card from '#lib/tiny/card.svelte';
+  import Button from '#lib/tiny/button/button.svelte';
+  import Busy from '#lib/tiny/button/specific/busy.svelte';
+  import Form from '#lib/tiny/form/form.svelte';
+  import Header from '#lib/tiny/form/header.svelte';
+  import Actions from '#lib/tiny/form/actions.svelte';
 
   let { onDone }: { onDone: (id: string | undefined) => void } = $props();
 

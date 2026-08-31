@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Tiny from '$lib/tiny/tiny.svelte';
+  import Tiny from '#lib/tiny/tiny.svelte';
 
   let { children } = $props();
 </script>

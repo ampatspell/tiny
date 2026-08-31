@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onClickOutside } from 'runed';
+  // import { onClickOutside } from 'runed';
 
   let {
     value,
@@ -28,12 +28,12 @@
     }
   };
 
-  onClickOutside(
-    () => color,
-    () => {
-      isOpen = false;
-    },
-  );
+  // onClickOutside(
+  //   () => color,
+  //   () => {
+  //     isOpen = false;
+  //   },
+  // );
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->

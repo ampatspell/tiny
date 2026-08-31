@@ -1,8 +1,8 @@
-import type { MaybeGetter } from 'runed';
 import { createContext, tick, type Snippet } from 'svelte';
 import { Floater } from '../floater/model.svelte.ts';
 import type { ComputePositionConfig } from '@floating-ui/dom';
-import { addObject, removeObject } from '$lib/tiny/utils/array.js';
+import { addObject, removeObject } from '#lib/tiny/utils/array.js';
+import type { MaybeGetter } from '#lib/tiny/utils/utils.js';
 
 export type FloaterOpenOptions<Req, Res> = {
   reference: () => HTMLElement | undefined;

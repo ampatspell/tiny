@@ -1,7 +1,7 @@
-import { jpeg } from '$lib/tiny/server/files/thumbnails.js';
-import { createServices, type Services } from '$lib/tiny/server/services/services.js';
-import { uid } from '$lib/tiny/server/utils.js';
-import { createDatabaseTools } from '$lib/tiny/tools/database.js';
+import { jpeg } from '#lib/tiny/server/files/thumbnails.js';
+import { createServices, type Services } from '#lib/tiny/server/services/services.js';
+import { uid } from '#lib/tiny/server/utils.js';
+import { createDatabaseTools } from '#lib/tiny/tools/database.js';
 import { mkdir, readFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 

@@ -1,11 +1,11 @@
 <script lang="ts">
   import NavigationItem from '../../backend/navigation/item.svelte';
-  import { getToken } from '$lib/tiny/auth/auth.remote.js';
-  import { basic } from '$lib/tiny/floating/position.js';
+  import { getToken } from '#lib/tiny/auth/auth.remote.js';
+  import { basic } from '#lib/tiny/floating/position.js';
   import Card from './card.svelte';
-  import type { TokenPayload } from '$lib/tiny/server/users/users.js';
-  import TablerUser from '$lib/tiny/icons/tabler--user.svelte';
-  import { useFloaters } from '$lib/tiny/floating/floaters/model.svelte.js';
+  import type { TokenPayload } from '#lib/tiny/server/users/users.js';
+  import TablerUser from '#lib/tiny/icons/tabler--user.svelte';
+  import { useFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
 
   let floaters = useFloaters();
   let token = $derived(await getToken());

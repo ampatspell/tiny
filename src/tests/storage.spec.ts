@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { withTemporaryFolder } from './helpers/utils.ts';
-import { createStorage } from '$lib/tiny/server/storage/storage.js';
+import { createStorage } from '#lib/tiny/server/storage/storage.js';
 import { join } from 'node:path';
 import { exists } from 'fs-extra';
 

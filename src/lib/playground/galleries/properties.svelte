@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Content from '$lib/tiny/form/content/content.svelte';
-  import Fields from '$lib/tiny/form/content/fields.svelte';
+  import Content from '#lib/tiny/form/content/content.svelte';
+  import Fields from '#lib/tiny/form/content/fields.svelte';
   import type { GalleryProperties } from './gallery.svelte.ts';
 
   let { properties }: { properties: GalleryProperties } = $props();

@@ -5,22 +5,15 @@ import { sveltekit } from '@sveltejs/kit/vite';
 export default defineConfig({
   plugins: [
     sveltekit({
-      adapter: adapter(),
       inspector: {
         toggleKeyCombo: 'alt-x',
       },
       compilerOptions: {
         runes: true,
-        experimental: {
-          async: true,
-        },
+        experimental: { async: true },
       },
-      experimental: {
-        explicitEnvironmentVariables: true,
-        handleRenderingErrors: true,
-        remoteFunctions: true,
-        sendWarningsToBrowser: true,
-      },
+      adapter: adapter(),
+      experimental: { remoteFunctions: true },
     }),
   ],
   test: {

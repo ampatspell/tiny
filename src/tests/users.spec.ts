@@ -11,7 +11,7 @@ describe('users', () => {
       });
 
       expect(result.id).toBeTruthy();
-      expect(result).toStrictEqual({ id: result.id, email: 'zeeba@gmail.com', type: 'admin' });
+      expect(result).toStrictEqual({ id: result.id, email: 'zeeba@gmail.com', role: 'admin' });
     });
   });
 
@@ -26,7 +26,7 @@ describe('users', () => {
       {
         const rec = await services.users.verify({ email: 'zeeba@gmail.com', password: 'huluu' });
         expect(rec).toBeTruthy();
-        expect(rec).toStrictEqual({ id: rec!.id, email: 'zeeba@gmail.com', type: 'admin' });
+        expect(rec).toStrictEqual({ id: rec!.id, email: 'zeeba@gmail.com', role: 'admin' });
       }
       {
         const rec = await services.users.verify({ email: 'zeeba@gmail.com', password: 'hulu' });

@@ -1,7 +1,8 @@
-import type { TokenPayload } from '$lib/tiny/server/users/users.js';
+import type { TokenPayload } from '#lib/tiny/server/users/users.js';
+import type { Page } from '$app/state';
 
 export type ValidateOptions = {
-  url: URL;
+  url: Page['url'];
   token: TokenPayload | undefined;
 };
 

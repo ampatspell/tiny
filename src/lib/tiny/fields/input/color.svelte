@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-  import TinyColor from '$lib/tiny/color.svelte';
+  import TinyColor from '#lib/tiny/color.svelte';
   import Container from '../container.svelte';
   import type { InputField } from './field.svelte.ts';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TinyIcon from '$lib/tiny/icon.svelte';
+  import TinyIcon from '#lib/tiny/icon.svelte';
   import type { Component } from 'svelte';
 
   let { icon }: { icon?: Component } = $props();

@@ -8,7 +8,6 @@
     type OffsetOptions,
     type Placement,
   } from '@floating-ui/dom';
-  import { Debounced } from 'runed';
   import type { Snippet } from 'svelte';
   import { px, recordToStyle } from '../utils/style.ts';
 
@@ -29,8 +28,9 @@
   let arrow = $state<HTMLDivElement>();
 
   let show = $state({ reference: false, tooltip: false });
-  let _isShown = new Debounced(() => label && (show.reference || show.tooltip), 100);
-  let isShown = $derived(_isShown.current);
+  // let _isShown = new Debounced(() => label && (show.reference || show.tooltip), 100);
+  let _isShown = $derived(label && (show.reference || show.tooltip));
+  let isShown = $derived(_isShown);
 
   let tooltipStyle = $state<string>();
   let arrowStyle = $state<string>();

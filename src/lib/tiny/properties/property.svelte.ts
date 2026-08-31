@@ -1,7 +1,6 @@
-import { onCleanup } from 'runed';
 import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 import { untrack } from 'svelte';
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 
 export const hashCodeTag = Symbol('hash-code');
 
@@ -129,7 +128,9 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
 
   const context = usePropertiesContext();
   const cancel = context._register(identity);
-  onCleanup(() => cancel());
+  $effect(() => {
+    return () => cancel();
+  });
 
   $effect.pre(() => {
     if (!passive) {

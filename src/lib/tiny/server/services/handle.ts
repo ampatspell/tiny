@@ -1,10 +1,10 @@
-import type { Handle } from '@sveltejs/kit';
 import { createServices, type CreateServicesOptions } from './services.ts';
 import { getRequestEvent } from '$app/server';
 import type { Database } from '../database/database.ts';
 import type { Files } from '../files/files.ts';
 import type { Storage } from '../storage/storage.ts';
 import type { Users } from '../users/users.ts';
+import type { Handle } from '@sveltejs/kit/hooks';
 
 export const createHandle = (opts: Omit<CreateServicesOptions, 'dir'> & { dir: string | undefined }): Handle => {
   return async ({ event, resolve }) => {

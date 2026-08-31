@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-  import TinyInput from '$lib/tiny/input.svelte';
+  import TinyInput from '#lib/tiny/input.svelte';
   import Container from '../container.svelte';
   import type { InputField } from './field.svelte.ts';
 

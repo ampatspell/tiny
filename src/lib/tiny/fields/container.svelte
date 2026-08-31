@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import TablerInfoCircle from '$lib/tiny/icons/tabler--info-circle.svelte';
+  import TablerInfoCircle from '#lib/tiny/icons/tabler--info-circle.svelte';
   import Tooltip from '../floating/tooltip.svelte';
   import Icon from '../icon.svelte';
   import type { Field } from './utils.svelte.ts';

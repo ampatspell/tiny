@@ -4,7 +4,7 @@
   import TinyList from '../../list/list.svelte';
   import Header from './header.svelte';
   import Item from './item.svelte';
-  import SplitView from '$lib/tiny/split-view.svelte';
+  import SplitView from '#lib/tiny/split-view.svelte';
 
   let {
     layout,

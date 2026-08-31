@@ -1,14 +1,14 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
-  import TablerPhoto from '$lib/tiny/icons/tabler--photo.svelte';
-  import LucideCat from '$lib/tiny/icons/lucide--cat.svelte';
-  import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
-  import TablerCode from '$lib/playground/icons/tabler--code.svelte';
+  import TablerPhoto from '#lib/tiny/icons/tabler--photo.svelte';
+  import LucideCat from '#lib/tiny/icons/lucide--cat.svelte';
+  import TablerAppWindow from '#lib/playground/icons/tabler--app-window.svelte';
+  import TablerCode from '#lib/playground/icons/tabler--code.svelte';
   import type { Snippet } from 'svelte';
-  import { setBackend } from '$lib/tiny/backend/context.svelte.js';
-  import Floaters from '$lib/tiny/floating/floaters/floaters.svelte';
-  import Backend from '$lib/tiny/backend/backend.svelte';
-  import { setFloaters } from '$lib/tiny/floating/floaters/model.svelte.js';
+  import { setBackend } from '#lib/tiny/backend/context.svelte.js';
+  import Floaters from '#lib/tiny/floating/floaters/floaters.svelte';
+  import Backend from '#lib/tiny/backend/backend.svelte';
+  import { setFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
 
   let { children }: { children: Snippet } = $props();
 
