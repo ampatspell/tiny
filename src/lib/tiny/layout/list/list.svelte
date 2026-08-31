@@ -1,7 +1,7 @@
 <script lang="ts" generics="M extends Model">
   import type { Snippet } from 'svelte';
   import type { ListLayout, Model } from './layout.svelte.ts';
-  import List from '../../list/list.svelte';
+  import TinyList from '../../list/list.svelte';
   import Header from './header.svelte';
   import Item from './item.svelte';
   import SplitView from '$lib/tiny/split-view.svelte';
@@ -20,14 +20,14 @@
 
 <SplitView>
   {#snippet sidebar()}
-    <List {route}>
+    <TinyList {route}>
       {#snippet header()}
         <Header {layout} />
       {/snippet}
       {#each models as model (model.id)}
         <Item {layout} {model} />
       {/each}
-    </List>
+    </TinyList>
   {/snippet}
   {@render children()}
 </SplitView>

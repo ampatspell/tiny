@@ -1,6 +1,6 @@
-<script lang="ts" generics="T = Any, E extends Field<T> = Field<T>">
+<script lang="ts" generics="T = Any, E extends TField<T> = TField<T>">
   import type { Any } from '../utils/utils.ts';
-  import type { Field } from './utils.svelte.ts';
+  import type { Field as TField } from './utils.svelte.ts';
 
   let { field }: { field: E } = $props();
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Item from '../../backend/navigation/item.svelte';
+  import NavigationItem from '../../backend/navigation/item.svelte';
   import { getToken } from '$lib/tiny/auth/auth.remote.js';
   import { basic } from '$lib/tiny/floating/position.js';
   import Card from './card.svelte';
@@ -9,7 +9,7 @@
 
   let floaters = useFloaters();
   let token = $derived(await getToken());
-  let item = $state<Item>();
+  let item = $state<NavigationItem>();
 
   let onClick = async () => {
     const reference = item?.element;
@@ -29,7 +29,7 @@
 </script>
 
 {#if token}
-  <Item bind:this={item} icon={TablerUser} {onClick} />
+  <NavigationItem bind:this={item} icon={TablerUser} {onClick} />
 {/if}
 
 {#snippet snippet({ request: { token } }: { request: { token: TokenPayload } })}

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { px } from '../../utils/style.ts';
   import { autoUpdate, computePosition } from '@floating-ui/dom';
-  import type { Floater } from './model.svelte.ts';
+  import type { Floater as TFloater } from './model.svelte.ts';
   import { elementContainsEventTarget, getActiveInputElement } from '$lib/tiny/utils/dom.js';
 
-  let { floater }: { floater: Floater } = $props();
+  let { floater }: { floater: TFloater } = $props();
 
   let reference = $derived(floater.reference);
   let snippet = $derived(floater.snippet);

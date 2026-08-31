@@ -1,6 +1,6 @@
 <script lang="ts" generics="M extends Model">
   import { type ListLayout, type Model } from './layout.svelte.ts';
-  import Item from '$lib/tiny/list/item/item.svelte';
+  import ListItem from '$lib/tiny/list/item/item.svelte';
 
   let {
     layout,
@@ -20,6 +20,6 @@
   let isCurrent = $derived(model.id === selected);
 </script>
 
-<Item {route} {isCurrent}>
+<ListItem {route} {isCurrent}>
   {@render item(model)}
-</Item>
+</ListItem>

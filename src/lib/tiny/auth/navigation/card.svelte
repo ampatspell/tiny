@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
   import Button from '$lib/tiny/button/button.svelte';
-  import Card from '$lib/tiny/card.svelte';
+  import TinyCard from '$lib/tiny/card.svelte';
   import Actions from '$lib/tiny/form/actions.svelte';
   import Content from '$lib/tiny/form/content/content.svelte';
   import FormLabel from '$lib/tiny/form/content/label.svelte';
@@ -20,7 +20,7 @@
   };
 </script>
 
-<Card width="fit">
+<TinyCard width="fit">
   <Form size="regular">
     <Header title={token.email} />
     <Content>
@@ -32,4 +32,4 @@
       </Actions>
     </Content>
   </Form>
-</Card>
+</TinyCard>

@@ -1,6 +1,6 @@
 {
   "name": "@ampatspell/tiny",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "license": "MIT",
   "scripts": {
     "dev": "vite dev",
@@ -28,9 +28,9 @@
     "tiny": ".cli/cli.js"
   },
   "files": [
-    ".cli",
+    "dist",
     "src",
-    "dist"
+    ".cli"
   ],
   "sideEffects": [
     "**/*.css",

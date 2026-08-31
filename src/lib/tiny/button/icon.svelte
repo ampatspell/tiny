@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Component } from 'svelte';
-  import Icon from '../icon.svelte';
+  import TinyIcon from '../icon.svelte';
   import { getButtonContext } from './button.svelte';
 
   let { icon }: { icon: Component | undefined } = $props();
@@ -17,4 +17,4 @@
   });
 </script>
 
-<Icon {icon} size="small" />
+<TinyIcon {icon} size="small" />

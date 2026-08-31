@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Form from './form.svelte';
+  import AuthForm from './form.svelte';
   import { useSignIn } from './model.svelte.ts';
 
   let { onSignUp }: { onSignUp: () => void } = $props();
@@ -12,4 +12,4 @@
   };
 </script>
 
-<Form {model} title="Sign in" {secondary} />
+<AuthForm {model} title="Sign in" {secondary} />
