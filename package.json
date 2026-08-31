@@ -29,7 +29,8 @@
   },
   "files": [
     "dist",
-    ".cli"
+    ".cli",
+    "src"
   ],
   "sideEffects": [
     "**/*.css",
