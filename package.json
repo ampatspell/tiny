@@ -588,8 +588,8 @@
     "svelte"
   ],
   "imports": {
-    "#lib": "./src/lib/index.js",
-    "#lib/*": "./src/lib/*"
+    "#lib": "./dist/index.js",
+    "#lib/*": "./dist/*"
   },
   "allowScripts": {
     "fsevents@2.3.3": true,
