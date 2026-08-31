@@ -12,6 +12,9 @@ export default defineConfig({
         runes: true,
         experimental: { async: true },
       },
+      alias: {
+        '#lib/*': 'src/lib/*'
+      },
       adapter: adapter(),
       experimental: { remoteFunctions: true },
     }),
