@@ -569,8 +569,8 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "@fontsource/ubuntu-mono": "^5.3.0",
     "@clack/prompts": "^1.7.0",
+    "@fontsource/ubuntu-mono": "^5.3.0",
     "better-sqlite3": "^12.11.1",
     "date-fns": "^4.4.0",
     "dedent": "^1.7.2",
@@ -582,6 +582,7 @@
     "sharp": "^0.35.4",
     "slug": "^12.0.1",
     "text-sentence-case": "^1.2.11",
+    "tinyexec": "^1.3.0",
     "valibot": "^1.4.2"
   },
   "keywords": [
