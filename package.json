@@ -544,7 +544,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@floating-ui/dom": "^1.8.0",
     "@sveltejs/adapter-node": "next",
     "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
@@ -569,6 +568,7 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
     "@clack/prompts": "^1.7.0",
     "@fontsource/ubuntu-mono": "^5.3.0",
     "better-sqlite3": "^12.11.1",
