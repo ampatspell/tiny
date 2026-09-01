@@ -22,5 +22,19 @@ export default defineConfig(({ mode }) => ({
       formats: ['es'],
     },
     outDir: '.cli',
+    rolldownOptions: {
+      external: [
+        '@clack/prompts',
+        'better-sqlite3',
+        'dedent',
+        'fs-extra',
+        'jsonwebtoken',
+        'kysely',
+        'kysely-codegen',
+        'launch-editor',
+        'sharp',
+        'tinyexec',
+      ],
+    },
   },
 }));

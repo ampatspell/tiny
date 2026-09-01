@@ -16,6 +16,22 @@ export default defineConfig({
       experimental: { remoteFunctions: true },
     }),
   ],
+  build: {
+    rolldownOptions: {
+      external: [
+        '@clack/prompts',
+        'better-sqlite3',
+        'dedent',
+        'fs-extra',
+        'jsonwebtoken',
+        'kysely',
+        'kysely-codegen',
+        'launch-editor',
+        'sharp',
+        'tinyexec',
+      ],
+    },
+  },
   test: {
     expect: {
       requireAssertions: true,

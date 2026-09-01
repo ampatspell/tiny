@@ -58,7 +58,7 @@ describe('users', () => {
         email: 'zeeba@gmail.com',
         exp: (data as Record<string, unknown>).exp,
         iat: (data as Record<string, unknown>).iat,
-        id: data.id,
+        id: data!.id,
         role: 'admin',
       });
     });

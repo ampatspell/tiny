@@ -51,9 +51,9 @@ export const assertRole = async (role: string) => {
   const token = await getUsersForRequestEvent().getToken();
   if (token?.role !== role) {
     if (token) {
-      error(403, { message: 'Role does not match required' });
+      error(403, 'Role does not match required');
     } else {
-      error(403, { message: 'Not signed in' });
+      error(403, 'Not signed in');
     }
   }
 };
@@ -62,9 +62,9 @@ export const assertId = async (id: string) => {
   const token = await getUsersForRequestEvent().getToken();
   if (token?.id !== id) {
     if (token) {
-      error(403, { message: 'User id does not match' });
+      error(403, 'User id does not match');
     } else {
-      error(403, { message: 'Not signed in' });
+      error(403, 'Not signed in');
     }
   }
 };

@@ -4,7 +4,9 @@ import type { DB } from '../database/schema.js';
 import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
 import { omit } from '../../utils/object.ts';
-import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+
+const { JsonWebTokenError } = jwt;
 
 export type TokenPayload = {
   id: string;
@@ -30,15 +32,8 @@ export const createUsers = async (opts: CreateUsersOptions) => {
       return { salt, hash };
     };
     const verify = ({ password, salt, hash }: { hash: string; salt: string; password: string }) => {
-      try {
-        const existing = sync({ password, salt });
-        return existing === hash;
-      } catch(err) {
-        if(err instanceof JsonWebTokenError) {
-          return false;
-        }
-        throw err;
-      }
+      const existing = sync({ password, salt });
+      return existing === hash;
     };
     return {
       sync,
@@ -93,12 +88,14 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
 
     const verify = async (token: string) => {
-      return new Promise<TokenPayload>((resolve, reject) => {
+      return new Promise<TokenPayload | undefined>((resolve, reject) => {
         if (!secret) {
           return reject(new Error('Secret missing'));
         }
         jwt.verify(token, secret, (err, payload) => {
-          if (err) {
+          if (err instanceof JsonWebTokenError) {
+            return resolve(undefined);
+          } else if (err) {
             return reject(err);
           }
           resolve(payload as TokenPayload);
