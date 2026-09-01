@@ -8,7 +8,7 @@ import { fileField } from './file/field.svelte.ts';
 import { colorField, stringField } from './input/field.svelte.ts';
 import { numberField } from './input/number.svelte.ts';
 import type { BaseFieldOptions } from './utils.svelte.ts';
-import type { InputType } from './imports.ts';
+import type { InputType } from '../input.svelte';
 
 export type StringKey<T> = {
   [K in keyof T]: T[K] extends string ? K & string : never;

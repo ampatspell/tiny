@@ -1,17 +1,40 @@
 import { glob, readFile, writeFile } from 'node:fs/promises';
 import { run } from '../utils/utils.ts';
-import { join, relative } from 'node:path';
+import { basename, dirname, join, relative } from 'node:path';
+import { isTruthy } from '../utils/array.ts';
 
 run(async () => {
   const dir = join(import.meta.dirname, '..');
   const pattern = `${dir}/**/*.{ts,svelte,svelte.ts}`;
-  const ignore = ['tools', 'server/database/migrations', 'server/database/schema'];
   const exports: Record<string, unknown> = {
     '.': {
       types: './dist/index.d.ts',
       svelte: './dist/index.js',
     },
     './package.json': './package.json',
+  };
+
+  const blacklistFor = async (entry: string) => {
+    const local = dirname(entry);
+    try {
+      const contents = await readFile(join(local, '.blacklist'), 'utf-8');
+      return contents.split('\n').filter(isTruthy);
+    } catch (err) {
+      if (typeof err === 'object' && (err as Record<string, unknown>).code === 'ENOENT') {
+        return [];
+      }
+      throw err;
+    }
+  };
+
+  const isIgnored = async (entry: string) => {
+    const blacklist = await blacklistFor(entry);
+    if (blacklist.includes('*')) {
+      return true;
+    }
+
+    const filename = basename(entry);
+    return blacklist.includes(filename);
   };
 
   const add = (name: string, content: Record<string, unknown>) => {
@@ -24,7 +47,7 @@ run(async () => {
   for await (const entry of glob(pattern)) {
     const path = relative(dir, entry);
     const clean = path.substring(0, path.indexOf('.'));
-    if (!ignore.find((ignore) => path.startsWith(ignore))) {
+    if (!(await isIgnored(entry))) {
       if (path.endsWith('.svelte')) {
         add(`./${clean}`, {
           types: `./dist/tiny/${clean}.svelte.d.ts`,
@@ -46,6 +69,9 @@ run(async () => {
           svelte: `./dist/tiny/${clean}.js`,
         };
       }
+      // console.log('+', path);
+    } else {
+      console.log('-', path);
     }
   }
 
