@@ -1,7 +1,7 @@
 ## TODO
 
-- [ ] Proper `<form/>` element to support submits with enter
 - [ ] Bootstrapped basic backend with auth and index editing
+- [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup
 - [ ] Remote file variant urls
 - [ ] Users section with form to change password, role
