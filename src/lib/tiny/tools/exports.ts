@@ -12,6 +12,7 @@ run(async () => {
       svelte: './dist/index.js',
     },
     './package.json': './package.json',
+    './assets/film-0677-011.jpg': './dist/tiny/assets/film-0677-011.jpg',
   };
 
   const blacklistFor = async (entry: string) => {
