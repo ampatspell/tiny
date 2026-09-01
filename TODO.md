@@ -14,6 +14,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Exports blacklist
 - [x] Separate property from presentation models
 - [x] Meta should be moved from properties to editors
 - [x] User authorization and authentication

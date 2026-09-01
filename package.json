@@ -225,18 +225,6 @@
       "types": "./dist/tiny/layout/list/layout.svelte.d.ts",
       "svelte": "./dist/tiny/layout/list/layout.svelte.js"
     },
-    "./layout/list/add": {
-      "types": "./dist/tiny/layout/list/add.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/list/add.svelte"
-    },
-    "./layout/list/header": {
-      "types": "./dist/tiny/layout/list/header.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/list/header.svelte"
-    },
-    "./layout/list/item": {
-      "types": "./dist/tiny/layout/list/item.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/list/item.svelte"
-    },
     "./layout/list/list": {
       "types": "./dist/tiny/layout/list/list.svelte.d.ts",
       "svelte": "./dist/tiny/layout/list/list.svelte"
@@ -248,22 +236,6 @@
     "./layout/editing/editing": {
       "types": "./dist/tiny/layout/editing/editing.svelte.d.ts",
       "svelte": "./dist/tiny/layout/editing/editing.svelte"
-    },
-    "./layout/editing/button/delete": {
-      "types": "./dist/tiny/layout/editing/button/delete.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/editing/button/delete.svelte"
-    },
-    "./layout/editing/button/discard": {
-      "types": "./dist/tiny/layout/editing/button/discard.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/editing/button/discard.svelte"
-    },
-    "./layout/editing/button/light": {
-      "types": "./dist/tiny/layout/editing/button/light.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/editing/button/light.svelte"
-    },
-    "./layout/editing/button/save": {
-      "types": "./dist/tiny/layout/editing/button/save.svelte.d.ts",
-      "svelte": "./dist/tiny/layout/editing/button/save.svelte"
     },
     "./icons/lucide--cat": {
       "types": "./dist/tiny/icons/lucide--cat.svelte.d.ts",
@@ -369,37 +341,13 @@
       "types": "./dist/tiny/floating/floater/model.svelte.d.ts",
       "svelte": "./dist/tiny/floating/floater/model.svelte.js"
     },
-    "./floating/floater/floater": {
-      "types": "./dist/tiny/floating/floater/floater.svelte.d.ts",
-      "svelte": "./dist/tiny/floating/floater/floater.svelte"
-    },
-    "./file/blank": {
-      "types": "./dist/tiny/file/blank.svelte.d.ts",
-      "svelte": "./dist/tiny/file/blank.svelte"
-    },
-    "./file/content": {
-      "types": "./dist/tiny/file/content.svelte.d.ts",
-      "svelte": "./dist/tiny/file/content.svelte"
-    },
-    "./file/description": {
-      "types": "./dist/tiny/file/description.svelte.d.ts",
-      "svelte": "./dist/tiny/file/description.svelte"
-    },
     "./file/file": {
       "types": "./dist/tiny/file/file.svelte.d.ts",
       "svelte": "./dist/tiny/file/file.svelte"
     },
-    "./file/overlay": {
-      "types": "./dist/tiny/file/overlay.svelte.d.ts",
-      "svelte": "./dist/tiny/file/overlay.svelte"
-    },
     "./fields/data": {
       "types": "./dist/tiny/fields/data.svelte.d.ts",
       "svelte": "./dist/tiny/fields/data.svelte.js"
-    },
-    "./fields/imports": {
-      "types": "./dist/tiny/fields/imports.d.ts",
-      "svelte": "./dist/tiny/fields/imports.js"
     },
     "./fields/utils": {
       "types": "./dist/tiny/fields/utils.svelte.d.ts",
@@ -420,14 +368,6 @@
     "./fields/input/number": {
       "types": "./dist/tiny/fields/input/number.svelte.d.ts",
       "svelte": "./dist/tiny/fields/input/number.svelte.js"
-    },
-    "./fields/input/color": {
-      "types": "./dist/tiny/fields/input/color.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/input/color.svelte"
-    },
-    "./fields/input/input": {
-      "types": "./dist/tiny/fields/input/input.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/input/input.svelte"
     },
     "./fields/file/field": {
       "types": "./dist/tiny/fields/file/field.svelte.d.ts",
@@ -481,37 +421,13 @@
       "types": "./dist/tiny/backend/navigation/model.svelte.d.ts",
       "svelte": "./dist/tiny/backend/navigation/model.svelte.js"
     },
-    "./backend/navigation/item": {
-      "types": "./dist/tiny/backend/navigation/item.svelte.d.ts",
-      "svelte": "./dist/tiny/backend/navigation/item.svelte"
-    },
-    "./backend/navigation/navigation": {
-      "types": "./dist/tiny/backend/navigation/navigation.svelte.d.ts",
-      "svelte": "./dist/tiny/backend/navigation/navigation.svelte"
-    },
-    "./auth/auth.remote": {
-      "types": "./dist/tiny/auth/auth.remote.d.ts",
-      "svelte": "./dist/tiny/auth/auth.remote.js"
-    },
     "./auth/utils": {
       "types": "./dist/tiny/auth/utils.svelte.d.ts",
       "svelte": "./dist/tiny/auth/utils.svelte.js"
     },
-    "./auth/navigation/card": {
-      "types": "./dist/tiny/auth/navigation/card.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/navigation/card.svelte"
-    },
-    "./auth/navigation/item": {
-      "types": "./dist/tiny/auth/navigation/item.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/navigation/item.svelte"
-    },
     "./auth/guard/validate": {
       "types": "./dist/tiny/auth/guard/validate.svelte.d.ts",
       "svelte": "./dist/tiny/auth/guard/validate.svelte.js"
-    },
-    "./auth/guard/denied": {
-      "types": "./dist/tiny/auth/guard/denied.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/guard/denied.svelte"
     },
     "./auth/guard/guard": {
       "types": "./dist/tiny/auth/guard/guard.svelte.d.ts",
@@ -520,22 +436,6 @@
     "./auth/guard/sign-in": {
       "types": "./dist/tiny/auth/guard/sign-in.svelte.d.ts",
       "svelte": "./dist/tiny/auth/guard/sign-in.svelte"
-    },
-    "./auth/guard/forms/model": {
-      "types": "./dist/tiny/auth/guard/forms/model.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/guard/forms/model.svelte.js"
-    },
-    "./auth/guard/forms/form": {
-      "types": "./dist/tiny/auth/guard/forms/form.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/guard/forms/form.svelte"
-    },
-    "./auth/guard/forms/sign-in": {
-      "types": "./dist/tiny/auth/guard/forms/sign-in.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/guard/forms/sign-in.svelte"
-    },
-    "./auth/guard/forms/sign-up": {
-      "types": "./dist/tiny/auth/guard/forms/sign-up.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/guard/forms/sign-up.svelte"
     }
   },
   "peerDependencies": {
