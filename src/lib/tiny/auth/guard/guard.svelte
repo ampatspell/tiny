@@ -12,7 +12,7 @@
   let token = $derived(await getToken());
 
   let resolution = $derived.by(() => {
-    if (token && validate) {
+    if (validate) {
       let url = page.url;
       return validate({ url, token });
     }
