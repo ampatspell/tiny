@@ -69,9 +69,6 @@ run(async () => {
           svelte: `./dist/tiny/${clean}.js`,
         };
       }
-      // console.log('+', path);
-    } else {
-      console.log('-', path);
     }
   }
 
