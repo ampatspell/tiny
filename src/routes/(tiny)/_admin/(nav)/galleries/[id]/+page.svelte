@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
-  import { useGalleryProperties } from '#lib/playground/galleries/gallery.svelte.js';
+  import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
   import { usePropertiesContext } from '#lib/tiny/properties/context.svelte.js';
   import Properties from '#lib/playground/galleries/properties.svelte';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
@@ -16,18 +16,18 @@
   usePropertiesContext();
   let id = $derived(page.params.id!);
   let gallery = $derived(await getGalleryById({ id }));
-  let properties = useGalleryProperties({ isNew: false, data: getter(() => gallery) });
+  let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
 
   let layout = useEditingLayout({
     title: getter(() => gallery.name),
-    properties,
+    model,
   });
 </script>
 
 <Editing {layout}>
   <Section>
     <Form size="regular">
-      <Properties {properties} />
+      <Properties properties={model} />
     </Form>
   </Section>
   <Section title="Photographs" height="fill">

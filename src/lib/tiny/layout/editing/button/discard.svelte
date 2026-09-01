@@ -1,18 +1,14 @@
-<script lang="ts" generics="P extends Properties">
+<script lang="ts" generics="M extends Model">
   import { useFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
   import { confirm } from '#lib/tiny/floating/layout/confirmation.svelte';
   import TablerCircleX from '#lib/tiny/icons/tabler--circle-x.svelte';
-  import type { EditingLayout, Properties } from '../layout.svelte.ts';
+  import type { EditingLayout, Model } from '../layout.svelte.ts';
   import Light from './light.svelte';
 
-  let {
-    layout,
-  }: {
-    layout: EditingLayout<P>;
-  } = $props();
+  let { layout }: { layout: EditingLayout<M> } = $props();
 
   let floaters = useFloaters();
-  let properties = $derived(layout.properties);
+  let model = $derived(layout.model);
   let onClick = async (reference: HTMLElement) => {
     let ok = await confirm({
       floaters,
@@ -22,11 +18,11 @@
       confirm: 'Discard',
     });
     if (ok) {
-      properties.rollback();
+      model.rollback();
     }
   };
 </script>
 
-{#if properties.isDirty}
+{#if model.isDirty}
   <Light label="Discard all changes" icon={TablerCircleX} {onClick} />
 {/if}

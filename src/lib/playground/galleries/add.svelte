@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useGalleryProperties } from './gallery.svelte.ts';
+  import { useGalleryModel } from './gallery.svelte.ts';
   import Properties from './properties.svelte';
   import Card from '#lib/tiny/card.svelte';
   import Button from '#lib/tiny/button/button.svelte';
@@ -10,7 +10,7 @@
 
   let { onDone }: { onDone: (id: string | undefined) => void } = $props();
 
-  let properties = useGalleryProperties({
+  let properties = useGalleryModel({
     isNew: true,
     data: { name: '', permalink: '' },
   });

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { IndexProperties } from './index.svelte.ts';
+  import type { IndexModel } from './index.svelte.ts';
   import Form from '#lib/tiny/form/form.svelte';
   import Content from '#lib/tiny/form/content/content.svelte';
   import Fields from '#lib/tiny/form/content/fields.svelte';
 
-  let { properties }: { properties: IndexProperties } = $props();
+  let { properties }: { properties: IndexModel } = $props();
 </script>
 
 <Form size="regular">
