@@ -11,17 +11,25 @@ export const fileField = (
   const accept = $derived(opts.accept);
   const meta = createMeta(opts);
 
+  const serialized = $derived.by(() => {
+    let { value } = property;
+    return {
+      file: value?.file,
+    };
+  });
+
   return options(
     {
       component: File,
+      serialized: getter(() => serialized),
       property: getter(() => property),
       accept: getter(() => accept),
       meta: getter(() => meta),
     },
-    { name: 'FileEditor' },
+    { name: 'FileField' },
   );
 };
 
-export type FileField = Field<UniversalFile | undefined> & {
+export type FileField = Field<UniversalFile | undefined, { file: globalThis.File | undefined }> & {
   accept: string[];
 };

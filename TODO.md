@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Dirty field serialization which makes it easy to replace/remove files
 - [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup

@@ -3,9 +3,10 @@ import type { Property } from '../properties/property.svelte.ts';
 import type { Any } from '../utils/utils.ts';
 import { getter, options } from '../utils/options.svelte.ts';
 
-export type Field<T = Any> = {
+export type Field<T = Any, S = T> = {
   property: Property<T>;
   component: Component<{ field: Any }>;
+  serialized: S;
   meta: {
     isRequired: boolean;
     label?: string | undefined;

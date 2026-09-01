@@ -44,12 +44,15 @@ export const updateIndex = command(
     indexBackgroundColor: v.optional(v.string()),
     indexTextColor: v.optional(v.string()),
     backgroundOffset: v.optional(v.number()),
+    background: v.optional(v.object({ file: v.optional(v.file()) })),
   }),
   async (props) => {
     await assertRole('admin');
 
-    const db = getDatabase();
-    await db.updateTable('index').set(props).execute();
+    console.log(props);
+
+    // const db = getDatabase();
+    // await db.updateTable('index').set(props).execute();
 
     void getIndex().refresh();
   },
