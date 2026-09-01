@@ -1,18 +1,13 @@
-<script lang="ts" generics=" P extends Properties">
-  import Busy from '$lib/tiny/button/specific/busy.svelte';
-  import type { EditingLayout, Properties } from '../layout.svelte.ts';
+<script lang="ts" generics="M extends Model">
+  import Busy from '#lib/tiny/button/specific/busy.svelte';
+  import type { EditingLayout, Model } from '../layout.svelte.ts';
 
-  let {
-    layout,
-  }: {
-    layout: EditingLayout<P>;
-  } = $props();
+  let { layout }: { layout: EditingLayout<M> } = $props();
 
-  let properties = $derived(layout.properties);
-  let onClick = () => properties.save();
-
+  let model = $derived(layout.model);
+  let onClick = () => model.save();
   let onkeydown = (e: KeyboardEvent) => {
-    if (properties.isDirty) {
+    if (model.isDirty) {
       if (e.key === 'Enter' && e.metaKey === true) {
         onClick();
       }
@@ -22,6 +17,6 @@
 
 <svelte:document {onkeydown} />
 
-{#if properties.isDirty}
+{#if model.isDirty}
   <Busy label="Save" {onClick} />
 {/if}

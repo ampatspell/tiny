@@ -1,11 +1,11 @@
 <script module lang="ts">
-  import Card from '$lib/tiny/card.svelte';
+  import Card from '#lib/tiny/card.svelte';
   import type { Component } from 'svelte';
   import { basic } from '../position.ts';
-  import Content from '$lib/tiny/dropdown/content/content.svelte';
-  import Icon from '$lib/tiny/dropdown/content/item/icon.svelte';
-  import Item, { type ItemState } from '$lib/tiny/dropdown/content/item/item.svelte';
-  import Label from '$lib/tiny/dropdown/content/item/label.svelte';
+  import Content from '#lib/tiny/dropdown/content/content.svelte';
+  import Icon from '#lib/tiny/dropdown/content/item/icon.svelte';
+  import Item, { type ItemState } from '#lib/tiny/dropdown/content/item/item.svelte';
+  import Label from '#lib/tiny/dropdown/content/item/label.svelte';
   import type { ComputePositionConfig } from '@floating-ui/dom';
   import type { Floaters } from '../floaters/model.svelte.ts';
 

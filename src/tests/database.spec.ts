@@ -4,8 +4,8 @@ import { withTemporaryFolder } from './helpers/utils.ts';
 import { join, resolve } from 'node:path';
 import dedent from 'dedent';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { createDatabaseServices } from '$lib/tiny/server/database/database.js';
-import { createDatabaseTools } from '$lib/tiny/tools/database.js';
+import { createDatabaseServices } from '#lib/tiny/server/database/database.js';
+import { createDatabaseTools } from '#lib/tiny/tools/database.js';
 
 describe('database services', () => {
   it('creates', async () => {

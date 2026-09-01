@@ -1,4 +1,4 @@
-import { invalidateAll } from '$app/navigation';
+import { refreshAll } from '$app/navigation';
 import { createContext } from 'svelte';
 import { getToken } from './auth/auth.remote.ts';
 
@@ -10,7 +10,7 @@ const createBroadcastChannel = () => {
       const data = e.data;
       const json = JSON.parse(data);
       if (json.type === 'did-save') {
-        void invalidateAll();
+        void refreshAll();
       } else if (json.type === 'token-did-change') {
         void getToken().refresh();
       }

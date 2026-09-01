@@ -1,16 +1,16 @@
-import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
-import { useDataFields } from '$lib/tiny/fields/data.svelte.js';
-import { notBlank } from '$lib/tiny/properties/validator.svelte.js';
-import { asFile } from '$lib/tiny/utils/files.svelte.js';
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
-import { images, run } from '$lib/tiny/utils/utils.js';
+import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
+import { useDataFields } from '#lib/tiny/fields/data.svelte.js';
+import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
+import { asFile } from '#lib/tiny/utils/files.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { images, run } from '#lib/tiny/utils/utils.js';
 import { updateIndex, updateIndexFile, type IndexData } from './index.remote.ts';
 
-export type UseIndexPropertiesOptions = {
+export type UseIndexModelOptions = {
   data: IndexData;
 };
 
-export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions>) => {
+export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   const opts = options(_opts);
 
   const data = $derived(opts.data);
@@ -80,4 +80,4 @@ export const useIndexProperties = (_opts: OptionsInput<UseIndexPropertiesOptions
   );
 };
 
-export type IndexProperties = ReturnType<typeof useIndexProperties>;
+export type IndexModel = ReturnType<typeof useIndexModel>;

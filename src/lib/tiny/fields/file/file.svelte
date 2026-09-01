@@ -1,7 +1,7 @@
 <script lang="ts">
   import Container from '../container.svelte';
-  import File from '$lib/tiny/file/file.svelte';
-  import type { LocalFile } from '$lib/tiny/utils/files.svelte.js';
+  import File from '#lib/tiny/file/file.svelte';
+  import type { LocalFile } from '#lib/tiny/utils/files.svelte.js';
   import type { FileField } from './field.svelte.ts';
 
   let { field }: { field: FileField } = $props();

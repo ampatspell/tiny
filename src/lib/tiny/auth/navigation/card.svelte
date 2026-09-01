@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
-  import Button from '$lib/tiny/button/button.svelte';
-  import TinyCard from '$lib/tiny/card.svelte';
-  import Actions from '$lib/tiny/form/actions.svelte';
-  import Content from '$lib/tiny/form/content/content.svelte';
-  import FormLabel from '$lib/tiny/form/content/label.svelte';
-  import Row from '$lib/tiny/form/content/row.svelte';
-  import Form from '$lib/tiny/form/form.svelte';
-  import Header from '$lib/tiny/form/header.svelte';
-  import type { TokenPayload } from '$lib/tiny/server/users/users.js';
+  import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
+  import Button from '#lib/tiny/button/button.svelte';
+  import TinyCard from '#lib/tiny/card.svelte';
+  import Actions from '#lib/tiny/form/actions.svelte';
+  import Content from '#lib/tiny/form/content/content.svelte';
+  import FormLabel from '#lib/tiny/form/content/label.svelte';
+  import Row from '#lib/tiny/form/content/row.svelte';
+  import Form from '#lib/tiny/form/form.svelte';
+  import Header from '#lib/tiny/form/header.svelte';
+  import type { TokenPayload } from '#lib/tiny/server/users/users.js';
   import { signOut } from '../utils.svelte.ts';
 
   let { token }: { token: TokenPayload } = $props();

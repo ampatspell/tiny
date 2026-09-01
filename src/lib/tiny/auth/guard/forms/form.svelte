@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Button from '$lib/tiny/button/button.svelte';
-  import Center from '$lib/tiny/center.svelte';
-  import type { InputField } from '$lib/tiny/fields/input/field.svelte.js';
-  import Actions from '$lib/tiny/form/actions.svelte';
-  import Fields from '$lib/tiny/form/content/fields.svelte';
-  import TinyForm from '$lib/tiny/form/form.svelte';
-  import Header from '$lib/tiny/form/header.svelte';
+  import Button from '#lib/tiny/button/button.svelte';
+  import Center from '#lib/tiny/center.svelte';
+  import type { InputField } from '#lib/tiny/fields/input/field.svelte.js';
+  import Actions from '#lib/tiny/form/actions.svelte';
+  import Fields from '#lib/tiny/form/content/fields.svelte';
+  import TinyForm from '#lib/tiny/form/form.svelte';
+  import Header from '#lib/tiny/form/header.svelte';
 
   let {
     title,

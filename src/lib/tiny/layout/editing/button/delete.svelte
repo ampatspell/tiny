@@ -1,19 +1,15 @@
-<script lang="ts" generics=" P extends Properties">
+<script lang="ts" generics="M extends Model">
   import { goto } from '$app/navigation';
-  import { useFloaters } from '$lib/tiny/floating/floaters/model.svelte.js';
-  import { confirm } from '$lib/tiny/floating/layout/confirmation.svelte';
-  import TablerTrashX from '$lib/tiny/icons/tabler--trash-x.svelte';
-  import type { EditingLayout, Properties } from '../layout.svelte.ts';
+  import { useFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
+  import { confirm } from '#lib/tiny/floating/layout/confirmation.svelte';
+  import TablerTrashX from '#lib/tiny/icons/tabler--trash-x.svelte';
+  import type { EditingLayout, Model } from '../layout.svelte.ts';
   import Light from './light.svelte';
 
-  let {
-    layout,
-  }: {
-    layout: EditingLayout<P>;
-  } = $props();
+  let { layout }: { layout: EditingLayout<M> } = $props();
 
   let floaters = useFloaters();
-  let properties = $derived(layout.properties);
+  let model = $derived(layout.model);
   let route = $derived(layout.route);
 
   let onClick = async (reference: HTMLElement) => {
@@ -25,12 +21,12 @@
       confirm: 'Delete',
     });
     if (ok) {
-      await properties.destroy?.();
+      await model.destroy?.();
       goto(route, { replaceState: true });
     }
   };
 </script>
 
-{#if properties.destroy}
+{#if model.destroy}
   <Light label="Delete" icon={TablerTrashX} {onClick} />
 {/if}

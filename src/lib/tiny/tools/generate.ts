@@ -192,7 +192,7 @@ export const bootstrapProject = async (project: Project) => {
   await write({
     filename: 'src/routes/files/[id]/[variant]/+server.ts',
     content: dedent`
-      import { getFiles } from '$lib/services';
+      import { getFiles } from '#lib/services';
       import { type RequestHandler } from '@sveltejs/kit';
 
       export const GET: RequestHandler = async ({ params: { id, variant } }) => {
@@ -233,15 +233,15 @@ export const bootstrapProject = async (project: Project) => {
     content: dedent`
       <script lang="ts">
         import { resolve } from '$app/paths';
-        import TablerPhoto from '$lib/tiny/icons/tabler--photo.svelte';
-        import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
-        import TablerAppWindow from '$lib/playground/icons/tabler--app-window.svelte';
-        import TablerCode from '$lib/playground/icons/tabler--code.svelte';
+        import TablerPhoto from '#lib/tiny/icons/tabler--photo.svelte';
+        import LucideCat from '#lib/playground/icons/lucide--cat.svelte';
+        import TablerAppWindow from '#lib/playground/icons/tabler--app-window.svelte';
+        import TablerCode from '#lib/playground/icons/tabler--code.svelte';
         import type { Snippet } from 'svelte';
-        import { setBackend } from '$lib/tiny/backend/backend.svelte.js';
-        import Floaters from '$lib/tiny/floating/floaters.svelte';
-        import { setFloaters } from '$lib/tiny/floating/floaters.svelte.js';
-        import Backend from '$lib/tiny/backend/backend.svelte';
+        import { setBackend } from '#lib/tiny/backend/backend.svelte.js';
+        import Floaters from '#lib/tiny/floating/floaters.svelte';
+        import { setFloaters } from '#lib/tiny/floating/floaters.svelte.js';
+        import Backend from '#lib/tiny/backend/backend.svelte';
 
         let { children }: { children: Snippet } = $props();
 
@@ -274,8 +274,8 @@ export const bootstrapProject = async (project: Project) => {
     filename: 'src/routes/(tiny)/_admin/(nav)/+page.svelte',
     content: dedent`
       <script lang="ts">
-        import LucideCat from '$lib/playground/icons/lucide--cat.svelte';
-        import Placeholder from '$lib/tiny/placeholder.svelte';
+        import LucideCat from '#lib/playground/icons/lucide--cat.svelte';
+        import Placeholder from '#lib/tiny/placeholder.svelte';
       </script>
 
       <Placeholder icon={LucideCat} label="Welcome to Tiny" />
@@ -336,7 +336,7 @@ export const bootstrapProject = async (project: Project) => {
   //   filename: 'src/routes/+page.svelte',
   //   content: dedent`
   //     <script lang="ts">
-  //       import { getMessage } from '$lib/hello.remote';
+  //       import { getMessage } from '#lib/hello.remote';
 
   //       let message = $derived(await getMessage());
   //     </script>

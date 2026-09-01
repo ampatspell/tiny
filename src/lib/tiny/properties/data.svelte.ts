@@ -1,8 +1,8 @@
 import { useProperty, type UsePropertyOptions } from './property.svelte.ts';
 import { usePropertiesContext } from './context.svelte.ts';
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
-import { hasKeys, omit, pick } from '$lib/tiny/utils/object.js';
-import { addObject } from '$lib/tiny/utils/array.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { hasKeys, omit, pick } from '#lib/tiny/utils/object.js';
+import { addObject } from '#lib/tiny/utils/array.js';
 
 export type UseDataPropertyOptions<D extends Record<string, unknown>, K extends keyof D & string> = {
   data: D;

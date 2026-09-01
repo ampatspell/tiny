@@ -21,14 +21,14 @@
 
 <script lang="ts">
   import { basic } from '../position.ts';
-  import Card from '$lib/tiny/card.svelte';
-  import Form from '$lib/tiny/form/form.svelte';
-  import Header from '$lib/tiny/form/header.svelte';
-  import Content from '$lib/tiny/form/content/content.svelte';
-  import Row from '$lib/tiny/form/content/row.svelte';
-  import Label from '$lib/tiny/form/content/label.svelte';
-  import Actions from '$lib/tiny/form/actions.svelte';
-  import Button from '$lib/tiny/button/button.svelte';
+  import Card from '#lib/tiny/card.svelte';
+  import Form from '#lib/tiny/form/form.svelte';
+  import Header from '#lib/tiny/form/header.svelte';
+  import Content from '#lib/tiny/form/content/content.svelte';
+  import Row from '#lib/tiny/form/content/row.svelte';
+  import Label from '#lib/tiny/form/content/label.svelte';
+  import Actions from '#lib/tiny/form/actions.svelte';
+  import Button from '#lib/tiny/button/button.svelte';
   import type { Floaters } from '../floaters/model.svelte.ts';
 </script>
 

@@ -1,19 +1,19 @@
-import { useBackend } from '$lib/tiny/backend/context.svelte.js';
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { useBackend } from '#lib/tiny/backend/context.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 
-export type Properties = {
+export type Model = {
   isDirty: boolean;
-  save: () => Promise<string | undefined>;
+  save: () => Promise<string | void | undefined>;
   rollback: () => void;
   destroy?: () => Promise<void>;
 };
 
-export type EditingLayoutOptions<P extends Properties> = {
+export type EditingLayoutOptions<M extends Model> = {
   title: string;
-  properties: P;
+  model: M;
 };
 
-export const useEditingLayout = <P extends Properties>(_opts: OptionsInput<EditingLayoutOptions<P>>) => {
+export const useEditingLayout = <P extends Model>(_opts: OptionsInput<EditingLayoutOptions<P>>) => {
   const opts = options(_opts);
   const backend = useBackend();
 
@@ -21,13 +21,13 @@ export const useEditingLayout = <P extends Properties>(_opts: OptionsInput<Editi
   const route = $derived(item.route);
 
   const title = $derived(opts.title);
-  const properties = $derived(opts.properties);
+  const model = $derived(opts.model);
 
   return options({
     title: getter(() => title),
-    properties: getter(() => properties),
+    model: getter(() => model),
     route: getter(() => route),
   });
 };
 
-export type EditingLayout<P extends Properties> = ReturnType<typeof useEditingLayout<P>>;
+export type EditingLayout<M extends Model> = ReturnType<typeof useEditingLayout<M>>;

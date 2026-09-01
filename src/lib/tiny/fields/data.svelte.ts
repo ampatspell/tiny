@@ -1,7 +1,7 @@
-import { sentenceCase } from '$lib/tiny/utils/string.js';
-import type { UniversalFile } from '$lib/tiny/utils/files.svelte.js';
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
-import { run } from '$lib/tiny/utils/utils.js';
+import { sentenceCase } from '#lib/tiny/utils/string.js';
+import type { UniversalFile } from '#lib/tiny/utils/files.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { run } from '#lib/tiny/utils/utils.js';
 import { useDataProperties, type UseDataPropertiesOptions } from '../properties/data.svelte.ts';
 import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
 import { fileField } from './file/field.svelte.ts';

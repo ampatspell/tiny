@@ -1,4 +1,4 @@
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { untrack } from 'svelte';
 import type { InputField } from './field.svelte.ts';
 import { Input } from '../imports.ts';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TablerPhoto from '$lib/tiny/icons/tabler--photo.svelte';
+  import TablerPhoto from '#lib/tiny/icons/tabler--photo.svelte';
   import { aan } from '../utils/string.ts';
   import Overlay from './overlay.svelte';
 

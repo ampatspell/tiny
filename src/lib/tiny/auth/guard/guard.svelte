@@ -2,7 +2,7 @@
   import type { Snippet } from 'svelte';
   import { getToken } from '../auth.remote.ts';
   import { page } from '$app/state';
-  import Tiny from '$lib/tiny/tiny.svelte';
+  import Tiny from '#lib/tiny/tiny.svelte';
   import SignIn from './sign-in.svelte';
   import type { ValidateFunction } from './validate.svelte.ts';
   import Denied from './denied.svelte';
@@ -12,7 +12,7 @@
   let token = $derived(await getToken());
 
   let resolution = $derived.by(() => {
-    if (validate) {
+    if (token && validate) {
       let url = page.url;
       return validate({ url, token });
     }

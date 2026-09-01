@@ -1,4 +1,4 @@
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Component } from 'svelte';
 import { createMeta, type Field, type FieldOptions } from '../utils.svelte.ts';
 import { Color, Input, type InputType } from '../imports.ts';

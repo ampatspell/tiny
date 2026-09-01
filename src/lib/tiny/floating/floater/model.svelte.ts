@@ -1,6 +1,6 @@
-import { extract } from 'runed';
 import type { FloaterOpenOptions } from '../floaters/model.svelte.ts';
-import { defer, type Deferred } from '$lib/tiny/utils/promise.js';
+import { defer, type Deferred } from '#lib/tiny/utils/promise.js';
+import { extract } from '#lib/tiny/utils/utils.js';
 
 export type FloaterOptions<Req, Res> = FloaterOpenOptions<Req, Res> & {
   onClosed: (floater: Floater<Req, Res>) => void;

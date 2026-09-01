@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { useBroadcastChannel } from '$lib/tiny/broadcast.svelte.js';
-  import Button from '$lib/tiny/button/button.svelte';
-  import TablerBalloon from '$lib/tiny/icons/tabler--balloon.svelte';
-  import Placeholder from '$lib/tiny/placeholder.svelte';
+  import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
+  import Button from '#lib/tiny/button/button.svelte';
+  import TablerBalloon from '#lib/tiny/icons/tabler--balloon.svelte';
+  import Placeholder from '#lib/tiny/placeholder.svelte';
   import { signOut } from '../utils.svelte.ts';
 
   let channel = useBroadcastChannel();

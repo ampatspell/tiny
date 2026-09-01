@@ -1,6 +1,6 @@
 import { page } from '$app/state';
 import type { ResolvedPathname } from '$app/types';
-import { getter, options, type OptionsInput } from '$lib/tiny/utils/options.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Component } from 'svelte';
 
 export type NavigationItemOptions = {

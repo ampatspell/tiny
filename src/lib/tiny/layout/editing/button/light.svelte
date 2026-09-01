@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Button from '$lib/tiny/button/button.svelte';
-  import Icon from '$lib/tiny/button/icon.svelte';
-  import Tooltip from '$lib/tiny/floating/tooltip.svelte';
+  import Button from '#lib/tiny/button/button.svelte';
+  import Icon from '#lib/tiny/button/icon.svelte';
+  import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import type { Component } from 'svelte';
 
   let {

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import TablerCloudFilled from '$lib/tiny/icons/tabler--cloud-filled.svelte';
-  import TablerCloud from '$lib/tiny/icons/tabler--cloud.svelte';
+  import TablerCloudFilled from '#lib/tiny/icons/tabler--cloud-filled.svelte';
+  import TablerCloud from '#lib/tiny/icons/tabler--cloud.svelte';
   import Button from '../button.svelte';
   import Icon from '../icon.svelte';
   import Label from '../label.svelte';

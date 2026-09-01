@@ -1,5 +1,5 @@
 <script module lang="ts">
-  export type Size = 'small' | 'regular';
+  export type Size = 'small' | 'regular' | 'max';
 </script>
 
 <script lang="ts">
@@ -22,6 +22,10 @@
     &.size-regular {
       --max: 450px;
       --width: auto;
+    }
+    &.size-max {
+      --max: 100%;
+      --width: 100%;
     }
     display: flex;
     flex-direction: column;
