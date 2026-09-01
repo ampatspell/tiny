@@ -4,7 +4,7 @@ import type { DB } from '../database/schema.js';
 import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
 import { omit } from '../../utils/object.ts';
-import jwt from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 
 export type TokenPayload = {
   id: string;
@@ -30,8 +30,15 @@ export const createUsers = async (opts: CreateUsersOptions) => {
       return { salt, hash };
     };
     const verify = ({ password, salt, hash }: { hash: string; salt: string; password: string }) => {
-      const existing = sync({ password, salt });
-      return existing === hash;
+      try {
+        const existing = sync({ password, salt });
+        return existing === hash;
+      } catch(err) {
+        if(err instanceof JsonWebTokenError) {
+          return false;
+        }
+        throw err;
+      }
     };
     return {
       sync,

@@ -1,7 +1,6 @@
 ## TODO
 
 - [ ] Proper `<form/>` element to support submits with enter
-- [ ] `tiny/server/users/users.js:72:21` JsonWebTokenError: invalid signature
 - [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Fix `await getFiles().get` variants lookup
 - [ ] Remote file variant urls
@@ -14,6 +13,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] `tiny/server/users/users.js:72:21` JsonWebTokenError: invalid signature
 - [x] Exports blacklist
 - [x] Separate property from presentation models
 - [x] Meta should be moved from properties to editors
