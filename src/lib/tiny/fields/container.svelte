@@ -45,12 +45,13 @@
 
 <style lang="scss">
   .property {
-    width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 2px;
     cursor: default;
     user-select: none;
+    min-width: 0;
     > .header {
       display: flex;
       flex-direction: row;
@@ -61,7 +62,12 @@
         display: flex;
         flex-direction: row;
         gap: 3px;
-        flex: 1;
+        min-width: 0;
+        > .label {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
       }
       > .error {
         white-space: nowrap;

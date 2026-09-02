@@ -1,6 +1,7 @@
 ## TODO
 
 - [ ] Bootstrapped basic backend with auth and index editing
+- [ ] Helpers to replace files & update db in server
 - [ ] Remove `extract` from `utils.ts`. Replace usage with `options({…})`
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup

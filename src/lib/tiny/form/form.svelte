@@ -1,5 +1,5 @@
 <script module lang="ts">
-  export type Size = 'small' | 'regular' | 'max';
+  export type Size = 'small' | 'regular' | 'wide' | 'max';
 </script>
 
 <script lang="ts">
@@ -21,6 +21,10 @@
     }
     &.size-regular {
       --max: 450px;
+      --width: auto;
+    }
+    &.size-wide {
+      --max: 710px;
       --width: auto;
     }
     &.size-max {

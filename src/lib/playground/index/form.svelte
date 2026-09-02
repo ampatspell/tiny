@@ -7,7 +7,7 @@
   let { properties }: { properties: IndexModel } = $props();
 </script>
 
-<Form size="regular">
+<Form size="wide">
   <Content>
     <Fields field={properties.title} />
     <Fields field={properties.description} />
