@@ -27,6 +27,10 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     await x('npm', ['install', 'sass-embedded', '@sveltejs/adapter-node@next', '--save-dev']);
   }
   {
+    log.step('Uninstall @sveltejs/adapter-auto');
+    await x('npm', ['uninstall', '@sveltejs/adapter-auto']);
+  }
+  {
     log.step('Add .local to .gitignore');
     const path = join(root, '.gitignore');
     let string = await readFile(path, 'utf-8');
@@ -646,6 +650,11 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
   {
     log.step('Delete .svelte-kit');
     await x('rm', ['-rf', join(root, '.svelte-kit')]);
+  }
+
+  {
+    log.step('Delete src/lib/assets');
+    await x('rm', ['-rf', join(root, 'src/lib/assets')]);
   }
 
   {
