@@ -1,7 +1,7 @@
 ## TODO
 
-- [ ] Remove `extract` from `utils.ts`. Replace usage with `options({…})`
 - [ ] Bootstrapped basic backend with auth and index editing
+- [ ] Remove `extract` from `utils.ts`. Replace usage with `options({…})`
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup
 - [ ] Remote file variant urls
