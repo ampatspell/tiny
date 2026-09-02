@@ -1,5 +1,5 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { withData } from '#lib/tiny/fields/data.svelte.js';
+import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
 import { asFile } from '#lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { images } from '#lib/tiny/utils/utils.js';
@@ -17,7 +17,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   const broadcast = useBroadcastChannel();
 
-  const { fields, state } = withData({
+  const [fields, state] = withDataFields({
     data: getter(() => ({
       ...data,
       background: asFile(data.background),
@@ -49,7 +49,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   return options(
     {
       ...fields,
-      ...state.actions,
+      ...state.opts,
       save,
     },
     {

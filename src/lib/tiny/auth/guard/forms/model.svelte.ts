@@ -2,14 +2,14 @@ import type { ResolvedPathname } from '$app/types';
 import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
 import { signIn, signUp } from '../../utils.svelte.ts';
-import { withData } from '#lib/tiny/fields/data.svelte.js';
+import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
 
 export const useForm = (opts: {
   perform: (data: { channel: BroadcastChannel; email: string; password: string }) => Promise<void>;
 }) => {
   const channel = useBroadcastChannel();
 
-  const { fields, state } = withData({
+  const [fields, state] = withDataFields({
     data: {
       email: '',
       password: '',

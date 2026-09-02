@@ -461,7 +461,7 @@
     "publint": "^0.3.21",
     "sass-embedded": "^1.103.1",
     "svelte": "^5.56.1",
-    "svelte-check": "^4.6.0",
+    "svelte-check": "^4.7.6",
     "tsx": "^4.23.13",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",

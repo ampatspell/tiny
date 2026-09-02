@@ -1,15 +1,18 @@
 import { useProperty, type UsePropertyOptions } from './property.svelte.ts';
-import { usePropertiesContext } from './context.svelte.ts';
+import { createPropertiesContext, type PropertiesContext } from './context.svelte.ts';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { addObject } from '#lib/tiny/utils/array.js';
+import { addObject } from '../utils/array.ts';
+import type { Any } from '../utils/utils.ts';
 
-export type UseDataPropertyOptions<D extends Record<string, unknown>, K extends keyof D & string> = {
+type DataProperties<D extends Data> = Record<string, DataProperty<D, string>>;
+
+type UseDataPropertyOptions<D extends Data, K extends keyof D & string> = {
   data: D;
   key: K;
-  prop?: Omit<UsePropertyOptions<D[K]>, 'value'>;
+  prop: Omit<UsePropertyOptions<D[K]>, 'value'>;
 };
 
-export const useDataProperty = <D extends Record<string, unknown>, K extends keyof D & string>(
+const createDataProperty = <D extends Data, K extends keyof D & string>(
   _opts: OptionsInput<UseDataPropertyOptions<D, K>>,
 ) => {
   const opts = options(_opts);
@@ -59,77 +62,104 @@ export const useDataProperty = <D extends Record<string, unknown>, K extends key
 };
 
 export type DataProperty<D extends Record<string, unknown>, K extends keyof D & string> = ReturnType<
-  typeof useDataProperty<D, K>
+  typeof createDataProperty<D, K>
 >;
 
-export type UseDataPropertiesOptions<D extends Record<string, unknown>> = {
+export type Data = Record<string, unknown>;
+
+export type WithDataOptions<D extends Data> = {
   data: D;
+  context?: PropertiesContext;
 };
 
-export const useDataProperties = <D extends Record<string, unknown>>(
-  _opts: OptionsInput<UseDataPropertiesOptions<D>>,
-) => {
+export const withDataProperties = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
   const opts = options(_opts);
-  const context = usePropertiesContext();
-  const properties = $state<DataProperty<D, string>[]>([]);
-  const property = <K extends keyof D & string>(key: K, propertyOptions?: Omit<UsePropertyOptions<D[K]>, 'value'>) => {
-    const prop = useDataProperty<D, K>({
+  const context = opts.context ?? createPropertiesContext();
+  const properties = $state<DataProperty<D, Any>[]>([]);
+
+  const property = <K extends keyof D & string>(
+    key: K,
+    propertyOptions?: Omit<UsePropertyOptions<D[K]>, 'value' | 'context'>,
+  ) => {
+    const prop = createDataProperty<D, K>({
       data: getter(() => opts.data),
       key,
-      prop: propertyOptions,
+      prop: { ...propertyOptions, context },
     });
-    addObject(properties, prop as unknown as DataProperty<D, string>);
+    addObject(properties, prop);
     return prop;
   };
 
-  const data = $derived.by(() => {
-    const data: Record<string, unknown> = {};
-    properties.forEach((prop) => {
-      data[prop.key] = prop.value;
-    });
-    return data as D;
-  });
+  const factory = () => {
+    return { property };
+  };
 
-  const dirty = $derived.by(() => {
-    const data: Record<string, unknown> = {};
-    properties.forEach((prop) => {
-      if (prop.isDirty) {
+  const createState = () => {
+    const isDirty = getter(() => context.isDirty);
+    const rollback = () => context.rollback();
+
+    const data = $derived.by(() => {
+      const data: Record<string, unknown> = {};
+      properties.forEach((prop) => {
         data[prop.key] = prop.value;
-      }
+      });
+      return data as D;
     });
-    if (Object.keys(data).length === 0) {
-      return undefined;
-    }
-    return data as Partial<D>;
-  });
 
-  const touch = () => context.touch();
-  const rollback = () => context.rollback();
-  const touched = $derived(context.touched);
-  const errors = $derived(context.errors);
-  const isTouched = $derived(context.isTouched);
-  const isValid = $derived(context.isValid);
-  const isDirty = $derived(context.isDirty);
+    const dirty = $derived.by(() => {
+      const data: Record<string, unknown> = {};
+      properties.forEach((prop) => {
+        if (prop.isDirty) {
+          data[prop.key] = prop.value;
+        }
+      });
+      if (Object.keys(data).length === 0) {
+        return undefined;
+      }
+      return data as Partial<D>;
+    });
 
-  return options(
-    {
-      context,
-      property,
-      data: getter(() => data),
-      dirty: getter(() => dirty),
-      touch,
-      rollback,
-      touched: getter(() => touched),
-      errors: getter(() => errors),
-      isTouched: getter(() => isTouched),
-      isValid: getter(() => isValid),
-      isDirty: getter(() => isDirty),
-    },
-    {
-      name: 'DataProperties',
-      serialized: ['isDirty', 'isValid'],
-    },
-  );
+    return options(
+      {
+        isDirty,
+        isValid: getter(() => context.isValid),
+        isTouched: getter(() => context.isTouched),
+        errors: getter(() => context.errors),
+        touched: getter(() => context.touched),
+        touch: () => context.touch(),
+        rollback,
+        data,
+        dirty,
+        opts: {
+          isDirty,
+          rollback,
+        },
+      },
+      {
+        name: 'DataPropertiesState',
+      },
+    );
+  };
+
+  const create = () => {
+    return {
+      factory: factory(),
+      state: createState(),
+    };
+  };
+
+  const define = <R extends DataProperties<D>>(
+    cb: (arg: ReturnType<typeof factory>) => R,
+  ): [R, ReturnType<typeof createState>] => {
+    const { factory, state } = create();
+    const object = cb(factory);
+    return [object, state];
+  };
+
+  return {
+    create,
+    define,
+  };
 };
 
-export type DataProperties<D extends Record<string, unknown>> = ReturnType<typeof useDataProperties<D>>;
+export type DataPropertiesState = ReturnType<ReturnType<typeof withDataProperties>['define']>[1];

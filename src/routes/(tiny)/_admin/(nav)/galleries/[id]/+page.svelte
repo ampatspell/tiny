@@ -2,7 +2,6 @@
   import { page } from '$app/state';
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
   import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
-  import { usePropertiesContext } from '#lib/tiny/properties/context.svelte.js';
   import Properties from '#lib/playground/galleries/properties.svelte';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { useBackend } from '#lib/tiny/backend/context.svelte.js';
@@ -13,7 +12,6 @@
   import Placeholder from '#lib/tiny/placeholder.svelte';
 
   let backend = useBackend();
-  usePropertiesContext();
   let id = $derived(page.params.id!);
   let gallery = $derived(await getGalleryById({ id }));
   let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
