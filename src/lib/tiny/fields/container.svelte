@@ -50,6 +50,7 @@
     flex-direction: column;
     gap: 2px;
     cursor: default;
+    user-select: none;
     > .header {
       display: flex;
       flex-direction: row;
