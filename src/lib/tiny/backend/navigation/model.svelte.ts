@@ -3,10 +3,16 @@ import type { ResolvedPathname } from '$app/types';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Component } from 'svelte';
 
+export type Comparator = (current: string, route: string) => boolean;
+
+export const startsWith: Comparator = (current, route) => current.startsWith(route);
+export const equals: Comparator = (current, route) => current === route;
+
 export type NavigationItemOptions = {
   icon: Component;
   name: string;
   route: ResolvedPathname;
+  cmp?: Comparator;
   select?: (id: string) => ResolvedPathname;
 };
 
@@ -18,16 +24,11 @@ export const createItem = (_opts: OptionsInput<NavigationItemOptions>) => {
   const select = $derived(opts.select);
   const route = $derived(opts.route);
 
-  const eq = ['/'];
-
   const isCurrent = $derived.by(() => {
     const pathname = page.url.pathname;
     if (pathname) {
-      if (eq.includes(route)) {
-        return route === pathname;
-      } else {
-        return pathname.startsWith(route);
-      }
+      const cmp = opts.cmp ?? startsWith;
+      return cmp(pathname, route);
     }
     return false;
   });

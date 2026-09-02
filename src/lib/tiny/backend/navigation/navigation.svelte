@@ -8,7 +8,7 @@
 
 <div class="navigation">
   <div class="items flex">
-    {#each backend.items as item (item.icon)}
+    {#each backend.items as item (item.route)}
       <Item isCurrent={item.isCurrent} icon={item.icon} name={item.name} route={item.route} />
     {/each}
   </div>

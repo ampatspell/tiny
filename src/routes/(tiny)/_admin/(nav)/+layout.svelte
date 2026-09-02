@@ -9,6 +9,8 @@
   import Floaters from '#lib/tiny/floating/floaters/floaters.svelte';
   import Backend from '#lib/tiny/backend/backend.svelte';
   import { setFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
+  import { equals } from '#lib/tiny/backend/navigation/model.svelte.js';
+  import TablerBalloon from '#lib/tiny/icons/tabler--balloon.svelte';
 
   let { children }: { children: Snippet } = $props();
 
@@ -16,8 +18,15 @@
     items: [
       {
         name: 'Public',
-        icon: LucideCat,
+        icon: TablerBalloon,
         route: resolve('/'),
+        cmp: equals,
+      },
+      {
+        name: 'Cat',
+        icon: LucideCat,
+        route: resolve('/(tiny)/_admin/(nav)'),
+        cmp: equals,
       },
       {
         name: 'Index',
