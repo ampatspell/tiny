@@ -59,6 +59,7 @@
       font-size: var(--tiny-font-size-small);
       gap: 5px;
       > .content {
+        flex: 1;
         display: flex;
         flex-direction: row;
         gap: 3px;

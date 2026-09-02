@@ -7,6 +7,7 @@
   import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import TablerSquareRoundedPlus from '#lib/tiny/icons/tabler--square-rounded-plus.svelte';
   import type { ListLayout, Model } from './layout.svelte.ts';
+  import { getter } from '#lib/tiny/utils/options.svelte.js';
 
   let { layout }: { layout: ListLayout<M> } = $props();
 
@@ -15,7 +16,7 @@
     let id = await floaters.open({
       snippet,
       position: basic(),
-      reference: () => reference,
+      reference: getter(() => reference),
       request: undefined,
       close: null,
     }).response;

@@ -2,10 +2,10 @@ import { createContext, tick, type Snippet } from 'svelte';
 import { Floater } from '../floater/model.svelte.ts';
 import type { ComputePositionConfig } from '@floating-ui/dom';
 import { addObject, removeObject } from '#lib/tiny/utils/array.js';
-import type { MaybeGetter } from '#lib/tiny/utils/utils.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 
 export type FloaterOpenOptions<Req, Res> = {
-  reference: () => HTMLElement | undefined;
+  reference: HTMLElement | undefined;
   position: ComputePositionConfig;
   snippet: Snippet<
     [
@@ -17,7 +17,7 @@ export type FloaterOpenOptions<Req, Res> = {
     ]
   >;
   request: NoInfer<Req>;
-  close?: MaybeGetter<Res | undefined>;
+  close?: Res | undefined;
 };
 
 export class Floaters {
@@ -28,9 +28,17 @@ export class Floaters {
     removeObject(this.all, floater);
   };
 
-  readonly open = <Req, Res>({ reference, position, snippet, request, close }: FloaterOpenOptions<Req, Res>) => {
+  readonly open = <Req, Res>(_opts: OptionsInput<FloaterOpenOptions<Req, Res>>) => {
+    const opts = options(_opts);
     const { onClosed } = this;
-    const floater = new Floater({ reference, position, snippet, request, close, onClosed });
+    const floater = new Floater({
+      reference: getter(() => opts.reference),
+      position: getter(() => opts.position),
+      snippet: getter(() => opts.snippet),
+      request: getter(() => opts.request),
+      close: getter(() => opts.close),
+      onClosed,
+    });
     addObject(this.all, floater);
     return floater;
   };

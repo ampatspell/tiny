@@ -12,7 +12,7 @@
     return await opts.floaters.open({
       snippet,
       request: opts,
-      reference: () => opts.reference,
+      reference: getter(() => opts.reference),
       position: basic(),
       close: false,
     }).response;
@@ -30,6 +30,7 @@
   import Actions from '#lib/tiny/form/actions.svelte';
   import Button from '#lib/tiny/button/button.svelte';
   import type { Floaters } from '../floaters/model.svelte.ts';
+  import { getter } from '#lib/tiny/utils/options.svelte.js';
 </script>
 
 {#snippet snippet({ request, resolve }: { request: ConfirmOptions; resolve: (ok: boolean) => void })}
