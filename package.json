@@ -440,7 +440,7 @@
     }
   },
   "peerDependencies": {
-    "@sveltejs/kit": "https://pkg.svelte.dev/@sveltejs/kit/c/0c1556ea1e5fb00cff14e219af3f0bbdb84a02ee",
+    "@sveltejs/kit": "next",
     "svelte": "^5.0.0"
   },
   "devDependencies": {
