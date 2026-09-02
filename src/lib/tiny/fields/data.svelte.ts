@@ -22,7 +22,9 @@ export type FileKey<T> = {
   [K in keyof T]: T[K] extends UniversalFile | undefined ? K & string : never;
 }[keyof T];
 
-export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsInput<UseDataPropertiesOptions<D>>) => {
+export type UseDataFieldsOptions<D extends Record<string, unknown>> = UseDataPropertiesOptions<D>;
+
+export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsInput<UseDataFieldsOptions<D>>) => {
   const properties = useDataProperties<D>(_opts);
   const fields: { key: keyof D; field: Field }[] = [];
 

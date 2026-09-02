@@ -12,7 +12,7 @@ export const fileField = (
   const meta = createMeta(opts);
 
   const serialized = $derived.by(() => {
-    let { value } = property;
+    const { value } = property;
     return {
       file: value?.file,
     };

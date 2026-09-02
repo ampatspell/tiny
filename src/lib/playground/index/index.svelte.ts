@@ -1,10 +1,10 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { useDataFields } from '#lib/tiny/fields/data.svelte.js';
-import type { Field } from '#lib/tiny/fields/utils.svelte.js';
+import { serialize } from '#lib/tiny/fields/utils.svelte.js';
 import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
 import { asFile } from '#lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { images, type Any } from '#lib/tiny/utils/utils.js';
+import { images } from '#lib/tiny/utils/utils.js';
 import { updateIndex, type IndexData } from './index.remote.ts';
 
 export type UseIndexModelOptions = {
@@ -42,50 +42,13 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   const isDirty = $derived(fields.isDirty);
   const rollback = () => fields.rollback();
 
-  const serialize = <
-    I extends Record<string, Field>,
-    O extends Partial<{
-      [K in keyof I]: I[K]['serialized'];
-    }>,
-  >(
-    input: I,
-  ): O | undefined => {
-    let output = {} as O;
-    Object.keys(input).forEach((key) => {
-      let field = input[key];
-      if (field.property.isDirty) {
-        output[key as keyof I] = field.serialized as Any;
-      }
-    });
-    if (Object.keys(output).length) {
-      return output;
-    }
-  };
-
-  $effect(() => {
-    console.log(serialize(all));
-  });
-
   const save = async () => {
     if (fields.touch()) {
-      let dirty = serialize(all);
+      const dirty = serialize.dirty(all);
       if (dirty) {
         await updateIndex(dirty);
+        broadcast.notifyDidSave();
       }
-      // const { omit: data, pick: files } = fields.with('background').dirty;
-      // await Promise.all([
-      //   run(async () => {
-      //     if (data) {
-      //       await updateIndex(data);
-      //     }
-      //   }),
-      //   run(async () => {
-      //     if (files) {
-      //       await updateIndexFile({ file: files.background?.file });
-      //     }
-      //   }),
-      // ]);
-      broadcast.notifyDidSave();
       return id;
     }
   };
@@ -99,7 +62,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
       rollback,
     },
     {
-      name: 'IndexProperties',
+      name: 'IndexModel',
     },
   );
 };
