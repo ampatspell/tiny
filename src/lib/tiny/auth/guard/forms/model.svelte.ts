@@ -1,33 +1,32 @@
 import type { ResolvedPathname } from '$app/types';
 import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { useDataFields } from '#lib/tiny/fields/data.svelte.js';
 import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
 import { signIn, signUp } from '../../utils.svelte.ts';
+import { withData } from '#lib/tiny/fields/data.svelte.js';
 
 export const useForm = (opts: {
   perform: (data: { channel: BroadcastChannel; email: string; password: string }) => Promise<void>;
 }) => {
   const channel = useBroadcastChannel();
 
-  const fields = useDataFields({
+  const { fields, state } = withData({
     data: {
       email: '',
       password: '',
     },
-  });
-
-  const email = fields.field.string('email', { validator: notBlank() });
-  const password = fields.field.string('password', { validator: notBlank(), type: 'password' });
+  }).define(({ string }) => ({
+    email: string('email', { validator: notBlank() }),
+    password: string('password', { validator: notBlank(), type: 'password' }),
+  }));
 
   const perform = async () => {
-    if (fields.touch()) {
-      await opts.perform({ channel, ...fields.data });
+    if (state.touch()) {
+      await opts.perform({ channel, ...state.serialized.all });
     }
   };
 
   return {
-    email,
-    password,
+    ...fields,
     perform,
   };
 };

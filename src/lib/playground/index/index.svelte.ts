@@ -1,7 +1,5 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { useDataFields } from '#lib/tiny/fields/data.svelte.js';
-import { serialize } from '#lib/tiny/fields/utils.svelte.js';
-import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
+import { withData } from '#lib/tiny/fields/data.svelte.js';
 import { asFile } from '#lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { images } from '#lib/tiny/utils/utils.js';
@@ -19,32 +17,27 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   const broadcast = useBroadcastChannel();
 
-  const fields = useDataFields({
+  const { fields, state } = withData({
     data: getter(() => ({
       ...data,
       background: asFile(data.background),
     })),
-  });
-
-  const all = {
-    title: fields.field.string('title', { validator: notBlank() }),
-    description: fields.field.string('description'),
-    background: fields.field.file('background', { accept: images }),
-    backgroundOffset: fields.field.number('backgroundOffset', {
+  }).define(({ string, number, file, color }) => ({
+    title: string('title'),
+    description: string('description'),
+    background: file('background', { accept: images }),
+    backgroundOffset: number('backgroundOffset', {
       meta: { description: 'Negative values crop the image' },
     }),
-    indexBackgroundColor: fields.field.color('indexBackgroundColor'),
-    indexTextColor: fields.field.color('indexTextColor'),
-    backgroundColor: fields.field.color('backgroundColor'),
-    textColor: fields.field.color('textColor'),
-  };
-
-  const isDirty = $derived(fields.isDirty);
-  const rollback = () => fields.rollback();
+    indexBackgroundColor: color('indexBackgroundColor'),
+    indexTextColor: color('indexTextColor'),
+    backgroundColor: color('backgroundColor'),
+    textColor: color('textColor'),
+  }));
 
   const save = async () => {
-    if (fields.touch()) {
-      const dirty = serialize.dirty(all);
+    if (state.touch()) {
+      const dirty = state.serialized.dirty;
       if (dirty) {
         await updateIndex(dirty);
         broadcast.notifyDidSave();
@@ -55,11 +48,9 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   return options(
     {
-      fields,
-      ...all,
-      isDirty: getter(() => isDirty),
+      ...fields,
+      ...state.actions,
       save,
-      rollback,
     },
     {
       name: 'IndexModel',

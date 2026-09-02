@@ -1,6 +1,6 @@
-import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 import { untrack } from 'svelte';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 
 export const hashCodeTag = Symbol('hash-code');
 

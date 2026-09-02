@@ -3,7 +3,7 @@ import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
 import type { OmitId } from '#lib/tiny/utils/utils.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { slug } from '#lib/tiny/utils/string.js';
-import { useDataFields } from '#lib/tiny/fields/data.svelte.js';
+import { withData } from '#lib/tiny/fields/data.svelte.js';
 
 export type UseGalleryModelOptions =
   | {
@@ -20,30 +20,34 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const isNew = $derived(opts.isNew);
   const data = $derived(opts.data);
 
-  const fields = useDataFields({ data: getter(() => data) });
-  const isDirty = $derived(fields.isDirty);
+  const { fields, state } = withData({ data: getter(() => data) }).define(({ string }) => {
+    const name = string('name', {
+      didUpdate: ({ after }) => {
+        permalink.property.update(slug(after, { replacement: '-' }));
+      },
+      validator: notBlank(),
+    });
 
-  const name = fields.field.string('name', {
-    didUpdate: ({ after }) => {
-      permalink.property.update(slug(after, { replacement: '-' }));
-    },
-    validator: notBlank(),
-  });
+    const permalink = string('permalink', {
+      meta: {
+        description: 'Part after /gallery in public URL',
+      },
+    });
 
-  const permalink = fields.field.string('permalink', {
-    meta: {
-      description: 'Part after /gallery in public URL',
-    },
+    return {
+      name,
+      permalink,
+    };
   });
 
   const save = async () => {
-    if (fields.touch()) {
+    if (state.touch()) {
       let id;
       if (opts.isNew) {
-        const data = fields.data;
+        const data = state.serialized.all;
         id = await addGallery(data);
       } else {
-        const data = fields.dirty;
+        const data = state.serialized.dirty;
         if (data) {
           id = opts.data.id;
           await updateGallery({ id, ...data });
@@ -60,16 +64,12 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
-  const rollback = () => fields.rollback();
-
   return options(
     {
       isNew: getter(() => isNew),
-      isDirty: getter(() => isDirty),
-      name,
-      permalink,
+      ...fields,
+      ...state.actions,
       save,
-      rollback,
       destroy,
     },
     {
