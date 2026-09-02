@@ -51,14 +51,14 @@ export const createInputField = <T>({
 };
 
 export const stringField = createInputField<string>({
-  name: 'StringEditor',
+  name: 'StringField',
   fromString: (value) => value,
   toString: (value) => value,
   component: Input,
 });
 
 export const colorField = createInputField<string>({
-  name: 'ColorEditor',
+  name: 'ColorField',
   fromString: (value) => value,
   toString: (value) => value,
   component: Color,
