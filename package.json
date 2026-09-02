@@ -45,7 +45,7 @@
       "svelte": "./dist/index.js"
     },
     "./package.json": "./package.json",
-    "./assets/film-0677-011.jpg": "./src/lib/tiny/assets/film-0677-011.jpg",
+    "./assets/film-0677-011.jpg": "./dist/tiny/assets/film-0677-011.jpg",
     "./broadcast": {
       "types": "./dist/tiny/broadcast.svelte.d.ts",
       "svelte": "./dist/tiny/broadcast.svelte.js"
