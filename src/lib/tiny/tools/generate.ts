@@ -616,6 +616,28 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     `,
   });
 
+  await write({
+    filename: 'vite.config.ts',
+    content: dedent`
+      import adapter from '@sveltejs/adapter-node';
+      import { sveltekit } from '@sveltejs/kit/vite';
+      import { defineConfig } from 'vite';
+
+      export default defineConfig({
+        plugins: [
+          sveltekit({
+            compilerOptions: {
+              runes: true,
+              experimental: { async: true },
+            },
+            adapter: adapter(),
+            experimental: { remoteFunctions: true },
+          }),
+        ],
+      });
+    `,
+  });
+
   {
     log.step('Copy favicon.png');
     await copyFile(join(tiny.root, 'static/favicon.png'), join(project.root, 'static/favicon.png'));

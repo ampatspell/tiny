@@ -13,6 +13,7 @@ npm
 
 ```
 npm install @ampatspell/tiny --save
+npm install-scripts approve -a
 ```
 
 ```
