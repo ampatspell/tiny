@@ -127,9 +127,9 @@ export const withDataProperties = <D extends Data = Data>(_opts: OptionsInput<Wi
         errors: getter(() => context.errors),
         touched: getter(() => context.touched),
         touch: () => context.touch(),
+        data: getter(() => data),
+        dirty: getter(() => dirty),
         rollback,
-        data,
-        dirty,
         opts: {
           isDirty,
           rollback,
