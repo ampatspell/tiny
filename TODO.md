@@ -3,7 +3,6 @@
 - [ ] Helpers to replace files & update db in server
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup
-- [ ] Remote file variant urls
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
 - [ ] `<Select />` component
