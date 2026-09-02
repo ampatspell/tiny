@@ -27,6 +27,7 @@ export const numberField = (_opts: OptionsInput<FieldOptions<number> & { fallbac
   const property = $derived(opts.property);
   const value = $derived(integerToString(property.value) ?? '');
   const meta = createMeta(opts);
+  const serialized = $derived(property.value);
 
   let local = $state<string>(untrack(() => value));
 
@@ -59,6 +60,7 @@ export const numberField = (_opts: OptionsInput<FieldOptions<number> & { fallbac
       component: Input,
       property: getter(() => property),
       value: getter(() => local),
+      serialized: getter(() => serialized),
       type: 'text',
       onInput,
       onBlur,
