@@ -1,6 +1,6 @@
 # Tiny
 
-``` sh
+```sh
 npx sv@latest create
 # foof
 # SvelteKit minimal
@@ -11,17 +11,17 @@ npx sv@latest create
 # npm
 ```
 
-``` sh
+```sh
 npm install @ampatspell/tiny --save
 npm install-scripts approve -a
 ```
 
-``` sh
+```sh
 npx tiny
 # Bootstrap this project
 ```
 
-``` sh
+```sh
 npm run dev
 ```
 

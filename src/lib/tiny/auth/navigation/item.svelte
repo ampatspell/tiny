@@ -6,6 +6,7 @@
   import type { TokenPayload } from '#lib/tiny/server/users/users.js';
   import TablerUser from '#lib/tiny/icons/tabler--user.svelte';
   import { useFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
+  import { getter } from '#lib/tiny/utils/options.svelte.js';
 
   let floaters = useFloaters();
   let token = $derived(await getToken());
@@ -15,7 +16,7 @@
     const reference = item?.element;
     if (reference && token) {
       floaters.open({
-        reference: () => reference,
+        reference: getter(() => reference),
         position: basic({
           placement: 'right-end',
           offset: { mainAxis: 5 },

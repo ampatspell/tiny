@@ -1,18 +1,18 @@
 import type { FloaterOpenOptions } from '../floaters/model.svelte.ts';
 import { defer, type Deferred } from '#lib/tiny/utils/promise.js';
-import { extract } from '#lib/tiny/utils/utils.js';
+import { type Any } from '#lib/tiny/utils/utils.js';
+import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 
 export type FloaterOptions<Req, Res> = FloaterOpenOptions<Req, Res> & {
   onClosed: (floater: Floater<Req, Res>) => void;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class Floater<Req = any, Res = any> {
+export class Floater<Req = Any, Res = Any> {
   private readonly _opts: FloaterOptions<Req, Res>;
   private _deferred: Deferred<Res>;
 
-  constructor(opts: FloaterOptions<Req, Res>) {
-    this._opts = opts;
+  constructor(opts: OptionsInput<FloaterOptions<Req, Res>>) {
+    this._opts = options(opts);
     this._deferred = defer<Res>();
   }
 
@@ -21,7 +21,7 @@ export class Floater<Req = any, Res = any> {
   }
 
   get reference() {
-    return this._opts.reference();
+    return this._opts.reference;
   }
 
   get snippet() {
@@ -34,7 +34,7 @@ export class Floater<Req = any, Res = any> {
   };
 
   readonly close = () => {
-    const close = extract(this._opts.close);
+    const close = this._opts.close;
     if (close !== undefined) {
       this.resolve(close);
     }

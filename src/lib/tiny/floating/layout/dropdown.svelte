@@ -8,6 +8,7 @@
   import Label from '#lib/tiny/dropdown/content/item/label.svelte';
   import type { ComputePositionConfig } from '@floating-ui/dom';
   import type { Floaters } from '../floaters/model.svelte.ts';
+  import { getter } from '#lib/tiny/utils/options.svelte.js';
 
   export type DropdownItem = {
     icon?: Component;
@@ -26,7 +27,7 @@
     return (await opts.floaters.open({
       snippet,
       request: opts as DropdownOptions,
-      reference: () => opts.reference,
+      reference: getter(() => opts.reference),
       position: opts.position ?? basic(),
       close: null,
     }).response) as I | undefined;
