@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Helpers to replace files & update db in server
 - [ ] Remove `extract` from `utils.ts`. Replace usage with `options({…})`
 - [ ] Proper `<form/>` element to support submits with enter
@@ -15,6 +14,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Bootstrapped basic backend with auth and index editing
 - [x] Rework fields to make it easy to serialize them
 - [x] Dirty field serialization which makes it easy to replace/remove files
 - [x] `tiny/server/users/users.js:72:21` JsonWebTokenError: invalid signature
