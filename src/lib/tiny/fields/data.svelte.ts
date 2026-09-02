@@ -21,6 +21,28 @@ export type Serialized<I extends Fields> = {
   [K in keyof I]: I[K]['serialized'];
 };
 
+const filtered = <I extends Fields, O extends Serialized<I>>(input: I, filter: (field: Field) => boolean) => {
+  const output = {} as Partial<O>;
+  Object.keys(input).forEach((key) => {
+    const field = input[key];
+    if (filter(field)) {
+      output[key as keyof I] = field.serialized as Any;
+    }
+  });
+  return output;
+};
+
+const serializeAll = <I extends Fields, O extends Serialized<I>>(input: I) => {
+  return filtered<I, O>(input, () => true) as O;
+};
+
+const serializeDirty = <I extends Fields, O extends Serialized<I>>(input: I) => {
+  const output = filtered<I, O>(input, (field) => field.property.isDirty);
+  if (Object.keys(output).length) {
+    return output;
+  }
+};
+
 export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
   const properties = withDataProperties<D>(_opts);
   const fields: { key: keyof D; field: Field }[] = [];
@@ -84,28 +106,6 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
       color,
       file,
     };
-  };
-
-  const filtered = <I extends Fields, O extends Serialized<I>>(input: I, filter: (field: Field) => boolean) => {
-    const output = {} as Partial<O>;
-    Object.keys(input).forEach((key) => {
-      const field = input[key];
-      if (filter(field)) {
-        output[key as keyof I] = field.serialized as Any;
-      }
-    });
-    return output;
-  };
-
-  const serializeAll = <I extends Fields, O extends Serialized<I>>(input: I) => {
-    return filtered<I, O>(input, () => true) as O;
-  };
-
-  const serializeDirty = <I extends Fields, O extends Serialized<I>>(input: I) => {
-    const output = filtered<I, O>(input, (field) => field.property.isDirty);
-    if (Object.keys(output).length) {
-      return output;
-    }
   };
 
   const createState = <R extends Fields>(fields: R, props: DataPropertiesState) => {
