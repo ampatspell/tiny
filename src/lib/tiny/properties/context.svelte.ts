@@ -1,7 +1,7 @@
-import { getContext, hasContext, setContext, untrack } from 'svelte';
+import { untrack } from 'svelte';
+import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { Property, PropertyUpdatePair } from './property.svelte.ts';
-import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { addObject, isTruthy, removeObject } from '#lib/tiny/utils/array.js';
+import { addObject, isTruthy, removeObject } from '../utils/array.ts';
 
 export type UpdateParams<T> = [property: Property<T>, pair: PropertyUpdatePair<T>];
 
@@ -67,8 +67,8 @@ export type UsePropertiesContextOptions = {
   parent?: Parent | undefined;
 } & Partial<Parent>;
 
-const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions>) => {
-  const opts = options(_opts);
+export const createPropertiesContext = (_opts?: OptionsInput<UsePropertiesContextOptions>) => {
+  const opts = options(_opts ?? {});
 
   const willUpdate = (property: Property<unknown>, pair: PropertyUpdatePair<unknown>) => {
     opts.willUpdate?.(property, pair);
@@ -104,7 +104,7 @@ const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions
     };
   };
 
-  return options(
+  const identity = options(
     {
       willUpdate,
       didUpdate,
@@ -116,6 +116,9 @@ const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions
       isDirty: getter(() => isDirty),
       touch,
       rollback,
+      nest: (opts?: OptionsInput<Omit<UsePropertiesContextOptions, 'parent'>>) => {
+        return createPropertiesContext({ ...opts, parent: identity });
+      },
       _register,
     },
     {
@@ -123,23 +126,8 @@ const createPropertiesContext = (_opts: OptionsInput<UsePropertiesContextOptions
       serialized: ['isDirty', 'isValid'],
     },
   );
+
+  return identity;
 };
 
 export type PropertiesContext = ReturnType<typeof createPropertiesContext>;
-
-const key = 'properties-context';
-
-export const usePropertiesContext = () => {
-  let context;
-  if (!hasContext(key)) {
-    context = setContext(key, createPropertiesContext({}));
-  } else {
-    context = getContext(key) as PropertiesContext;
-  }
-  return context;
-};
-
-export const nestPropertiesContext = (opts: Omit<UsePropertiesContextOptions, 'parent'> = {}) => {
-  const parent = getContext(key) as PropertiesContext | undefined;
-  return setContext(key, createPropertiesContext({ ...opts, parent }));
-};

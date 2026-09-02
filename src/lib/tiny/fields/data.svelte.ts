@@ -1,35 +1,54 @@
-import { sentenceCase } from '#lib/tiny/utils/string.js';
-import type { UniversalFile } from '#lib/tiny/utils/files.svelte.js';
-import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { run, type Any } from '#lib/tiny/utils/utils.js';
-import { useDataProperties, type UseDataPropertiesOptions } from '../properties/data.svelte.ts';
+import { sentenceCase } from 'text-sentence-case';
+import {
+  withDataProperties,
+  type Data,
+  type DataPropertiesState,
+  type WithDataOptions,
+} from '../properties/data.svelte.ts';
 import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
-import { fileField } from './file/field.svelte.ts';
+import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
+import type { BaseFieldOptions, Field } from './utils.svelte.ts';
+import { run, type Any, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
+import type { UniversalFile } from '../utils/files.svelte.ts';
 import { colorField, stringField } from './input/field.svelte.ts';
 import { numberField } from './input/number.svelte.ts';
-import type { BaseFieldOptions, Field } from './utils.svelte.ts';
+import { fileField } from './file/field.svelte.ts';
 import type { InputType } from '../input.svelte';
 
-export type StringKey<T> = {
-  [K in keyof T]: T[K] extends string ? K & string : never;
-}[keyof T];
+export type Fields = Record<string, Field>;
 
-export type NumberKey<T> = {
-  [K in keyof T]: T[K] extends number ? K & string : never;
-}[keyof T];
+export type Serialized<I extends Fields> = {
+  [K in keyof I]: I[K]['serialized'];
+};
 
-export type FileKey<T> = {
-  [K in keyof T]: T[K] extends UniversalFile | undefined ? K & string : never;
-}[keyof T];
+const filtered = <I extends Fields, O extends Serialized<I>>(input: I, filter: (field: Field) => boolean) => {
+  const output = {} as Partial<O>;
+  Object.keys(input).forEach((key) => {
+    const field = input[key];
+    if (filter(field)) {
+      output[key as keyof I] = field.serialized as Any;
+    }
+  });
+  return output;
+};
 
-export type UseDataFieldsOptions<D extends Record<string, unknown>> = UseDataPropertiesOptions<D>;
+const serializeAll = <I extends Fields, O extends Serialized<I>>(input: I) => {
+  return filtered<I, O>(input, () => true) as O;
+};
 
-export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsInput<UseDataFieldsOptions<D>>) => {
-  const properties = useDataProperties<D>(_opts);
+const serializeDirty = <I extends Fields, O extends Serialized<I>>(input: I) => {
+  const output = filtered<I, O>(input, (field) => field.property.isDirty);
+  if (Object.keys(output).length) {
+    return output;
+  }
+};
+
+export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
+  const properties = withDataProperties<D>(_opts);
   const fields: { key: keyof D; field: Field }[] = [];
 
-  const field = run(() => {
-    type PropertyOptions<K extends keyof D> = Omit<UsePropertyOptions<D[K]>, 'value'>;
+  const factory = (createDataProperty: Parameters<Parameters<(typeof properties)['define']>[0]>[0]['property']) => {
+    type PropertyOptions<K extends keyof D> = Omit<UsePropertyOptions<D[K]>, 'value' | 'context'>;
     type FieldOptions<K extends keyof D> = PropertyOptions<K> & BaseFieldOptions;
 
     const as = <T>(property: Property<Any>): Property<T> => {
@@ -59,25 +78,25 @@ export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsI
 
     const string = <K extends StringKey<D>>(key: K, _opts?: FieldOptions<K> & { type?: InputType }) => {
       const opts = split(key, _opts);
-      const property = as<string>(properties.property(key, opts.property));
+      const property = as<string>(createDataProperty(key, opts.property));
       return add(key, stringField({ property, ...opts.field, type: _opts?.type }));
     };
 
     const number = <K extends NumberKey<D>>(key: K, _opts?: FieldOptions<K>) => {
       const opts = split(key, _opts);
-      const property = as<number>(properties.property(key, opts.property));
+      const property = as<number>(createDataProperty(key, opts.property));
       return add(key, numberField({ property, ...opts.field }));
     };
 
     const color = <K extends StringKey<D>>(key: K, _opts?: FieldOptions<K>) => {
       const opts = split(key, _opts);
-      const property = as<string>(properties.property(key, opts.property));
+      const property = as<string>(createDataProperty(key, opts.property));
       return add(key, colorField({ property, ...opts.field }));
     };
 
     const file = <K extends FileKey<D>>(key: K, _opts: FieldOptions<K> & { accept: string[] }) => {
       const opts = split(key, _opts);
-      const property = as<UniversalFile | undefined>(properties.property<K>(key, opts.property));
+      const property = as<UniversalFile | undefined>(createDataProperty<K>(key, opts.property));
       return add(key, fileField({ property, ...opts.field, accept: _opts.accept }));
     };
 
@@ -87,36 +106,52 @@ export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsI
       color,
       file,
     };
-  });
+  };
 
-  const context = $derived(properties.context);
-  const data = $derived(properties.data);
-  const dirty = $derived(properties.dirty);
-  const errors = $derived(properties.errors);
-  const isDirty = $derived(properties.isDirty);
-  const isTouched = $derived(properties.isTouched);
-  const isValid = $derived(properties.isValid);
-  const rollback = $derived(properties.rollback);
-  const touch = $derived(properties.touch);
-  const touched = $derived(properties.touched);
-  const withKeys = $derived(properties.with);
+  const createState = <R extends Fields>(fields: R, props: DataPropertiesState) => {
+    const isDirty = getter(() => props.isDirty);
+    const touch = () => props.touch();
+    const rollback = () => props.rollback();
+    const serialized = run(() => {
+      const all = $derived(serializeAll(fields));
+      const dirty = $derived(serializeDirty(fields));
+      return options({
+        all: getter(() => all),
+        dirty: getter(() => dirty),
+      });
+    });
+    return options(
+      {
+        isDirty,
+        isValid: getter(() => props.isDirty),
+        isTouched: getter(() => props.isDirty),
+        serialized,
+        touch,
+        rollback,
+        opts: {
+          isDirty,
+          rollback,
+        },
+      },
+      {
+        name: 'DataFieldsState',
+      },
+    );
+  };
 
-  return options(
-    {
-      properties,
-      field: getter(() => field),
-      context: getter(() => context),
-      data: getter(() => data),
-      dirty: getter(() => dirty),
-      errors: getter(() => errors),
-      isDirty: getter(() => isDirty),
-      isTouched: getter(() => isTouched),
-      isValid: getter(() => isValid),
-      rollback: getter(() => rollback),
-      touch: getter(() => touch),
-      touched: getter(() => touched),
-      with: getter(() => withKeys),
-    },
-    { name: 'DataFields' },
-  );
+  type Factory = ReturnType<typeof factory>;
+  type State<R extends Fields> = ReturnType<typeof createState<R>>;
+
+  const define = <R extends Fields>(cb: (arg: Factory) => R): [R, State<R>] => {
+    const parent = properties.create();
+    const object = cb(factory(parent.factory.property));
+    const state = createState<R>(object, parent.state);
+    return [object, state];
+  };
+
+  return {
+    define,
+  };
 };
+
+export type DataFieldsState = ReturnType<ReturnType<typeof withDataFields>['define']>[1];

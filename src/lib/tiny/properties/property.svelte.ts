@@ -1,6 +1,7 @@
-import { usePropertiesContext, type PropertiesContext } from './context.svelte.ts';
 import { untrack } from 'svelte';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { type PropertiesContext } from './context.svelte.ts';
+import type { Any } from '../utils/utils.ts';
 
 export const hashCodeTag = Symbol('hash-code');
 
@@ -45,17 +46,18 @@ export type Validator<T> = {
 };
 
 export type UsePropertyOptions<T> = {
-  readonly value: T;
-  readonly passive?: boolean;
-  readonly willUpdate?: (opts: PropertyUpdatePair<T>) => void;
-  readonly didUpdate?: (opts: PropertyUpdatePair<T>) => void;
-  readonly onRollback?: () => void;
-  readonly validator?: Validator<T>;
+  context: PropertiesContext;
+  value: T;
+  passive?: boolean;
+  willUpdate?: (opts: PropertyUpdatePair<T>) => void;
+  didUpdate?: (opts: PropertyUpdatePair<T>) => void;
+  onRollback?: () => void;
+  validator?: Validator<T>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>) => {
+export const useProperty = <T = Any>(_opts: OptionsInput<UsePropertyOptions<T>>) => {
   const opts = options(_opts);
+  const context = opts.context;
   const passive = $derived(opts.passive ?? false);
   const external = $derived(opts.value);
   let current = $state<T>(untrack(() => external));
@@ -126,7 +128,6 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
     },
   );
 
-  const context = usePropertiesContext();
   const cancel = context._register(identity);
   $effect(() => {
     return () => cancel();
@@ -142,8 +143,7 @@ export const useProperty = <T = any>(_opts: OptionsInput<UsePropertyOptions<T>>)
   return identity;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Property<T = any> = {
+export type Property<T = Any> = {
   value: T;
   update: (after: T) => void;
   rollback: () => void;

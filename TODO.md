@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Remove `extract` from `utils.ts`. Replace usage with `options({…})`
 - [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup
@@ -13,6 +14,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Rework fields to make it easy to serialize them
 - [x] Dirty field serialization which makes it easy to replace/remove files
 - [x] `tiny/server/users/users.js:72:21` JsonWebTokenError: invalid signature
 - [x] Exports blacklist
