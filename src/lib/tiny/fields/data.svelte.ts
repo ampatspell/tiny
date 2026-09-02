@@ -1,13 +1,13 @@
 import { sentenceCase } from '#lib/tiny/utils/string.js';
 import type { UniversalFile } from '#lib/tiny/utils/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { run } from '#lib/tiny/utils/utils.js';
+import { run, type Any } from '#lib/tiny/utils/utils.js';
 import { useDataProperties, type UseDataPropertiesOptions } from '../properties/data.svelte.ts';
 import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
 import { fileField } from './file/field.svelte.ts';
 import { colorField, stringField } from './input/field.svelte.ts';
 import { numberField } from './input/number.svelte.ts';
-import type { BaseFieldOptions } from './utils.svelte.ts';
+import type { BaseFieldOptions, Field } from './utils.svelte.ts';
 import type { InputType } from '../input.svelte';
 
 export type StringKey<T> = {
@@ -22,15 +22,17 @@ export type FileKey<T> = {
   [K in keyof T]: T[K] extends UniversalFile | undefined ? K & string : never;
 }[keyof T];
 
-export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsInput<UseDataPropertiesOptions<D>>) => {
+export type UseDataFieldsOptions<D extends Record<string, unknown>> = UseDataPropertiesOptions<D>;
+
+export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsInput<UseDataFieldsOptions<D>>) => {
   const properties = useDataProperties<D>(_opts);
+  const fields: { key: keyof D; field: Field }[] = [];
 
   const field = run(() => {
     type PropertyOptions<K extends keyof D> = Omit<UsePropertyOptions<D[K]>, 'value'>;
     type FieldOptions<K extends keyof D> = PropertyOptions<K> & BaseFieldOptions;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const as = <T>(property: Property<any>): Property<T> => {
+    const as = <T>(property: Property<Any>): Property<T> => {
       return property as Property<T>;
     };
 
@@ -50,28 +52,33 @@ export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsI
       };
     };
 
+    const add = <F extends Field>(key: keyof D, field: F): F => {
+      fields.push({ key, field });
+      return field;
+    };
+
     const string = <K extends StringKey<D>>(key: K, _opts?: FieldOptions<K> & { type?: InputType }) => {
       const opts = split(key, _opts);
       const property = as<string>(properties.property(key, opts.property));
-      return stringField({ property, ...opts.field, type: _opts?.type });
+      return add(key, stringField({ property, ...opts.field, type: _opts?.type }));
     };
 
     const number = <K extends NumberKey<D>>(key: K, _opts?: FieldOptions<K>) => {
       const opts = split(key, _opts);
       const property = as<number>(properties.property(key, opts.property));
-      return numberField({ property, ...opts.field });
+      return add(key, numberField({ property, ...opts.field }));
     };
 
     const color = <K extends StringKey<D>>(key: K, _opts?: FieldOptions<K>) => {
       const opts = split(key, _opts);
       const property = as<string>(properties.property(key, opts.property));
-      return colorField({ property, ...opts.field });
+      return add(key, colorField({ property, ...opts.field }));
     };
 
     const file = <K extends FileKey<D>>(key: K, _opts: FieldOptions<K> & { accept: string[] }) => {
       const opts = split(key, _opts);
       const property = as<UniversalFile | undefined>(properties.property<K>(key, opts.property));
-      return fileField({ property, ...opts.field, accept: _opts.accept });
+      return add(key, fileField({ property, ...opts.field, accept: _opts.accept }));
     };
 
     return {
@@ -96,6 +103,7 @@ export const useDataFields = <D extends Record<string, unknown>>(_opts: OptionsI
 
   return options(
     {
+      properties,
       field: getter(() => field),
       context: getter(() => context),
       data: getter(() => data),

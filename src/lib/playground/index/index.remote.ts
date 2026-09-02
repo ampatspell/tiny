@@ -4,6 +4,7 @@ import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
 import { uid } from '#lib/tiny/server/utils.js';
 import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { assertRole } from '#lib/tiny/server/users/request-event.js';
+import { hasKeys, omit } from '#lib/tiny/utils/object.js';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
@@ -27,7 +28,8 @@ export const getIndex = query(async () => {
 
   let background;
   if (index.backgroundId) {
-    background = await getFiles().data(index.backgroundId);
+    const files = getFiles();
+    background = await files.data(index.backgroundId);
   }
 
   return { ...index, background };
@@ -44,39 +46,32 @@ export const updateIndex = command(
     indexBackgroundColor: v.optional(v.string()),
     indexTextColor: v.optional(v.string()),
     backgroundOffset: v.optional(v.number()),
+    background: v.optional(v.object({ file: v.optional(v.file()) })),
   }),
-  async (props) => {
+  async (input) => {
     await assertRole('admin');
 
     const db = getDatabase();
-    await db.updateTable('index').set(props).execute();
 
-    void getIndex().refresh();
-  },
-);
-
-export const updateIndexFile = command(
-  v.strictObject({
-    file: v.optional(v.file()),
-  }),
-  async ({ file }) => {
-    await assertRole('admin');
-
-    const db = getDatabase();
-    const files = getFiles();
-
-    const index = await db.selectFrom('index').selectAll().executeTakeFirstOrThrow();
-    let id = index.backgroundId;
-
-    if (id) {
-      await files.drop(id);
+    if (input.background) {
+      const file = input.background.file;
+      const files = getFiles();
+      const index = await db.selectFrom('index').selectAll().executeTakeFirstOrThrow();
+      let backgroundId = index.backgroundId;
+      if (backgroundId) {
+        await files.drop(backgroundId);
+      }
+      if (file) {
+        backgroundId = uid();
+        await Promise.all([db.updateTable('index').set({ backgroundId }).execute(), files.store(backgroundId, file)]);
+      } else {
+        await db.updateTable('index').set({ backgroundId: null }).execute();
+      }
     }
 
-    if (file) {
-      id = uid();
-      await Promise.all([db.updateTable('index').set({ backgroundId: id }).execute(), files.store(id, file)]);
-    } else {
-      await db.updateTable('index').set({ backgroundId: null }).execute();
+    const props = omit(input, ['background']);
+    if (hasKeys(props)) {
+      await db.updateTable('index').set(props).execute();
     }
 
     void getIndex().refresh();

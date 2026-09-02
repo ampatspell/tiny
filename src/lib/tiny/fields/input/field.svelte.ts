@@ -28,6 +28,7 @@ export const createInputField = <T>({
 
     const property = $derived(opts.property);
     const value = $derived(toString(opts.property.value));
+    const serialized = $derived(property.value);
     const onInput = (value: string) => property.update(fromString(value));
     const onBlur = (value: string) => property.update(fromString(value));
     const type = $derived(opts.type ?? 'text');
@@ -38,6 +39,7 @@ export const createInputField = <T>({
         component,
         property: getter(() => property),
         value: getter(() => value),
+        serialized: getter(() => serialized),
         onInput,
         onBlur,
         type: getter(() => type),
