@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Dirty field serialization which makes it easy to replace/remove files
 - [ ] Bootstrapped basic backend with auth and index editing
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup
@@ -14,6 +13,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Dirty field serialization which makes it easy to replace/remove files
 - [x] `tiny/server/users/users.js:72:21` JsonWebTokenError: invalid signature
 - [x] Exports blacklist
 - [x] Separate property from presentation models
