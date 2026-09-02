@@ -1,5 +1,9 @@
 # Tiny
 
+A Svelte library and a tool for building nice admin interfaces and custom public UIs based on SvelteKit, Kysely & SQLite3.
+
+![](https://github.com/ampatspell/tiny/blob/master/static/screenshot-1.png?raw=true)
+
 ```sh
 npx sv@latest create
 # foof
