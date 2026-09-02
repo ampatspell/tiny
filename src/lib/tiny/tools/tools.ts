@@ -92,7 +92,7 @@ export const createTools = async (opts: { cwd: string }) => {
         await tools.migrate({ migrations: project.migrationsRoot }).toLatest();
       });
     },
-    bootstrapProject: () => bootstrapProject(project),
+    bootstrapProject: () => bootstrapProject(project, tiny),
   };
 
   return {

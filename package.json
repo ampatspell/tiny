@@ -28,9 +28,16 @@
     "tiny": ".cli/cli.js"
   },
   "files": [
-    "dist",
     ".cli",
-    "src"
+    "dist",
+    "!dist/tiny/server/database/migrations",
+    "!dist/playground",
+    "src",
+    "!src/lib/tiny/assets",
+    "!src/tests",
+    "!src/lib/playground",
+    "!src/routes",
+    "static"
   ],
   "sideEffects": [
     "**/*.css",
