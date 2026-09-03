@@ -4,7 +4,7 @@ import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
 import { uid } from '#lib/tiny/server/utils.js';
 import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { assertRole } from '#lib/tiny/server/users/request-event.js';
-import { hasKeys, omit } from '#lib/tiny/utils/object.js';
+import { omit } from '#lib/tiny/utils/object.js';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
@@ -52,27 +52,20 @@ export const updateIndex = command(
     await assertRole('admin');
 
     const db = getDatabase();
+    const files = getFiles();
 
+    let backgroundId;
     if (input.background) {
       const file = input.background.file;
-      const files = getFiles();
-      const index = await db.selectFrom('index').selectAll().executeTakeFirstOrThrow();
-      let backgroundId = index.backgroundId;
-      if (backgroundId) {
-        await files.drop(backgroundId);
-      }
-      if (file) {
-        backgroundId = uid();
-        await Promise.all([db.updateTable('index').set({ backgroundId }).execute(), files.store(backgroundId, file)]);
-      } else {
-        await db.updateTable('index').set({ backgroundId: null }).execute();
-      }
+      const index = await db.selectFrom('index').select('backgroundId').executeTakeFirstOrThrow();
+      backgroundId = await files.replace(index.backgroundId, uid(), file);
     }
 
     const props = omit(input, ['background']);
-    if (hasKeys(props)) {
-      await db.updateTable('index').set(props).execute();
-    }
+    await db
+      .updateTable('index')
+      .set({ ...props, backgroundId })
+      .execute();
 
     void getIndex().refresh();
   },

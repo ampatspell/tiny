@@ -1,7 +1,8 @@
 ## TODO
 
+- [ ] Server validation errors in forms
 - [ ] Editable arrays of entries like files with descriptions or whatever
-- [ ] Helpers to replace files & update db in server
+- [ ] Clean up server services
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup
 - [ ] Users section with form to change password, role
@@ -13,6 +14,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Helpers to replace files & update db in server
 - [x] Remove `extract` from `utils.ts`. Replace usage with `options({…})`
 - [x] Bootstrapped basic backend with auth and index editing
 - [x] Rework fields to make it easy to serialize them
