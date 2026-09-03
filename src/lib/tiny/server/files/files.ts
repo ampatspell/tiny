@@ -89,18 +89,27 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     }
   };
 
-  const resolve = async ({ id: fileId, variant = ORIGINAL }: { id: string | undefined; variant?: string }) => {
+  const resolve = async ({
+    id: fileId,
+    variant: variantId = ORIGINAL,
+  }: {
+    id: string | undefined;
+    variant?: string;
+  }) => {
     if (fileId) {
       const file = await getById(fileId);
       if (file) {
         const variants = file.variants;
-        const existing = variants.find((data) => data.variant === variant);
-        if (existing) {
-          return file;
+        const variant = variants.find((data) => data.variant === variantId);
+        if (variant) {
+          return {
+            file,
+            variant,
+          };
         } else {
           const originalVariant = variants.find((variant) => variant.variant === ORIGINAL)!;
           if (images.includes(originalVariant.contentType)) {
-            const definition = opts.thumbnails?.find((thumbnail) => thumbnail.id === variant);
+            const definition = opts.thumbnails?.find((thumbnail) => thumbnail.id === variantId);
             if (!definition) {
               throw error(404, 'File variant not found');
             }
@@ -129,7 +138,18 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
               storage.file(id).store(data),
             ]);
 
-            return (await getById(fileId))!;
+            const file = await getById(fileId);
+            if (!file) {
+              throw error(500, 'File not found');
+            }
+            const variant = file.variants.find((variant) => variant.id === id);
+            if (!variant) {
+              throw error(500, 'File variant found');
+            }
+            return {
+              file,
+              variant,
+            };
           } else {
             throw error(404, 'File is not an image');
           }
@@ -143,8 +163,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
   };
 
   const get = async ({ id: fileId, variant: variantId = ORIGINAL }: { id: string | undefined; variant?: string }) => {
-    const file = await resolve({ id: fileId, variant: variantId });
-    const variant = file.variants.find((rec) => rec.variant === variantId)!; // TODO: resolve should just return variant it created
+    const { file, variant } = await resolve({ id: fileId, variant: variantId });
     const stored = storage.file(variant.id);
 
     const load = (...args: Parameters<(typeof stored)['load']>) => {
@@ -210,4 +229,6 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
 };
 
 export type Files = Awaited<ReturnType<typeof createFiles>>;
+
 export type FileData = Awaited<ReturnType<Files['data']>>;
+export type VariantData = FileData['variants'][number];
