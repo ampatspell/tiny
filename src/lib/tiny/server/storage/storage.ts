@@ -69,3 +69,4 @@ export const createStorage = async (opts: CreateStorageServicesOptions) => {
 };
 
 export type Storage = Awaited<ReturnType<typeof createStorage>>;
+export type StorageFile = ReturnType<Storage['file']>;

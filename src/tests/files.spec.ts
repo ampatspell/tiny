@@ -65,4 +65,26 @@ describe('files services', () => {
       expect(await storage.file(loaded!.variants[2].id).exists()).toBeFalsy();
     });
   });
+
+  it('stores a pdf', async () => {
+    await withFiles(async ({ files }) => {
+      const file = await readTestFileAsFile('1-page.pdf', 'application/pdf');
+      await files.file('hello').store(file);
+      const loaded = await files.file('hello').load();
+      expect(loaded).toStrictEqual({
+        id: 'hello',
+        name: '1-page.pdf',
+        variants: [
+          {
+            id: loaded!.variants[0].id,
+            variant: 'original',
+            contentType: 'application/pdf',
+            size: 3583785,
+            width: null,
+            height: null,
+          },
+        ],
+      });
+    });
+  });
 });
