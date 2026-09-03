@@ -216,7 +216,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
           const backgroundId = uid();
           const buffer = await readFile(fileURLToPath(import.meta.resolve('@ampatspell/tiny/assets/film-0677-011.jpg')));
           const file = new File([buffer], 'film-0677-011.jpg', { type: 'image/jpeg' });
-          await getFiles().store(backgroundId, file);
+          await getFiles().file(backgroundId).store(file);
 
           record = await getDatabase()
             .insertInto('messages')
@@ -231,7 +231,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
 
         let background;
         if (record.backgroundId) {
-          background = await getFiles().data(record.backgroundId);
+          background = await getFiles().file(record.backgroundId).load();
         }
 
         return {
@@ -255,7 +255,11 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
           let backgroundId;
           if (background) {
             const message = await db.selectFrom('messages').select('backgroundId').executeTakeFirstOrThrow();
-            backgroundId = await getFiles().replace(message.backgroundId, uid(), background.file);
+            backgroundId = await getFiles().replace({
+              prev: message.backgroundId,
+              next: uid(),
+              file: background.file,
+            });
           }
 
           await db
@@ -276,9 +280,9 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { updateMessage, type MessageData } from './message.remote';
       import { notBlank } from '@ampatspell/tiny/properties/validator';
       import { type BroadcastChannel } from '@ampatspell/tiny/broadcast';
-      import { asFile } from '@ampatspell/tiny/utils/files';
       import { images } from '@ampatspell/tiny/utils/utils';
       import { withDataFields } from '@ampatspell/tiny/fields/data';
+      import { asRemoteFile } from '@ampatspell/tiny/utils/files';
 
       export type MessageModelOptions = Readonly<{
         data: MessageData;
@@ -293,7 +297,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         const [fields, state] = withDataFields({
           data: getter(() => ({
             ...data,
-            background: asFile(data.background),
+            background: asRemoteFile(data.background),
           })),
         }).define(({ string, file }) => ({
           message: string('message', { validator: notBlank() }),
