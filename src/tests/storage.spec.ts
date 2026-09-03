@@ -27,7 +27,7 @@ describe('storage services', () => {
     await withTemporaryFolder(async (dir) => {
       const storage = await createStorage({ dir: join(dir, 'storage') });
       await storage.file('hello').store('Thing');
-      expect(await storage.file('hello').load('utf-8')).toStrictEqual('Thing');
+      expect(await storage.file('hello').load.asString()).toStrictEqual('Thing');
     });
   });
   it('drops a file', async () => {
@@ -35,7 +35,7 @@ describe('storage services', () => {
       const storage = await createStorage({ dir: join(dir, 'storage') });
       await storage.file('hello').store('Thing');
       await storage.file('hello').drop();
-      await expect(storage.file('hello').load('utf-8')).rejects.toThrow();
+      await expect(storage.file('hello').load.asString()).rejects.toThrow();
     });
   });
 });

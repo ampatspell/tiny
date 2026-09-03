@@ -31,7 +31,7 @@ export const withServices = async <D = unknown, T = any>(cb: (services: Services
         wal: false,
       },
       files: {
-        thumbnails: [jpeg({ size: 100 })],
+        thumbnails: [jpeg({ size: 100 }), jpeg({ size: 1024 })],
       },
       users: {
         secret: 'foobar',
