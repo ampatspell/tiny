@@ -26,3 +26,13 @@ export type QueryResponse<T extends (...args: Any[]) => Any> =
   ReturnType<T> extends RemoteResource<infer R> ? R : undefined;
 
 export type OmitId<T> = Omit<T, 'id'>;
+
+export type Size = {
+  width: number;
+  height: number;
+};
+
+export type Point = {
+  x: number;
+  y: number;
+};

@@ -4,6 +4,7 @@ import type { Files } from '#lib/tiny/server/files/files.js';
 import type { Database } from '#lib/tiny/server/database/database.js';
 import type { Storage } from '#lib/tiny/server/storage/storage.js';
 import type { DB } from '#lib/tiny/server/database/schema.js';
+import { error } from '@sveltejs/kit';
 
 const withFiles = async <T>(cb: (opts: { files: Files; db: Database<DB>; storage: Storage }) => Promise<T>) => {
   return await withServices(async (services) => {
@@ -31,7 +32,7 @@ describe('files services', () => {
         variants: [
           {
             id: loaded!.variants[0].id,
-            variant: 'original',
+            identifier: 'original',
             contentType: 'image/jpeg',
             size: 3508847,
             width: 3484,
@@ -39,7 +40,7 @@ describe('files services', () => {
           },
           {
             id: loaded!.variants[1].id,
-            variant: '100x100',
+            identifier: '100x100',
             contentType: 'image/jpeg',
             size: 2482,
             width: 100,
@@ -47,7 +48,7 @@ describe('files services', () => {
           },
           {
             id: loaded!.variants[2].id,
-            variant: '1024x1024',
+            identifier: '1024x1024',
             contentType: 'image/jpeg',
             size: 145916,
             width: 1024,
@@ -58,7 +59,7 @@ describe('files services', () => {
 
       await files.file('hello').drop();
 
-      expect(await files.file('hello').load()).toBeUndefined();
+      await expect(() => files.file('hello').load()).rejects.toThrow();
 
       expect(await storage.file(loaded!.variants[0].id).exists()).toBeFalsy();
       expect(await storage.file(loaded!.variants[1].id).exists()).toBeFalsy();
@@ -77,7 +78,7 @@ describe('files services', () => {
         variants: [
           {
             id: loaded!.variants[0].id,
-            variant: 'original',
+            identifier: 'original',
             contentType: 'application/pdf',
             size: 3583785,
             width: null,

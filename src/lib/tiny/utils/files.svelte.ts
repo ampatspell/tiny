@@ -4,7 +4,23 @@ import type { FileData, VariantData } from '../server/files/files.ts';
 import { getter, options, type OptionsInput } from './options.svelte.ts';
 import { defer } from './promise.ts';
 
-export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V>) => {};
+export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V>) => {
+  const opts = options(_opts);
+
+  const variant = $derived(opts.variant);
+  const contentType = $derived(opts.contentType);
+
+  const dimensions = $derived.by(() => {
+    const { width, height } = opts;
+    if (width && height) {
+      return { width, height };
+    }
+  });
+
+  return options({
+    dimensions: getter(() => dimensions),
+  });
+};
 
 const createIsImage = (contentType: string) => contentType.startsWith('image/');
 
@@ -23,6 +39,7 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
   const id = $derived(data.id);
   const name = $derived(data.name);
   const variants = $derived(data.variants.map((variant) => createRemoteVariant(variant)));
+  const original = $derived(variants.find((variant) => variant));
 
   //
 

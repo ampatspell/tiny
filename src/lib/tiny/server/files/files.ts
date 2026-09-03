@@ -36,7 +36,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
         jsonArrayFrom(
           eb
             .selectFrom('fileVariants')
-            .select(['id', 'variant', 'contentType', 'size', 'width', 'height'])
+            .select(['id', 'identifier', 'contentType', 'size', 'width', 'height'])
             .whereRef('fileVariants.fileId', '==', 'files.id'),
         ).as('variants'),
       ])
@@ -92,7 +92,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
         .values({
           id: variantId,
           fileId: id,
-          variant: ORIGINAL,
+          identifier: ORIGINAL,
           contentType,
           size,
           width,
@@ -110,18 +110,18 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     const { data, info } = await thumbnail.toBuffer({ resolveWithObject: true });
     const { width, height, size } = info;
     const id = uid();
-    const variant = definition.id;
+    const identifier = definition.id;
     await Promise.all([
       db
         .insertInto('fileVariants')
         .values({
           id,
           fileId,
+          identifier,
           contentType,
           size,
           width,
           height,
-          variant,
         })
         .execute(),
       storage.file(id).store(data),
@@ -133,11 +133,11 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     const data = await getById({ id });
     if (data) {
       const { variants } = data;
-      const original = variants.find((variant) => variant.variant === ORIGINAL);
+      const original = variants.find((variant) => variant.identifier === ORIGINAL);
       if (original && images.includes(original.contentType) && thumbnails) {
         const buffer = await storage.file(original.id).load.asBuffer();
         for (const definition of thumbnails) {
-          if (!variants.find((variant) => variant.variant === definition.id)) {
+          if (!variants.find((variant) => variant.identifier === definition.id)) {
             await createVariant({ id, buffer, definition });
           }
         }
@@ -179,12 +179,12 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
       }
     };
 
-    const variant = (variantId?: string) => {
-      variantId ??= ORIGINAL;
+    const variant = (identifier?: string) => {
+      identifier ??= ORIGINAL;
 
       const loadVariant = async () => {
         const file = await load();
-        const variant = file.variants.find((variant) => variant.variant === variantId);
+        const variant = file.variants.find((variant) => variant.identifier === identifier);
         if (variant) {
           return { file, variant };
         } else {
