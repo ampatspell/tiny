@@ -4,7 +4,7 @@
   import { getIndex } from './index.remote.js';
 
   let index = $derived(await getIndex());
-  let background = $derived(asRemoteFile(index.background));
+  let background = $derived(asRemoteFile(index.background)?.variant('2048x2048'));
   let offset = $derived(index.backgroundOffset);
   let backgroundColor = $derived(index.indexBackgroundColor);
   let textColor = $derived(index.indexTextColor);

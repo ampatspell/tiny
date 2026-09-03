@@ -3,12 +3,14 @@ import { hashCodeTag } from '#lib/tiny/properties/property.svelte.js';
 import type { FileData, VariantData } from '../server/files/files.ts';
 import { getter, options, type OptionsInput } from './options.svelte.ts';
 import { defer } from './promise.ts';
+import type { Any } from './utils.ts';
 
-export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V>) => {
+export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V & { fileId: string }>) => {
   const opts = options(_opts);
 
-  const variant = $derived(opts.variant);
+  const identifier = $derived(opts.identifier);
   const contentType = $derived(opts.contentType);
+  const size = $derived(opts.size);
 
   const dimensions = $derived.by(() => {
     const { width, height } = opts;
@@ -17,8 +19,14 @@ export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V
     }
   });
 
+  const url = $derived(resolve('/files/[id]/[variant=variants]', { id: opts.fileId, variant: identifier as Any }));
+
   return options({
+    identifier: getter(() => identifier),
+    contentType: getter(() => contentType),
+    size: getter(() => size),
     dimensions: getter(() => dimensions),
+    url: getter(() => url),
   });
 };
 
@@ -38,19 +46,26 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
 
   const id = $derived(data.id);
   const name = $derived(data.name);
-  const variants = $derived(data.variants.map((variant) => createRemoteVariant(variant)));
-  const original = $derived(variants.find((variant) => variant));
 
-  //
+  const variants = $derived(data.variants.map((variant) => createRemoteVariant({ ...variant, fileId: id })));
 
-  const original = $derived(data.variants.find((variant) => variant.variant === 'original')!);
+  const variant = (identifier: string) => {
+    const variant = variants.find((variant) => variant.identifier === identifier);
+    if (variant) {
+      return variant;
+    }
+    throw new Error(`variant '${variant}' not found`);
+  };
+
+  const original = $derived(variant('original'));
   const contentType = $derived(original.contentType);
   const size = $derived(original.size);
-
-  const url = $derived(resolve('/files/[id]/[variant=variants]', { id, variant: '2048x2048' }));
   const isImage = $derived(createIsImage(contentType));
 
-  //
+  const url = $derived.by(() => {
+    const identifier = isImage ? '1024x1024' : 'original';
+    return variant(identifier).url;
+  });
 
   const hashCode = $derived(`remote-file-${id}`);
 
@@ -59,16 +74,17 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
       type: 'remote' as const,
       data,
       file: undefined,
+      variant,
       id: getter(() => id),
       name: getter(() => name),
       contentType: getter(() => contentType),
       size: getter(() => size),
-      url: getter(() => url),
       isImage: getter(() => isImage),
+      url: getter(() => url),
       [hashCodeTag]: getter(() => hashCode),
     },
     {
-      name: 'RemoteFileModel',
+      name: 'RemoteFile',
       serialized: ['id', 'name', 'contentType'],
     },
   );
@@ -102,7 +118,7 @@ const createLocalFile = (file: File) => {
       isImage: getter(() => isImage),
     },
     {
-      name: 'LocalFileModel',
+      name: 'LocalFile',
       serialized: ['name', 'contentType'],
     },
   );
