@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Editable arrays of entries like files with descriptions or whatever
 - [ ] Helpers to replace files & update db in server
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Fix `await getFiles().get` variants lookup
