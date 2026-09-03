@@ -3,7 +3,6 @@
 - [ ] Universal file variant URLs
 - [ ] Server validation errors in forms
 - [ ] Editable arrays of entries like files with descriptions or whatever
-- [ ] Clean up server services
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
@@ -14,6 +13,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Clean up files service
 - [x] Fix `await getFiles().get` variants lookup
 - [x] Helpers to replace files & update db in server
 - [x] Remove `extract` from `utils.ts`. Replace usage with `options({…})`

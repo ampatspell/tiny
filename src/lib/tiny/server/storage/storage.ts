@@ -47,8 +47,9 @@ export const createStorage = async (opts: CreateStorageServicesOptions) => {
     const toReadableStream = () => {
       return createReadableStream(path);
     };
-    const load = (opts?: Parameters<typeof readFile>[1]) => {
-      return readFile(path, opts);
+    const load = {
+      asBuffer: () => readFile(path),
+      asString: () => readFile(path, 'utf-8'),
     };
     return {
       key,
@@ -68,3 +69,4 @@ export const createStorage = async (opts: CreateStorageServicesOptions) => {
 };
 
 export type Storage = Awaited<ReturnType<typeof createStorage>>;
+export type StorageFile = ReturnType<Storage['file']>;

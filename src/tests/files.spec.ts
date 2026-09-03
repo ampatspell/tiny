@@ -15,27 +15,22 @@ const withFiles = async <T>(cb: (opts: { files: Files; db: Database<DB>; storage
 };
 
 describe('files services', () => {
-  it('stores a file', async () => {
+  it('stores an image', async () => {
     await withFiles(async ({ files, storage }) => {
       const file = await readTestFileAsFile('film-0663-032.jpg', 'image/jpeg');
-      const ret = await files.store('hello', file);
-      expect(await storage.file(ret.original).exists()).toStrictEqual(true);
-    });
-  });
+      await files.file('hello').store(file);
+      const loaded = await files.file('hello').load();
 
-  it('creates a thumbnail and deletes it', async () => {
-    await withFiles(async ({ files, storage }) => {
-      const file = await readTestFileAsFile('film-0663-032.jpg', 'image/jpeg');
-      await files.store('hello', file);
+      expect(await storage.file(loaded!.variants[0].id).exists()).toBeTruthy();
+      expect(await storage.file(loaded!.variants[1].id).exists()).toBeTruthy();
+      expect(await storage.file(loaded!.variants[2].id).exists()).toBeTruthy();
 
-      const hash = await files.get({ id: 'hello', variant: '100x100' });
-
-      expect(hash.file).toStrictEqual({
+      expect(loaded).toStrictEqual({
         id: 'hello',
         name: 'film-0663-032.jpg',
         variants: [
           {
-            id: hash.file.variants[0].id,
+            id: loaded!.variants[0].id,
             variant: 'original',
             contentType: 'image/jpeg',
             size: 3508847,
@@ -43,35 +38,53 @@ describe('files services', () => {
             height: 2323,
           },
           {
-            id: hash.file.variants[1].id,
+            id: loaded!.variants[1].id,
             variant: '100x100',
             contentType: 'image/jpeg',
             size: 2482,
             width: 100,
             height: 67,
           },
+          {
+            id: loaded!.variants[2].id,
+            variant: '1024x1024',
+            contentType: 'image/jpeg',
+            size: 145916,
+            width: 1024,
+            height: 682,
+          },
         ],
       });
 
-      expect(hash.variant).toStrictEqual({
-        id: hash.variant.id,
-        variant: '100x100',
-        contentType: 'image/jpeg',
-        size: 2482,
-        width: 100,
-        height: 67,
+      await files.file('hello').drop();
+
+      expect(await files.file('hello').load()).toBeUndefined();
+
+      expect(await storage.file(loaded!.variants[0].id).exists()).toBeFalsy();
+      expect(await storage.file(loaded!.variants[1].id).exists()).toBeFalsy();
+      expect(await storage.file(loaded!.variants[2].id).exists()).toBeFalsy();
+    });
+  });
+
+  it('stores a pdf', async () => {
+    await withFiles(async ({ files }) => {
+      const file = await readTestFileAsFile('1-page.pdf', 'application/pdf');
+      await files.file('hello').store(file);
+      const loaded = await files.file('hello').load();
+      expect(loaded).toStrictEqual({
+        id: 'hello',
+        name: '1-page.pdf',
+        variants: [
+          {
+            id: loaded!.variants[0].id,
+            variant: 'original',
+            contentType: 'application/pdf',
+            size: 3583785,
+            width: null,
+            height: null,
+          },
+        ],
       });
-
-      const original = hash.file.variants.find((v) => v.variant === 'original')!.id;
-      const thumbnail = hash.variant.id;
-
-      expect(await storage.file(original).exists()).toStrictEqual(true);
-      expect(await storage.file(thumbnail).exists()).toStrictEqual(true);
-
-      await files.drop('hello');
-
-      expect(await storage.file(original).exists()).toStrictEqual(false);
-      expect(await storage.file(thumbnail).exists()).toStrictEqual(false);
     });
   });
 });

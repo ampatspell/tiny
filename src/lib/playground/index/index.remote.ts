@@ -29,7 +29,7 @@ export const getIndex = query(async () => {
   let background;
   if (index.backgroundId) {
     const files = getFiles();
-    background = await files.data(index.backgroundId);
+    background = await files.file(index.backgroundId).load();
   }
 
   return { ...index, background };
@@ -58,7 +58,11 @@ export const updateIndex = command(
     if (input.background) {
       const file = input.background.file;
       const index = await db.selectFrom('index').select('backgroundId').executeTakeFirstOrThrow();
-      backgroundId = await files.replace(index.backgroundId, uid(), file);
+      backgroundId = await files.replace({
+        prev: index.backgroundId,
+        next: uid(),
+        file,
+      });
     }
 
     const props = omit(input, ['background']);
