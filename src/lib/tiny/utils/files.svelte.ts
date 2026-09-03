@@ -51,9 +51,9 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
 
 export type RemoteFile = ReturnType<typeof createRemoteFile>;
 
-export const asFile = <D extends FileData = FileData>(opts: OptionsInput<D> | undefined) => {
+export const asRemoteFile = <D extends FileData = FileData>(opts: OptionsInput<D> | undefined) => {
   if (opts) {
-    return createRemoteFile<D>(opts) as UniversalFile;
+    return createRemoteFile<D>(opts);
   }
 };
 
