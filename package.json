@@ -57,6 +57,10 @@
       "types": "./dist/tiny/broadcast.svelte.d.ts",
       "svelte": "./dist/tiny/broadcast.svelte.js"
     },
+    "./files": {
+      "types": "./dist/tiny/files.svelte.d.ts",
+      "svelte": "./dist/tiny/files.svelte.js"
+    },
     "./card": {
       "types": "./dist/tiny/card.svelte.d.ts",
       "svelte": "./dist/tiny/card.svelte"
@@ -112,10 +116,6 @@
     "./utils/dom": {
       "types": "./dist/tiny/utils/dom.d.ts",
       "svelte": "./dist/tiny/utils/dom.js"
-    },
-    "./utils/files": {
-      "types": "./dist/tiny/utils/files.svelte.d.ts",
-      "svelte": "./dist/tiny/utils/files.svelte.js"
     },
     "./utils/number": {
       "types": "./dist/tiny/utils/number.d.ts",
