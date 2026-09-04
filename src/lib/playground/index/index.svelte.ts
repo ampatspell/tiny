@@ -1,6 +1,6 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
-import { asRemoteFile } from '#lib/tiny/files.svelte.js';
+import { useFiles } from '#lib/tiny/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { images } from '#lib/tiny/utils/utils.js';
 import { updateIndex, type IndexData } from './index.remote.ts';
@@ -11,6 +11,7 @@ export type UseIndexModelOptions = {
 
 export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   const opts = options(_opts);
+  const files = useFiles();
 
   const data = $derived(opts.data);
   const id = $derived(data.id);
@@ -20,7 +21,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   const [fields, state] = withDataFields({
     data: getter(() => ({
       ...data,
-      background: asRemoteFile(data.background),
+      background: files.asRemote(data.background),
     })),
   }).define(({ string, number, file, color }) => ({
     title: string('title'),

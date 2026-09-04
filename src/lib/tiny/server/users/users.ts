@@ -11,7 +11,7 @@ const { JsonWebTokenError } = jwt;
 export type TokenPayload = {
   id: string;
   email: string;
-  role: string;
+  role: Tiny.Role;
 };
 
 export type CreateUsersOptions = {
@@ -42,7 +42,7 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
   });
 
-  const create = async ({ email, password, role }: { email: string; password: string; role?: string }) => {
+  const create = async ({ email, password, role }: { email: string; password: string; role?: Tiny.Role }) => {
     const { salt, hash } = crypto.create({ password });
     if (!role) {
       const { count } = await db.selectFrom('users').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
@@ -62,7 +62,15 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     if (record) {
       const { id, role, salt, hash } = record;
       if (hash && salt && crypto.verify({ hash, salt, password })) {
-        return { id, email, role };
+        return {
+          id,
+          email,
+          role,
+        } as {
+          id: string;
+          email: string;
+          role: Tiny.Role;
+        };
       }
     }
   };

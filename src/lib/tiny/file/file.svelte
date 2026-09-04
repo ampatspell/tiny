@@ -4,7 +4,7 @@
   import { mouse } from '../floating/position.ts';
   import TablerCircleX from '../icons/tabler--circle-x.svelte';
   import TablerPhoto from '../icons/tabler--photo.svelte';
-  import { pickFile, type LocalFile, type UniversalFile } from '../files.svelte.ts';
+  import { useFiles, type LocalFile, type UniversalFile } from '../files.svelte.ts';
   import { round } from '../utils/number.ts';
   import { px } from '../utils/style.ts';
   import Blank from './blank.svelte';
@@ -20,13 +20,15 @@
     onSelected: (model: LocalFile | undefined) => void;
   } = $props();
 
+  let files = useFiles();
+
   let isImage = $derived(accept && !accept.find((mime) => !mime.startsWith('image/')));
   let type = $derived(isImage ? 'image' : 'file');
   let clientWidth = $state<number>();
   let height = $derived(round(((clientWidth ?? 0) / 3) * 2, 0));
 
   let onPick = async () => {
-    let file = await pickFile({ accept });
+    let file = await files.pick.file({ accept });
     if (file) {
       onSelected(file);
     }

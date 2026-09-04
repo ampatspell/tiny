@@ -73,10 +73,6 @@
       "types": "./dist/tiny/color.svelte.d.ts",
       "svelte": "./dist/tiny/color.svelte"
     },
-    "./entrypoint": {
-      "types": "./dist/tiny/entrypoint.svelte.d.ts",
-      "svelte": "./dist/tiny/entrypoint.svelte"
-    },
     "./error": {
       "types": "./dist/tiny/error.svelte.d.ts",
       "svelte": "./dist/tiny/error.svelte"
@@ -384,6 +380,14 @@
     "./fields/file/file": {
       "types": "./dist/tiny/fields/file/file.svelte.d.ts",
       "svelte": "./dist/tiny/fields/file/file.svelte"
+    },
+    "./entrypoint/tiny": {
+      "types": "./dist/tiny/entrypoint/tiny.svelte.d.ts",
+      "svelte": "./dist/tiny/entrypoint/tiny.svelte.js"
+    },
+    "./entrypoint/entrypoint": {
+      "types": "./dist/tiny/entrypoint/entrypoint.svelte.d.ts",
+      "svelte": "./dist/tiny/entrypoint/entrypoint.svelte"
     },
     "./dropdown/content/content": {
       "types": "./dist/tiny/dropdown/content/content.svelte.d.ts",

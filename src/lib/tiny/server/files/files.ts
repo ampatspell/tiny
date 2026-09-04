@@ -282,7 +282,7 @@ export type FileData = {
   name: string;
   variants: {
     id: string;
-    identifier: Tiny.FileVariants;
+    identifier: Tiny.FileVariant;
     contentType: string;
     width: number | null;
     height: number | null;
