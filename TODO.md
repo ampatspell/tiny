@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Universal file variant URLs
 - [ ] Server validation errors in forms
 - [ ] Editable arrays of entries like files with descriptions or whatever
 - [ ] Proper `<form/>` element to support submits with enter
@@ -13,6 +12,8 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Require all thumbnail ids to have processor
+- [x] Universal file variant URLs
 - [x] Clean up files service
 - [x] Fix `await getFiles().get` variants lookup
 - [x] Helpers to replace files & update db in server

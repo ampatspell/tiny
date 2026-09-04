@@ -5,7 +5,7 @@
 
   let files = useFiles();
   let index = $derived(await getIndex());
-  let background = $derived(files.asRemote(index.background)?.variant('2048x2048'));
+  let background = $derived(files.asRemote(index.background)?.variant.named('2048x2048'));
   let offset = $derived(index.backgroundOffset);
   let backgroundColor = $derived(index.indexBackgroundColor);
   let textColor = $derived(index.indexTextColor);

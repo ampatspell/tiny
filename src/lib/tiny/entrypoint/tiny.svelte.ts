@@ -8,7 +8,7 @@ import { setFiles } from '../files.svelte.ts';
 export type CreateTinyOptions = {
   guard?: ValidateFunction | undefined;
   files: {
-    resolve: (opts: { id: string; variant: Tiny.FileVariant }) => ResolvedPathname;
+    resolve: (opts: { id: string; variant: Tiny.Thumbnail }) => ResolvedPathname;
   };
 };
 

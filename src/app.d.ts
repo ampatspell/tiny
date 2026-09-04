@@ -21,7 +21,7 @@ declare global {
   }
 
   namespace Tiny {
-    export type FileVariant = Variant;
+    export type Thumbnail = Variant;
     export type Role = 'admin' | 'subscriber';
   }
 }

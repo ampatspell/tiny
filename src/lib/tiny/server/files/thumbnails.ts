@@ -1,7 +1,8 @@
 import type { Sharp } from 'sharp';
+import type { FileThumbnailOptions } from './files.ts';
 
-export const jpeg = (opts: { size: number; id?: string; quality?: number }) => {
-  const { size, id = `${size}x${size}`, quality = 80 } = opts;
+export const jpeg = (opts: { size: number; quality?: number }): FileThumbnailOptions => {
+  const { size, quality = 80 } = opts;
 
   const process = async (sharp: Sharp) => {
     const thumbnail = sharp
@@ -22,7 +23,6 @@ export const jpeg = (opts: { size: number; id?: string; quality?: number }) => {
   };
 
   return {
-    id,
     process,
   };
 };

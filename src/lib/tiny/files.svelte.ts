@@ -4,6 +4,8 @@ import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
 import { defer } from './utils/promise.ts';
 import { createContext } from 'svelte';
 import { useTiny } from './entrypoint/tiny.svelte.ts';
+import type { Size } from './utils/utils.ts';
+import { sortedBy } from './utils/array.ts';
 
 const createRemoteVariant = (
   _opts: OptionsInput<{
@@ -54,7 +56,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
     ),
   );
 
-  const variant = (identifier: Tiny.FileVariant) => {
+  const variantByName = (identifier: Tiny.Thumbnail) => {
     const variant = variants.find((variant) => variant.identifier === identifier);
     if (variant) {
       return variant;
@@ -62,14 +64,40 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
     throw new Error(`Variant '${variant}' not found`);
   };
 
-  const original = $derived(variant('original'));
+  const variantForSize = (size: Size | undefined) => {
+    if (size) {
+      const sorted = sortedBy(
+        variants.filter((variant) => {
+          const dimensions = variant.dimensions;
+          if (dimensions) {
+            return dimensions.width >= size.width && dimensions.height >= size.height;
+          }
+        }),
+        {
+          value: (variant) => {
+            return variant.dimensions!.width * variant.dimensions!.height;
+          },
+          direction: 'asc',
+        },
+      );
+
+      return sorted[0] ?? original;
+    }
+  };
+
+  const variant = {
+    named: variantByName,
+    forSize: variantForSize,
+  };
+
+  const original = $derived(variant.named('original'));
   const contentType = $derived(original.contentType);
   const size = $derived(original.size);
   const isImage = $derived(createIsImage(contentType));
 
   const url = $derived.by(() => {
     const identifier = isImage ? '1024x1024' : 'original';
-    return variant(identifier).url;
+    return variant.named(identifier).url;
   });
 
   const hashCode = $derived(`remote-file-${id}`);
@@ -86,6 +114,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
       size: getter(() => size),
       isImage: getter(() => isImage),
       url: getter(() => url),
+      variantForSize,
       [hashCodeTag]: getter(() => hashCode),
     },
     {
@@ -112,11 +141,27 @@ const createLocalFile = ({ data }: { data: CreateLocalFileOptions; files: FilesC
   const url = $derived(URL.createObjectURL(file));
   const isImage = $derived(createIsImage(contentType));
 
+  const variant = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    named: (identifier: Tiny.Thumbnail) => {
+      return options({
+        url: getter(() => url),
+      });
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    forSize: (size: Size | undefined) => {
+      return options({
+        url: getter(() => url),
+      });
+    },
+  };
+
   return options(
     {
       type: 'local' as const,
       file,
       data: undefined,
+      variant,
       name,
       contentType,
       size,
