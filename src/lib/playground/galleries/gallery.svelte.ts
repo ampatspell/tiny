@@ -1,4 +1,4 @@
-import { addGallery, deleteGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
+import { addGallery, deleteGallery, updateGallery, type GalleryDetailsData } from './galleries.remote.ts';
 import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
 import type { OmitId } from '#lib/tiny/utils/utils.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
@@ -8,11 +8,11 @@ import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
 export type UseGalleryModelOptions =
   | {
       isNew: true;
-      data: OmitId<GalleryData>;
+      data: OmitId<GalleryDetailsData>;
     }
   | {
       isNew: false;
-      data: GalleryData;
+      data: GalleryDetailsData;
     };
 
 export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => {

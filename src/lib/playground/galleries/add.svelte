@@ -12,7 +12,7 @@
 
   let properties = useGalleryModel({
     isNew: true,
-    data: { name: '', permalink: '' },
+    data: { name: '', permalink: '', files: [] },
   });
 
   let onSave = async () => {

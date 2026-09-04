@@ -46,6 +46,24 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
       .executeTakeFirst()) as FileData | undefined;
   };
 
+  // TODO: unify byId, byIds
+  const getByIds = async (opts: { ids: string[] }): Promise<FileData[]> => {
+    const { ids } = opts;
+    return (await db
+      .selectFrom('files')
+      .select(['id', 'name'])
+      .where('id', 'in', ids)
+      .select((eb) => [
+        jsonArrayFrom(
+          eb
+            .selectFrom('fileVariants')
+            .select(['id', 'identifier', 'contentType', 'size', 'width', 'height'])
+            .whereRef('fileVariants.fileId', '==', 'files.id'),
+        ).as('variants'),
+      ])
+      .execute()) as FileData[];
+  };
+
   const resolveOriginalMetadata = async (opts: { file: File }) => {
     const { file } = opts;
     const { type, name, size } = file;
@@ -159,6 +177,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
       const meta = await resolveOriginalMetadata({ file });
       await storeOriginal({ id, meta, file });
       await createVariants({ id });
+      return id;
     };
 
     const load = async () => {
@@ -277,7 +296,15 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     }
   };
 
+  const files = (ids: string[]) => {
+    const load = () => getByIds({ ids });
+    return {
+      load,
+    };
+  };
+
   return {
+    files,
     file,
     replace,
     handle,

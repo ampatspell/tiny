@@ -15,11 +15,14 @@ export const up = async (db: Kysely<any>) => {
     .addColumn('gallery_id', 'text', (col) => col.notNull().references('galleries.id'))
     .addColumn('file_id', 'text', (col) => col.notNull().references('files.id'))
     .addColumn('position', 'integer', (col) => col.notNull())
-    .addColumn('title', 'text', (col) => col.notNull())
+    .addColumn('name', 'text', (col) => col.notNull().defaultTo(''))
     .execute();
+
+  await db.schema.createIndex('gallery_files_gallery_id_index').on('gallery_files').column('gallery_id').execute();
 };
 
 export const down = async (db: Kysely<any>) => {
   await db.schema.dropTable('galleries').execute();
   await db.schema.dropTable('gallery_files').execute();
+  await db.schema.dropIndex('gallery_files_gallery_id_index').execute();
 };
