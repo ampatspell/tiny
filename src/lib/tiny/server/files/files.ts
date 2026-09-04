@@ -26,9 +26,9 @@ export const ORIGINAL = 'original';
 export const createFiles = async (opts: CreateFilesServicesOptions) => {
   const { db, storage, thumbnails } = opts;
 
-  const getById = async (opts: { id: string }) => {
+  const getById = async (opts: { id: string }): Promise<FileData | undefined> => {
     const { id } = opts;
-    return await db
+    return (await db
       .selectFrom('files')
       .select(['id', 'name'])
       .where('id', '==', id)
@@ -40,7 +40,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
             .whereRef('fileVariants.fileId', '==', 'files.id'),
         ).as('variants'),
       ])
-      .executeTakeFirst();
+      .executeTakeFirst()) as FileData | undefined;
   };
 
   const resolveOriginalMetadata = async (opts: { file: File }) => {
@@ -276,5 +276,18 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
 };
 
 export type Files = Awaited<ReturnType<typeof createFiles>>;
-export type FileData = NonNullable<Awaited<ReturnType<ReturnType<Files['file']>['load']>>>;
+
+export type FileData = {
+  id: string;
+  name: string;
+  variants: {
+    id: string;
+    identifier: Tiny.FileVariants;
+    contentType: string;
+    width: number | null;
+    height: number | null;
+    size: number;
+  }[];
+};
+
 export type VariantData = FileData['variants'][number];

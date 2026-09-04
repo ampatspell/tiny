@@ -1,6 +1,6 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
-import { asRemoteFile } from '#lib/tiny/utils/files.svelte.js';
+import { asRemoteFile } from '#lib/tiny/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { images } from '#lib/tiny/utils/utils.js';
 import { updateIndex, type IndexData } from './index.remote.ts';

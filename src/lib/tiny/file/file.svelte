@@ -4,7 +4,7 @@
   import { mouse } from '../floating/position.ts';
   import TablerCircleX from '../icons/tabler--circle-x.svelte';
   import TablerPhoto from '../icons/tabler--photo.svelte';
-  import { pickFile, type LocalFile, type UniversalFile } from '../utils/files.svelte.ts';
+  import { pickFile, type LocalFile, type UniversalFile } from '../files.svelte.ts';
   import { round } from '../utils/number.ts';
   import { px } from '../utils/style.ts';
   import Blank from './blank.svelte';

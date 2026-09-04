@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition';
   import Description from './description.svelte';
   import { url } from '../utils/style.ts';
-  import type { UniversalFile } from '../utils/files.svelte.ts';
+  import type { UniversalFile } from '../files.svelte.ts';
 
   let {
     file,

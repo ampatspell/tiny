@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { asRemoteFile } from '#lib/tiny/utils/files.svelte.js';
+  import { asRemoteFile } from '#lib/tiny/files.svelte.js';
   import { px, url } from '#lib/tiny/utils/style.js';
   import { getIndex } from './index.remote.js';
 

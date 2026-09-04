@@ -1,9 +1,8 @@
 import { resolve } from '$app/paths';
 import { hashCodeTag } from '#lib/tiny/properties/property.svelte.js';
-import type { FileData, VariantData } from '../server/files/files.ts';
-import { getter, options, type OptionsInput } from './options.svelte.ts';
-import { defer } from './promise.ts';
-import type { Any } from './utils.ts';
+import type { FileData, VariantData } from './server/files/files.ts';
+import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
+import { defer } from './utils/promise.ts';
 
 export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V & { fileId: string }>) => {
   const opts = options(_opts);
@@ -19,7 +18,7 @@ export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V
     }
   });
 
-  const url = $derived(resolve('/files/[id]/[variant=variants]', { id: opts.fileId, variant: identifier as Any }));
+  const url = $derived(resolve('/files/[id]/[variant=variants]', { id: opts.fileId, variant: identifier }));
 
   return options({
     identifier: getter(() => identifier),
@@ -32,15 +31,6 @@ export const createRemoteVariant = <V extends VariantData>(_opts: OptionsInput<V
 
 const createIsImage = (contentType: string) => contentType.startsWith('image/');
 
-export type Variant = {
-  id: string;
-  variant: string;
-  contentType: string;
-  size: number;
-  width: number | undefined;
-  height: number | undefined;
-};
-
 export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsInput<D>) => {
   const data = options(_opts);
 
@@ -49,12 +39,12 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
 
   const variants = $derived(data.variants.map((variant) => createRemoteVariant({ ...variant, fileId: id })));
 
-  const variant = (identifier: string) => {
+  const variant = (identifier: Tiny.FileVariants) => {
     const variant = variants.find((variant) => variant.identifier === identifier);
     if (variant) {
       return variant;
     }
-    throw new Error(`variant '${variant}' not found`);
+    throw new Error(`Variant '${variant}' not found`);
   };
 
   const original = $derived(variant('original'));
@@ -90,15 +80,13 @@ export const createRemoteFile = <D extends FileData = FileData>(_opts: OptionsIn
   );
 };
 
-export type RemoteFile = ReturnType<typeof createRemoteFile>;
-
 export const asRemoteFile = <D extends FileData = FileData>(opts: OptionsInput<D> | undefined) => {
   if (opts) {
     return createRemoteFile<D>(opts);
   }
 };
 
-const createLocalFile = (file: File) => {
+export const createLocalFile = (file: File) => {
   const name = file.name;
   const contentType = file.type;
   const size = file.size;
@@ -123,10 +111,6 @@ const createLocalFile = (file: File) => {
     },
   );
 };
-
-export type LocalFile = ReturnType<typeof createLocalFile>;
-
-export type UniversalFile = LocalFile | RemoteFile;
 
 export type PickFilesOptions = {
   multiple?: boolean;
@@ -177,3 +161,7 @@ export const pickFile = async (opts: Omit<PickFilesOptions, 'multiple'>) => {
     return model;
   }
 };
+
+export type RemoteFile = ReturnType<typeof createRemoteFile>;
+export type LocalFile = ReturnType<typeof createLocalFile>;
+export type UniversalFile = LocalFile | RemoteFile;

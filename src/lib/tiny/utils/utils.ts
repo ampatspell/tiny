@@ -1,5 +1,5 @@
 import type { RemoteResource } from '$app/server';
-import type { UniversalFile } from './files.svelte.ts';
+import type { UniversalFile } from '../files.svelte.ts';
 
 export const images = ['image/png', 'image/jpeg'];
 

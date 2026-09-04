@@ -1,6 +1,6 @@
 <script lang="ts">
   import TablerPhoto from '#lib/tiny/icons/tabler--photo.svelte';
-  import type { UniversalFile } from '../utils/files.svelte.ts';
+  import type { UniversalFile } from '../files.svelte.ts';
   import { formatBytes } from '../utils/number.ts';
   import Overlay from './overlay.svelte';
 
