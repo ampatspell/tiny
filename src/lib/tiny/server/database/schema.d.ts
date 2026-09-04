@@ -1,7 +1,8 @@
-import type { ColumnType } from 'kysely';
+import type { ColumnType } from "kysely";
 
-export type Generated<T> =
-  T extends ColumnType<infer S, infer I, infer U> ? ColumnType<S, I | undefined, U> : ColumnType<T, T | undefined, T>;
+export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
+  ? ColumnType<S, I | undefined, U>
+  : ColumnType<T, T | undefined, T>;
 
 export interface File {
   id: string;
@@ -22,6 +23,14 @@ export interface Gallery {
   id: string;
   name: Generated<string>;
   permalink: Generated<string>;
+}
+
+export interface GalleryFile {
+  fileId: string;
+  galleryId: string;
+  id: string;
+  position: number;
+  title: string;
 }
 
 export interface Index {
@@ -48,6 +57,7 @@ export interface DB {
   files: File;
   fileVariants: FileVariant;
   galleries: Gallery;
+  galleryFiles: GalleryFile;
   index: Index;
   users: User;
 }
