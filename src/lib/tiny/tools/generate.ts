@@ -167,6 +167,10 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         dir: STORAGE_ROOT,
         users: {
           secret: USERS_SECRET,
+          roles: {
+            admin: 'admin',
+            default: 'subscriber',
+          },
         },
         files: {
           thumbnails: {
