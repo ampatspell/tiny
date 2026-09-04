@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Default roles should be configurable
 - [ ] Server validation errors in forms
 - [ ] Editable arrays of entries like files with descriptions or whatever
 - [ ] Proper `<form/>` element to support submits with enter

@@ -169,7 +169,11 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
           secret: USERS_SECRET,
         },
         files: {
-          thumbnails: [jpeg({ size: 100 }), jpeg({ size: 1024 }), jpeg({ size: 2048 })],
+          thumbnails: {
+            '100x100': jpeg({ size: 100 }),
+            '1024x1024': jpeg({ size: 1024 }),
+            '2048x2048': jpeg({ size: 2048 }),
+          },
         },
         logger: createBasicLogger(),
       });
@@ -192,8 +196,12 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { defineParams } from '@sveltejs/kit/params';
       import * as v from 'valibot';
 
+      const variants = v.union([v.literal('original'), v.literal('100x100'), v.literal('1024x1024'), v.literal('2048x2048')]);
+
+      export type Variants = v.InferInput<typeof variants>;
+
       export const params = defineParams({
-        variants: v.union([v.literal('100x100'), v.literal('1024x1024'), v.literal('2048x2048')]),
+        variants,
       });
     `,
   });
@@ -282,7 +290,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { type BroadcastChannel } from '@ampatspell/tiny/broadcast';
       import { images } from '@ampatspell/tiny/utils/utils';
       import { withDataFields } from '@ampatspell/tiny/fields/data';
-      import { asRemoteFile } from '@ampatspell/tiny/utils/files';
+      import { useFiles } from '@ampatspell/tiny/files';
 
       export type MessageModelOptions = Readonly<{
         data: MessageData;
@@ -290,6 +298,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       }>;
 
       export const useMessageModel = (_opts: OptionsInput<MessageModelOptions>) => {
+        const files = useFiles();
         const opts = options(_opts);
         const broadcast = $derived(opts.broadcast);
         const data = $derived(opts.data);
@@ -297,7 +306,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         const [fields, state] = withDataFields({
           data: getter(() => ({
             ...data,
-            background: asRemoteFile(data.background),
+            background: files.asRemote(data.background),
           })),
         }).define(({ string, file }) => ({
           message: string('message', { validator: notBlank() }),
@@ -562,18 +571,25 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     filename: 'src/routes/+layout.svelte',
     content: dedent`
       <script lang="ts">
+        import { resolve } from '$app/paths';
         import { validatePrefix } from '@ampatspell/tiny/auth/guard/validate';
-        import Entrypoint from '@ampatspell/tiny/entrypoint';
+        import Entrypoint from '@ampatspell/tiny/entrypoint/entrypoint';
+        import { setTiny } from '@ampatspell/tiny/entrypoint/tiny';
 
         let { children } = $props();
 
-        let validate = validatePrefix({
-          prefix: '/_admin',
-          role: 'admin',
+        setTiny({
+          guard: validatePrefix({
+            prefix: '/_admin',
+            role: 'admin',
+          }),
+          files: {
+            resolve: ({ id, variant }) => resolve('/files/[id]/[variant=variants]', { id, variant }),
+          },
         });
       </script>
 
-      <Entrypoint {validate}>
+      <Entrypoint>
         {@render children()}
       </Entrypoint>
     `,
@@ -594,6 +610,33 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       <Tiny>
         <Public />
       </Tiny>
+    `,
+  });
+
+  await write({
+    filename: 'src/app.d.ts',
+    content: dedent`
+      // See https://svelte.dev/docs/kit/types#app.d.ts
+
+      import type { Variants } from './params';
+
+      // for information about these interfaces
+      declare global {
+        namespace App {
+          // interface Error {}
+          // interface Locals {}
+          // interface PageData {}
+          // interface PageState {}
+          // interface Platform {}
+        }
+
+        namespace Tiny {
+          export type Thumbnail = Variants;
+          export type Role = 'admin' | 'subscriber';
+        }
+      }
+
+      export {};
     `,
   });
 

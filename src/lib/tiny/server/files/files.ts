@@ -188,7 +188,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
       }
     };
 
-    const variant = (identifier?: string) => {
+    const variant = (identifier?: Tiny.Thumbnail) => {
       identifier ??= ORIGINAL;
 
       const loadVariant = async () => {
@@ -269,7 +269,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     return id;
   };
 
-  const handle = async ({ id, variant }: { id?: string | undefined; variant?: string | undefined }) => {
+  const handle = async ({ id, variant }: { id?: string | undefined; variant?: Tiny.Thumbnail | undefined }) => {
     if (id && variant) {
       return await file(id).variant(variant).asResponse();
     } else {
