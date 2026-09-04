@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition';
   import Description from './description.svelte';
   import { url } from '../utils/style.ts';
-  import type { UniversalFile } from '../utils/files.svelte.ts';
+  import type { UniversalFile } from '../files.svelte.ts';
 
   let {
     file,
@@ -11,13 +11,15 @@
     file: UniversalFile;
     isBusy?: boolean;
   } = $props();
+
+  let image = $derived.by(() => file.variant.forSize({ width: 2048, height: 2048 })?.url);
 </script>
 
 <div class="content">
   {#if file.isImage}
     <div class="image">
       {#key file.url}
-        <div class="content" transition:fade style:--url={url(file.url)}></div>
+        <div class="content" transition:fade style:--url={url(image)}></div>
       {/key}
     </div>
   {/if}

@@ -10,7 +10,7 @@ export type ValidateResolution = 'allowed' | 'sign-in' | 'denied';
 
 export type ValidateFunction = (opts: ValidateOptions) => ValidateResolution;
 
-export const validatePrefix = ({ prefix, role }: { prefix: string; role: string }) => {
+export const validatePrefix = ({ prefix, role }: { prefix: string; role: Tiny.Role }) => {
   return (opts: ValidateOptions): ValidateResolution => {
     if (opts.url.pathname.startsWith(prefix)) {
       if (!opts.token) {

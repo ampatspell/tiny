@@ -1,4 +1,4 @@
-import type { UniversalFile } from '#lib/tiny/utils/files.svelte.js';
+import type { UniversalFile } from '#lib/tiny/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { createMeta, type Field, type FieldOptions } from '../utils.svelte.ts';
 import File from './file.svelte';

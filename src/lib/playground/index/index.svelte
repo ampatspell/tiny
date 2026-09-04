@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { asRemoteFile } from '#lib/tiny/utils/files.svelte.js';
+  import { useFiles } from '#lib/tiny/files.svelte.js';
   import { px, url } from '#lib/tiny/utils/style.js';
   import { getIndex } from './index.remote.js';
 
+  let files = useFiles();
   let index = $derived(await getIndex());
-  let background = $derived(asRemoteFile(index.background));
+  let background = $derived(files.asRemote(index.background)?.variant.named('2048x2048'));
   let offset = $derived(index.backgroundOffset);
   let backgroundColor = $derived(index.indexBackgroundColor);
   let textColor = $derived(index.indexTextColor);

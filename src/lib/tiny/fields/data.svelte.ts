@@ -9,7 +9,7 @@ import type { Property, UsePropertyOptions } from '../properties/property.svelte
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { BaseFieldOptions, Field } from './utils.svelte.ts';
 import { run, type Any, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
-import type { UniversalFile } from '../utils/files.svelte.ts';
+import type { UniversalFile } from '../files.svelte.ts';
 import { colorField, stringField } from './input/field.svelte.ts';
 import { numberField } from './input/number.svelte.ts';
 import { fileField } from './file/field.svelte.ts';

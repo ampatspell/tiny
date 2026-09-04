@@ -1,5 +1,5 @@
 import type { RemoteResource } from '$app/server';
-import type { UniversalFile } from './files.svelte.ts';
+import type { UniversalFile } from '../files.svelte.ts';
 
 export const images = ['image/png', 'image/jpeg'];
 
@@ -26,3 +26,13 @@ export type QueryResponse<T extends (...args: Any[]) => Any> =
   ReturnType<T> extends RemoteResource<infer R> ? R : undefined;
 
 export type OmitId<T> = Omit<T, 'id'>;
+
+export type Size = {
+  width: number;
+  height: number;
+};
+
+export type Point = {
+  x: number;
+  y: number;
+};

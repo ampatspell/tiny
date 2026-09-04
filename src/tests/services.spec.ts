@@ -15,7 +15,12 @@ describe('services', () => {
           wal: false,
         },
         files: {
-          thumbnails: [jpeg({ size: 100 })],
+          thumbnails: {
+            '100x100': jpeg({ size: 100 }),
+            '512x512': jpeg({ size: 512 }),
+            '1024x1024': jpeg({ size: 1024 }),
+            '2048x2048': jpeg({ size: 2048 }),
+          },
         },
       };
 
@@ -35,7 +40,12 @@ describe('services', () => {
           wal: false,
         },
         files: {
-          thumbnails: [jpeg({ size: 100 })],
+          thumbnails: {
+            '100x100': jpeg({ size: 100 }),
+            '512x512': jpeg({ size: 512 }),
+            '1024x1024': jpeg({ size: 1024 }),
+            '2048x2048': jpeg({ size: 2048 }),
+          },
         },
       };
 

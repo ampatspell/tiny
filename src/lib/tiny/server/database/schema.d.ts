@@ -13,8 +13,8 @@ export interface FileVariant {
   fileId: string;
   height: number | null;
   id: string;
+  identifier: string;
   size: number;
-  variant: string;
   width: number | null;
 }
 

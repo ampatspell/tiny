@@ -25,20 +25,23 @@ export const readTestFileAsFile = async (name: string, type: string) => {
 export const withServices = async <D = unknown, T = any>(cb: (services: Services<D>) => Promise<T>) => {
   const migrations = join(import.meta.dirname, '../../lib/tiny/server/database/migrations');
   await withTemporaryFolder(async (dir) => {
-    const opts = {
+    const services = await createServices<D>({
       dir,
       database: {
         wal: false,
       },
       files: {
-        thumbnails: [jpeg({ size: 100 }), jpeg({ size: 1024 })],
+        thumbnails: {
+          '100x100': jpeg({ size: 100 }),
+          '512x512': jpeg({ size: 512 }),
+          '1024x1024': jpeg({ size: 1024 }),
+          '2048x2048': jpeg({ size: 2048 }),
+        },
       },
       users: {
         secret: 'foobar',
       },
-    };
-
-    const services = await createServices<D>(opts);
+    });
     const tools = await createDatabaseTools({ db: services.database.as<unknown>() });
 
     try {

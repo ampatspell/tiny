@@ -47,7 +47,7 @@ export const getUsersForRequestEvent = () => {
   };
 };
 
-export const assertRole = async (role: string) => {
+export const assertRole = async (role: Tiny.Role) => {
   const token = await getUsersForRequestEvent().getToken();
   if (token?.role !== role) {
     if (token) {

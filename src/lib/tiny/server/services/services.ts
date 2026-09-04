@@ -1,5 +1,5 @@
 import { join, resolve } from 'node:path';
-import { createFiles, type FileThumbnailOptions } from '../files/files.ts';
+import { createFiles, type FileThumbnails } from '../files/files.ts';
 import { createDatabaseServices } from '../database/database.ts';
 import { createStorage } from '../storage/storage.ts';
 import type { DB } from '../database/schema.js';
@@ -13,7 +13,7 @@ export type CreateServicesOptions = {
     wal?: boolean;
   };
   files?: {
-    thumbnails?: FileThumbnailOptions[];
+    thumbnails?: FileThumbnails;
   };
   users?: {
     secret?: string;

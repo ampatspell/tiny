@@ -7,14 +7,17 @@ import type { Storage, StorageFile } from '../storage/storage.ts';
 import type { DB } from '../database/schema.js';
 import { error } from '@sveltejs/kit';
 
+export type FileThumbnails = {
+  [K in Exclude<Tiny.Thumbnail, 'original'>]: FileThumbnailOptions;
+};
+
 export type CreateFilesServicesOptions = {
   db: Database<DB>;
   storage: Storage;
-  thumbnails?: FileThumbnailOptions[];
+  thumbnails?: FileThumbnails;
 };
 
 export type FileThumbnailOptions = {
-  id: string;
   process: (original: Sharp) => Promise<{
     thumbnail: Sharp;
     contentType: string;
@@ -26,9 +29,9 @@ export const ORIGINAL = 'original';
 export const createFiles = async (opts: CreateFilesServicesOptions) => {
   const { db, storage, thumbnails } = opts;
 
-  const getById = async (opts: { id: string }) => {
+  const getById = async (opts: { id: string }): Promise<FileData | undefined> => {
     const { id } = opts;
-    return await db
+    return (await db
       .selectFrom('files')
       .select(['id', 'name'])
       .where('id', '==', id)
@@ -36,11 +39,11 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
         jsonArrayFrom(
           eb
             .selectFrom('fileVariants')
-            .select(['id', 'variant', 'contentType', 'size', 'width', 'height'])
+            .select(['id', 'identifier', 'contentType', 'size', 'width', 'height'])
             .whereRef('fileVariants.fileId', '==', 'files.id'),
         ).as('variants'),
       ])
-      .executeTakeFirst();
+      .executeTakeFirst()) as FileData | undefined;
   };
 
   const resolveOriginalMetadata = async (opts: { file: File }) => {
@@ -92,7 +95,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
         .values({
           id: variantId,
           fileId: id,
-          variant: ORIGINAL,
+          identifier: ORIGINAL,
           contentType,
           size,
           width,
@@ -103,25 +106,29 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     ]);
   };
 
-  const createVariant = async (opts: { id: string; buffer: Buffer; definition: FileThumbnailOptions }) => {
-    const { id: fileId, buffer, definition } = opts;
+  const createVariant = async (opts: {
+    id: string;
+    buffer: Buffer;
+    identifier: Tiny.Thumbnail;
+    definition: FileThumbnailOptions;
+  }) => {
+    const { id: fileId, buffer, identifier, definition } = opts;
     const original = sharp(buffer);
     const { thumbnail, contentType } = await definition.process(original);
     const { data, info } = await thumbnail.toBuffer({ resolveWithObject: true });
     const { width, height, size } = info;
     const id = uid();
-    const variant = definition.id;
     await Promise.all([
       db
         .insertInto('fileVariants')
         .values({
           id,
           fileId,
+          identifier,
           contentType,
           size,
           width,
           height,
-          variant,
         })
         .execute(),
       storage.file(id).store(data),
@@ -133,12 +140,14 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     const data = await getById({ id });
     if (data) {
       const { variants } = data;
-      const original = variants.find((variant) => variant.variant === ORIGINAL);
+      const original = variants.find((variant) => variant.identifier === ORIGINAL);
       if (original && images.includes(original.contentType) && thumbnails) {
         const buffer = await storage.file(original.id).load.asBuffer();
-        for (const definition of thumbnails) {
-          if (!variants.find((variant) => variant.variant === definition.id)) {
-            await createVariant({ id, buffer, definition });
+        for (const _id in thumbnails) {
+          const identifier = _id as Tiny.Thumbnail;
+          const definition = (thumbnails as Record<string, FileThumbnailOptions>)[identifier];
+          if (!variants.find((variant) => variant.identifier === identifier)) {
+            await createVariant({ id, buffer, identifier, definition });
           }
         }
       }
@@ -179,12 +188,12 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
       }
     };
 
-    const variant = (variantId?: string) => {
-      variantId ??= ORIGINAL;
+    const variant = (identifier?: Tiny.Thumbnail) => {
+      identifier ??= ORIGINAL;
 
       const loadVariant = async () => {
         const file = await load();
-        const variant = file.variants.find((variant) => variant.variant === variantId);
+        const variant = file.variants.find((variant) => variant.identifier === identifier);
         if (variant) {
           return { file, variant };
         } else {
@@ -260,7 +269,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
     return id;
   };
 
-  const handle = async ({ id, variant }: { id?: string | undefined; variant?: string | undefined }) => {
+  const handle = async ({ id, variant }: { id?: string | undefined; variant?: Tiny.Thumbnail | undefined }) => {
     if (id && variant) {
       return await file(id).variant(variant).asResponse();
     } else {
@@ -276,5 +285,18 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
 };
 
 export type Files = Awaited<ReturnType<typeof createFiles>>;
-export type FileData = NonNullable<Awaited<ReturnType<ReturnType<Files['file']>['load']>>>;
+
+export type FileData = {
+  id: string;
+  name: string;
+  variants: {
+    id: string;
+    identifier: Tiny.Thumbnail;
+    contentType: string;
+    width: number | null;
+    height: number | null;
+    size: number;
+  }[];
+};
+
 export type VariantData = FileData['variants'][number];

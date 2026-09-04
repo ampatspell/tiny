@@ -12,12 +12,12 @@ export const up = async (db: Kysely<any>) => {
     .createTable('file_variants')
     .addColumn('id', 'text', (col) => col.notNull().primaryKey())
     .addColumn('file_id', 'text', (col) => col.notNull().references('files.id'))
-    .addColumn('variant', 'text', (col) => col.notNull())
+    .addColumn('identifier', 'text', (col) => col.notNull())
     .addColumn('content_type', 'text', (col) => col.notNull())
     .addColumn('size', 'numeric', (col) => col.notNull())
     .addColumn('width', 'numeric')
     .addColumn('height', 'numeric')
-    .addUniqueConstraint('file_id_variant_unique', ['file_id', 'variant'])
+    .addUniqueConstraint('file_id_identifier_unique', ['file_id', 'identifier'])
     .execute();
 
   await db.schema.createIndex('file_variants_file_id_index').on('file_variants').column('file_id').execute();
