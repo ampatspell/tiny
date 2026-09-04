@@ -2,7 +2,7 @@
   import { page } from '$app/state';
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
   import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
-  import Properties from '#lib/playground/galleries/properties.svelte';
+  import Fields from '#lib/playground/galleries/fields.svelte';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { useBackend } from '#lib/tiny/backend/context.svelte.js';
   import { useEditingLayout } from '#lib/tiny/layout/editing/layout.svelte.js';
@@ -25,7 +25,7 @@
 <Editing {layout}>
   <Section>
     <Form size="regular">
-      <Properties properties={model} />
+      <Fields properties={model} />
     </Form>
   </Section>
   <Section title="Photographs" height="fill">

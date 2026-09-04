@@ -1,6 +1,6 @@
 <script lang="ts">
   import { useGalleryModel } from './gallery.svelte.ts';
-  import Properties from './properties.svelte';
+  import Fields from './fields.svelte';
   import Card from '#lib/tiny/card.svelte';
   import Button from '#lib/tiny/button/button.svelte';
   import Busy from '#lib/tiny/button/specific/busy.svelte';
@@ -28,7 +28,7 @@
 <Card>
   <Form>
     <Header title="New gallery" />
-    <Properties {properties} />
+    <Fields {properties} />
     <Actions>
       <Button label="Cancel" onClick={onCancel} />
       <Busy label="Add" onClick={onSave} />
