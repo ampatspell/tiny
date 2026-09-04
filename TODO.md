@@ -1,8 +1,7 @@
 ## TODO
 
-- [ ] Default roles should be configurable
-- [ ] Server validation errors in forms
 - [ ] Editable arrays of entries like files with descriptions or whatever
+- [ ] Server validation errors in forms
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
@@ -13,6 +12,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Default roles should be configurable
 - [x] Require all thumbnail ids to have processor
 - [x] Universal file variant URLs
 - [x] Clean up files service
