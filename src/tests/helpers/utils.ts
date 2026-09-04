@@ -33,13 +33,16 @@ export const withServices = async <D = unknown, T = any>(cb: (services: Services
       files: {
         thumbnails: {
           '100x100': jpeg({ size: 100 }),
-          '512x512': jpeg({ size: 512 }),
           '1024x1024': jpeg({ size: 1024 }),
           '2048x2048': jpeg({ size: 2048 }),
         },
       },
       users: {
         secret: 'foobar',
+        roles: {
+          admin: 'admin',
+          default: 'subscriber',
+        },
       },
     });
     const tools = await createDatabaseTools({ db: services.database.as<unknown>() });

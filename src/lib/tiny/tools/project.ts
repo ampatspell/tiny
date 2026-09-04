@@ -80,6 +80,8 @@ export const createProject = async (opts: { impl: ProjectImpl }) => {
         info: wrap(log.info, true),
         error: wrap(log.error, false),
       },
+      files: {},
+      users: {},
     });
     try {
       return await cb(services);

@@ -53,6 +53,14 @@ describe('files services', () => {
             width: 1024,
             height: 682,
           },
+          {
+            id: loaded!.variants[3].id,
+            identifier: '2048x2048',
+            contentType: 'image/jpeg',
+            size: 444257,
+            width: 2048,
+            height: 1366,
+          },
         ],
       });
 

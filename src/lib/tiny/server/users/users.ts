@@ -5,6 +5,7 @@ import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
 import { omit } from '../../utils/object.ts';
 import jwt from 'jsonwebtoken';
+import { error } from '@sveltejs/kit';
 
 const { JsonWebTokenError } = jwt;
 
@@ -17,10 +18,14 @@ export type TokenPayload = {
 export type CreateUsersOptions = {
   db: Database<DB>;
   secret?: string;
+  roles?: {
+    admin: Tiny.Role;
+    default: Tiny.Role;
+  };
 };
 
 export const createUsers = async (opts: CreateUsersOptions) => {
-  const { db, secret } = opts;
+  const { db, secret, roles } = opts;
 
   const crypto = run(() => {
     const sync = (opts: { password: string; salt: string }) => {
@@ -46,7 +51,10 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     const { salt, hash } = crypto.create({ password });
     if (!role) {
       const { count } = await db.selectFrom('users').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
-      role = count === 0 ? 'admin' : 'subscriber';
+      if (!roles) {
+        error(500, 'Roles are missing');
+      }
+      role = count === 0 ? roles.admin : roles.default;
     }
     const result = await db
       .insertInto('users')

@@ -1,27 +1,25 @@
 import { describe, expect, it } from 'vitest';
 import { withServices, withTemporaryFolder } from './helpers/utils.ts';
-import { join } from 'node:path';
 import { jpeg } from '#lib/tiny/server/files/thumbnails.js';
-import { createServices } from '#lib/tiny/server/services/services.js';
+import { createServices, type CreateServicesOptions } from '#lib/tiny/server/services/services.js';
 import type { DB } from '#lib/tiny/server/database/schema.js';
 
 describe('services', () => {
   it('creates services', async () => {
     await withTemporaryFolder(async (dir) => {
-      const opts = {
+      const opts: CreateServicesOptions = {
         dir,
         database: {
-          migrations: join(dir, 'migrations'),
           wal: false,
         },
         files: {
           thumbnails: {
             '100x100': jpeg({ size: 100 }),
-            '512x512': jpeg({ size: 512 }),
             '1024x1024': jpeg({ size: 1024 }),
             '2048x2048': jpeg({ size: 2048 }),
           },
         },
+        users: {},
       };
 
       const services = await createServices(opts);
@@ -33,20 +31,19 @@ describe('services', () => {
 
   it('reuses existing services', async () => {
     await withTemporaryFolder(async (dir) => {
-      const opts = {
+      const opts: CreateServicesOptions = {
         dir,
         database: {
-          migrations: join(dir, 'migrations'),
           wal: false,
         },
         files: {
           thumbnails: {
             '100x100': jpeg({ size: 100 }),
-            '512x512': jpeg({ size: 512 }),
             '1024x1024': jpeg({ size: 1024 }),
             '2048x2048': jpeg({ size: 2048 }),
           },
         },
+        users: {},
       };
 
       const a = await createServices(opts);
