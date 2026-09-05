@@ -34,9 +34,9 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
       },
     });
 
-    // const files = array('files').define(({ string }) => {
-    //   string('name');
-    // });
+    const files = array('files').define(({ string }) => {
+      string('name');
+    });
 
     return {
       name,

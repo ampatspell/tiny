@@ -44,11 +44,13 @@ const serializeDirty = <I extends Fields, O extends Serialized<I>>(input: I) => 
   }
 };
 
-export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
+const createFactoryAndState = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
   const properties = withDataProperties<D>(_opts);
   const fields: { key: keyof D; field: Field }[] = [];
 
-  const factory = (createDataProperty: Parameters<Parameters<(typeof properties)['define']>[0]>[0]['property']) => {
+  const createFactory = (
+    createDataProperty: Parameters<Parameters<(typeof properties)['define']>[0]>[0]['property'],
+  ) => {
     type PropertyOptions<K extends keyof D> = Omit<UsePropertyOptions<D[K]>, 'value' | 'context'>;
     type FieldOptions<K extends keyof D> = PropertyOptions<K> & BaseFieldOptions;
 
@@ -102,12 +104,12 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
     };
 
     const array = <K extends ArrayKey<D, object>>(key: K, _opts?: FieldOptions<K>) => {
-      type A = D[K] extends object[] ? D[K] : never;
+      type A = D[K] extends Data[] ? D[K] : never;
       const opts = split(key, _opts);
       const property = as<A>(createDataProperty<K>(key, opts.property));
       const field = arrayField<A>({ property, ...opts.field });
       return {
-        define: (opts: {}) => {
+        define: (cb: (factory: Factory) => void) => {
           return field;
         },
       };
@@ -153,15 +155,20 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
     );
   };
 
-  type Factory = ReturnType<typeof factory>;
+  type Factory = ReturnType<typeof createFactory>;
   type State<R extends Fields> = ReturnType<typeof createState<R>>;
 
-  const define = <R extends Fields>(cb: (arg: Factory) => R): [R, State<R>] => {
+  return <R extends Fields>(cb: (arg: Factory) => R): [R, State<R>] => {
     const parent = properties.create();
-    const object = cb(factory(parent.factory.property));
+    const f = createFactory(parent.factory.property);
+    const object = cb(f);
     const state = createState<R>(object, parent.state);
     return [object, state];
   };
+};
+
+export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
+  const define = createFactoryAndState<D>(_opts);
 
   return {
     define,
