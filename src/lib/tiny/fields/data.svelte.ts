@@ -8,12 +8,13 @@ import {
 import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { BaseFieldOptions, Field } from './utils.svelte.ts';
-import { run, type Any, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
+import { run, type Any, type ArrayKey, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
 import type { UniversalFile } from '../files.svelte.ts';
 import { colorField, stringField } from './input/field.svelte.ts';
 import { numberField } from './input/number.svelte.ts';
 import { fileField } from './file/field.svelte.ts';
 import type { InputType } from '../input.svelte';
+import { arrayField } from './array/field.svelte.ts';
 
 export type Fields = Record<string, Field>;
 
@@ -98,6 +99,13 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
       const opts = split(key, _opts);
       const property = as<UniversalFile | undefined>(createDataProperty<K>(key, opts.property));
       return add(key, fileField({ property, ...opts.field, accept: _opts.accept }));
+    };
+
+    const array = <K extends ArrayKey<D, object>>(key: K, _opts?: FieldOptions<K>) => {
+      type A = D[K] extends object[] ? D[K] : never;
+      const opts = split(key, _opts);
+      const property = as<A>(createDataProperty<K>(key, opts.property));
+      return arrayField<A>({ property, ...opts.field });
     };
 
     return {

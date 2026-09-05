@@ -22,6 +22,10 @@ export type FileKey<T> = {
   [K in keyof T]: T[K] extends UniversalFile | undefined ? K & string : never;
 }[keyof T];
 
+export type ArrayKey<T, V> = {
+  [K in keyof T]: T[K] extends V[] ? K & string : never;
+}[keyof T];
+
 export type QueryResponse<T extends (...args: Any[]) => Any> =
   ReturnType<T> extends RemoteResource<infer R> ? R : undefined;
 

@@ -1,13 +1,22 @@
 <script lang="ts">
+  import Button from '#lib/tiny/button/button.svelte';
   import Content from '#lib/tiny/form/content/content.svelte';
   import Fields from '#lib/tiny/form/content/fields.svelte';
+  import Row from '#lib/tiny/form/content/row.svelte';
   import type { GalleryModel } from './gallery.svelte.ts';
 
   let { properties }: { properties: GalleryModel } = $props();
-  let { name, permalink } = $derived(properties);
+
+  let onClick = () => {
+    properties.addDemoFile();
+  };
 </script>
 
 <Content>
-  <Fields field={name} />
-  <Fields field={permalink} />
+  <Fields field={properties.name} />
+  <Fields field={properties.permalink} />
+  <Fields field={properties.files} />
+  <Row>
+    <Button label="Add file" {onClick} />
+  </Row>
 </Content>

@@ -5,6 +5,8 @@ import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { uid } from '#lib/tiny/server/utils.js';
 import { omit } from '#lib/tiny/utils/object.js';
 import { assertRole } from '#lib/tiny/server/users/request-event.js';
+import { join } from 'node:path';
+import { readFile } from 'node:fs/promises';
 
 export const getGalleries = query(async () => {
   const db = getDatabase();
@@ -81,4 +83,18 @@ export const deleteGallery = command(v.strictObject({ id: v.string() }), async (
 
   await getDatabase().deleteFrom('galleries').where('id', '==', id).execute();
   getGalleries().refresh();
+});
+
+export const addFile = command(v.strictObject({ id: v.string() }), async ({ id }) => {
+  const buffer = await readFile(join(import.meta.dirname, '../../tiny/assets/film-0677-011.jpg'));
+  const file = new File([buffer], 'film-0677-011.jpg', { type: 'image/jpeg' });
+  const fileId = uid();
+
+  await getFiles().file(fileId).store(file);
+  await getDatabase()
+    .insertInto('galleryFiles')
+    .values({ fileId, galleryId: id, id: uid(), position: 0, name: 'film-0677-011' })
+    .execute();
+
+  getGalleryById({ id }).refresh();
 });
