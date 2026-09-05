@@ -16,10 +16,8 @@ export const arrayField = <A extends object[]>(_opts: OptionsInput<FieldOptions<
   return options(
     {
       component: Array,
+      property: getter(() => property),
       serialized: getter(() => serialized),
-      isDirty: getter(() => property.isDirty),
-      value: getter(() => property.value),
-      update: (next: A) => property.update(next),
       meta: getter(() => meta),
     },
     { name: 'ArrayField' },
