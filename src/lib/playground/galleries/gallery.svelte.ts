@@ -1,4 +1,4 @@
-import { addGallery, deleteGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
+import { addFile, addGallery, deleteGallery, updateGallery, type GalleryDetailsData } from './galleries.remote.ts';
 import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
 import type { OmitId } from '#lib/tiny/utils/utils.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
@@ -8,11 +8,11 @@ import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
 export type UseGalleryModelOptions =
   | {
       isNew: true;
-      data: OmitId<GalleryData>;
+      data: OmitId<GalleryDetailsData>;
     }
   | {
       isNew: false;
-      data: GalleryData;
+      data: GalleryDetailsData;
     };
 
 export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => {
@@ -20,7 +20,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const isNew = $derived(opts.isNew);
   const data = $derived(opts.data);
 
-  const [fields, state] = withDataFields({ data: getter(() => data) }).define(({ string }) => {
+  const [fields, state] = withDataFields({ data: getter(() => data) }).define(({ string, array }) => {
     const name = string('name', {
       didUpdate: ({ after }) => {
         permalink.property.update(slug(after, { replacement: '-' }));
@@ -34,9 +34,14 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
       },
     });
 
+    const files = array('files').define(({ string }) => {
+      string('name');
+    });
+
     return {
       name,
       permalink,
+      // files,
     };
   });
 
@@ -64,6 +69,13 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
+  const addDemoFile = async () => {
+    if (!opts.isNew) {
+      const id = opts.data.id;
+      await addFile({ id });
+    }
+  };
+
   return options(
     {
       isNew: getter(() => isNew),
@@ -71,6 +83,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
       ...state.opts,
       save,
       destroy,
+      addDemoFile,
     },
     {
       name: 'GalleryModel',

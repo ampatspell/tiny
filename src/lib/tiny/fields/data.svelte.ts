@@ -8,12 +8,13 @@ import {
 import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { BaseFieldOptions, Field } from './utils.svelte.ts';
-import { run, type Any, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
+import { run, type Any, type ArrayKey, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
 import type { UniversalFile } from '../files.svelte.ts';
 import { colorField, stringField } from './input/field.svelte.ts';
 import { numberField } from './input/number.svelte.ts';
 import { fileField } from './file/field.svelte.ts';
 import type { InputType } from '../input.svelte';
+import { arrayField } from './array/field.svelte.ts';
 
 export type Fields = Record<string, Field>;
 
@@ -43,11 +44,13 @@ const serializeDirty = <I extends Fields, O extends Serialized<I>>(input: I) => 
   }
 };
 
-export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
+const createFactoryAndState = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
   const properties = withDataProperties<D>(_opts);
   const fields: { key: keyof D; field: Field }[] = [];
 
-  const factory = (createDataProperty: Parameters<Parameters<(typeof properties)['define']>[0]>[0]['property']) => {
+  const createFactory = (
+    createDataProperty: Parameters<Parameters<(typeof properties)['define']>[0]>[0]['property'],
+  ) => {
     type PropertyOptions<K extends keyof D> = Omit<UsePropertyOptions<D[K]>, 'value' | 'context'>;
     type FieldOptions<K extends keyof D> = PropertyOptions<K> & BaseFieldOptions;
 
@@ -82,16 +85,16 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
       return add(key, stringField({ property, ...opts.field, type: _opts?.type }));
     };
 
-    const number = <K extends NumberKey<D>>(key: K, _opts?: FieldOptions<K>) => {
-      const opts = split(key, _opts);
-      const property = as<number>(createDataProperty(key, opts.property));
-      return add(key, numberField({ property, ...opts.field }));
-    };
-
     const color = <K extends StringKey<D>>(key: K, _opts?: FieldOptions<K>) => {
       const opts = split(key, _opts);
       const property = as<string>(createDataProperty(key, opts.property));
       return add(key, colorField({ property, ...opts.field }));
+    };
+
+    const number = <K extends NumberKey<D>>(key: K, _opts?: FieldOptions<K>) => {
+      const opts = split(key, _opts);
+      const property = as<number>(createDataProperty(key, opts.property));
+      return add(key, numberField({ property, ...opts.field }));
     };
 
     const file = <K extends FileKey<D>>(key: K, _opts: FieldOptions<K> & { accept: string[] }) => {
@@ -100,11 +103,24 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
       return add(key, fileField({ property, ...opts.field, accept: _opts.accept }));
     };
 
+    const array = <K extends ArrayKey<D, object>>(key: K, _opts?: FieldOptions<K>) => {
+      type A = D[K] extends Data[] ? D[K] : never;
+      const opts = split(key, _opts);
+      const property = as<A>(createDataProperty<K>(key, opts.property));
+      const field = arrayField<A>({ property, ...opts.field });
+      return {
+        define: (cb: (factory: Factory) => void) => {
+          return field;
+        },
+      };
+    };
+
     return {
       string,
       number,
       color,
       file,
+      array,
     };
   };
 
@@ -139,15 +155,20 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
     );
   };
 
-  type Factory = ReturnType<typeof factory>;
+  type Factory = ReturnType<typeof createFactory>;
   type State<R extends Fields> = ReturnType<typeof createState<R>>;
 
-  const define = <R extends Fields>(cb: (arg: Factory) => R): [R, State<R>] => {
+  return <R extends Fields>(cb: (arg: Factory) => R): [R, State<R>] => {
     const parent = properties.create();
-    const object = cb(factory(parent.factory.property));
+    const f = createFactory(parent.factory.property);
+    const object = cb(f);
     const state = createState<R>(object, parent.state);
     return [object, state];
   };
+};
+
+export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDataOptions<D>>) => {
+  const define = createFactoryAndState<D>(_opts);
 
   return {
     define,
