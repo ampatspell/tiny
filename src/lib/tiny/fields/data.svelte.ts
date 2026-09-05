@@ -113,6 +113,7 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
       number,
       color,
       file,
+      array,
     };
   };
 
