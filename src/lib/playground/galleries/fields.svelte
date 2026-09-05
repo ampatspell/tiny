@@ -15,7 +15,11 @@
 <Content>
   <Fields field={properties.name} />
   <Fields field={properties.permalink} />
-  <Fields field={properties.files} />
+
+  <!-- {#each properties.files.items as properties}
+    <Fields field={properties.name} />
+  {/each} -->
+
   <Row>
     <Button label="Add file" {onClick} />
   </Row>

@@ -83,16 +83,16 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
       return add(key, stringField({ property, ...opts.field, type: _opts?.type }));
     };
 
-    const number = <K extends NumberKey<D>>(key: K, _opts?: FieldOptions<K>) => {
-      const opts = split(key, _opts);
-      const property = as<number>(createDataProperty(key, opts.property));
-      return add(key, numberField({ property, ...opts.field }));
-    };
-
     const color = <K extends StringKey<D>>(key: K, _opts?: FieldOptions<K>) => {
       const opts = split(key, _opts);
       const property = as<string>(createDataProperty(key, opts.property));
       return add(key, colorField({ property, ...opts.field }));
+    };
+
+    const number = <K extends NumberKey<D>>(key: K, _opts?: FieldOptions<K>) => {
+      const opts = split(key, _opts);
+      const property = as<number>(createDataProperty(key, opts.property));
+      return add(key, numberField({ property, ...opts.field }));
     };
 
     const file = <K extends FileKey<D>>(key: K, _opts: FieldOptions<K> & { accept: string[] }) => {
@@ -105,7 +105,12 @@ export const withDataFields = <D extends Data = Data>(_opts: OptionsInput<WithDa
       type A = D[K] extends object[] ? D[K] : never;
       const opts = split(key, _opts);
       const property = as<A>(createDataProperty<K>(key, opts.property));
-      return arrayField<A>({ property, ...opts.field });
+      const field = arrayField<A>({ property, ...opts.field });
+      return {
+        define: (opts: {}) => {
+          return field;
+        },
+      };
     };
 
     return {
