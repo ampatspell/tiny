@@ -20,7 +20,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const isNew = $derived(opts.isNew);
   const data = $derived(opts.data);
 
-  const [fields, state] = withDataFields({ data: getter(() => data) }).define(({ string, array }) => {
+  const [fields, state] = withDataFields({ data: getter(() => data) }).define(({ string }) => {
     const name = string('name', {
       didUpdate: ({ after }) => {
         permalink.property.update(slug(after, { replacement: '-' }));
@@ -34,14 +34,9 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
       },
     });
 
-    const files = array('files').define(({ string }) => {
-      string('name');
-    });
-
     return {
       name,
       permalink,
-      // files,
     };
   });
 

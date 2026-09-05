@@ -8,13 +8,12 @@ import {
 import type { Property, UsePropertyOptions } from '../properties/property.svelte.ts';
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { BaseFieldOptions, Field } from './utils.svelte.ts';
-import { run, type Any, type ArrayKey, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
+import { run, type Any, type FileKey, type NumberKey, type StringKey } from '../utils/utils.ts';
 import type { UniversalFile } from '../files.svelte.ts';
 import { colorField, stringField } from './input/field.svelte.ts';
 import { numberField } from './input/number.svelte.ts';
 import { fileField } from './file/field.svelte.ts';
 import type { InputType } from '../input.svelte';
-import { arrayField } from './array/field.svelte.ts';
 
 export type Fields = Record<string, Field>;
 
@@ -103,24 +102,11 @@ const createFactoryAndState = <D extends Data = Data>(_opts: OptionsInput<WithDa
       return add(key, fileField({ property, ...opts.field, accept: _opts.accept }));
     };
 
-    const array = <K extends ArrayKey<D, object>>(key: K, _opts?: FieldOptions<K>) => {
-      type A = D[K] extends Data[] ? D[K] : never;
-      const opts = split(key, _opts);
-      const property = as<A>(createDataProperty<K>(key, opts.property));
-      const field = arrayField<A>({ property, ...opts.field });
-      return {
-        define: (cb: (factory: Factory) => void) => {
-          return field;
-        },
-      };
-    };
-
     return {
       string,
       number,
       color,
       file,
-      array,
     };
   };
 
