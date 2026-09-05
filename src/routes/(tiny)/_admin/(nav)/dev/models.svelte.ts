@@ -2,10 +2,21 @@ import type { Data } from '#lib/tiny/properties/data.svelte.js';
 import type { OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Any, ArrayKey, FileKey, NumberKey, StringKey } from '#lib/tiny/utils/utils.js';
 
+type InferFieldFromDefinition<T extends FieldDefinition<Any, Any>> =
+  T extends FieldDefinition<Any, infer F> ? F : never;
+
+type InferFieldsFromDefinitions<D extends Record<string, FieldDefinition<Any, Any>>> = {
+  [K in keyof D]: InferFieldFromDefinition<D[K]>;
+};
+
 abstract class Field<D> {}
+
 class StringField<D> extends Field<D> {}
+
 class NumberField<D> extends Field<D> {}
+
 class FileField<D> extends Field<D> {}
+
 class ArrayField<D, R extends Record<string, Field<D>>> extends Field<D> {
   constructor(public readonly fields: R) {
     super();
@@ -17,13 +28,6 @@ abstract class FieldDefinition<D, F extends Field<D>> {
 
   abstract build(): F;
 }
-
-type InferFieldFromDefinition<T extends FieldDefinition<Any, Any>> =
-  T extends FieldDefinition<Any, infer F> ? F : never;
-
-type InferFieldsFromDefinitions<D extends Record<string, FieldDefinition<Any, Any>>> = {
-  [K in keyof D]: InferFieldFromDefinition<D[K]>;
-};
 
 class StringFieldDefinition<D> extends FieldDefinition<D, StringField<D>> {
   build() {
