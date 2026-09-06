@@ -1,6 +1,6 @@
 import type { Data } from '../index.svelte.ts';
 import { ValueField, type ValueFieldOptions } from '../value.svelte.ts';
-import Editor from './editor.svelte';
+import InputEditor from './input-editor.svelte';
 
 export type InputFieldOptions<D extends Data, T> = ValueFieldOptions<D, T>;
 
@@ -13,5 +13,5 @@ export abstract class InputField<
   abstract readonly string: string;
   abstract onInput(next: string): void;
   abstract onBlur(next: string): void;
-  readonly editor = Editor;
+  readonly editor = InputEditor;
 }
