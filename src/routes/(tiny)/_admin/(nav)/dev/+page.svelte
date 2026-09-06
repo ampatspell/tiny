@@ -23,11 +23,11 @@
     ],
   };
 
-  const fields = withDataFields({ data }).define(({ string, number, array }) => {
+  const model = withDataFields({ data }).define(({ string, number, array }) => {
     return {
       name: string('name', {
         didUpdate: ({ after }) => {
-          fields.record.permalink.update(slug(after, { replacement: '-' }));
+          model.record.permalink.update(slug(after, { replacement: '-' }));
         },
         validator: notBlank(),
       }),
@@ -40,19 +40,21 @@
       }),
     };
   });
+
+  const fields = $derived(model.record);
 </script>
 
 <Section title="Gallery">
   <Form size="wide">
     <Content>
       <Row>
-        <Input field={fields.record.name} />
+        <Input field={fields.name} />
       </Row>
       <Row>
-        <Input field={fields.record.permalink} />
+        <Input field={fields.permalink} />
       </Row>
       <Row>
-        <Input field={fields.record.position} />
+        <Input field={fields.position} />
       </Row>
     </Content>
   </Form>
@@ -61,13 +63,13 @@
 <Section title="Files">
   <Form size="wide">
     <Content>
-      {#each fields.record.files.items as file (file)}
+      {#each fields.files.items as file (file)}
         <Row>
           <Input field={file.record.name} />
         </Row>
       {/each}
       <Row>
-        <Button label="Add" onClick={() => fields.record.files.add({ name: 'New' })} />
+        <Button label="Add" onClick={() => model.record.files.add({ name: 'New' })} />
       </Row>
     </Content>
   </Form>
@@ -77,8 +79,8 @@
   <Form>
     <Content>
       <Row>
-        <Button label="Save" onClick={fields.touch} />
-        <Button label="Rollback" onClick={fields.rollback} />
+        <Button label="Save" onClick={model.touch} />
+        <Button label="Rollback" onClick={model.rollback} />
       </Row>
     </Content>
   </Form>
