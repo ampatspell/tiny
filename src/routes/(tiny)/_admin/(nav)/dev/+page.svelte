@@ -84,8 +84,8 @@
   <Form>
     <Content>
       <Row>
-        <Button label="Save" onClick={onSave} />
-        <Button label="Rollback" onClick={model.rollback} />
+        <Button label="Save" onClick={onSave} isDisabled={!model.isDirty} />
+        <Button label="Rollback" onClick={model.rollback} isDisabled={!model.isDirty} />
       </Row>
     </Content>
   </Form>
