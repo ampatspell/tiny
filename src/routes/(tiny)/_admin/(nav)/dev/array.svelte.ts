@@ -45,6 +45,8 @@ export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinit
   readonly isRequired = false;
   readonly error = undefined;
 
+  readonly fields: Field[] = $derived.by(() => [this, ...this.items.map((item) => item.fields.all).flat()]);
+
   private externals() {
     return this.external.map((data) => {
       return new ArrayFieldItem<N, FDR>({ data, definitions: getter(() => this.definitions) });

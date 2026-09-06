@@ -22,6 +22,8 @@ export abstract class Field<D extends Data = Data, T = unknown, O extends FieldO
   readonly label = $derived.by(() => this.definition.label);
   readonly description = $derived.by(() => this.definition.description);
 
+  readonly fields: Field[] = $derived([this]);
+
   abstract readonly isRequired: boolean;
   abstract readonly error: string | undefined;
   readonly isValid = $derived.by(() => !this.error);

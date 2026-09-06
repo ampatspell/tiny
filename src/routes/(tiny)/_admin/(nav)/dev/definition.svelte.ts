@@ -24,6 +24,7 @@ export abstract class FieldDefinition<
   O extends FieldDefinitionOptions = FieldDefinitionOptions,
 > {
   protected readonly opts: O;
+
   readonly key = $derived.by(() => this.opts.key);
   readonly context = $derived.by(() => this.opts.context);
   readonly label = $derived.by(() => this.opts.label ?? sentenceCase(this.key));

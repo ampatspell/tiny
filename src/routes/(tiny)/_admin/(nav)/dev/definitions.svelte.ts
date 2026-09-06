@@ -22,12 +22,15 @@ export type FieldDefinitionsOptions<D extends Data, R> = {
 
 export class FieldDefinitions<D extends Data, R extends FieldDefinitionsRecord<D> = FieldDefinitionsRecord<D>> {
   private readonly opts: FieldDefinitionsOptions<D, R>;
+
   readonly context = $derived.by(() => this.opts.context);
+
   readonly factory = $derived.by(() => {
     return new Factory<D>({
       context: getter(() => this.context),
     });
   });
+
   readonly record = $derived.by(() => this.opts.cb(this.factory));
 
   constructor(opts: OptionsInput<FieldDefinitionsOptions<D, R>>) {
@@ -37,6 +40,7 @@ export class FieldDefinitions<D extends Data, R extends FieldDefinitionsRecord<D
   fields(opts: OptionsInput<{ data: D }>) {
     return new Fields({
       ...opts,
+      context: getter(() => this.context),
       definitions: this,
     });
   }

@@ -6,6 +6,7 @@ import { createContext } from 'svelte';
 import { useTiny } from './entrypoint/tiny.svelte.ts';
 import type { Size } from './utils/utils.ts';
 import { sortedBy } from './utils/array.ts';
+import { noCloneTag } from '../../routes/(tiny)/_admin/(nav)/dev/utils.svelte.ts';
 
 const createRemoteVariant = (
   _opts: OptionsInput<{
@@ -116,6 +117,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
       url: getter(() => url),
       variantForSize,
       [hashCodeTag]: getter(() => hashCode),
+      [noCloneTag]: true,
     },
     {
       name: 'RemoteFile',
@@ -167,6 +169,7 @@ const createLocalFile = ({ data }: { data: CreateLocalFileOptions; files: FilesC
       size,
       url: getter(() => url),
       isImage: getter(() => isImage),
+      [noCloneTag]: true,
     },
     {
       name: 'LocalFile',

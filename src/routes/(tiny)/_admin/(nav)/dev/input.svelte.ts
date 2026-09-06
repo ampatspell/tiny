@@ -7,11 +7,11 @@ export type InputFieldOptions<D extends Data, T> = ValueFieldOptions<D, T> & {
 };
 
 export class InputField<D extends Data = Data, T = unknown> extends ValueField<D, T, InputFieldOptions<D, T>> {
-  toValue(value: string) {
+  protected toValue(value: string) {
     return this.opts.toValue(value);
   }
 
-  toString(value: T) {
+  protected toString(value: T) {
     return this.opts.toString(value);
   }
 

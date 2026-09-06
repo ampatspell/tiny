@@ -36,6 +36,8 @@
       }),
     };
   });
+
+  $effect(() => console.log(fields.all));
 </script>
 
 <Form size="wide">

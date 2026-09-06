@@ -1,21 +1,8 @@
 import { getter, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { clone } from './clone.svelte.ts';
+import { clone, equals } from './utils.svelte.ts';
 import { FieldDefinition, type FieldDefinitionBuildOptions, type FieldDefinitionOptions } from './definition.svelte.ts';
 import { Field, type FieldOptions } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';
-
-export const hashCodeTag = Symbol('hash-code');
-
-const hasHashCodeTag = (obj: unknown) => {
-  return typeof obj === 'object' && obj !== null && hashCodeTag in obj;
-};
-
-const equals = (a: unknown, b: unknown) => {
-  if (hasHashCodeTag(a) && hasHashCodeTag(b)) {
-    return a[hashCodeTag] === b[hashCodeTag];
-  }
-  return a === b;
-};
 
 export type FieldUpdatePair<T> = { before: T; after: T };
 
@@ -86,6 +73,7 @@ export abstract class ValueFieldDefinition<
   O extends ValueFieldDefinitionOptions<T> = ValueFieldDefinitionOptions<T>,
 > extends FieldDefinition<D, T, F, O> {
   abstract buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<T>>): F;
+
   field(opts: OptionsInput<FieldDefinitionBuildOptions<D>>): F {
     return this.buildImpl({
       ...opts,
