@@ -5,14 +5,11 @@ import type { FieldsContext } from './context.svelte.ts';
 import type { FieldDefinitionsRecord } from './definitions.svelte.ts';
 import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file.svelte.ts';
 import type { Data } from './index.svelte.ts';
-import { NumberFieldDefinition } from './number.svelte.ts';
-import { StringFieldDefinition } from './string.svelte.ts';
-import type { ValueFieldDefinitionOptions } from './value.svelte.ts';
+import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from './number.svelte.ts';
+import { StringFieldDefinition, type StringFieldDefinitionOptions } from './string.svelte.ts';
 
 type ArrayNestedData<D, K extends ArrayKey<D, Data>> = D[K] extends Any[] ? D[K][number] : never;
-
-type ValueOpts<T> = OptionsInput<Omit<ValueFieldDefinitionOptions<T>, 'key' | 'context'>>;
-type FileOpts = OptionsInput<Omit<FileFieldDefinitionOptions, 'key' | 'context'>>;
+type Opts<T> = OptionsInput<Omit<T, 'key' | 'context'>>;
 
 export type FactoryOptions = {
   context: FieldsContext;
@@ -32,15 +29,15 @@ export class Factory<D extends Data> {
     };
   }
 
-  readonly string = <K extends StringKey<D>>(key: K, opts?: ValueOpts<string>) => {
+  readonly string = <K extends StringKey<D>>(key: K, opts?: Opts<StringFieldDefinitionOptions>) => {
     return new StringFieldDefinition<D>({ key, ...this.defaults, ...opts });
   };
 
-  readonly number = <K extends NumberKey<D>>(key: K, opts?: ValueOpts<number>) => {
+  readonly number = <K extends NumberKey<D>>(key: K, opts?: Opts<NumberFieldDefinitionOptions>) => {
     return new NumberFieldDefinition<D>({ key, ...this.defaults, ...opts });
   };
 
-  readonly file = <K extends FileKey<D>>(key: K, opts: FileOpts) => {
+  readonly file = <K extends FileKey<D>>(key: K, opts: Opts<FileFieldDefinitionOptions>) => {
     return new FileFieldDefinition<D>({ key, ...this.defaults, ...opts });
   };
 

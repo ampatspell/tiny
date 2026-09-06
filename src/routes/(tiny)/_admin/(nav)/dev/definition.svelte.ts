@@ -23,6 +23,7 @@ export abstract class FieldDefinition<
   F extends Field<D, T>,
   O extends FieldDefinitionOptions = FieldDefinitionOptions,
 > {
+  protected readonly raw: OptionsInput<O>;
   protected readonly opts: O;
 
   readonly key = $derived.by(() => this.opts.key);
@@ -31,6 +32,7 @@ export abstract class FieldDefinition<
   readonly description = $derived.by(() => this.opts.description);
 
   constructor(opts: OptionsInput<O>) {
+    this.raw = opts;
     this.opts = options(opts);
   }
 

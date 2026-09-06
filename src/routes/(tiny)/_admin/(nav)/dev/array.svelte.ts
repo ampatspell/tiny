@@ -49,7 +49,10 @@ export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinit
 
   private externals() {
     return this.external.map((data) => {
-      return new ArrayFieldItem<N, FDR>({ data, definitions: getter(() => this.definitions) });
+      return new ArrayFieldItem<N, FDR>({
+        data,
+        definitions: getter(() => this.definitions),
+      });
     });
   }
 

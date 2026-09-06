@@ -7,8 +7,9 @@
   let { field }: { field: InputField<Data, T> } = $props();
   let value = $derived(field.string);
   let onInput = $derived(field.onInput);
+  let onBlur = $derived(field.onBlur);
 </script>
 
 <Container {field}>
-  <Input {value} {onInput} />
+  <Input {value} {onInput} {onBlur} />
 </Container>
