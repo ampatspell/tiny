@@ -13,6 +13,7 @@ export type FieldsOptions<D, FD> = {
 export class Fields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFieldsFromDefinitions<FD['record']>> {
   private readonly opts: FieldsOptions<D, FD>;
 
+  readonly context = $derived.by(() => this.opts.context);
   readonly data = $derived.by(() => this.opts.data);
   readonly definitions = $derived.by(() => this.opts.definitions);
 
@@ -43,4 +44,17 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFi
   constructor(opts: OptionsInput<FieldsOptions<D, FD>>) {
     this.opts = options(opts);
   }
+
+  readonly isDirty = $derived(!!this.all.find((field) => field.isDirty));
+  readonly isValid = $derived(!this.all.find((field) => !field.isValid));
+  readonly isTouched = $derived(this.context.isTouched);
+
+  readonly touch = () => {
+    this.context.touch();
+    return this.isValid;
+  };
+
+  readonly rollback = () => {
+    this.all.forEach((field) => field.rollback());
+  };
 }

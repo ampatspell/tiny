@@ -63,6 +63,12 @@ export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinit
   add(data: N) {
     this._items = [...this._items, this.item(data)];
   }
+
+  readonly isDirty = $derived(false);
+
+  rollback() {
+    console.log('array rollback');
+  }
 }
 
 export type ArrayFieldDefinitionOptions<N extends Data, FDR> = FieldDefinitionOptions & {

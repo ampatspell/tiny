@@ -3,6 +3,18 @@ import type { Any } from '#lib/tiny/utils/utils.js';
 import type { FieldDefinition } from './definition.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
+class TouchedField {
+  private isTouched = $derived.by(() => this.field.isTouched);
+
+  constructor(private readonly field: Field) {}
+
+  readonly error = $derived.by(() => {
+    if (this.isTouched) {
+      return this.field.error;
+    }
+  });
+}
+
 export type FieldOptions<D extends Data, T> = {
   data: D;
   definition: FieldDefinition<D, T, Any>;
@@ -21,20 +33,17 @@ export abstract class Field<D extends Data = Data, T = unknown, O extends FieldO
   readonly key = $derived.by(() => this.definition.key);
   readonly label = $derived.by(() => this.definition.label);
   readonly description = $derived.by(() => this.definition.description);
-
-  readonly fields: Field[] = $derived([this]);
-
-  abstract readonly isRequired: boolean;
-  abstract readonly error: string | undefined;
   readonly isValid = $derived.by(() => !this.error);
-
-  readonly touched = $derived.by(() => {
-    return {
-      error: this.error,
-    };
-  });
+  readonly touched = new TouchedField(this);
 
   constructor(opts: OptionsInput<O>) {
     this.opts = options(opts);
   }
+
+  abstract readonly isRequired: boolean;
+  abstract readonly isDirty: boolean;
+  abstract readonly error: string | undefined;
+  abstract rollback(): void;
+
+  readonly fields: Field[] = $derived([this]);
 }

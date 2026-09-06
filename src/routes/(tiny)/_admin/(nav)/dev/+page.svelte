@@ -6,6 +6,7 @@
   import { withDataFields } from './index.svelte.ts';
   import Input from './input.svelte';
   import { notBlank } from './validator.svelte.ts';
+  import Button from '#lib/tiny/button/button.svelte';
 
   const data = {
     name: 'One',
@@ -36,8 +37,6 @@
       }),
     };
   });
-
-  $effect(() => console.log(fields.all));
 </script>
 
 <Form size="wide">
@@ -47,6 +46,10 @@
     </Row>
     <Row>
       <Input field={fields.record.permalink} />
+    </Row>
+    <Row>
+      <Button label="Save" onClick={fields.touch} />
+      <Button label="Rollback" onClick={fields.rollback} />
     </Row>
   </Content>
 </Form>
