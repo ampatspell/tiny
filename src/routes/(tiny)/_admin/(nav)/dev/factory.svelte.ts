@@ -3,10 +3,10 @@ import type { Any, ArrayKey, FileKey, NumberKey, StringKey } from '#lib/tiny/uti
 import { ArrayFieldDefinition } from './array.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
 import type { FieldDefinitionsRecord } from './definitions.svelte.ts';
-import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file.svelte.ts';
+import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file/file.svelte.ts';
 import type { Data } from './index.svelte.ts';
-import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from './number.svelte.ts';
-import { StringFieldDefinition, type StringFieldDefinitionOptions } from './string.svelte.ts';
+import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from './input/number.svelte.ts';
+import { StringFieldDefinition, type StringFieldDefinitionOptions } from './input/string.svelte.ts';
 
 type ArrayNestedData<D, K extends ArrayKey<D, Data>> = D[K] extends Any[] ? D[K][number] : never;
 type Opts<T> = OptionsInput<Omit<T, 'key' | 'context'>>;

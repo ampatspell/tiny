@@ -1,5 +1,6 @@
 import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Any } from '#lib/tiny/utils/utils.js';
+import type { Component } from 'svelte';
 import type { FieldDefinition } from './definition.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
@@ -49,6 +50,7 @@ export abstract class Field<
   abstract readonly isDirty: boolean;
   abstract readonly error: string | undefined;
   abstract readonly serialized: S;
+  abstract readonly editor: Component<{ field: Any }>; // TODO: type
   abstract rollback(): void;
 
   readonly fields: Field[] = $derived([this]);

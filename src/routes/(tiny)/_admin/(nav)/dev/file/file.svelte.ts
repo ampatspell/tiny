@@ -1,14 +1,15 @@
 import type { UniversalFile } from '#lib/tiny/files.svelte.js';
 import type { OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { type FieldDefinitionBuildOptions } from './definition.svelte.ts';
-import type { Data } from './index.svelte.ts';
+import { type FieldDefinitionBuildOptions } from '../definition.svelte.ts';
+import type { Data } from '../index.svelte.ts';
 import {
   ValueField,
   ValueFieldDefinition,
   type Optionals,
   type ValueFieldDefinitionOptions,
   type ValueFieldOptions,
-} from './value.svelte.ts';
+} from '../value.svelte.ts';
+import Editor from './editor.svelte';
 
 export type Type = UniversalFile | undefined;
 
@@ -22,7 +23,7 @@ export type Shared = {
 
 export type FileFieldOptions<D extends Data> = ValueFieldOptions<D, Type> & Shared;
 
-export class FileField<D extends Data> extends ValueField<D, Type, Serialized, FileFieldOptions<D>> {
+export class FileField<D extends Data = Data> extends ValueField<D, Type, Serialized, FileFieldOptions<D>> {
   readonly serialized = $derived.by(() => {
     const { value } = this;
     return {
@@ -31,6 +32,7 @@ export class FileField<D extends Data> extends ValueField<D, Type, Serialized, F
   });
 
   readonly accept = $derived(this.opts.accept);
+  readonly editor = Editor;
 }
 
 export type FileFieldDefinitionOptions = ValueFieldDefinitionOptions<Type> & Shared;

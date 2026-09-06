@@ -4,12 +4,11 @@
   import Form from '#lib/tiny/form/form.svelte';
   import slug from 'slug';
   import { withDataFields } from './index.svelte.ts';
-  import Input from './input.svelte';
   import { notBlank } from './validator.svelte.ts';
   import Button from '#lib/tiny/button/button.svelte';
   import Section from '#lib/tiny/page/section.svelte';
   import { images } from '#lib/tiny/utils/utils.js';
-  import File from './file.svelte';
+  import Fields from './fields.svelte';
 
   const data = {
     name: 'One',
@@ -60,18 +59,10 @@
 <Section title="Gallery">
   <Form size="wide">
     <Content>
-      <Row>
-        <Input field={fields.name} />
-      </Row>
-      <Row>
-        <File field={fields.file} />
-      </Row>
-      <Row>
-        <Input field={fields.permalink} />
-      </Row>
-      <Row>
-        <Input field={fields.position} />
-      </Row>
+      <Fields field={fields.name} />
+      <Fields field={fields.permalink} />
+      <Fields field={fields.file} />
+      <Fields field={fields.position} />
     </Content>
   </Form>
 </Section>
@@ -80,9 +71,7 @@
   <Form size="wide">
     <Content>
       {#each fields.files.items as file (file)}
-        <Row>
-          <Input field={file.record.name} />
-        </Row>
+        <Fields field={file.record.name} />
       {/each}
       <Row>
         <Button label="Add" onClick={() => model.record.files.add({ name: 'New' })} />

@@ -1,8 +1,8 @@
 import { type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { type FieldDefinitionBuildOptions } from './definition.svelte.ts';
-import type { Data } from './index.svelte.ts';
+import type { FieldDefinitionBuildOptions } from '../definition.svelte.ts';
+import type { Data } from '../index.svelte.ts';
+import { ValueFieldDefinition, type Optionals, type ValueFieldDefinitionOptions } from '../value.svelte.ts';
 import { InputField, type InputFieldOptions } from './input.svelte.ts';
-import { ValueFieldDefinition, type Optionals, type ValueFieldDefinitionOptions } from './value.svelte.ts';
 
 const integerToString = (number: number | undefined) => {
   if (typeof number === 'number') {
