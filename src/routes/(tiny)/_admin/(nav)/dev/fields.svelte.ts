@@ -15,7 +15,12 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFi
     const record: Record<string, unknown> = {};
     const definitions = this.definitions.record;
     for (const key in definitions) {
-      record[key] = definitions[key].build({ key, data: getter(() => this.data) });
+      const definition = definitions[key];
+      const data = getter(() => this.data);
+      record[key] = definition.field({
+        definition,
+        data,
+      });
     }
     return record as FR;
   });

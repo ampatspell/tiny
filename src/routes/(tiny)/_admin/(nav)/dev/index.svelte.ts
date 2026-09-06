@@ -1,18 +1,25 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { FieldsContext } from './context.svelte.ts';
 import { FieldDefinitions, type FieldDefinitionsRecord } from './definitions.svelte.ts';
 import type { Factory } from './factory.svelte.ts';
 
 export type Data = Record<string, unknown>;
 
-export const withDataFields = <D extends Data>(_opts: OptionsInput<{ data: D }>) => {
+export const withDataFields = <D extends Data>(_opts: OptionsInput<{ data: D; context?: FieldsContext }>) => {
   const opts = options(_opts);
+  const context = $derived(opts.context ?? new FieldsContext());
 
   const create = <R extends FieldDefinitionsRecord<D>>(cb: (factory: Factory<D>) => R) => {
-    return new FieldDefinitions<D, R>({ cb });
+    return new FieldDefinitions<D, R>({
+      context: getter(() => context),
+      cb,
+    });
   };
 
   const define = <R extends FieldDefinitionsRecord<D>>(cb: (factory: Factory<D>) => R) => {
-    return create<R>(cb).build({ data: getter(() => opts.data) });
+    return create<R>(cb).fields({
+      data: getter(() => opts.data),
+    });
   };
 
   return {

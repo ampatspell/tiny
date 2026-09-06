@@ -1,5 +1,5 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { FieldDefinition, type FieldDefinitionBuildOptions } from './definition.svelte.ts';
+import { FieldDefinition, type FieldDefinitionBuildOptions, type FieldDefinitionOptions } from './definition.svelte.ts';
 import { FieldDefinitions, type FieldDefinitionsRecord } from './definitions.svelte.ts';
 import type { Factory } from './factory.svelte.ts';
 import { Field, type FieldOptions } from './field.svelte.ts';
@@ -15,7 +15,7 @@ export class ArrayFieldItem<N extends Data, FDR extends FieldDefinitionsRecord<N
   readonly definitions = $derived.by(() => this.opts.definitions);
   readonly data = $derived.by(() => this.opts.data);
   readonly fields = $derived.by(() => {
-    return this.definitions.build({
+    return this.definitions.fields({
       data: getter(() => this.data),
     });
   });
@@ -26,7 +26,10 @@ export class ArrayFieldItem<N extends Data, FDR extends FieldDefinitionsRecord<N
   }
 }
 
-export type ArrayFieldOptions<D, N extends Data, FDR extends FieldDefinitionsRecord<N>> = FieldOptions<D, N[]> & {
+export type ArrayFieldOptions<D extends Data, N extends Data, FDR extends FieldDefinitionsRecord<N>> = FieldOptions<
+  D,
+  N[]
+> & {
   definitions: FieldDefinitions<N, FDR>;
 };
 
@@ -38,6 +41,9 @@ export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinit
   readonly definitions = $derived.by(() => this.opts.definitions);
   private _items = $derived(this.externals());
   readonly items = $derived(this._items);
+
+  readonly isRequired = false;
+  readonly error = undefined;
 
   private externals() {
     return this.external.map((data) => {
@@ -57,8 +63,7 @@ export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinit
   }
 }
 
-export type ArrayFieldDefinitionOptions<N extends Data, FDR> = {
-  key: string;
+export type ArrayFieldDefinitionOptions<N extends Data, FDR> = FieldDefinitionOptions & {
   cb: (factory: Factory<N>) => FDR;
 };
 
@@ -66,18 +71,15 @@ export class ArrayFieldDefinition<
   D extends Data,
   N extends Data,
   FDR extends FieldDefinitionsRecord<N>,
-> extends FieldDefinition<D, N[], ArrayField<D, N, FDR>> {
-  private readonly opts: ArrayFieldDefinitionOptions<N, FDR>;
+> extends FieldDefinition<D, N[], ArrayField<D, N, FDR>, ArrayFieldDefinitionOptions<N, FDR>> {
   readonly definitions = $derived.by(() => {
-    return new FieldDefinitions<N, FDR>({ cb: getter(() => this.opts.cb) });
+    return new FieldDefinitions<N, FDR>({
+      context: getter(() => this.opts.context),
+      cb: getter(() => this.opts.cb),
+    });
   });
 
-  constructor(opts: OptionsInput<ArrayFieldDefinitionOptions<N, FDR>>) {
-    super(opts);
-    this.opts = options(opts);
-  }
-
-  build(opts: OptionsInput<FieldDefinitionBuildOptions<D>>) {
+  field(opts: OptionsInput<FieldDefinitionBuildOptions<D>>) {
     return new ArrayField<D, N, FDR>({
       ...opts,
       definitions: getter(() => this.definitions),

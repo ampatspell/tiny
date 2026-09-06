@@ -1,12 +1,12 @@
 import type { OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { FieldDefinition, type FieldDefinitionBuildOptions } from './definition.svelte.ts';
-import { ValueField } from './field.svelte.ts';
+import { type FieldDefinitionBuildOptions } from './definition.svelte.ts';
 import type { Data } from './index.svelte.ts';
+import { ValueField, ValueFieldDefinition, type Optionals } from './value.svelte.ts';
 
 export class NumberField<D extends Data> extends ValueField<D, number> {}
 
-export class NumberFieldDefinition<D extends Data> extends FieldDefinition<D, number, NumberField<D>> {
-  build(opts: OptionsInput<FieldDefinitionBuildOptions<D>>) {
+export class NumberFieldDefinition<D extends Data> extends ValueFieldDefinition<D, number, NumberField<D>> {
+  buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<number>>) {
     return new NumberField<D>(opts);
   }
 }
