@@ -2,22 +2,47 @@ import type { UniversalFile } from '#lib/tiny/files.svelte.js';
 import type { OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { type FieldDefinitionBuildOptions } from './definition.svelte.ts';
 import type { Data } from './index.svelte.ts';
-import { ValueField, ValueFieldDefinition, type Optionals, type ValueFieldDefinitionOptions } from './value.svelte.ts';
+import {
+  ValueField,
+  ValueFieldDefinition,
+  type Optionals,
+  type ValueFieldDefinitionOptions,
+  type ValueFieldOptions,
+} from './value.svelte.ts';
 
-export type FileFieldDefinitionOptions = ValueFieldDefinitionOptions<UniversalFile | undefined> & {
+export type Type = UniversalFile | undefined;
+
+export type Serialized = {
+  file: globalThis.File | undefined;
+};
+
+export type Shared = {
   accept: string[];
 };
 
-export class FileField<D extends Data> extends ValueField<D, UniversalFile | undefined, Record<string, never>> {
-  readonly serialized = $derived({});
+export type FileFieldOptions<D extends Data> = ValueFieldOptions<D, Type> & Shared;
+
+export class FileField<D extends Data> extends ValueField<D, Type, Serialized, FileFieldOptions<D>> {
+  readonly serialized = $derived.by(() => {
+    const { value } = this;
+    return {
+      file: value?.file,
+    };
+  });
+
+  readonly accept = $derived(this.opts.accept);
 }
+
+export type FileFieldDefinitionOptions = ValueFieldDefinitionOptions<Type> & Shared;
 
 export class FileFieldDefinition<D extends Data> extends ValueFieldDefinition<
   D,
   UniversalFile | undefined,
-  FileField<D>
+  FileField<D>,
+  FileFieldDefinitionOptions
 > {
-  buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<UniversalFile | undefined>>): FileField<D> {
-    return new FileField<D>(opts);
+  buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<Type>>): FileField<D> {
+    const { accept } = this.raw;
+    return new FileField<D>({ ...opts, accept });
   }
 }

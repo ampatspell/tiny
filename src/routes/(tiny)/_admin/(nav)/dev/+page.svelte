@@ -8,11 +8,14 @@
   import { notBlank } from './validator.svelte.ts';
   import Button from '#lib/tiny/button/button.svelte';
   import Section from '#lib/tiny/page/section.svelte';
+  import { images } from '#lib/tiny/utils/utils.js';
+  import File from './file.svelte';
 
   const data = {
     name: 'One',
     permalink: 'one',
     position: 0,
+    file: undefined,
     files: [
       {
         name: 'First',
@@ -23,7 +26,7 @@
     ],
   };
 
-  const model = withDataFields({ data }).define(({ string, number, array }) => {
+  const model = withDataFields({ data }).define(({ string, number, file, array }) => {
     return {
       name: string('name', {
         didUpdate: ({ after }) => {
@@ -31,6 +34,7 @@
         },
         validator: notBlank(),
       }),
+      file: file('file', { accept: images }),
       permalink: string('permalink'),
       position: number('position'),
       files: array('files', ({ string }) => {
@@ -58,6 +62,9 @@
     <Content>
       <Row>
         <Input field={fields.name} />
+      </Row>
+      <Row>
+        <File field={fields.file} />
       </Row>
       <Row>
         <Input field={fields.permalink} />
