@@ -6,10 +6,13 @@ import { Factory } from './factory.svelte.ts';
 import { Fields } from './fields.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
-export type FieldDefinitionsRecord<D extends Data = Data> = Record<string, FieldDefinition<D, Any, Any>>;
+export type FieldDefinitionsRecord<D extends Data = Data> = Record<string, FieldDefinition<D, Any, Any> | undefined>;
 
-export type InferFieldFromDefinition<D extends FieldDefinition<Any, Any, Any>> =
-  D extends FieldDefinition<Any, Any, infer F> ? F : never;
+export type InferFieldFromDefinition<D extends FieldDefinition<Any, Any, Any> | undefined> = D extends undefined
+  ? undefined
+  : D extends FieldDefinition<Any, Any, infer F>
+    ? F
+    : never;
 
 export type InferFieldsFromDefinitions<R extends FieldDefinitionsRecord> = {
   [K in keyof R]: InferFieldFromDefinition<R[K]>;

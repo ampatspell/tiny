@@ -5,7 +5,9 @@ import type { Factory } from './factory.svelte.ts';
 
 export type Data = Record<string, unknown>;
 
-export const withDataFields = <D extends Data>(_opts: OptionsInput<{ data: D; context?: FieldsContext }>) => {
+export type WithDataFieldsOptions<D> = { data: D; context?: FieldsContext };
+
+export const withDataFields = <D extends Data>(_opts: OptionsInput<WithDataFieldsOptions<D>>) => {
   const opts = options(_opts);
   const context = $derived(opts.context ?? new FieldsContext());
 

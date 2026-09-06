@@ -20,13 +20,15 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFi
   readonly record: FR = $derived.by(() => {
     const record: Record<string, unknown> = {};
     const definitions = this.definitions.record;
+    const data = getter(() => this.data);
     for (const key in definitions) {
       const definition = definitions[key];
-      const data = getter(() => this.data);
-      record[key] = definition.field({
-        definition,
-        data,
-      });
+      if (definition) {
+        record[key] = definition.field({
+          definition,
+          data,
+        });
+      }
     }
     return record as FR;
   });

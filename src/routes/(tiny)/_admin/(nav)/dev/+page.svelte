@@ -25,7 +25,7 @@
     return {
       name: string('name', {
         didUpdate: ({ after }) => {
-          fields.record.permalink.update(slug(after, { replacement: '-' }));
+          fields.record.permalink?.update(slug(after, { replacement: '-' }));
         },
         validator: notBlank(),
       }),
@@ -44,9 +44,11 @@
     <Row>
       <Input field={fields.record.name} />
     </Row>
-    <Row>
-      <Input field={fields.record.permalink} />
-    </Row>
+    {#if fields.record.permalink}
+      <Row>
+        <Input field={fields.record.permalink} />
+      </Row>
+    {/if}
     <Row>
       <Button label="Save" onClick={fields.touch} />
       <Button label="Rollback" onClick={fields.rollback} />
