@@ -18,6 +18,11 @@ export type InferFieldsFromDefinitions<R extends FieldDefinitionsRecord> = {
   [K in keyof R]: InferFieldFromDefinition<R[K]>;
 };
 
+export type InferFieldsRecordFromDefinition<
+  D extends Data,
+  FD extends FieldDefinitions<D>,
+> = InferFieldsFromDefinitions<FD['record']>;
+
 export type FieldDefinitionsOptions<D extends Data, R> = {
   context: FieldsContext;
   cb: (factory: Factory<D>) => R;

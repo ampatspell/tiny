@@ -1,21 +1,19 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { FieldsContext } from './context.svelte.ts';
-import type { FieldDefinitions, InferFieldsFromDefinitions } from './definitions.svelte.ts';
+import type {
+  FieldDefinitions,
+  InferFieldsFromDefinitions,
+  InferFieldsRecordFromDefinition,
+} from './definitions.svelte.ts';
 import type { Field } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
-export type FieldsRecord<D extends Data, FD extends FieldDefinitions<D>> = InferFieldsFromDefinitions<FD['record']>;
-
-export type Serialized<
-  D extends Data,
-  FD extends FieldDefinitions<D>,
-  FR extends FieldsRecord<D, FD> = FieldsRecord<D, FD>,
-> = {
-  [K in keyof FR]: FR[K]['serialized'];
+export type Serialized<D extends Data, FD extends FieldDefinitions<D>> = {
+  [K in keyof InferFieldsRecordFromDefinition<D, FD>]: InferFieldsRecordFromDefinition<D, FD>[K]['serialized'];
 };
 
-class SerializedFields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFieldsFromDefinitions<FD['record']>> {
-  constructor(private readonly fields: Fields<D, FD, FR>) {}
+class SerializedFields<D extends Data, FD extends FieldDefinitions<D>> {
+  constructor(private readonly fields: Fields<D, FD>) {}
 
   private filtered(filter: (field: Field) => boolean) {
     const output = {} as Partial<Serialized<D, FD>>;
@@ -47,15 +45,15 @@ export type FieldsOptions<D, FD> = {
   definitions: FD;
 };
 
-export class Fields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFieldsFromDefinitions<FD['record']>> {
+export class Fields<D extends Data, FD extends FieldDefinitions<D>> {
   private readonly opts: FieldsOptions<D, FD>;
 
   readonly context = $derived.by(() => this.opts.context);
   readonly data = $derived.by(() => this.opts.data);
   readonly definitions = $derived.by(() => this.opts.definitions);
-  readonly serialized = $derived(new SerializedFields<D, FD, FR>(this));
+  readonly serialized = $derived(new SerializedFields<D, FD>(this));
 
-  readonly record: FR = $derived.by(() => {
+  readonly record = $derived.by(() => {
     const record: Record<string, unknown> = {};
     const definitions = this.definitions.record;
     const data = getter(() => this.data);
@@ -68,7 +66,7 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFi
         });
       }
     }
-    return record as FR;
+    return record as InferFieldsFromDefinitions<FD['record']>;
   });
 
   readonly all = $derived.by(() => {
