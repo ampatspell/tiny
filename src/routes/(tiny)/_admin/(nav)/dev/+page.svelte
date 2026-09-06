@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { GalleryDetailsData } from '#lib/playground/galleries/galleries.remote.js';
-  import { withDataFields } from './models.svelte.ts';
+  import Form from '#lib/tiny/form/form.svelte';
+  import Json from '#lib/tiny/json.svelte';
+  import { setGlobal } from '#lib/tiny/utils/set-global.js';
+  import { withDataFields } from './index.svelte.ts';
 
   const data: GalleryDetailsData = {
     id: 'gallery',
@@ -19,18 +22,44 @@
   };
 
   let fields = withDataFields({ data });
+  let built = fields.create(({ string, array }) => {
+    return {
+      name: string('name'),
+      files: array('files', ({ string }) => {
+        return {
+          fileId: string('fileId'),
+        };
+      }),
+    };
+  });
+
+  built.record.name;
+  built.record.files.definitions.record.fileId.key;
+
   let defined = fields.define(({ string, array }) => {
     let name = string('name');
     let permalink = string('permalink');
     let files = array('files', ({ string }) => {
       return {
-        name: string('name'),
+        fileId: string('fileId'),
+        galleryId: string('galleryId'),
       };
     });
+
     return {
       name,
       permalink,
       files,
     };
   });
+
+  defined.record.name;
+  defined.record.files.definitions.record.fileId.key;
+  defined.record.files.definitions.build({ data: undefined as any }).record.fileId;
+
+  setGlobal({ defined });
 </script>
+
+<Form>
+  <Json data={defined} />
+</Form>
