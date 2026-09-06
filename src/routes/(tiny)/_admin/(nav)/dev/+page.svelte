@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { GalleryDetailsData } from '#lib/playground/galleries/galleries.remote.js';
+  import Content from '#lib/tiny/form/content/content.svelte';
+  import Row from '#lib/tiny/form/content/row.svelte';
   import Form from '#lib/tiny/form/form.svelte';
+  import Input from '#lib/tiny/input.svelte';
   import Json from '#lib/tiny/json.svelte';
-  import { setGlobal } from '#lib/tiny/utils/set-global.js';
+  import { Field } from './field.svelte.ts';
   import { withDataFields } from './index.svelte.ts';
+  import { StringField } from './string.svelte.ts';
 
   const data: GalleryDetailsData = {
     id: 'gallery',
@@ -21,45 +25,30 @@
     ],
   };
 
-  let fields = withDataFields({ data });
-  let built = fields.create(({ string, array }) => {
+  const fields = withDataFields({ data }).define(({ string, array }) => {
     return {
       name: string('name'),
+      permalink: string('permalink'),
       files: array('files', ({ string }) => {
         return {
-          fileId: string('fileId'),
+          name: string('name'),
         };
       }),
     };
   });
-
-  built.record.name;
-  built.record.files.definitions.record.fileId.key;
-
-  let defined = fields.define(({ string, array }) => {
-    let name = string('name');
-    let permalink = string('permalink');
-    let files = array('files', ({ string }) => {
-      return {
-        fileId: string('fileId'),
-        galleryId: string('galleryId'),
-      };
-    });
-
-    return {
-      name,
-      permalink,
-      files,
-    };
-  });
-
-  defined.record.name;
-  defined.record.files.definitions.record.fileId.key;
-  defined.record.files.definitions.build({ data: undefined as any }).record.fileId;
-
-  setGlobal({ defined });
 </script>
 
-<Form>
-  <Json data={defined} />
+{#snippet string(field: StringField)}
+  <Row>
+    <Input value={field.value} onInput={field.onInput} />
+  </Row>
+  <Row>
+    key: {field.key}, isDirty: {field.isDirty}, external: {field.external}, value: {field.value}
+  </Row>
+{/snippet}
+<Form size="wide">
+  <Content>
+    {@render string(fields.record.name)}
+    {@render string(fields.record.permalink)}
+  </Content>
 </Form>

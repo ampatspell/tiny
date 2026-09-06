@@ -11,7 +11,7 @@ export type FieldDefinitionBuildOptions<D extends Data> = {
   data: D;
 };
 
-export abstract class FieldDefinition<D extends Data, F extends Field<D>> {
+export abstract class FieldDefinition<D extends Data, T, F extends Field<D, T>> {
   private readonly _opts: FieldDefinitionOptions;
   readonly key = $derived.by(() => this._opts.key);
 

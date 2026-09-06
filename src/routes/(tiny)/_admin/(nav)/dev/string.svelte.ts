@@ -3,9 +3,13 @@ import { FieldDefinition, type FieldDefinitionBuildOptions } from './definition.
 import { Field } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
-export class StringField<D extends Data> extends Field<D> {}
+export class StringField<D extends Data = Data> extends Field<D, string> {
+  readonly onInput = (next: string) => {
+    this.update(next);
+  };
+}
 
-export class StringFieldDefinition<D extends Data> extends FieldDefinition<D, StringField<D>> {
+export class StringFieldDefinition<D extends Data> extends FieldDefinition<D, string, StringField<D>> {
   build(opts: OptionsInput<FieldDefinitionBuildOptions<D>>) {
     return new StringField<D>(opts);
   }

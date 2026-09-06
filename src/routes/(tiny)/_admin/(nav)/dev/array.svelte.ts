@@ -9,7 +9,7 @@ export type ArrayFieldOptions<D, N extends Data, FDR extends FieldDefinitionsRec
   definitions: FieldDefinitions<N, FDR>;
 };
 
-export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinitionsRecord<N>> extends Field<D> {
+export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinitionsRecord<N>> extends Field<D, N[]> {
   private readonly opts: ArrayFieldOptions<D, N, FDR>;
 
   readonly definitions = $derived.by(() => this.opts.definitions);
@@ -29,7 +29,7 @@ export class ArrayFieldDefinition<
   D extends Data,
   N extends Data,
   FDR extends FieldDefinitionsRecord<N>,
-> extends FieldDefinition<D, ArrayField<D, N, FDR>> {
+> extends FieldDefinition<D, N[], ArrayField<D, N, FDR>> {
   private readonly opts: ArrayFieldDefinitionOptions<N, FDR>;
   readonly definitions = $derived.by(() => new FieldDefinitions<N, FDR>({ cb: getter(() => this.opts.cb) }));
 
