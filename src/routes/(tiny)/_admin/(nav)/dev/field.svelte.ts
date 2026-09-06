@@ -1,4 +1,5 @@
 import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { clone } from './clone.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
 export const hashCodeTag = Symbol('hash-code');
@@ -16,33 +17,45 @@ export const equals = (a: unknown, b: unknown) => {
 
 export type FieldUpdatePair<T> = { before: T; after: T };
 
-export type FieldOptions<D> = {
+export type FieldOptions<D, T> = {
   data: D;
   key: string;
-  // willUpdate?: (pair: FieldUpdatePair<T>) => void;
-  // didUpdate?: (pair: FieldUpdatePair<T>) => void;
+  willUpdate?: (pair: FieldUpdatePair<T>) => void;
+  didUpdate?: (pair: FieldUpdatePair<T>) => void;
 };
 
-export abstract class Field<D extends Data = Data, T = unknown> {
-  private readonly _opts: FieldOptions<D>;
-  readonly data = $derived.by(() => this._opts.data);
-  readonly key = $derived.by(() => this._opts.key);
+export abstract class Field<D extends Data = Data, T = unknown, O extends FieldOptions<D, T> = FieldOptions<D, T>> {
+  protected readonly opts: O;
+  readonly data = $derived.by(() => this.opts.data);
+  readonly key = $derived.by(() => this.opts.key);
   readonly external = $derived.by(() => this.data[this.key] as T);
-  private _value = $derived(this.external);
+
+  constructor(opts: OptionsInput<O>) {
+    this.opts = options(opts);
+  }
+}
+
+export type ValueFieldOptions<D, T> = FieldOptions<D, T> & {
+  willUpdate?: (pair: FieldUpdatePair<T>) => void;
+  didUpdate?: (pair: FieldUpdatePair<T>) => void;
+};
+
+export abstract class ValueField<
+  D extends Data = Data,
+  T = unknown,
+  O extends ValueFieldOptions<D, T> = ValueFieldOptions<D, T>,
+> extends Field<D, T, O> {
+  private _value = $derived(clone(this.external));
   readonly value = $derived(this._value);
   readonly isDirty = $derived(!equals(this.external, this.value));
-
-  constructor(opts: OptionsInput<FieldOptions<D>>) {
-    this._opts = options(opts);
-  }
 
   readonly update = (after: T) => {
     const before = this.value;
     if (!equals(before, after)) {
-      // const pair = { before, after };
-      // this._opts.willUpdate?.(pair);
+      const pair = { before, after };
+      this.opts.willUpdate?.(pair);
       this._value = after;
-      // this._opts.didUpdate?.(pair);
+      this.opts.didUpdate?.(pair);
     }
   };
 

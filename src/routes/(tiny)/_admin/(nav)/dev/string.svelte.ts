@@ -1,9 +1,9 @@
 import type { OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { FieldDefinition, type FieldDefinitionBuildOptions } from './definition.svelte.ts';
-import { Field } from './field.svelte.ts';
+import { ValueField } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
-export class StringField<D extends Data = Data> extends Field<D, string> {
+export class StringField<D extends Data = Data> extends ValueField<D, string> {
   readonly onInput = (next: string) => {
     this.update(next);
   };
