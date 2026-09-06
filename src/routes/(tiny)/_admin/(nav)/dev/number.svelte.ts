@@ -27,9 +27,10 @@ export type Shared = {
 
 export type NumberFieldOptions<D extends Data> = InputFieldOptions<D, number> & Shared;
 
-export class NumberField<D extends Data> extends InputField<D, number, NumberFieldOptions<D>> {
+export class NumberField<D extends Data> extends InputField<D, number, number, NumberFieldOptions<D>> {
   readonly fallback = $derived(this.opts.fallback ?? 0);
   readonly string = $derived(integerToString(this.value) ?? String(this.fallback));
+  readonly serialized = $derived(this.value);
 
   readonly onInput = (next: string) => {
     const value = stringToInteger(next);

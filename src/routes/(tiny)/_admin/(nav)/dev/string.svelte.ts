@@ -6,6 +6,7 @@ import { ValueFieldDefinition, type Optionals, type ValueFieldDefinitionOptions 
 
 export class StringField<D extends Data = Data> extends InputField<D, string> {
   readonly string = $derived(this.value);
+  readonly serialized = $derived(this.value);
   readonly onInput = (next: string) => this.update(next);
   readonly onBlur = () => {};
 }

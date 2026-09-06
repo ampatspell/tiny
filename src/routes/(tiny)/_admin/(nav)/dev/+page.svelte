@@ -42,6 +42,15 @@
   });
 
   const fields = $derived(model.record);
+
+  const onSave = () => {
+    if (model.touch()) {
+      const dirty = model.serialized.dirty;
+      if (dirty) {
+        console.log('save', dirty);
+      }
+    }
+  };
 </script>
 
 <Section title="Gallery">
@@ -79,7 +88,7 @@
   <Form>
     <Content>
       <Row>
-        <Button label="Save" onClick={model.touch} />
+        <Button label="Save" onClick={onSave} />
         <Button label="Rollback" onClick={model.rollback} />
       </Row>
     </Content>

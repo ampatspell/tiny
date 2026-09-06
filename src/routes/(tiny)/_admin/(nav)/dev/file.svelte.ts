@@ -8,7 +8,9 @@ export type FileFieldDefinitionOptions = ValueFieldDefinitionOptions<UniversalFi
   accept: string[];
 };
 
-export class FileField<D extends Data> extends ValueField<D, UniversalFile | undefined> {}
+export class FileField<D extends Data> extends ValueField<D, UniversalFile | undefined, Record<string, never>> {
+  readonly serialized = $derived({});
+}
 
 export class FileFieldDefinition<D extends Data> extends ValueFieldDefinition<
   D,

@@ -36,11 +36,13 @@ export type ArrayFieldOptions<D extends Data, N extends Data, FDR extends FieldD
 export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinitionsRecord<N>> extends Field<
   D,
   N[],
+  Record<string, never>,
   ArrayFieldOptions<D, N, FDR>
 > {
   readonly definitions = $derived.by(() => this.opts.definitions);
   private _items = $derived(this.externals());
   readonly items = $derived(this._items);
+  readonly serialized = $derived({});
 
   readonly isRequired = false;
   readonly error = undefined;

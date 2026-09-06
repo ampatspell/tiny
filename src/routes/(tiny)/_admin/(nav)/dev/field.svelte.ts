@@ -20,7 +20,12 @@ export type FieldOptions<D extends Data, T> = {
   definition: FieldDefinition<D, T, Any>;
 };
 
-export abstract class Field<D extends Data = Data, T = unknown, O extends FieldOptions<D, T> = FieldOptions<D, T>> {
+export abstract class Field<
+  D extends Data = Data,
+  T = unknown,
+  S = unknown,
+  O extends FieldOptions<D, T> = FieldOptions<D, T>,
+> {
   protected readonly opts: O;
 
   readonly data = $derived.by(() => this.opts.data);
@@ -43,6 +48,7 @@ export abstract class Field<D extends Data = Data, T = unknown, O extends FieldO
   abstract readonly isRequired: boolean;
   abstract readonly isDirty: boolean;
   abstract readonly error: string | undefined;
+  abstract readonly serialized: S;
   abstract rollback(): void;
 
   readonly fields: Field[] = $derived([this]);

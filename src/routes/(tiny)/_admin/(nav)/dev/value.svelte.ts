@@ -22,8 +22,9 @@ export type ValueFieldOptions<D extends Data, T> = FieldOptions<D, T> & Optional
 export abstract class ValueField<
   D extends Data = Data,
   T = unknown,
+  S = unknown,
   O extends ValueFieldOptions<D, T> = ValueFieldOptions<D, T>,
-> extends Field<D, T, O> {
+> extends Field<D, T, S, O> {
   private _value = $derived(clone(this.external));
   readonly value = $derived(this._value);
   readonly validator = $derived(this.opts.validator);

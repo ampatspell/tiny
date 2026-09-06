@@ -4,6 +4,43 @@ import type { FieldDefinitions, InferFieldsFromDefinitions } from './definitions
 import type { Field } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
+export type FieldsRecord<D extends Data, FD extends FieldDefinitions<D>> = InferFieldsFromDefinitions<FD['record']>;
+
+export type Serialized<
+  D extends Data,
+  FD extends FieldDefinitions<D>,
+  FR extends FieldsRecord<D, FD> = FieldsRecord<D, FD>,
+> = {
+  [K in keyof FR]: FR[K]['serialized'];
+};
+
+class SerializedFields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFieldsFromDefinitions<FD['record']>> {
+  constructor(private readonly fields: Fields<D, FD, FR>) {}
+
+  private filtered(filter: (field: Field) => boolean) {
+    const output = {} as Partial<Serialized<D, FD>>;
+    const record = this.fields.record;
+    for (const key in record) {
+      const field = record[key] as Field;
+      if (filter(field)) {
+        output[key] = field.serialized;
+      }
+    }
+    return output;
+  }
+
+  readonly all = $derived.by(() => {
+    return this.filtered(() => true) as Serialized<D, FD>;
+  });
+
+  readonly dirty = $derived.by(() => {
+    const output = this.filtered((field) => field.isDirty) as Serialized<D, FD>;
+    if (Object.keys(output).length) {
+      return output;
+    }
+  });
+}
+
 export type FieldsOptions<D, FD> = {
   context: FieldsContext;
   data: D;
@@ -16,6 +53,7 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>, FR = InferFi
   readonly context = $derived.by(() => this.opts.context);
   readonly data = $derived.by(() => this.opts.data);
   readonly definitions = $derived.by(() => this.opts.definitions);
+  readonly serialized = $derived(new SerializedFields<D, FD, FR>(this));
 
   readonly record: FR = $derived.by(() => {
     const record: Record<string, unknown> = {};
