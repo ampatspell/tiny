@@ -16,7 +16,7 @@ export type ArrayFieldItemOptions<N extends Entry, FDR extends FieldDefinitionsR
   delete: (item: ArrayFieldItem) => void;
 };
 
-export type SerializedItem<N extends Entry = Entry, FDR extends FieldDefinitionsRecord<N> = FieldDefinitionsRecord<N>> =
+export type SerializedArrayItem<D> =
   | {
       state: 'deleted';
       id: string;
@@ -24,11 +24,15 @@ export type SerializedItem<N extends Entry = Entry, FDR extends FieldDefinitions
   | ({
       state: 'updated';
       id: string;
-    } & Partial<Serialized<N, FieldDefinitions<N, FDR>>>)
+    } & Partial<D>)
   | ({
       state: 'added';
-    } & Serialized<N, FieldDefinitions<N, FDR>>)
-  | undefined;
+    } & D);
+
+export type SerializedItemForDefinition<
+  N extends Entry = Entry,
+  FDR extends FieldDefinitionsRecord<N> = FieldDefinitionsRecord<N>,
+> = SerializedArrayItem<Serialized<N, FieldDefinitions<N, FDR>>>;
 
 export class ArrayFieldItem<
   N extends Entry = Entry,
@@ -50,7 +54,7 @@ export class ArrayFieldItem<
   readonly data = $derived.by(() => this.opts.data);
   readonly record = $derived(this.fields.record);
 
-  readonly serialized = $derived.by<SerializedItem<N, FDR>>(() => {
+  readonly serialized = $derived.by<SerializedItemForDefinition<N, FDR> | undefined>(() => {
     if (this.isDeleted) {
       const id = this.data.id;
       if (!id) {
@@ -108,7 +112,7 @@ export type ArrayFieldOptions<D extends Data, N extends Entry, FDR extends Field
 export class ArrayField<D extends Data, N extends Entry, FDR extends FieldDefinitionsRecord<N>> extends Field<
   D,
   N[],
-  SerializedItem<N, FDR>[],
+  SerializedItemForDefinition<N, FDR>[],
   ArrayFieldOptions<D, N, FDR>
 > {
   private readonly definitions = $derived.by(() => this.opts.definitions);
