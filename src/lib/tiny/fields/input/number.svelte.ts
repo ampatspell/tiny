@@ -1,8 +1,14 @@
-import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { untrack } from 'svelte';
-import type { InputField } from './field.svelte.ts';
-import { createMeta, type FieldOptions } from '../utils.svelte.ts';
-import Input from './input.svelte';
+import { type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { FieldDefinitionBuildOptions } from '../definition.svelte.ts';
+import type { Data } from '../index.svelte.ts';
+import { type Optionals } from '../value.svelte.ts';
+import InputEditor from './input-editor.svelte';
+import {
+  InputField,
+  InputFieldDefinition,
+  type InputFieldDefinitionOptions,
+  type InputFieldOptions,
+} from './input.svelte.ts';
 
 const integerToString = (number: number | undefined) => {
   if (typeof number === 'number') {
@@ -21,51 +27,45 @@ const stringToInteger = (string: string) => {
   return undefined;
 };
 
-export const numberField = (_opts: OptionsInput<FieldOptions<number> & { fallback?: number }>): InputField<number> => {
-  const opts = options(_opts);
-  const fallback = $derived(opts.fallback ?? 0);
-  const property = $derived(opts.property);
-  const value = $derived(integerToString(property.value) ?? '');
-  const meta = createMeta(opts);
-  const serialized = $derived(property.value);
-
-  let local = $state<string>(untrack(() => value));
-
-  $effect(() => {
-    const untracked = untrack(() => local);
-    if (stringToInteger(untracked) !== undefined) {
-      if (value !== untracked) {
-        local = value;
-      }
-    }
-  });
-
-  const update = (next: string) => {
-    const value = stringToInteger(next);
-    property.update(value ?? fallback);
-  };
-
-  const onInput = (next: string) => {
-    local = next;
-    update(next);
-  };
-
-  const onBlur = (next: string) => {
-    local = value;
-    update(next);
-  };
-
-  return options(
-    {
-      component: Input,
-      property: getter(() => property),
-      value: getter(() => local),
-      serialized: getter(() => serialized),
-      type: 'text',
-      onInput,
-      onBlur,
-      meta,
-    },
-    { name: 'NumberField' },
-  );
+export type Shared = {
+  fallback?: number;
 };
+
+export type NumberFieldOptions<D extends Data> = InputFieldOptions<D, number> & Shared;
+
+export class NumberField<D extends Data> extends InputField<D, number, number, NumberFieldOptions<D>> {
+  readonly editor = InputEditor;
+  readonly fallback = $derived(this.opts.fallback ?? 0);
+  readonly string = $derived(integerToString(this.value) ?? String(this.fallback));
+  readonly serialized = $derived(this.value);
+
+  readonly onInput = (next: string) => {
+    const value = stringToInteger(next);
+    if (value !== undefined) {
+      this.update(value);
+    }
+  };
+
+  readonly onBlur = (next: string) => {
+    const value = stringToInteger(next) ?? this.fallback;
+    this.update(value);
+  };
+}
+
+export type NumberFieldDefinitionOptions = InputFieldDefinitionOptions<number> & Shared;
+
+export class NumberFieldDefinition<D extends Data> extends InputFieldDefinition<
+  D,
+  number,
+  NumberField<D>,
+  NumberFieldDefinitionOptions
+> {
+  buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<number>>) {
+    const { fallback, type } = this.raw;
+    return new NumberField<D>({
+      ...opts,
+      type,
+      fallback,
+    });
+  }
+}

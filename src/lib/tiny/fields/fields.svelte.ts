@@ -87,6 +87,13 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>> {
   readonly isValid = $derived(!this.all.find((field) => !field.isValid));
   readonly isTouched = $derived(this.context.isTouched);
 
+  readonly state = $derived.by(() => {
+    return {
+      isDirty: getter(() => this.isDirty),
+      rollback: () => this.rollback(),
+    };
+  });
+
   readonly touch = () => {
     this.context.touch();
     return this.isValid;

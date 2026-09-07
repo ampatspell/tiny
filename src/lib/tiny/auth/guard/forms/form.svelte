@@ -1,9 +1,9 @@
 <script lang="ts">
   import Button from '#lib/tiny/button/button.svelte';
   import Center from '#lib/tiny/center.svelte';
-  import type { Field } from '#lib/tiny/fields-2/field.svelte.js';
-  import Fields from '#lib/tiny/fields-2/form/fields.svelte';
+  import type { Field } from '#lib/tiny/fields/field.svelte.js';
   import Actions from '#lib/tiny/form/actions.svelte';
+  import Fields from '#lib/tiny/form/content/fields.svelte';
   import TinyForm from '#lib/tiny/form/form.svelte';
   import Header from '#lib/tiny/form/header.svelte';
 

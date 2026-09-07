@@ -1,4 +1,4 @@
-export const noCloneTag = Symbol('no-clone');
+export const noCloneTag = '_tiny-no-clone' as const;
 
 export const hasNoCloneTag = (obj: unknown) => {
   return typeof obj === 'object' && obj !== null && noCloneTag in obj;
@@ -18,17 +18,4 @@ export const clone = <T>(arg: T): T => {
   } else {
     return arg;
   }
-};
-
-export const hashCodeTag = Symbol('hash-code');
-
-export const hasHashCodeTag = (obj: unknown) => {
-  return typeof obj === 'object' && obj !== null && hashCodeTag in obj;
-};
-
-export const equals = (a: unknown, b: unknown) => {
-  if (hasHashCodeTag(a) && hasHashCodeTag(b)) {
-    return a[hashCodeTag] === b[hashCodeTag];
-  }
-  return a === b;
 };

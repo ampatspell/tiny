@@ -1,14 +1,14 @@
 <script lang="ts">
+  import Button from '#lib/tiny/button/button.svelte';
+  import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+  import { notBlank } from '#lib/tiny/fields/validator.svelte.js';
   import Content from '#lib/tiny/form/content/content.svelte';
+  import Fields from '#lib/tiny/form/content/fields.svelte';
   import Row from '#lib/tiny/form/content/row.svelte';
   import Form from '#lib/tiny/form/form.svelte';
-  import slug from 'slug';
-  import Button from '#lib/tiny/button/button.svelte';
   import Section from '#lib/tiny/page/section.svelte';
   import { images } from '#lib/tiny/utils/utils.js';
-  import { withDataFields } from '#lib/tiny/fields-2/index.svelte.js';
-  import { notBlank } from '#lib/tiny/fields-2/validator.svelte.js';
-  import Fields from '#lib/tiny/fields-2/form/fields.svelte';
+  import slug from 'slug';
 
   const data = {
     name: 'One',

@@ -1,9 +1,9 @@
-import { addFile, addGallery, deleteGallery, updateGallery, type GalleryDetailsData } from './galleries.remote.ts';
-import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
-import type { OmitId } from '#lib/tiny/utils/utils.js';
+import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+import { notBlank } from '#lib/tiny/fields/validator.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { slug } from '#lib/tiny/utils/string.js';
-import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
+import type { OmitId } from '#lib/tiny/utils/utils.js';
+import { addFile, addGallery, deleteGallery, updateGallery, type GalleryDetailsData } from './galleries.remote.ts';
 
 export type UseGalleryModelOptions =
   | {
@@ -20,18 +20,16 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const isNew = $derived(opts.isNew);
   const data = $derived(opts.data);
 
-  const [fields, state] = withDataFields({ data: getter(() => data) }).define(({ string }) => {
+  const model = withDataFields({ data: getter(() => data) }).define(({ string }) => {
     const name = string('name', {
       didUpdate: ({ after }) => {
-        permalink.property.update(slug(after, { replacement: '-' }));
+        model.fields.permalink.update(slug(after, { replacement: '-' }));
       },
       validator: notBlank(),
     });
 
     const permalink = string('permalink', {
-      meta: {
-        description: 'Part after /gallery in public URL',
-      },
+      description: 'Part after /gallery in public URL',
     });
 
     return {
@@ -40,14 +38,16 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     };
   });
 
+  const fields = $derived(model.fields);
+
   const save = async () => {
-    if (state.touch()) {
+    if (model.touch()) {
       let id;
       if (opts.isNew) {
-        const data = state.serialized.all;
+        const data = model.serialized.all;
         id = await addGallery(data);
       } else {
-        const data = state.serialized.dirty;
+        const data = model.serialized.dirty;
         if (data) {
           id = opts.data.id;
           await updateGallery({ id, ...data });
@@ -74,8 +74,8 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   return options(
     {
       isNew: getter(() => isNew),
-      ...fields,
-      ...state.opts,
+      fields,
+      ...model.state,
       save,
       destroy,
       addDemoFile,

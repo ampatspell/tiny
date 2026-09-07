@@ -1,5 +1,5 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
+import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { useFiles } from '#lib/tiny/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { images } from '#lib/tiny/utils/utils.js';
@@ -18,7 +18,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   const broadcast = useBroadcastChannel();
 
-  const [fields, state] = withDataFields({
+  const model = withDataFields({
     data: getter(() => ({
       ...data,
       background: files.asRemote(data.background),
@@ -28,7 +28,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
     description: string('description'),
     background: file('background', { accept: images }),
     backgroundOffset: number('backgroundOffset', {
-      meta: { description: 'Negative values crop the image' },
+      description: 'Negative values crop the image',
     }),
     indexBackgroundColor: color('indexBackgroundColor'),
     indexTextColor: color('indexTextColor'),
@@ -37,8 +37,8 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   }));
 
   const save = async () => {
-    if (state.touch()) {
-      const dirty = state.serialized.dirty;
+    if (model.touch()) {
+      const dirty = model.serialized.dirty;
       if (dirty) {
         await updateIndex(dirty);
         broadcast.notifyDidSave();
@@ -47,10 +47,12 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
     }
   };
 
+  const fields = $derived(model.fields);
+
   return options(
     {
-      ...fields,
-      ...state.opts,
+      fields,
+      ...model.state,
       save,
     },
     {

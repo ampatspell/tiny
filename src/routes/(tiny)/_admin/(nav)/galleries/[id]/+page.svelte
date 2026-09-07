@@ -23,7 +23,7 @@
 <Editing {layout}>
   <Section>
     <Form size="regular">
-      <Fields properties={model} />
+      <Fields {model} />
     </Form>
   </Section>
   <Section title="Photographs" height="fill">

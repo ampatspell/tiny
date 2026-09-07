@@ -1,4 +1,3 @@
-import { hashCodeTag } from '#lib/tiny/properties/property.svelte.js';
 import type { FileData, VariantData } from './server/files/files.ts';
 import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
 import { defer } from './utils/promise.ts';
@@ -6,7 +5,10 @@ import { createContext } from 'svelte';
 import { useTiny } from './entrypoint/tiny.svelte.ts';
 import type { Size } from './utils/utils.ts';
 import { sortedBy } from './utils/array.ts';
-import { noCloneTag } from './fields-2/utils.svelte.ts';
+import { hashCodeTag } from './utils/hash-code.ts';
+import { noCloneTag } from './utils/clone.ts';
+
+export { hashCodeTag, noCloneTag };
 
 const createRemoteVariant = (
   _opts: OptionsInput<{

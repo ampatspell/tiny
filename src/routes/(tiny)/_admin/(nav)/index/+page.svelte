@@ -18,6 +18,6 @@
 
 <Editing {layout}>
   <Section>
-    <Form properties={model} />
+    <Form {model} />
   </Section>
 </Editing>

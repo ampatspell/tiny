@@ -28,7 +28,7 @@
 <Card>
   <Form>
     <Header title="New gallery" />
-    <Fields {properties} />
+    <Fields model={properties} />
     <Actions>
       <Button label="Cancel" onClick={onCancel} />
       <Busy label="Add" onClick={onSave} />

@@ -5,21 +5,18 @@
   import Row from '#lib/tiny/form/content/row.svelte';
   import type { GalleryModel } from './gallery.svelte.ts';
 
-  let { properties }: { properties: GalleryModel } = $props();
+  let { model }: { model: GalleryModel } = $props();
+
+  const fields = $derived(model.fields);
 
   let onClick = () => {
-    properties.addDemoFile();
+    model.addDemoFile();
   };
 </script>
 
 <Content>
-  <Fields field={properties.name} />
-  <Fields field={properties.permalink} />
-
-  <!-- {#each properties.files.items as properties}
-    <Fields field={properties.name} />
-  {/each} -->
-
+  <Fields field={fields.name} />
+  <Fields field={fields.permalink} />
   <Row>
     <Button label="Add file" {onClick} />
   </Row>

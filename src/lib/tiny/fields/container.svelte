@@ -1,25 +1,26 @@
-<script lang="ts">
+<script lang="ts" generics="T">
   import type { Snippet } from 'svelte';
   import TablerInfoCircle from '#lib/tiny/icons/tabler--info-circle.svelte';
-  import Tooltip from '../floating/tooltip.svelte';
-  import Icon from '../icon.svelte';
-  import type { Field } from './utils.svelte.ts';
+  import type { Field } from './field.svelte.ts';
+  import Tooltip from '#lib/tiny/floating/tooltip.svelte';
+  import Icon from '#lib/tiny/icon.svelte';
+  import type { Data } from './index.svelte.ts';
 
   let {
     field,
     children,
   }: {
-    field: Field;
+    field: Field<Data, T>;
     children?: Snippet;
   } = $props();
 
-  let label = $derived(field.meta.label);
-  let isRequired = $derived(field.meta.isRequired);
-  let description = $derived(field.meta.description);
-  let error = $derived(field.property.touched.error);
+  let label = $derived(field.label);
+  let isRequired = $derived(field.isRequired);
+  let description = $derived(field.description);
+  let error = $derived(field.touched.error);
 </script>
 
-<div class="property">
+<div class="field">
   {#if label}
     <div class="header">
       <div class="content">
@@ -44,7 +45,7 @@
 </div>
 
 <style lang="scss">
-  .property {
+  .field {
     flex: 1;
     display: flex;
     flex-direction: column;
