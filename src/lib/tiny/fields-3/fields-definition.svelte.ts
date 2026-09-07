@@ -36,5 +36,5 @@ export class FieldsDefinition<D extends Data = Data> {
 }
 
 export const withDataFields = <D extends Data = Data>(...opts: ConstructorParameters<typeof FieldsDefinition<D>>) => {
-  return new FieldsDefinition<D>(...opts);
+  return new FieldsDefinition(...opts);
 };

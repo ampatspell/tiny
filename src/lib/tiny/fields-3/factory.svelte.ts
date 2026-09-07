@@ -1,5 +1,6 @@
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
-import type { NumberKey, StringKey } from '../utils/utils.ts';
+import type { ArrayKey, NumberKey, StringKey } from '../utils/utils.ts';
+import { ArrayFieldDefinition } from './array-field.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
 import type { BaseFieldDefinitionOptions } from './field-definition.svelte.ts';
 import { NumberFieldDefinition } from './number-field.svelte.ts';
@@ -34,4 +35,9 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
   readonly number = <K extends NumberKey<D>>(key: K, opts?: OptionsInput<BaseFieldDefinitionOptions>) => {
     return new NumberFieldDefinition({ key, ...this.base, ...opts });
   };
+  readonly array = <K extends ArrayKey<D, Data>>(key: K, opts?: OptionsInput<BaseFieldDefinitionOptions>) => {
+    return new ArrayFieldDefinition<InferArrayFieldType<D[K]>>({ key, ...this.base, ...opts });
+  };
 }
+
+export type InferArrayFieldType<T> = T extends (infer E)[] ? (E extends Data ? E : never) : never;
