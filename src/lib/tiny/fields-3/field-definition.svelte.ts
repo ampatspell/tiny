@@ -14,15 +14,15 @@ export type FieldDefinitionOptions = {
   key: string;
 } & BaseFieldDefinitionOptions;
 
-export abstract class FieldDefinition {
-  private readonly opts: FieldDefinitionOptions;
+export abstract class FieldDefinition<O extends FieldDefinitionOptions = FieldDefinitionOptions> {
+  private readonly opts: O;
 
   readonly context = $derived.by(() => this.opts.context);
   readonly key = $derived.by(() => this.opts.key);
   readonly label = $derived.by(() => this.opts.label ?? sentenceCase(this.key));
   readonly description = $derived.by(() => this.opts.description);
 
-  constructor(opts: OptionsInput<FieldDefinitionOptions>) {
+  constructor(opts: OptionsInput<O>) {
     this.opts = options(opts);
   }
 

@@ -7,8 +7,12 @@ export type FieldOptions<FD extends FieldDefinition> = {
   data: Data;
 };
 
-export abstract class Field<T = unknown, FD extends FieldDefinition = FieldDefinition> {
-  private readonly opts: FieldOptions<FD>;
+export abstract class Field<
+  T = unknown,
+  FD extends FieldDefinition = FieldDefinition,
+  O extends FieldOptions<FD> = FieldOptions<FD>,
+> {
+  private readonly opts: O;
   private readonly parent = $derived.by(() => this.opts.data);
 
   readonly definition = $derived.by(() => this.opts.definition);
@@ -20,7 +24,7 @@ export abstract class Field<T = unknown, FD extends FieldDefinition = FieldDefin
   readonly description = $derived.by(() => this.definition.description);
   readonly isValid = $derived.by(() => !this.error);
 
-  constructor(opts: OptionsInput<FieldOptions<FD>>) {
+  constructor(opts: OptionsInput<O>) {
     this.opts = options(opts);
   }
 
