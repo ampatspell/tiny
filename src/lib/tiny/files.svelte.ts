@@ -6,6 +6,7 @@ import { noCloneTag } from './utils/clone.ts';
 import { hashCodeTag } from './utils/equals.ts';
 import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
 import { defer } from './utils/promise.ts';
+import { basename as _basename } from './utils/string.ts';
 import type { Size } from './utils/utils.ts';
 
 export { hashCodeTag, noCloneTag };
@@ -48,6 +49,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
   const { data, files } = opts;
   const id = $derived(data.id);
   const name = $derived(data.name);
+  const basename = $derived(_basename(data.name));
 
   const variants = $derived(
     data.variants.map((data) =>
@@ -113,6 +115,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
       variant,
       id: getter(() => id),
       name: getter(() => name),
+      basename: getter(() => basename),
       contentType: getter(() => contentType),
       size: getter(() => size),
       isImage: getter(() => isImage),
@@ -139,6 +142,7 @@ export type CreateLocalFileOptions = { file: File };
 const createLocalFile = ({ data }: { data: CreateLocalFileOptions; files: FilesContext }) => {
   const file = data.file;
   const name = file.name;
+  const basename = _basename(name);
   const contentType = file.type;
   const size = file.size;
 
@@ -167,6 +171,7 @@ const createLocalFile = ({ data }: { data: CreateLocalFileOptions; files: FilesC
       data: undefined,
       variant,
       name,
+      basename,
       contentType,
       size,
       url: getter(() => url),

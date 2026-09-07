@@ -58,7 +58,7 @@
       picked.models.forEach((file) =>
         field.add({
           file,
-          name: file.name,
+          name: file.basename,
         }),
       );
     }

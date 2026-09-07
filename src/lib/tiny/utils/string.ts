@@ -30,3 +30,11 @@ export const aan = (string: string) => {
   const an = aeiou.includes(string.toLowerCase()[0]);
   return an ? 'an' : 'a';
 };
+
+export const basename = (string: string) => {
+  const idx = string.indexOf('.');
+  if (idx !== -1) {
+    return string.substring(0, idx);
+  }
+  return string;
+};
