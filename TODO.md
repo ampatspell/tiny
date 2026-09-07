@@ -1,8 +1,9 @@
 ## TODO
 
+- [ ] Fields: Simplify types
+- [ ] Fields: Arrays
 - [ ] Defaults for `handleError`
 - [ ] Unsaved changes warning dialog
-- [ ] Editable arrays of entries like files with descriptions or whatever
 - [ ] Server validation errors in forms
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Users section with form to change password, role
