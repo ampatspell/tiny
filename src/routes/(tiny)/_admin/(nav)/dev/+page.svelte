@@ -26,6 +26,6 @@
 
 {ff.hamsters.data}
 {ff.name.data}
-{ff.nicknames.data}
+{ff.nicknames.data[0]?.nickname}
 
 <Json data={fields.serialized} />
