@@ -60,7 +60,7 @@ export class NumberFieldDefinition<D extends Data> extends InputFieldDefinition<
   NumberField<D>,
   NumberFieldDefinitionOptions
 > {
-  buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<number>>) {
+  valueField(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<number>>) {
     const { fallback, type } = this.raw;
     return new NumberField<D>({
       ...opts,

@@ -21,7 +21,7 @@ export abstract class BaseStringFieldDefinition<D extends Data> extends InputFie
   BaseStringField<D>,
   BaseStringFieldDefinitionOptions
 > {
-  protected buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>>) {
+  protected valueField(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>>) {
     const { type } = this.raw;
     return this.buildStringImpl({ ...opts, type });
   }

@@ -1,7 +1,7 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { isTruthy } from '../utils/array.ts';
 import { FieldDefinition, type FieldDefinitionBuildOptions, type FieldDefinitionOptions } from './definition.svelte.ts';
-import { FieldDefinitions, type FieldDefinitionsRecord } from './definitions.svelte.ts';
+import { FieldsDefinition, type FieldsDefinitionRecord } from './definitions.svelte.ts';
 import type { Factory } from './factory.svelte.ts';
 import { Field, type FieldOptions } from './field.svelte.ts';
 import type { Serialized } from './fields.svelte.ts';
@@ -9,9 +9,9 @@ import type { Data } from './index.svelte.ts';
 
 export type Entry = Data & { id?: string };
 
-export type ArrayFieldItemOptions<N extends Entry, FDR extends FieldDefinitionsRecord<N>> = {
+export type ArrayFieldItemOptions<N extends Entry, FDR extends FieldsDefinitionRecord<N>> = {
   data: N;
-  definitions: FieldDefinitions<N, FDR>;
+  definitions: FieldsDefinition<N, FDR>;
   isNew: boolean;
   delete: (item: ArrayFieldItem) => void;
 };
@@ -31,12 +31,12 @@ export type SerializedArrayItem<D> =
 
 export type SerializedItemForDefinition<
   N extends Entry = Entry,
-  FDR extends FieldDefinitionsRecord<N> = FieldDefinitionsRecord<N>,
-> = SerializedArrayItem<Serialized<N, FieldDefinitions<N, FDR>>>;
+  FDR extends FieldsDefinitionRecord<N> = FieldsDefinitionRecord<N>,
+> = SerializedArrayItem<Serialized<N, FieldsDefinition<N, FDR>>>;
 
 export class ArrayFieldItem<
   N extends Entry = Entry,
-  FDR extends FieldDefinitionsRecord<N> = FieldDefinitionsRecord<N>,
+  FDR extends FieldsDefinitionRecord<N> = FieldsDefinitionRecord<N>,
 > {
   private readonly opts: ArrayFieldItemOptions<N, FDR>;
   private readonly definitions = $derived.by(() => this.opts.definitions);
@@ -58,7 +58,7 @@ export class ArrayFieldItem<
     if (this.isDeleted) {
       const id = this.data.id;
       if (!id) {
-        throw new Error('Id is required for deleted items');
+        throw new Error('id property is required for deleted items');
       }
       return {
         state: 'deleted',
@@ -72,7 +72,7 @@ export class ArrayFieldItem<
     } else {
       const id = this.data.id;
       if (!id) {
-        throw new Error('Id is required for updated items');
+        throw new Error('id property is required for updated items');
       }
       const dirty = this.fields.serialized.dirty;
       if (dirty) {
@@ -102,14 +102,14 @@ export class ArrayFieldItem<
   }
 }
 
-export type ArrayFieldOptions<D extends Data, N extends Entry, FDR extends FieldDefinitionsRecord<N>> = FieldOptions<
+export type ArrayFieldOptions<D extends Data, N extends Entry, FDR extends FieldsDefinitionRecord<N>> = FieldOptions<
   D,
   N[]
 > & {
-  definitions: FieldDefinitions<N, FDR>;
+  definitions: FieldsDefinition<N, FDR>;
 };
 
-export class ArrayField<D extends Data, N extends Entry, FDR extends FieldDefinitionsRecord<N>> extends Field<
+export class ArrayField<D extends Data, N extends Entry, FDR extends FieldsDefinitionRecord<N>> extends Field<
   D,
   N[],
   SerializedItemForDefinition<N, FDR>[],
@@ -165,10 +165,10 @@ export type ArrayFieldDefinitionOptions<N extends Data, FDR> = FieldDefinitionOp
 export class ArrayFieldDefinition<
   D extends Data,
   N extends Data,
-  FDR extends FieldDefinitionsRecord<N>,
+  FDR extends FieldsDefinitionRecord<N>,
 > extends FieldDefinition<D, N[], ArrayField<D, N, FDR>, ArrayFieldDefinitionOptions<N, FDR>> {
   readonly definitions = $derived.by(() => {
-    return new FieldDefinitions<N, FDR>({
+    return new FieldsDefinition<N, FDR>({
       context: getter(() => this.opts.context),
       cb: getter(() => this.opts.cb),
     });

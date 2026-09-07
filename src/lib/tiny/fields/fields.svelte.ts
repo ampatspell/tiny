@@ -1,18 +1,18 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { FieldsContext } from './context.svelte.ts';
 import type {
-  FieldDefinitions,
+  FieldsDefinition,
   InferFieldsFromDefinitions,
   InferFieldsRecordFromDefinition,
 } from './definitions.svelte.ts';
 import type { Field } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
-export type Serialized<D extends Data, FD extends FieldDefinitions<D>> = {
+export type Serialized<D extends Data, FD extends FieldsDefinition<D>> = {
   [K in keyof InferFieldsRecordFromDefinition<D, FD>]: InferFieldsRecordFromDefinition<D, FD>[K]['serialized'];
 };
 
-class SerializedFields<D extends Data, FD extends FieldDefinitions<D>> {
+class SerializedFields<D extends Data, FD extends FieldsDefinition<D>> {
   constructor(private readonly fields: Fields<D, FD>) {}
 
   private filtered(filter: (field: Field) => boolean) {
@@ -45,7 +45,7 @@ export type FieldsOptions<D, FD> = {
   definitions: FD;
 };
 
-export class Fields<D extends Data, FD extends FieldDefinitions<D>> {
+export class Fields<D extends Data, FD extends FieldsDefinition<D>> {
   private readonly opts: FieldsOptions<D, FD>;
 
   readonly context = $derived.by(() => this.opts.context);

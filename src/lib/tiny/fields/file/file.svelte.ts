@@ -43,7 +43,7 @@ export class FileFieldDefinition<D extends Data> extends ValueFieldDefinition<
   FileField<D>,
   FileFieldDefinitionOptions
 > {
-  buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<Type>>): FileField<D> {
+  valueField(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<Type>>): FileField<D> {
     const { accept } = this.raw;
     return new FileField<D>({ ...opts, accept });
   }

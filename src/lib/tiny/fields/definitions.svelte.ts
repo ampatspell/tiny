@@ -6,7 +6,7 @@ import { Factory } from './factory.svelte.ts';
 import { Fields } from './fields.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
-export type FieldDefinitionsRecord<D extends Data = Data> = Record<string, FieldDefinition<D, Any, Any> | undefined>;
+export type FieldsDefinitionRecord<D extends Data = Data> = Record<string, FieldDefinition<D, Any, Any> | undefined>;
 
 export type InferFieldFromDefinition<D extends FieldDefinition<Any, Any, Any> | undefined> = D extends undefined
   ? undefined
@@ -14,24 +14,22 @@ export type InferFieldFromDefinition<D extends FieldDefinition<Any, Any, Any> | 
     ? F
     : never;
 
-export type InferFieldsFromDefinitions<R extends FieldDefinitionsRecord> = {
+export type InferFieldsFromDefinitions<R extends FieldsDefinitionRecord> = {
   [K in keyof R]: InferFieldFromDefinition<R[K]>;
 };
 
 export type InferFieldsRecordFromDefinition<
   D extends Data = Data,
-  FD extends FieldDefinitions<D> = FieldDefinitions<D>,
+  FD extends FieldsDefinition<D> = FieldsDefinition<D>,
 > = InferFieldsFromDefinitions<FD['record']>;
 
-export type FieldDefinitionsOptions<D extends Data, R> = {
+export type FieldsDefinitionOptions<D extends Data, R> = {
   context: FieldsContext;
   cb: (factory: Factory<D>) => R;
 };
 
-export type InferDataFromFieldDefinitions<FDS> = FDS extends FieldDefinitions<infer D> ? D : never;
-
-export class FieldDefinitions<D extends Data = Data, R extends FieldDefinitionsRecord<D> = FieldDefinitionsRecord<D>> {
-  private readonly opts: FieldDefinitionsOptions<D, R>;
+export class FieldsDefinition<D extends Data = Data, R extends FieldsDefinitionRecord<D> = FieldsDefinitionRecord<D>> {
+  private readonly opts: FieldsDefinitionOptions<D, R>;
 
   readonly context = $derived.by(() => this.opts.context);
 
@@ -43,7 +41,7 @@ export class FieldDefinitions<D extends Data = Data, R extends FieldDefinitionsR
 
   readonly record = $derived.by(() => this.opts.cb(this.factory));
 
-  constructor(opts: OptionsInput<FieldDefinitionsOptions<D, R>>) {
+  constructor(opts: OptionsInput<FieldsDefinitionOptions<D, R>>) {
     this.opts = options(opts);
   }
 

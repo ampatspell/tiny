@@ -2,7 +2,7 @@ import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svel
 import type { Any, ArrayKey, FileKey, NumberKey, StringKey } from '#lib/tiny/utils/utils.js';
 import { ArrayFieldDefinition } from './array.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
-import type { FieldDefinitionsRecord } from './definitions.svelte.ts';
+import type { FieldsDefinitionRecord } from './definitions.svelte.ts';
 import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file/file.svelte.ts';
 import type { Data } from './index.svelte.ts';
 import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from './input/number.svelte.ts';
@@ -51,7 +51,7 @@ export class Factory<D extends Data> {
 
   readonly array = <
     K extends ArrayKey<D, Data>,
-    FDR extends FieldDefinitionsRecord<N>,
+    FDR extends FieldsDefinitionRecord<N>,
     N extends ArrayNestedData<D, K>,
   >(
     key: K,

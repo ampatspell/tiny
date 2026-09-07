@@ -74,10 +74,10 @@ export abstract class ValueFieldDefinition<
   F extends ValueField<D, T>,
   O extends ValueFieldDefinitionOptions<T> = ValueFieldDefinitionOptions<T>,
 > extends FieldDefinition<D, T, F, O> {
-  protected abstract buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<T>>): F;
+  protected abstract valueField(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<T>>): F;
 
   field(opts: OptionsInput<FieldDefinitionBuildOptions<D>>): F {
-    return this.buildImpl({
+    return this.valueField({
       ...opts,
       willUpdate: getter(() => this.opts.willUpdate),
       didUpdate: getter(() => this.opts.didUpdate),
