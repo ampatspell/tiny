@@ -1,6 +1,6 @@
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { page } from '$app/state';
 import type { ResolvedPathname } from '$app/types';
-import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Component } from 'svelte';
 
 export type Comparator = (current: string, route: string) => boolean;

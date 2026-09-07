@@ -1,8 +1,8 @@
-// @ts-expect-error missing type atm
-import { STORAGE_ROOT, USERS_SECRET } from '$app/env/private';
 import { jpeg } from '#lib/tiny/server/files/thumbnails.js';
 import { createHandle } from '#lib/tiny/server/services/handle.js';
 import { createBasicLogger } from '#lib/tiny/server/utils.js';
+// @ts-expect-error missing type atm
+import { STORAGE_ROOT, USERS_SECRET } from '$app/env/private';
 import { sequence, type HandleServerError } from '@sveltejs/kit/hooks';
 import { NoResultError } from 'kysely';
 

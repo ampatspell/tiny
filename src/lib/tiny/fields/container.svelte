@@ -1,9 +1,9 @@
 <script lang="ts" generics="T">
-  import type { Snippet } from 'svelte';
-  import TablerInfoCircle from '#lib/tiny/icons/tabler--info-circle.svelte';
-  import type { Field } from './field.svelte.ts';
   import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import Icon from '#lib/tiny/icon.svelte';
+  import TablerInfoCircle from '#lib/tiny/icons/tabler--info-circle.svelte';
+  import type { Snippet } from 'svelte';
+  import type { Field } from './field.svelte.ts';
   import type { Data } from './index.svelte.ts';
 
   let {

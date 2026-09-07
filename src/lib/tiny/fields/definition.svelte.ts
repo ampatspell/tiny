@@ -1,9 +1,9 @@
 import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Any } from '#lib/tiny/utils/utils.js';
 import { sentenceCase } from 'text-sentence-case';
+import type { FieldsContext } from './context.svelte.ts';
 import type { Field } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';
-import type { FieldsContext } from './context.svelte.ts';
 
 export type FieldDefinitionOptions = {
   context: FieldsContext;

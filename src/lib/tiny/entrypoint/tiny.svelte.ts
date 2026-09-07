@@ -1,9 +1,9 @@
+import type { ResolvedPathname } from '$app/types';
 import { createContext } from 'svelte';
-import { options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { ValidateFunction } from '../auth/guard/validate.svelte.ts';
 import { setBroadcastChannel } from '../broadcast.svelte.ts';
-import type { ResolvedPathname } from '$app/types';
 import { setFiles } from '../files.svelte.ts';
+import { options, type OptionsInput } from '../utils/options.svelte.ts';
 
 export type CreateTinyOptions = {
   guard?: ValidateFunction | undefined;

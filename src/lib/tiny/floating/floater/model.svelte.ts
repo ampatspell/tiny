@@ -1,7 +1,7 @@
-import type { FloaterOpenOptions } from '../floaters/model.svelte.ts';
+import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { defer, type Deferred } from '#lib/tiny/utils/promise.js';
 import { type Any } from '#lib/tiny/utils/utils.js';
-import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { FloaterOpenOptions } from '../floaters/model.svelte.ts';
 
 export type FloaterOptions<Req, Res> = FloaterOpenOptions<Req, Res> & {
   onClosed: (floater: Floater<Req, Res>) => void;

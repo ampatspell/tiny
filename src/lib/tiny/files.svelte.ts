@@ -1,12 +1,12 @@
-import type { FileData, VariantData } from './server/files/files.ts';
-import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
-import { defer } from './utils/promise.ts';
 import { createContext } from 'svelte';
 import { useTiny } from './entrypoint/tiny.svelte.ts';
-import type { Size } from './utils/utils.ts';
+import type { FileData, VariantData } from './server/files/files.ts';
 import { sortedBy } from './utils/array.ts';
-import { hashCodeTag } from './utils/hash-code.ts';
 import { noCloneTag } from './utils/clone.ts';
+import { hashCodeTag } from './utils/equals.ts';
+import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
+import { defer } from './utils/promise.ts';
+import type { Size } from './utils/utils.ts';
 
 export { hashCodeTag, noCloneTag };
 

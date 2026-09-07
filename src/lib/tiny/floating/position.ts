@@ -1,7 +1,7 @@
 import { browser } from '$app/env';
 import {
-  flip,
   offset as _offset,
+  flip,
   shift,
   type ComputePositionConfig,
   type Middleware,

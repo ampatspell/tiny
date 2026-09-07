@@ -1,8 +1,8 @@
 <script lang="ts" generics="M extends Model">
-  import { goto } from '$app/navigation';
   import { useFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
   import { confirm } from '#lib/tiny/floating/layout/confirmation.svelte';
   import TablerTrashX from '#lib/tiny/icons/tabler--trash-x.svelte';
+  import { goto } from '$app/navigation';
   import type { EditingLayout, Model } from '../layout.svelte.ts';
   import Light from './light.svelte';
 

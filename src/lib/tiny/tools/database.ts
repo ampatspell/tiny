@@ -1,10 +1,10 @@
-import { generate as generateSchema, SqliteDialect as CodegenSqliteDialect } from 'kysely-codegen';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { FileMigrationProvider, Migrator } from 'kysely/migration';
-import { run } from '../utils/utils.ts';
 import { log, outro } from '@clack/prompts';
 import type { Kysely } from 'kysely';
+import { SqliteDialect as CodegenSqliteDialect, generate as generateSchema } from 'kysely-codegen';
+import { FileMigrationProvider, Migrator } from 'kysely/migration';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { run } from '../utils/utils.ts';
 
 export type CreateDatabaseToolsOptions = {
   db: Kysely<unknown>;

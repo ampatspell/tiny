@@ -1,6 +1,6 @@
 import { getter, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { clone } from '../utils/clone.ts';
-import { equals } from '../utils/hash-code.ts';
+import { equals } from '../utils/equals.ts';
 import { FieldDefinition, type FieldDefinitionBuildOptions, type FieldDefinitionOptions } from './definition.svelte.ts';
 import { Field, type FieldOptions } from './field.svelte.ts';
 import type { Data } from './index.svelte.ts';

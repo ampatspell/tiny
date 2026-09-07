@@ -1,10 +1,10 @@
 <script lang="ts">
+  import { useFiles, type LocalFile, type UniversalFile } from '../files.svelte.ts';
   import { useFloaters } from '../floating/floaters/model.svelte.ts';
   import { dropdown, type DropdownItem } from '../floating/layout/dropdown.svelte';
   import { mouse } from '../floating/position.ts';
   import TablerCircleX from '../icons/tabler--circle-x.svelte';
   import TablerPhoto from '../icons/tabler--photo.svelte';
-  import { useFiles, type LocalFile, type UniversalFile } from '../files.svelte.ts';
   import { round } from '../utils/number.ts';
   import { px } from '../utils/style.ts';
   import Blank from './blank.svelte';

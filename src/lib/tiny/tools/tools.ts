@@ -3,10 +3,10 @@ import { copy, exists } from 'fs-extra';
 import { readdir, realpath, writeFile } from 'node:fs/promises';
 import { join, parse, resolve } from 'node:path';
 import { x } from 'tinyexec';
-import { loadPackageJSON } from './utils.ts';
-import { createConsumerProjectImpl, createProject, createTinyProjectImpl, type Project } from './project.ts';
-import { bootstrapProject, generateMigrationFile } from './generate.ts';
 import { createDatabaseTools } from './database.ts';
+import { bootstrapProject, generateMigrationFile } from './generate.ts';
+import { createConsumerProjectImpl, createProject, createTinyProjectImpl, type Project } from './project.ts';
+import { loadPackageJSON } from './utils.ts';
 
 const findRoot = async (current: string) => {
   if (await exists(join(current, 'package.json'))) {
