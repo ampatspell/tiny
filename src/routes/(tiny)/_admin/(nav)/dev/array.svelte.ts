@@ -43,6 +43,7 @@ export class ArrayField<D extends Data, N extends Data, FDR extends FieldDefinit
   private _items = $derived(this.externals());
   readonly items = $derived(this._items);
   readonly serialized = $derived({});
+  readonly editor = undefined;
 
   readonly isRequired = false;
   readonly error = undefined;

@@ -50,7 +50,7 @@ export abstract class Field<
   abstract readonly isDirty: boolean;
   abstract readonly error: string | undefined;
   abstract readonly serialized: S;
-  abstract readonly editor: Component<{ field: Any }>; // TODO: type
+  abstract readonly editor: Component<{ field: Any }> | undefined; // TODO: type
   abstract rollback(): void;
 
   readonly fields: Field[] = $derived([this]);
