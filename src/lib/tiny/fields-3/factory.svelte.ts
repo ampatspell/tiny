@@ -32,9 +32,14 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
     return new StringFieldDefinition({ key, ...this.base, ...opts });
   };
 
+  // TODO: color
+
   readonly number = <K extends NumberKey<D>>(key: K, opts?: OptionsInput<BaseFieldDefinitionOptions>) => {
     return new NumberFieldDefinition({ key, ...this.base, ...opts });
   };
+
+  // TODO: file
+
   readonly array = <K extends ArrayKey<D, Data>>(key: K, opts?: OptionsInput<BaseFieldDefinitionOptions>) => {
     return new ArrayFieldDefinition<InferArrayFieldType<D[K]>>({ key, ...this.base, ...opts });
   };
