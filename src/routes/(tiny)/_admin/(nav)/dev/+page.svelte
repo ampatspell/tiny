@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { withDataFields } from '#lib/tiny/fields-3/index.svelte.js';
+  import { withDataFields } from '#lib/tiny/fields-3/fields-definition.svelte.js';
   import Json from '#lib/tiny/json.svelte';
 
   let fields = withDataFields({ data: { name: 'duck', hamsters: 5 } }).define(({ string, number }) => {
