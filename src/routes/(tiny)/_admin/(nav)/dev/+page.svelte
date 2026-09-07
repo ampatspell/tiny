@@ -1,5 +1,8 @@
 <script lang="ts">
   import { withDataFields } from '#lib/tiny/fields-3/fields-definition.svelte.js';
+  import Content from '#lib/tiny/form/content/content.svelte';
+  import Row from '#lib/tiny/form/content/row.svelte';
+  import Form from '#lib/tiny/form/form.svelte';
   import Json from '#lib/tiny/json.svelte';
 
   let fields = withDataFields({
@@ -24,8 +27,11 @@
   let ff = fields.record;
 </script>
 
-{ff.hamsters.data}
-{ff.name.data}
-{ff.nicknames.data[0]?.nickname}
-
-<Json data={fields.serialized} />
+<Form>
+  <Content>
+    <Row>{ff.hamsters.data}</Row>
+    <Row>{ff.name.data}</Row>
+    <Row>{ff.nicknames.data[0]?.nickname}</Row>
+    <Row><Json data={fields.serialized} /></Row>
+  </Content>
+</Form>
