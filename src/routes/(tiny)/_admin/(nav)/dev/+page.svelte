@@ -29,7 +29,7 @@
     return {
       name: string('name', {
         didUpdate: ({ after }) => {
-          model.record.permalink.update(slug(after, { replacement: '-' }));
+          model.fields.permalink.update(slug(after, { replacement: '-' }));
         },
         validator: notBlank(),
       }),
@@ -44,7 +44,7 @@
     };
   });
 
-  const fields = $derived(model.record);
+  const fields = $derived(model.fields);
 
   const onSave = () => {
     if (model.touch()) {
@@ -74,7 +74,7 @@
         <Fields field={file.record.name} />
       {/each}
       <Row>
-        <Button label="Add" onClick={() => model.record.files.add({ name: 'New' })} />
+        <Button label="Add" onClick={() => model.fields.files.add({ name: 'New' })} />
       </Row>
     </Content>
   </Form>

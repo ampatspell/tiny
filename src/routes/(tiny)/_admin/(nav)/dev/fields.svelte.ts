@@ -17,7 +17,7 @@ class SerializedFields<D extends Data, FD extends FieldDefinitions<D>> {
 
   private filtered(filter: (field: Field) => boolean) {
     const output = {} as Partial<Serialized<D, FD>>;
-    const record = this.fields.record;
+    const record = this.fields.fields;
     for (const key in record) {
       const field = record[key] as Field;
       if (filter(field)) {
@@ -53,7 +53,7 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>> {
   readonly definitions = $derived.by(() => this.opts.definitions);
   readonly serialized = $derived(new SerializedFields<D, FD>(this));
 
-  readonly record = $derived.by(() => {
+  readonly fields = $derived.by(() => {
     const record: Record<string, unknown> = {};
     const definitions = this.definitions.record;
     const data = getter(() => this.data);
@@ -70,13 +70,13 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>> {
   });
 
   readonly all = $derived.by(() => {
-    const fields: Field[] = [];
-    const record = this.record;
-    for (const key in record) {
-      const field = record[key] as Field;
-      fields.push(...field.fields);
+    const all: Field[] = [];
+    const fields = this.fields;
+    for (const key in fields) {
+      const field = fields[key] as Field;
+      all.push(...field.fields);
     }
-    return fields;
+    return all;
   });
 
   constructor(opts: OptionsInput<FieldsOptions<D, FD>>) {

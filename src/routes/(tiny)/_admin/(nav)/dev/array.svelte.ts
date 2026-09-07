@@ -19,7 +19,7 @@ export class ArrayFieldItem<N extends Data, FDR extends FieldDefinitionsRecord<N
       data: getter(() => this.data),
     });
   });
-  readonly record = $derived(this.fields.record);
+  readonly record = $derived(this.fields.fields);
 
   constructor(opts: OptionsInput<ArrayFieldItemOptions<N, FDR>>) {
     this.opts = options(opts);
