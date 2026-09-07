@@ -23,7 +23,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const model = withDataFields({ data: getter(() => data) }).define(({ string }) => {
     const name = string('name', {
       didUpdate: ({ after }) => {
-        model.fields.permalink.update(slug(after, { replacement: '-' }));
+        model.record.permalink.update(slug(after, { replacement: '-' }));
       },
       validator: notBlank(),
     });
@@ -38,7 +38,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     };
   });
 
-  const fields = $derived(model.fields);
+  const fields = $derived(model.record);
 
   const save = async () => {
     if (model.touch()) {

@@ -21,32 +21,36 @@ export abstract class BaseStringFieldDefinition<D extends Data> extends InputFie
   BaseStringField<D>,
   BaseStringFieldDefinitionOptions
 > {
-  buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>>) {
+  protected buildImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>>) {
     const { type } = this.raw;
     return this.buildStringImpl({ ...opts, type });
   }
 
-  abstract buildStringImpl(
+  protected abstract buildStringImpl(
     opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>> & OptionsInput<Shared>,
   ): BaseStringField<D>;
 }
 
 export class StringField<D extends Data> extends BaseStringField<D> {
-  readonly editor = InputEditor;
+  protected readonly editor = InputEditor;
 }
 
 export class StringFieldDefinition<D extends Data> extends BaseStringFieldDefinition<D> {
-  buildStringImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>> & OptionsInput<Shared>) {
+  protected buildStringImpl(
+    opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>> & OptionsInput<Shared>,
+  ) {
     return new StringField<D>(opts);
   }
 }
 
 export class ColorField<D extends Data> extends BaseStringField<D> {
-  readonly editor = ColorEditor;
+  protected readonly editor = ColorEditor;
 }
 
 export class ColorFieldDefinition<D extends Data> extends BaseStringFieldDefinition<D> {
-  buildStringImpl(opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>> & OptionsInput<Shared>) {
+  protected buildStringImpl(
+    opts: OptionsInput<FieldDefinitionBuildOptions<D> & Optionals<string>> & OptionsInput<Shared>,
+  ) {
     return new ColorField<D>(opts);
   }
 }

@@ -47,7 +47,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
     }
   };
 
-  const fields = $derived(model.fields);
+  const fields = $derived(model.record);
 
   return options(
     {

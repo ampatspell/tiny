@@ -26,7 +26,7 @@ export const useForm = (opts: {
   };
 
   return {
-    ...model.fields,
+    ...model.record,
     perform,
   };
 };

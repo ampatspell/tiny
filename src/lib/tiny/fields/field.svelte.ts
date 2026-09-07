@@ -32,7 +32,7 @@ export abstract class Field<
   readonly data = $derived.by(() => this.opts.data);
   readonly external = $derived.by(() => this.data[this.key] as T);
 
-  readonly definition = $derived.by(() => this.opts.definition);
+  private readonly definition = $derived.by(() => this.opts.definition);
   readonly context = $derived.by(() => this.definition.context);
   readonly isTouched = $derived(this.context.isTouched);
 
@@ -50,8 +50,8 @@ export abstract class Field<
   abstract readonly isDirty: boolean;
   abstract readonly error: string | undefined;
   abstract readonly serialized: S;
-  abstract readonly editor: Component<{ field: Any }> | undefined; // TODO: type
   abstract rollback(): void;
 
-  readonly fields: Field[] = $derived([this]);
+  protected abstract readonly editor: Component<{ field: Any }> | undefined; // TODO: type
+  protected readonly fields: Field[] = $derived([this]);
 }

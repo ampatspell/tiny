@@ -17,7 +17,7 @@ class SerializedFields<D extends Data, FD extends FieldDefinitions<D>> {
 
   private filtered(filter: (field: Field) => boolean) {
     const output = {} as Partial<Serialized<D, FD>>;
-    const record = this.fields.fields;
+    const record = this.fields.record;
     for (const key in record) {
       const field = record[key] as Field;
       if (filter(field)) {
@@ -50,10 +50,10 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>> {
 
   readonly context = $derived.by(() => this.opts.context);
   readonly data = $derived.by(() => this.opts.data);
-  readonly definitions = $derived.by(() => this.opts.definitions);
+  private readonly definitions = $derived.by(() => this.opts.definitions);
   readonly serialized = $derived(new SerializedFields<D, FD>(this));
 
-  readonly fields = $derived.by(() => {
+  readonly record = $derived.by(() => {
     const record: Record<string, unknown> = {};
     const definitions = this.definitions.record;
     const data = getter(() => this.data);
@@ -69,12 +69,12 @@ export class Fields<D extends Data, FD extends FieldDefinitions<D>> {
     return record as InferFieldsFromDefinitions<FD['record']>;
   });
 
-  readonly all = $derived.by(() => {
+  private readonly all = $derived.by(() => {
     const all: Field[] = [];
-    const fields = this.fields;
+    const fields = this.record;
     for (const key in fields) {
       const field = fields[key] as Field;
-      all.push(...field.fields);
+      all.push(...field['fields']);
     }
     return all;
   });
