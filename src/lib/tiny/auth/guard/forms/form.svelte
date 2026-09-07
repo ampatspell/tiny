@@ -1,9 +1,9 @@
 <script lang="ts">
   import Button from '#lib/tiny/button/button.svelte';
   import Center from '#lib/tiny/center.svelte';
-  import type { InputField } from '#lib/tiny/fields/input/field.svelte.js';
+  import type { Field } from '#lib/tiny/fields-2/field.svelte.js';
+  import Fields from '#lib/tiny/fields-2/form/fields.svelte';
   import Actions from '#lib/tiny/form/actions.svelte';
-  import Fields from '#lib/tiny/form/content/fields.svelte';
   import TinyForm from '#lib/tiny/form/form.svelte';
   import Header from '#lib/tiny/form/header.svelte';
 
@@ -13,7 +13,7 @@
     secondary,
   }: {
     title: string;
-    model: { email: InputField<string>; password: InputField<string>; perform: () => void };
+    model: { email: Field; password: Field; perform: () => void };
     secondary: { label: string; onClick: () => void };
   } = $props();
 </script>

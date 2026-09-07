@@ -6,7 +6,11 @@ import type { FieldDefinitionsRecord } from './definitions.svelte.ts';
 import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file/file.svelte.ts';
 import type { Data } from './index.svelte.ts';
 import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from './input/number.svelte.ts';
-import { StringFieldDefinition, type StringFieldDefinitionOptions } from './input/string.svelte.ts';
+import {
+  ColorFieldDefinition,
+  StringFieldDefinition,
+  type BaseStringFieldDefinitionOptions,
+} from './input/string.svelte.ts';
 
 type ArrayNestedData<D, K extends ArrayKey<D, Data>> = D[K] extends Any[] ? D[K][number] : never;
 type Opts<T> = OptionsInput<Omit<T, 'key' | 'context'>>;
@@ -29,8 +33,12 @@ export class Factory<D extends Data> {
     };
   }
 
-  readonly string = <K extends StringKey<D>>(key: K, opts?: Opts<StringFieldDefinitionOptions>) => {
+  readonly string = <K extends StringKey<D>>(key: K, opts?: Opts<BaseStringFieldDefinitionOptions>) => {
     return new StringFieldDefinition<D>({ key, ...this.defaults, ...opts });
+  };
+
+  readonly color = <K extends StringKey<D>>(key: K, opts?: Opts<BaseStringFieldDefinitionOptions>) => {
+    return new ColorFieldDefinition<D>({ key, ...this.defaults, ...opts });
   };
 
   readonly number = <K extends NumberKey<D>>(key: K, opts?: Opts<NumberFieldDefinitionOptions>) => {

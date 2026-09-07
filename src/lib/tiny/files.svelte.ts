@@ -6,7 +6,7 @@ import { createContext } from 'svelte';
 import { useTiny } from './entrypoint/tiny.svelte.ts';
 import type { Size } from './utils/utils.ts';
 import { sortedBy } from './utils/array.ts';
-import { noCloneTag } from '../../routes/(tiny)/_admin/(nav)/dev/utils.svelte.ts';
+import { noCloneTag } from './fields-2/utils.svelte.ts';
 
 const createRemoteVariant = (
   _opts: OptionsInput<{

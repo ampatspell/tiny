@@ -3,16 +3,17 @@
   import Row from '#lib/tiny/form/content/row.svelte';
   import Form from '#lib/tiny/form/form.svelte';
   import slug from 'slug';
-  import { withDataFields } from './index.svelte.ts';
-  import { notBlank } from './validator.svelte.ts';
   import Button from '#lib/tiny/button/button.svelte';
   import Section from '#lib/tiny/page/section.svelte';
   import { images } from '#lib/tiny/utils/utils.js';
-  import Fields from './fields.svelte';
+  import { withDataFields } from '#lib/tiny/fields-2/index.svelte.js';
+  import { notBlank } from '#lib/tiny/fields-2/validator.svelte.js';
+  import Fields from '#lib/tiny/fields-2/form/fields.svelte';
 
   const data = {
     name: 'One',
     permalink: 'one',
+    color: '#eee',
     position: 0,
     file: undefined,
     files: [
@@ -25,7 +26,7 @@
     ],
   };
 
-  const model = withDataFields({ data }).define(({ string, number, file, array }) => {
+  const model = withDataFields({ data }).define(({ string, color, number, file, array }) => {
     return {
       name: string('name', {
         didUpdate: ({ after }) => {
@@ -33,6 +34,7 @@
         },
         validator: notBlank(),
       }),
+      color: color('color'),
       file: file('file', { accept: images }),
       permalink: string('permalink'),
       position: number('position'),
@@ -60,6 +62,7 @@
   <Form size="wide">
     <Content>
       <Fields field={fields.name} />
+      <Fields field={fields.color} />
       <Fields field={fields.permalink} />
       <Fields field={fields.file} />
       <Fields field={fields.position} />
