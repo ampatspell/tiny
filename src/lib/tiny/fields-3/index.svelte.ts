@@ -1,6 +1,6 @@
 import { sentenceCase } from 'text-sentence-case';
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
-import type { NumberKey, StringKey } from '../utils/utils.ts';
+import type { NumberKey, StringKey, Unpack } from '../utils/utils.ts';
 import { FieldsContext } from './context.svelte.ts';
 
 export type Data = Record<string, unknown>;
@@ -67,11 +67,11 @@ export abstract class FieldDefinition {
     this.opts = options(opts);
   }
 
-  abstract field<D extends Data>(opts: OptionsInput<{ data: D }>): Field;
+  abstract field(opts: OptionsInput<{ data: Data }>): Field;
 }
 
 export class StringFieldDefinition extends FieldDefinition {
-  field<D extends Data>(opts: OptionsInput<{ data: D }>): StringField {
+  field(opts: OptionsInput<{ data: Data }>): StringField {
     return new StringField({
       definition: this,
       ...opts,
@@ -80,7 +80,7 @@ export class StringFieldDefinition extends FieldDefinition {
 }
 
 export class NumberFieldDefinition extends FieldDefinition {
-  field<D extends Data>(opts: OptionsInput<{ data: D }>): NumberField {
+  field(opts: OptionsInput<{ data: Data }>): NumberField {
     return new NumberField({
       definition: this,
       ...opts,
@@ -90,15 +90,15 @@ export class NumberFieldDefinition extends FieldDefinition {
 
 export type InferFieldsDefinitionRecordFromFactory<F> = F extends Factory<Data, infer R> ? R : never;
 
-export type InferFieldsFromDefinitionRecord<R extends Data> = {
+export type InferFieldsFromDefinitionRecord<R extends Data> = Unpack<{
   [K in keyof R]: InferFieldFromDefinition<R[K]>;
-};
+}>;
 
 export type InferFieldFromDefinition<T> = T extends FieldDefinition ? ReturnType<T['field']> : T;
 
-export type InferSerializedFromFieldsRecord<R extends Data> = {
+export type InferSerializedFromFieldsRecord<R extends Data> = Unpack<{
   [K in keyof R]: InferSerializedFromField<R[K]>;
-};
+}>;
 
 export type InferSerializedFromField<T> = T extends Field ? T['serialized'] : T;
 
@@ -210,3 +210,7 @@ export class FieldsDefinition<D extends Data = Data> {
     });
   }
 }
+
+export const withDataFields = <D extends Data = Data>(...opts: ConstructorParameters<typeof FieldsDefinition<D>>) => {
+  return new FieldsDefinition<D>(...opts);
+};

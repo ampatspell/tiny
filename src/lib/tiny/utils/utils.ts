@@ -31,6 +31,10 @@ export type QueryResponse<T extends (...args: Any[]) => Any> =
 
 export type OmitId<T> = Omit<T, 'id'>;
 
+export type Unpack<T> = {
+  [K in keyof T]: Unpack<T[K]>;
+};
+
 export type Size = {
   width: number;
   height: number;
