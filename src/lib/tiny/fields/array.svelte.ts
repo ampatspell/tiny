@@ -4,6 +4,7 @@ import { FieldDefinition, type FieldDefinitionBuildOptions, type FieldDefinition
 import { FieldDefinitions, type FieldDefinitionsRecord } from './definitions.svelte.ts';
 import type { Factory } from './factory.svelte.ts';
 import { Field, type FieldOptions } from './field.svelte.ts';
+import type { Serialized } from './fields.svelte.ts';
 import type { Data } from './index.svelte.ts';
 
 export type Entry = Data & { id?: string };
@@ -14,6 +15,20 @@ export type ArrayFieldItemOptions<N extends Entry, FDR extends FieldDefinitionsR
   isNew: boolean;
   delete: (item: ArrayFieldItem) => void;
 };
+
+export type SerializedItem<N extends Entry = Entry, FDR extends FieldDefinitionsRecord<N> = FieldDefinitionsRecord<N>> =
+  | {
+      state: 'deleted';
+      id: string;
+    }
+  | ({
+      state: 'updated';
+      id: string;
+    } & Partial<Serialized<N, FieldDefinitions<N, FDR>>>)
+  | ({
+      state: 'added';
+    } & Serialized<N, FieldDefinitions<N, FDR>>)
+  | undefined;
 
 export class ArrayFieldItem<
   N extends Entry = Entry,
@@ -35,45 +50,32 @@ export class ArrayFieldItem<
   readonly data = $derived.by(() => this.opts.data);
   readonly record = $derived(this.fields.record);
 
-  readonly serialized = $derived.by(() => {
+  readonly serialized = $derived.by<SerializedItem<N, FDR>>(() => {
     if (this.isDeleted) {
       const id = this.data.id;
-      const state = 'deleted';
-      if (id) {
-        return {
-          id,
-          state,
-        };
-      } else {
-        const all = this.fields.serialized.all;
-        return {
-          state,
-          ...all,
-        };
+      if (!id) {
+        throw new Error('Id is required for deleted items');
       }
+      return {
+        state: 'deleted',
+        id,
+      };
     } else if (this.isNew) {
-      const all = this.fields.serialized.all;
       return {
         state: 'added',
-        ...all,
+        ...this.fields.serialized.all,
       };
     } else {
       const id = this.data.id;
-      const state = 'updated';
-      if (id) {
-        const dirty = this.fields.serialized.dirty;
-        if (dirty) {
-          return {
-            id,
-            state,
-            ...dirty,
-          };
-        }
-      } else if (this.fields.isDirty) {
-        const all = this.fields.serialized.all;
+      if (!id) {
+        throw new Error('Id is required for updated items');
+      }
+      const dirty = this.fields.serialized.dirty;
+      if (dirty) {
         return {
-          state,
-          ...all,
+          state: 'updated',
+          id,
+          ...dirty,
         };
       }
     }
@@ -106,7 +108,7 @@ export type ArrayFieldOptions<D extends Data, N extends Entry, FDR extends Field
 export class ArrayField<D extends Data, N extends Entry, FDR extends FieldDefinitionsRecord<N>> extends Field<
   D,
   N[],
-  unknown,
+  SerializedItem<N, FDR>[],
   ArrayFieldOptions<D, N, FDR>
 > {
   private readonly definitions = $derived.by(() => this.opts.definitions);
