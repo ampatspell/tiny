@@ -19,8 +19,8 @@ export type InferFieldsFromDefinitions<R extends FieldDefinitionsRecord> = {
 };
 
 export type InferFieldsRecordFromDefinition<
-  D extends Data,
-  FD extends FieldDefinitions<D>,
+  D extends Data = Data,
+  FD extends FieldDefinitions<D> = FieldDefinitions<D>,
 > = InferFieldsFromDefinitions<FD['record']>;
 
 export type FieldDefinitionsOptions<D extends Data, R> = {
@@ -28,7 +28,9 @@ export type FieldDefinitionsOptions<D extends Data, R> = {
   cb: (factory: Factory<D>) => R;
 };
 
-export class FieldDefinitions<D extends Data, R extends FieldDefinitionsRecord<D> = FieldDefinitionsRecord<D>> {
+export type InferDataFromFieldDefinitions<FDS> = FDS extends FieldDefinitions<infer D> ? D : never;
+
+export class FieldDefinitions<D extends Data = Data, R extends FieldDefinitionsRecord<D> = FieldDefinitionsRecord<D>> {
   private readonly opts: FieldDefinitionsOptions<D, R>;
 
   readonly context = $derived.by(() => this.opts.context);
