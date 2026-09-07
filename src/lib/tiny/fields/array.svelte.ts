@@ -36,12 +36,21 @@ export class ArrayFieldItem<
   readonly record = $derived(this.fields.record);
 
   readonly serialized = $derived.by(() => {
-    const id = this.data.id;
     if (this.isDeleted) {
-      return {
-        id,
-        state: 'deleted',
-      };
+      const id = this.data.id;
+      const state = 'deleted';
+      if (id) {
+        return {
+          id,
+          state,
+        };
+      } else {
+        const all = this.fields.serialized.all;
+        return {
+          state,
+          ...all,
+        };
+      }
     } else if (this.isNew) {
       const all = this.fields.serialized.all;
       return {
@@ -49,12 +58,22 @@ export class ArrayFieldItem<
         ...all,
       };
     } else {
-      const dirty = this.fields.serialized.dirty;
-      if (dirty) {
+      const id = this.data.id;
+      const state = 'updated';
+      if (id) {
+        const dirty = this.fields.serialized.dirty;
+        if (dirty) {
+          return {
+            id,
+            state,
+            ...dirty,
+          };
+        }
+      } else if (this.fields.isDirty) {
+        const all = this.fields.serialized.all;
         return {
-          id,
-          state: 'updated',
-          ...dirty,
+          state,
+          ...all,
         };
       }
     }
@@ -95,7 +114,7 @@ export class ArrayField<D extends Data, N extends Entry, FDR extends FieldDefini
   readonly items = $derived(this._items);
   readonly serialized = $derived.by(() => this.items.map((item) => item.serialized).filter(isTruthy));
   protected readonly editor = undefined;
-
+  readonly isDirty = $derived(!!this._items.find((item) => item.isDirty));
   readonly isRequired = false;
   readonly error = undefined;
 
@@ -124,7 +143,9 @@ export class ArrayField<D extends Data, N extends Entry, FDR extends FieldDefini
     this._items = [...this._items, this.item(data, true)];
   }
 
-  readonly isDirty = $derived(!!this._items.find((item) => item.isDirty));
+  clear() {
+    this._items.forEach((item) => item.delete());
+  }
 
   rollback() {
     this._items = this.externals();

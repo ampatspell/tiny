@@ -249,7 +249,7 @@ const createFiles = () => {
       },
       pick: {
         file: (opts: PickFileOptions) => pickFile({ ...opts, files }),
-        files: (opts: PickFilesOptions) => pickFiles({ ...opts, files }),
+        files: (opts: PickFilesOptions) => pickFiles({ multiple: true, ...opts, files }),
       },
       resolve: (...args: Parameters<(typeof tiny)['files']['resolve']>) => tiny.files.resolve(...args),
     },
