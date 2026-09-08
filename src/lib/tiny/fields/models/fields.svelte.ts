@@ -1,4 +1,4 @@
-import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Factory } from './factory.svelte.ts';
 import { FieldDefinition } from './field-definition.svelte.ts';
 import { Field } from './field.svelte.ts';

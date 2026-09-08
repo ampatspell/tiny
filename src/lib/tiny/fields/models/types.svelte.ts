@@ -1,4 +1,3 @@
-import type { Unpack } from '../utils/utils.ts';
 import type { Factory } from './factory.svelte.ts';
 import type { FieldDefinition } from './field-definition.svelte.ts';
 import type { Field } from './field.svelte.ts';
@@ -13,13 +12,13 @@ export type InferFieldsFromDefinitionRecord<R extends Data> = {
 
 export type InferFieldFromDefinition<T> = T extends FieldDefinition ? ReturnType<T['field']> : T;
 
-export type InferSerializedAllFromFieldsRecord<R extends Data> = Unpack<{
+export type InferSerializedAllFromFieldsRecord<R extends Data> = {
   [K in keyof R]: InferSerializedAllFromField<R[K]>;
-}>;
+};
 
-export type InferSerializedDirtyFromFieldsRecord<R extends Data> = Unpack<{
+export type InferSerializedDirtyFromFieldsRecord<R extends Data> = {
   [K in keyof R]: InferSerializedDirtyFromField<R[K]>;
-}>;
+};
 
 export type InferSerializedAllFromField<T> = T extends Field ? T['serialized']['all'] : T;
 export type InferSerializedDirtyFromField<T> = T extends Field ? T['serialized']['dirty'] : T;

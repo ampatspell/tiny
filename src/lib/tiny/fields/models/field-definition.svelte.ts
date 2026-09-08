@@ -1,5 +1,5 @@
+import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { sentenceCase } from 'text-sentence-case';
-import { options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
 import type { Field } from './field.svelte.ts';
 import type { Data } from './types.svelte.ts';
@@ -14,6 +14,8 @@ export type FieldDefinitionOptions = {
   key: string;
 } & BaseFieldDefinitionOptions;
 
+export type CreateFieldOptions = OptionsInput<{ data: Data }>;
+
 export abstract class FieldDefinition<O extends FieldDefinitionOptions = FieldDefinitionOptions> {
   protected readonly opts: O;
 
@@ -26,5 +28,5 @@ export abstract class FieldDefinition<O extends FieldDefinitionOptions = FieldDe
     this.opts = options(opts);
   }
 
-  abstract field(opts: OptionsInput<{ data: Data }>): Field;
+  abstract field(opts: CreateFieldOptions): Field;
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Input from '../input.svelte';
-  import Container from './container.svelte';
-  import type { NumberField } from './number-field.svelte.ts';
+  import Input from '../../input.svelte';
+  import Container from '../container.svelte';
+  import type { NumberField } from './number.svelte.ts';
 
   let { field }: { field: NumberField } = $props();
 

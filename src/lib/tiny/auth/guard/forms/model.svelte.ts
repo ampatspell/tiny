@@ -1,6 +1,6 @@
 import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { withDataFields } from '#lib/tiny/fields-3/fields-definition.svelte.js';
-import { notBlank } from '#lib/tiny/fields/validator.svelte.js';
+import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
 import type { ResolvedPathname } from '$app/types';
 import { signIn, signUp } from '../../utils.svelte.ts';
 

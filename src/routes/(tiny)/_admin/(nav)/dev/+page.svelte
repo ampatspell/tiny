@@ -1,9 +1,9 @@
 <script lang="ts">
   import Button from '#lib/tiny/button/button.svelte';
-  import { withDataFields } from '#lib/tiny/fields-3/fields-definition.svelte.js';
-  import Fields from '#lib/tiny/fields-3/fields.svelte';
+  import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
   import Actions from '#lib/tiny/form/actions.svelte';
   import Content from '#lib/tiny/form/content/content.svelte';
+  import Fields from '#lib/tiny/form/content/fields.svelte';
   import Row from '#lib/tiny/form/content/row.svelte';
   import Form from '#lib/tiny/form/form.svelte';
   import Json from '#lib/tiny/json.svelte';

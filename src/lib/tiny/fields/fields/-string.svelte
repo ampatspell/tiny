@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Input from '../input.svelte';
-  import Container from './container.svelte';
-  import type { StringField } from './string-field.svelte.ts';
+  import Input from '#lib/tiny/input.svelte';
+  import Container from '../container.svelte';
+  import type { StringField } from './string.svelte.ts';
 
   let { field }: { field: StringField } = $props();
 

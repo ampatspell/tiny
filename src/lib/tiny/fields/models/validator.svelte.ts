@@ -1,4 +1,7 @@
-import type { Validator } from './value-field.svelte.ts';
+export type Validator<T> = {
+  validate: (value: T) => string | boolean | undefined;
+  isRequired: boolean;
+};
 
 export const notBlank = (): Validator<string> => {
   return {

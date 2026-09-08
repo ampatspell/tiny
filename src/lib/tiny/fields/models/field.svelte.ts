@@ -1,11 +1,12 @@
+import { clone } from '#lib/tiny/utils/clone.js';
 import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { Any } from '#lib/tiny/utils/utils.js';
 import type { Component } from 'svelte';
-import type { FieldDefinition } from './definition.svelte.ts';
-import type { Data } from './index.svelte.ts';
+import type { FieldDefinition } from './field-definition.svelte.ts';
+import type { Data } from './types.svelte.ts';
 
 class TouchedField {
-  private isTouched = $derived.by(() => this.field.isTouched);
+  private readonly isTouched = $derived.by(() => this.field.isTouched);
 
   constructor(private readonly field: Field) {}
 
@@ -16,23 +17,21 @@ class TouchedField {
   });
 }
 
-export type FieldOptions<D extends Data, T> = {
-  data: D;
-  definition: FieldDefinition<D, T, Any>;
+export type FieldOptions<FD extends FieldDefinition> = {
+  definition: FD;
+  data: Data;
 };
 
 export abstract class Field<
-  D extends Data = Data,
   T = unknown,
-  S = unknown,
-  O extends FieldOptions<D, T> = FieldOptions<D, T>,
+  FD extends FieldDefinition = FieldDefinition,
+  O extends FieldOptions<FD> = FieldOptions<FD>,
 > {
-  protected readonly opts: O;
+  private readonly opts: O;
+  private readonly parent = $derived.by(() => this.opts.data);
+  readonly data = $derived.by(() => clone(this.parent[this.key] as T));
 
-  readonly data = $derived.by(() => this.opts.data);
-  readonly external = $derived.by(() => this.data[this.key] as T);
-
-  private readonly definition = $derived.by(() => this.opts.definition);
+  readonly definition = $derived.by(() => this.opts.definition);
   readonly context = $derived.by(() => this.definition.context);
   readonly isTouched = $derived(this.context.isTouched);
 
@@ -42,16 +41,16 @@ export abstract class Field<
   readonly isValid = $derived.by(() => !this.error);
   readonly touched = new TouchedField(this);
 
-  constructor(opts: OptionsInput<O>) {
-    this.opts = options(opts);
-  }
-
   abstract readonly isRequired: boolean;
   abstract readonly isDirty: boolean;
   abstract readonly error: string | undefined;
-  abstract readonly serialized: S;
+  abstract readonly serialized: { all: unknown; dirty: unknown };
   abstract rollback(): void;
 
-  protected abstract readonly editor: Component<{ field: Any }> | undefined; // TODO: type
   protected readonly fields: Field[] = $derived([this]);
+  protected abstract readonly editor: Component<{ field: Any }> | undefined;
+
+  constructor(opts: OptionsInput<O>) {
+    this.opts = options(opts);
+  }
 }

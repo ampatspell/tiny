@@ -1,11 +1,11 @@
-import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
-import type { ArrayKey, FileKey, NumberKey, OptionalId, StringKey } from '../utils/utils.ts';
-import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions, type Entry } from './array-field.svelte.ts';
-import { ColorFieldDefinition } from './color-field.svelte.ts';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { ArrayKey, FileKey, NumberKey, OptionalId, StringKey } from '#lib/tiny/utils/utils.js';
+import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions, type Entry } from '../fields/array.svelte.ts';
+import { ColorFieldDefinition } from '../fields/color.svelte.ts';
+import { FileFieldDefinition, type FileFieldDefinitionOptions } from '../fields/file.svelte.ts';
+import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from '../fields/number.svelte.ts';
+import { StringFieldDefinition, type StringFieldDefinitionOptions } from '../fields/string.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
-import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file-field.svelte.ts';
-import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from './number-field.svelte.ts';
-import { StringFieldDefinition, type StringFieldDefinitionOptions } from './string-field.svelte.ts';
 import type { Data } from './types.svelte.ts';
 
 export type FactoryOptions<D extends Data = Data, R extends Data = Data> = {

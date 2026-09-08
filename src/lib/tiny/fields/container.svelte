@@ -1,16 +1,15 @@
-<script lang="ts" generics="T">
+<script lang="ts">
   import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import Icon from '#lib/tiny/icon.svelte';
   import TablerInfoCircle from '#lib/tiny/icons/tabler--info-circle.svelte';
   import type { Snippet } from 'svelte';
-  import type { Field } from './field.svelte.ts';
-  import type { Data } from './index.svelte.ts';
+  import type { Field } from './models/field.svelte.ts';
 
   let {
     field,
     children,
   }: {
-    field: Field<Data, T>;
+    field: Field;
     children?: Snippet;
   } = $props();
 

@@ -1,10 +1,14 @@
-import { isTruthy } from '../utils/array.ts';
-import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
-import { Factory } from './factory.svelte.ts';
-import { FieldDefinition, type FieldDefinitionOptions } from './field-definition.svelte.ts';
-import { Field } from './field.svelte.ts';
-import { Fields } from './fields.svelte.ts';
-import type { Data, SerializedDirtyArrayItem } from './types.svelte.ts';
+import { isTruthy } from '#lib/tiny/utils/array.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { Factory } from '../models/factory.svelte.ts';
+import {
+  FieldDefinition,
+  type CreateFieldOptions,
+  type FieldDefinitionOptions,
+} from '../models/field-definition.svelte.ts';
+import { Field } from '../models/field.svelte.ts';
+import { Fields } from '../models/fields.svelte.ts';
+import type { Data, SerializedDirtyArrayItem } from '../models/types.svelte.ts';
 
 export class SerializedArrayFieldItem<T extends Entry, R extends Data> {
   private readonly item: ArrayFieldItem<T, R>;
@@ -167,7 +171,7 @@ export class ArrayFieldDefinition<T extends Entry = Entry, R extends Data = Data
     });
   });
 
-  field(opts: OptionsInput<{ data: Data }>): ArrayField<T, R> {
+  field(opts: CreateFieldOptions): ArrayField<T, R> {
     return new ArrayField<T, R>({
       definition: this,
       ...opts,

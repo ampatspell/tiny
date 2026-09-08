@@ -1,30 +1,30 @@
-import { equals } from '../utils/equals.ts';
-import { FieldDefinition, type FieldDefinitionOptions } from './field-definition.svelte.ts';
-import { Field } from './field.svelte.ts';
+import { equals } from '#lib/tiny/utils/equals.js';
+import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { FieldDefinition, type FieldDefinitionOptions } from '../models/field-definition.svelte.ts';
+import { Field } from '../models/field.svelte.ts';
+import type { Validator } from '../models/validator.svelte.ts';
 
-class SerializedValueField<T> {
-  private readonly field: ValueField<T>;
+export type SerializedValueFieldOptions<V> = { isDirty: boolean; value: V };
 
-  constructor(field: ValueField<T>) {
-    this.field = field;
+export class SerializedValueField<V = unknown> {
+  private readonly opts: SerializedValueFieldOptions<V>;
+  constructor(opts: OptionsInput<SerializedValueFieldOptions<V>>) {
+    this.opts = options(opts);
   }
 
-  readonly all = $derived.by(() => this.field.value);
+  readonly all = $derived.by(() => {
+    return this.opts.value;
+  });
 
   readonly dirty = $derived.by(() => {
-    const field = this.field;
-    if (field.isDirty) {
-      return field.value;
+    const { opts } = this;
+    if (opts.isDirty) {
+      return opts.value;
     }
   });
 }
 
 export type FieldUpdatePair<T> = { before: T; after: T };
-
-export type Validator<T> = {
-  validate: (value: T) => string | boolean | undefined;
-  isRequired: boolean;
-};
 
 export abstract class ValueField<
   T = unknown,
@@ -68,8 +68,6 @@ export abstract class ValueField<
   readonly rollback = () => {
     this.update(this.data);
   };
-
-  readonly serialized = new SerializedValueField(this);
 }
 
 export type BaseValueFieldDefinitionOptions<T> = {

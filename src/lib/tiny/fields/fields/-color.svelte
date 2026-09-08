@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Color from '../color.svelte';
-  import type { ColorField } from './color-field.svelte.ts';
-  import Container from './container.svelte';
+  import Color from '#lib/tiny/color.svelte';
+  import Container from '../container.svelte';
+  import type { ColorField } from './color.svelte.ts';
 
   let { field }: { field: ColorField } = $props();
 

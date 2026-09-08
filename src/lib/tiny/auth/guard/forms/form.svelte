@@ -1,8 +1,8 @@
 <script lang="ts">
   import Button from '#lib/tiny/button/button.svelte';
   import Center from '#lib/tiny/center.svelte';
-  import Fields from '#lib/tiny/fields-3/fields.svelte';
   import Actions from '#lib/tiny/form/actions.svelte';
+  import Fields from '#lib/tiny/form/content/fields.svelte';
   import TinyForm from '#lib/tiny/form/form.svelte';
   import Header from '#lib/tiny/form/header.svelte';
   import type { UseForm } from './model.svelte.ts';

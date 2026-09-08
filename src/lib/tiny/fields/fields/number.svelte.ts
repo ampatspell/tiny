@@ -1,7 +1,12 @@
-import type { OptionsInput } from '../utils/options.svelte.ts';
-import Number from './number.svelte';
-import type { Data } from './types.svelte.ts';
-import { ValueField, ValueFieldDefinition, type ValueFieldDefinitionOptions } from './value-field.svelte.ts';
+import { getter } from '#lib/tiny/utils/options.svelte.js';
+import type { CreateFieldOptions } from '../models/field-definition.svelte.ts';
+import Number from './-number.svelte';
+import {
+  SerializedValueField,
+  ValueField,
+  ValueFieldDefinition,
+  type ValueFieldDefinitionOptions,
+} from './value.svelte.ts';
 
 const integerToString = (number: number | undefined) => {
   if (typeof number === 'number') {
@@ -38,6 +43,11 @@ export class NumberField extends ValueField<T, NumberFieldDefinition> {
     this.update(value);
   };
 
+  readonly serialized = new SerializedValueField({
+    isDirty: getter(() => this.isDirty),
+    value: getter(() => this.value),
+  });
+
   protected editor = Number;
 }
 
@@ -48,7 +58,7 @@ export type NumberFieldDefinitionOptions = ValueFieldDefinitionOptions<T> & {
 export class NumberFieldDefinition extends ValueFieldDefinition<T, NumberFieldDefinitionOptions> {
   readonly fallback = $derived(this.opts.fallback ?? 0);
 
-  field(opts: OptionsInput<{ data: Data }>): NumberField {
+  field(opts: CreateFieldOptions): NumberField {
     return new NumberField({
       definition: this,
       ...opts,

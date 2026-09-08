@@ -1,4 +1,4 @@
-import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { FieldsContext } from './context.svelte.ts';
 import { Factory } from './factory.svelte.ts';
 import { Fields } from './fields.svelte.ts';
@@ -34,7 +34,3 @@ export class FieldsDefinition<D extends Data = Data> {
     });
   }
 }
-
-export const withDataFields = <D extends Data = Data>(...opts: ConstructorParameters<typeof FieldsDefinition<D>>) => {
-  return new FieldsDefinition(...opts);
-};
