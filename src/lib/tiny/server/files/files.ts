@@ -1,11 +1,11 @@
-import { images, run } from '../../utils/utils.ts';
+import { error } from '@sveltejs/kit';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
 import { default as sharp, type Sharp } from 'sharp';
-import { uid } from '../utils.ts';
+import { images, run } from '../../utils/utils.ts';
 import type { Database } from '../database/database.ts';
-import type { Storage, StorageFile } from '../storage/storage.ts';
 import type { DB } from '../database/schema.js';
-import { error } from '@sveltejs/kit';
+import type { Storage, StorageFile } from '../storage/storage.ts';
+import { uid } from '../utils.ts';
 
 export type FileThumbnails = {
   [K in Exclude<Tiny.Thumbnail, 'original'>]: FileThumbnailOptions;
@@ -29,12 +29,10 @@ export const ORIGINAL = 'original';
 export const createFiles = async (opts: CreateFilesServicesOptions) => {
   const { db, storage, thumbnails } = opts;
 
-  const getById = async (opts: { id: string }): Promise<FileData | undefined> => {
-    const { id } = opts;
-    return (await db
+  const select = () => {
+    return db
       .selectFrom('files')
       .select(['id', 'name'])
-      .where('id', '==', id)
       .select((eb) => [
         jsonArrayFrom(
           eb
@@ -42,26 +40,19 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
             .select(['id', 'identifier', 'contentType', 'size', 'width', 'height'])
             .whereRef('fileVariants.fileId', '==', 'files.id'),
         ).as('variants'),
-      ])
-      .executeTakeFirst()) as FileData | undefined;
+      ]);
   };
 
-  // TODO: unify byId, byIds
+  const getById = async (opts: { id: string }): Promise<FileData | undefined> => {
+    const { id } = opts;
+    const record = await select().where('id', '==', id).executeTakeFirst();
+    return record as FileData | undefined;
+  };
+
   const getByIds = async (opts: { ids: string[] }): Promise<FileData[]> => {
     const { ids } = opts;
-    return (await db
-      .selectFrom('files')
-      .select(['id', 'name'])
-      .where('id', 'in', ids)
-      .select((eb) => [
-        jsonArrayFrom(
-          eb
-            .selectFrom('fileVariants')
-            .select(['id', 'identifier', 'contentType', 'size', 'width', 'height'])
-            .whereRef('fileVariants.fileId', '==', 'files.id'),
-        ).as('variants'),
-      ])
-      .execute()) as FileData[];
+    const records = await select().where('id', 'in', ids).execute();
+    return records as FileData[];
   };
 
   const resolveOriginalMetadata = async (opts: { file: File }) => {
