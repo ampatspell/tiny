@@ -1,8 +1,8 @@
 <script lang="ts" generics="M extends Model">
-  import type { ListLayout, Model } from './layout.svelte.ts';
   import TinyHeader from '../../header/header.svelte';
   import Title from '../../header/title.svelte';
   import Add from './add.svelte';
+  import type { ListLayout, Model } from './layout.svelte.ts';
 
   let {
     layout,

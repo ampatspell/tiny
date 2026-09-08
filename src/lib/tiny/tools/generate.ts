@@ -1,13 +1,13 @@
 import { log, outro } from '@clack/prompts';
-import type { Project } from './project.ts';
-import { x } from 'tinyexec';
+import { format } from 'date-fns';
+import dedent from 'dedent';
+import launchEditor from 'launch-editor';
+import crypto from 'node:crypto';
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, parse } from 'node:path';
-import dedent from 'dedent';
-import { format } from 'date-fns';
-import launchEditor from 'launch-editor';
+import { x } from 'tinyexec';
 import { isTruthy } from '../utils/array.ts';
-import crypto from 'node:crypto';
+import type { Project } from './project.ts';
 
 export const bootstrapProject = async (project: Project, tiny: Project) => {
   const root = project.root;
@@ -58,6 +58,9 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     content: dedent`
       {
         "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "always"
+        },
       }
     `,
   });

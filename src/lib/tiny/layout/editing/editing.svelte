@@ -1,9 +1,9 @@
 <script lang="ts" generics=" P extends Model">
+  import Page from '#lib/tiny/page/page.svelte';
   import type { Snippet } from 'svelte';
   import Delete from './button/delete.svelte';
-  import Save from './button/save.svelte';
   import Discard from './button/discard.svelte';
-  import Page from '#lib/tiny/page/page.svelte';
+  import Save from './button/save.svelte';
   import type { EditingLayout, Model } from './layout.svelte.ts';
 
   let {

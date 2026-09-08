@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { resolve } from '$app/paths';
-  import TablerBalloon from '#lib/tiny/icons/tabler--balloon.svelte';
   import Index from '#lib/playground/index/index.svelte';
-  import Tiny from '#lib/tiny/tiny.svelte';
-  import Screen from '#lib/tiny/screen.svelte';
   import Icon from '#lib/tiny/icon.svelte';
+  import TablerBalloon from '#lib/tiny/icons/tabler--balloon.svelte';
+  import Screen from '#lib/tiny/screen.svelte';
+  import Tiny from '#lib/tiny/tiny.svelte';
+  import { resolve } from '$app/paths';
 </script>
 
 <svelte:head>

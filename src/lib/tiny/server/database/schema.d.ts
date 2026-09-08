@@ -24,6 +24,14 @@ export interface Gallery {
   permalink: Generated<string>;
 }
 
+export interface GalleryFile {
+  fileId: string;
+  galleryId: string;
+  id: string;
+  name: Generated<string>;
+  position: number;
+}
+
 export interface Index {
   backgroundColor: string;
   backgroundId: string | null;
@@ -48,6 +56,7 @@ export interface DB {
   files: File;
   fileVariants: FileVariant;
   galleries: Gallery;
+  galleryFiles: GalleryFile;
   index: Index;
   users: User;
 }

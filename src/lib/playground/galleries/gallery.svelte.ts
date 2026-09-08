@@ -1,53 +1,78 @@
-import { addGallery, deleteGallery, updateGallery, type GalleryData } from './galleries.remote.ts';
-import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
-import type { OmitId } from '#lib/tiny/utils/utils.js';
+import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
+import { useFiles } from '#lib/tiny/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { slug } from '#lib/tiny/utils/string.js';
-import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
+import type { OptionalId } from '#lib/tiny/utils/utils.js';
+import { addGallery, deleteGallery, updateGallery, type GalleryDetailsData } from './galleries.remote.ts';
 
 export type UseGalleryModelOptions =
   | {
       isNew: true;
-      data: OmitId<GalleryData>;
+      data: OptionalId<GalleryDetailsData>;
     }
   | {
       isNew: false;
-      data: GalleryData;
+      data: GalleryDetailsData;
     };
 
 export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => {
   const opts = options(_opts);
   const isNew = $derived(opts.isNew);
-  const data = $derived(opts.data);
+  const files = useFiles();
+  const data = $derived.by(() => {
+    const data = opts.data;
+    return {
+      ...data,
+      files: data.files.map((data) => {
+        return {
+          ...data,
+          file: files.asRemote(data.file),
+        };
+      }),
+    };
+  });
 
-  const [fields, state] = withDataFields({ data: getter(() => data) }).define(({ string }) => {
+  const model = withDataFields({ data: getter(() => data) }).define(({ string, array }) => {
     const name = string('name', {
       didUpdate: ({ after }) => {
-        permalink.property.update(slug(after, { replacement: '-' }));
+        model.record.permalink.update(slug(after, { replacement: '-' }));
       },
       validator: notBlank(),
     });
 
     const permalink = string('permalink', {
-      meta: {
-        description: 'Part after /gallery in public URL',
-      },
+      description: 'Part after /gallery in public URL',
     });
+
+    let files;
+    if (!isNew) {
+      files = array('files', ({ file, string, number }) => {
+        return {
+          name: string('name'),
+          position: number('position'),
+          file: file('file'),
+        };
+      });
+    }
 
     return {
       name,
       permalink,
+      files,
     };
   });
 
+  const fields = $derived(model.record);
+
   const save = async () => {
-    if (state.touch()) {
+    if (model.touch()) {
       let id;
       if (opts.isNew) {
-        const data = state.serialized.all;
+        const data = model.serialized.all;
         id = await addGallery(data);
       } else {
-        const data = state.serialized.dirty;
+        const data = model.serialized.dirty;
         if (data) {
           id = opts.data.id;
           await updateGallery({ id, ...data });
@@ -67,8 +92,8 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   return options(
     {
       isNew: getter(() => isNew),
-      ...fields,
-      ...state.opts,
+      fields,
+      ...model.state,
       save,
       destroy,
     },

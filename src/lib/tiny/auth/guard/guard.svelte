@@ -1,11 +1,11 @@
 <script lang="ts">
+  import Tiny from '#lib/tiny/tiny.svelte';
+  import { page } from '$app/state';
   import type { Snippet } from 'svelte';
   import { getToken } from '../auth.remote.ts';
-  import { page } from '$app/state';
-  import Tiny from '#lib/tiny/tiny.svelte';
+  import Denied from './denied.svelte';
   import SignIn from './sign-in.svelte';
   import type { ValidateFunction } from './validate.svelte.ts';
-  import Denied from './denied.svelte';
 
   let { children, validate }: { children: Snippet; validate?: ValidateFunction } = $props();
 

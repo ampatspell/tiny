@@ -1,15 +1,15 @@
-import type { ResolvedPathname } from '$app/types';
 import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { notBlank } from '#lib/tiny/properties/validator.svelte.js';
+import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
+import type { ResolvedPathname } from '$app/types';
 import { signIn, signUp } from '../../utils.svelte.ts';
-import { withDataFields } from '#lib/tiny/fields/data.svelte.js';
 
 export const useForm = (opts: {
   perform: (data: { channel: BroadcastChannel; email: string; password: string }) => Promise<void>;
 }) => {
   const channel = useBroadcastChannel();
 
-  const [fields, state] = withDataFields({
+  const model = withDataFields({
     data: {
       email: '',
       password: '',
@@ -20,16 +20,18 @@ export const useForm = (opts: {
   }));
 
   const perform = async () => {
-    if (state.touch()) {
-      await opts.perform({ channel, ...state.serialized.all });
+    if (model.touch()) {
+      await opts.perform({ channel, ...model.serialized.all });
     }
   };
 
   return {
-    ...fields,
+    ...model.record,
     perform,
   };
 };
+
+export type UseForm = ReturnType<typeof useForm>;
 
 export const useSignIn = () => useForm({ perform: (data) => signIn(data) });
 export const useSignUp = () => useForm({ perform: (data) => signUp(data) });

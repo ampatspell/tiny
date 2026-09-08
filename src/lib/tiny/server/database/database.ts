@@ -1,11 +1,11 @@
 // @ts-expect-error Has no better-sqlite3 type
 import SQLite from 'better-sqlite3';
+import { CamelCasePlugin, Kysely, ParseJSONResultsPlugin, SqliteDialect } from 'kysely';
 import { mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
-import { CamelCasePlugin, Kysely, ParseJSONResultsPlugin, SqliteDialect } from 'kysely';
+import { round } from '../../utils/number.ts';
 import { run } from '../../utils/utils.ts';
 import type { Logger } from '../utils.ts';
-import { round } from '../../utils/number.ts';
 
 export type CreateDatabaseServicesOptions = {
   file: string;

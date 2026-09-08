@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Field as FieldType } from '#lib/tiny/fields/utils.svelte.js';
   import Field from '#lib/tiny/fields/field.svelte';
-  import Row from './row.svelte';
+  import type { Field as FieldType } from '#lib/tiny/fields/models/field.svelte.js';
+  import Row from '#lib/tiny/form/content/row.svelte';
 
   type Props =
     | {
