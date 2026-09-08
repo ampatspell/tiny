@@ -3,8 +3,6 @@ import { uid } from '#lib/tiny/server/utils.js';
 import { omit } from '#lib/tiny/utils/object.js';
 import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { command, query } from '$app/server';
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import * as v from 'valibot';
 import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
 
@@ -85,16 +83,16 @@ export const deleteGallery = command(v.strictObject({ id: v.string() }), async (
   getGalleries().refresh();
 });
 
-export const addFile = command(v.strictObject({ id: v.string() }), async ({ id }) => {
-  const buffer = await readFile(join(import.meta.dirname, '../../tiny/assets/film-0677-011.jpg'));
-  const file = new File([buffer], 'film-0677-011.jpg', { type: 'image/jpeg' });
-  const fileId = uid();
+// export const addFile = command(v.strictObject({ id: v.string() }), async ({ id }) => {
+//   const buffer = await readFile(join(import.meta.dirname, '../../tiny/assets/film-0677-011.jpg'));
+//   const file = new File([buffer], 'film-0677-011.jpg', { type: 'image/jpeg' });
+//   const fileId = uid();
 
-  await getFiles().file(fileId).store(file);
-  await getDatabase()
-    .insertInto('galleryFiles')
-    .values({ fileId, galleryId: id, id: uid(), position: 0, name: 'film-0677-011' })
-    .execute();
+//   await getFiles().file(fileId).store(file);
+//   await getDatabase()
+//     .insertInto('galleryFiles')
+//     .values({ fileId, galleryId: id, id: uid(), position: 0, name: 'film-0677-011' })
+//     .execute();
 
-  getGalleryById({ id }).refresh();
-});
+//   getGalleryById({ id }).refresh();
+// });

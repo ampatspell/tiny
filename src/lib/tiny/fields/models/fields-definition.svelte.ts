@@ -1,6 +1,6 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { FieldsContext } from './context.svelte.ts';
-import { Factory } from './factory.svelte.ts';
+import { Factory, type FactoryCallback } from './factory.svelte.ts';
 import { Fields } from './fields.svelte.ts';
 import type { Data } from './types.svelte.ts';
 
@@ -19,14 +19,14 @@ export class FieldsDefinition<D extends Data = Data> {
     this.opts = options(opts);
   }
 
-  factory<R extends Data>(cb: (factory: Factory<D>) => R) {
+  factory<R extends Data>(cb: FactoryCallback<D, R>) {
     return new Factory({
       cb,
       context: getter(() => this.context),
     });
   }
 
-  define<R extends Data>(cb: (factory: Factory<D>) => R) {
+  define<R extends Data>(cb: FactoryCallback<D, R>) {
     const factory = this.factory(cb);
     return new Fields({
       data: getter(() => this.opts.data),

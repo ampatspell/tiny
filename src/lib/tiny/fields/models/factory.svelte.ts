@@ -8,9 +8,11 @@ import { StringFieldDefinition, type StringFieldDefinitionOptions } from '../fie
 import type { FieldsContext } from './context.svelte.ts';
 import type { Data } from './types.svelte.ts';
 
+export type FactoryCallback<D extends Data, R extends Data> = (factory: Omit<Factory<D>, 'context' | 'record'>) => R;
+
 export type FactoryOptions<D extends Data = Data, R extends Data = Data> = {
   context: FieldsContext;
-  cb: (factory: Factory<D>) => R;
+  cb: FactoryCallback<D, R>;
 };
 
 type Opts<O> = OptionsInput<Omit<O, 'context' | 'key'>>;
@@ -49,7 +51,7 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
 
   readonly array = <K extends ArrayKey<D, Entry>, N extends OptionalId<InferArrayFieldType<D[K]>>, NR extends Data>(
     key: K,
-    cb: (factory: Factory<N>) => NR,
+    cb: FactoryCallback<N, NR>,
     opts?: Opts<Omit<ArrayFieldDefinitionOptions<N, NR>, 'cb'>>,
   ) => {
     return new ArrayFieldDefinition({ key, ...this.base, cb, ...opts });

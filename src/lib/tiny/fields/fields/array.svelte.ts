@@ -1,6 +1,6 @@
 import { isTruthy } from '#lib/tiny/utils/array.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { Factory } from '../models/factory.svelte.ts';
+import { Factory, type FactoryCallback } from '../models/factory.svelte.ts';
 import {
   FieldDefinition,
   type CreateFieldOptions,
@@ -158,7 +158,7 @@ export class ArrayField<T extends Entry = Entry, R extends Data = Data> extends 
 }
 
 export type ArrayFieldDefinitionOptions<T extends Entry, R extends Data> = FieldDefinitionOptions & {
-  cb: (factory: Factory<T>) => R;
+  cb: FactoryCallback<T, R>;
 };
 
 export class ArrayFieldDefinition<T extends Entry = Entry, R extends Data = Data> extends FieldDefinition<

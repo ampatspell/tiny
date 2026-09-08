@@ -2,8 +2,10 @@
   import Fields from '#lib/playground/galleries/fields.svelte';
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
   import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
+  import Button from '#lib/tiny/button/button.svelte';
+  import Field from '#lib/tiny/fields/field.svelte';
+  import Actions from '#lib/tiny/form/actions.svelte';
   import Form from '#lib/tiny/form/form.svelte';
-  import Json from '#lib/tiny/json.svelte';
   import Editing from '#lib/tiny/layout/editing/editing.svelte';
   import { useEditingLayout } from '#lib/tiny/layout/editing/layout.svelte.js';
   import Section from '#lib/tiny/page/section.svelte';
@@ -26,9 +28,19 @@
       <Fields {model} />
     </Form>
   </Section>
-  <Section title="Photographs" height="fill">
-    <Form>
-      <Json data={gallery.files} />
-    </Form>
-  </Section>
+  {#if model.fields.files}
+    <Section title="Photographs" height="fill">
+      {#each model.fields.files.items as file (file)}
+        {#if !file.isDeleted}
+          <Form size="regular">
+            <Field field={file.record.file} />
+            <Field field={file.record.name} />
+            <Actions>
+              <Button label="Remove" onClick={() => file.delete()} />
+            </Actions>
+          </Form>
+        {/if}
+      {/each}
+    </Section>
+  {/if}
 </Editing>
