@@ -78,17 +78,18 @@ export class Fields<
   private readonly definition = $derived.by(() => this.opts.factory.record);
 
   readonly record = $derived.by(() => {
-    const { definition: definitions, data } = this;
+    const { definition } = this;
+    const data = getter(() => this.data);
     const record: Record<string, unknown> = {};
-    for (const key in definitions) {
-      const definition = definitions[key];
-      if (definition instanceof FieldDefinition) {
-        record[key] = definition.field({ data: getter(() => data) });
+    for (const key in definition) {
+      const value = definition[key];
+      if (value instanceof FieldDefinition) {
+        record[key] = value.field({ data });
       } else {
-        record[key] = definition;
+        record[key] = value;
       }
     }
-    return record as InferFieldsFromDefinitionRecord<typeof definitions>;
+    return record as InferFieldsFromDefinitionRecord<typeof definition>;
   });
 
   readonly serialized = new Serialized(this);
