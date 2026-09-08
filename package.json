@@ -109,9 +109,17 @@
       "types": "./dist/tiny/utils/array.d.ts",
       "svelte": "./dist/tiny/utils/array.js"
     },
+    "./utils/clone": {
+      "types": "./dist/tiny/utils/clone.d.ts",
+      "svelte": "./dist/tiny/utils/clone.js"
+    },
     "./utils/dom": {
       "types": "./dist/tiny/utils/dom.d.ts",
       "svelte": "./dist/tiny/utils/dom.js"
+    },
+    "./utils/equals": {
+      "types": "./dist/tiny/utils/equals.d.ts",
+      "svelte": "./dist/tiny/utils/equals.js"
     },
     "./utils/number": {
       "types": "./dist/tiny/utils/number.d.ts",
@@ -184,22 +192,6 @@
     "./server/database/database": {
       "types": "./dist/tiny/server/database/database.d.ts",
       "svelte": "./dist/tiny/server/database/database.js"
-    },
-    "./properties/context": {
-      "types": "./dist/tiny/properties/context.svelte.d.ts",
-      "svelte": "./dist/tiny/properties/context.svelte.js"
-    },
-    "./properties/data": {
-      "types": "./dist/tiny/properties/data.svelte.d.ts",
-      "svelte": "./dist/tiny/properties/data.svelte.js"
-    },
-    "./properties/property": {
-      "types": "./dist/tiny/properties/property.svelte.d.ts",
-      "svelte": "./dist/tiny/properties/property.svelte.js"
-    },
-    "./properties/validator": {
-      "types": "./dist/tiny/properties/validator.svelte.d.ts",
-      "svelte": "./dist/tiny/properties/validator.svelte.js"
     },
     "./page/page": {
       "types": "./dist/tiny/page/page.svelte.d.ts",
@@ -349,13 +341,9 @@
       "types": "./dist/tiny/file/file.svelte.d.ts",
       "svelte": "./dist/tiny/file/file.svelte"
     },
-    "./fields/data": {
-      "types": "./dist/tiny/fields/data.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/data.svelte.js"
-    },
-    "./fields/utils": {
-      "types": "./dist/tiny/fields/utils.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/utils.svelte.js"
+    "./fields/index": {
+      "types": "./dist/tiny/fields/index.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/index.svelte.js"
     },
     "./fields/container": {
       "types": "./dist/tiny/fields/container.svelte.d.ts",
@@ -365,21 +353,77 @@
       "types": "./dist/tiny/fields/field.svelte.d.ts",
       "svelte": "./dist/tiny/fields/field.svelte"
     },
-    "./fields/input/field": {
-      "types": "./dist/tiny/fields/input/field.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/input/field.svelte.js"
+    "./fields/models/context": {
+      "types": "./dist/tiny/fields/models/context.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/context.svelte.js"
     },
-    "./fields/input/number": {
-      "types": "./dist/tiny/fields/input/number.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/input/number.svelte.js"
+    "./fields/models/factory": {
+      "types": "./dist/tiny/fields/models/factory.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/factory.svelte.js"
     },
-    "./fields/file/field": {
-      "types": "./dist/tiny/fields/file/field.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/file/field.svelte.js"
+    "./fields/models/field-definition": {
+      "types": "./dist/tiny/fields/models/field-definition.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/field-definition.svelte.js"
     },
-    "./fields/file/file": {
-      "types": "./dist/tiny/fields/file/file.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/file/file.svelte"
+    "./fields/models/field": {
+      "types": "./dist/tiny/fields/models/field.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/field.svelte.js"
+    },
+    "./fields/models/fields-definition": {
+      "types": "./dist/tiny/fields/models/fields-definition.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/fields-definition.svelte.js"
+    },
+    "./fields/models/fields": {
+      "types": "./dist/tiny/fields/models/fields.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/fields.svelte.js"
+    },
+    "./fields/models/types": {
+      "types": "./dist/tiny/fields/models/types.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/types.svelte.js"
+    },
+    "./fields/models/validator": {
+      "types": "./dist/tiny/fields/models/validator.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/models/validator.svelte.js"
+    },
+    "./fields/fields/array": {
+      "types": "./dist/tiny/fields/fields/array.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/array.svelte.js"
+    },
+    "./fields/fields/color": {
+      "types": "./dist/tiny/fields/fields/color.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/color.svelte.js"
+    },
+    "./fields/fields/file": {
+      "types": "./dist/tiny/fields/fields/file.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/file.svelte.js"
+    },
+    "./fields/fields/number": {
+      "types": "./dist/tiny/fields/fields/number.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/number.svelte.js"
+    },
+    "./fields/fields/string": {
+      "types": "./dist/tiny/fields/fields/string.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/string.svelte.js"
+    },
+    "./fields/fields/value": {
+      "types": "./dist/tiny/fields/fields/value.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/value.svelte.js"
+    },
+    "./fields/fields/-color": {
+      "types": "./dist/tiny/fields/fields/-color.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/-color.svelte"
+    },
+    "./fields/fields/-file": {
+      "types": "./dist/tiny/fields/fields/-file.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/-file.svelte"
+    },
+    "./fields/fields/-number": {
+      "types": "./dist/tiny/fields/fields/-number.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/-number.svelte"
+    },
+    "./fields/fields/-string": {
+      "types": "./dist/tiny/fields/fields/-string.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/-string.svelte"
     },
     "./entrypoint/tiny": {
       "types": "./dist/tiny/entrypoint/tiny.svelte.d.ts",
