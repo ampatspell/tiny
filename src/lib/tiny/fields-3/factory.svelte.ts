@@ -1,6 +1,6 @@
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
 import type { ArrayKey, FileKey, NumberKey, StringKey } from '../utils/utils.ts';
-import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions } from './array-field.svelte.ts';
+import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions, type Entry } from './array-field.svelte.ts';
 import { ColorFieldDefinition } from './color-field.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
 import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file-field.svelte.ts';
@@ -47,9 +47,13 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
     return new FileFieldDefinition({ key, ...this.base, ...opts });
   };
 
-  readonly array = <K extends ArrayKey<D, Data>>(key: K, opts?: Opts<ArrayFieldDefinitionOptions>) => {
-    return new ArrayFieldDefinition<InferArrayFieldType<D[K]>>({ key, ...this.base, ...opts });
+  readonly array = <K extends ArrayKey<D, Entry>, N extends InferArrayFieldType<D[K]>, NR extends Data>(
+    key: K,
+    cb: (factory: Factory<N>) => NR,
+    opts?: Opts<Omit<ArrayFieldDefinitionOptions<N, NR>, 'cb'>>,
+  ) => {
+    return new ArrayFieldDefinition({ key, ...this.base, cb, ...opts });
   };
 }
 
-export type InferArrayFieldType<T> = T extends (infer E)[] ? (E extends Data ? E : never) : never;
+export type InferArrayFieldType<T> = T extends (infer E)[] ? (E extends Entry ? E : never) : never;
