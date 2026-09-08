@@ -409,22 +409,6 @@
       "types": "./dist/tiny/fields/fields/value.svelte.d.ts",
       "svelte": "./dist/tiny/fields/fields/value.svelte.js"
     },
-    "./fields/fields/-color": {
-      "types": "./dist/tiny/fields/fields/-color.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/fields/-color.svelte"
-    },
-    "./fields/fields/-file": {
-      "types": "./dist/tiny/fields/fields/-file.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/fields/-file.svelte"
-    },
-    "./fields/fields/-number": {
-      "types": "./dist/tiny/fields/fields/-number.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/fields/-number.svelte"
-    },
-    "./fields/fields/-string": {
-      "types": "./dist/tiny/fields/fields/-string.svelte.d.ts",
-      "svelte": "./dist/tiny/fields/fields/-string.svelte"
-    },
     "./entrypoint/tiny": {
       "types": "./dist/tiny/entrypoint/tiny.svelte.d.ts",
       "svelte": "./dist/tiny/entrypoint/tiny.svelte.js"
