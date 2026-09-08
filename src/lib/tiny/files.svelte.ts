@@ -1,11 +1,15 @@
-import { hashCodeTag } from '#lib/tiny/properties/property.svelte.js';
-import type { FileData, VariantData } from './server/files/files.ts';
-import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
-import { defer } from './utils/promise.ts';
 import { createContext } from 'svelte';
 import { useTiny } from './entrypoint/tiny.svelte.ts';
-import type { Size } from './utils/utils.ts';
+import type { FileData, VariantData } from './server/files/files.ts';
 import { sortedBy } from './utils/array.ts';
+import { noCloneTag } from './utils/clone.ts';
+import { hashCodeTag } from './utils/equals.ts';
+import { getter, options, type OptionsInput } from './utils/options.svelte.ts';
+import { defer } from './utils/promise.ts';
+import { basename as _basename } from './utils/string.ts';
+import type { Size } from './utils/utils.ts';
+
+export { hashCodeTag, noCloneTag };
 
 const createRemoteVariant = (
   _opts: OptionsInput<{
@@ -45,6 +49,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
   const { data, files } = opts;
   const id = $derived(data.id);
   const name = $derived(data.name);
+  const basename = $derived(_basename(data.name));
 
   const variants = $derived(
     data.variants.map((data) =>
@@ -110,12 +115,14 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
       variant,
       id: getter(() => id),
       name: getter(() => name),
+      basename: getter(() => basename),
       contentType: getter(() => contentType),
       size: getter(() => size),
       isImage: getter(() => isImage),
       url: getter(() => url),
       variantForSize,
       [hashCodeTag]: getter(() => hashCode),
+      [noCloneTag]: true,
     },
     {
       name: 'RemoteFile',
@@ -135,6 +142,7 @@ export type CreateLocalFileOptions = { file: File };
 const createLocalFile = ({ data }: { data: CreateLocalFileOptions; files: FilesContext }) => {
   const file = data.file;
   const name = file.name;
+  const basename = _basename(name);
   const contentType = file.type;
   const size = file.size;
 
@@ -163,10 +171,12 @@ const createLocalFile = ({ data }: { data: CreateLocalFileOptions; files: FilesC
       data: undefined,
       variant,
       name,
+      basename,
       contentType,
       size,
       url: getter(() => url),
       isImage: getter(() => isImage),
+      [noCloneTag]: true,
     },
     {
       name: 'LocalFile',
@@ -244,7 +254,7 @@ const createFiles = () => {
       },
       pick: {
         file: (opts: PickFileOptions) => pickFile({ ...opts, files }),
-        files: (opts: PickFilesOptions) => pickFiles({ ...opts, files }),
+        files: (opts: PickFilesOptions) => pickFiles({ multiple: true, ...opts, files }),
       },
       resolve: (...args: Parameters<(typeof tiny)['files']['resolve']>) => tiny.files.resolve(...args),
     },

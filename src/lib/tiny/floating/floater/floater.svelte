@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { px } from '../../utils/style.ts';
-  import { autoUpdate, computePosition } from '@floating-ui/dom';
-  import type { Floater as TFloater } from './model.svelte.ts';
   import { elementContainsEventTarget, getActiveInputElement } from '#lib/tiny/utils/dom.js';
+  import { autoUpdate, computePosition } from '@floating-ui/dom';
+  import { px } from '../../utils/style.ts';
+  import type { Floater as TFloater } from './model.svelte.ts';
 
   let { floater }: { floater: TFloater } = $props();
 

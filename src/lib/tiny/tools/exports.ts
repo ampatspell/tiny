@@ -1,7 +1,7 @@
 import { glob, readFile, writeFile } from 'node:fs/promises';
-import { run } from '../utils/utils.ts';
 import { basename, dirname, join, relative } from 'node:path';
 import { isTruthy } from '../utils/array.ts';
+import { run } from '../utils/utils.ts';
 
 run(async () => {
   const dir = join(import.meta.dirname, '..');

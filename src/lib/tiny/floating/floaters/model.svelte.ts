@@ -1,8 +1,8 @@
-import { createContext, tick, type Snippet } from 'svelte';
-import { Floater } from '../floater/model.svelte.ts';
-import type { ComputePositionConfig } from '@floating-ui/dom';
 import { addObject, removeObject } from '#lib/tiny/utils/array.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { ComputePositionConfig } from '@floating-ui/dom';
+import { createContext, tick, type Snippet } from 'svelte';
+import { Floater } from '../floater/model.svelte.ts';
 
 export type FloaterOpenOptions<Req, Res> = {
   reference: HTMLElement | undefined;

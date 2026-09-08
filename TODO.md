@@ -1,8 +1,10 @@
 ## TODO
 
-- [ ] Default roles should be configurable
+- [ ] Fields: Nice UI for arrays with add, remove
+- [ ] Galleries demo impl
+- [ ] Defaults for `handleError`
+- [ ] Unsaved changes warning dialog
 - [ ] Server validation errors in forms
-- [ ] Editable arrays of entries like files with descriptions or whatever
 - [ ] Proper `<form/>` element to support submits with enter
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
@@ -13,6 +15,10 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Fields: Arrays
+- [x] Fields: Replace v2 with v3
+- [x] Fields: Simplify types
+- [x] Default roles should be configurable
 - [x] Require all thumbnail ids to have processor
 - [x] Universal file variant URLs
 - [x] Clean up files service

@@ -14,9 +14,9 @@
 </script>
 
 <script lang="ts">
-  import type { ResolvedPathname } from '$app/types';
   import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import Icon from '#lib/tiny/icon.svelte';
+  import type { ResolvedPathname } from '$app/types';
   import type { Component } from 'svelte';
 
   // eslint-disable-next-line svelte/no-unused-props

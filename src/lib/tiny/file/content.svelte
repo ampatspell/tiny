@@ -1,8 +1,8 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import Description from './description.svelte';
-  import { url } from '../utils/style.ts';
   import type { UniversalFile } from '../files.svelte.ts';
+  import { url } from '../utils/style.ts';
+  import Description from './description.svelte';
 
   let {
     file,

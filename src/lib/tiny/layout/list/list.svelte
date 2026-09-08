@@ -1,10 +1,10 @@
 <script lang="ts" generics="M extends Model">
+  import SplitView from '#lib/tiny/split-view.svelte';
   import type { Snippet } from 'svelte';
-  import type { ListLayout, Model } from './layout.svelte.ts';
   import TinyList from '../../list/list.svelte';
   import Header from './header.svelte';
   import Item from './item.svelte';
-  import SplitView from '#lib/tiny/split-view.svelte';
+  import type { ListLayout, Model } from './layout.svelte.ts';
 
   let {
     layout,

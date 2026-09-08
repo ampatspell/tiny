@@ -1,8 +1,8 @@
+import { createStorage } from '#lib/tiny/server/storage/storage.js';
+import { exists } from 'fs-extra';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { withTemporaryFolder } from './helpers/utils.ts';
-import { createStorage } from '#lib/tiny/server/storage/storage.js';
-import { join } from 'node:path';
-import { exists } from 'fs-extra';
 
 describe('storage services', () => {
   it('creates', async () => {

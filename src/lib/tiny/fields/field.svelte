@@ -1,10 +1,9 @@
-<script lang="ts" generics="T = Any, E extends TField<T> = TField<T>">
-  import type { Any } from '../utils/utils.ts';
-  import type { Field as TField } from './utils.svelte.ts';
+<script lang="ts">
+  import type { Field } from './models/field.svelte.ts';
 
-  let { field }: { field: E } = $props();
+  let { field }: { field: Field } = $props();
 
-  let Impl = $derived(field.component);
+  let Impl = $derived(field['editor']);
 </script>
 
 <Impl {field} />

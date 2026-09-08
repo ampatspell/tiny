@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { page } from '$app/state';
+  import Fields from '#lib/playground/galleries/fields.svelte';
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
   import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
-  import Properties from '#lib/playground/galleries/properties.svelte';
-  import { getter } from '#lib/tiny/utils/options.svelte.js';
-  import { useBackend } from '#lib/tiny/backend/context.svelte.js';
-  import { useEditingLayout } from '#lib/tiny/layout/editing/layout.svelte.js';
-  import Editing from '#lib/tiny/layout/editing/editing.svelte';
-  import Section from '#lib/tiny/page/section.svelte';
+  import Button from '#lib/tiny/button/button.svelte';
+  import Field from '#lib/tiny/fields/field.svelte';
+  import Actions from '#lib/tiny/form/actions.svelte';
   import Form from '#lib/tiny/form/form.svelte';
-  import Placeholder from '#lib/tiny/placeholder.svelte';
+  import Editing from '#lib/tiny/layout/editing/editing.svelte';
+  import { useEditingLayout } from '#lib/tiny/layout/editing/layout.svelte.js';
+  import Section from '#lib/tiny/page/section.svelte';
+  import { getter } from '#lib/tiny/utils/options.svelte.js';
+  import { page } from '$app/state';
 
-  let backend = useBackend();
   let id = $derived(page.params.id!);
   let gallery = $derived(await getGalleryById({ id }));
   let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
@@ -25,10 +25,22 @@
 <Editing {layout}>
   <Section>
     <Form size="regular">
-      <Properties properties={model} />
+      <Fields {model} />
     </Form>
   </Section>
-  <Section title="Photographs" height="fill">
-    <Placeholder icon={backend.item.icon} label="Section is coming" />
-  </Section>
+  {#if model.fields.files}
+    <Section title="Photographs" height="fill">
+      {#each model.fields.files.items as file (file)}
+        {#if !file.isDeleted}
+          <Form size="regular">
+            <Field field={file.record.file} />
+            <Field field={file.record.name} />
+            <Actions>
+              <Button label="Remove" onClick={() => file.delete()} />
+            </Actions>
+          </Form>
+        {/if}
+      {/each}
+    </Section>
+  {/if}
 </Editing>

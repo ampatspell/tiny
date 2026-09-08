@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest';
-import { withServices, withTemporaryFolder } from './helpers/utils.ts';
+import type { DB } from '#lib/tiny/server/database/schema.js';
 import { jpeg } from '#lib/tiny/server/files/thumbnails.js';
 import { createServices, type CreateServicesOptions } from '#lib/tiny/server/services/services.js';
-import type { DB } from '#lib/tiny/server/database/schema.js';
+import { describe, expect, it } from 'vitest';
+import { withServices, withTemporaryFolder } from './helpers/utils.ts';
 
 describe('services', () => {
   it('creates services', async () => {

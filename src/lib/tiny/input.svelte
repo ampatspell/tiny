@@ -37,7 +37,9 @@
         input.blur();
       }
     } else if (e.key === 'Escape') {
-      onInput?.(initial ?? '');
+      let value = initial ?? '';
+      onInput?.(value);
+      input.value = value;
       input.blur();
     }
   };
@@ -49,6 +51,7 @@
   let onblur = (e: Event) => {
     let input = targetAsInput(e);
     onBlur?.(input.value);
+    input.value = value ?? initial ?? '';
   };
 
   let oninput = (e: Event) => {

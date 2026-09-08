@@ -3,11 +3,12 @@
   import Fields from '#lib/tiny/form/content/fields.svelte';
   import type { GalleryModel } from './gallery.svelte.ts';
 
-  let { properties }: { properties: GalleryModel } = $props();
-  let { name, permalink } = $derived(properties);
+  let { model }: { model: GalleryModel } = $props();
+
+  const fields = $derived(model.fields);
 </script>
 
 <Content>
-  <Fields field={name} />
-  <Fields field={permalink} />
+  <Fields field={fields.name} />
+  <Fields field={fields.permalink} />
 </Content>

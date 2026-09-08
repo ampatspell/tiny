@@ -1,9 +1,9 @@
-import { join, relative, resolve } from 'node:path';
-import { loadPackageJSON } from './utils.ts';
-import { exists } from 'fs-extra';
 import { log } from '@clack/prompts';
+import { exists } from 'fs-extra';
+import { join, relative, resolve } from 'node:path';
 import { loadEnvFile } from 'node:process';
 import { createServices, type Services } from '../server/services/services.ts';
+import { loadPackageJSON } from './utils.ts';
 
 type ProjectImpl = {
   isTiny: boolean;
