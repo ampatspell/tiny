@@ -6,9 +6,11 @@
   import Content from '#lib/tiny/form/content/content.svelte';
   import Row from '#lib/tiny/form/content/row.svelte';
   import Form from '#lib/tiny/form/form.svelte';
+  import Json from '#lib/tiny/json.svelte';
 
   let fields = withDataFields({
     data: {
+      name: 'Random',
       ducks: [
         {
           id: '0',
@@ -27,8 +29,9 @@
         },
       ],
     },
-  }).define(({ array }) => {
+  }).define(({ string, array }) => {
     return {
+      name: string('name'),
       ducks: array('ducks', ({ string, number }) => {
         return {
           name: string('name'),
@@ -48,6 +51,12 @@
 
   let onAdd = () => fields.record.ducks.add({ name: 'New', hamsters: 0 });
 </script>
+
+<Form>
+  <Content>
+    <Fields field={fields.record.name} />
+  </Content>
+</Form>
 
 {#each fields.record.ducks.items as item (item)}
   <div class={['item', item.isDeleted && 'deleted']}>
@@ -77,6 +86,17 @@
     <Row>
       <Button label="Save" onClick={onSave} />
       <Button label="Rollback" onClick={onRollback} />
+    </Row>
+  </Content>
+</Form>
+
+<Form>
+  <Content>
+    <Row>
+      <Json data={fields.serialized.all} />
+    </Row>
+    <Row>
+      <Json data={fields.serialized.dirty} />
     </Row>
   </Content>
 </Form>

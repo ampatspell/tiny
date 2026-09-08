@@ -52,7 +52,7 @@ export abstract class ValueField<
     this.update(this.data);
   };
 
-  readonly serialized = $derived(this.data);
+  readonly serialized = $derived(this.value);
 }
 
 export type BaseValueFieldDefinitionOptions<T> = {

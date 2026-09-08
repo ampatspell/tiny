@@ -30,7 +30,7 @@ export class ArrayFieldItem<T extends Entry = Entry, R extends Data = Data> {
   readonly isDeleted = $derived(this._isDeleted);
   readonly isDirty = $derived(this.fields.isDirty || this.isNew || this.isDeleted);
 
-  readonly serialized = $derived.by<SerializedArrayItem<R>>(() => {
+  readonly serialized = $derived.by<SerializedArrayItem<R> | undefined>(() => {
     if (this.isDeleted) {
       const id = this.data.id;
       if (!id) {
@@ -41,16 +41,17 @@ export class ArrayFieldItem<T extends Entry = Entry, R extends Data = Data> {
         id,
       };
     } else if (this.isNew) {
+      const all = this.fields.serialized.all;
       return {
         state: 'added',
-        ...this.fields.serialized,
+        ...all,
       };
     } else {
       const id = this.data.id;
       if (!id) {
         throw new Error('id property is required for updated items');
       }
-      const dirty = this.fields.serialized;
+      const dirty = this.fields.serialized.dirty;
       if (dirty) {
         return {
           state: 'updated',

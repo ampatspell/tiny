@@ -36,5 +36,4 @@ export type SerializedArrayItemRecord<D> =
       state: 'added';
     } & D);
 
-export type SerializedArrayItem<R extends Data> =
-  SerializedArrayItemRecord<InferSerializedFromDefinitionRecord<R>> | undefined;
+export type SerializedArrayItem<R extends Data> = SerializedArrayItemRecord<InferSerializedFromDefinitionRecord<R>>;

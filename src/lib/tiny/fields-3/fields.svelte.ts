@@ -9,6 +9,56 @@ import type {
   InferSerializedFromFieldsRecord,
 } from './types.svelte.ts';
 
+export class Serialized<
+  D extends Data = Data,
+  F extends Factory<D, InferFieldsDefinitionRecordFromFactory<F>> = Factory<D>,
+> {
+  private readonly fields: Fields<D, F>;
+  private readonly record = $derived.by(() => this.fields.record);
+
+  constructor(fields: Fields<D, F>) {
+    this.fields = fields;
+  }
+
+  private withFields(cb: (arg: unknown) => unknown) {
+    const record = this.record;
+    const serialized: Record<string, unknown> = {};
+    for (const key in record) {
+      const field = record[key];
+      const result = cb(field);
+      if (result !== undefined) {
+        serialized[key] = result;
+      }
+    }
+    return serialized;
+  }
+
+  readonly all = $derived.by(() => {
+    return this.withFields((arg) => {
+      if (arg instanceof Field) {
+        return arg.serialized;
+      } else {
+        return arg;
+      }
+    }) as InferSerializedFromFieldsRecord<typeof this.record>;
+  });
+
+  readonly dirty = $derived.by(() => {
+    const serialized = this.withFields((arg) => {
+      if (arg instanceof Field) {
+        if (arg.isDirty) {
+          return arg.serialized;
+        }
+      } else {
+        return arg;
+      }
+    }) as Partial<InferSerializedFromFieldsRecord<typeof this.record>>;
+    if (Object.keys(serialized).length) {
+      return serialized;
+    }
+  });
+}
+
 export type FieldsOptions<D extends Data, F extends Factory<D>> = {
   data: D;
   factory: F;
@@ -42,19 +92,7 @@ export class Fields<
     return record as InferFieldsFromDefinitionRecord<typeof definitions>;
   });
 
-  readonly serialized = $derived.by(() => {
-    const record = this.record;
-    const serialized: Record<string, unknown> = {};
-    for (const key in record) {
-      const field = record[key];
-      if (field instanceof Field) {
-        serialized[key] = field.serialized;
-      } else {
-        serialized[key] = field;
-      }
-    }
-    return serialized as InferSerializedFromFieldsRecord<typeof record>;
-  });
+  readonly serialized = new Serialized(this);
 
   private readonly all = $derived.by(() => {
     const all: Field[] = [];
