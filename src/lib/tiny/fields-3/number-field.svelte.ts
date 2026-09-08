@@ -20,7 +20,9 @@ const stringToInteger = (string: string) => {
   return undefined;
 };
 
-export class NumberField extends ValueField<number, NumberFieldDefinition> {
+type T = number;
+
+export class NumberField extends ValueField<T, NumberFieldDefinition> {
   readonly fallback = $derived(this.definition.fallback);
   readonly string = $derived(integerToString(this.value) ?? String(this.fallback));
 
@@ -39,11 +41,11 @@ export class NumberField extends ValueField<number, NumberFieldDefinition> {
   protected editor = Number;
 }
 
-export type NumberFieldDefinitionOptions = ValueFieldDefinitionOptions<number> & {
-  fallback?: number;
+export type NumberFieldDefinitionOptions = ValueFieldDefinitionOptions<T> & {
+  fallback?: T;
 };
 
-export class NumberFieldDefinition extends ValueFieldDefinition<number, NumberFieldDefinitionOptions> {
+export class NumberFieldDefinition extends ValueFieldDefinition<T, NumberFieldDefinitionOptions> {
   readonly fallback = $derived(this.opts.fallback ?? 0);
 
   field(opts: OptionsInput<{ data: Data }>): NumberField {
