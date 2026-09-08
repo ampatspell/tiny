@@ -46,7 +46,7 @@
 
   let onRollback = () => fields.rollback();
 
-  let onAdd = () => fields.record.ducks.add({ id: '', name: 'New', hamsters: 0 });
+  let onAdd = () => fields.record.ducks.add({ name: 'New', hamsters: 0 });
 </script>
 
 {#each fields.record.ducks.items as item (item)}

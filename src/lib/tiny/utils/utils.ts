@@ -29,7 +29,7 @@ export type ArrayKey<T, V> = {
 export type QueryResponse<T extends (...args: Any[]) => Any> =
   ReturnType<T> extends RemoteResource<infer R> ? R : undefined;
 
-export type OmitId<T> = Omit<T, 'id'>;
+export type OptionalId<T> = Omit<T, 'id'> & { id?: string | undefined };
 
 export type Unpack<T> = {
   [K in keyof T]: Unpack<T[K]>;

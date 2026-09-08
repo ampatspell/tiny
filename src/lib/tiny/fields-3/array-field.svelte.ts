@@ -4,26 +4,9 @@ import { Factory } from './factory.svelte.ts';
 import { FieldDefinition, type FieldDefinitionOptions } from './field-definition.svelte.ts';
 import { Field } from './field.svelte.ts';
 import { Fields } from './fields.svelte.ts';
-import type { Data, InferFieldsFromDefinitionRecord, InferSerializedFromFieldsRecord } from './types.svelte.ts';
+import type { Data, SerializedArrayItem } from './types.svelte.ts';
 
-// TODO: Force data to allow undefined ids for new records
 export type Entry = Data & { id?: string | undefined };
-
-export type SerializedItemRecord<D> =
-  | {
-      state: 'deleted';
-      id: string;
-    }
-  | ({
-      state: 'updated';
-      id: string;
-    } & Partial<D>)
-  | ({
-      state: 'added';
-    } & D);
-
-export type SerializedItem<R extends Data> =
-  SerializedItemRecord<InferSerializedFromFieldsRecord<InferFieldsFromDefinitionRecord<R>>> | undefined;
 
 export type ArrayFieldItemOptions<T extends Entry = Entry, R extends Data = Data> = {
   isNew: boolean;
@@ -47,7 +30,7 @@ export class ArrayFieldItem<T extends Entry = Entry, R extends Data = Data> {
   readonly isDeleted = $derived(this._isDeleted);
   readonly isDirty = $derived(this.fields.isDirty || this.isNew || this.isDeleted);
 
-  readonly serialized = $derived.by<SerializedItem<R>>(() => {
+  readonly serialized = $derived.by<SerializedArrayItem<R>>(() => {
     if (this.isDeleted) {
       const id = this.data.id;
       if (!id) {
@@ -110,7 +93,7 @@ export class ArrayField<T extends Entry = Entry, R extends Data = Data> extends 
   readonly error = undefined;
 
   private item(data: T, isNew: boolean) {
-    return new ArrayFieldItem({
+    return new ArrayFieldItem<T, R>({
       isNew,
       data,
       factory: getter(() => this.factory),

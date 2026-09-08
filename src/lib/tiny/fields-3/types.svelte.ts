@@ -18,3 +18,23 @@ export type InferSerializedFromFieldsRecord<R extends Data> = Unpack<{
 }>;
 
 export type InferSerializedFromField<T> = T extends Field ? T['serialized'] : T;
+
+export type InferSerializedFromDefinitionRecord<R extends Data> = InferSerializedFromFieldsRecord<
+  InferFieldsFromDefinitionRecord<R>
+>;
+
+export type SerializedArrayItemRecord<D> =
+  | {
+      state: 'deleted';
+      id: string;
+    }
+  | ({
+      state: 'updated';
+      id: string;
+    } & Partial<D>)
+  | ({
+      state: 'added';
+    } & D);
+
+export type SerializedArrayItem<R extends Data> =
+  SerializedArrayItemRecord<InferSerializedFromDefinitionRecord<R>> | undefined;

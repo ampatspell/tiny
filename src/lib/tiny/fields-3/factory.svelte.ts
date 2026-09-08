@@ -1,5 +1,5 @@
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
-import type { ArrayKey, FileKey, NumberKey, StringKey } from '../utils/utils.ts';
+import type { ArrayKey, FileKey, NumberKey, OptionalId, StringKey } from '../utils/utils.ts';
 import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions, type Entry } from './array-field.svelte.ts';
 import { ColorFieldDefinition } from './color-field.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
@@ -47,7 +47,7 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
     return new FileFieldDefinition({ key, ...this.base, ...opts });
   };
 
-  readonly array = <K extends ArrayKey<D, Entry>, N extends InferArrayFieldType<D[K]>, NR extends Data>(
+  readonly array = <K extends ArrayKey<D, Entry>, N extends OptionalId<InferArrayFieldType<D[K]>>, NR extends Data>(
     key: K,
     cb: (factory: Factory<N>) => NR,
     opts?: Opts<Omit<ArrayFieldDefinitionOptions<N, NR>, 'cb'>>,
