@@ -1,11 +1,11 @@
 <script lang="ts">
   import Button from '#lib/tiny/button/button.svelte';
   import Center from '#lib/tiny/center.svelte';
-  import type { Field } from '#lib/tiny/fields/field.svelte.js';
+  import Fields from '#lib/tiny/fields-3/fields.svelte';
   import Actions from '#lib/tiny/form/actions.svelte';
-  import Fields from '#lib/tiny/form/content/fields.svelte';
   import TinyForm from '#lib/tiny/form/form.svelte';
   import Header from '#lib/tiny/form/header.svelte';
+  import type { UseForm } from './model.svelte.ts';
 
   let {
     title,
@@ -13,7 +13,7 @@
     secondary,
   }: {
     title: string;
-    model: { email: Field; password: Field; perform: () => void };
+    model: UseForm;
     secondary: { label: string; onClick: () => void };
   } = $props();
 </script>

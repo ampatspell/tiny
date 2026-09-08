@@ -1,5 +1,5 @@
 import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+import { withDataFields } from '#lib/tiny/fields-3/fields-definition.svelte.js';
 import { notBlank } from '#lib/tiny/fields/validator.svelte.js';
 import type { ResolvedPathname } from '$app/types';
 import { signIn, signUp } from '../../utils.svelte.ts';
@@ -30,6 +30,8 @@ export const useForm = (opts: {
     perform,
   };
 };
+
+export type UseForm = ReturnType<typeof useForm>;
 
 export const useSignIn = () => useForm({ perform: (data) => signIn(data) });
 export const useSignUp = () => useForm({ perform: (data) => signUp(data) });
