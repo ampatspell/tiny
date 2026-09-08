@@ -55,4 +55,35 @@ export class Fields<
     }
     return serialized as InferSerializedFromFieldsRecord<typeof record>;
   });
+
+  private readonly all = $derived.by(() => {
+    const all: Field[] = [];
+    const fields = this.record;
+    for (const key in fields) {
+      const field = fields[key] as Field;
+      all.push(...field['fields']);
+    }
+    return all;
+  });
+
+  readonly isDirty = $derived(!!this.all.find((field) => field.isDirty));
+  readonly isValid = $derived(!this.all.find((field) => !field.isValid));
+  readonly isTouched = $derived(this.context.isTouched);
+
+  readonly state = $derived.by(() => {
+    return {
+      isDirty: getter(() => this.isDirty),
+      rollback: () => this.rollback(),
+    };
+  });
+
+  readonly touch = () => {
+    this.context.touch();
+    return this.isValid;
+  };
+
+  readonly rollback = () => {
+    this.all.forEach((field) => field.rollback());
+    this.context.isTouched = false;
+  };
 }

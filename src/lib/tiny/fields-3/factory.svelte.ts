@@ -1,16 +1,19 @@
 import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
-import type { ArrayKey, NumberKey, StringKey } from '../utils/utils.ts';
-import { ArrayFieldDefinition } from './array-field.svelte.ts';
+import type { ArrayKey, FileKey, NumberKey, StringKey } from '../utils/utils.ts';
+import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions } from './array-field.svelte.ts';
+import { ColorFieldDefinition } from './color-field.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
-import type { BaseFieldDefinitionOptions } from './field-definition.svelte.ts';
-import { NumberFieldDefinition } from './number-field.svelte.ts';
-import { StringFieldDefinition } from './string-field.svelte.ts';
+import { FileFieldDefinition, type FileFieldDefinitionOptions } from './file-field.svelte.ts';
+import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from './number-field.svelte.ts';
+import { StringFieldDefinition, type StringFieldDefinitionOptions } from './string-field.svelte.ts';
 import type { Data } from './types.svelte.ts';
 
 export type FactoryOptions<D extends Data = Data, R extends Data = Data> = {
   context: FieldsContext;
   cb: (factory: Factory<D>) => R;
 };
+
+type Opts<O> = OptionsInput<Omit<O, 'context' | 'key'>>;
 
 export class Factory<D extends Data = Data, R extends Data = Data> {
   private readonly opts: FactoryOptions<D, R>;
@@ -28,19 +31,23 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
     };
   }
 
-  readonly string = <K extends StringKey<D>>(key: K, opts?: OptionsInput<BaseFieldDefinitionOptions>) => {
+  readonly string = <K extends StringKey<D>>(key: K, opts?: Opts<StringFieldDefinitionOptions>) => {
     return new StringFieldDefinition({ key, ...this.base, ...opts });
   };
 
-  // TODO: color
+  readonly color = <K extends StringKey<D>>(key: K, opts?: Opts<StringFieldDefinitionOptions>) => {
+    return new ColorFieldDefinition({ key, ...this.base, ...opts });
+  };
 
-  readonly number = <K extends NumberKey<D>>(key: K, opts?: OptionsInput<BaseFieldDefinitionOptions>) => {
+  readonly number = <K extends NumberKey<D>>(key: K, opts?: Opts<NumberFieldDefinitionOptions>) => {
     return new NumberFieldDefinition({ key, ...this.base, ...opts });
   };
 
-  // TODO: file
+  readonly file = <K extends FileKey<D>>(key: K, opts?: Opts<FileFieldDefinitionOptions>) => {
+    return new FileFieldDefinition({ key, ...this.base, ...opts });
+  };
 
-  readonly array = <K extends ArrayKey<D, Data>>(key: K, opts?: OptionsInput<BaseFieldDefinitionOptions>) => {
+  readonly array = <K extends ArrayKey<D, Data>>(key: K, opts?: Opts<ArrayFieldDefinitionOptions>) => {
     return new ArrayFieldDefinition<InferArrayFieldType<D[K]>>({ key, ...this.base, ...opts });
   };
 }

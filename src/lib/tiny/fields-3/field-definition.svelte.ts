@@ -15,7 +15,7 @@ export type FieldDefinitionOptions = {
 } & BaseFieldDefinitionOptions;
 
 export abstract class FieldDefinition<O extends FieldDefinitionOptions = FieldDefinitionOptions> {
-  private readonly opts: O;
+  protected readonly opts: O;
 
   readonly context = $derived.by(() => this.opts.context);
   readonly key = $derived.by(() => this.opts.key);

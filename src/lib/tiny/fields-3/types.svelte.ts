@@ -7,9 +7,9 @@ export type Data = Record<string, unknown>;
 
 export type InferFieldsDefinitionRecordFromFactory<F> = F extends Factory<Data, infer R> ? R : never;
 
-export type InferFieldsFromDefinitionRecord<R extends Data> = Unpack<{
+export type InferFieldsFromDefinitionRecord<R extends Data> = {
   [K in keyof R]: InferFieldFromDefinition<R[K]>;
-}>;
+};
 
 export type InferFieldFromDefinition<T> = T extends FieldDefinition ? ReturnType<T['field']> : T;
 
