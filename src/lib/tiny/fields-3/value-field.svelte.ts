@@ -2,6 +2,23 @@ import { equals } from '../utils/equals.ts';
 import { FieldDefinition, type FieldDefinitionOptions } from './field-definition.svelte.ts';
 import { Field } from './field.svelte.ts';
 
+class SerializedValueField<T> {
+  private readonly field: ValueField<T>;
+
+  constructor(field: ValueField<T>) {
+    this.field = field;
+  }
+
+  readonly all = $derived.by(() => this.field.value);
+
+  readonly dirty = $derived.by(() => {
+    const field = this.field;
+    if (field.isDirty) {
+      return field.value;
+    }
+  });
+}
+
 export type FieldUpdatePair<T> = { before: T; after: T };
 
 export type Validator<T> = {
@@ -52,7 +69,7 @@ export abstract class ValueField<
     this.update(this.data);
   };
 
-  readonly serialized = $derived(this.value);
+  readonly serialized = new SerializedValueField(this);
 }
 
 export type BaseValueFieldDefinitionOptions<T> = {

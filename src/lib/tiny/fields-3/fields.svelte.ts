@@ -6,7 +6,8 @@ import type {
   Data,
   InferFieldsDefinitionRecordFromFactory,
   InferFieldsFromDefinitionRecord,
-  InferSerializedFromFieldsRecord,
+  InferSerializedAllFromFieldsRecord,
+  InferSerializedDirtyFromFieldsRecord,
 } from './types.svelte.ts';
 
 export class Serialized<
@@ -36,23 +37,21 @@ export class Serialized<
   readonly all = $derived.by(() => {
     return this.withFields((arg) => {
       if (arg instanceof Field) {
-        return arg.serialized;
+        return arg.serialized.all;
       } else {
         return arg;
       }
-    }) as InferSerializedFromFieldsRecord<typeof this.record>;
+    }) as InferSerializedAllFromFieldsRecord<typeof this.record>;
   });
 
   readonly dirty = $derived.by(() => {
     const serialized = this.withFields((arg) => {
       if (arg instanceof Field) {
-        if (arg.isDirty) {
-          return arg.serialized;
-        }
+        return arg.serialized.dirty;
       } else {
         return arg;
       }
-    }) as Partial<InferSerializedFromFieldsRecord<typeof this.record>>;
+    }) as Partial<InferSerializedDirtyFromFieldsRecord<typeof this.record>>;
     if (Object.keys(serialized).length) {
       return serialized;
     }

@@ -13,17 +13,26 @@ export type InferFieldsFromDefinitionRecord<R extends Data> = {
 
 export type InferFieldFromDefinition<T> = T extends FieldDefinition ? ReturnType<T['field']> : T;
 
-export type InferSerializedFromFieldsRecord<R extends Data> = Unpack<{
-  [K in keyof R]: InferSerializedFromField<R[K]>;
+export type InferSerializedAllFromFieldsRecord<R extends Data> = Unpack<{
+  [K in keyof R]: InferSerializedAllFromField<R[K]>;
 }>;
 
-export type InferSerializedFromField<T> = T extends Field ? T['serialized'] : T;
+export type InferSerializedDirtyFromFieldsRecord<R extends Data> = Unpack<{
+  [K in keyof R]: InferSerializedDirtyFromField<R[K]>;
+}>;
 
-export type InferSerializedFromDefinitionRecord<R extends Data> = InferSerializedFromFieldsRecord<
+export type InferSerializedAllFromField<T> = T extends Field ? T['serialized']['all'] : T;
+export type InferSerializedDirtyFromField<T> = T extends Field ? T['serialized']['dirty'] : T;
+
+export type InferSerializedAllFromDefinitionRecord<R extends Data> = InferSerializedAllFromFieldsRecord<
   InferFieldsFromDefinitionRecord<R>
 >;
 
-export type SerializedArrayItemRecord<D> =
+export type InferSerializedDirtyFromDefinitionRecord<R extends Data> = InferSerializedDirtyFromFieldsRecord<
+  InferFieldsFromDefinitionRecord<R>
+>;
+
+export type SerializedDirtyArrayItemRecord<D> =
   | {
       state: 'deleted';
       id: string;
@@ -36,4 +45,6 @@ export type SerializedArrayItemRecord<D> =
       state: 'added';
     } & D);
 
-export type SerializedArrayItem<R extends Data> = SerializedArrayItemRecord<InferSerializedFromDefinitionRecord<R>>;
+export type SerializedDirtyArrayItem<R extends Data> = SerializedDirtyArrayItemRecord<
+  InferSerializedDirtyFromDefinitionRecord<R>
+>;

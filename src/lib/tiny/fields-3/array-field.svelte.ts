@@ -4,7 +4,50 @@ import { Factory } from './factory.svelte.ts';
 import { FieldDefinition, type FieldDefinitionOptions } from './field-definition.svelte.ts';
 import { Field } from './field.svelte.ts';
 import { Fields } from './fields.svelte.ts';
-import type { Data, SerializedArrayItem } from './types.svelte.ts';
+import type { Data, SerializedDirtyArrayItem } from './types.svelte.ts';
+
+export class SerializedArrayFieldItem<T extends Entry, R extends Data> {
+  private readonly item: ArrayFieldItem<T, R>;
+
+  constructor(item: ArrayFieldItem<T, R>) {
+    this.item = item;
+  }
+
+  readonly all = $derived.by(() => this.item['fields'].serialized.all);
+
+  readonly dirty = $derived.by<SerializedDirtyArrayItem<R> | undefined>(() => {
+    const item = this.item;
+    if (item.isDeleted) {
+      const id = item.data.id;
+      if (!id) {
+        throw new Error('id property is required for deleted items');
+      }
+      return {
+        state: 'deleted',
+        id,
+      };
+    } else if (item.isNew) {
+      const all = item['fields'].serialized.all;
+      return {
+        state: 'added',
+        ...all,
+      };
+    } else {
+      const id = item.data.id;
+      if (!id) {
+        throw new Error('id property is required for updated items');
+      }
+      const dirty = item['fields'].serialized.dirty;
+      if (dirty) {
+        return {
+          state: 'updated',
+          id,
+          ...dirty,
+        };
+      }
+    }
+  });
+}
 
 export type Entry = Data & { id?: string | undefined };
 
@@ -30,37 +73,7 @@ export class ArrayFieldItem<T extends Entry = Entry, R extends Data = Data> {
   readonly isDeleted = $derived(this._isDeleted);
   readonly isDirty = $derived(this.fields.isDirty || this.isNew || this.isDeleted);
 
-  readonly serialized = $derived.by<SerializedArrayItem<R> | undefined>(() => {
-    if (this.isDeleted) {
-      const id = this.data.id;
-      if (!id) {
-        throw new Error('id property is required for deleted items');
-      }
-      return {
-        state: 'deleted',
-        id,
-      };
-    } else if (this.isNew) {
-      const all = this.fields.serialized.all;
-      return {
-        state: 'added',
-        ...all,
-      };
-    } else {
-      const id = this.data.id;
-      if (!id) {
-        throw new Error('id property is required for updated items');
-      }
-      const dirty = this.fields.serialized.dirty;
-      if (dirty) {
-        return {
-          state: 'updated',
-          id,
-          ...dirty,
-        };
-      }
-    }
-  });
+  readonly serialized = new SerializedArrayFieldItem(this);
 
   delete() {
     if (this.isNew) {
@@ -83,12 +96,23 @@ export class ArrayFieldItem<T extends Entry = Entry, R extends Data = Data> {
   }
 }
 
+export class SerializedArrayField<T extends Entry = Entry, R extends Data = Data> {
+  private readonly field: ArrayField<T, R>;
+
+  constructor(field: ArrayField<T, R>) {
+    this.field = field;
+  }
+
+  readonly all = $derived.by(() => this.field.items.map((item) => item.serialized.all));
+  readonly dirty = $derived.by(() => this.field.items.map((item) => item.serialized.dirty).filter(isTruthy));
+}
+
 export class ArrayField<T extends Entry = Entry, R extends Data = Data> extends Field<T[], ArrayFieldDefinition<T, R>> {
   private readonly factory = $derived(this.definition.factory);
 
   private _items = $derived(this.dataItems());
   readonly items = $derived(this._items);
-  readonly serialized = $derived.by(() => this.items.map((item) => item.serialized).filter(isTruthy));
+  readonly serialized = new SerializedArrayField(this);
   readonly isDirty = $derived(!!this._items.find((item) => item.isDirty));
   readonly isRequired = false;
   readonly error = undefined;

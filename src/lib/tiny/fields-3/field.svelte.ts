@@ -48,7 +48,7 @@ export abstract class Field<
   abstract readonly isRequired: boolean;
   abstract readonly isDirty: boolean;
   abstract readonly error: string | undefined;
-  abstract readonly serialized: unknown;
+  abstract readonly serialized: { all: unknown; dirty: unknown };
   abstract rollback(): void;
 
   protected readonly fields: Field[] = $derived([this]);
