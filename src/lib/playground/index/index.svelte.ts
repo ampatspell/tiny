@@ -36,6 +36,8 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
     textColor: color('textColor'),
   }));
 
+  $effect(() => console.log(model.isDirty, model.record.title.isDirty));
+
   const save = async () => {
     if (model.touch()) {
       const dirty = model.serialized.dirty;
