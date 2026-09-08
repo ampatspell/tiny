@@ -1,5 +1,7 @@
 ## TODO
 
+- [ ] Fields: Arrays
+- [ ] Fields: Replace v2 with v3
 - [ ] Galleries demo impl
 - [ ] Defaults for `handleError`
 - [ ] Unsaved changes warning dialog
@@ -14,7 +16,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
-- [x] Fields: Arrays
+- [x] Fields: Simplify types
 - [x] Default roles should be configurable
 - [x] Require all thumbnail ids to have processor
 - [x] Universal file variant URLs
