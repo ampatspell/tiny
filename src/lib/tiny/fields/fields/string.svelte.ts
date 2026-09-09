@@ -1,29 +1,22 @@
 import type { InputType } from '#lib/tiny/input.svelte';
-import { getter } from '#lib/tiny/utils/options.svelte.js';
 import type { CreateFieldOptions } from '../models/field-definition.svelte.ts';
 import String from './-string.svelte';
-import {
-  SerializedValueField,
-  ValueField,
-  ValueFieldDefinition,
-  type ValueFieldDefinitionOptions,
-} from './value.svelte.ts';
+import { ValueField, ValueFieldDefinition, type ValueFieldDefinitionOptions } from './value.svelte.ts';
 
-export class StringField extends ValueField<string, StringFieldDefinition> {
-  protected editor = String;
+type T = string;
+
+export class StringField extends ValueField<T, T, StringFieldDefinition> {
   readonly type = $derived(this.definition.type);
   readonly onInput = (next: string) => this.update(next);
-  readonly serialized = new SerializedValueField({
-    isDirty: getter(() => this.isDirty),
-    value: getter(() => this.value),
-  });
+  protected readonly _serialized = $derived(this.value);
+  protected editor = String;
 }
 
-export type StringFieldDefinitionOptions = ValueFieldDefinitionOptions<string> & {
+export type StringFieldDefinitionOptions = ValueFieldDefinitionOptions<T> & {
   type?: InputType;
 };
 
-export class StringFieldDefinition extends ValueFieldDefinition<string, StringFieldDefinitionOptions> {
+export class StringFieldDefinition extends ValueFieldDefinition<T, StringFieldDefinitionOptions> {
   readonly type = $derived(this.opts.type ?? 'text');
 
   field(opts: CreateFieldOptions): StringField {

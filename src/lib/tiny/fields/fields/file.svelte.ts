@@ -1,24 +1,23 @@
-import { getter } from '#lib/tiny/utils/options.svelte.js';
 import type { LocalFile, UniversalFile } from '../../files.svelte.ts';
 import type { CreateFieldOptions } from '../models/field-definition.svelte.ts';
 import File from './-file.svelte';
-import {
-  SerializedValueField,
-  ValueField,
-  ValueFieldDefinition,
-  type ValueFieldDefinitionOptions,
-} from './value.svelte.ts';
+import { ValueField, ValueFieldDefinition, type ValueFieldDefinitionOptions } from './value.svelte.ts';
 
 type T = UniversalFile | undefined;
 
-export class FileField extends ValueField<T, FileFieldDefinition> {
+export type SerializedFileField = {
+  file: globalThis.File | undefined;
+};
+
+export class FileField extends ValueField<T, SerializedFileField, FileFieldDefinition> {
   readonly accept = $derived(this.definition.accept);
   readonly onSelected = (next: LocalFile | undefined) => this.update(next);
-  readonly serialized = new SerializedValueField({
-    isDirty: getter(() => this.isDirty),
-    value: getter(() => ({ file: this.value?.file })),
+  protected readonly _serialized = $derived.by(() => {
+    return {
+      file: this.value?.file,
+    };
   });
-  protected editor = File;
+  protected readonly editor = File;
 }
 
 export type FileFieldDefinitionOptions = ValueFieldDefinitionOptions<T> & {

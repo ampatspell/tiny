@@ -1,5 +1,5 @@
 import { equals } from '#lib/tiny/utils/equals.js';
-import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { FieldDefinition, type FieldDefinitionOptions } from '../models/field-definition.svelte.ts';
 import { Field } from '../models/field.svelte.ts';
 import type { Validator } from '../models/validator.svelte.ts';
@@ -28,6 +28,7 @@ export type FieldUpdatePair<T> = { before: T; after: T };
 
 export abstract class ValueField<
   T = unknown,
+  S = unknown,
   D extends ValueFieldDefinition<T> = ValueFieldDefinition<T>,
 > extends Field<T, D> {
   private _value = $derived(this.data);
@@ -35,6 +36,10 @@ export abstract class ValueField<
   readonly isDirty = $derived(!equals(this.data, this.value));
   readonly validator = $derived(this.definition.validator);
   readonly isRequired = $derived.by(() => this.validator?.isRequired ?? false);
+  readonly serialized = new SerializedValueField({
+    isDirty: getter(() => this.isDirty),
+    value: getter(() => this._serialized),
+  });
 
   readonly error = $derived.by(() => {
     const fn = this.validator?.validate;
@@ -68,6 +73,8 @@ export abstract class ValueField<
   readonly rollback = () => {
     this.update(this.data);
   };
+
+  protected abstract readonly _serialized: S;
 }
 
 export type BaseValueFieldDefinitionOptions<T> = {
