@@ -1,5 +1,5 @@
 <script lang="ts">
-  import File from '#lib/tiny/file/file.svelte';
+  import TinyFile from '#lib/tiny/file/file.svelte';
   import Container from '../container.svelte';
   import type { FileField } from './file.svelte.ts';
 
@@ -10,5 +10,5 @@
 </script>
 
 <Container {field}>
-  <File {file} {onSelected} {accept} />
+  <TinyFile {file} {onSelected} {accept} />
 </Container>
