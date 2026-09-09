@@ -24,7 +24,7 @@
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    padding: 0 10px;
+    padding: 4px 10px;
     text-decoration: none;
     border-bottom: 1px solid var(--tiny-border-color-2);
     transition: 0.15s ease-in-out background-color;
