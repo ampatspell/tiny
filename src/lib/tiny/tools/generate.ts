@@ -293,11 +293,11 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     content: dedent`
       import { getter, options, type OptionsInput } from '@ampatspell/tiny/utils/options';
       import { updateMessage, type MessageData } from './message.remote';
-      import { notBlank } from '@ampatspell/tiny/properties/validator';
       import { type BroadcastChannel } from '@ampatspell/tiny/broadcast';
       import { images } from '@ampatspell/tiny/utils/utils';
-      import { withDataFields } from '@ampatspell/tiny/fields/data';
       import { useFiles } from '@ampatspell/tiny/files';
+      import { withDataFields } from '@ampatspell/tiny/fields/index';
+      import { notBlank } from '@ampatspell/tiny/fields/models/validator';
 
       export type MessageModelOptions = Readonly<{
         data: MessageData;
@@ -310,7 +310,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         const broadcast = $derived(opts.broadcast);
         const data = $derived(opts.data);
 
-        const [fields, state] = withDataFields({
+        const fields = withDataFields({
           data: getter(() => ({
             ...data,
             background: files.asRemote(data.background),
@@ -321,8 +321,8 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         }));
 
         const save = async () => {
-          if (state.touch()) {
-            const data = state.serialized.dirty;
+          if (fields.touch()) {
+            const data = fields.serialized.dirty;
             if (data) {
               await updateMessage(data);
               broadcast.notifyDidSave();
@@ -330,11 +330,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
           }
         };
 
-        return options({
-          ...fields,
-          ...state.opts,
-          save,
-        });
+        return fields.asEditable({ save });
       };
     `,
   });
@@ -448,14 +444,17 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
           data: getter(() => data),
           broadcast,
         });
-        let layout = useEditingLayout({ model, title: 'Message' });
+        let layout = useEditingLayout({
+          model,
+          title: 'Message',
+        });
       </script>
 
       <Editing {layout}>
         <Form size="wide">
           <Content>
-            <Fields field={model.message} />
-            <Fields field={model.background} />
+            <Fields field={model.fields.message} />
+            <Fields field={model.fields.background} />
           </Content>
         </Form>
       </Editing>
