@@ -33,10 +33,10 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     };
   });
 
-  const model = withDataFields({ data: getter(() => data) }).define(({ string, array }) => {
+  const fields = withDataFields({ data: getter(() => data) }).define(({ string, array }) => {
     const name = string('name', {
       didUpdate: ({ after }) => {
-        model.record.permalink.update(slug(after, { replacement: '-' }));
+        fields.record.permalink.update(slug(after, { replacement: '-' }));
       },
       validator: notBlank(),
     });
@@ -64,13 +64,13 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   });
 
   const save = async () => {
-    if (model.touch()) {
+    if (fields.touch()) {
       let id;
       if (opts.isNew) {
-        const data = model.serialized.all;
+        const data = fields.serialized.all;
         id = await addGallery(data);
       } else {
-        const data = model.serialized.dirty;
+        const data = fields.serialized.dirty;
         if (data) {
           id = opts.data.id;
           await updateGallery({ id, ...data });
@@ -87,7 +87,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
-  return model.asEditable(
+  return fields.asEditable(
     {
       isNew: getter(() => isNew),
       save,

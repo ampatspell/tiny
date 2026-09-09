@@ -18,7 +18,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   const broadcast = useBroadcastChannel();
 
-  const model = withDataFields({
+  const fields = withDataFields({
     data: getter(() => ({
       ...data,
       background: files.asRemote(data.background),
@@ -37,8 +37,8 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   }));
 
   const save = async () => {
-    if (model.touch()) {
-      const dirty = model.serialized.dirty;
+    if (fields.touch()) {
+      const dirty = fields.serialized.dirty;
       if (dirty) {
         await updateIndex(dirty);
         broadcast.notifyDidSave();
@@ -47,7 +47,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
     }
   };
 
-  return model.asEditable(
+  return fields.asEditable(
     {
       save,
     },
