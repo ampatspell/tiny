@@ -1,7 +1,7 @@
 <script lang="ts">
   import Fields from '#lib/playground/galleries/fields.svelte';
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
-  import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
+  import { useGalleryModel, type GalleryFileArrayFieldItem } from '#lib/playground/galleries/gallery.svelte.js';
   import Content from '#lib/tiny/form/content/content.svelte';
   import FormFields from '#lib/tiny/form/content/fields.svelte';
   import Form from '#lib/tiny/form/form.svelte';
@@ -17,7 +17,10 @@
   let id = $derived(page.params.id!);
   let gallery = $derived(await getGalleryById({ id }));
   let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
-  let selected = $derived(model.fields.files?.items[0].record);
+  let selected = $derived(model.fields.files?.items[0]);
+  let onSelect = (next: GalleryFileArrayFieldItem | undefined) => {
+    selected = next;
+  };
 
   let layout = useEditingLayout({
     title: getter(() => gallery.name),
@@ -36,18 +39,18 @@
   {#if model.fields.files}
     <Section height="fill">
       <SplitView variant="reversed">
-        <Grid models={model.fields.files.items}>
-          {#snippet children({ model })}
-            <File file={model.record.file.value} />
+        <Grid models={model.fields.files.items} {selected} {onSelect}>
+          {#snippet children({ model, isSelected })}
+            <File file={model.record.file.value} {isSelected} />
           {/snippet}
         </Grid>
         {#snippet sidebar()}
           <Form size="max">
             <Content>
               {#if selected}
-                <FormFields field={selected.file} />
-                <FormFields field={selected.name} />
-                <FormFields field={selected.position} />
+                <FormFields field={selected.record.file} />
+                <FormFields field={selected.record.name} />
+                <FormFields field={selected.record.position} />
               {/if}
             </Content>
           </Form>

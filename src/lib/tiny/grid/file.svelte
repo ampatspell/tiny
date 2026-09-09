@@ -5,7 +5,7 @@
   import { url } from '#lib/tiny/utils/style.js';
   import Item from './item.svelte';
 
-  let { file }: { file: UniversalFile | undefined } = $props();
+  let { file, isSelected }: { file: UniversalFile | undefined; isSelected: boolean } = $props();
 
   let image = $derived.by(() => {
     if (file?.isImage) {
@@ -14,7 +14,7 @@
   });
 </script>
 
-<Item>
+<Item {isSelected}>
   {#if file}
     <div class="file">
       <div class="preview">

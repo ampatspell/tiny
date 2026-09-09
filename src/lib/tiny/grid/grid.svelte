@@ -10,12 +10,16 @@
     models,
     padding,
     gap,
+    selected,
+    onSelect,
     children,
   }: {
     models: T[];
     padding?: number;
     gap?: number;
-    children: Snippet<[{ model: T }]>;
+    selected?: T | undefined;
+    onSelect?: (value: T | undefined) => void;
+    children: Snippet<[{ model: T; isSelected: boolean }]>;
   } = $props();
 
   let width = $state<number>();
@@ -31,8 +35,10 @@
 </script>
 
 {#snippet item(model: T)}
-  <div class="item" style:--size={px(context.item)}>
-    {@render children({ model })}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div class="item" style:--size={px(context.item)} onclick={() => onSelect?.(model)}>
+    {@render children({ model, isSelected: model === selected })}
   </div>
 {/snippet}
 

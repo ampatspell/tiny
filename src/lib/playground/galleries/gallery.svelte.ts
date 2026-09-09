@@ -1,4 +1,5 @@
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+import type { InferArrayFieldItem } from '#lib/tiny/fields/models/types.svelte.js';
 import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
 import { useFiles } from '#lib/tiny/files.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
@@ -101,3 +102,5 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
 };
 
 export type GalleryModel = ReturnType<typeof useGalleryModel>;
+
+export type GalleryFileArrayFieldItem = InferArrayFieldItem<GalleryModel['fields']['files']>;

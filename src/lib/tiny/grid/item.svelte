@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { children }: { children?: Snippet } = $props();
+  let { children, isSelected }: { children?: Snippet; isSelected: boolean } = $props();
 </script>
 
-<div class="item">
+<div class={['item', isSelected && 'selected']}>
   {@render children?.()}
 </div>
 
@@ -16,7 +16,8 @@
     flex-direction: column;
     border-radius: 3px;
     transition: 0.15s ease-in-out background-color;
-    &:hover {
+    &:hover,
+    &.selected {
       background: var(--tiny-selected-background-color-1);
     }
   }
