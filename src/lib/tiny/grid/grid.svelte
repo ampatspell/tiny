@@ -11,7 +11,7 @@
     padding,
     gap,
     selected,
-    onSelect,
+    onSelect: _onSelect,
     children,
   }: {
     models: T[];
@@ -32,12 +32,21 @@
   });
 
   let size = $derived(context.size);
+
+  let onSelect = (e: MouseEvent, model: T) => {
+    e.stopPropagation();
+    _onSelect?.(model);
+  };
+
+  let onClickOutside = () => {
+    _onSelect?.(undefined);
+  };
 </script>
 
 {#snippet item(model: T)}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="item" style:--size={px(context.item)} onclick={() => onSelect?.(model)}>
+  <div class="item" style:--size={px(context.item)} onclick={(e) => onSelect(e, model)}>
     {@render children({ model, isSelected: model === selected })}
   </div>
 {/snippet}
@@ -45,7 +54,9 @@
 <div class="grid" style:--gap={px(context.gap)} style:--padding={px(context.padding)} bind:clientWidth={width}>
   {#if models.length}
     {#if size}
-      <div class="overflow">
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="overflow" onclick={onClickOutside}>
         <div class="content" style:--width={px(size.width)} style:--height={px(size.height)}>
           {#each models as model (model)}
             {@render item(model)}
