@@ -120,7 +120,6 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
       size: getter(() => size),
       isImage: getter(() => isImage),
       url: getter(() => url),
-      variantForSize,
       [hashCodeTag]: getter(() => hashCode),
       [noCloneTag]: true,
     },

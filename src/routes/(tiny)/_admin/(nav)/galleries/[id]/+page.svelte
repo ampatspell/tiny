@@ -2,19 +2,22 @@
   import Fields from '#lib/playground/galleries/fields.svelte';
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
   import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
-  import Button from '#lib/tiny/button/button.svelte';
-  import Field from '#lib/tiny/fields/field.svelte';
-  import Actions from '#lib/tiny/form/actions.svelte';
+  import Content from '#lib/tiny/form/content/content.svelte';
+  import FormFields from '#lib/tiny/form/content/fields.svelte';
   import Form from '#lib/tiny/form/form.svelte';
+  import File from '#lib/tiny/grid/file.svelte';
+  import Grid from '#lib/tiny/grid/grid.svelte';
   import Editing from '#lib/tiny/layout/editing/editing.svelte';
   import { useEditingLayout } from '#lib/tiny/layout/editing/layout.svelte.js';
   import Section from '#lib/tiny/page/section.svelte';
+  import SplitView from '#lib/tiny/split-view.svelte';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { page } from '$app/state';
 
   let id = $derived(page.params.id!);
   let gallery = $derived(await getGalleryById({ id }));
   let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
+  let selected = $derived(model.fields.files?.items[0].record);
 
   let layout = useEditingLayout({
     title: getter(() => gallery.name),
@@ -25,22 +28,31 @@
 <Editing {layout}>
   <Section>
     <Form size="regular">
-      <Fields {model} />
+      <Content>
+        <Fields {model} />
+      </Content>
     </Form>
   </Section>
   {#if model.fields.files}
-    <Section title="Photographs" height="fill">
-      {#each model.fields.files.items as file (file)}
-        {#if !file.isDeleted}
-          <Form size="regular">
-            <Field field={file.record.file} />
-            <Field field={file.record.name} />
-            <Actions>
-              <Button label="Remove" onClick={() => file.delete()} />
-            </Actions>
+    <Section height="fill">
+      <SplitView variant="reversed">
+        <Grid models={model.fields.files.items}>
+          {#snippet children({ model })}
+            <File file={model.record.file.value} />
+          {/snippet}
+        </Grid>
+        {#snippet sidebar()}
+          <Form size="max">
+            <Content>
+              {#if selected}
+                <FormFields field={selected.file} />
+                <FormFields field={selected.name} />
+                <FormFields field={selected.position} />
+              {/if}
+            </Content>
           </Form>
-        {/if}
-      {/each}
+        {/snippet}
+      </SplitView>
     </Section>
   {/if}
 </Editing>
