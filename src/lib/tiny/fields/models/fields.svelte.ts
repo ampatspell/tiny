@@ -1,11 +1,13 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { Any } from '#lib/tiny/utils/utils.js';
 import type { Factory } from './factory.svelte.ts';
 import { FieldDefinition } from './field-definition.svelte.ts';
 import { Field } from './field.svelte.ts';
 import type {
   Data,
   InferFieldsDefinitionRecordFromFactory,
-  InferFieldsFromDefinitionRecord,
+  InferFieldsRecordFromDefinitionRecord,
+  InferFieldsRecordFromFactory,
   InferSerializedAllFromFieldsRecord,
   InferSerializedDirtyFromFieldsRecord,
 } from './types.svelte.ts';
@@ -89,7 +91,7 @@ export class Fields<
         record[key] = value;
       }
     }
-    return record as InferFieldsFromDefinitionRecord<typeof definition>;
+    return record as InferFieldsRecordFromDefinitionRecord<typeof definition>;
   });
 
   readonly serialized = new Serialized(this);
@@ -108,13 +110,6 @@ export class Fields<
   readonly isValid = $derived(!this.all.find((field) => !field.isValid));
   readonly isTouched = $derived(this.context.isTouched);
 
-  readonly state = $derived.by(() => {
-    return {
-      isDirty: getter(() => this.isDirty),
-      rollback: () => this.rollback(),
-    };
-  });
-
   readonly touch = () => {
     this.context.touch();
     return this.isValid;
@@ -124,4 +119,31 @@ export class Fields<
     this.all.forEach((field) => field.rollback());
     this.context.isTouched = false;
   };
+
+  asEditable<O>(
+    opts: OptionsInput<O>,
+    meta?: {
+      name: string;
+      serialized?: (keyof O | 'isDirty' | 'isValid' | 'isTouched' | 'rollback')[];
+    },
+  ) {
+    type R = O & {
+      fields: InferFieldsRecordFromFactory<F>;
+      isDirty: boolean;
+      isValid: boolean;
+      isTouched: boolean;
+      rollback: () => void;
+    };
+    return options<Any>(
+      {
+        fields: getter(() => this.record),
+        isDirty: getter(() => this.isDirty),
+        isValid: getter(() => this.isValid),
+        isTouched: getter(() => this.isTouched),
+        rollback: () => this.rollback(),
+        ...opts,
+      },
+      meta,
+    ) as R;
+  }
 }

@@ -47,17 +47,11 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
     }
   };
 
-  const fields = $derived(model.record);
-
-  return options(
+  return model.asEditable(
     {
-      fields: getter(() => fields),
-      ...model.state,
       save,
     },
-    {
-      name: 'IndexModel',
-    },
+    { name: 'IndexModel', serialized: ['isDirty'] },
   );
 };
 

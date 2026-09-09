@@ -6,11 +6,15 @@ export type Data = Record<string, unknown>;
 
 export type InferFieldsDefinitionRecordFromFactory<F> = F extends Factory<Data, infer R> ? R : never;
 
-export type InferFieldsFromDefinitionRecord<R extends Data> = {
+export type InferFieldsRecordFromDefinitionRecord<R extends Data> = {
   [K in keyof R]: InferFieldFromDefinition<R[K]>;
 };
 
 export type InferFieldFromDefinition<T> = T extends FieldDefinition ? ReturnType<T['field']> : T;
+
+export type InferFieldsRecordFromFactory<F> = InferFieldsRecordFromDefinitionRecord<
+  InferFieldsDefinitionRecordFromFactory<F>
+>;
 
 export type InferSerializedAllFromFieldsRecord<R extends Data> = {
   [K in keyof R]: InferSerializedAllFromField<R[K]>;
@@ -24,11 +28,11 @@ export type InferSerializedAllFromField<T> = T extends Field ? T['serialized']['
 export type InferSerializedDirtyFromField<T> = T extends Field ? T['serialized']['dirty'] : T;
 
 export type InferSerializedAllFromDefinitionRecord<R extends Data> = InferSerializedAllFromFieldsRecord<
-  InferFieldsFromDefinitionRecord<R>
+  InferFieldsRecordFromDefinitionRecord<R>
 >;
 
 export type InferSerializedDirtyFromDefinitionRecord<R extends Data> = InferSerializedDirtyFromFieldsRecord<
-  InferFieldsFromDefinitionRecord<R>
+  InferFieldsRecordFromDefinitionRecord<R>
 >;
 
 export type SerializedDirtyArrayItemRecord<D> =

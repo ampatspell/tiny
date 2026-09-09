@@ -63,8 +63,6 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     };
   });
 
-  const fields = $derived(model.record);
-
   const save = async () => {
     if (model.touch()) {
       let id;
@@ -89,11 +87,9 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
-  return options(
+  return model.asEditable(
     {
       isNew: getter(() => isNew),
-      fields,
-      ...model.state,
       save,
       destroy,
     },
