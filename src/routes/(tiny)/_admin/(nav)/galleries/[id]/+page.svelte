@@ -59,7 +59,6 @@
             <Content>
               <FormFields field={selected.record.file} />
               <FormFields field={selected.record.name} />
-              <FormFields field={selected.record.position} />
               <Row>
                 {#if selected.isDeleted}
                   <Button variant="light" label="Restore" onClick={() => selected?.restore()} />
