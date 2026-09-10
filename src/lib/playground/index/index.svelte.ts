@@ -26,7 +26,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   }).define(({ string, number, file, color }) => ({
     title: string('title'),
     description: string('description'),
-    background: file('background', { accept: images }),
+    background: file('background', { accept: images, variant: '1024x1024' }),
     backgroundOffset: number('backgroundOffset', {
       description: 'Negative values crop the image',
     }),

@@ -66,7 +66,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
     if (variant) {
       return variant;
     }
-    throw new Error(`Variant '${variant}' not found`);
+    throw new Error(`Variant '${identifier}' not found`);
   };
 
   const variantForSize = (size: Size | undefined) => {

@@ -6,7 +6,7 @@
     sidebar,
     children,
   }: {
-    variant: 'regular' | 'reversed';
+    variant?: 'regular' | 'reversed';
     sidebar: Snippet;
     children: Snippet;
   } = $props();

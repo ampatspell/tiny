@@ -62,7 +62,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
         return {
           name: string('name'),
           position: number('position'),
-          file: file('file'),
+          file: file('file', { accept: images, variant: '1024x1024', isRequired: true }),
         };
       });
     }

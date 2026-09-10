@@ -90,6 +90,7 @@ export const deleteFile = command(v.strictObject({ id: v.string() }), async ({ i
   const record = await db.selectFrom('galleryFiles').selectAll().where('id', '==', id).executeTakeFirstOrThrow();
 
   await db.deleteFrom('galleryFiles').where('id', '==', id).execute();
+  await getFiles().file(record.fileId).drop();
 
   getGalleryById({ id: record.galleryId }).refresh();
 });
@@ -131,27 +132,21 @@ export const updateFile = command(
       .where('id', '==', props.id)
       .executeTakeFirstOrThrow();
 
-    let fileId;
-    if (props.file && props.file) {
-      fileId = uid();
+    const update = () => db.updateTable('galleryFiles').where('id', '==', props.id);
+
+    if (props.file?.file) {
+      const fileId = uid();
       await getFiles().replace({
         prev: record.fileId,
         next: fileId,
         file: props.file.file,
       });
+      await update().set({ fileId }).execute();
     }
 
     const { name, position } = props;
 
-    await getDatabase()
-      .updateTable('galleryFiles')
-      .where('id', '==', props.id)
-      .set({
-        fileId,
-        name,
-        position,
-      })
-      .execute();
+    await update().set({ name, position }).execute();
 
     getGalleryById({ id: record.galleryId }).refresh();
   },

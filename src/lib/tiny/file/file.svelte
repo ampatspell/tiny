@@ -5,6 +5,7 @@
   import { mouse } from '../floating/position.ts';
   import TablerCircleX from '../icons/tabler--circle-x.svelte';
   import TablerPhoto from '../icons/tabler--photo.svelte';
+  import { isTruthy } from '../utils/array.ts';
   import { round } from '../utils/number.ts';
   import { px } from '../utils/style.ts';
   import Blank from './blank.svelte';
@@ -13,10 +14,15 @@
   let {
     accept = [],
     file,
+    variant,
+    isRequired = false,
     onSelected,
   }: {
     accept?: string[];
     file: UniversalFile | undefined;
+    isRequired?: boolean;
+    variant: Tiny.Thumbnail;
+
     onSelected: (model: LocalFile | undefined) => void;
   } = $props();
 
@@ -47,18 +53,19 @@
     let items: Item[];
     if (file) {
       items = [
-        {
-          icon: TablerCircleX,
-          label: `Remove ${type}`,
-          state: 'critical',
-          perform: () => onDelete(),
-        },
+        !isRequired &&
+          ({
+            icon: TablerCircleX,
+            label: `Remove ${type}`,
+            state: 'critical',
+            perform: () => onDelete(),
+          } satisfies Item),
         {
           icon: TablerPhoto,
           label: `Replace ${type}`,
           perform: () => onPick(),
         },
-      ];
+      ].filter(isTruthy);
     } else {
       items = [
         {
@@ -89,7 +96,7 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="file" style:--height={px(height)} bind:clientWidth {onclick}>
   {#if file}
-    <Content {file} isBusy={isOpen} />
+    <Content {file} {variant} isBusy={isOpen} />
   {:else}
     <Blank {type} />
   {/if}

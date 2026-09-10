@@ -1,5 +1,7 @@
 ## TODO
 
+- [ ] Busy state for fields while saving
+- [ ] willUpdate & didUpdate in arrays
 - [ ] Fields: Nice UI for arrays with add, remove
 - [ ] Galleries demo impl
 - [ ] Defaults for `handleError`

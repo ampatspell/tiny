@@ -5,7 +5,15 @@
   import { url } from '#lib/tiny/utils/style.js';
   import Item from './item.svelte';
 
-  let { file, isSelected }: { file: UniversalFile | undefined; isSelected: boolean } = $props();
+  let {
+    file,
+    isSelected,
+    isDeleted,
+  }: {
+    file: UniversalFile | undefined;
+    isSelected: boolean;
+    isDeleted?: boolean;
+  } = $props();
 
   let image = $derived.by(() => {
     if (file?.isImage) {
@@ -16,7 +24,7 @@
 
 <Item {isSelected}>
   {#if file}
-    <div class="file">
+    <div class={['file', isDeleted && 'deleted']}>
       <div class="preview">
         {#if image}
           <div class="thumbnail" style:--url={url(image)}></div>
@@ -35,6 +43,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: 0.15s ease-in-out opacity;
     > .preview {
       flex: 1;
       display: flex;
@@ -62,6 +71,9 @@
       padding: var(--padding);
       background: rgba(255, 255, 255, 0.3);
       font-size: var(--tiny-font-size-small);
+    }
+    &.deleted {
+      opacity: 0.5;
     }
   }
 </style>
