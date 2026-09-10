@@ -11,7 +11,9 @@
 </svelte:head>
 
 <Tiny>
-  <Index />
+  <div class="page">
+    <Index />
+  </div>
   <a href={resolve('/(tiny)/_admin/(nav)/index')} class="edit">
     <Icon icon={TablerBalloon} />
     <div class="label">open backend (admin/admin)</div>
@@ -19,6 +21,12 @@
 </Tiny>
 
 <style lang="scss">
+  .page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
   .edit {
     position: absolute;
     bottom: 20px;
