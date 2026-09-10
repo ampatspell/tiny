@@ -1,24 +1,29 @@
 import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { createContext } from 'svelte';
+import { nextObject, prevObject } from '../utils/array.ts';
 import { sizeFor, type AspectRatio } from '../utils/aspect-ratio.ts';
 
-export type GridContextOptions = {
-  models: unknown[];
+export type Direction = 'left' | 'right' | 'up' | 'down';
+
+export type GridContextOptions<T> = {
+  selected: T | undefined;
+  models: T[];
   width: number | undefined;
   gap?: number;
   padding?: number;
   aspectRatio?: AspectRatio;
 };
 
-export class GridContext {
-  private readonly opts: GridContextOptions;
+export class GridContext<T = unknown> {
+  private readonly opts: GridContextOptions<T>;
   readonly width = $derived.by(() => this.opts.width);
   readonly models = $derived.by(() => this.opts.models);
   readonly padding = $derived.by(() => this.opts.padding ?? 5);
   readonly gap = $derived.by(() => this.opts.gap ?? 3);
   readonly aspectRatio = $derived.by(() => this.opts.aspectRatio ?? '1x1');
+  readonly selected = $derived.by(() => this.opts.selected);
 
-  constructor(opts: OptionsInput<GridContextOptions>) {
+  constructor(opts: OptionsInput<GridContextOptions<T>>) {
     this.opts = options(opts);
   }
 
@@ -51,9 +56,38 @@ export class GridContext {
       };
     }
   });
+
+  readonly navigate = (direction: Direction) => {
+    if (!this.selected) {
+      return this.models[0];
+    }
+    if (direction === 'right') {
+      return nextObject(this.models, this.selected);
+    } else if (direction === 'left') {
+      return prevObject(this.models, this.selected);
+    } else if (direction === 'down' || direction === 'up') {
+      const offset = this.columns;
+      if (offset) {
+        const idx = this.models.indexOf(this.selected);
+        if (idx !== -1) {
+          let next;
+          if (direction === 'down') {
+            next = idx + offset;
+          } else {
+            next = idx - offset;
+          }
+          return this.models[next];
+        }
+      }
+    }
+  };
 }
 
 const [get, set] = createContext<GridContext>();
 
-export const setGridContext = (opts: OptionsInput<GridContextOptions>) => set(new GridContext(opts));
+export const setGridContext = <T>(opts: OptionsInput<GridContextOptions<T>>) => {
+  const context = new GridContext<T>(opts);
+  set(context);
+  return context;
+};
 export const useGridContext = () => get();

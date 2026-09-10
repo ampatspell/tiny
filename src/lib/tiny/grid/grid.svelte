@@ -5,7 +5,8 @@
   import { px } from '#lib/tiny/utils/style.js';
   import type { Snippet } from 'svelte';
   import type { AspectRatio } from '../utils/aspect-ratio.ts';
-  import { setGridContext } from './model.svelte.ts';
+  import { getActiveInputElement } from '../utils/dom.ts';
+  import { setGridContext, type Direction } from './model.svelte.ts';
 
   let {
     models,
@@ -27,7 +28,8 @@
 
   let width = $state<number>();
 
-  let context = setGridContext({
+  let context = setGridContext<T>({
+    selected: getter(() => selected),
     models: getter(() => models),
     width: getter(() => width),
     padding: getter(() => padding),
@@ -45,7 +47,31 @@
   let onClickOutside = () => {
     _onSelect?.(undefined);
   };
+
+  let onKey = (e: KeyboardEvent) => {
+    if (!getActiveInputElement()) {
+      if (e.key === 'Escape') {
+        _onSelect?.(undefined);
+      } else {
+        let map: { [key: string]: Direction } = {
+          ArrowLeft: 'left',
+          ArrowRight: 'right',
+          ArrowUp: 'up',
+          ArrowDown: 'down',
+        };
+        let direction = map[e.key];
+        if (direction) {
+          let next = context.navigate(direction);
+          if (next) {
+            _onSelect?.(next);
+          }
+        }
+      }
+    }
+  };
 </script>
+
+<svelte:window onkeydown={onKey} />
 
 {#snippet item(model: T)}
   <!-- svelte-ignore a11y_click_events_have_key_events -->

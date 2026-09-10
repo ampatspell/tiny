@@ -18,7 +18,6 @@
   import Section from '#lib/tiny/page/section.svelte';
   import Placeholder from '#lib/tiny/placeholder.svelte';
   import SplitView from '#lib/tiny/split-view.svelte';
-  import { getActiveInputElement } from '#lib/tiny/utils/dom.js';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { page } from '$app/state';
 
@@ -42,19 +41,7 @@
     title: getter(() => gallery.name),
     model,
   });
-
-  let onKey = (e: KeyboardEvent) => {
-    if (!getActiveInputElement()) {
-      if (e.key == 'ArrowLeft') {
-        _selected = model.fields.files?.prev(_selected);
-      } else if (e.key == 'ArrowRight') {
-        _selected = model.fields.files?.next(_selected);
-      }
-    }
-  };
 </script>
-
-<svelte:window onkeydown={onKey} />
 
 <Editing {layout}>
   <SplitView variant="wide">
