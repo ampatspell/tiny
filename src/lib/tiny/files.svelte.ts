@@ -66,7 +66,7 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
     if (variant) {
       return variant;
     }
-    throw new Error(`Variant '${variant}' not found`);
+    throw new Error(`Variant '${identifier}' not found`);
   };
 
   const variantForSize = (size: Size | undefined) => {
@@ -120,7 +120,6 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
       size: getter(() => size),
       isImage: getter(() => isImage),
       url: getter(() => url),
-      variantForSize,
       [hashCodeTag]: getter(() => hashCode),
       [noCloneTag]: true,
     },
@@ -134,6 +133,13 @@ const createRemoteFile = (opts: { data: FileData; files: FilesContext }) => {
 const asRemoteFile = ({ data, files }: { data: FileData | undefined; files: FilesContext }) => {
   if (data) {
     return createRemoteFile({ data, files });
+  }
+};
+
+const asUniversalFile = (...args: Parameters<typeof asRemoteFile>) => {
+  const file = asRemoteFile(...args);
+  if (file) {
+    return file as UniversalFile;
   }
 };
 
@@ -248,6 +254,7 @@ const createFiles = () => {
   const files = options(
     {
       asRemote: (data: FileData | undefined) => asRemoteFile({ data, files }),
+      asUniversal: (data: FileData | undefined) => asUniversalFile({ data, files }),
       create: {
         local: (data: CreateLocalFileOptions) => createLocalFile({ data, files }),
         remote: (data: FileData) => createRemoteFile({ data, files }),

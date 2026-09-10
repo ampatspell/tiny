@@ -15,6 +15,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   const data = $derived(opts.data);
   const id = $derived(data.id);
+  const title = $derived(data.title ?? 'Index');
 
   const broadcast = useBroadcastChannel();
 
@@ -26,7 +27,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   }).define(({ string, number, file, color }) => ({
     title: string('title'),
     description: string('description'),
-    background: file('background', { accept: images }),
+    background: file('background', { accept: images, variant: '1024x1024' }),
     backgroundOffset: number('backgroundOffset', {
       description: 'Negative values crop the image',
     }),
@@ -49,6 +50,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   return fields.asEditable(
     {
+      title: getter(() => title),
       save,
     },
     { name: 'IndexModel', serialized: ['isDirty'] },

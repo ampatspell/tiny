@@ -1,5 +1,5 @@
 <script module lang="ts">
-  export type Size = 'small' | 'regular' | 'wide' | 'max';
+  export type Size = 'small' | 'regular' | 'wide' | 'fill';
 </script>
 
 <script lang="ts">
@@ -14,20 +14,22 @@
 
 <style lang="scss">
   .form {
-    --min: 280px;
     &.size-small {
+      --min: 280px;
       --max: 320px;
       --width: fit-content;
     }
     &.size-regular {
+      --min: 280px;
       --max: 450px;
       --width: auto;
     }
     &.size-wide {
+      --min: 280px;
       --max: 710px;
       --width: auto;
     }
-    &.size-max {
+    &.size-fill {
       --max: 100%;
       --width: 100%;
     }

@@ -1,10 +1,11 @@
 import { assertRole } from '#lib/tiny/server/users/request-event.js';
 import { uid } from '#lib/tiny/server/utils.js';
-import { omit } from '#lib/tiny/utils/object.js';
+import { hasValues, omit } from '#lib/tiny/utils/object.js';
 import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { command, query } from '$app/server';
 import * as v from 'valibot';
 import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
+import { getGalleries } from '../galleries/galleries.remote.ts';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
@@ -32,7 +33,9 @@ export const getIndex = query(async () => {
     background = await files.file(index.backgroundId).load();
   }
 
-  return { ...index, background };
+  const galleries = await getGalleries();
+
+  return { ...index, background, galleries };
 });
 
 export type IndexData = QueryResponse<typeof getIndex>;
@@ -54,22 +57,20 @@ export const updateIndex = command(
     const db = getDatabase();
     const files = getFiles();
 
-    let backgroundId;
     if (input.background) {
       const file = input.background.file;
       const index = await db.selectFrom('index').select('backgroundId').executeTakeFirstOrThrow();
-      backgroundId = await files.replace({
+      await files.replace({
         prev: index.backgroundId,
-        next: uid(),
         file,
+        update: (backgroundId) => db.updateTable('index').set({ backgroundId }).execute(),
       });
     }
 
     const props = omit(input, ['background']);
-    await db
-      .updateTable('index')
-      .set({ ...props, backgroundId })
-      .execute();
+    if (hasValues(props)) {
+      await db.updateTable('index').set(props).execute();
+    }
 
     void getIndex().refresh();
   },

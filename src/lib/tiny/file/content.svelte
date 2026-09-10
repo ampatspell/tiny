@@ -6,13 +6,15 @@
 
   let {
     file,
+    variant,
     isBusy,
   }: {
     file: UniversalFile;
+    variant: Tiny.Thumbnail;
     isBusy?: boolean;
   } = $props();
 
-  let image = $derived.by(() => file.variant.forSize({ width: 2048, height: 2048 })?.url);
+  let image = $derived.by(() => file.variant.named(variant)?.url);
 </script>
 
 <div class="content">

@@ -5,10 +5,12 @@
 
   let { field }: { field: FileField } = $props();
   let accept = $derived(field.accept);
+  let variant = $derived(field.variant);
+  let isRequired = $derived(field.isFileRequired);
   let file = $derived(field.value);
   let onSelected = $derived(field.onSelected);
 </script>
 
 <Container {field}>
-  <TinyFile {file} {onSelected} {accept} />
+  <TinyFile {file} {variant} {onSelected} {accept} {isRequired} />
 </Container>

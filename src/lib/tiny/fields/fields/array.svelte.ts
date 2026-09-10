@@ -1,4 +1,4 @@
-import { isTruthy } from '#lib/tiny/utils/array.js';
+import { isTruthy, nextObject, prevObject } from '#lib/tiny/utils/array.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { Factory, type FactoryCallback } from '../models/factory.svelte.ts';
 import {
@@ -146,9 +146,37 @@ export class ArrayField<T extends Entry = Entry, R extends Data = Data> extends 
     this._items.forEach((item) => item.delete());
   }
 
+  restore() {
+    this._items.forEach((item) => item.restore());
+  }
+
   rollback() {
     this._items = this.dataItems();
   }
+
+  prev(item: ArrayFieldItem<T, R> | undefined, wrap = false) {
+    if (!item) {
+      return this.items[0];
+    }
+    const next = prevObject(this.items, item, wrap);
+    if (wrap || next) {
+      return next;
+    }
+    return item;
+  }
+
+  next(item: ArrayFieldItem<T, R> | undefined, wrap = false) {
+    if (!item) {
+      return this.items[0];
+    }
+    const prev = nextObject(this.items, item, wrap);
+    if (wrap || prev) {
+      return prev;
+    }
+    return item;
+  }
+
+  readonly existing = $derived(this.items.filter((item) => !item.isDeleted));
 
   protected readonly fields: Field[] = $derived.by(() => {
     return [this, ...this.items.map((item) => item['fields']['all']).flat()];

@@ -45,7 +45,7 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
     return new NumberFieldDefinition({ key, ...this.base, ...opts });
   };
 
-  readonly file = <K extends FileKey<D>>(key: K, opts?: Opts<FileFieldDefinitionOptions>) => {
+  readonly file = <K extends FileKey<D>>(key: K, opts: Opts<FileFieldDefinitionOptions>) => {
     return new FileFieldDefinition({ key, ...this.base, ...opts });
   };
 

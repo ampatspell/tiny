@@ -1,7 +1,8 @@
 ## TODO
 
+- [ ] Busy state for fields while saving
+- [ ] willUpdate & didUpdate in arrays
 - [ ] Fields: Nice UI for arrays with add, remove
-- [ ] Galleries demo impl
 - [ ] Defaults for `handleError`
 - [ ] Unsaved changes warning dialog
 - [ ] Server validation errors in forms
@@ -15,6 +16,7 @@
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [x] Galleries demo impl
 - [x] Fields: Arrays
 - [x] Fields: Replace v2 with v3
 - [x] Fields: Simplify types
