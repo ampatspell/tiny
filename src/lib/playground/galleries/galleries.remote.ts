@@ -1,8 +1,10 @@
+import type { DB } from '#lib/tiny/server/database/schema.js';
 import { assertRole } from '#lib/tiny/server/users/request-event.js';
 import { uid } from '#lib/tiny/server/utils.js';
 import { hasValues, omit } from '#lib/tiny/utils/object.js';
 import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { command, query } from '$app/server';
+import type { ExpressionBuilder, OperandExpression, SqlBool } from 'kysely';
 import * as v from 'valibot';
 import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
 
@@ -13,10 +15,10 @@ export const getGalleries = query(async () => {
 
 export type GalleryData = QueryResponse<typeof getGalleries>[number];
 
-export const getGalleryById = query(v.strictObject({ id: v.string() }), async ({ id }) => {
+const getGalleryBy = async (where: (b: ExpressionBuilder<DB, 'galleries'>) => OperandExpression<SqlBool>) => {
   const db = getDatabase();
-  const gallery = await db.selectFrom('galleries').where('id', '==', id).selectAll().executeTakeFirstOrThrow();
-  const galleryFiles = await db.selectFrom('galleryFiles').where('galleryId', '==', id).selectAll().execute();
+  const gallery = await db.selectFrom('galleries').where(where).selectAll().executeTakeFirstOrThrow();
+  const galleryFiles = await db.selectFrom('galleryFiles').where('galleryId', '==', gallery.id).selectAll().execute();
   const fileIds = galleryFiles.map((file) => file.fileId);
   const files = await getFiles().files(fileIds).load();
 
@@ -29,6 +31,14 @@ export const getGalleryById = query(v.strictObject({ id: v.string() }), async ({
       };
     }),
   };
+};
+
+export const getGalleryById = query(v.strictObject({ id: v.string() }), async ({ id }) => {
+  return await getGalleryBy((where) => where('id', '==', id));
+});
+
+export const getGalleryByPermalink = query(v.strictObject({ permalink: v.string() }), async ({ permalink }) => {
+  return await getGalleryBy((where) => where('permalink', '==', permalink));
 });
 
 export type GalleryDetailsData = QueryResponse<typeof getGalleryById>;
