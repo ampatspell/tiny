@@ -32,7 +32,6 @@
           <Icon icon={TablerBalloon} />
         {/if}
       </div>
-      <div class="details">{file.basename}</div>
     </div>
   {/if}
 </Item>
@@ -50,27 +49,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: var(--padding);
       > .thumbnail {
         width: 100%;
         flex: 1;
         background: var(--url);
         background-repeat: no-repeat;
         background-position: center;
-        background-size: contain;
+        background-size: cover;
+        border-radius: 3px;
       }
-    }
-    > .details {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      padding: var(--padding);
-      background: rgba(255, 255, 255, 0.3);
-      font-size: var(--tiny-font-size-small);
     }
     &.deleted {
       opacity: 0.5;

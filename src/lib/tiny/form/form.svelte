@@ -14,16 +14,18 @@
 
 <style lang="scss">
   .form {
-    --min: 280px;
     &.size-small {
+      --min: 280px;
       --max: 320px;
       --width: fit-content;
     }
     &.size-regular {
+      --min: 280px;
       --max: 450px;
       --width: auto;
     }
     &.size-wide {
+      --min: 280px;
       --max: 710px;
       --width: auto;
     }

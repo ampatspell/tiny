@@ -1,11 +1,13 @@
 import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { createContext } from 'svelte';
+import { sizeFor, type AspectRatio } from '../utils/aspect-ratio.ts';
 
 export type GridContextOptions = {
   models: unknown[];
   width: number | undefined;
   gap?: number;
   padding?: number;
+  aspectRatio?: AspectRatio;
 };
 
 export class GridContext {
@@ -14,6 +16,7 @@ export class GridContext {
   readonly models = $derived.by(() => this.opts.models);
   readonly padding = $derived.by(() => this.opts.padding ?? 5);
   readonly gap = $derived.by(() => this.opts.gap ?? 3);
+  readonly aspectRatio = $derived.by(() => this.opts.aspectRatio ?? '1x1');
 
   constructor(opts: OptionsInput<GridContextOptions>) {
     this.opts = options(opts);
@@ -31,8 +34,7 @@ export class GridContext {
     const { width, padding, columns, gap } = this;
     if (width && columns) {
       const w = width - 2 * padding - gap * (columns - 1);
-      const size = w / columns;
-      return size;
+      return sizeFor(w / columns, this.aspectRatio);
     }
   });
 
@@ -40,12 +42,12 @@ export class GridContext {
     const { columns, item } = this;
     const items = this.models.length;
     if (columns && items && item) {
-      const rows = Math.ceil(items / columns);
+      // const rows = Math.ceil(items / columns);
       const gap = this.gap;
-      const scale = (value: number) => item * value + (value - 1) * gap;
+      const scale = (value: number) => item.width * value + (value - 1) * gap;
       return {
         width: scale(columns),
-        height: scale(rows),
+        height: 0, // scale(rows),
       };
     }
   });

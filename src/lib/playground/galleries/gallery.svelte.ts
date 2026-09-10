@@ -46,6 +46,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
 
   const fields = withDataFields({ data: getter(() => data) }).define(({ string, array }) => {
     const name = string('name', {
+      label: 'Gallery name',
       didUpdate: ({ after }) => {
         fields.record.permalink.update(slug(after, { replacement: '-' }));
       },
@@ -53,7 +54,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     });
 
     const permalink = string('permalink', {
-      description: 'Part after /gallery in public URL',
+      description: 'Part after /galleries in public URL',
     });
 
     let files;
@@ -139,17 +140,12 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
-  const clear = () => {
-    fields.record.files?.clear();
-  };
-
   return fields.asEditable(
     {
       isNew: getter(() => isNew),
       save,
       destroy,
       add,
-      clear,
     },
     {
       name: 'GalleryModel',

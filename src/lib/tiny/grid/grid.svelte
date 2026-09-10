@@ -4,12 +4,14 @@
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { px } from '#lib/tiny/utils/style.js';
   import type { Snippet } from 'svelte';
+  import type { AspectRatio } from '../utils/aspect-ratio.ts';
   import { setGridContext } from './model.svelte.ts';
 
   let {
     models,
     padding,
     gap,
+    aspectRatio,
     selected,
     onSelect: _onSelect,
     children,
@@ -17,6 +19,7 @@
     models: T[];
     padding?: number;
     gap?: number;
+    aspectRatio?: AspectRatio;
     selected?: T | undefined;
     onSelect?: (value: T | undefined) => void;
     children: Snippet<[{ model: T; isSelected: boolean }]>;
@@ -29,6 +32,7 @@
     width: getter(() => width),
     padding: getter(() => padding),
     gap: getter(() => gap),
+    aspectRatio: getter(() => aspectRatio),
   });
 
   let size = $derived(context.size);
@@ -46,7 +50,12 @@
 {#snippet item(model: T)}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="item" style:--size={px(context.item)} onclick={(e) => onSelect(e, model)}>
+  <div
+    class="item"
+    style:--width={px(context.item?.width)}
+    style:--height={px(context.item?.height)}
+    onclick={(e) => onSelect(e, model)}
+  >
     {@render children({ model, isSelected: model === selected })}
   </div>
 {/snippet}
@@ -57,7 +66,7 @@
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="overflow" onclick={onClickOutside}>
-        <div class="content" style:--width={px(size.width)} style:--height={px(size.height)}>
+        <div class="content" style:--width={px(size.width)}>
           {#each models as model (model)}
             {@render item(model)}
           {/each}
@@ -86,7 +95,6 @@
       overflow: auto;
       > .content {
         width: var(--width);
-        height: var(--height);
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -94,8 +102,8 @@
         > .item {
           display: flex;
           flex-direction: column;
-          width: var(--size);
-          height: var(--size);
+          width: var(--width);
+          height: var(--height);
         }
       }
     }

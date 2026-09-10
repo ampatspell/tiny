@@ -14,11 +14,12 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: 3px;
-    transition: 0.15s ease-in-out background-color;
-    &:hover,
+    border-radius: 4px;
+    transition: 0.15s ease-in-out border-color;
+    border: 2px solid transparent;
+    padding: 1px;
     &.selected {
-      background: var(--tiny-selected-background-color-1);
+      border-color: var(--tiny-accent-color-2);
     }
   }
 </style>

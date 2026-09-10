@@ -6,7 +6,7 @@
     sidebar,
     children,
   }: {
-    variant?: 'regular' | 'reversed';
+    variant?: 'regular' | 'wide';
     sidebar: Snippet;
     children: Snippet;
   } = $props();
@@ -23,12 +23,20 @@
 
 <style lang="scss">
   .split-view {
+    &.variant-regular {
+      --sidebar-width: 260px;
+    }
+    &.variant-wide {
+      --sidebar-width: 320px;
+    }
     flex: 1;
     display: flex;
+    flex-direction: row;
     > .sidebar {
-      width: 260px;
+      width: var(--sidebar-width);
       display: flex;
       flex-direction: column;
+      border-right: 1px solid var(--tiny-border-color-1);
       &:empty {
         display: none;
       }
@@ -37,19 +45,6 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-    }
-    &.variant-regular {
-      flex-direction: row;
-      > .sidebar {
-        border-right: 1px solid var(--tiny-border-color-1);
-      }
-    }
-    &.variant-reversed {
-      flex-direction: row-reverse;
-      > .sidebar {
-        width: 320px;
-        border-left: 1px solid var(--tiny-border-color-1);
-      }
     }
   }
 </style>
