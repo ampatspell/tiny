@@ -23,9 +23,14 @@
   let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
   let onAdd = () => model.add();
   let onClear = () => model.clear();
-  let selected = $state<GalleryFileArrayFieldItem>();
+  let _selected = $state<GalleryFileArrayFieldItem>();
+  let selected = $derived.by(() => {
+    if (_selected && model.fields.files?.items.includes(_selected)) {
+      return _selected;
+    }
+  });
   let onSelect = (next: GalleryFileArrayFieldItem | undefined) => {
-    selected = next;
+    _selected = next;
   };
 
   let layout = useEditingLayout({

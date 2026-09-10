@@ -254,28 +254,22 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
 
   const replace = async ({
     prev,
-    next,
     file: nextFile,
+    update,
   }: {
     prev: string | null | undefined;
-    next: string;
     file: File | undefined;
+    update: (id: string) => Promise<unknown>;
   }) => {
-    const [id] = await Promise.all([
-      run(async () => {
-        if (nextFile) {
-          await file(next).store(nextFile);
-          return next;
-        } else {
-          return null;
-        }
-      }),
-      run(async () => {
-        if (prev) {
-          await file(prev).drop();
-        }
-      }),
-    ]);
+    let id;
+    if (nextFile) {
+      id = uid();
+      await file(id).store(nextFile);
+      await update(id);
+    }
+    if (prev) {
+      await file(prev).drop();
+    }
     return id;
   };
 

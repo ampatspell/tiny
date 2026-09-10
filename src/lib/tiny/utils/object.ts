@@ -35,3 +35,13 @@ export const recordToString = (serialized: Record<PropertyKey, unknown>) => {
 export const hasKeys = (arg: object) => {
   return Object.keys(arg).length > 0;
 };
+
+export const hasValues = (arg: Record<string, unknown>) => {
+  for (const key in arg) {
+    const value = arg[key];
+    if (value !== undefined) {
+      return true;
+    }
+  }
+  return false;
+};

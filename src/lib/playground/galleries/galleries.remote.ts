@@ -1,6 +1,6 @@
 import { assertRole } from '#lib/tiny/server/users/request-event.js';
 import { uid } from '#lib/tiny/server/utils.js';
-import { omit } from '#lib/tiny/utils/object.js';
+import { hasValues, omit } from '#lib/tiny/utils/object.js';
 import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { command, query } from '$app/server';
 import * as v from 'valibot';
@@ -135,18 +135,17 @@ export const updateFile = command(
     const update = () => db.updateTable('galleryFiles').where('id', '==', props.id);
 
     if (props.file?.file) {
-      const fileId = uid();
       await getFiles().replace({
         prev: record.fileId,
-        next: fileId,
         file: props.file.file,
+        update: (fileId) => update().set({ fileId }).execute(),
       });
-      await update().set({ fileId }).execute();
     }
 
     const { name, position } = props;
-
-    await update().set({ name, position }).execute();
+    if (hasValues({ name, position })) {
+      await update().set({ name, position }).execute();
+    }
 
     getGalleryById({ id: record.galleryId }).refresh();
   },
