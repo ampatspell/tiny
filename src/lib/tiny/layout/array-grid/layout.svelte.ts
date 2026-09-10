@@ -41,9 +41,9 @@ export const useArrayGridEditingLayout = <
   });
 
   return options({
-    onAdd,
-    field,
-    aspectRatio,
+    onAdd: getter(() => onAdd),
+    field: getter(() => field),
+    aspectRatio: getter(() => aspectRatio),
     editing,
     selected: getter(() => selected),
     onSelect,
