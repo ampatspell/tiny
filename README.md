@@ -2,7 +2,10 @@
 
 A Svelte-based tool and library for building elegant admin interfaces and custom public UIs with SvelteKit, Kysely, and SQLite3.
 
+![](https://github.com/ampatspell/tiny/blob/main/static/screenshot-1.png?raw=true)
 ![](https://github.com/ampatspell/tiny/blob/main/static/screenshot-2.png?raw=true)
+![](https://github.com/ampatspell/tiny/blob/main/static/screenshot-4.png?raw=true)
+![](https://github.com/ampatspell/tiny/blob/main/static/screenshot-3.png?raw=true)
 
 ```sh
 npx sv@latest create
