@@ -1,13 +1,15 @@
-<script lang="ts" generics="T extends GridModel, F extends ArrayField, I extends InferArrayFieldItem<F>">
-  import type { ArrayField } from '#lib/tiny/fields/fields/array.svelte.js';
-  import type { InferArrayFieldItem } from '#lib/tiny/fields/models/types.svelte.js';
+<script lang="ts" generics="L extends ArrayGridEditingLayout">
+  import Content from '#lib/tiny/form/content/content.svelte';
+  import Form from '#lib/tiny/form/form.svelte';
   import Grid from '#lib/tiny/grid/grid.svelte';
   import Section from '#lib/tiny/page/section.svelte';
   import SplitView from '#lib/tiny/split-view.svelte';
   import type { Snippet } from 'svelte';
   import Editing from '../editing/editing.svelte';
-  import type { ArrayGridEditingLayout, GridModel } from './layout.svelte.ts';
+  import type { ArrayGridEditingLayout, InferItemFromLayout } from './layout.svelte.ts';
   import Selection from './selection.svelte';
+
+  type I = InferItemFromLayout<L>;
 
   let {
     layout,
@@ -15,14 +17,14 @@
     item,
     selected: selectedSnippet,
   }: {
-    layout: ArrayGridEditingLayout<T, F>;
+    layout: L;
     general: Snippet;
     item: Snippet<[{ item: I; isSelected: boolean }]>;
-    selected: Snippet<[{ item: I; deleteRestoreRow: Snippet }]>;
+    selected: Snippet<[{ item: I }]>;
   } = $props();
 
   let field = $derived(layout.field);
-  let items = $derived(field?.items as I[]);
+  let items = $derived(field?.items);
   let selected = $derived(layout.selected);
   let onSelect = $derived(layout.onSelect);
 </script>
@@ -30,11 +32,17 @@
 <Editing layout={layout.editing}>
   <SplitView variant="wide">
     {#snippet sidebar()}
-      {@render general()}
+      <Section>
+        <Form size="fill">
+          <Content>
+            {@render general()}
+          </Content>
+        </Form>
+      </Section>
       <Selection {layout} selected={selectedSnippet} />
     {/snippet}
     <Section height="fill">
-      {#if field}
+      {#if field && items}
         <Grid models={items} aspectRatio="2x3" {selected} {onSelect}>
           {#snippet children({ model, isSelected })}
             {@render item({ item: model as I, isSelected })}

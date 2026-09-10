@@ -11,7 +11,7 @@
     children,
   }: {
     layout: EditingLayout<P>;
-    children: Snippet;
+    children?: Snippet;
   } = $props();
 
   let label = $derived(layout.title);
@@ -23,5 +23,5 @@
     <Discard {layout} />
     <Delete {layout} />
   {/snippet}
-  {@render children()}
+  {@render children?.()}
 </Page>

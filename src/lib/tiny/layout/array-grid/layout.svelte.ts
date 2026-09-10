@@ -1,4 +1,4 @@
-import type { ArrayField } from '#lib/tiny/fields/fields/array.svelte.js';
+import type { ArrayField, ArrayFieldItem } from '#lib/tiny/fields/fields/array.svelte.js';
 import type { InferArrayFieldItem } from '#lib/tiny/fields/models/types.svelte.js';
 import type { AspectRatio } from '#lib/tiny/utils/aspect-ratio.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
@@ -12,11 +12,13 @@ export type ArrayGridEditingLayoutOptions<M extends GridModel, F extends ArrayFi
   onAdd?: () => void;
 } & EditingLayoutOptions<M>;
 
-export const useArrayGridEditingLayout = <M extends GridModel, F extends ArrayField>(
+export const useArrayGridEditingLayout = <
+  M extends GridModel = GridModel,
+  F extends ArrayField = ArrayField,
+  I extends ArrayFieldItem = ArrayFieldItem,
+>(
   _opts: OptionsInput<ArrayGridEditingLayoutOptions<M, F>>,
 ) => {
-  type I = InferArrayFieldItem<F>;
-
   const opts = options(_opts);
   const field = $derived(opts.field);
   const aspectRatio = $derived(opts.aspectRatio);
@@ -48,6 +50,9 @@ export const useArrayGridEditingLayout = <M extends GridModel, F extends ArrayFi
   });
 };
 
-export type ArrayGridEditingLayout<M extends GridModel, F extends ArrayField> = ReturnType<
+export type ArrayGridEditingLayout<M extends GridModel = GridModel, F extends ArrayField = ArrayField> = ReturnType<
   typeof useArrayGridEditingLayout<M, F>
 >;
+
+export type InferFieldFromLayout<L> = L extends ArrayGridEditingLayout<GridModel, infer F> ? F : never;
+export type InferItemFromLayout<L> = InferArrayFieldItem<InferFieldFromLayout<L>>;

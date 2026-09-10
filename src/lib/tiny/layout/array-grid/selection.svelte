@@ -1,9 +1,7 @@
-<script lang="ts" generics="T extends GridModel, F extends ArrayField, I extends InferArrayFieldItem<F>">
+<script lang="ts" generics="L extends ArrayGridEditingLayout">
   import Button from '#lib/tiny/button/button.svelte';
   import Icon from '#lib/tiny/button/icon.svelte';
   import Label from '#lib/tiny/button/label.svelte';
-  import { ArrayField } from '#lib/tiny/fields/fields/array.svelte.js';
-  import type { InferArrayFieldItem } from '#lib/tiny/fields/models/types.svelte.js';
   import Content from '#lib/tiny/form/content/content.svelte';
   import Row from '#lib/tiny/form/content/row.svelte';
   import Form from '#lib/tiny/form/form.svelte';
@@ -12,14 +10,16 @@
   import Section from '#lib/tiny/page/section.svelte';
   import Placeholder from '#lib/tiny/placeholder.svelte';
   import type { Snippet } from 'svelte';
-  import type { ArrayGridEditingLayout, GridModel } from './layout.svelte.ts';
+  import type { ArrayGridEditingLayout, InferItemFromLayout } from './layout.svelte.ts';
+
+  type I = InferItemFromLayout<L>;
 
   let {
     layout,
     selected: selectedSnippet,
   }: {
-    layout: ArrayGridEditingLayout<T, F>;
-    selected: Snippet<[{ item: I; deleteRestoreRow: Snippet }]>;
+    layout: L;
+    selected: Snippet<[{ item: I }]>;
   } = $props();
 
   let field = $derived(layout.field);
@@ -30,22 +30,21 @@
   let onRestore = () => layout.field?.restore();
 </script>
 
-{#snippet deleteRestoreRow()}
-  {#if selected}
-    <Row>
-      {#if selected.isDeleted}
-        <Button variant="light" label="Restore" onClick={() => selected.restore()} />
-      {:else}
-        <Button variant="light" label="Delete" onClick={() => selected.delete()} />
-      {/if}
-    </Row>
-  {/if}
-{/snippet}
-
 {#if field}
   <Section height="fill">
     {#if selected}
-      {@render selectedSnippet({ item: selected as I, deleteRestoreRow })}
+      <Form>
+        <Content>
+          {@render selectedSnippet({ item: selected as I })}
+          <Row>
+            {#if selected.isDeleted}
+              <Button variant="light" label="Restore" onClick={() => selected.restore()} />
+            {:else}
+              <Button variant="light" label="Delete" onClick={() => selected.delete()} />
+            {/if}
+          </Row>
+        </Content>
+      </Form>
     {:else}
       <Placeholder icon={TablerPhoto} label="No selection" />
     {/if}

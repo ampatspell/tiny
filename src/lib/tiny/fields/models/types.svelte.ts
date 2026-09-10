@@ -1,4 +1,4 @@
-import type { ArrayField } from '../fields/array.svelte.ts';
+import type { ArrayField, ArrayFieldItem } from '../fields/array.svelte.ts';
 import type { Factory } from './factory.svelte.ts';
 import type { FieldDefinition } from './field-definition.svelte.ts';
 import type { Field } from './field.svelte.ts';
@@ -53,4 +53,4 @@ export type SerializedDirtyArrayItem<R extends Data> = SerializedDirtyArrayItemR
   InferSerializedDirtyFromDefinitionRecord<R>
 >;
 
-export type InferArrayFieldItem<T> = T extends ArrayField ? T['items'][number] : never;
+export type InferArrayFieldItem<A> = A extends ArrayField<infer T, infer R> ? ArrayFieldItem<T, R> : never;
