@@ -50,8 +50,8 @@
       align-items: center;
       justify-content: center;
       > .thumbnail {
-        width: 100%;
         flex: 1;
+        width: 100%;
         background: var(--url);
         background-repeat: no-repeat;
         background-position: center;

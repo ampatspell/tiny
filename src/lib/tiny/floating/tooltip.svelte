@@ -16,11 +16,13 @@
     label,
     offset,
     placement = 'top',
+    variant = 'regular',
   }: {
     children?: Snippet;
     label?: string;
     offset?: OffsetOptions;
     placement?: Placement;
+    variant: 'regular' | 'fill';
   } = $props();
 
   let reference = $state<HTMLDivElement>();
@@ -87,7 +89,7 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <!-- svelte-ignore a11y_mouse_events_have_key_events -->
 <div
-  class="reference"
+  class={['reference', `variant-${variant}`]}
   bind:this={reference}
   onmouseover={() => (show.reference = true)}
   onmouseout={() => (show.reference = false)}
@@ -134,6 +136,14 @@
       0px 2px 8px 0px rgba(0, 0, 0, 0.12);
   }
   .reference {
-    width: min-content;
+    &.variant-regular {
+      width: min-content;
+    }
+    &.variant-fill {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
   }
 </style>
