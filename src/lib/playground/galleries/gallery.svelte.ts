@@ -11,7 +11,6 @@ import {
   addGallery,
   deleteFile,
   deleteGallery,
-  getGalleryById,
   updateFile,
   updateGallery,
   type GalleryDetailsData,
@@ -109,7 +108,6 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
                 }
               }
             }
-            await getGalleryById({ id }).refresh();
           }
         }
       }
@@ -141,12 +139,17 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
+  const clear = () => {
+    fields.record.files?.clear();
+  };
+
   return fields.asEditable(
     {
       isNew: getter(() => isNew),
       save,
       destroy,
       add,
+      clear,
     },
     {
       name: 'GalleryModel',

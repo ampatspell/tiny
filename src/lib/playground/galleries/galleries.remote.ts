@@ -86,7 +86,12 @@ export const deleteGallery = command(v.strictObject({ id: v.string() }), async (
 export const deleteFile = command(v.strictObject({ id: v.string() }), async ({ id }) => {
   await assertRole('admin');
 
-  await getDatabase().deleteFrom('galleryFiles').where('id', '==', id).execute();
+  const db = getDatabase();
+  const record = await db.selectFrom('galleryFiles').selectAll().where('id', '==', id).executeTakeFirstOrThrow();
+
+  await db.deleteFrom('galleryFiles').where('id', '==', id).execute();
+
+  getGalleryById({ id: record.galleryId }).refresh();
 });
 
 export const addFile = command(
@@ -103,6 +108,8 @@ export const addFile = command(
     const fileId = uid();
     await getFiles().file(fileId).store(file);
     await getDatabase().insertInto('galleryFiles').values({ fileId, galleryId, id, position, name }).execute();
+
+    getGalleryById({ id: galleryId }).refresh();
   },
 );
 
@@ -118,14 +125,14 @@ export const updateFile = command(
 
     const db = getDatabase();
 
+    const record = await db
+      .selectFrom('galleryFiles')
+      .selectAll()
+      .where('id', '==', props.id)
+      .executeTakeFirstOrThrow();
+
     let fileId;
     if (props.file && props.file) {
-      const record = await db
-        .selectFrom('galleryFiles')
-        .selectAll()
-        .where('id', '==', props.id)
-        .executeTakeFirstOrThrow();
-
       fileId = uid();
       await getFiles().replace({
         prev: record.fileId,
@@ -136,16 +143,16 @@ export const updateFile = command(
 
     const { name, position } = props;
 
-    if (fileId || typeof name === 'string' || typeof position === 'number') {
-      await getDatabase()
-        .updateTable('galleryFiles')
-        .where('id', '==', props.id)
-        .set({
-          fileId,
-          name,
-          position,
-        })
-        .execute();
-    }
+    await getDatabase()
+      .updateTable('galleryFiles')
+      .where('id', '==', props.id)
+      .set({
+        fileId,
+        name,
+        position,
+      })
+      .execute();
+
+    getGalleryById({ id: record.galleryId }).refresh();
   },
 );

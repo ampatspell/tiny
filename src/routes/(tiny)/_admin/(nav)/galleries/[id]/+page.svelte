@@ -20,6 +20,7 @@
   let gallery = $derived(await getGalleryById({ id }));
   let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
   let onAdd = () => model.add();
+  let onClear = () => model.clear();
   let _selected = $derived(model.fields.files?.items[0]);
   let selected = $derived.by(() => {
     if (!_selected?.isDeleted) {
@@ -56,6 +57,7 @@
           <Content>
             <Row>
               <Button label="Add" onClick={onAdd} />
+              <Button label="Clear" onClick={onClear} />
             </Row>
           </Content>
         </Form>
