@@ -22,7 +22,7 @@
     });
     if (ok) {
       await model.destroy?.();
-      goto(route, { replaceState: true });
+      goto(route, { replace: true });
     }
   };
 </script>

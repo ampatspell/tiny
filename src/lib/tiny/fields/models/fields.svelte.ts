@@ -100,8 +100,10 @@ export class Fields<
     const all: Field[] = [];
     const fields = this.record;
     for (const key in fields) {
-      const field = fields[key] as Field;
-      all.push(...field['fields']);
+      const field = fields[key];
+      if (field instanceof Field) {
+        all.push(...field['fields']);
+      }
     }
     return all;
   });
