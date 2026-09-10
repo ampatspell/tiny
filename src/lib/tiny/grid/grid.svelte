@@ -1,4 +1,4 @@
-<script lang="ts" generics="T extends object">
+<script lang="ts" generics="T">
   import TablerPhoto from '#lib/tiny/icons/tabler--photo.svelte';
   import Placeholder from '#lib/tiny/placeholder.svelte';
   import { getter } from '#lib/tiny/utils/options.svelte.js';

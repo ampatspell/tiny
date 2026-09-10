@@ -15,6 +15,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   const data = $derived(opts.data);
   const id = $derived(data.id);
+  const title = $derived(data.title ?? 'Index');
 
   const broadcast = useBroadcastChannel();
 
@@ -49,6 +50,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
 
   return fields.asEditable(
     {
+      title: getter(() => title),
       save,
     },
     { name: 'IndexModel', serialized: ['isDirty'] },

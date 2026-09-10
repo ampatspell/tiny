@@ -22,7 +22,7 @@
     label?: string;
     offset?: OffsetOptions;
     placement?: Placement;
-    variant: 'regular' | 'fill';
+    variant?: 'regular' | 'fill';
   } = $props();
 
   let reference = $state<HTMLDivElement>();

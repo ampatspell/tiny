@@ -11,7 +11,6 @@
   let model = useIndexModel({ data: getter(() => data) });
 
   let layout = useEditingLayout({
-    title: getter(() => data.title ?? 'Index'),
     model,
   });
 </script>

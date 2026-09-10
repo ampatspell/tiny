@@ -7,8 +7,8 @@
     children,
   }: {
     variant?: 'regular' | 'wide';
-    sidebar: Snippet;
-    children: Snippet;
+    sidebar?: Snippet;
+    children?: Snippet;
   } = $props();
 </script>
 

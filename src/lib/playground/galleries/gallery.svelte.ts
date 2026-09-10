@@ -1,3 +1,4 @@
+import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import type { InferArrayFieldItem } from '#lib/tiny/fields/models/types.svelte.js';
 import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
@@ -30,6 +31,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const opts = options(_opts);
   const isNew = $derived(opts.isNew);
   const files = useFiles();
+  const broadcast = useBroadcastChannel();
 
   const data = $derived.by(() => {
     const data = opts.data;
@@ -81,6 +83,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
       if (opts.isNew) {
         const data = fields.serialized.all;
         id = await addGallery(data);
+        broadcast.notifyDidSave();
       } else {
         const data = fields.serialized.dirty;
         if (data) {
@@ -110,6 +113,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
               }
             }
           }
+          broadcast.notifyDidSave();
         }
       }
       return id;
@@ -142,6 +146,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
 
   return fields.asEditable(
     {
+      title: getter(() => data.name),
       isNew: getter(() => isNew),
       save,
       destroy,
