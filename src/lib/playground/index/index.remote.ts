@@ -5,6 +5,7 @@ import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { command, query } from '$app/server';
 import * as v from 'valibot';
 import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
+import { getGalleries } from '../galleries/galleries.remote.ts';
 
 export const getIndex = query(async () => {
   const db = getDatabase();
@@ -32,7 +33,9 @@ export const getIndex = query(async () => {
     background = await files.file(index.backgroundId).load();
   }
 
-  return { ...index, background };
+  const galleries = await getGalleries();
+
+  return { ...index, background, galleries };
 });
 
 export type IndexData = QueryResponse<typeof getIndex>;
