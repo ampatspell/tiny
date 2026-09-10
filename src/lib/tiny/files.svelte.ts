@@ -136,6 +136,13 @@ const asRemoteFile = ({ data, files }: { data: FileData | undefined; files: File
   }
 };
 
+const asUniversalFile = (...args: Parameters<typeof asRemoteFile>) => {
+  const file = asRemoteFile(...args);
+  if (file) {
+    return file as UniversalFile;
+  }
+};
+
 export type CreateLocalFileOptions = { file: File };
 
 const createLocalFile = ({ data }: { data: CreateLocalFileOptions; files: FilesContext }) => {
@@ -247,6 +254,7 @@ const createFiles = () => {
   const files = options(
     {
       asRemote: (data: FileData | undefined) => asRemoteFile({ data, files }),
+      asUniversal: (data: FileData | undefined) => asUniversalFile({ data, files }),
       create: {
         local: (data: CreateLocalFileOptions) => createLocalFile({ data, files }),
         remote: (data: FileData) => createRemoteFile({ data, files }),

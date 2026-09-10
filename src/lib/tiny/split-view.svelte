@@ -29,6 +29,9 @@
       width: 260px;
       display: flex;
       flex-direction: column;
+      &:empty {
+        display: none;
+      }
     }
     > .content {
       flex: 1;

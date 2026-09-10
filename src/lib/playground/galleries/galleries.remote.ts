@@ -83,16 +83,69 @@ export const deleteGallery = command(v.strictObject({ id: v.string() }), async (
   getGalleries().refresh();
 });
 
-// export const addFile = command(v.strictObject({ id: v.string() }), async ({ id }) => {
-//   const buffer = await readFile(join(import.meta.dirname, '../../tiny/assets/film-0677-011.jpg'));
-//   const file = new File([buffer], 'film-0677-011.jpg', { type: 'image/jpeg' });
-//   const fileId = uid();
+export const deleteFile = command(v.strictObject({ id: v.string() }), async ({ id }) => {
+  await assertRole('admin');
 
-//   await getFiles().file(fileId).store(file);
-//   await getDatabase()
-//     .insertInto('galleryFiles')
-//     .values({ fileId, galleryId: id, id: uid(), position: 0, name: 'film-0677-011' })
-//     .execute();
+  await getDatabase().deleteFrom('galleryFiles').where('id', '==', id).execute();
+});
 
-//   getGalleryById({ id }).refresh();
-// });
+export const addFile = command(
+  v.strictObject({
+    id: v.string(),
+    file: v.file(),
+    name: v.string(),
+    position: v.number(),
+  }),
+  async ({ id: galleryId, file, position, name }) => {
+    await assertRole('admin');
+
+    const id = uid();
+    const fileId = uid();
+    await getFiles().file(fileId).store(file);
+    await getDatabase().insertInto('galleryFiles').values({ fileId, galleryId, id, position, name }).execute();
+  },
+);
+
+export const updateFile = command(
+  v.strictObject({
+    id: v.string(),
+    file: v.optional(v.strictObject({ file: v.optional(v.file()) })),
+    name: v.optional(v.string()),
+    position: v.optional(v.number()),
+  }),
+  async (props) => {
+    await assertRole('admin');
+
+    const db = getDatabase();
+
+    let fileId;
+    if (props.file && props.file) {
+      const record = await db
+        .selectFrom('galleryFiles')
+        .selectAll()
+        .where('id', '==', props.id)
+        .executeTakeFirstOrThrow();
+
+      fileId = uid();
+      await getFiles().replace({
+        prev: record.fileId,
+        next: fileId,
+        file: props.file.file,
+      });
+    }
+
+    const { name, position } = props;
+
+    if (fileId || typeof name === 'string' || typeof position === 'number') {
+      await getDatabase()
+        .updateTable('galleryFiles')
+        .where('id', '==', props.id)
+        .set({
+          fileId,
+          name,
+          position,
+        })
+        .execute();
+    }
+  },
+);

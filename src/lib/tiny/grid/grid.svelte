@@ -75,6 +75,8 @@
     overflow: hidden;
     user-select: none;
     position: relative;
+    display: flex;
+    flex-direction: column;
     > .overflow {
       position: absolute;
       top: var(--padding);
