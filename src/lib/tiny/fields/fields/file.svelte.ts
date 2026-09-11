@@ -22,13 +22,13 @@ export class FileField extends ValueField<T, SerializedFileField, FileFieldDefin
   protected readonly editor = File;
 }
 
-export type FileFieldDefinitionOptions = ValueFieldDefinitionOptions<T> & {
+export type FileFieldDefinitionOptions = ValueFieldDefinitionOptions<T, FileField> & {
   accept?: string[];
   variant: Tiny.Thumbnail;
   isRequired?: boolean;
 };
 
-export class FileFieldDefinition extends ValueFieldDefinition<T, FileFieldDefinitionOptions> {
+export class FileFieldDefinition extends ValueFieldDefinition<T, FileField, FileFieldDefinitionOptions> {
   readonly accept = $derived(this.opts.accept);
   readonly variant = $derived(this.opts.variant);
   readonly isRequired = $derived(this.opts.isRequired);

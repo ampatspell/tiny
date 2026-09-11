@@ -41,11 +41,11 @@ export class NumberField extends ValueField<T, T, NumberFieldDefinition> {
   protected readonly editor = Number;
 }
 
-export type NumberFieldDefinitionOptions = ValueFieldDefinitionOptions<T> & {
+export type NumberFieldDefinitionOptions = ValueFieldDefinitionOptions<T, NumberField> & {
   fallback?: T;
 };
 
-export class NumberFieldDefinition extends ValueFieldDefinition<T, NumberFieldDefinitionOptions> {
+export class NumberFieldDefinition extends ValueFieldDefinition<T, NumberField, NumberFieldDefinitionOptions> {
   readonly fallback = $derived(this.opts.fallback ?? 0);
 
   field(opts: CreateFieldOptions): NumberField {

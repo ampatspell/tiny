@@ -1,5 +1,6 @@
 import { equals } from '#lib/tiny/utils/equals.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { Any } from '#lib/tiny/utils/utils.js';
 import { FieldDefinition, type FieldDefinitionOptions } from '../models/field-definition.svelte.ts';
 import { Field } from '../models/field.svelte.ts';
 import type { Validator } from '../models/validator.svelte.ts';
@@ -24,12 +25,12 @@ export class SerializedValueField<V = unknown> {
   });
 }
 
-export type FieldUpdatePair<T> = { field: ValueField<T>; before: T; after: T };
+export type FieldUpdatePair<T, F> = { field: F; before: T; after: T };
 
 export abstract class ValueField<
   T = unknown,
   S = unknown,
-  D extends ValueFieldDefinition<T> = ValueFieldDefinition<T>,
+  D extends ValueFieldDefinition<T, Any, Any> = ValueFieldDefinition<T>,
 > extends Field<T, D> {
   private _value = $derived(this.data);
   readonly value = $derived(this._value);
@@ -77,25 +78,27 @@ export abstract class ValueField<
   protected abstract readonly _serialized: S;
 }
 
-export type BaseValueFieldDefinitionOptions<T> = {
-  willUpdate?: (pair: FieldUpdatePair<T>) => void;
-  didUpdate?: (pair: FieldUpdatePair<T>) => void;
+export type BaseValueFieldDefinitionOptions<T, F> = {
+  willUpdate?: (pair: FieldUpdatePair<T, F>) => void;
+  didUpdate?: (pair: FieldUpdatePair<T, F>) => void;
   validator?: Validator<T>;
 };
 
-export type ValueFieldDefinitionOptions<T> = FieldDefinitionOptions & BaseValueFieldDefinitionOptions<T>;
+export type ValueFieldDefinitionOptions<T, F = ValueField<T, Any, Any>> = FieldDefinitionOptions &
+  BaseValueFieldDefinitionOptions<T, F>;
 
 export abstract class ValueFieldDefinition<
   T = unknown,
-  O extends ValueFieldDefinitionOptions<T> = ValueFieldDefinitionOptions<T>,
+  F = ValueField<T, Any, Any>,
+  O extends ValueFieldDefinitionOptions<T, F> = ValueFieldDefinitionOptions<T, F>,
 > extends FieldDefinition<O> {
   readonly validator = $derived(this.opts.validator);
 
-  willUpdate(pair: FieldUpdatePair<T>) {
+  willUpdate(pair: FieldUpdatePair<T, F>) {
     this.opts.willUpdate?.(pair);
   }
 
-  didUpdate(pair: FieldUpdatePair<T>) {
+  didUpdate(pair: FieldUpdatePair<T, F>) {
     this.opts.didUpdate?.(pair);
   }
 }

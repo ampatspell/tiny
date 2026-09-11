@@ -1,7 +1,7 @@
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { ArrayKey, FileKey, NumberKey, OptionalId, StringKey } from '#lib/tiny/utils/utils.js';
 import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions, type Entry } from '../fields/array.svelte.ts';
-import { ColorFieldDefinition } from '../fields/color.svelte.ts';
+import { ColorFieldDefinition, type ColorFieldDefinitionOptions } from '../fields/color.svelte.ts';
 import { FileFieldDefinition, type FileFieldDefinitionOptions } from '../fields/file.svelte.ts';
 import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from '../fields/number.svelte.ts';
 import { StringFieldDefinition, type StringFieldDefinitionOptions } from '../fields/string.svelte.ts';
@@ -37,7 +37,7 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
     return new StringFieldDefinition({ key, ...this.base, ...opts });
   };
 
-  readonly color = <K extends StringKey<D>>(key: K, opts?: Opts<StringFieldDefinitionOptions>) => {
+  readonly color = <K extends StringKey<D>>(key: K, opts?: Opts<ColorFieldDefinitionOptions>) => {
     return new ColorFieldDefinition({ key, ...this.base, ...opts });
   };
 
