@@ -1,19 +1,20 @@
 ## TODO
 
+- [ ] Proper `<form/>` element to support submits with enter
 - [ ] Busy state for fields while saving
 - [ ] Defaults for `handleError`
 - [ ] Unsaved changes warning dialog
 - [ ] Server validation errors in forms
-- [ ] Proper `<form/>` element to support submits with enter
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
 - [ ] `<Select />` component
-- [ ] Markdown field (MDsveX maybe?)
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
 - [ ] Button state which looks like a link (auth forms)
+- [ ] Markdown field (MDsveX maybe?)
+- [ ] Textarea
 - [x] willUpdate & didUpdate in arrays
 - [x] Galleries demo impl
 - [x] Fields: Arrays

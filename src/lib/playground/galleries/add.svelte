@@ -31,7 +31,7 @@
     <Fields model={properties} />
     <Actions>
       <Button label="Cancel" onClick={onCancel} />
-      <Busy label="Add" onClick={onSave} />
+      <Busy type="submit" label="Add" onClick={onSave} />
     </Actions>
   </Form>
 </Card>

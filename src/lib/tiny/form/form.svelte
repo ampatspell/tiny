@@ -8,9 +8,9 @@
   let { size = 'small', children }: { size?: Size; children?: Snippet } = $props();
 </script>
 
-<div class={['form', `size-${size}`]}>
+<form class={['form', `size-${size}`]}>
   {@render children?.()}
-</div>
+</form>
 
 <style lang="scss">
   .form {

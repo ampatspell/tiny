@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  export type ButtonType = 'regular' | 'fill';
+  export type ButtonType = 'button' | 'submit';
   export type ButtonVariant = 'regular' | 'light';
 
   class ButtonContext {
@@ -22,12 +22,12 @@
     isBusy: _isBusy,
     onClick,
     children,
-    type = 'regular',
+    type = 'button',
     variant = 'regular',
   }: {
     isDisabled?: boolean;
     isBusy?: boolean;
-    onClick: (e: MouseEvent) => void;
+    onClick?: (e: MouseEvent) => void;
     label?: string;
     children?: Snippet;
     type?: ButtonType;
@@ -35,7 +35,7 @@
   } = $props();
 
   let onclick = (e: MouseEvent) => {
-    onClick(e);
+    onClick?.(e);
   };
 
   let context = setButtonContext(new ButtonContext());
@@ -49,10 +49,11 @@
 </script>
 
 <button
-  class={['button', `type-${type}`, `variant-${variant}`, context.label && 'has-label']}
+  class={['button', `variant-${variant}`, context.label && 'has-label']}
   class:disabled={isDisabled}
   class:busy={isBusy}
   disabled={isBusyOrDisabled}
+  {type}
   {onclick}
   bind:this={element}
 >
@@ -99,17 +100,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    max-width: max-content;
     white-space: nowrap;
     gap: 8px;
     transition:
       0.15s ease-in-out opacity,
       0.1s ease-in-out background-color;
-    &.type-regular {
-      max-width: max-content;
-    }
-    &.type-fill {
-      width: 100%;
-    }
     &.busy {
       background-color: #000;
     }

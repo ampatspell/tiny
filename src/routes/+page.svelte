@@ -14,7 +14,7 @@
   <div class="page">
     <Index />
   </div>
-  <a href={resolve('/(tiny)/_admin/(nav)/index')} class="edit">
+  <a href={resolve('/(tiny)/_admin/(nav)')} class="edit">
     <Icon icon={TablerBalloon} />
     <div class="label">open backend (admin/admin)</div>
   </a>
