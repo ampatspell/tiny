@@ -6,6 +6,7 @@
   import type { Snippet } from 'svelte';
   import type { AspectRatio } from '../utils/aspect-ratio.ts';
   import { getActiveInputElement } from '../utils/dom.ts';
+  import Cell from './cell.svelte';
   import { setGridContext, type Direction } from './model.svelte.ts';
 
   let {
@@ -14,7 +15,7 @@
     gap,
     aspectRatio,
     selected,
-    onSelect: _onSelect,
+    onSelect,
     children,
   }: {
     models: T[];
@@ -39,19 +40,14 @@
 
   let size = $derived(context.size);
 
-  let onSelect = (e: MouseEvent, model: T) => {
-    e.stopPropagation();
-    _onSelect?.(model);
-  };
-
   let onClickOutside = () => {
-    _onSelect?.(undefined);
+    onSelect?.(undefined);
   };
 
   let onKey = (e: KeyboardEvent) => {
     if (!getActiveInputElement()) {
       if (e.key === 'Escape') {
-        _onSelect?.(undefined);
+        onSelect?.(undefined);
       } else {
         let map: { [key: string]: Direction } = {
           ArrowLeft: 'left',
@@ -64,28 +60,19 @@
           let next = context.navigate(direction);
           if (next) {
             e.preventDefault();
-            _onSelect?.(next);
+            onSelect?.(next);
+            let cell = cells.find((cell) => cell.matches(next));
+            cell?.scrollIntoView();
           }
         }
       }
     }
   };
+
+  let cells = $state<Cell<T>[]>([]);
 </script>
 
 <svelte:window onkeydown={onKey} />
-
-{#snippet item(model: T)}
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div
-    class="item"
-    style:--width={px(context.item?.width)}
-    style:--height={px(context.item?.height)}
-    onclick={(e) => onSelect(e, model)}
-  >
-    {@render children({ model, isSelected: model === selected })}
-  </div>
-{/snippet}
 
 <div class="grid" style:--gap={px(context.gap)} style:--padding={px(context.padding)} bind:clientWidth={width}>
   {#if models.length}
@@ -94,8 +81,10 @@
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="overflow" onclick={onClickOutside}>
         <div class="content" style:--width={px(size.width)}>
-          {#each models as model (model)}
-            {@render item(model)}
+          {#each models as model, idx (model)}
+            <Cell {model} {onSelect} bind:this={cells[idx]}>
+              {@render children({ model, isSelected: model === selected })}
+            </Cell>
           {/each}
         </div>
       </div>
@@ -126,12 +115,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: var(--gap);
-        > .item {
-          display: flex;
-          flex-direction: column;
-          width: var(--width);
-          height: var(--height);
-        }
       }
     }
   }
