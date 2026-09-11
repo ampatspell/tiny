@@ -23,8 +23,11 @@ export const useNavigationConfirmation = (
     });
 
     if (confirmed && navigation.to) {
-      await goto(navigation.to.url);
-      confirmed = false;
+      try {
+        await goto(navigation.to.url);
+      } finally {
+        confirmed = false;
+      }
     }
   };
 
