@@ -43,7 +43,7 @@
     {/snippet}
     <Section height="fill">
       {#if field && items}
-        <Grid models={items} aspectRatio="2x3" {selected} {onSelect}>
+        <Grid models={items} aspectRatio={layout.aspectRatio} {selected} {onSelect}>
           {#snippet children({ model, isSelected })}
             {@render item({ item: model as I, isSelected })}
           {/snippet}

@@ -1,7 +1,13 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { children, accessories }: { children?: Snippet; accessories?: Snippet } = $props();
+  let {
+    children,
+    accessories,
+  }: {
+    children?: Snippet;
+    accessories?: Snippet;
+  } = $props();
 </script>
 
 <div class="header">
@@ -28,6 +34,7 @@
       align-items: center;
       &.left {
         flex: 1;
+        gap: 10px;
       }
     }
   }

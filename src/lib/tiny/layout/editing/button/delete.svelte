@@ -10,7 +10,7 @@
 
   let floaters = useFloaters();
   let model = $derived(layout.model);
-  let route = $derived(layout.route);
+  let route = $derived(layout.admin);
 
   let onClick = async (reference: HTMLElement) => {
     let ok = await confirm({

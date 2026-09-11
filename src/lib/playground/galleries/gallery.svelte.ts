@@ -6,6 +6,7 @@ import { hasKeys, omit } from '#lib/tiny/utils/object.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { slug } from '#lib/tiny/utils/string.js';
 import { images, type OptionalId } from '#lib/tiny/utils/utils.js';
+import { resolve } from '$app/paths';
 import {
   addFile,
   addGallery,
@@ -151,9 +152,17 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
+  const route = $derived.by(() => {
+    const permalink = fields.record.permalink;
+    if (!fields.record.permalink.isDirty) {
+      return resolve('/galleries/[permalink]', { permalink: permalink.value });
+    }
+  });
+
   return fields.asEditable(
     {
       title: getter(() => data.name),
+      route: getter(() => route),
       isNew: getter(() => isNew),
       save,
       destroy,

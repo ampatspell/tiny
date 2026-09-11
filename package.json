@@ -285,6 +285,10 @@
       "types": "./dist/tiny/icons/tabler--square-rounded-plus.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--square-rounded-plus.svelte"
     },
+    "./icons/tabler--sun": {
+      "types": "./dist/tiny/icons/tabler--sun.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--sun.svelte"
+    },
     "./icons/tabler--trash-x": {
       "types": "./dist/tiny/icons/tabler--trash-x.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--trash-x.svelte"

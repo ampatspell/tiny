@@ -25,6 +25,6 @@ export const aspectRatio = (value: AspectRatio) => aspectRatioValues[value];
 export const sizeFor = (width: number, ratio: AspectRatio) => {
   return {
     width,
-    height: aspectRatio(ratio) * width,
+    height: width / aspectRatio(ratio),
   };
 };

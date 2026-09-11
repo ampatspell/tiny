@@ -3,6 +3,7 @@
   import type { Snippet } from 'svelte';
   import Delete from './button/delete.svelte';
   import Discard from './button/discard.svelte';
+  import Public from './button/public.svelte';
   import Save from './button/save.svelte';
   import type { EditingLayout, Model } from './layout.svelte.ts';
 
@@ -18,6 +19,9 @@
 </script>
 
 <Page {label}>
+  {#snippet navigation()}
+    <Public {layout} />
+  {/snippet}
   {#snippet accessories()}
     <Save {layout} />
     <Discard {layout} />

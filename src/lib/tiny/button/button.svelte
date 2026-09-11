@@ -10,59 +10,78 @@
   let [getButtonContext, setButtonContext] = createContext<ButtonContext>();
 
   export { getButtonContext, setButtonContext };
+
+  export type BaseButtonProps = {
+    isDisabled?: boolean;
+    isBusy?: boolean;
+    label?: string;
+    children?: Snippet;
+    variant?: ButtonVariant;
+  };
+
+  export type ButtonProps = BaseButtonProps &
+    (
+      | {
+          type?: 'button' | 'submit' | undefined;
+          onClick: (e: MouseEvent) => void;
+        }
+      | {
+          type: 'link';
+          route: ResolvedPathname | undefined;
+        }
+    );
 </script>
 
 <script lang="ts">
+  import type { ResolvedPathname } from '$app/types';
   import { createContext, type Snippet } from 'svelte';
   import Label from './label.svelte';
 
-  let {
-    label,
-    isDisabled: _isDisabled,
-    isBusy: _isBusy,
-    onClick,
-    children,
-    type = 'button',
-    variant = 'regular',
-  }: {
-    isDisabled?: boolean;
-    isBusy?: boolean;
-    onClick?: (e: MouseEvent) => void;
-    label?: string;
-    children?: Snippet;
-    type?: ButtonType;
-    variant?: ButtonVariant;
-  } = $props();
-
-  let onclick = (e: MouseEvent) => {
-    onClick?.(e);
-  };
+  let props: ButtonProps = $props();
+  let label = $derived(props.label);
+  let children = $derived(props.children);
+  let isBusy = $derived(props.isBusy ?? false);
+  let isDisabled = $derived(props.isDisabled ?? false);
+  let isBusyOrDisabled = $derived(isBusy || isDisabled);
+  let variant = $derived(props.variant ?? 'regular');
 
   let context = setButtonContext(new ButtonContext());
+  let element = $state<HTMLButtonElement | HTMLAnchorElement>();
 
-  let isBusy = $derived(_isBusy ?? false);
-  let isDisabled = $derived(_isDisabled ?? false);
-  let isBusyOrDisabled = $derived(isBusy || isDisabled);
+  let onclick = (e: MouseEvent) => {
+    if (props.type !== 'link') {
+      props.onClick?.(e);
+    }
+  };
 
-  let element = $state<HTMLButtonElement>();
   export { element };
+
+  let classes = $derived([
+    'button',
+    `variant-${variant}`,
+    context.label && 'has-label',
+    isDisabled && 'disabled',
+    isBusy && 'busy',
+  ]);
 </script>
 
-<button
-  class={['button', `variant-${variant}`, context.label && 'has-label']}
-  class:disabled={isDisabled}
-  class:busy={isBusy}
-  disabled={isBusyOrDisabled}
-  {type}
-  {onclick}
-  bind:this={element}
->
+{#snippet content()}
   {#if children}
     {@render children()}
   {:else}
     <Label {label} />
   {/if}
-</button>
+{/snippet}
+
+{#if !props.type || props.type === 'button' || props.type === 'submit'}
+  <button class={classes} disabled={isBusyOrDisabled} type={props.type} {onclick} bind:this={element}>
+    {@render content()}
+  </button>
+{:else if props.type === 'link'}
+  <a href={props.route ?? '#'} class={classes} bind:this={element}>
+    {@render content()}
+  </a>
+{/if}
 
 <style lang="scss">
   .button {
@@ -89,6 +108,7 @@
     color: var(--color);
     font-family: var(--tiny-font-family);
     font-size: var(--tiny-font-size);
+    text-decoration: none;
     outline: 1px solid var(--outline);
     outline-offset: -1px;
     width: 100%;
@@ -111,6 +131,7 @@
     }
     &.disabled {
       opacity: 0.25;
+      pointer-events: none;
     }
   }
 </style>

@@ -1,9 +1,11 @@
 import { useBackend } from '#lib/tiny/backend/context.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { ResolvedPathname } from '$app/types';
 
 export type Model = {
   title: string;
   isDirty: boolean;
+  route: ResolvedPathname | undefined;
   save: () => Promise<string | void | undefined>;
   rollback: () => void;
   destroy?: () => Promise<void>;
@@ -18,7 +20,8 @@ export const useEditingLayout = <P extends Model>(_opts: OptionsInput<EditingLay
   const backend = useBackend();
 
   const item = $derived(backend.item);
-  const route = $derived(item.route);
+  const admin = $derived(item.route);
+  const frontend = $derived(opts.model.route);
 
   const model = $derived(opts.model);
   const title = $derived(model.title);
@@ -26,7 +29,8 @@ export const useEditingLayout = <P extends Model>(_opts: OptionsInput<EditingLay
   return options({
     title: getter(() => title),
     model: getter(() => model),
-    route: getter(() => route),
+    admin: getter(() => admin),
+    frontend: getter(() => frontend),
   });
 };
 

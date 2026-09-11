@@ -6,16 +6,19 @@
   let {
     label,
     children,
+    navigation,
     accessories: _accessories,
   }: {
     label: string;
     children: Snippet;
+    navigation?: Snippet;
     accessories?: Snippet;
   } = $props();
 </script>
 
 <div class="page">
   <Header>
+    {@render navigation?.()}
     <Title {label} />
     {#snippet accessories()}
       {@render _accessories?.()}

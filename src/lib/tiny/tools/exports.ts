@@ -20,11 +20,9 @@ run(async () => {
     const local = dirname(entry);
     const contents = cache[local];
     if (contents) {
-      console.log('cached', local);
       return contents;
     }
     try {
-      console.log('load', local);
       const loaded = await readFile(join(local, '.blacklist'), 'utf-8');
       const contents = loaded.split('\n').filter(isTruthy);
       cache[local] = contents;

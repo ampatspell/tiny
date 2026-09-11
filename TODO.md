@@ -7,13 +7,16 @@
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
 - [ ] `<Select />` component
+- [ ] Dropdown field
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
-- [ ] Button state which looks like a link (auth forms)
+- [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
+- [x] Link as a button
+- [x] Open in frontend buttons for editable layouts
 - [x] Proper `<form/>` element to support submits with enter
 - [x] willUpdate & didUpdate in arrays
 - [x] Galleries demo impl
