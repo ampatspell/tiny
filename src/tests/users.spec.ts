@@ -10,8 +10,8 @@ describe('users', () => {
         role: 'admin',
       });
 
-      expect(result.id).toBeTruthy();
-      expect(result).toStrictEqual({ id: result.id, email: 'zeeba@gmail.com', role: 'admin' });
+      expect(result!.id).toBeTruthy();
+      expect(result).toStrictEqual({ id: result!.id, email: 'zeeba@gmail.com', role: 'admin' });
     });
   });
 

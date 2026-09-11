@@ -1,6 +1,6 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
-import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
+import { notBlank, optionalPermalink } from '#lib/tiny/fields/models/validator.svelte.js';
 import { useFiles } from '#lib/tiny/files.svelte.js';
 import { hasKeys, omit } from '#lib/tiny/utils/object.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
@@ -53,11 +53,12 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
       didUpdate: ({ after }) => {
         fields.record.permalink.update(slug(after, { replacement: '-' }));
       },
-      validator: notBlank(),
+      validator: notBlank,
     });
 
     const permalink = string('permalink', {
       description: 'Part after /galleries in public URL',
+      validator: optionalPermalink,
     });
 
     let files;

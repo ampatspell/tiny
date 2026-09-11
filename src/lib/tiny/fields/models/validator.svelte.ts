@@ -1,15 +1,40 @@
+import {
+  NotBlankSchema,
+  OptionalPermalinkSchema,
+  ProperPasswordSchema,
+  RequiredEmailSchema,
+} from '#lib/tiny/utils/schema.js';
+import { type Any } from '#lib/tiny/utils/utils.js';
+import * as v from 'valibot';
+
 export type Validator<T> = {
   validate: (value: T) => string | boolean | undefined;
   isRequired: boolean;
 };
 
-export const notBlank = (): Validator<string> => {
+export const valibot = <T>({
+  isRequired,
+  schema,
+}: {
+  isRequired: boolean;
+  schema: v.BaseSchema<T, Any, Any>;
+}): Validator<T> => {
+  const validate = (value: T) => {
+    const result = v.safeParse(schema, value, { abortEarly: true, abortPipeEarly: true });
+    if (!result.success) {
+      const issues = v.flatten<typeof schema>(result.issues);
+      const issue = issues.root?.[0];
+      return issue ?? 'Is not valid';
+    }
+    return undefined;
+  };
   return {
-    isRequired: true,
-    validate: (string) => {
-      if (string.trim().length === 0) {
-        return 'Should not be blank';
-      }
-    },
+    validate,
+    isRequired,
   };
 };
+
+export const notBlank = valibot({ isRequired: true, schema: NotBlankSchema });
+export const optionalPermalink = valibot({ isRequired: false, schema: OptionalPermalinkSchema });
+export const requiredEmail = valibot({ isRequired: true, schema: RequiredEmailSchema });
+export const properPassword = valibot({ isRequired: true, schema: ProperPasswordSchema });

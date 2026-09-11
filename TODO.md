@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Use valibot for field validations
 - [ ] Busy state for fields while saving
 - [ ] Server validation errors in forms
 - [ ] Defaults for `handleError`
@@ -15,6 +14,7 @@
 - [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
+- [x] Use valibot for field validations
 - [x] Unsaved changes warning dialog
 - [x] Link as a button
 - [x] Open in frontend buttons for editable layouts
