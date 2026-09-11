@@ -12,11 +12,11 @@ export class StringField extends ValueField<T, T, StringFieldDefinition> {
   protected editor = String;
 }
 
-export type StringFieldDefinitionOptions = ValueFieldDefinitionOptions<T> & {
+export type StringFieldDefinitionOptions = ValueFieldDefinitionOptions<T, StringField> & {
   type?: InputType;
 };
 
-export class StringFieldDefinition extends ValueFieldDefinition<T, StringFieldDefinitionOptions> {
+export class StringFieldDefinition extends ValueFieldDefinition<T, StringField, StringFieldDefinitionOptions> {
   readonly type = $derived(this.opts.type ?? 'text');
 
   field(opts: CreateFieldOptions): StringField {

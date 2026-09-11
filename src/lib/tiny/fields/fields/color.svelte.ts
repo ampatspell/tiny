@@ -10,9 +10,9 @@ export class ColorField extends ValueField<T, T, ColorFieldDefinition> {
   protected readonly editor = Color;
 }
 
-export type ColorFieldDefinitionOptions = ValueFieldDefinitionOptions<T>;
+export type ColorFieldDefinitionOptions = ValueFieldDefinitionOptions<T, ColorField>;
 
-export class ColorFieldDefinition extends ValueFieldDefinition<T, ColorFieldDefinitionOptions> {
+export class ColorFieldDefinition extends ValueFieldDefinition<T, ColorField, ColorFieldDefinitionOptions> {
   field(opts: CreateFieldOptions): ColorField {
     return new ColorField({
       definition: this,

@@ -15,13 +15,23 @@ run(async () => {
     './assets/film-0677-011.jpg': './dist/tiny/assets/film-0677-011.jpg',
   };
 
+  const cache: { [key: string]: string[] } = {};
   const blacklistFor = async (entry: string) => {
     const local = dirname(entry);
+    const contents = cache[local];
+    if (contents) {
+      console.log('cached', local);
+      return contents;
+    }
     try {
-      const contents = await readFile(join(local, '.blacklist'), 'utf-8');
-      return contents.split('\n').filter(isTruthy);
+      console.log('load', local);
+      const loaded = await readFile(join(local, '.blacklist'), 'utf-8');
+      const contents = loaded.split('\n').filter(isTruthy);
+      cache[local] = contents;
+      return contents;
     } catch (err) {
       if (typeof err === 'object' && (err as Record<string, unknown>).code === 'ENOENT') {
+        cache[local] = [];
         return [];
       }
       throw err;

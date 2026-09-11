@@ -109,6 +109,10 @@
       "types": "./dist/tiny/utils/array.d.ts",
       "svelte": "./dist/tiny/utils/array.js"
     },
+    "./utils/aspect-ratio": {
+      "types": "./dist/tiny/utils/aspect-ratio.d.ts",
+      "svelte": "./dist/tiny/utils/aspect-ratio.js"
+    },
     "./utils/clone": {
       "types": "./dist/tiny/utils/clone.d.ts",
       "svelte": "./dist/tiny/utils/clone.js"
@@ -233,6 +237,14 @@
       "types": "./dist/tiny/layout/editing/editing.svelte.d.ts",
       "svelte": "./dist/tiny/layout/editing/editing.svelte"
     },
+    "./layout/array-grid/layout": {
+      "types": "./dist/tiny/layout/array-grid/layout.svelte.d.ts",
+      "svelte": "./dist/tiny/layout/array-grid/layout.svelte.js"
+    },
+    "./layout/array-grid/array-grid": {
+      "types": "./dist/tiny/layout/array-grid/array-grid.svelte.d.ts",
+      "svelte": "./dist/tiny/layout/array-grid/array-grid.svelte"
+    },
     "./icons/lucide--cat": {
       "types": "./dist/tiny/icons/lucide--cat.svelte.d.ts",
       "svelte": "./dist/tiny/icons/lucide--cat.svelte"
@@ -261,6 +273,14 @@
       "types": "./dist/tiny/icons/tabler--photo.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--photo.svelte"
     },
+    "./icons/tabler--plus-filled": {
+      "types": "./dist/tiny/icons/tabler--plus-filled.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--plus-filled.svelte"
+    },
+    "./icons/tabler--square-rounded-plus-filled": {
+      "types": "./dist/tiny/icons/tabler--square-rounded-plus-filled.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--square-rounded-plus-filled.svelte"
+    },
     "./icons/tabler--square-rounded-plus": {
       "types": "./dist/tiny/icons/tabler--square-rounded-plus.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--square-rounded-plus.svelte"
@@ -280,6 +300,22 @@
     "./header/title": {
       "types": "./dist/tiny/header/title.svelte.d.ts",
       "svelte": "./dist/tiny/header/title.svelte"
+    },
+    "./grid/model": {
+      "types": "./dist/tiny/grid/model.svelte.d.ts",
+      "svelte": "./dist/tiny/grid/model.svelte.js"
+    },
+    "./grid/file": {
+      "types": "./dist/tiny/grid/file.svelte.d.ts",
+      "svelte": "./dist/tiny/grid/file.svelte"
+    },
+    "./grid/grid": {
+      "types": "./dist/tiny/grid/grid.svelte.d.ts",
+      "svelte": "./dist/tiny/grid/grid.svelte"
+    },
+    "./grid/item": {
+      "types": "./dist/tiny/grid/item.svelte.d.ts",
+      "svelte": "./dist/tiny/grid/item.svelte"
     },
     "./form/actions": {
       "types": "./dist/tiny/form/actions.svelte.d.ts",
