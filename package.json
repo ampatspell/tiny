@@ -22,7 +22,8 @@
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage",
     "test": "npm run test:unit -- --run",
-    "exports": "tsx ./src/lib/tiny/tools/exports.ts"
+    "exports": "tsx ./src/lib/tiny/tools/exports.ts",
+    "db": "litecli ./.local/tiny.db"
   },
   "bin": {
     "tiny": ".cli/cli.js"
@@ -144,6 +145,10 @@
     "./utils/promise": {
       "types": "./dist/tiny/utils/promise.d.ts",
       "svelte": "./dist/tiny/utils/promise.js"
+    },
+    "./utils/schema": {
+      "types": "./dist/tiny/utils/schema.d.ts",
+      "svelte": "./dist/tiny/utils/schema.js"
     },
     "./utils/set-global": {
       "types": "./dist/tiny/utils/set-global.d.ts",
