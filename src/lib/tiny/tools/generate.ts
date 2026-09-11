@@ -317,7 +317,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
             background: files.asRemote(data.background),
           })),
         }).define(({ string, file }) => ({
-          message: string('message', { validator: notBlank() }),
+          message: string('message', { validator: notBlank }),
           background: file('background', { accept: images, variant: '1024x1024' }),
         }));
 

@@ -1,6 +1,6 @@
-import type { Database } from '#lib/next/database/server/database.ts';
-import type { Files } from '#lib/next/files/server/files.ts';
-import type { Storage } from '#lib/next/storage/server/storage.ts';
+import type { Database } from '#lib/tiny/server/database/database.ts';
+import type { Files } from '#lib/tiny/server/files/files.ts';
+import type { Storage } from '#lib/tiny/server/storage/storage.ts';
 import type { Users } from '#lib/tiny/server/users/users.ts';
 import type { Variant } from './params.ts';
 
