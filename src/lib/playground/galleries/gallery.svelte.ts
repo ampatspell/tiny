@@ -65,7 +65,17 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
         return {
           name: string('name'),
           position: number('position'),
-          file: file('file', { accept: images, variant: '1024x1024', isRequired: true }),
+          file: file('file', {
+            accept: images,
+            variant: '1024x1024',
+            isRequired: true,
+            didUpdate: ({ field, after }) => {
+              const item = fields.record.files?.itemForField(field);
+              if (item) {
+                item.record.name.update(after?.basename ?? '');
+              }
+            },
+          }),
         };
       });
     }

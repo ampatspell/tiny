@@ -63,7 +63,7 @@
         if (direction) {
           let next = context.navigate(direction);
           if (next) {
-            e.stopPropagation();
+            e.preventDefault();
             _onSelect?.(next);
           }
         }

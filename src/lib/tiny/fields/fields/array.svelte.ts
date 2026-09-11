@@ -95,6 +95,10 @@ export class ArrayFieldItem<T extends Entry = Entry, R extends Data = Data> {
     this.fields.rollback();
   }
 
+  containsField(field: Field) {
+    return this.fields.containsField(field);
+  }
+
   constructor(opts: OptionsInput<ArrayFieldItemOptions<T, R>>) {
     this.opts = options(opts);
   }
@@ -174,6 +178,10 @@ export class ArrayField<T extends Entry = Entry, R extends Data = Data> extends 
       return prev;
     }
     return item;
+  }
+
+  itemForField(field: Field) {
+    return this.items.find((item) => item.containsField(field));
   }
 
   readonly existing = $derived(this.items.filter((item) => !item.isDeleted));
