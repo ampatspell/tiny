@@ -122,6 +122,10 @@ export class Fields<
     this.context.isTouched = false;
   };
 
+  containsField(field: Field) {
+    return this.all.includes(field);
+  }
+
   asEditable<O>(
     opts: OptionsInput<O>,
     meta?: {

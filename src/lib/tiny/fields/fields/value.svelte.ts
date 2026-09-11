@@ -24,7 +24,7 @@ export class SerializedValueField<V = unknown> {
   });
 }
 
-export type FieldUpdatePair<T> = { before: T; after: T };
+export type FieldUpdatePair<T> = { field: ValueField<T>; before: T; after: T };
 
 export abstract class ValueField<
   T = unknown,
@@ -63,7 +63,7 @@ export abstract class ValueField<
   readonly update = (after: T) => {
     const before = this.value;
     if (!equals(before, after)) {
-      const pair = { before, after };
+      const pair = { field: this, before, after };
       this.definition.willUpdate(pair);
       this._value = after;
       this.definition.didUpdate(pair);

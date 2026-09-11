@@ -1,7 +1,7 @@
 ## TODO
 
-- [ ] Busy state for fields while saving
 - [ ] willUpdate & didUpdate in arrays
+- [ ] Busy state for fields while saving
 - [ ] Fields: Nice UI for arrays with add, remove
 - [ ] Defaults for `handleError`
 - [ ] Unsaved changes warning dialog
