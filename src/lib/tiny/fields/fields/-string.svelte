@@ -7,9 +7,10 @@
 
   let type = $derived(field.type);
   let value = $derived(field.value);
+  let autofocus = $derived(field.autofocus);
   let onInput = $derived(field.onInput);
 </script>
 
 <Container {field}>
-  <Input {type} {value} {onInput} />
+  <Input {type} {value} {onInput} {autofocus} />
 </Container>

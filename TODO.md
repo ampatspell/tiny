@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Proper `<form/>` element to support submits with enter
 - [ ] Busy state for fields while saving
 - [ ] Defaults for `handleError`
 - [ ] Unsaved changes warning dialog
@@ -15,6 +14,7 @@
 - [ ] Button state which looks like a link (auth forms)
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
+- [x] Proper `<form/>` element to support submits with enter
 - [x] willUpdate & didUpdate in arrays
 - [x] Galleries demo impl
 - [x] Fields: Arrays

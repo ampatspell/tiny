@@ -15,7 +15,7 @@ export const useForm = (opts: {
       password: '',
     },
   }).define(({ string }) => ({
-    email: string('email', { validator: notBlank() }),
+    email: string('email', { validator: notBlank(), autofocus: true }),
     password: string('password', { validator: notBlank(), type: 'password' }),
   }));
 

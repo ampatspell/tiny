@@ -9,6 +9,7 @@
     value,
     placeholder,
     multiline,
+    autofocus,
     onEnter,
     onInput,
     onBlur,
@@ -18,6 +19,7 @@
     value: string | undefined;
     placeholder?: string;
     multiline?: boolean;
+    autofocus?: boolean;
     onEnter?: (value: string) => void;
     onInput?: (value: string) => void;
     onBlur?: (value: string) => void;
@@ -60,12 +62,39 @@
   };
 
   let disabled = $derived(isDisabled);
+  let element = $state<HTMLTextAreaElement | HTMLInputElement>();
+
+  $effect(() => {
+    if (autofocus) {
+      element?.focus();
+    }
+  });
 </script>
 
 {#if multiline}
-  <textarea class="input textarea" {placeholder} {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur}></textarea>
+  <textarea
+    bind:this={element}
+    class="input textarea"
+    {placeholder}
+    {disabled}
+    {value}
+    {oninput}
+    {onkeyup}
+    {onfocus}
+    {onblur}></textarea>
 {:else}
-  <input type={type ?? 'text'} class="input" {placeholder} {disabled} {value} {oninput} {onkeyup} {onfocus} {onblur} />
+  <input
+    bind:this={element}
+    type={type ?? 'text'}
+    class="input"
+    {placeholder}
+    {disabled}
+    {value}
+    {oninput}
+    {onkeyup}
+    {onfocus}
+    {onblur}
+  />
 {/if}
 
 <style lang="scss">

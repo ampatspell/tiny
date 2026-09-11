@@ -48,6 +48,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const fields = withDataFields({ data: getter(() => data) }).define(({ string, array }) => {
     const name = string('name', {
       label: 'Gallery name',
+      autofocus: isNew,
       didUpdate: ({ after }) => {
         fields.record.permalink.update(slug(after, { replacement: '-' }));
       },
