@@ -1,11 +1,11 @@
+import { error } from '@sveltejs/kit';
+import jwt from 'jsonwebtoken';
+import { pbkdf2Sync, randomBytes } from 'node:crypto';
+import { omit } from '../../utils/object.ts';
 import { run } from '../../utils/utils.ts';
 import type { Database } from '../database/database.ts';
 import type { DB } from '../database/schema.js';
-import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { uid } from '../utils.ts';
-import { omit } from '../../utils/object.ts';
-import jwt from 'jsonwebtoken';
-import { error } from '@sveltejs/kit';
 
 const { JsonWebTokenError } = jwt;
 
@@ -48,6 +48,8 @@ export const createUsers = async (opts: CreateUsersOptions) => {
   });
 
   const create = async ({ email, password, role }: { email: string; password: string; role?: Tiny.Role }) => {
+    email = email.toLowerCase().trim();
+
     const { salt, hash } = crypto.create({ password });
     if (!role) {
       const { count } = await db.selectFrom('users').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
@@ -56,6 +58,11 @@ export const createUsers = async (opts: CreateUsersOptions) => {
       }
       role = count === 0 ? roles.admin : roles.default;
     }
+
+    if (await db.selectFrom('users').select('id').where('email', '==', email).executeTakeFirst()) {
+      return;
+    }
+
     const result = await db
       .insertInto('users')
       .returningAll()
@@ -66,6 +73,8 @@ export const createUsers = async (opts: CreateUsersOptions) => {
   };
 
   const verify = async ({ email, password }: { email: string; password: string }) => {
+    email = email.toLowerCase().trim();
+
     const record = await db.selectFrom('users').where('email', '==', email).selectAll().executeTakeFirst();
     if (record) {
       const { id, role, salt, hash } = record;

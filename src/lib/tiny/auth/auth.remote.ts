@@ -11,7 +11,9 @@ export const signIn = command(
     const users = getUsersForRequestEvent();
     if (await users.signIn({ email, password })) {
       getToken().refresh();
+      return true;
     }
+    return false;
   },
 );
 
@@ -24,7 +26,9 @@ export const signUp = command(
     const users = getUsersForRequestEvent();
     if (await users.signUp({ email, password })) {
       getToken().refresh();
+      return true;
     }
+    return false;
   },
 );
 

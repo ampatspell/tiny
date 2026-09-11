@@ -12,8 +12,11 @@ export const signIn = async ({
   email: string;
   password: string;
 }) => {
-  await _signIn({ email, password });
-  channel.notifyTokenDidChange();
+  if (await _signIn({ email, password })) {
+    channel.notifyTokenDidChange();
+    return true;
+  }
+  return false;
 };
 
 export const signUp = async ({
@@ -25,8 +28,11 @@ export const signUp = async ({
   email: string;
   password: string;
 }) => {
-  await _signUp({ email, password });
-  channel.notifyTokenDidChange();
+  if (await _signUp({ email, password })) {
+    channel.notifyTokenDidChange();
+    return true;
+  }
+  return false;
 };
 
 export const signOut = async ({ channel }: { channel: BroadcastChannel }) => {

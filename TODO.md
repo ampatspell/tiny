@@ -1,8 +1,9 @@
 ## TODO
 
+- [ ] Use valibot for field validations
 - [ ] Busy state for fields while saving
-- [ ] Defaults for `handleError`
 - [ ] Server validation errors in forms
+- [ ] Defaults for `handleError`
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
 - [ ] `<Select />` component

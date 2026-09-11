@@ -2,7 +2,9 @@
   import Button from '#lib/tiny/button/button.svelte';
   import Center from '#lib/tiny/center.svelte';
   import Actions from '#lib/tiny/form/actions.svelte';
+  import Content from '#lib/tiny/form/content/content.svelte';
   import Fields from '#lib/tiny/form/content/fields.svelte';
+  import Label from '#lib/tiny/form/content/label.svelte';
   import TinyForm from '#lib/tiny/form/form.svelte';
   import Header from '#lib/tiny/form/header.svelte';
   import type { UseForm } from './model.svelte.ts';
@@ -20,9 +22,13 @@
 
 <Center>
   <TinyForm size="small">
-    <Header {title} />
-    <Fields field={model.email} />
-    <Fields field={model.password} />
+    <Header {title}>
+      <Label value={model.error} />
+    </Header>
+    <Content>
+      <Fields field={model.fields.email} />
+      <Fields field={model.fields.password} />
+    </Content>
     <Actions>
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->

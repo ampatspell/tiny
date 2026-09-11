@@ -4,6 +4,9 @@ import { sentenceCase } from 'text-sentence-case';
 export { sentenceCase, slug };
 
 export function widow(text: string): string {
+  if (text === ' ') {
+    return text;
+  }
   text = text.trim();
   if (text.length === 0) {
     return text;

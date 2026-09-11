@@ -1,11 +1,13 @@
 import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
+import { getter } from '#lib/tiny/utils/options.svelte.js';
 import type { ResolvedPathname } from '$app/types';
 import { signIn, signUp } from '../../utils.svelte.ts';
 
 export const useForm = (opts: {
-  perform: (data: { channel: BroadcastChannel; email: string; password: string }) => Promise<void>;
+  error: string;
+  perform: (data: { channel: BroadcastChannel; email: string; password: string }) => Promise<boolean>;
 }) => {
   const channel = useBroadcastChannel();
 
@@ -19,22 +21,38 @@ export const useForm = (opts: {
     password: string('password', { validator: notBlank(), type: 'password' }),
   }));
 
+  let isError = $state(false);
+
   const perform = async () => {
     if (model.touch()) {
-      await opts.perform({ channel, ...model.serialized.all });
+      isError = false;
+      if (!(await opts.perform({ channel, ...model.serialized.all }))) {
+        isError = true;
+      }
     }
   };
 
-  return {
-    ...model.record,
+  const error = $derived(isError ? opts.error : undefined);
+
+  return model.asEditable({
     perform,
-  };
+    error: getter(() => error),
+  });
 };
 
 export type UseForm = ReturnType<typeof useForm>;
 
-export const useSignIn = () => useForm({ perform: (data) => signIn(data) });
-export const useSignUp = () => useForm({ perform: (data) => signUp(data) });
+export const useSignIn = () =>
+  useForm({
+    perform: (data) => signIn(data),
+    error: 'Incorrect email or password.',
+  });
+
+export const useSignUp = () =>
+  useForm({
+    perform: (data) => signUp(data),
+    error: 'Email already taken.',
+  });
 
 export type FormOptions = {
   route: ResolvedPathname;
