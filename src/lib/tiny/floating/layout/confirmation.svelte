@@ -1,19 +1,35 @@
 <script module lang="ts">
   type ConfirmOptions = {
     floaters: Floaters;
-    reference: HTMLElement;
     title: string;
-    description: string;
+    description?: string;
     cancel?: string;
     confirm: string;
-  };
+  } & (
+    | {
+        type?: 'relative';
+        reference: HTMLElement;
+      }
+    | {
+        type: 'center';
+      }
+  );
 
-  export const confirm = async (opts: ConfirmOptions) => {
-    return await opts.floaters.open({
+  export const confirm = async (request: ConfirmOptions) => {
+    let reference;
+    let position;
+    if ('type' in request && request.type === 'center') {
+      reference = document.body;
+      position = center();
+    } else {
+      reference = request.reference;
+      position = basic();
+    }
+    return await request.floaters.open({
       snippet,
-      request: opts,
-      reference: getter(() => opts.reference),
-      position: basic(),
+      request,
+      reference,
+      position,
       close: false,
     }).response;
   };
@@ -28,20 +44,21 @@
   import Row from '#lib/tiny/form/content/row.svelte';
   import Form from '#lib/tiny/form/form.svelte';
   import Header from '#lib/tiny/form/header.svelte';
-  import { getter } from '#lib/tiny/utils/options.svelte.js';
   import type { Floaters } from '../floaters/model.svelte.ts';
-  import { basic } from '../position.ts';
+  import { basic, center } from '../position.ts';
 </script>
 
 {#snippet snippet({ request, resolve }: { request: ConfirmOptions; resolve: (ok: boolean) => void })}
   <Card width="fit">
     <Form>
       <Header title={request.title} />
-      <Content>
-        <Row>
-          <Label value={request.description} />
-        </Row>
-      </Content>
+      {#if request.description}
+        <Content>
+          <Row>
+            <Label value={request.description} />
+          </Row>
+        </Content>
+      {/if}
       <Actions>
         <Button label={request.cancel ?? 'Cancel'} onClick={() => resolve(false)} />
         <Button label={request.confirm} onClick={() => resolve(true)} />

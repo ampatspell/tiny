@@ -2,7 +2,6 @@
 
 - [ ] Busy state for fields while saving
 - [ ] Defaults for `handleError`
-- [ ] Unsaved changes warning dialog
 - [ ] Server validation errors in forms
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
@@ -15,6 +14,7 @@
 - [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
+- [x] Unsaved changes warning dialog
 - [x] Link as a button
 - [x] Open in frontend buttons for editable layouts
 - [x] Proper `<form/>` element to support submits with enter

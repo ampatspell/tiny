@@ -9,7 +9,6 @@
   let { layout }: { layout: EditingLayout<M> } = $props();
 
   let floaters = useFloaters();
-  let model = $derived(layout.model);
   let route = $derived(layout.admin);
 
   let onClick = async (reference: HTMLElement) => {
@@ -21,12 +20,12 @@
       confirm: 'Delete',
     });
     if (ok) {
-      await model.destroy?.();
+      await layout.destroy?.();
       goto(route, { replace: true });
     }
   };
 </script>
 
-{#if model.destroy}
+{#if layout.destroy}
   <Light label="Delete" icon={TablerTrashX} {onClick} />
 {/if}

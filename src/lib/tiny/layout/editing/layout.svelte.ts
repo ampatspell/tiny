@@ -25,12 +25,31 @@ export const useEditingLayout = <P extends Model>(_opts: OptionsInput<EditingLay
 
   const model = $derived(opts.model);
   const title = $derived(model.title);
+  const isDirty = $derived(model.isDirty);
+  const save = $derived(model.save);
+  const rollback = $derived(model.rollback);
+
+  let isDestroyed = $state(false);
+
+  const destroy = $derived.by(() => {
+    const fn = opts.model.destroy;
+    if (fn) {
+      return async () => {
+        await fn();
+        isDestroyed = true;
+      };
+    }
+  });
 
   return options({
     title: getter(() => title),
-    model: getter(() => model),
+    isDirty: getter(() => isDirty),
+    isDestroyed: getter(() => isDestroyed),
     admin: getter(() => admin),
     frontend: getter(() => frontend),
+    save: getter(() => save),
+    rollback: getter(() => rollback),
+    destroy: getter(() => destroy),
   });
 };
 

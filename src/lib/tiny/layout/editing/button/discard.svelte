@@ -8,7 +8,6 @@
   let { layout }: { layout: EditingLayout<M> } = $props();
 
   let floaters = useFloaters();
-  let model = $derived(layout.model);
   let onClick = async (reference: HTMLElement) => {
     let ok = await confirm({
       floaters,
@@ -18,11 +17,11 @@
       confirm: 'Discard',
     });
     if (ok) {
-      model.rollback();
+      layout.rollback();
     }
   };
 </script>
 
-{#if model.isDirty}
+{#if layout.isDirty}
   <Light label="Discard all changes" icon={TablerCircleX} {onClick} />
 {/if}

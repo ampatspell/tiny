@@ -18,6 +18,24 @@ export const basic = (opts?: { placement?: Placement; offset?: OffsetOptions }):
   };
 };
 
+export const center = (): ComputePositionConfig => {
+  const middleware: Middleware = {
+    name: 'center',
+    fn: async (arg): Promise<MiddlewareReturn> => {
+      const floating = arg.rects.floating;
+      const body = document.body;
+      return {
+        x: body.clientWidth / 2 - floating.width / 2,
+        y: body.clientHeight / 2 - floating.height / 2,
+      };
+    },
+  };
+  return {
+    middleware: [middleware],
+    strategy: 'fixed',
+  };
+};
+
 let pos = { x: 0, y: 0 };
 
 if (browser) {
