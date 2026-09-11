@@ -1,6 +1,5 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
-import type { InferArrayFieldItem } from '#lib/tiny/fields/models/types.svelte.js';
 import { notBlank } from '#lib/tiny/fields/models/validator.svelte.js';
 import { useFiles } from '#lib/tiny/files.svelte.js';
 import { hasKeys, omit } from '#lib/tiny/utils/object.js';
@@ -70,10 +69,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
             variant: '1024x1024',
             isRequired: true,
             didUpdate: ({ field, after }) => {
-              const item = fields.record.files?.itemForField(field);
-              if (item) {
-                item.record.name.update(after?.basename ?? '');
-              }
+              fields.record.files?.itemForField(field)?.record.name.update(after?.basename ?? '');
             },
           }),
         };
@@ -170,5 +166,3 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
 };
 
 export type GalleryModel = ReturnType<typeof useGalleryModel>;
-
-export type GalleryFileArrayFieldItem = InferArrayFieldItem<GalleryModel['fields']['files']>;

@@ -5,7 +5,7 @@
   },
   "search.exclude": {
     "**/node_modules": true,
-    "**/dist": true,
+    "**/dist": true
   },
   "cSpell.words": ["codegen", "huluu", "introspector", "kysely", "runed", "Tabler", "tinyexec"]
 }
