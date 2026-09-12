@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Dropdown field can't be ValueField. Validation is against string representation.
 - [ ] Busy state for fields while saving
 - [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`
@@ -13,6 +12,7 @@
 - [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
+- [ ] Dropdown field can't be ValueField. Validation is against string representation.
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [x] Dropdown field
 - [x] Dropdown for user roles
