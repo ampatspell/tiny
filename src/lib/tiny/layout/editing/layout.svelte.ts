@@ -5,7 +5,7 @@ import type { ResolvedPathname } from '$app/types';
 export type Model = {
   title: string;
   isDirty: boolean;
-  route: ResolvedPathname | undefined;
+  route: ResolvedPathname | undefined | null;
   save: () => Promise<string | void | undefined>;
   rollback: () => void;
   destroy?: () => Promise<void>;

@@ -29,7 +29,12 @@
     try {
       await floaters.open({
         reference,
-        position: basic(),
+        position: basic({
+          offset: {
+            crossAxis: -4,
+            mainAxis: 3,
+          },
+        }),
         request: null,
         snippet,
         close: null,

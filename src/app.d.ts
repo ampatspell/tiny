@@ -2,6 +2,7 @@ import type { Database } from '#lib/tiny/server/database/database.ts';
 import type { Files } from '#lib/tiny/server/files/files.ts';
 import type { Storage } from '#lib/tiny/server/storage/storage.ts';
 import type { Users } from '#lib/tiny/server/users/users.ts';
+import type { roles } from './env.ts';
 import type { Variant } from './params.ts';
 
 declare global {
@@ -22,7 +23,7 @@ declare global {
 
   namespace Tiny {
     export type Thumbnail = Variant;
-    export type Role = 'admin' | 'subscriber';
+    export type Role = (typeof roles)[number];
   }
 }
 
