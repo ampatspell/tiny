@@ -435,6 +435,192 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
   });
 
   await write({
+    filename: 'src/lib/users/users.remote.ts',
+    content: dedent`
+      import { getDatabase, getUsers } from '#lib/services.js';
+      import { command, query } from '$app/server';
+      import { assertRole } from '@ampatspell/tiny/server/users/request-event';
+      import { NotBlankSchema, RequiredEmailSchema } from '@ampatspell/tiny/utils/schema';
+      import type { QueryResponse } from '@ampatspell/tiny/utils/utils';
+      import * as v from 'valibot';
+
+      const selectFromUsers = () => {
+        return getDatabase().selectFrom('users').select(['id', 'email', 'role']);
+      };
+
+      export const getAllUsers = query(async () => {
+        await assertRole('admin');
+
+        return await selectFromUsers().execute();
+      });
+
+      export type UserData = QueryResponse<typeof getAllUsers>[number];
+
+      export const getUserById = query(v.strictObject({ id: v.string() }), async ({ id }) => {
+        await assertRole('admin');
+
+        return await selectFromUsers().where('id', '==', id).executeTakeFirstOrThrow();
+      });
+
+      export const updateUser = command(
+        v.strictObject({
+          id: v.string(),
+          email: v.optional(RequiredEmailSchema),
+          password: v.optional(NotBlankSchema),
+          role: v.optional(NotBlankSchema),
+        }),
+        async (props) => {
+          await assertRole('admin');
+
+          await getUsers().update(props);
+          getAllUsers().refresh();
+          getUserById({ id: props.id }).refresh();
+        },
+      );
+    `,
+  });
+
+  await write({
+    filename: 'src/lib/users.svelte.ts',
+    content: dedent`
+      import { useBroadcastChannel } from '@ampatspell/tiny/broadcast';
+      import { withDataFields } from '@ampatspell/tiny/fields/index';
+      import { notBlank, optionalPassword, requiredEmail } from '@ampatspell/tiny/fields/models/validator';
+      import { getter, options, type OptionsInput } from '@ampatspell/tiny/utils/options';
+      import { updateUser, type UserData } from './users.remote';
+
+      export type UseUserModelOptions = {
+        data: UserData;
+      };
+
+      export const useUserModel = (_opts: OptionsInput<UseUserModelOptions>) => {
+        const opts = options(_opts);
+        const data = $derived(opts.data);
+        const id = $derived(data.id);
+
+        const broadcast = useBroadcastChannel();
+
+        const fields = withDataFields({
+          data: getter(() => ({ ...data, password: '' })),
+        }).define(({ string }) => {
+          return {
+            email: string('email', { validator: requiredEmail }),
+            role: string('role', { validator: notBlank }),
+            password: string('password', {
+              validator: optionalPassword,
+              description: 'Leave blank to keep the current password',
+              type: 'password',
+            }),
+          };
+        });
+
+        const save = async () => {
+          if (fields.touch()) {
+            const dirty = fields.serialized.dirty;
+            if (dirty) {
+              await updateUser({ id, ...dirty });
+              fields.rollback();
+              broadcast.notifyDidSave();
+            }
+          }
+        };
+
+        return fields.asEditable({
+          save,
+          route: undefined,
+          title: getter(() => data.email),
+        });
+      };
+
+    `,
+  });
+
+  await write({
+    filename: 'src/routes/(tiny)/_admin/(nav)/users/+layout.svelte',
+    content: dedent`
+      <script lang="ts">
+        import { getAllUsers, type UserData } from '#lib/users/users.remote.js';
+        import { page } from '$app/state';
+        import { useListLayout } from '@ampatspell/tiny/layout/list/layout';
+        import List from '@ampatspell/tiny/layout/list/list';
+        import Label from '@ampatspell/tiny/list/item/label';
+        import { getter } from '@ampatspell/tiny/utils/options';
+        import type { Snippet } from 'svelte';
+
+        let { children }: { children?: Snippet } = $props();
+
+        let id = $derived(page.params.id);
+        let users = $derived(await getAllUsers());
+
+        let layout = useListLayout({
+          selected: getter(() => id),
+          models: getter(() => users),
+          item,
+        });
+      </script>
+
+      {#snippet item(user: UserData)}
+        <Label label={user.email} description={user.role} />
+      {/snippet}
+
+      <List {layout}>
+        {@render children?.()}
+      </List>
+    `,
+  });
+
+  await write({
+    filename: 'src/routes/(tiny)/_admin/(nav)/users/+page.svelte',
+    content: dedent`
+      <script lang="ts">
+        import Placeholder from '@ampatspell/tiny/layout/placeholder/placeholder';
+      </script>
+
+      <Placeholder />
+  `,
+  });
+
+  await write({
+    filename: 'src/routes/(tiny)/_admin/(nav)/users/[id]/+page.svelte',
+    content: dedent`
+      <script lang="ts">
+        import { getUserById } from '#lib/users/users.remote.js';
+        import { useUserModel } from '#lib/users/users.svelte.js';
+        import { page } from '$app/state';
+        import Content from '@ampatspell/tiny/form/content/content';
+        import Fields from '@ampatspell/tiny/form/content/fields';
+        import Form from '@ampatspell/tiny/form/form';
+        import Editing from '@ampatspell/tiny/layout/editing/editing';
+        import { useEditingLayout } from '@ampatspell/tiny/layout/editing/layout';
+        import Section from '@ampatspell/tiny/page/section';
+        import { getter } from '@ampatspell/tiny/utils/options';
+
+        let id = $derived(page.params.id!);
+        let data = $derived(await getUserById({ id }));
+
+        let model = useUserModel({ data: getter(() => data) });
+        let fields = $derived(model.fields);
+
+        let layout = useEditingLayout({
+          model,
+        });
+      </script>
+
+      <Editing {layout}>
+        <Section>
+          <Form>
+            <Content>
+              <Fields field={fields.email} />
+              <Fields field={fields.role} />
+              <Fields field={fields.password} />
+            </Content>
+          </Form>
+        </Section>
+      </Editing>
+  `,
+  });
+
+  await write({
     filename: 'src/routes/(tiny)/_admin/(nav)/message/+page.svelte',
     content: dedent`
       <script lang="ts">
@@ -483,6 +669,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         import LucideCat from '@ampatspell/tiny/icons/lucide--cat';
         import TablerBalloon from '@ampatspell/tiny/icons/tabler--balloon';
         import TablerCloud from '@ampatspell/tiny/icons/tabler--cloud';
+        import TablerUser from '@ampatspell/tiny/icons/tabler--user';
         import type { Snippet } from 'svelte';
 
         let { children }: { children: Snippet } = $props();
@@ -505,6 +692,12 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
               name: 'Message',
               icon: TablerBalloon,
               route: resolve('/(tiny)/_admin/(nav)/message'),
+            },
+            {
+              name: 'Users',
+              icon: TablerUser,
+              route: resolve('/(tiny)/_admin/(nav)/users'),
+              select: (id) => resolve('/(tiny)/_admin/(nav)/users/[id]', { id }),
             },
           ],
         });
