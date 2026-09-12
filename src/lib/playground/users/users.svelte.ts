@@ -1,8 +1,8 @@
-import { updateUser, type UserData } from '#lib/tiny/auth/users.remote.js';
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { notBlank, optionalPassword, requiredEmail } from '#lib/tiny/fields/models/validator.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { updateUser, type UserData } from './users.remote.ts';
 
 export type UseUserModelOptions = {
   data: UserData;

@@ -1,9 +1,9 @@
 import * as v from 'valibot';
 import { command, query } from '$app/server';
-import { getDatabase, getUsers } from '../server/services/getters.ts';
-import { assertRole } from '../server/users/request-event.ts';
-import type { QueryResponse } from '../utils/utils.ts';
-import { NotBlankSchema, RequiredEmailSchema } from '../utils/schema.ts';
+import { getDatabase, getUsers } from '../../tiny/server/services/getters.ts';
+import { assertRole } from '../../tiny/server/users/request-event.ts';
+import type { QueryResponse } from '../../tiny/utils/utils.ts';
+import { NotBlankSchema, RequiredEmailSchema } from '../../tiny/utils/schema.ts';
 
 const selectFromUsers = () => {
   return getDatabase().selectFrom('users').select(['id', 'email', 'role']);

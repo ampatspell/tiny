@@ -510,14 +510,6 @@
       "types": "./dist/tiny/backend/navigation/model.svelte.d.ts",
       "svelte": "./dist/tiny/backend/navigation/model.svelte.js"
     },
-    "./auth/users.remote": {
-      "types": "./dist/tiny/auth/users.remote.d.ts",
-      "svelte": "./dist/tiny/auth/users.remote.js"
-    },
-    "./auth/users": {
-      "types": "./dist/tiny/auth/users.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/users.svelte.js"
-    },
     "./auth/utils": {
       "types": "./dist/tiny/auth/utils.svelte.d.ts",
       "svelte": "./dist/tiny/auth/utils.svelte.js"

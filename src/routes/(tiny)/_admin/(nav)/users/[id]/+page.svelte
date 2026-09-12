@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getUserById } from '#lib/tiny/auth/users.remote.js';
-  import { useUserModel } from '#lib/tiny/auth/users.svelte.js';
+  import { getUserById } from '#lib/playground/users/users.remote.js';
+  import { useUserModel } from '#lib/playground/users/users.svelte.js';
   import Content from '#lib/tiny/form/content/content.svelte';
   import Fields from '#lib/tiny/form/content/fields.svelte';
   import Form from '#lib/tiny/form/form.svelte';

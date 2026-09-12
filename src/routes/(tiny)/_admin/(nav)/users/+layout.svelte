@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getAllUsers, type UserData } from '#lib/tiny/auth/users.remote.js';
+  import { getAllUsers, type UserData } from '#lib/playground/users/users.remote.js';
   import { useListLayout } from '#lib/tiny/layout/list/layout.svelte.js';
   import List from '#lib/tiny/layout/list/list.svelte';
   import Label from '#lib/tiny/list/item/label.svelte';
