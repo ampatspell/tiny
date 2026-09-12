@@ -78,7 +78,7 @@
       }
     }
     &.type-portrait {
-      padding: 20px 0;
+      padding: 25px 0;
       > .blocks {
         display: flex;
         flex-direction: column;
@@ -92,7 +92,7 @@
           }
           > .details {
             > .file {
-              max-height: calc(100vh - 20px);
+              max-height: calc(100vh - 35px);
             }
           }
         }
