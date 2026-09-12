@@ -2,6 +2,7 @@ import type { DB } from '#lib/tiny/server/database/schema.js';
 import { assertRole } from '#lib/tiny/server/users/request-event.js';
 import { uid } from '#lib/tiny/server/utils.js';
 import { hasValues, omit } from '#lib/tiny/utils/object.js';
+import { OptionalPermalinkSchema, PermalinkSchema } from '#lib/tiny/utils/schema.js';
 import type { QueryResponse } from '#lib/tiny/utils/utils.js';
 import { command, query } from '$app/server';
 import type { ExpressionBuilder, OperandExpression, SqlBool } from 'kysely';
@@ -39,7 +40,7 @@ export const getGalleryById = query(v.strictObject({ id: v.string() }), async ({
   return await getGalleryBy((where) => where('id', '==', id));
 });
 
-export const getGalleryByPermalink = query(v.strictObject({ permalink: v.string() }), async ({ permalink }) => {
+export const getGalleryByPermalink = query(v.strictObject({ permalink: PermalinkSchema }), async ({ permalink }) => {
   return await getGalleryBy((where) => where('permalink', '==', permalink));
 });
 
@@ -48,7 +49,7 @@ export type GalleryDetailsData = QueryResponse<typeof getGalleryById>;
 export const addGallery = command(
   v.strictObject({
     name: v.optional(v.string()),
-    permalink: v.optional(v.string()),
+    permalink: OptionalPermalinkSchema,
   }),
   async (props) => {
     await assertRole('admin');
