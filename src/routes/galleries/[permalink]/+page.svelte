@@ -17,14 +17,11 @@
 
   let getCurrent = () => {
     let wy = window.scrollY;
-    let wh = window.innerHeight;
-    let visible = blocks.filter((block) => {
+    return blocks.find((block) => {
       let rect = block.getBoundingClientRect();
       let ry = rect.y + wy;
-      let rh = rect.height;
-      return ry > wy && ry + rh < wy + wh;
+      return ry > wy;
     });
-    return visible[0];
   };
 
   let scrollIntoView = (e: Event, cb: (current: HTMLElement) => Element | null) => {
@@ -33,7 +30,6 @@
     if (current) {
       let next = cb(current);
       if (next instanceof HTMLElement) {
-        console.log(next.innerText);
         next.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
