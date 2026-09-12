@@ -1,7 +1,9 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
-import { notBlank, optionalPassword, requiredEmail } from '#lib/tiny/fields/models/validator.svelte.js';
+import { optionalPassword, requiredEmail } from '#lib/tiny/fields/models/validator.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { sentenceCase } from 'text-sentence-case';
+import { roles } from '../../../env.ts';
 import { updateUser, type UserData } from './users.remote.ts';
 
 export type UseUserModelOptions = {
@@ -17,10 +19,13 @@ export const useUserModel = (_opts: OptionsInput<UseUserModelOptions>) => {
 
   const fields = withDataFields({
     data: getter(() => ({ ...data, password: '' })),
-  }).define(({ string }) => {
+  }).define(({ string, dropdown }) => {
+    const items = roles.map((role) => {
+      return { role, label: sentenceCase(role) };
+    });
     return {
       email: string('email', { validator: requiredEmail }),
-      role: string('role', { validator: notBlank }),
+      role: dropdown('role', { items, identifier: 'role' }),
       password: string('password', {
         validator: optionalPassword,
         description: 'Leave blank to keep the current password',
@@ -42,7 +47,7 @@ export const useUserModel = (_opts: OptionsInput<UseUserModelOptions>) => {
 
   return fields.asEditable({
     save,
-    route: undefined,
+    route: null,
     title: getter(() => data.email),
   });
 };

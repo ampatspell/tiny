@@ -102,7 +102,7 @@
     width: 100%;
     outline: none;
     border: 1px solid var(--tiny-border-color-1);
-    padding: 5px 5px;
+    padding: 5px 6px;
     border-radius: 3px;
     font-size: var(--tiny-font-size-medium);
     &::placeholder {

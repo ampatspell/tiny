@@ -6,6 +6,7 @@
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { page } from '$app/state';
   import type { Snippet } from 'svelte';
+  import { sentenceCase } from 'text-sentence-case';
 
   let { children }: { children?: Snippet } = $props();
 
@@ -20,7 +21,7 @@
 </script>
 
 {#snippet item(user: UserData)}
-  <Label label={user.email} description={user.role} />
+  <Label label={user.email} description={sentenceCase(user.role)} />
 {/snippet}
 
 <List {layout}>
