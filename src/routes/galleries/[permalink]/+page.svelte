@@ -94,11 +94,11 @@
           flex-direction: column-reverse;
           gap: 10px;
           > .description {
-            padding: 0 10px;
+            padding: 0 15px;
           }
           > .details {
             > .file {
-              max-height: calc(100vh - 35px);
+              max-height: calc(100vh - 30px);
             }
           }
         }
