@@ -5,10 +5,22 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { size = 'small', children }: { size?: Size; children?: Snippet } = $props();
+  let {
+    size = 'small',
+    onSubmit,
+    children,
+  }: {
+    size?: Size;
+    onSubmit?: () => void;
+    children?: Snippet;
+  } = $props();
+
+  let onsubmit = () => {
+    onSubmit?.();
+  };
 </script>
 
-<form class={['form', `size-${size}`]}>
+<form class={['form', `size-${size}`]} {onsubmit}>
   {@render children?.()}
 </form>
 

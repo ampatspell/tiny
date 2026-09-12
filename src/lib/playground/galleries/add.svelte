@@ -1,6 +1,5 @@
 <script lang="ts">
   import Button from '#lib/tiny/button/button.svelte';
-  import Busy from '#lib/tiny/button/specific/busy.svelte';
   import Card from '#lib/tiny/card.svelte';
   import Actions from '#lib/tiny/form/actions.svelte';
   import Form from '#lib/tiny/form/form.svelte';
@@ -10,28 +9,31 @@
 
   let { onDone }: { onDone: (id: string | undefined) => void } = $props();
 
-  let properties = useGalleryModel({
+  let model = useGalleryModel({
     isNew: true,
     data: { name: '', permalink: '', files: [] },
   });
 
-  let onSave = async () => {
-    let id = await properties.save();
+  let onSubmit = async () => {
+    let id = await model.save();
     if (id) {
       onDone(id);
     }
   };
 
-  let onCancel = () => onDone(undefined);
+  let onCancel = () => {
+    console.log('cancel');
+    onDone(undefined);
+  };
 </script>
 
 <Card>
-  <Form>
+  <Form {onSubmit}>
     <Header title="New gallery" />
-    <Fields model={properties} />
+    <Fields {model} />
     <Actions>
       <Button label="Cancel" onClick={onCancel} />
-      <Busy type="submit" label="Add" onClick={onSave} />
+      <Button type="submit" label="Add" />
     </Actions>
   </Form>
 </Card>

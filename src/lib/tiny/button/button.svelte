@@ -22,8 +22,11 @@
   export type ButtonProps = BaseButtonProps &
     (
       | {
-          type?: 'button' | 'submit' | undefined;
+          type?: 'button' | undefined;
           onClick: (e: MouseEvent) => void;
+        }
+      | {
+          type: 'submit';
         }
       | {
           type: 'link';
@@ -49,7 +52,7 @@
   let element = $state<HTMLButtonElement | HTMLAnchorElement>();
 
   let onclick = (e: MouseEvent) => {
-    if (props.type !== 'link') {
+    if (props.type === 'button' || props.type === undefined) {
       props.onClick?.(e);
     }
   };
@@ -74,7 +77,7 @@
 {/snippet}
 
 {#if !props.type || props.type === 'button' || props.type === 'submit'}
-  <button class={classes} disabled={isBusyOrDisabled} type={props.type} {onclick} bind:this={element}>
+  <button class={classes} disabled={isBusyOrDisabled} type={props.type ?? 'button'} {onclick} bind:this={element}>
     {@render content()}
   </button>
 {:else if props.type === 'link'}

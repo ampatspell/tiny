@@ -4,6 +4,7 @@ import { notBlank, optionalPermalink } from '#lib/tiny/fields/models/validator.s
 import { useFiles } from '#lib/tiny/files.svelte.js';
 import { hasKeys, omit } from '#lib/tiny/utils/object.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import { throttle } from '#lib/tiny/utils/promise.js';
 import { slug } from '#lib/tiny/utils/string.js';
 import { images, type OptionalId } from '#lib/tiny/utils/utils.js';
 import { resolve } from '$app/paths';
@@ -88,12 +89,13 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
 
   const save = async () => {
     if (fields.touch()) {
-      let id;
+      let id: string;
       if (opts.isNew) {
         const data = fields.serialized.all;
         id = await addGallery(data);
         broadcast.notifyDidSave();
       } else {
+        id = opts.data.id!;
         const data = fields.serialized.dirty;
         if (data) {
           id = opts.data.id;
@@ -106,20 +108,22 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
           {
             const files = data.files;
             if (files) {
+              const tasks: (() => Promise<unknown>)[] = [];
               for (const entry of files) {
                 if (entry.state === 'deleted') {
-                  await deleteFile({ id: entry.id });
+                  tasks.push(() => deleteFile({ id: entry.id }));
                 } else if (entry.state === 'added') {
                   const { name, position } = entry;
                   const file = entry.file?.file;
                   if (file) {
-                    await addFile({ id, file, name: name!, position: position! });
+                    tasks.push(() => addFile({ id, file, name: name!, position: position! }));
                   }
                 } else if (entry.state === 'updated') {
                   const { id, file, name, position } = entry;
-                  await updateFile({ id, file, name, position });
+                  tasks.push(() => updateFile({ id, file, name, position }));
                 }
               }
+              await throttle(tasks, 10);
             }
           }
           broadcast.notifyDidSave();
