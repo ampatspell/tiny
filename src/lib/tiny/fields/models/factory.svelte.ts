@@ -1,12 +1,15 @@
+import type { ItemData } from '#lib/tiny/dropdown/basic/items.svelte';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { ArrayKey, FileKey, NumberKey, OptionalId, StringKey } from '#lib/tiny/utils/utils.js';
 import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions, type Entry } from '../fields/array.svelte.ts';
 import { ColorFieldDefinition, type ColorFieldDefinitionOptions } from '../fields/color.svelte.ts';
+import { DropdownFieldDefinition, type DropdownFieldDefinitionOptions } from '../fields/dropdown.svelte.ts';
 import { FileFieldDefinition, type FileFieldDefinitionOptions } from '../fields/file.svelte.ts';
 import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from '../fields/number.svelte.ts';
 import { StringFieldDefinition, type StringFieldDefinitionOptions } from '../fields/string.svelte.ts';
 import type { FieldsContext } from './context.svelte.ts';
 import type { Data } from './types.svelte.ts';
+import { notBlank } from './validator.svelte.ts';
 
 export type FactoryCallback<D extends Data, R extends Data> = (factory: Omit<Factory<D>, 'context' | 'record'>) => R;
 
@@ -47,6 +50,13 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
 
   readonly file = <K extends FileKey<D>>(key: K, opts: Opts<FileFieldDefinitionOptions>) => {
     return new FileFieldDefinition({ key, ...this.base, ...opts });
+  };
+
+  readonly dropdown = <K extends StringKey<D>, I extends ItemData>(
+    key: K,
+    opts: Opts<DropdownFieldDefinitionOptions<I>>,
+  ) => {
+    return new DropdownFieldDefinition<I>({ key, ...this.base, validator: notBlank, ...opts });
   };
 
   readonly array = <K extends ArrayKey<D, Entry>, N extends OptionalId<InferArrayFieldType<D[K]>>, NR extends Data>(

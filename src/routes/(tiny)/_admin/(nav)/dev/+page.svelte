@@ -1,6 +1,9 @@
 <script lang="ts">
-  import Dropdown from '#lib/tiny/dropdown/basic/dropdown.svelte';
   import type { ItemData } from '#lib/tiny/dropdown/basic/items.svelte';
+  import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
+  import Fields from '#lib/tiny/form/content/fields.svelte';
+  import Form from '#lib/tiny/form/form.svelte';
+  import { getter } from '#lib/tiny/utils/options.svelte.js';
 
   type Model = {
     id: string;
@@ -22,14 +25,25 @@
       state: 'critical',
     },
   ]);
-  let selected = $state<Model | undefined>();
-  let onSelect = (next: Model | undefined) => {
-    selected = next;
-  };
+
+  let fields = withDataFields({
+    data: {
+      role: 'admin',
+    },
+  }).define(({ dropdown }) => {
+    return {
+      role: dropdown('role', {
+        items: getter(() => items),
+        identifier: 'id',
+      }),
+    };
+  });
 </script>
 
 <div class="page">
-  <Dropdown {items} {selected} isRequired={true} {onSelect} />
+  <Form>
+    <Fields field={fields.record.role} />
+  </Form>
 </div>
 
 <style lang="scss">

@@ -1,11 +1,11 @@
 <script module lang="ts">
-  import type { ItemState } from '#lib/tiny/dropdown/content/item/item.svelte';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import type { ComputePositionConfig } from '@floating-ui/dom';
   import type { Component } from 'svelte';
   import type { Floaters } from '../floaters/model.svelte.ts';
   import { basic } from '../position.ts';
   import Content from '#lib/tiny/dropdown/basic/content.svelte';
+  import type { ItemState } from '#lib/tiny/dropdown/content/item.svelte';
 
   export type DropdownItem = {
     icon?: Component;
