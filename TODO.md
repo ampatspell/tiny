@@ -1,8 +1,6 @@
 ## TODO
 
 - [ ] Dropdown field can't be ValueField. Validation is against string representation.
-- [x] Dropdown field
-- [x] Dropdown for user roles
 - [ ] Busy state for fields while saving
 - [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`
@@ -16,6 +14,8 @@
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Dropdown field
+- [x] Dropdown for user roles
 - [x] Generate users section in bootstrap
 - [x] Users section with form to change password, role
 - [x] `lib/tiny/auth/utils.svelte.ts` sign-in sign-up duplication
