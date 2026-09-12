@@ -12,17 +12,51 @@
     let h = innerHeight.current;
     return w && h && w > h ? ('landscape' as const) : ('portrait' as const);
   });
+
+  let root = $state<HTMLDivElement>();
+  let blocks = $state<HTMLElement[]>([]);
+
+  let getCurrent = () => {
+    let y = window.scrollY;
+    return blocks.find((block) => {
+      let rect = block.getBoundingClientRect();
+      return rect.y + y > y;
+    });
+  };
+
+  let scrollIntoView = (e: Event, cb: (current: HTMLElement) => Element | null) => {
+    e.preventDefault();
+    let current = getCurrent();
+    if (current) {
+      let next = cb(current);
+      if (next instanceof HTMLElement) {
+        next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  };
+
+  let onkeydown = (e: KeyboardEvent) => {
+    if (!e.metaKey && !e.altKey && !e.ctrlKey) {
+      if (e.key === 'ArrowUp') {
+        scrollIntoView(e, (curr) => curr.previousElementSibling);
+      } else if (e.key === 'ArrowDown') {
+        scrollIntoView(e, (curr) => curr.nextElementSibling);
+      }
+    }
+  };
 </script>
 
-<div class={['page', `type-${type}`]}>
+<svelte:window {onkeydown} />
+
+<div class={['page', `type-${type}`]} bind:this={root}>
   <div class="blocks">
     <div class="block">
       <div class="description">
         <div class="title">{gallery.name}</div>
       </div>
     </div>
-    {#each gallery.files.filter((file) => file.file) as file (file.id)}
-      <div class="block">
+    {#each gallery.files.filter((file) => file.file) as file, i (file.id)}
+      <div class="block" bind:this={blocks[i]}>
         <div class="description">{file.name}</div>
         <div class="details">
           <img
