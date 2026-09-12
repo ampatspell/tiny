@@ -481,7 +481,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
   });
 
   await write({
-    filename: 'src/lib/users.svelte.ts',
+    filename: 'src/lib/users/users.svelte.ts',
     content: dedent`
       import { useBroadcastChannel } from '@ampatspell/tiny/broadcast';
       import { withDataFields } from '@ampatspell/tiny/fields/index';
