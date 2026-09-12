@@ -20,33 +20,32 @@
     let wy = window.scrollY;
     let wh = window.innerHeight;
 
-    let visible = sortedBy(
-      blocks
-        .map((el) => {
-          let rect = el.getBoundingClientRect();
-          let ry = rect.y + wy;
-          let rh = rect.height;
-          let a = ry + rh > wy;
-          let b = ry < wy + wh;
-          if (a && b) {
-            let top = Math.max(ry, wy);
-            let bottom = Math.min(ry + rh, wy + wh);
-            let visible = bottom - top;
-            let fraction = visible / rh;
-            return {
-              el,
-              height: rh,
-              fraction,
-            };
-          }
-        })
-        .filter(isTruthy),
-      { value: (v) => v.fraction, direction: 'desc' },
-    );
+    let visible = blocks
+      .map((el) => {
+        let rect = el.getBoundingClientRect();
+        let ry = rect.y + wy;
+        let rh = rect.height;
+        let a = ry + rh > wy;
+        let b = ry < wy + wh;
+        if (a && b) {
+          let top = Math.max(ry, wy);
+          let bottom = Math.min(ry + rh, wy + wh);
+          let visible = bottom - top;
+          let fraction = visible / rh;
+          return {
+            el,
+            fraction,
+          };
+        }
+      })
+      .filter(isTruthy);
 
-    console.log(visible.map((v) => `${v.el.innerText} ${v.fraction}`));
+    let sorted = sortedBy(visible, {
+      value: (rec) => rec.fraction,
+      direction: 'desc',
+    });
 
-    return visible[0]?.el;
+    return sorted[0]?.el;
   };
 
   let scrollIntoView = (e: Event, cb: (current: HTMLElement) => Element | null) => {
