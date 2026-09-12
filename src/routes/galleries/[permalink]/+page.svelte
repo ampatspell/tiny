@@ -50,6 +50,12 @@
             font-size: var(--tiny-font-size);
           }
         }
+        > .details {
+          > .file {
+            object-fit: contain;
+            object-position: right;
+          }
+        }
       }
     }
     &.type-landscape {
@@ -71,7 +77,7 @@
             display: flex;
             flex-direction: column;
             > .file {
-              max-height: calc(100vh - 100px);
+              max-height: calc(100vh - 50px);
             }
           }
         }
