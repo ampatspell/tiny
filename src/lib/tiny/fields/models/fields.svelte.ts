@@ -117,9 +117,13 @@ export class Fields<
     return this.isValid;
   };
 
+  readonly untouch = () => {
+    this.context.untouch();
+  };
+
   readonly rollback = () => {
     this.all.forEach((field) => field.rollback());
-    this.context.isTouched = false;
+    this.untouch();
   };
 
   containsField(field: Field) {

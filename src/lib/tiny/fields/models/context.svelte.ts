@@ -4,4 +4,8 @@ export class FieldsContext {
   touch() {
     this.isTouched = true;
   }
+
+  untouch() {
+    this.isTouched = false;
+  }
 }

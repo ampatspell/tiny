@@ -10,7 +10,7 @@ export type UseListLayoutOptions<M extends Model> = {
   selected: string | undefined;
   models: M[];
   item: Snippet<[model: M]>;
-  add: Snippet<[onDone: (id: string | undefined) => void]>;
+  add?: Snippet<[onDone: (id: string | undefined) => void]>;
 };
 
 export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayoutOptions<M>>) => {
