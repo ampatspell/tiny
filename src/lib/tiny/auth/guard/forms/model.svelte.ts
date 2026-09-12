@@ -2,7 +2,6 @@ import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { properPassword, requiredEmail } from '#lib/tiny/fields/models/validator.svelte.js';
 import { getter } from '#lib/tiny/utils/options.svelte.js';
-import type { ResolvedPathname } from '$app/types';
 import { signIn, signUp } from '../../utils.svelte.ts';
 
 export const useForm = (opts: {
@@ -53,8 +52,3 @@ export const useSignUp = () =>
     perform: (data) => signUp(data),
     error: 'Email already taken.',
   });
-
-export type FormOptions = {
-  route: ResolvedPathname;
-  perform: (data: { email: string; password: string }) => Promise<void>;
-};

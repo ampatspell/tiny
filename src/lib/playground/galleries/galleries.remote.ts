@@ -9,6 +9,8 @@ import * as v from 'valibot';
 import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
 
 export const getGalleries = query(async () => {
+  await assertRole('admin');
+
   const db = getDatabase();
   return await db.selectFrom('galleries').selectAll().execute();
 });
@@ -34,6 +36,8 @@ const getGalleryBy = async (where: (b: ExpressionBuilder<DB, 'galleries'>) => Op
 };
 
 export const getGalleryById = query(v.strictObject({ id: v.string() }), async ({ id }) => {
+  await assertRole('admin');
+
   return await getGalleryBy((where) => where('id', '==', id));
 });
 

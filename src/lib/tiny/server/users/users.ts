@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
-import { pbkdf2Sync, randomBytes } from 'node:crypto';
+import { pbkdf2, randomBytes } from 'node:crypto';
 import { omit } from '../../utils/object.ts';
 import { run } from '../../utils/utils.ts';
 import type { Database } from '../database/database.ts';
@@ -28,16 +28,23 @@ export const createUsers = async (opts: CreateUsersOptions) => {
   const { db, secret, roles } = opts;
 
   const crypto = run(() => {
-    const sync = (opts: { password: string; salt: string }) => {
-      return pbkdf2Sync(opts.password, opts.salt, 1000, 32, `sha512`).toString(`hex`);
+    const sync = async (opts: { password: string; salt: string }) => {
+      return new Promise<string>((resolve, reject) => {
+        pbkdf2(opts.password, opts.salt, 300000, 32, `sha512`, (err, buff) => {
+          if (err) {
+            return reject(err);
+          }
+          return resolve(buff.toString(`hex`));
+        });
+      });
     };
-    const create = ({ password }: { password: string }) => {
+    const create = async ({ password }: { password: string }) => {
       const salt = randomBytes(16).toString('hex');
-      const hash = sync({ password, salt });
+      const hash = await sync({ password, salt });
       return { salt, hash };
     };
-    const verify = ({ password, salt, hash }: { hash: string; salt: string; password: string }) => {
-      const existing = sync({ password, salt });
+    const verify = async ({ password, salt, hash }: { hash: string; salt: string; password: string }) => {
+      const existing = await sync({ password, salt });
       return existing === hash;
     };
     return {
@@ -50,7 +57,7 @@ export const createUsers = async (opts: CreateUsersOptions) => {
   const create = async ({ email, password, role }: { email: string; password: string; role?: Tiny.Role }) => {
     email = email.toLowerCase().trim();
 
-    const { salt, hash } = crypto.create({ password });
+    const { salt, hash } = await crypto.create({ password });
     if (!role) {
       const { count } = await db.selectFrom('users').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
       if (!roles) {
@@ -78,7 +85,7 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     const record = await db.selectFrom('users').where('email', '==', email).selectAll().executeTakeFirst();
     if (record) {
       const { id, role, salt, hash } = record;
-      if (hash && salt && crypto.verify({ hash, salt, password })) {
+      if (hash && salt && (await crypto.verify({ hash, salt, password }))) {
         return {
           id,
           email,

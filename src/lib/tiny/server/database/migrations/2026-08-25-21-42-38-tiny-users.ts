@@ -9,7 +9,7 @@ export const up = async (db: Kysely<any>) => {
     .addColumn('salt', 'text')
     .addColumn('hash', 'text')
     .addColumn('role', 'text', (col) => col.notNull())
-    .addUniqueConstraint('file_id_variant_unique', ['email'])
+    .addUniqueConstraint('users_email_unique', ['email'])
     .execute();
 
   await db.schema.createIndex('users_email_index').on('users').column('email').execute();

@@ -21,8 +21,9 @@ export const getUsersForRequestEvent = () => {
 
   const signUp = async ({ email, password }: { email: string; password: string }) => {
     const users = getUsers();
-    await users.create({ email, password });
-    return await signIn({ email, password });
+    if (await users.create({ email, password })) {
+      return await signIn({ email, password });
+    }
   };
 
   const signOut = async () => {

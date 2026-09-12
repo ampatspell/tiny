@@ -521,10 +521,6 @@
     "./auth/guard/guard": {
       "types": "./dist/tiny/auth/guard/guard.svelte.d.ts",
       "svelte": "./dist/tiny/auth/guard/guard.svelte"
-    },
-    "./auth/guard/sign-in": {
-      "types": "./dist/tiny/auth/guard/sign-in.svelte.d.ts",
-      "svelte": "./dist/tiny/auth/guard/sign-in.svelte"
     }
   },
   "peerDependencies": {
@@ -586,5 +582,8 @@
     "better-sqlite3@12.11.1": true,
     "@parcel/watcher@2.6.0": true,
     "esbuild@0.28.2": true
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

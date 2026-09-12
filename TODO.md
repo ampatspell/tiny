@@ -1,5 +1,7 @@
 ## TODO
 
+- [ ] `lib/tiny/auth/utils.svelte.ts` sign-in sign-up duplication
+- [ ] Max age for JWT is 7 days, needs token renews.
 - [ ] Busy state for fields while saving
 - [ ] Server validation errors in forms
 - [ ] Defaults for `handleError`
