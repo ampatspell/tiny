@@ -9,6 +9,7 @@
   import LucideCat from '#lib/tiny/icons/lucide--cat.svelte';
   import TablerBalloon from '#lib/tiny/icons/tabler--balloon.svelte';
   import TablerPhoto from '#lib/tiny/icons/tabler--photo.svelte';
+  import TablerUser from '#lib/tiny/icons/tabler--user.svelte';
   import { resolve } from '$app/paths';
   import type { Snippet } from 'svelte';
 
@@ -38,6 +39,12 @@
         icon: TablerPhoto,
         route: resolve('/(tiny)/_admin/(nav)/galleries'),
         select: (id) => resolve('/(tiny)/_admin/(nav)/galleries/[id]', { id }),
+      },
+      {
+        name: 'Users',
+        icon: TablerUser,
+        route: resolve('/(tiny)/_admin/(nav)/users'),
+        select: (id) => resolve('/(tiny)/_admin/(nav)/users/[id]', { id }),
       },
       {
         name: 'In development',

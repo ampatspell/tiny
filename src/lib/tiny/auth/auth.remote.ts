@@ -1,12 +1,12 @@
 import { command, query } from '$app/server';
 import * as v from 'valibot';
 import { getUsersForRequestEvent } from '../server/users/request-event.ts';
-import { ProperPasswordSchema, RequiredEmailSchema } from '../utils/schema.ts';
+import { RequiredPasswordSchema, RequiredEmailSchema } from '../utils/schema.ts';
 
 export const signIn = command(
   v.strictObject({
     email: RequiredEmailSchema,
-    password: ProperPasswordSchema,
+    password: RequiredPasswordSchema,
   }),
   async ({ email, password }) => {
     const users = getUsersForRequestEvent();
@@ -21,7 +21,7 @@ export const signIn = command(
 export const signUp = command(
   v.strictObject({
     email: RequiredEmailSchema,
-    password: ProperPasswordSchema,
+    password: RequiredPasswordSchema,
   }),
   async ({ email, password }) => {
     const users = getUsersForRequestEvent();

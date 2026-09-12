@@ -1,8 +1,9 @@
 import {
   NotBlankSchema,
   OptionalPermalinkSchema,
-  ProperPasswordSchema,
+  RequiredPasswordSchema,
   RequiredEmailSchema,
+  OptionalPasswordSchema,
 } from '#lib/tiny/utils/schema.js';
 import { type Any } from '#lib/tiny/utils/utils.js';
 import * as v from 'valibot';
@@ -37,4 +38,5 @@ export const valibot = <T>({
 export const notBlank = valibot({ isRequired: true, schema: NotBlankSchema });
 export const optionalPermalink = valibot({ isRequired: false, schema: OptionalPermalinkSchema });
 export const requiredEmail = valibot({ isRequired: true, schema: RequiredEmailSchema });
-export const properPassword = valibot({ isRequired: true, schema: ProperPasswordSchema });
+export const requiredPassword = valibot({ isRequired: true, schema: RequiredPasswordSchema });
+export const optionalPassword = valibot({ isRequired: false, schema: v.optional(OptionalPasswordSchema) });

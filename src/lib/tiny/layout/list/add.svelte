@@ -40,11 +40,13 @@
 </script>
 
 {#snippet snippet({ resolve }: { resolve: (id: string | undefined) => void })}
-  {@render add(resolve)}
+  {@render add?.(resolve)}
 {/snippet}
 
-<Tooltip label="Add new" placement="right">
-  <Button bind:this={button} variant="light" {onClick}>
-    <Icon icon={TablerSquareRoundedPlus} />
-  </Button>
-</Tooltip>
+{#if add}
+  <Tooltip label="Add new" placement="right">
+    <Button bind:this={button} variant="light" {onClick}>
+      <Icon icon={TablerSquareRoundedPlus} />
+    </Button>
+  </Tooltip>
+{/if}

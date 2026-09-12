@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import { pbkdf2, randomBytes } from 'node:crypto';
-import { omit } from '../../utils/object.ts';
+import { hasValues, omit } from '../../utils/object.ts';
 import { run } from '../../utils/utils.ts';
 import type { Database } from '../database/database.ts';
 import type { DB } from '../database/schema.js';
@@ -141,10 +141,42 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
   });
 
+  const update = async ({
+    id,
+    email,
+    role,
+    password,
+  }: {
+    id: string;
+    email?: string;
+    role?: string;
+    password?: string;
+  }) => {
+    let data: Partial<{
+      email: string;
+      role: string;
+      salt: string;
+      hash: string;
+    }> = {
+      email,
+      role,
+    };
+
+    if (password) {
+      const rec = await crypto.create({ password });
+      data = { ...data, ...rec };
+    }
+
+    if (hasValues(data)) {
+      await db.updateTable('users').set(data).where('id', '==', id).executeTakeFirstOrThrow();
+    }
+  };
+
   return {
     create,
     verify,
     token,
+    update,
   };
 };
 

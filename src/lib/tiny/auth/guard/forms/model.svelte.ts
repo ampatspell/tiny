@@ -1,6 +1,6 @@
 import { useBroadcastChannel, type BroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
-import { properPassword, requiredEmail } from '#lib/tiny/fields/models/validator.svelte.js';
+import { requiredPassword, requiredEmail } from '#lib/tiny/fields/models/validator.svelte.js';
 import { getter } from '#lib/tiny/utils/options.svelte.js';
 import { signIn, signUp } from '../../utils.svelte.ts';
 
@@ -17,7 +17,7 @@ export const useForm = (opts: {
     },
   }).define(({ string }) => ({
     email: string('email', { validator: requiredEmail, autofocus: true }),
-    password: string('password', { validator: properPassword, type: 'password' }),
+    password: string('password', { validator: requiredPassword, type: 'password' }),
   }));
 
   let isError = $state(false);
