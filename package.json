@@ -262,6 +262,14 @@
       "types": "./dist/tiny/icons/tabler--balloon.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--balloon.svelte"
     },
+    "./icons/tabler--chevron-down": {
+      "types": "./dist/tiny/icons/tabler--chevron-down.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--chevron-down.svelte"
+    },
+    "./icons/tabler--chevron-up": {
+      "types": "./dist/tiny/icons/tabler--chevron-up.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--chevron-up.svelte"
+    },
     "./icons/tabler--circle-x": {
       "types": "./dist/tiny/icons/tabler--circle-x.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--circle-x.svelte"
@@ -442,6 +450,10 @@
       "types": "./dist/tiny/fields/fields/color.svelte.d.ts",
       "svelte": "./dist/tiny/fields/fields/color.svelte.js"
     },
+    "./fields/fields/dropdown": {
+      "types": "./dist/tiny/fields/fields/dropdown.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/dropdown.svelte.js"
+    },
     "./fields/fields/file": {
       "types": "./dist/tiny/fields/fields/file.svelte.d.ts",
       "svelte": "./dist/tiny/fields/fields/file.svelte.js"
@@ -466,21 +478,33 @@
       "types": "./dist/tiny/entrypoint/entrypoint.svelte.d.ts",
       "svelte": "./dist/tiny/entrypoint/entrypoint.svelte"
     },
-    "./dropdown/content/content": {
-      "types": "./dist/tiny/dropdown/content/content.svelte.d.ts",
-      "svelte": "./dist/tiny/dropdown/content/content.svelte"
+    "./dropdown/content/icon": {
+      "types": "./dist/tiny/dropdown/content/icon.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/icon.svelte"
     },
-    "./dropdown/content/item/icon": {
-      "types": "./dist/tiny/dropdown/content/item/icon.svelte.d.ts",
-      "svelte": "./dist/tiny/dropdown/content/item/icon.svelte"
+    "./dropdown/content/item": {
+      "types": "./dist/tiny/dropdown/content/item.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/item.svelte"
     },
-    "./dropdown/content/item/item": {
-      "types": "./dist/tiny/dropdown/content/item/item.svelte.d.ts",
-      "svelte": "./dist/tiny/dropdown/content/item/item.svelte"
+    "./dropdown/content/label": {
+      "types": "./dist/tiny/dropdown/content/label.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/label.svelte"
     },
-    "./dropdown/content/item/label": {
-      "types": "./dist/tiny/dropdown/content/item/label.svelte.d.ts",
-      "svelte": "./dist/tiny/dropdown/content/item/label.svelte"
+    "./dropdown/basic/content": {
+      "types": "./dist/tiny/dropdown/basic/content.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/basic/content.svelte"
+    },
+    "./dropdown/basic/dropdown": {
+      "types": "./dist/tiny/dropdown/basic/dropdown.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/basic/dropdown.svelte"
+    },
+    "./dropdown/basic/item": {
+      "types": "./dist/tiny/dropdown/basic/item.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/basic/item.svelte"
+    },
+    "./dropdown/basic/items": {
+      "types": "./dist/tiny/dropdown/basic/items.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/basic/items.svelte"
     },
     "./button/button": {
       "types": "./dist/tiny/button/button.svelte.d.ts",
