@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Generate users section in bootstrap
 - [ ] Dropdown field
 - [ ] Dropdown for user roles
 - [ ] Busy state for fields while saving
@@ -16,6 +15,7 @@
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Generate users section in bootstrap
 - [x] Users section with form to change password, role
 - [x] `lib/tiny/auth/utils.svelte.ts` sign-in sign-up duplication
 - [x] Use valibot for field validations
