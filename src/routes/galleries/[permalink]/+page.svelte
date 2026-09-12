@@ -71,19 +71,21 @@
 
 <svelte:window {onkeydown} />
 
-<div class={['page', `type-${type}`]}>
+{#snippet main()}
   <div class="main">
     <div class="title">{gallery.name}</div>
   </div>
+{/snippet}
+
+<div class={['page', `type-${type}`]}>
+  {@render main()}
   <div class="blocks">
     {#each gallery.files.filter((file) => file.file) as file, i (file.id)}
       <div class="block" bind:this={blocks[i]}>
         <div class="content">
           <div class="description">
             {#if i === 0}
-              <div class="main">
-                <div class="title">{gallery.name}</div>
-              </div>
+              {@render main()}
             {/if}
             <div class="footer">
               {file.name}
