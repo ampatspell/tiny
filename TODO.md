@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Find a place to declare roles array, type and schema
 - [ ] Busy state for fields while saving
 - [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`

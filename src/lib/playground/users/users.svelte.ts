@@ -1,9 +1,9 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
-import { optionalPassword, requiredEmail } from '#lib/tiny/fields/models/validator.svelte.js';
+import { optionalPassword, requiredEmail, valibot } from '#lib/tiny/fields/models/validator.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { sentenceCase } from 'text-sentence-case';
-import { roles } from '../../../env.ts';
+import { roles, ValidRoleSchema } from '../../../env.ts';
 import { updateUser, type UserData } from './users.remote.ts';
 
 export type UseUserModelOptions = {
@@ -25,7 +25,14 @@ export const useUserModel = (_opts: OptionsInput<UseUserModelOptions>) => {
     });
     return {
       email: string('email', { validator: requiredEmail }),
-      role: dropdown('role', { items, identifier: 'role' }),
+      role: dropdown('role', {
+        items,
+        identifier: 'role',
+        validator: valibot({
+          isRequired: true,
+          schema: ValidRoleSchema,
+        }),
+      }),
       password: string('password', {
         label: 'New password',
         description: 'Leave blank to keep the current one',
