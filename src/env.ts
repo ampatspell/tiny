@@ -2,6 +2,8 @@ import { building } from '$app/env';
 import { defineEnvVars } from '@sveltejs/kit/env';
 import * as v from 'valibot';
 
+export const roles = ['admin', 'subscriber'] as const;
+
 const string = () => {
   return building ? v.optional(v.string()) : v.string();
 };

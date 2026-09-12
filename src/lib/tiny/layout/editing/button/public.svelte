@@ -4,6 +4,7 @@
   import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import TablerSun from '#lib/tiny/icons/tabler--sun.svelte';
   import type { EditingLayout, Model } from '../layout.svelte.ts';
+
   let {
     layout,
   }: {
@@ -18,8 +19,10 @@
   });
 </script>
 
-<Tooltip {label} placement="right">
-  <Button type="link" variant="light" {route} isDisabled={!route}>
-    <Icon icon={TablerSun} />
-  </Button>
-</Tooltip>
+{#if route !== null}
+  <Tooltip {label} placement="right">
+    <Button type="link" variant="light" {route} isDisabled={!route}>
+      <Icon icon={TablerSun} />
+    </Button>
+  </Tooltip>
+{/if}
