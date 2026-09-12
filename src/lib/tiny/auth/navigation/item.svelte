@@ -29,7 +29,7 @@
   };
 </script>
 
-{#if token}
+{#if token?.id}
   <NavigationItem bind:this={item} icon={TablerUser} {onClick} />
 {/if}
 

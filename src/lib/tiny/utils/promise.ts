@@ -60,3 +60,15 @@ export const throttle = <T>(tasks: (() => Promise<T>)[], limit: number): Promise
     }
   });
 };
+
+type Task<T> = () => Promise<T>;
+
+export const runner = <T>() => {
+  const tasks: Task<T>[] = [];
+  const push = (task: Task<T>) => tasks.push(task);
+  const run = async (limit = 10) => throttle(tasks, limit);
+  return {
+    push,
+    run,
+  };
+};

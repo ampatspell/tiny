@@ -21,7 +21,7 @@
 </script>
 
 <Center>
-  <TinyForm size="small">
+  <TinyForm size="small" onSubmit={model.perform}>
     <Header {title}>
       <Label value={model.error} />
     </Header>
@@ -33,7 +33,7 @@
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="secondary" onclick={secondary.onClick}>{secondary.label}</div>
-      <Button type="submit" label={title} onClick={model.perform} />
+      <Button type="submit" label={title} />
     </Actions>
   </TinyForm>
 </Center>

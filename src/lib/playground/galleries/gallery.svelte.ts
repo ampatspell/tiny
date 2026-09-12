@@ -4,7 +4,7 @@ import { notBlank, optionalPermalink } from '#lib/tiny/fields/models/validator.s
 import { useFiles } from '#lib/tiny/files.svelte.js';
 import { hasKeys, omit } from '#lib/tiny/utils/object.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-import { throttle } from '#lib/tiny/utils/promise.js';
+import { runner } from '#lib/tiny/utils/promise.js';
 import { slug } from '#lib/tiny/utils/string.js';
 import { images, type OptionalId } from '#lib/tiny/utils/utils.js';
 import { resolve } from '$app/paths';
@@ -108,7 +108,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
           {
             const files = data.files;
             if (files) {
-              const tasks: (() => Promise<unknown>)[] = [];
+              const tasks = runner();
               for (const entry of files) {
                 if (entry.state === 'deleted') {
                   tasks.push(() => deleteFile({ id: entry.id }));
@@ -123,7 +123,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
                   tasks.push(() => updateFile({ id, file, name, position }));
                 }
               }
-              await throttle(tasks, 10);
+              await tasks.run();
             }
           }
           broadcast.notifyDidSave();
