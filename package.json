@@ -38,7 +38,8 @@
     "!src/tests",
     "!src/lib/playground",
     "!src/routes",
-    "static"
+    "static",
+    "!static/screenshot-*"
   ],
   "sideEffects": [
     "**/*.css",
