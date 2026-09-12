@@ -143,6 +143,8 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { defineEnvVars } from '@sveltejs/kit/env';
       import { building } from '$app/env';
 
+      export const roles = ['admin', 'subscriber'] as const;
+
       const string = () => {
         return building ? v.optional(v.string()) : v.string();
       };
@@ -497,9 +499,11 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     content: dedent`
       import { useBroadcastChannel } from '@ampatspell/tiny/broadcast';
       import { withDataFields } from '@ampatspell/tiny/fields/index';
-      import { notBlank, optionalPassword, requiredEmail } from '@ampatspell/tiny/fields/models/validator';
+      import { optionalPassword, requiredEmail } from '@ampatspell/tiny/fields/models/validator';
       import { getter, options, type OptionsInput } from '@ampatspell/tiny/utils/options';
-      import { updateUser, type UserData } from './users.remote';
+      import { sentenceCase } from '@ampatspell/tiny/utils/string';
+      import { roles } from '../../env.ts';
+      import { updateUser, type UserData } from './users.remote.ts';
 
       export type UseUserModelOptions = {
         data: UserData;
@@ -514,13 +518,17 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
 
         const fields = withDataFields({
           data: getter(() => ({ ...data, password: '' })),
-        }).define(({ string }) => {
+        }).define(({ string, dropdown }) => {
+          const items = roles.map((role) => {
+            return { role, label: sentenceCase(role) };
+          });
           return {
             email: string('email', { validator: requiredEmail }),
-            role: string('role', { validator: notBlank }),
+            role: dropdown('role', { items, identifier: 'role' }),
             password: string('password', {
+              label: 'New password',
+              description: 'Leave blank to keep the current one',
               validator: optionalPassword,
-              description: 'Leave blank to keep the current password',
               type: 'password',
             }),
           };
@@ -539,11 +547,10 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
 
         return fields.asEditable({
           save,
-          route: undefined,
+          route: null,
           title: getter(() => data.email),
         });
       };
-
     `,
   });
 
@@ -557,6 +564,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         import List from '@ampatspell/tiny/layout/list/list';
         import Label from '@ampatspell/tiny/list/item/label';
         import { getter } from '@ampatspell/tiny/utils/options';
+        import { sentenceCase } from '@ampatspell/tiny/utils/string';
         import type { Snippet } from 'svelte';
 
         let { children }: { children?: Snippet } = $props();
@@ -572,7 +580,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       </script>
 
       {#snippet item(user: UserData)}
-        <Label label={user.email} description={user.role} />
+        <Label label={user.email} description={sentenceCase(user.role)} />
       {/snippet}
 
       <List {layout}>
@@ -838,6 +846,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     content: dedent`
       // See https://svelte.dev/docs/kit/types#app.d.ts
 
+      import type { roles } from './env';
       import type { Variants } from './params';
 
       // for information about these interfaces
@@ -852,7 +861,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
 
         namespace Tiny {
           export type Thumbnail = Variants;
-          export type Role = 'admin' | 'subscriber';
+          export type Role = (typeof roles)[number];
         }
       }
 
