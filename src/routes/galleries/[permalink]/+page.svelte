@@ -72,6 +72,9 @@
 <svelte:window {onkeydown} />
 
 <div class={['page', `type-${type}`]}>
+  <div class="main">
+    <div class="title">{gallery.name}</div>
+  </div>
   <div class="blocks">
     {#each gallery.files.filter((file) => file.file) as file, i (file.id)}
       <div class="block" bind:this={blocks[i]}>
@@ -110,6 +113,9 @@
       }
     }
     &.type-landscape {
+      > .main {
+        display: none;
+      }
       > .blocks {
         display: flex;
         flex-direction: column;
@@ -144,6 +150,45 @@
                 height: 100%;
                 object-fit: contain;
                 object-position: right;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.type-portrait {
+      > .main {
+        padding: 25px;
+        > .title {
+          font-size: var(--tiny-font-size);
+          font-weight: 700;
+        }
+      }
+      > .blocks {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        > .block {
+          display: flex;
+          flex-direction: column;
+          font-size: var(--tiny-font-size-small);
+          > .content {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 20px;
+            > .description {
+              > .main {
+                display: none;
+              }
+              padding: 0 20px;
+            }
+            > .details {
+              max-height: calc(100vh - 60px);
+              > .file {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                object-position: center;
               }
             }
           }
