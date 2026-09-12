@@ -27,8 +27,9 @@ export const useUserModel = (_opts: OptionsInput<UseUserModelOptions>) => {
       email: string('email', { validator: requiredEmail }),
       role: dropdown('role', { items, identifier: 'role' }),
       password: string('password', {
+        label: 'New password',
+        description: 'Leave blank to keep the current one',
         validator: optionalPassword,
-        description: 'Leave blank to keep the current password',
         type: 'password',
       }),
     };
