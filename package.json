@@ -22,7 +22,7 @@
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage",
     "test": "npm run test:unit -- --run",
-    "exports": "tsx ./src/lib/tiny/tools/exports.ts",
+    "exports": "tsx ./src/lib/tiny/tools/exports.ts && npm run format",
     "db": "litecli ./.local/tiny.db"
   },
   "bin": {
@@ -509,6 +509,14 @@
     "./backend/navigation/model": {
       "types": "./dist/tiny/backend/navigation/model.svelte.d.ts",
       "svelte": "./dist/tiny/backend/navigation/model.svelte.js"
+    },
+    "./auth/users.remote": {
+      "types": "./dist/tiny/auth/users.remote.d.ts",
+      "svelte": "./dist/tiny/auth/users.remote.js"
+    },
+    "./auth/users": {
+      "types": "./dist/tiny/auth/users.svelte.d.ts",
+      "svelte": "./dist/tiny/auth/users.svelte.js"
     },
     "./auth/utils": {
       "types": "./dist/tiny/auth/utils.svelte.d.ts",
