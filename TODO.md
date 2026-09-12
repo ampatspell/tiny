@@ -1,10 +1,7 @@
 ## TODO
 
-- [ ] Split gallery from files. Do batch for files
-- [ ] `lib/tiny/auth/utils.svelte.ts` sign-in sign-up duplication
-- [ ] Max age for JWT is 7 days, needs token renews.
 - [ ] Busy state for fields while saving
-- [ ] Server validation errors in forms
+- [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`
 - [ ] Users section with form to change password, role
 - [ ] resend.com integration
@@ -17,6 +14,8 @@
 - [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Textarea
+- [ ] Max age for JWT is 7 days, needs token renews.
+- [x] `lib/tiny/auth/utils.svelte.ts` sign-in sign-up duplication
 - [x] Use valibot for field validations
 - [x] Unsaved changes warning dialog
 - [x] Link as a button
