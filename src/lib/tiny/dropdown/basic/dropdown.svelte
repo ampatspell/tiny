@@ -1,9 +1,8 @@
 <script lang="ts" generics="T extends ItemData">
   import Item from './item.svelte';
-  import Items, { type ItemData } from './items.svelte';
+  import type { ItemData } from './items.svelte';
   import { useFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
   import { basic } from '#lib/tiny/floating/position.js';
-  import Card from '#lib/tiny/card.svelte';
   import Icon from '../content/icon.svelte';
   import TablerChevronUp from '#lib/tiny/icons/tabler--chevron-up.svelte';
   import TablerChevronDown from '#lib/tiny/icons/tabler--chevron-down.svelte';
@@ -41,11 +40,10 @@
   };
 
   let blank = {} as T;
-
   let selected = $derived(_selected ?? blank);
 
   let items = $derived.by<T[]>(() => {
-    if (!isRequired || selected === blank) {
+    if (!isRequired) {
       return [blank, ..._items];
     }
     return _items;
@@ -61,7 +59,7 @@
   <Content {items} {selected} onSelect={onSelect(close)} />
 {/snippet}
 
-<div class="dropdown" bind:this={reference}>
+<div bind:this={reference}>
   <Item item={selected} onSelect={onOpen} variant="bordered">
     <Icon icon={isOpen ? TablerChevronUp : TablerChevronDown} />
   </Item>

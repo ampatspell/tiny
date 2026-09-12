@@ -22,7 +22,7 @@
       state: 'critical',
     },
   ]);
-  let selected = $state<Model | undefined>(items[0]);
+  let selected = $state<Model | undefined>();
   let onSelect = (next: Model | undefined) => {
     selected = next;
   };
