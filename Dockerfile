@@ -18,7 +18,7 @@ ENV NODE_ENV=production
 CMD [ "npm", "start" ]
 
 HEALTHCHECK \
-  --interval=1m \
+  --interval=30s \
   --timeout=10s \
   --start-period=5s \
   --retries=10 \
