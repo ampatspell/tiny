@@ -1,14 +1,11 @@
 <script module lang="ts">
-  import Card from '#lib/tiny/card.svelte';
-  import Content from '#lib/tiny/dropdown/content/content.svelte';
-  import Icon from '#lib/tiny/dropdown/content/item/icon.svelte';
-  import Item, { type ItemState } from '#lib/tiny/dropdown/content/item/item.svelte';
-  import Label from '#lib/tiny/dropdown/content/item/label.svelte';
+  import type { ItemState } from '#lib/tiny/dropdown/content/item/item.svelte';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import type { ComputePositionConfig } from '@floating-ui/dom';
   import type { Component } from 'svelte';
   import type { Floaters } from '../floaters/model.svelte.ts';
   import { basic } from '../position.ts';
+  import Content from '#lib/tiny/dropdown/basic/content.svelte';
 
   export type DropdownItem = {
     icon?: Component;
@@ -41,14 +38,5 @@
   request: DropdownOptions;
   resolve: (item: DropdownItem | undefined) => void;
 })}
-  <Card width="fit">
-    <Content>
-      {#each request.items as item (item.label)}
-        <Item state={item.state} onClick={() => resolve(item)}>
-          <Icon icon={item.icon} />
-          <Label label={item.label} />
-        </Item>
-      {/each}
-    </Content>
-  </Card>
+  <Content items={request.items} selected={undefined} onSelect={resolve} />
 {/snippet}
