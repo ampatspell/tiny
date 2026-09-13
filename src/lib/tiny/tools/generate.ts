@@ -57,10 +57,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     filename: '.vscode/settings.json',
     content: dedent`
       {
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-          "source.organizeImports": "always"
-        },
+        "editor.formatOnSave": true
       }
     `,
   });
