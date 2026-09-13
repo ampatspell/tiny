@@ -13,7 +13,7 @@ export const up = async (db: Kysely<any>) => {
     .createTable('gallery_files')
     .addColumn('id', 'text', (col) => col.primaryKey().notNull())
     .addColumn('gallery_id', 'text', (col) => col.notNull().references('galleries.id'))
-    .addColumn('file_id', 'text', (col) => col.notNull().references('files.id'))
+    .addColumn('file_id', 'text', (col) => col.references('files.id'))
     .addColumn('position', 'integer', (col) => col.notNull())
     .addColumn('name', 'text', (col) => col.notNull().defaultTo(''))
     .execute();

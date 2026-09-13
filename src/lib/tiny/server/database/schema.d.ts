@@ -25,7 +25,7 @@ export interface Gallery {
 }
 
 export interface GalleryFile {
-  fileId: string;
+  fileId: string | null;
   galleryId: string;
   id: string;
   name: Generated<string>;

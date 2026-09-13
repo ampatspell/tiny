@@ -8,6 +8,7 @@ import { command, query } from '$app/server';
 import type { ExpressionBuilder, OperandExpression, SqlBool } from 'kysely';
 import * as v from 'valibot';
 import { getDatabase, getFiles } from '../../tiny/server/services/getters.ts';
+import { isTruthy } from '#lib/tiny/utils/array.js';
 
 export const getGalleries = query(async () => {
   const db = getDatabase();
@@ -20,7 +21,7 @@ const getGalleryBy = async (where: (b: ExpressionBuilder<DB, 'galleries'>) => Op
   const db = getDatabase();
   const gallery = await db.selectFrom('galleries').where(where).selectAll().executeTakeFirstOrThrow();
   const galleryFiles = await db.selectFrom('galleryFiles').where('galleryId', '==', gallery.id).selectAll().execute();
-  const fileIds = galleryFiles.map((file) => file.fileId);
+  const fileIds = galleryFiles.map((file) => file.fileId).filter(isTruthy);
   const files = await getFiles().files(fileIds).load();
 
   return {
@@ -103,7 +104,11 @@ export const deleteFile = command(v.strictObject({ id: v.string() }), async ({ i
   const record = await db.selectFrom('galleryFiles').selectAll().where('id', '==', id).executeTakeFirstOrThrow();
 
   await db.deleteFrom('galleryFiles').where('id', '==', id).execute();
-  await getFiles().file(record.fileId).drop();
+
+  const { fileId } = record;
+  if (fileId) {
+    await getFiles().file(fileId).drop();
+  }
 
   getGalleryById({ id: record.galleryId }).refresh();
 });
