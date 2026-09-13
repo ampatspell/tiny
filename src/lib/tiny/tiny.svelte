@@ -3,8 +3,9 @@
   import '@fontsource/ubuntu-mono/700.css';
   import './reset.scss';
   import './style.scss';
+  import type { Snippet } from 'svelte';
 
-  let { children } = $props();
+  let { children }: { children?: Snippet } = $props();
 </script>
 
-{@render children()}
+{@render children?.()}
