@@ -1,7 +1,5 @@
 ## TODO
 
-- [x] Add optional public route to list layout not just for selected entity
-- [x] Add for list layout should be snippet or callback
 - [ ] Textarea
 - [ ] Busy state for fields while saving
 - [ ] Find a place to declare roles array, type and schema
@@ -17,6 +15,8 @@
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation.
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Add optional public route to list layout not just for selected entity
+- [x] Add for list layout should be snippet or callback
 - [x] Dropdown field
 - [x] Dropdown for user roles
 - [x] Generate users section in bootstrap

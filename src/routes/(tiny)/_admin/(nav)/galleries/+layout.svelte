@@ -4,7 +4,7 @@
   import { useListLayout } from '#lib/tiny/layout/list/layout.svelte.js';
   import List from '#lib/tiny/layout/list/list.svelte';
   import Label from '#lib/tiny/list/item/label.svelte';
-  import { isSnippet } from '#lib/tiny/utils/is.js';
+  import { markSnippet } from '#lib/tiny/utils/mark.js';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { page } from '$app/state';
   import type { Snippet } from 'svelte';
@@ -18,7 +18,7 @@
     selected: getter(() => id),
     models: getter(() => galleries),
     item,
-    add: isSnippet(add),
+    add: markSnippet(add),
     route: null,
   });
 </script>

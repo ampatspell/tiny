@@ -1,5 +1,5 @@
 import { useBackend } from '#lib/tiny/backend/context.svelte.js';
-import type { IsFunction, IsSnippet } from '#lib/tiny/utils/is.js';
+import type { MarkedFunction, MarkedSnippet } from '#lib/tiny/utils/mark.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { ResolvedPathname } from '$app/types';
 import type { Snippet } from 'svelte';
@@ -14,7 +14,7 @@ export type UseListLayoutOptions<M extends Model> = {
   selected: string | undefined;
   models: M[];
   item: Snippet<[model: M]>;
-  add?: IsSnippet<AddSnippet> | IsFunction<() => Promise<unknown>>;
+  add?: MarkedSnippet<AddSnippet> | MarkedFunction<() => Promise<unknown>>;
   route?: ResolvedPathname | null;
 };
 
