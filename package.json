@@ -127,6 +127,10 @@
       "types": "./dist/tiny/utils/equals.d.ts",
       "svelte": "./dist/tiny/utils/equals.js"
     },
+    "./utils/is": {
+      "types": "./dist/tiny/utils/is.d.ts",
+      "svelte": "./dist/tiny/utils/is.js"
+    },
     "./utils/navigation": {
       "types": "./dist/tiny/utils/navigation.d.ts",
       "svelte": "./dist/tiny/utils/navigation.js"
@@ -522,6 +526,10 @@
     "./button/specific/busy": {
       "types": "./dist/tiny/button/specific/busy.svelte.d.ts",
       "svelte": "./dist/tiny/button/specific/busy.svelte"
+    },
+    "./button/specific/public": {
+      "types": "./dist/tiny/button/specific/public.svelte.d.ts",
+      "svelte": "./dist/tiny/button/specific/public.svelte"
     },
     "./backend/context": {
       "types": "./dist/tiny/backend/context.svelte.d.ts",

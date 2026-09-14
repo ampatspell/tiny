@@ -1,16 +1,21 @@
 import { useBackend } from '#lib/tiny/backend/context.svelte.js';
+import type { IsFunction, IsSnippet } from '#lib/tiny/utils/is.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
+import type { ResolvedPathname } from '$app/types';
 import type { Snippet } from 'svelte';
 
 export type Model = {
   id: string;
 };
 
+type AddSnippet = Snippet<[onDone: (id: string | undefined) => void]>;
+
 export type UseListLayoutOptions<M extends Model> = {
   selected: string | undefined;
   models: M[];
   item: Snippet<[model: M]>;
-  add?: Snippet<[onDone: (id: string | undefined) => void]>;
+  add?: IsSnippet<AddSnippet> | IsFunction<() => Promise<unknown>>;
+  route?: ResolvedPathname | null;
 };
 
 export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayoutOptions<M>>) => {
@@ -27,6 +32,7 @@ export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayout
   const models = $derived(opts.models);
   const item = $derived(opts.item);
   const add = $derived(opts.add);
+  const route = $derived(opts.route);
 
   return options(
     {
@@ -38,6 +44,7 @@ export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayout
       models: getter(() => models),
       item: getter(() => item),
       add: getter(() => add),
+      route: getter(() => route),
     },
     {
       name: 'ListLayout',

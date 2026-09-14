@@ -1,4 +1,5 @@
 <script lang="ts" generics="M extends Model">
+  import Public from '#lib/tiny/button/specific/public.svelte';
   import TinyHeader from '../../header/header.svelte';
   import Title from '../../header/title.svelte';
   import Add from './add.svelte';
@@ -16,6 +17,7 @@
 <TinyHeader>
   <Title label={title} />
   {#snippet accessories()}
+    <Public route={layout.route} />
     <Add {layout} />
   {/snippet}
 </TinyHeader>

@@ -15,7 +15,8 @@
     children?: Snippet;
   } = $props();
 
-  let onsubmit = () => {
+  let onsubmit = (e: Event) => {
+    e.preventDefault();
     onSubmit?.();
   };
 </script>

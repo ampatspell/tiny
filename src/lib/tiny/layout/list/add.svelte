@@ -29,10 +29,14 @@
   };
 
   let button = $state<Button>();
-  let onClick = () => {
-    let reference = button?.element;
-    if (reference) {
-      onAdd(reference);
+  let onClick = async () => {
+    if (add?.type === 'function') {
+      await add.value();
+    } else if (add?.type === 'snippet') {
+      let reference = button?.element;
+      if (reference) {
+        onAdd(reference);
+      }
     }
   };
 
@@ -40,7 +44,9 @@
 </script>
 
 {#snippet snippet({ resolve }: { resolve: (id: string | undefined) => void })}
-  {@render add?.(resolve)}
+  {#if add?.type === 'snippet'}
+    {@render add.value(resolve)}
+  {/if}
 {/snippet}
 
 {#if add}
