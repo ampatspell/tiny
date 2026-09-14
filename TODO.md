@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Add isDisabled for users. Validate token against that
 - [ ] Textarea
 - [ ] Busy state for fields while saving
 - [ ] Find a place to declare roles array, type and schema
