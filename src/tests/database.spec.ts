@@ -135,6 +135,7 @@ describe('database services', () => {
         'file_variants',
         'files',
         'galleries',
+        'gallery_files',
         'index',
         'users',
       ]);
