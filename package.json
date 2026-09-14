@@ -127,9 +127,9 @@
       "types": "./dist/tiny/utils/equals.d.ts",
       "svelte": "./dist/tiny/utils/equals.js"
     },
-    "./utils/is": {
-      "types": "./dist/tiny/utils/is.d.ts",
-      "svelte": "./dist/tiny/utils/is.js"
+    "./utils/mark": {
+      "types": "./dist/tiny/utils/mark.d.ts",
+      "svelte": "./dist/tiny/utils/mark.js"
     },
     "./utils/navigation": {
       "types": "./dist/tiny/utils/navigation.d.ts",
