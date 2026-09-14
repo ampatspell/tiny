@@ -1,6 +1,6 @@
 // @ts-expect-error Has no better-sqlite3 type
 import SQLite from 'better-sqlite3';
-import { CamelCasePlugin, Kysely, ParseJSONResultsPlugin, SqliteDialect } from 'kysely';
+import { CamelCasePlugin, Kysely, ParseJSONResultsPlugin, SafeNullComparisonPlugin, SqliteDialect } from 'kysely';
 import { mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { round } from '../../utils/number.ts';
@@ -32,7 +32,7 @@ export const createDatabaseServices = async <D = unknown>(opts: CreateDatabaseSe
 
     return new Kysely<D>({
       dialect,
-      plugins: [new CamelCasePlugin(), new ParseJSONResultsPlugin()],
+      plugins: [new CamelCasePlugin(), new ParseJSONResultsPlugin(), new SafeNullComparisonPlugin()],
       log: (event) => {
         const ms = `${round(event.queryDurationMillis)}ms`;
         const sql = event.query.sql;
