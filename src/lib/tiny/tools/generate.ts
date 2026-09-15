@@ -544,7 +544,6 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
 
         return fields.asEditable({
           save,
-          route: null,
           title: getter(() => data.email),
         });
       };

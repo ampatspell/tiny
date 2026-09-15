@@ -19,7 +19,6 @@
     models: getter(() => galleries),
     item,
     add: markSnippet(add),
-    route: null,
   });
 </script>
 

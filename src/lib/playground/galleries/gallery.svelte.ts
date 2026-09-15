@@ -162,6 +162,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     if (!fields.record.permalink.isDirty) {
       return resolve('/galleries/[permalink]', { permalink: permalink.value });
     }
+    return null;
   });
 
   return fields.asEditable(

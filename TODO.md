@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Calendar component
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Textarea
 - [ ] Busy state for fields while saving
@@ -16,6 +17,7 @@
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation.
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Figure out Public button's semantics
 - [x] Add optional public route to list layout not just for selected entity
 - [x] Add for list layout should be snippet or callback
 - [x] Dropdown field

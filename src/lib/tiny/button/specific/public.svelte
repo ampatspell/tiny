@@ -18,9 +18,9 @@
   });
 </script>
 
-{#if route !== null}
+{#if route !== undefined}
   <Tooltip {label} placement="right">
-    <Button type="link" variant="light" {route} isDisabled={!route}>
+    <Button type="link" variant="light" route={route ?? undefined} isDisabled={!route}>
       <Icon icon={TablerSun} />
     </Button>
   </Tooltip>
