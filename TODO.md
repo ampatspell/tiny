@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Drop file(s) on field
 - [ ] Calendar component
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Textarea
