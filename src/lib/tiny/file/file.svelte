@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createFileDropModel, fileDrop } from '../file-drop.svelte.ts';
   import { useFiles, type LocalFile, type UniversalFile } from '../files.svelte.ts';
   import { useFloaters } from '../floating/floaters/model.svelte.ts';
   import { dropdown, type DropdownItem } from '../floating/layout/dropdown.svelte';
@@ -7,9 +8,11 @@
   import TablerPhoto from '../icons/tabler--photo.svelte';
   import { isTruthy } from '../utils/array.ts';
   import { round } from '../utils/number.ts';
+  import { getter } from '../utils/options.svelte.ts';
   import { px } from '../utils/style.ts';
   import Blank from './blank.svelte';
   import Content from './content.svelte';
+  import Drop from './drop.svelte';
 
   let {
     accept = [],
@@ -90,13 +93,28 @@
       isOpen = false;
     }
   };
+
+  let onDrop = ([file]: File[]) => {
+    if (file) {
+      let model = files.create.local({ file });
+      onSelected(model);
+    }
+  };
+
+  let drop = createFileDropModel({
+    accept: getter(() => accept),
+    multiple: false,
+    onDrop,
+  });
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="file" style:--height={px(height)} bind:clientWidth {onclick}>
+<div class="file" {@attach fileDrop(drop)} style:--height={px(height)} bind:clientWidth {onclick}>
   {#if file}
     <Content {file} {variant} isBusy={isOpen} />
+  {:else if drop.isOver}
+    <Drop {type} />
   {:else}
     <Blank {type} />
   {/if}

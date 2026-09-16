@@ -6,4 +6,4 @@
   let { type }: { type: string } = $props();
 </script>
 
-<Overlay icon={TablerPhoto} label="Select {aan(type)} {type} or drop it here" />
+<Overlay icon={TablerPhoto} label="Drop {aan(type)} {type} here" />

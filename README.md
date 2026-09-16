@@ -36,19 +36,19 @@ First user that signs-up gets `admin` role.
 
 ## Deploy to Dokploy
 
-* Create service
-* Compose
-* Select Github account, repository, branch, … Save
-* Environment
-* Add "USERS_SECRET" and other required env variables
-* Create .env file (?)
-* Save
-* Deploy
-* Domains
-* Add domain
-* Select service
-* Type in host
-* Port 3000
-* Enable HTTPS
-* Create
-* Re-deploy
+- Create service
+- Compose
+- Select Github account, repository, branch, … Save
+- Environment
+- Add "USERS_SECRET" and other required env variables
+- Create .env file (?)
+- Save
+- Deploy
+- Domains
+- Add domain
+- Select service
+- Type in host
+- Port 3000
+- Enable HTTPS
+- Create
+- Re-deploy
