@@ -8,16 +8,22 @@
   import { getActiveInputElement } from '../utils/dom.ts';
   import Cell from './cell.svelte';
   import { setGridContext, type Direction } from './model.svelte.ts';
+  import { createFileDropModel, fileDrop } from '../file-drop.svelte.ts';
+  import { useFiles, type LocalFile } from '../files.svelte.ts';
 
   let {
+    accept,
     models,
     padding,
     gap,
     aspectRatio,
     selected,
     onSelect,
+    onDrop: _onDrop,
     children,
   }: {
+    accept?: string[];
+    onDrop?: (files: LocalFile[]) => void;
     models: T[];
     padding?: number;
     gap?: number;
@@ -70,11 +76,29 @@
   };
 
   let cells = $state<Cell<T>[]>([]);
+
+  let files = useFiles();
+  let onDrop = (selected: File[]) => {
+    let local = selected.map((file) => files.create.local({ file }));
+    _onDrop?.(local);
+  };
+
+  let drop = createFileDropModel({
+    accept: getter(() => accept),
+    onDrop,
+    multiple: true,
+  });
 </script>
 
 <svelte:window onkeydown={onKey} />
 
-<div class="grid" style:--gap={px(context.gap)} style:--padding={px(context.padding)} bind:clientWidth={width}>
+<div
+  class="grid"
+  style:--gap={px(context.gap)}
+  style:--padding={px(context.padding)}
+  {@attach fileDrop(drop)}
+  bind:clientWidth={width}
+>
   {#if models.length}
     {#if size}
       <!-- svelte-ignore a11y_click_events_have_key_events -->
