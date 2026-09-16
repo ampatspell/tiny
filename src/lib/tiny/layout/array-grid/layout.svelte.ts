@@ -1,15 +1,18 @@
 import type { ArrayField, ArrayFieldItem } from '#lib/tiny/fields/fields/array.svelte.js';
 import type { InferArrayFieldItem } from '#lib/tiny/fields/models/types.svelte.js';
+import { useFiles, type LocalFile } from '#lib/tiny/files.svelte.js';
 import type { AspectRatio } from '#lib/tiny/utils/aspect-ratio.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { useEditingLayout, type EditingLayoutOptions, type Model } from '../editing/layout.svelte.ts';
 
-export type GridModel = Model;
+export type GridModel = Model & {
+  accept: string[];
+  onFiles?: (files: LocalFile[]) => void;
+};
 
 export type ArrayGridEditingLayoutOptions<M extends GridModel, F extends ArrayField> = {
   field: F | undefined;
   aspectRatio: AspectRatio;
-  onAdd?: () => void;
 } & EditingLayoutOptions<M>;
 
 export const useArrayGridEditingLayout = <
@@ -20,9 +23,12 @@ export const useArrayGridEditingLayout = <
   _opts: OptionsInput<ArrayGridEditingLayoutOptions<M, F>>,
 ) => {
   const opts = options(_opts);
+  const files = useFiles();
+
   const field = $derived(opts.field);
   const aspectRatio = $derived(opts.aspectRatio);
-  const onAdd = $derived(opts.onAdd);
+  const accept = $derived(opts.model.accept);
+  const onFiles = $derived(opts.model.onFiles);
 
   let _selected = $state<I>();
 
@@ -36,17 +42,30 @@ export const useArrayGridEditingLayout = <
     _selected = next;
   };
 
+  const onAdd = $derived.by(() => {
+    if (accept && onFiles) {
+      return async () => {
+        const picked = await files.pick.files({ accept });
+        if (picked.status === 'picked') {
+          onFiles(picked.models);
+        }
+      };
+    }
+  });
+
   const editing = useEditingLayout({
     model: getter(() => opts.model),
   });
 
   return options({
-    onAdd: getter(() => onAdd),
+    accept: getter(() => accept),
     field: getter(() => field),
     aspectRatio: getter(() => aspectRatio),
     editing,
     selected: getter(() => selected),
     onSelect,
+    onFiles: getter(() => onFiles),
+    onAdd,
   });
 };
 

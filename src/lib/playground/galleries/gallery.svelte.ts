@@ -1,7 +1,7 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { notBlank, optionalPermalink } from '#lib/tiny/fields/models/validator.svelte.js';
-import { useFiles } from '#lib/tiny/files.svelte.js';
+import { useFiles, type LocalFile } from '#lib/tiny/files.svelte.js';
 import { hasKeys, omit } from '#lib/tiny/utils/object.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { runner } from '#lib/tiny/utils/promise.js';
@@ -140,21 +140,17 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     }
   };
 
-  const add = async () => {
-    const picked = await files.pick.files({ accept: images });
-    if (picked.status === 'picked') {
-      const files = picked.models;
-      const position = 0;
-      files.forEach((file, idx) => {
-        fields.record.files?.add({
-          file,
-          name: file.basename,
-          galleryId: '',
-          fileId: '',
-          position: position + idx,
-        });
+  const onFiles = async (files: LocalFile[]) => {
+    const position = 0;
+    files.forEach((file, idx) => {
+      fields.record.files?.add({
+        file,
+        name: file.basename,
+        galleryId: '',
+        fileId: '',
+        position: position + idx,
       });
-    }
+    });
   };
 
   const route = $derived.by(() => {
@@ -165,6 +161,8 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     return null;
   });
 
+  const accept = images;
+
   return fields.asEditable(
     {
       title: getter(() => data.name),
@@ -172,7 +170,8 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
       isNew: getter(() => isNew),
       save,
       destroy,
-      add,
+      accept,
+      onFiles,
     },
     {
       name: 'GalleryModel',

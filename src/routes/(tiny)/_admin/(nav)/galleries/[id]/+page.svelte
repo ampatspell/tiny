@@ -14,7 +14,6 @@
   let layout = useArrayGridEditingLayout({
     model,
     field: getter(() => model.fields.files),
-    onAdd: () => model.add(),
     aspectRatio: '3x2',
   });
 </script>

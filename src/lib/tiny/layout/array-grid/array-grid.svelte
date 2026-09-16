@@ -27,6 +27,8 @@
   let items = $derived(field?.items);
   let selected = $derived(layout.selected);
   let onSelect = $derived(layout.onSelect);
+  let accept = $derived(layout.accept);
+  let onDrop = $derived(layout.onFiles);
 </script>
 
 <Editing layout={layout.editing}>
@@ -43,7 +45,7 @@
     {/snippet}
     <Section height="fill">
       {#if field && items}
-        <Grid models={items} aspectRatio={layout.aspectRatio} {selected} {onSelect}>
+        <Grid models={items} aspectRatio={layout.aspectRatio} {selected} {onSelect} {accept} {onDrop}>
           {#snippet children({ model, isSelected })}
             {@render item({ item: model as I, isSelected })}
           {/snippet}

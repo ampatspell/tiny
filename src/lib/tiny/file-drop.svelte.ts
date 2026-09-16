@@ -8,7 +8,7 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
   const fileItemsFromEvent = (e: DragEvent) => {
     const items = e.dataTransfer?.items ?? [];
     const all = [...items].filter((item) => item.kind === 'file') ?? [];
-    const accepted = all.filter((item) => model.accept.includes(item.type));
+    const accepted = all.filter((item) => model.accept?.includes(item.type));
     let isValid;
     if (model.multiple) {
       isValid = accepted.length > 0;
@@ -20,6 +20,9 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
 
   return (element) => {
     const onDragOver = (e: DragEvent) => {
+      if (!model.isEnabled) {
+        return;
+      }
       const { all, isValid } = fileItemsFromEvent(e);
       if (all.length > 0) {
         e.preventDefault();
@@ -35,6 +38,9 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
     };
 
     const onWindowDragOver = (e: DragEvent) => {
+      if (!model.isEnabled) {
+        return;
+      }
       const { all } = fileItemsFromEvent(e);
       if (all.length > 0) {
         e.preventDefault();
@@ -47,16 +53,22 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
     };
 
     const onDragLeave = () => {
+      if (!model.isEnabled) {
+        return;
+      }
       model.setOver(false);
     };
 
     const onDrop = (e: DragEvent) => {
+      if (!model.isEnabled) {
+        return;
+      }
       const { all, accepted, isValid } = fileItemsFromEvent(e);
       if (all.length > 0) {
         e.preventDefault();
         if (isValid) {
           const files = accepted.map((item) => item.getAsFile()).filter(isTruthy);
-          model.onDrop(files);
+          model.onDrop?.(files);
         }
       }
       model.setOver(false);
@@ -77,20 +89,26 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
 
 export const createFileDropModel = (
   _opts: OptionsInput<{
-    onDrop: (files: File[]) => void;
-    accept: string[];
+    onDrop?: (files: File[]) => void;
+    accept?: string[];
     multiple?: boolean;
+    isEnabled?: boolean;
   }>,
 ) => {
   const opts = options(_opts);
   const onDrop = $derived(opts.onDrop);
   const accept = $derived(opts.accept);
   const multiple = $derived(opts.multiple ?? false);
+  const isEnabled = $derived((opts.isEnabled ?? true) && !!accept && !!onDrop);
+
   let isOver = $state(false);
+
   const setOver = (over: boolean) => {
     isOver = over;
   };
+
   return options({
+    isEnabled: getter(() => isEnabled),
     multiple: getter(() => multiple),
     isOver: getter(() => isOver),
     accept: getter(() => accept),
