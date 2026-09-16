@@ -59,6 +59,10 @@
       "types": "./dist/tiny/broadcast.svelte.d.ts",
       "svelte": "./dist/tiny/broadcast.svelte.js"
     },
+    "./file-drop": {
+      "types": "./dist/tiny/file-drop.svelte.d.ts",
+      "svelte": "./dist/tiny/file-drop.svelte.js"
+    },
     "./files": {
       "types": "./dist/tiny/files.svelte.d.ts",
       "svelte": "./dist/tiny/files.svelte.js"
@@ -398,6 +402,10 @@
     "./floating/floater/model": {
       "types": "./dist/tiny/floating/floater/model.svelte.d.ts",
       "svelte": "./dist/tiny/floating/floater/model.svelte.js"
+    },
+    "./file/drop": {
+      "types": "./dist/tiny/file/drop.svelte.d.ts",
+      "svelte": "./dist/tiny/file/drop.svelte"
     },
     "./file/file": {
       "types": "./dist/tiny/file/file.svelte.d.ts",
