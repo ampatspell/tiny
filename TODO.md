@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Drop file(s) on field
+- [ ] Drop files on the grid
 - [ ] Calendar component
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Textarea
@@ -18,6 +18,7 @@
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation.
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Drop file(s) on field
 - [x] Figure out Public button's semantics
 - [x] Add optional public route to list layout not just for selected entity
 - [x] Add for list layout should be snippet or callback
