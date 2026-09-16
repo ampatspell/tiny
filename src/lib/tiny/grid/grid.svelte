@@ -10,6 +10,7 @@
   import { setGridContext, type Direction } from './model.svelte.ts';
   import { createFileDropModel, fileDrop } from '../file-drop.svelte.ts';
   import { useFiles, type LocalFile } from '../files.svelte.ts';
+  import { isAcceptingImages } from '../utils/utils.ts';
 
   let {
     accept,
@@ -88,6 +89,14 @@
     onDrop,
     multiple: true,
   });
+
+  let placeholder = $derived.by(() => {
+    let type = isAcceptingImages(accept) ? 'images' : 'files';
+    if (drop.isOver) {
+      return `Drop ${type} here`;
+    }
+    return `No ${type} yet`;
+  });
 </script>
 
 <svelte:window onkeydown={onKey} />
@@ -114,7 +123,7 @@
       </div>
     {/if}
   {:else}
-    <Placeholder label="No files yet" icon={TablerPhoto} />
+    <Placeholder label={placeholder} icon={TablerPhoto} />
   {/if}
 </div>
 

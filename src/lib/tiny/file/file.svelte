@@ -10,6 +10,7 @@
   import { round } from '../utils/number.ts';
   import { getter } from '../utils/options.svelte.ts';
   import { px } from '../utils/style.ts';
+  import { isAcceptingImages } from '../utils/utils.ts';
   import Blank from './blank.svelte';
   import Content from './content.svelte';
   import Drop from './drop.svelte';
@@ -31,7 +32,7 @@
 
   let files = useFiles();
 
-  let isImage = $derived(accept && !accept.find((mime) => !mime.startsWith('image/')));
+  let isImage = $derived(isAcceptingImages(accept));
   let type = $derived(isImage ? 'image' : 'file');
   let clientWidth = $state<number>();
   let height = $derived(round(((clientWidth ?? 0) / 3) * 2, 0));

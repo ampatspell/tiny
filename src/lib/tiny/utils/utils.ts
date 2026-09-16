@@ -3,6 +3,10 @@ import type { UniversalFile } from '../files.svelte.ts';
 
 export const images = ['image/png', 'image/jpeg'];
 
+export const isAcceptingImages = (accept?: string[]) => {
+  return !!accept && !accept.find((mime) => !mime.startsWith('image/'));
+};
+
 export const run = <T>(cb: () => T): T => {
   return cb();
 };
