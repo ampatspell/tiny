@@ -22,7 +22,9 @@
   <div class="description">{index.description}</div>
   <div class="galleries">
     {#each index.galleries as gallery (gallery.id)}
-      <a href={resolve('/galleries/[permalink]', { permalink: gallery.permalink })} class="gallery">{gallery.name}</a>
+      <a href={resolve('/(pub)/galleries/[permalink]', { permalink: gallery.permalink })} class="gallery"
+        >{gallery.name}</a
+      >
     {/each}
   </div>
 </div>
