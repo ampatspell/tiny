@@ -52,7 +52,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   return fields.asEditable(
     {
       title: getter(() => title),
-      route: resolve('/'),
+      route: resolve('/(pub)'),
       save,
     },
     { name: 'IndexModel', serialized: ['isDirty'] },

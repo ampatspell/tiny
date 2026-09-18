@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Isolate tiny css from public css
 - [ ] Calendar component
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Textarea

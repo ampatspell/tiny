@@ -17,7 +17,7 @@ export const signIn = withCredentials(_signIn);
 export const signUp = withCredentials(_signUp);
 
 export const signOut = async ({ channel }: { channel: BroadcastChannel }) => {
-  await goto(resolve('/'));
+  await goto(resolve('/(pub)'));
   await _signOut();
   channel.notifyTokenDidChange();
 };

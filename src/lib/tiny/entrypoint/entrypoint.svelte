@@ -1,4 +1,5 @@
 <script lang="ts">
+  import './entrypoint.scss';
   import type { Snippet } from 'svelte';
   import Guard from '../auth/guard/guard.svelte';
   import { useTiny } from './tiny.svelte.ts';

@@ -20,7 +20,7 @@
       {
         name: 'Public',
         icon: TablerBalloon,
-        route: resolve('/'),
+        route: resolve('/(pub)'),
         cmp: equals,
       },
       {
