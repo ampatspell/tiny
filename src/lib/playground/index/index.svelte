@@ -52,7 +52,7 @@
       background-size: cover;
     }
     > .title {
-      font-size: 21px;
+      font-size: 27px;
     }
     > .description {
       font-size: 13px;
@@ -61,7 +61,11 @@
       padding: 10px 0 0 0;
       > .gallery {
         color: var(--text-color);
-        font-size: 13px;
+        text-decoration: none;
+        font-size: 18px;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
