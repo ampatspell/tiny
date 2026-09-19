@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Isolate tiny css from public css
+- [ ] Update generate for `<Hello/>` and stuff
 - [ ] Calendar component
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Textarea
@@ -18,6 +18,7 @@
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation.
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Isolate tiny css from public css
 - [x] Drop files on the grid
 - [x] Drop file(s) on field
 - [x] Figure out Public button's semantics
