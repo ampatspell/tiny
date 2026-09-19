@@ -4,13 +4,12 @@
   let { children } = $props();
 </script>
 
-<div class="public">
+<div class="pub">
   {@render children()}
 </div>
 
 <style lang="scss">
-  .public {
-    display: contents;
-    font-family: 'Raleway', system-ui;
+  .pub {
+    font-family: Raleway;
   }
 </style>

@@ -3,7 +3,6 @@
   import Placeholder from '#lib/tiny/placeholder.svelte';
   import { isTruthy } from '#lib/tiny/utils/array.js';
   import { page } from '$app/state';
-  import Tiny from './tiny.svelte';
 
   let status = $derived(page.status);
   let error = $derived(page.error?.message ?? 'Unknown error');
@@ -12,6 +11,4 @@
   });
 </script>
 
-<Tiny>
-  <Placeholder icon={TablerBalloon} {label} />
-</Tiny>
+<Placeholder icon={TablerBalloon} {label} />

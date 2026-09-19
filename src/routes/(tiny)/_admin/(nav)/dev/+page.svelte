@@ -1,20 +1,13 @@
 <script lang="ts">
-  import { createFileDropModel, fileDrop } from '#lib/tiny/file-drop.svelte.js';
-  import { images } from '#lib/tiny/utils/utils.js';
-
-  let model = createFileDropModel({
-    accept: images,
-    multiple: true,
-    onDrop: (files) => {
-      console.log('onDrop', files);
-    },
-  });
-
-  $effect(() => console.log(model.isOver));
+  let blowUp = () => {
+    throw new Error('Fake');
+  };
 </script>
 
 <div class="page">
-  <div class="block" {@attach fileDrop(model)}></div>
+  <div class="block">
+    {blowUp()}
+  </div>
 </div>
 
 <style lang="scss">

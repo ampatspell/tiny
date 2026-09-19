@@ -13,8 +13,8 @@
 <style lang="scss">
   .tiny {
     display: contents;
-    background: var(--tiny-white-color);
     font-family: var(--tiny-font-family);
     font-size: var(--tiny-font-size);
+    font-weight: var(--tiny-font-weight);
   }
 </style>

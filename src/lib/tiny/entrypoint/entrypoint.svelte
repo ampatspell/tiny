@@ -13,3 +13,5 @@
 <Guard {validate}>
   {@render children()}
 </Guard>
+
+<div class="box"></div>
