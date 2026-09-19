@@ -1,7 +1,7 @@
 <script lang="ts">
   import { validatePrefix } from '#lib/tiny/auth/guard/validate.svelte.js';
-  import Entrypoint from '#lib/tiny/entrypoint/entrypoint.svelte';
-  import { setTiny } from '#lib/tiny/entrypoint/tiny.svelte.js';
+  import Hello from '#lib/tiny/hello/hello.svelte';
+  import { setTiny } from '#lib/tiny/hello/tiny.svelte.js';
   import { resolve } from '$app/paths';
 
   let { children } = $props();
@@ -17,6 +17,6 @@
   });
 </script>
 
-<Entrypoint>
+<Hello>
   {@render children()}
-</Entrypoint>
+</Hello>

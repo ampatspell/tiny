@@ -110,7 +110,7 @@
     flex-direction: column;
     > .blocks {
       > .block {
-        font-size: var(--tiny-font-size-small);
+        font-size: 14px;
       }
     }
     &.type-landscape {
@@ -138,7 +138,7 @@
               > .main {
                 flex: 1;
                 > .title {
-                  font-size: var(--tiny-font-size);
+                  font-size: 18px;
                   font-weight: 700;
                 }
               }
@@ -161,7 +161,7 @@
       > .main {
         padding: 25px;
         > .title {
-          font-size: var(--tiny-font-size);
+          font-size: 18px;
           font-weight: 700;
         }
       }
@@ -172,7 +172,6 @@
         > .block {
           display: flex;
           flex-direction: column;
-          font-size: var(--tiny-font-size-small);
           > .content {
             display: flex;
             flex-direction: column-reverse;

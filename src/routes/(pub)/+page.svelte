@@ -10,10 +10,11 @@
   <title>Welcome to Tiny</title>
 </svelte:head>
 
+<div class="page">
+  <Index />
+</div>
+
 <Tiny>
-  <div class="page">
-    <Index />
-  </div>
   <a href={resolve('/(tiny)/_admin/(nav)')} class="edit">
     <Icon icon={TablerBalloon} />
     <div class="label">open backend (duck@test.com / duck)</div>

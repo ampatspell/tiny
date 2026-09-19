@@ -156,7 +156,7 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const route = $derived.by(() => {
     const permalink = fields.record.permalink;
     if (!fields.record.permalink.isDirty) {
-      return resolve('/galleries/[permalink]', { permalink: permalink.value });
+      return resolve('/(pub)/galleries/[permalink]', { permalink: permalink.value });
     }
     return null;
   });

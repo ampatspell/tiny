@@ -1,5 +1,5 @@
 import { createContext } from 'svelte';
-import { useTiny } from './entrypoint/tiny.svelte.ts';
+import { useTiny } from './hello/tiny.svelte.ts';
 import type { FileData, VariantData } from './server/files/files.ts';
 import { sortedBy } from './utils/array.ts';
 import { noCloneTag } from './utils/clone.ts';

@@ -22,7 +22,9 @@
   <div class="description">{index.description}</div>
   <div class="galleries">
     {#each index.galleries as gallery (gallery.id)}
-      <a href={resolve('/galleries/[permalink]', { permalink: gallery.permalink })} class="gallery">{gallery.name}</a>
+      <a href={resolve('/(pub)/galleries/[permalink]', { permalink: gallery.permalink })} class="gallery"
+        >{gallery.name}</a
+      >
     {/each}
   </div>
 </div>
@@ -50,7 +52,7 @@
       background-size: cover;
     }
     > .title {
-      font-size: 21px;
+      font-size: 27px;
     }
     > .description {
       font-size: 13px;
@@ -59,7 +61,11 @@
       padding: 10px 0 0 0;
       > .gallery {
         color: var(--text-color);
-        font-size: 13px;
+        text-decoration: none;
+        font-size: 18px;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
