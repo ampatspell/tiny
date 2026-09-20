@@ -18,6 +18,9 @@
   let isBusy = $state(false);
 
   let onClick = async () => {
+    if (isBusy) {
+      return;
+    }
     try {
       isBusy = true;
       await _onClick();
@@ -27,6 +30,10 @@
   };
 
   let icon = $derived(isBusy ? TablerCloudFilled : TablerCloud);
+
+  const perform = () => onClick();
+
+  export { isBusy, perform };
 </script>
 
 <Button {onClick} {isBusy} {type}>

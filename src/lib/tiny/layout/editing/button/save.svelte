@@ -4,21 +4,13 @@
 
   let { layout }: { layout: EditingLayout<M> } = $props();
 
-  let isSaving = $state(false);
+  let busy = $state<Busy>();
+  let onClick = () => layout.save();
 
-  let onClick = async () => {
-    try {
-      isSaving = true;
-      await layout.save();
-    } finally {
-      isSaving = false;
-    }
-  };
-
-  let onkeydown = (e: KeyboardEvent) => {
+  let onkeydown = async (e: KeyboardEvent) => {
     if (layout.isDirty) {
       if (e.key === 'Enter' && e.metaKey === true) {
-        onClick();
+        await busy?.perform();
       }
     }
   };
@@ -26,6 +18,6 @@
 
 <svelte:document {onkeydown} />
 
-{#if layout.isDirty || isSaving}
-  <Busy label="Save" {onClick} />
+{#if layout.isDirty || busy?.isBusy}
+  <Busy bind:this={busy} label="Save" {onClick} />
 {/if}

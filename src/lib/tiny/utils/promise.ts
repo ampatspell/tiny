@@ -31,18 +31,16 @@ export const throttle = <T>(tasks: (() => Promise<T>)[], limit: number): Promise
         return;
       }
 
-      const currentIndex = next++;
-      const task = tasks[currentIndex];
+      const idx = next++;
+      const task = tasks[idx];
 
       try {
         const result = await task();
         if (failed) {
           return;
         }
-
-        results[currentIndex] = result;
+        results[idx] = result;
         completed++;
-
         if (completed === tasks.length) {
           resolve(results);
         } else {
@@ -71,4 +69,10 @@ export const runner = <T>() => {
     push,
     run,
   };
+};
+
+export const delay = (millis: number = 5000) => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => resolve(), millis);
+  });
 };

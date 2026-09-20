@@ -15,15 +15,18 @@
     children?: Snippet;
   } = $props();
 
-  let onsubmit = (e: Event) => {
-    e.preventDefault();
-    onSubmit?.();
+  let onkeydown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.metaKey && !e.altKey && !e.ctrlKey) {
+      onSubmit?.();
+    }
   };
 </script>
 
-<form class={['form', `size-${size}`]} {onsubmit}>
+<svelte:body {onkeydown} />
+
+<div class={['form', `size-${size}`]}>
   {@render children?.()}
-</form>
+</div>
 
 <style lang="scss">
   .form {

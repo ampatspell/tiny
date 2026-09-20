@@ -1,7 +1,7 @@
 ## TODO
 
-- [ ] Calendar component
 - [ ] Busy state for fields while saving
+- [ ] Calendar component
 - [ ] Find a place to declare roles array, type and schema (do src/tiny.ts?)
 - [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`
