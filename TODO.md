@@ -1,8 +1,8 @@
 ## TODO
 
+- [ ] Textarea
 - [ ] Calendar component
 - [ ] Add isDisabled for users. Validate token against that
-- [ ] Textarea
 - [ ] Busy state for fields while saving
 - [ ] Find a place to declare roles array, type and schema (do src/tiny.ts?)
 - [ ] Server validation errors in forms / fields
