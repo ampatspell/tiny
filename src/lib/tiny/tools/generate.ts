@@ -345,7 +345,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         };
 
         const title = 'Message';
-        const route = resolve('/');
+        const route = resolve('/(pub)');
 
         return fields.asEditable({
           save,
@@ -696,7 +696,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
             {
               name: 'Public',
               icon: TablerCloud,
-              route: resolve('/'),
+              route: resolve('/(pub)'),
               cmp: equals,
             },
             {
