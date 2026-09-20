@@ -65,7 +65,7 @@ export const useArrayGridEditingLayout = <
     selected: getter(() => selected),
     onSelect,
     onFiles: getter(() => onFiles),
-    onAdd,
+    onAdd: getter(() => onAdd),
   });
 };
 
