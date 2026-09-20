@@ -403,10 +403,11 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
             justify-content: center;
             background: var(--background) center center / cover no-repeat;
             > .message {
-              font-size: var(--tiny-font-size-small);
+              font-size: 13px;
               color: #000;
               display: flex;
               flex-direction: column;
+              gap: 2px;
             }
           }
         }
@@ -781,13 +782,16 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     content: dedent`
       <script lang="ts">
         import Error from '@ampatspell/tiny/error';
+        import Tiny from '@ampatspell/tiny/tiny';
       </script>
 
       <svelte:head>
         <title>Tiny issue</title>
       </svelte:head>
 
-      <Error />
+      <Tiny>
+        <Error />
+      </Tiny>
     `,
   });
 
@@ -797,8 +801,8 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       <script lang="ts">
         import { resolve } from '$app/paths';
         import { validatePrefix } from '@ampatspell/tiny/auth/guard/validate';
-        import Entrypoint from '@ampatspell/tiny/entrypoint/entrypoint';
-        import { setTiny } from '@ampatspell/tiny/entrypoint/tiny';
+        import Hello from '@ampatspell/tiny/hello/hello';
+        import { setTiny } from '@ampatspell/tiny/hello/tiny';
 
         let { children } = $props();
 
@@ -813,27 +817,49 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         });
       </script>
 
-      <Entrypoint>
+      <Hello>
         {@render children()}
-      </Entrypoint>
+      </Hello>
     `,
   });
 
   await write({
-    filename: 'src/routes/+page.svelte',
+    filename: 'src/routes/(pub)/+layout.svelte',
+    content: dedent`
+      <script lang="ts">
+        let { children } = $props();
+      </script>
+
+      <div class="pub">
+        {@render children()}
+      </div>
+
+      <style lang="scss">
+        .pub {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          font-family:
+            Menlo,
+            Ubuntu Mono,
+            monospace;
+        }
+      </style>
+    `,
+  });
+
+  await write({
+    filename: 'src/routes/(pub)/+page.svelte',
     content: dedent`
       <script lang="ts">
         import Public from '#lib/message/public.svelte';
-        import Tiny from '@ampatspell/tiny/tiny';
       </script>
 
       <svelte:head>
         <title>Tiny</title>
       </svelte:head>
 
-      <Tiny>
-        <Public />
-      </Tiny>
+      <Public />
     `,
   });
 
