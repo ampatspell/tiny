@@ -7,6 +7,7 @@ type T = string;
 
 export class StringField extends ValueField<T, T, StringFieldDefinition> {
   readonly type = $derived(this.definition.type);
+  readonly rows = $derived(this.definition.rows);
   readonly autofocus = $derived(this.definition.autofocus);
   readonly onInput = (next: string) => this.update(next);
   protected readonly _serialized = $derived(this.value);
@@ -15,11 +16,13 @@ export class StringField extends ValueField<T, T, StringFieldDefinition> {
 
 export type StringFieldDefinitionOptions = ValueFieldDefinitionOptions<T, StringField> & {
   type?: InputType;
+  rows?: number;
   autofocus?: boolean;
 };
 
 export class StringFieldDefinition extends ValueFieldDefinition<T, StringField, StringFieldDefinitionOptions> {
-  readonly type = $derived(this.opts.type ?? 'text');
+  readonly type = $derived(this.opts.type);
+  readonly rows = $derived(this.opts.rows);
   readonly autofocus = $derived(this.opts.autofocus ?? false);
 
   field(opts: CreateFieldOptions): StringField {

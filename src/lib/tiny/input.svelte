@@ -1,14 +1,14 @@
 <script module lang="ts">
-  export type InputType = 'text' | 'password';
+  export type InputType = 'text' | 'textarea' | 'password';
 </script>
 
 <script lang="ts">
   let {
     isDisabled,
-    type,
+    type = 'text',
+    rows = 6,
     value,
     placeholder,
-    multiline,
     autofocus,
     onEnter,
     onInput,
@@ -16,14 +16,16 @@
   }: {
     isDisabled?: boolean;
     type?: InputType;
+    rows?: number;
     value: string | undefined;
     placeholder?: string;
-    multiline?: boolean;
     autofocus?: boolean;
     onEnter?: (value: string) => void;
     onInput?: (value: string) => void;
     onBlur?: (value: string) => void;
   } = $props();
+
+  let multiline = $derived(type === 'textarea');
 
   let initial: string | undefined;
 
@@ -75,6 +77,7 @@
   <textarea
     bind:this={element}
     class="input textarea"
+    {rows}
     {placeholder}
     {disabled}
     {value}
@@ -85,7 +88,7 @@
 {:else}
   <input
     bind:this={element}
-    type={type ?? 'text'}
+    {type}
     class="input"
     {placeholder}
     {disabled}
@@ -109,7 +112,6 @@
       color: var(--tiny-faded-color-1);
     }
     &.textarea {
-      height: 298px;
       resize: vertical;
     }
   }
