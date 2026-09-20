@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Add new could be disabled in list layout and have a reason for that
 - [ ] Busy state for fields while saving
 - [ ] Calendar component
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
