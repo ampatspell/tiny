@@ -5,16 +5,16 @@
 
   let {
     label,
+    isBusy = false,
     children,
     navigation,
     accessories: _accessories,
-    isBusy = false,
   }: {
     label: string;
+    isBusy?: boolean;
     children: Snippet;
     navigation?: Snippet;
     accessories?: Snippet;
-    isBusy?: boolean;
   } = $props();
 </script>
 

@@ -18,14 +18,13 @@
   } = $props();
 
   let label = $derived(layout.title);
-  let save = $state<Save<P>>();
 
   useNavigationConfirmation({
     isDirty: getter(() => layout.isDirty),
     isDestroyed: getter(() => layout.isDestroyed),
   });
 
-  let isBusy = $derived(save?.isBusy ?? false);
+  let isBusy = $derived(layout.isSaving);
 </script>
 
 <Page {label} {isBusy}>
@@ -33,8 +32,7 @@
     <Public {layout} />
   {/snippet}
   {#snippet accessories()}
-    <!-- remove bind. save in layout should have isBusy, not this madness-->
-    <Save bind:this={save} {layout} />
+    <Save {layout} />
     <Discard {layout} />
     <Delete {layout} />
   {/snippet}
