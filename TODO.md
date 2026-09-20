@@ -1,8 +1,8 @@
 ## TODO
 
-- [ ] Calendar component
-- [ ] Add isDisabled for users. Validate token against that
 - [ ] Busy state for fields while saving
+- [ ] Calendar component
+- [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Find a place to declare roles array, type and schema (do src/tiny.ts?)
 - [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`
@@ -14,6 +14,7 @@
 - [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation.
+- [ ] Add isDisabled for users. Validate token against that
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [x] Textarea
 - [x] `<Select />` component
