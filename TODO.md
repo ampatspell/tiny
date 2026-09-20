@@ -2,6 +2,7 @@
 
 - [ ] Busy state for fields while saving
 - [ ] Calendar component
+- [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Find a place to declare roles array, type and schema (do src/tiny.ts?)
 - [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`
