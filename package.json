@@ -323,6 +323,14 @@
       "types": "./dist/tiny/icons/tabler--user.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--user.svelte"
     },
+    "./hello/tiny": {
+      "types": "./dist/tiny/hello/tiny.svelte.d.ts",
+      "svelte": "./dist/tiny/hello/tiny.svelte.js"
+    },
+    "./hello/hello": {
+      "types": "./dist/tiny/hello/hello.svelte.d.ts",
+      "svelte": "./dist/tiny/hello/hello.svelte"
+    },
     "./header/header": {
       "types": "./dist/tiny/header/header.svelte.d.ts",
       "svelte": "./dist/tiny/header/header.svelte"
@@ -482,14 +490,6 @@
     "./fields/fields/value": {
       "types": "./dist/tiny/fields/fields/value.svelte.d.ts",
       "svelte": "./dist/tiny/fields/fields/value.svelte.js"
-    },
-    "./entrypoint/tiny": {
-      "types": "./dist/tiny/entrypoint/tiny.svelte.d.ts",
-      "svelte": "./dist/tiny/entrypoint/tiny.svelte.js"
-    },
-    "./entrypoint/entrypoint": {
-      "types": "./dist/tiny/entrypoint/entrypoint.svelte.d.ts",
-      "svelte": "./dist/tiny/entrypoint/entrypoint.svelte"
     },
     "./dropdown/content/icon": {
       "types": "./dist/tiny/dropdown/content/icon.svelte.d.ts",
