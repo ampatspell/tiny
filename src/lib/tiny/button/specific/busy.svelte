@@ -8,23 +8,14 @@
   let {
     label,
     type,
-    onClick: _onClick,
+    isBusy,
+    onClick,
   }: {
     label: string;
     type?: ButtonType;
-    onClick: () => Promise<unknown>;
+    isBusy: boolean;
+    onClick: () => void;
   } = $props();
-
-  let isBusy = $state(false);
-
-  let onClick = async () => {
-    try {
-      isBusy = true;
-      await _onClick();
-    } finally {
-      isBusy = false;
-    }
-  };
 
   let icon = $derived(isBusy ? TablerCloudFilled : TablerCloud);
 </script>

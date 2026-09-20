@@ -23,9 +23,11 @@
     isDirty: getter(() => layout.isDirty),
     isDestroyed: getter(() => layout.isDestroyed),
   });
+
+  let isBusy = $derived(layout.isSaving);
 </script>
 
-<Page {label}>
+<Page {label} {isBusy}>
   {#snippet navigation()}
     <Public {layout} />
   {/snippet}

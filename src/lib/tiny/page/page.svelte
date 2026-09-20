@@ -5,18 +5,20 @@
 
   let {
     label,
+    isBusy = false,
     children,
     navigation,
     accessories: _accessories,
   }: {
     label: string;
+    isBusy?: boolean;
     children: Snippet;
     navigation?: Snippet;
     accessories?: Snippet;
   } = $props();
 </script>
 
-<div class="page">
+<div class={['page', isBusy && 'busy']}>
   <Header>
     {@render navigation?.()}
     <Title {label} />
@@ -52,6 +54,9 @@
         display: flex;
         flex-direction: column;
       }
+    }
+    &.busy {
+      pointer-events: none;
     }
   }
 </style>
