@@ -8,7 +8,6 @@
 - [ ] Server validation errors in forms / fields
 - [ ] Defaults for `handleError`
 - [ ] resend.com integration
-- [ ] `<Select />` component
 - [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
@@ -17,6 +16,7 @@
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation.
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] `<Select />` component
 - [x] Update generate for `<Hello/>` and stuff
 - [x] Isolate tiny css from public css
 - [x] Drop files on the grid
