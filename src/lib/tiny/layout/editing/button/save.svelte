@@ -14,6 +14,10 @@
       }
     }
   };
+
+  let isBusy = $derived(busy?.isBusy);
+
+  export { isBusy };
 </script>
 
 <svelte:document {onkeydown} />

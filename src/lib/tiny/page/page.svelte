@@ -8,15 +8,17 @@
     children,
     navigation,
     accessories: _accessories,
+    isBusy = false,
   }: {
     label: string;
     children: Snippet;
     navigation?: Snippet;
     accessories?: Snippet;
+    isBusy?: boolean;
   } = $props();
 </script>
 
-<div class="page">
+<div class={['page', isBusy && 'busy']}>
   <Header>
     {@render navigation?.()}
     <Title {label} />
@@ -52,6 +54,9 @@
         display: flex;
         flex-direction: column;
       }
+    }
+    &.busy {
+      pointer-events: none;
     }
   }
 </style>
