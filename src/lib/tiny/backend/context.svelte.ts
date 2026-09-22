@@ -19,7 +19,7 @@ const createBackend = (_opts: OptionsInput<BackendOptions>) => {
   const item = $derived.by(() => {
     const section = items.find((section) => section.isCurrent);
     if (!section) {
-      throw new Error('Current backend session not defined');
+      throw new Error('There is no current backend section for the route');
     }
     return section;
   });
