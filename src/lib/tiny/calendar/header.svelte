@@ -10,21 +10,21 @@
   let { month }: { month: MonthModel } = $props();
 </script>
 
-{#snippet nav(icon: Component)}
+{#snippet nav(icon: Component, onClick: () => void)}
   <div class="nav">
-    <Button type="button" variant="light" onClick={() => {}}>
+    <Button type="button" variant="light" {onClick}>
       <Icon {icon} />
     </Button>
   </div>
 {/snippet}
 
 <div class="header">
-  {@render nav(TablerChevronLeft)}
+  {@render nav(TablerChevronLeft, month.months.prev)}
   <div class="current">
     <Dropdown {...month.years} />
     <Dropdown {...month.months} />
   </div>
-  {@render nav(TablerChevronRight)}
+  {@render nav(TablerChevronRight, month.months.next)}
 </div>
 
 <style lang="scss">

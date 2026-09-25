@@ -1,5 +1,4 @@
-import type Item from '../dropdown/basic/item.svelte';
-import { options, type OptionsInput } from '../utils/options.svelte.ts';
+import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'] as const;
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
@@ -48,46 +47,73 @@ export class MonthModel {
   private readonly today = $derived(Temporal.Now.plainDateISO());
   private readonly selected = $derived.by(() => this.opts.date);
   private readonly date = $derived.by(() => this.selected ?? this.today);
-  private readonly month = $derived.by(() => this.date.month);
+  private month = $derived.by(() => this.date.month);
+  private year = $derived.by(() => this.date.year);
   readonly name = $derived.by(() => MONTHS[this.month]);
-  readonly year = $derived.by(() => this.date.year);
 
   readonly years = $derived.by(() => {
-    const current = this.year;
-
-    const items: { year: number; label: string }[] = [];
-    for (let year = current - 5; year <= current + 5; year++) {
-      items.push({ year, label: String(year) });
-    }
-
-    const selected = items.find((item) => item.year === current);
-    const onSelect = (item: (typeof items)[number] | undefined) => {};
-
-    return {
-      items,
-      selected,
+    const current = $derived(this.year);
+    const items = $derived.by(() => {
+      const items: { year: number; label: string }[] = [];
+      for (let year = current - 5; year <= current + 5; year++) {
+        items.push({ year, label: String(year) });
+      }
+      return items;
+    });
+    const selected = $derived(items.find((item) => item.year === current)!);
+    const onSelect = (item: (typeof items)[number] | undefined) => {
+      if (item) {
+        this.year = item.year;
+      }
+    };
+    return options({
+      items: getter(() => items),
+      selected: getter(() => selected),
       onSelect,
       isRequired: true,
-    };
+    });
   });
 
   readonly months = $derived.by(() => {
-    const current = this.month;
-
-    const items: { month: number; label: string }[] = [];
-    for (let month = 1; month <= 12; month++) {
-      items.push({ label: MONTHS[month - 1], month });
-    }
-
-    const selected = items.find((item) => item.month === current);
-    const onSelect = (item: (typeof items)[number] | undefined) => {};
-
-    return {
-      items,
-      selected,
-      onSelect,
-      isRequired: true,
+    const current = $derived(this.month);
+    const items = $derived.by(() => {
+      const items: { month: number; label: string }[] = [];
+      for (let month = 1; month <= 12; month++) {
+        items.push({ label: MONTHS[month - 1], month });
+      }
+      return items;
+    });
+    const selected = $derived(items.find((item) => item.month === current)!);
+    const onSelect = (item: (typeof items)[number] | undefined) => {
+      if (item) {
+        this.month = item.month;
+      }
     };
+
+    const delta = (months: number) => {
+      const { year, month } = Temporal.PlainDate.from({
+        year: this.year,
+        month: this.month,
+        day: 1,
+      }).add({
+        months: months,
+      });
+
+      this.year = year;
+      this.month = month;
+    };
+
+    const prev = () => delta(-1);
+    const next = () => delta(+1);
+
+    return options({
+      items: getter(() => items),
+      selected: getter(() => selected),
+      onSelect,
+      prev,
+      next,
+      isRequired: true,
+    });
   });
 
   private readonly firstDay = $derived.by(() => {
