@@ -12,7 +12,7 @@
   let max = $derived.by(() => {
     const total = rect?.height;
     if (total) {
-      return Math.floor(total / (height + gap) - gap);
+      return Math.floor(total / (height + gap));
     }
   });
 

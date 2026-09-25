@@ -8,7 +8,7 @@
     date: _date,
   }: {
     month: MonthModel;
-    date: Snippet<[{ date: DateModel }]>;
+    date: Snippet<[{ model: DateModel; date: Temporal.PlainDate }]>;
   } = $props();
 
   let positionFor = (idx: number) => {
@@ -62,7 +62,10 @@
           </div>
         </div>
         <div class="content">
-          {@render _date({ date })}
+          {@render _date({
+            model: date,
+            date: date.date,
+          })}
         </div>
       </div>
     {/each}
@@ -89,6 +92,7 @@
         display: flex;
         flex-direction: column;
         transition: 0.15s ease-in-out background-color;
+        overflow: hidden;
         &.date {
           --padding: 5px;
           --background: var(--tiny-white-color);
@@ -123,6 +127,7 @@
               font-weight: 700;
               width: 26px;
               height: 26px;
+              min-width: 26px;
               display: flex;
               flex-direction: column;
               align-items: center;

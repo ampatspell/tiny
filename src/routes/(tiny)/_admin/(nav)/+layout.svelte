@@ -24,9 +24,9 @@
         cmp: equals,
       },
       {
-        name: 'Cat',
+        name: 'Dashboard',
         icon: LucideCat,
-        route: resolve('/(tiny)/_admin/(nav)'),
+        route: resolve('/(tiny)/_admin/(nav)/(dashboard)'),
         cmp: equals,
       },
       {
