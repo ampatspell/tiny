@@ -15,6 +15,7 @@
   });
 
   let onSubmit = async () => {
+    console.log('submit');
     let id = await model.save();
     if (id) {
       onDone(id);

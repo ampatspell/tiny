@@ -4,6 +4,8 @@
   import Pills from '#lib/tiny/calendar/month/grid/pills/pills.svelte';
   import { useMonth } from '#lib/tiny/calendar/month/month.svelte.js';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
+  import Page from '#lib/tiny/page/page.svelte';
+  import Header from '#lib/tiny/calendar/month/header.svelte';
 
   let date = $state<Temporal.PlainDate>();
 
@@ -13,7 +15,10 @@
   });
 </script>
 
-<div class="page">
+<Page label="Calendar">
+  {#snippet navigation()}
+    <Header {month} />
+  {/snippet}
   <Content {month}>
     {#snippet date({ date })}
       <Pills>
@@ -21,12 +26,4 @@
       </Pills>
     {/snippet}
   </Content>
-</div>
-
-<style lang="scss">
-  .page {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-</style>
+</Page>

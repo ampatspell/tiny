@@ -6,6 +6,7 @@ export const up = async (db: Kysely<any>) => {
     .createTable('files')
     .addColumn('id', 'text', (col) => col.notNull().primaryKey())
     .addColumn('name', 'text', (col) => col.notNull())
+    .addColumn('created_at', 'text', (col) => col.notNull())
     .execute();
 
   await db.schema

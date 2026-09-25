@@ -91,12 +91,15 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
 
     const variantId = uid();
 
+    const createdAt = Temporal.Now.zonedDateTimeISO().toJSON();
+
     await Promise.all([
       db
         .insertInto('files')
         .values({
           id,
           name,
+          createdAt,
         })
         .execute(),
       db

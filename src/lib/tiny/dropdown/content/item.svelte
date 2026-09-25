@@ -31,7 +31,7 @@
 
 <style lang="scss">
   .item {
-    --height: 26px;
+    --height: 24px;
     &.variant-regular {
       --border: none;
       --padding: 10px;
