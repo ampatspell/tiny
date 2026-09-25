@@ -1,12 +1,29 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { children, deg: _deg }: { children?: Snippet; deg?: number } = $props();
-  let deg = $derived(Math.max(Math.min(_deg ?? 0, 360), 0));
+  type Props = {
+    deg?: number;
+  } & (
+    | {
+        label: string | undefined;
+      }
+    | {
+        children: Snippet | undefined;
+      }
+  );
+
+  // eslint-disable-next-line svelte/no-unused-props
+  let props: Props = $props();
+
+  let deg = $derived(Math.max(Math.min(props.deg ?? 0, 360), 0));
 </script>
 
 <div class="pill" style:--deg={deg}>
-  {@render children?.()}
+  {#if 'children' in props}
+    {@render props.children?.()}
+  {:else if 'label' in props}
+    {props.label}
+  {/if}
 </div>
 
 <style lang="scss">

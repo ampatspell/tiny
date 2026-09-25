@@ -15,11 +15,9 @@
 
 <div class="page">
   <Content {month}>
-    {#snippet children({ date })}
+    {#snippet date({ date })}
       <Pills>
-        <Pill>
-          {date.isToday ? 'Today' : ''}
-        </Pill>
+        <Pill label={date.isToday ? 'Today' : undefined} />
       </Pills>
     {/snippet}
   </Content>

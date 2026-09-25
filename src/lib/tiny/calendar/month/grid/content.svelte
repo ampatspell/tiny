@@ -4,10 +4,10 @@
 
   let {
     month,
-    children,
+    date: _date,
   }: {
     month: MonthModel;
-    children: Snippet<[{ date: DateModel }]>;
+    date: Snippet<[{ date: DateModel }]>;
   } = $props();
 
   let positionFor = (idx: number) => {
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="content">
-        {@render children({ date })}
+        {@render _date({ date })}
       </div>
     </div>
   {/each}
