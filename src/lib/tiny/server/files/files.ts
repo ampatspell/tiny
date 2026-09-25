@@ -91,7 +91,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
 
     const variantId = uid();
 
-    const createdAt = Temporal.Now.zonedDateTimeISO().toJSON();
+    const createdAt = Temporal.Now.zonedDateTimeISO().withTimeZone('UTC').toPlainDateTime().toString();
 
     await Promise.all([
       db
