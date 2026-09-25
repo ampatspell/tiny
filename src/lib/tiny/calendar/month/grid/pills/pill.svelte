@@ -36,7 +36,7 @@
     background: var(--background);
     color: contrast-color(var(--background));
     padding: 0 4px;
-    height: calc(14px + 6px);
+    height: var(--height);
     border-radius: 3px;
     display: flex;
     flex-direction: row;

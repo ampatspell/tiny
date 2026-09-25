@@ -41,34 +41,32 @@
 </script>
 
 <div class="content" bind:contentRect={rect}>
-  {#if size}
-    <div class="content" style:--cell-width={px(size?.width)} style:--cell-height={px(size?.height)}>
-      {#each month.grid as date, idx (idx)}
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
-        <!-- svelte-ignore a11y_no_static_element_interactions -->
-        <div
-          class={[
-            'cell',
-            'date',
-            ...positionFor(idx),
-            date.isCurrent && 'current',
-            date.isToday && 'today',
-            date.isSelected && 'selected',
-          ]}
-          onclick={date.onSelect}
-        >
-          <div class="header">
-            <div class="day">
-              {date.day}
-            </div>
-          </div>
-          <div class="content">
-            {@render _date({ date })}
+  <div class="content" style:--cell-width={px(size?.width)} style:--cell-height={px(size?.height)}>
+    {#each month.grid as date, idx (idx)}
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div
+        class={[
+          'cell',
+          'date',
+          ...positionFor(idx),
+          date.isCurrent && 'current',
+          date.isToday && 'today',
+          date.isSelected && 'selected',
+        ]}
+        onclick={date.onSelect}
+      >
+        <div class="header">
+          <div class="day">
+            {date.day}
           </div>
         </div>
-      {/each}
-    </div>
-  {/if}
+        <div class="content">
+          {@render _date({ date })}
+        </div>
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style lang="scss">

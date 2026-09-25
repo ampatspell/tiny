@@ -15,7 +15,6 @@
   });
 
   let onSubmit = async () => {
-    console.log('submit');
     let id = await model.save();
     if (id) {
       onDone(id);
@@ -23,7 +22,6 @@
   };
 
   let onCancel = () => {
-    console.log('cancel');
     onDone(undefined);
   };
 </script>
