@@ -1,8 +1,9 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
   import { px } from '#lib/tiny/utils/style.js';
+  import type { Renderable } from '#lib/tiny/render.svelte';
+  import Render from '#lib/tiny/render.svelte';
 
-  let { children }: { children?: Snippet } = $props();
+  let { pills }: { pills: Renderable[] } = $props();
 
   let rect = $state<DOMRectReadOnly>();
 
@@ -14,13 +15,16 @@
     if (total) {
       return Math.floor(total / (height + gap));
     }
+    return 0;
   });
-
-  export { max };
 </script>
 
 <div class="pills" bind:contentRect={rect} style:--height={px(height)} style:--gap={px(gap)}>
-  {@render children?.()}
+  {#each pills as renderable, idx (idx)}
+    {#if idx < max}
+      <Render {renderable} />
+    {/if}
+  {/each}
 </div>
 
 <style lang="scss">
