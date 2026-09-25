@@ -35,7 +35,7 @@
     font-size: var(--tiny-font-size-medium);
     background: var(--background);
     color: contrast-color(var(--background));
-    padding: 0 3px;
+    padding: 0 4px;
     height: calc(14px + 6px);
     border-radius: 3px;
     display: flex;
