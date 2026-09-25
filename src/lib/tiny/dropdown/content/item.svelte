@@ -41,7 +41,7 @@
       --padding: 6px;
     }
     &.state-critical {
-      --hover-color: var(--tiny-critical);
+      --hover-color: var(--tiny-critical-color);
     }
     display: flex;
     flex-direction: row;

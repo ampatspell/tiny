@@ -8,7 +8,7 @@
   {#each month.days as day (day)}
     <div class="cell day">{day}</div>
   {/each}
-  {#each month.grid as date (date.key)}
+  {#each month.grid as date, idx (idx)}
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
