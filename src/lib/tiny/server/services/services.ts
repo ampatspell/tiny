@@ -10,7 +10,7 @@ export type CreateServicesOptions = {
   dir: string;
   logger?: Logger;
   database?: Pick<CreateDatabaseServicesOptions, 'wal'>;
-  files: Pick<CreateFilesServicesOptions, 'thumbnails'>;
+  files: Pick<CreateFilesServicesOptions, 'thumbnails' | 'onStored' | 'onDropped'>;
   users: Pick<CreateUsersOptions, 'secret' | 'roles'>;
 };
 

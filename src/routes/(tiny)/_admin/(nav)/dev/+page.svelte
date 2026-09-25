@@ -40,10 +40,9 @@
   <Content {month}>
     {#snippet date({ date })}
       <Pills>
-        <Pill deg={200} label={date.isToday ? 'Today' : undefined} />
-        {@const f = filesFor(date.date)}
-        {#if f.length}
-          <Pill label={`Uploaded ${f.length} ${pluralize(f.length, 'file', 'files')}`} />
+        {@const files = filesFor(date.date)}
+        {#if files.length}
+          <Pill label={`Uploaded ${files.length} ${pluralize(files.length, 'file', 'files')}`} />
         {/if}
       </Pills>
     {/snippet}
