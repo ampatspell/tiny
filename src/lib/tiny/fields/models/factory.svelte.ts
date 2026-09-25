@@ -3,6 +3,7 @@ import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svel
 import type { ArrayKey, FileKey, NumberKey, OptionalId, StringKey } from '#lib/tiny/utils/utils.js';
 import { ArrayFieldDefinition, type ArrayFieldDefinitionOptions, type Entry } from '../fields/array.svelte.ts';
 import { ColorFieldDefinition, type ColorFieldDefinitionOptions } from '../fields/color.svelte.ts';
+import { DateFieldDefinition, type DateFieldDefinitionOptions } from '../fields/date.svelte.ts';
 import { DropdownFieldDefinition, type DropdownFieldDefinitionOptions } from '../fields/dropdown.svelte.ts';
 import { FileFieldDefinition, type FileFieldDefinitionOptions } from '../fields/file.svelte.ts';
 import { NumberFieldDefinition, type NumberFieldDefinitionOptions } from '../fields/number.svelte.ts';
@@ -42,6 +43,10 @@ export class Factory<D extends Data = Data, R extends Data = Data> {
 
   readonly color = <K extends StringKey<D>>(key: K, opts?: Opts<ColorFieldDefinitionOptions>) => {
     return new ColorFieldDefinition({ key, ...this.base, ...opts });
+  };
+
+  readonly date = <K extends StringKey<D>>(key: K, opts?: Opts<DateFieldDefinitionOptions>) => {
+    return new DateFieldDefinition({ key, ...this.base, ...opts });
   };
 
   readonly number = <K extends NumberKey<D>>(key: K, opts?: Opts<NumberFieldDefinitionOptions>) => {
