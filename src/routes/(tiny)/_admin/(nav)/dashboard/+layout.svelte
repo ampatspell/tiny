@@ -42,7 +42,7 @@
     date: getter(() => date),
     onUpdate: (next) => {
       if (next) {
-        goto(resolve('/(tiny)/_admin/(nav)/(dashboard)/[date]', { date: next.toJSON() }));
+        goto(resolve('/(tiny)/_admin/(nav)/dashboard/[date]', { date: next.toJSON() }));
       }
     },
   });

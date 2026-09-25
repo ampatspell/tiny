@@ -26,8 +26,7 @@
       {
         name: 'Dashboard',
         icon: LucideCat,
-        route: resolve('/(tiny)/_admin/(nav)/(dashboard)'),
-        cmp: equals,
+        route: resolve('/(tiny)/_admin/(nav)/dashboard'),
       },
       {
         name: 'Index',
