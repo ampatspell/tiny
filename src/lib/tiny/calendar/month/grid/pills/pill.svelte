@@ -11,9 +11,9 @@
 
 <style lang="scss">
   .pill {
-    font-size: var(--tiny-font-size-medium);
     --base: var(--tiny-accent-color-1);
     --background: hwb(from var(--base) calc(h + var(--deg)) w b);
+    font-size: var(--tiny-font-size-medium);
     background: var(--background);
     color: contrast-color(var(--background));
     padding: 0 3px;
