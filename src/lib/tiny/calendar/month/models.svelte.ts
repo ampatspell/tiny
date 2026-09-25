@@ -28,6 +28,7 @@ export class DateModel {
   readonly isCurrent = $derived.by(() => this.opts.isCurrent);
   readonly day = $derived.by(() => this.date.day);
   readonly isToday = $derived.by(() => this.date.equals(this.today));
+
   readonly isSelected = $derived.by(() => {
     const selected = this.opts.selected;
     if (selected) {
@@ -35,7 +36,9 @@ export class DateModel {
     }
     return false;
   });
+
   readonly onSelect = () => this.opts.onSelect();
+
   readonly key = $derived.by(() => this.date.toJSON());
 }
 
