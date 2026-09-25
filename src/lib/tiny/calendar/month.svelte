@@ -1,26 +1,14 @@
 <script lang="ts">
-  import { getter } from '../utils/options.svelte.ts';
-  import { useMonth } from './models.svelte.ts';
+  import type { MonthModel } from './models.svelte.ts';
 
-  let {
-    date: _date,
-    onUpdate,
-  }: {
-    date: Temporal.PlainDate | undefined;
-    onUpdate: (date: Temporal.PlainDate) => void;
-  } = $props();
-
-  let model = useMonth({
-    date: getter(() => _date),
-    onUpdate: getter(() => onUpdate),
-  });
+  let { month }: { month: MonthModel } = $props();
 </script>
 
 <div class="month">
-  {#each model.days as day (day)}
+  {#each month.days as day (day)}
     <div class="cell day">{day}</div>
   {/each}
-  {#each model.grid as day (day.key)}
+  {#each month.grid as day (day.key)}
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class={['cell', 'date', day.isToday && 'today', day.isSelected && 'selected']} onclick={day.onSelect}>
@@ -31,7 +19,6 @@
 
 <style lang="scss">
   .month {
-    padding: 5px;
     user-select: none;
     display: grid;
     grid-template-columns: repeat(7, 1fr);

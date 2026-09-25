@@ -1,3 +1,4 @@
+import type Item from '../dropdown/basic/item.svelte';
 import { options, type OptionsInput } from '../utils/options.svelte.ts';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'] as const;
@@ -45,19 +46,60 @@ export class MonthModel {
   }
 
   private readonly today = $derived(Temporal.Now.plainDateISO());
-  private readonly selected = $derived.by(() => this.opts.date ?? this.today);
-  private readonly year = $derived.by(() => this.selected.year);
-  private readonly month = $derived.by(() => this.selected.month);
+  private readonly selected = $derived.by(() => this.opts.date);
+  private readonly date = $derived.by(() => this.selected ?? this.today);
+  private readonly month = $derived.by(() => this.date.month);
+  readonly name = $derived.by(() => MONTHS[this.month]);
+  readonly year = $derived.by(() => this.date.year);
+
+  readonly years = $derived.by(() => {
+    const current = this.year;
+
+    const items: { year: number; label: string }[] = [];
+    for (let year = current - 5; year <= current + 5; year++) {
+      items.push({ year, label: String(year) });
+    }
+
+    const selected = items.find((item) => item.year === current);
+    const onSelect = (item: (typeof items)[number] | undefined) => {};
+
+    return {
+      items,
+      selected,
+      onSelect,
+      isRequired: true,
+    };
+  });
+
+  readonly months = $derived.by(() => {
+    const current = this.month;
+
+    const items: { month: number; label: string }[] = [];
+    for (let month = 1; month <= 12; month++) {
+      items.push({ label: MONTHS[month - 1], month });
+    }
+
+    const selected = items.find((item) => item.month === current);
+    const onSelect = (item: (typeof items)[number] | undefined) => {};
+
+    return {
+      items,
+      selected,
+      onSelect,
+      isRequired: true,
+    };
+  });
+
   private readonly firstDay = $derived.by(() => {
     const { year, month } = this;
     return Temporal.PlainDate.from({ year, month, day: 1 });
   });
 
   readonly days = $derived.by(() => {
-    const { selected } = this;
+    const { date } = this;
     const columns = [];
-    const dayOfWeek = selected.dayOfWeek;
-    const days = selected.subtract({ days: dayOfWeek - 1 });
+    const dayOfWeek = date.dayOfWeek;
+    const days = date.subtract({ days: dayOfWeek - 1 });
     for (let i = 0; i < 7; i++) {
       const day = days.add({ days: i });
       columns.push(DAYS[day.dayOfWeek - 1]);
