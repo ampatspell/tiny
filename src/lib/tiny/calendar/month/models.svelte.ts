@@ -1,4 +1,4 @@
-import { getter, options, type OptionsInput } from '../utils/options.svelte.ts';
+import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'] as const;
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
@@ -13,6 +13,7 @@ export type DateModelOptions = {
   today: Temporal.PlainDate;
   selected: Temporal.PlainDate | undefined;
   onSelect: () => void;
+  isCurrent: boolean;
 };
 
 export class DateModel {
@@ -22,19 +23,20 @@ export class DateModel {
     this.opts = options(opts);
   }
 
-  readonly day = $derived.by(() => this.opts.date.day);
-  readonly isToday = $derived.by(() => this.opts.date.equals(this.opts.today));
+  private readonly date = $derived.by(() => this.opts.date);
+  private readonly today = $derived.by(() => this.opts.today);
+  readonly isCurrent = $derived.by(() => this.opts.isCurrent);
+  readonly day = $derived.by(() => this.date.day);
+  readonly isToday = $derived.by(() => this.date.equals(this.today));
   readonly isSelected = $derived.by(() => {
     const selected = this.opts.selected;
     if (selected) {
-      return this.opts.date.equals(selected);
+      return this.date.equals(selected);
     }
     return false;
   });
-
   readonly onSelect = () => this.opts.onSelect();
-
-  readonly key = $derived.by(() => this.opts.date.toJSON());
+  readonly key = $derived.by(() => this.date.toJSON());
 }
 
 export class MonthModel {
@@ -144,7 +146,8 @@ export class MonthModel {
     const grid: DateModel[] = [];
     const push = (date: Temporal.PlainDate) => {
       const onSelect = () => this.opts.onUpdate(date);
-      grid.push(new DateModel({ date, today, selected, onSelect }));
+      const isCurrent = getter(() => date.year === year && date.month === month);
+      grid.push(new DateModel({ date, today, selected, onSelect, isCurrent }));
     };
 
     {

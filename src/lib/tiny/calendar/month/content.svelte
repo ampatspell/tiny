@@ -4,21 +4,24 @@
   let { month }: { month: MonthModel } = $props();
 </script>
 
-<div class="month">
+<div class="content">
   {#each month.days as day (day)}
     <div class="cell day">{day}</div>
   {/each}
   {#each month.grid as day (day.key)}
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class={['cell', 'date', day.isToday && 'today', day.isSelected && 'selected']} onclick={day.onSelect}>
+    <div
+      class={['cell', 'date', day.isCurrent && 'current', day.isToday && 'today', day.isSelected && 'selected']}
+      onclick={day.onSelect}
+    >
       {day.day}
     </div>
   {/each}
 </div>
 
 <style lang="scss">
-  .month {
+  .content {
     user-select: none;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -45,10 +48,14 @@
           --background: var(--tiny-color);
           --color: var(--tiny-white-color);
         }
+
         font-size: var(--tiny-font-size-medium);
         border-radius: var(--size);
         background: var(--background);
         color: var(--color);
+        &:not(.current) {
+          opacity: 0.25;
+        }
       }
       display: flex;
       flex-direction: row;
