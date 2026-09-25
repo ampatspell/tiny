@@ -23,7 +23,7 @@ export class DateModel {
     this.opts = options(opts);
   }
 
-  private readonly date = $derived.by(() => this.opts.date);
+  readonly date = $derived.by(() => this.opts.date);
   private readonly today = $derived.by(() => this.opts.today);
   readonly isCurrent = $derived.by(() => this.opts.isCurrent);
   readonly day = $derived.by(() => this.date.day);
@@ -38,8 +38,6 @@ export class DateModel {
   });
 
   readonly onSelect = () => this.opts.onSelect();
-
-  readonly key = $derived.by(() => this.date.toJSON());
 }
 
 export class MonthModel {

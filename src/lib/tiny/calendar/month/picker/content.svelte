@@ -24,7 +24,7 @@
   .content {
     user-select: none;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 2px;
     > .cell {
       --size: 26px;

@@ -57,7 +57,7 @@
   .content {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     user-select: none;
     > .cell {
       display: flex;

@@ -6,6 +6,24 @@
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import Page from '#lib/tiny/page/page.svelte';
   import Header from '#lib/tiny/calendar/month/header.svelte';
+  import { getFiles } from './files.remote.ts';
+  import { pluralize } from '#lib/tiny/utils/string.js';
+
+  let data = $derived(await getFiles());
+
+  let files = $derived.by(() => {
+    return data.map((data) => {
+      let createdAt = Temporal.PlainDateTime.from(data.createdAt).toZonedDateTime('UTC').withTimeZone('Europe/Riga');
+      return {
+        ...data,
+        createdAt,
+      };
+    });
+  });
+
+  let filesFor = (date: Temporal.PlainDate) => {
+    return files.filter((file) => file.createdAt.toPlainDate().equals(date));
+  };
 
   let date = $state<Temporal.PlainDate>();
 
@@ -22,7 +40,11 @@
   <Content {month}>
     {#snippet date({ date })}
       <Pills>
-        <Pill label={date.isToday ? 'Today' : undefined} />
+        <Pill deg={200} label={date.isToday ? 'Today' : undefined} />
+        {@const f = filesFor(date.date)}
+        {#if f.length}
+          <Pill label={`Uploaded ${f.length} ${pluralize(f.length, 'file', 'files')}`} />
+        {/if}
       </Pills>
     {/snippet}
   </Content>

@@ -27,6 +27,13 @@ export const capitalize = (string: string) => {
   return `${first}${rest}`;
 };
 
+export const pluralize = (value: number, singular: string, plural: string) => {
+  if (value === 1) {
+    return singular;
+  }
+  return plural;
+};
+
 const aeiou = ['a', 'e', 'i', 'o', 'u'];
 
 export const aan = (string: string) => {

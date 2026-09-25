@@ -19,11 +19,13 @@
 </script>
 
 <div class="pill" style:--deg={deg}>
-  {#if 'children' in props}
-    {@render props.children?.()}
-  {:else if 'label' in props}
-    {props.label}
-  {/if}
+  <div class="content">
+    {#if 'children' in props}
+      {@render props.children?.()}
+    {:else if 'label' in props}
+      {props.label}
+    {/if}
+  </div>
 </div>
 
 <style lang="scss">
@@ -39,7 +41,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    &:empty {
+    min-width: 0;
+    > .content {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &:has(> .content:empty) {
       display: none;
     }
   }
