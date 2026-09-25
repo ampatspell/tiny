@@ -1,7 +1,7 @@
 <script lang="ts">
   import Container from '../container.svelte';
   import type { DateField } from './date.svelte.ts';
-  import Date from '../../calendar/date.svelte';
+  import Date from '../../date.svelte';
 
   let { field }: { field: DateField } = $props();
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Component } from 'svelte';
-  import type { MonthModel } from './models.svelte.ts';
+  import type { MonthModel } from '../month.svelte.ts';
   import Button from '#lib/tiny/button/button.svelte';
   import Icon from '#lib/tiny/button/icon.svelte';
   import TablerChevronLeft from '#lib/tiny/icons/tabler--chevron-left.svelte';

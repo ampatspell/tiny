@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { MonthModel } from './models.svelte.ts';
+  import type { MonthModel } from '../month.svelte.ts';
 
   let { month }: { month: MonthModel } = $props();
 </script>
@@ -8,14 +8,14 @@
   {#each month.days as day (day)}
     <div class="cell day">{day}</div>
   {/each}
-  {#each month.grid as day (day.key)}
+  {#each month.grid as date (date.key)}
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
-      class={['cell', 'date', day.isCurrent && 'current', day.isToday && 'today', day.isSelected && 'selected']}
-      onclick={day.onSelect}
+      class={['cell', 'date', date.isCurrent && 'current', date.isToday && 'today', date.isSelected && 'selected']}
+      onclick={date.onSelect}
     >
-      {day.day}
+      {date.day}
     </div>
   {/each}
 </div>

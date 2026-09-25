@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Card from '../card.svelte';
-  import Chevron from '../dropdown/content/chevron.svelte';
-  import Clickable from '../dropdown/content/clickable.svelte';
-  import Item from '../dropdown/content/item.svelte';
-  import Label from '../dropdown/content/label.svelte';
-  import { basic } from '../floating/position.ts';
-  import Month from './month/month.svelte';
+  import Month from './calendar/month/picker/month.svelte';
+  import Card from './card.svelte';
+  import Chevron from './dropdown/content/chevron.svelte';
+  import Clickable from './dropdown/content/clickable.svelte';
+  import Item from './dropdown/content/item.svelte';
+  import Label from './dropdown/content/label.svelte';
+  import { basic } from './floating/position.ts';
 
   let {
     date,

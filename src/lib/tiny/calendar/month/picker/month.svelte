@@ -2,7 +2,7 @@
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import Content from './content.svelte';
   import Header from './header.svelte';
-  import { useMonth } from './models.svelte.js';
+  import { useMonth } from '../month.svelte.ts';
 
   let {
     date,
