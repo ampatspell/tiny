@@ -2,7 +2,7 @@
 
 - [ ] Make sure user with current JWT token actually exists
 - [ ] Auto-refresh token if role has changed
-- [ ] Add new could be disabled in list layout and have a reason for that
+- [ ] "Add new" could be disabled in list layout and have a reason for that (daily pics)
 - [ ] Busy state for fields while saving
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Server validation errors in forms / fields
