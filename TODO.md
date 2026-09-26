@@ -1,8 +1,8 @@
 ## TODO
 
+- [ ] Figure out a place to put Temporal.Polyfill
 - [ ] Add new could be disabled in list layout and have a reason for that
 - [ ] Busy state for fields while saving
-- [ ] Calendar component
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Find a place to declare roles array, type and schema (do src/tiny.ts?)
 - [ ] Server validation errors in forms / fields
@@ -17,6 +17,7 @@
 - [ ] Dropdown field can't be ValueField. Validation is against string representation. Same goes for Temporal.PlainDate
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Calendar component
 - [x] Textarea
 - [x] `<Select />` component
 - [x] Update generate for `<Hello/>` and stuff
