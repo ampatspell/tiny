@@ -28,11 +28,18 @@ const services = createHandle({
 export const handle = sequence(services);
 
 export const handleError: HandleServerError = async ({ error }) => {
+  if (error instanceof Error) {
+    console.error(error.stack);
+  } else {
+    console.error(error);
+  }
+
   if (error instanceof NoResultError) {
     return {
       status: 404,
       message: 'Not found',
     };
   }
+
   return error;
 };

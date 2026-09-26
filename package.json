@@ -79,6 +79,10 @@
       "types": "./dist/tiny/color.svelte.d.ts",
       "svelte": "./dist/tiny/color.svelte"
     },
+    "./date": {
+      "types": "./dist/tiny/date.svelte.d.ts",
+      "svelte": "./dist/tiny/date.svelte"
+    },
     "./error": {
       "types": "./dist/tiny/error.svelte.d.ts",
       "svelte": "./dist/tiny/error.svelte"
@@ -98,6 +102,10 @@
     "./placeholder": {
       "types": "./dist/tiny/placeholder.svelte.d.ts",
       "svelte": "./dist/tiny/placeholder.svelte"
+    },
+    "./render": {
+      "types": "./dist/tiny/render.svelte.d.ts",
+      "svelte": "./dist/tiny/render.svelte"
     },
     "./screen": {
       "types": "./dist/tiny/screen.svelte.d.ts",
@@ -274,6 +282,14 @@
     "./icons/tabler--chevron-down": {
       "types": "./dist/tiny/icons/tabler--chevron-down.svelte.d.ts",
       "svelte": "./dist/tiny/icons/tabler--chevron-down.svelte"
+    },
+    "./icons/tabler--chevron-left": {
+      "types": "./dist/tiny/icons/tabler--chevron-left.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--chevron-left.svelte"
+    },
+    "./icons/tabler--chevron-right": {
+      "types": "./dist/tiny/icons/tabler--chevron-right.svelte.d.ts",
+      "svelte": "./dist/tiny/icons/tabler--chevron-right.svelte"
     },
     "./icons/tabler--chevron-up": {
       "types": "./dist/tiny/icons/tabler--chevron-up.svelte.d.ts",
@@ -471,6 +487,10 @@
       "types": "./dist/tiny/fields/fields/color.svelte.d.ts",
       "svelte": "./dist/tiny/fields/fields/color.svelte.js"
     },
+    "./fields/fields/date": {
+      "types": "./dist/tiny/fields/fields/date.svelte.d.ts",
+      "svelte": "./dist/tiny/fields/fields/date.svelte.js"
+    },
     "./fields/fields/dropdown": {
       "types": "./dist/tiny/fields/fields/dropdown.svelte.d.ts",
       "svelte": "./dist/tiny/fields/fields/dropdown.svelte.js"
@@ -490,6 +510,14 @@
     "./fields/fields/value": {
       "types": "./dist/tiny/fields/fields/value.svelte.d.ts",
       "svelte": "./dist/tiny/fields/fields/value.svelte.js"
+    },
+    "./dropdown/content/chevron": {
+      "types": "./dist/tiny/dropdown/content/chevron.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/chevron.svelte"
+    },
+    "./dropdown/content/clickable": {
+      "types": "./dist/tiny/dropdown/content/clickable.svelte.d.ts",
+      "svelte": "./dist/tiny/dropdown/content/clickable.svelte"
     },
     "./dropdown/content/icon": {
       "types": "./dist/tiny/dropdown/content/icon.svelte.d.ts",
@@ -518,6 +546,30 @@
     "./dropdown/basic/items": {
       "types": "./dist/tiny/dropdown/basic/items.svelte.d.ts",
       "svelte": "./dist/tiny/dropdown/basic/items.svelte"
+    },
+    "./calendar/month/month": {
+      "types": "./dist/tiny/calendar/month/month.svelte.d.ts",
+      "svelte": "./dist/tiny/calendar/month/month.svelte.js"
+    },
+    "./calendar/month/header": {
+      "types": "./dist/tiny/calendar/month/header.svelte.d.ts",
+      "svelte": "./dist/tiny/calendar/month/header.svelte"
+    },
+    "./calendar/month/grid/content": {
+      "types": "./dist/tiny/calendar/month/grid/content.svelte.d.ts",
+      "svelte": "./dist/tiny/calendar/month/grid/content.svelte"
+    },
+    "./calendar/month/grid/pills/pills": {
+      "types": "./dist/tiny/calendar/month/grid/pills/pills.svelte.d.ts",
+      "svelte": "./dist/tiny/calendar/month/grid/pills/pills.svelte"
+    },
+    "./calendar/month/grid/pills/pill/label": {
+      "types": "./dist/tiny/calendar/month/grid/pills/pill/label.svelte.d.ts",
+      "svelte": "./dist/tiny/calendar/month/grid/pills/pill/label.svelte"
+    },
+    "./calendar/month/grid/pills/pill/pill": {
+      "types": "./dist/tiny/calendar/month/grid/pills/pill/pill.svelte.d.ts",
+      "svelte": "./dist/tiny/calendar/month/grid/pills/pill/pill.svelte"
     },
     "./button/button": {
       "types": "./dist/tiny/button/button.svelte.d.ts",
