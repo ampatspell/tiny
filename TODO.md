@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Figure out a place to put Temporal.Polyfill
+- [ ] Figure out a place to put `Temporal` polyfill
 - [ ] Add new could be disabled in list layout and have a reason for that
 - [ ] Busy state for fields while saving
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
