@@ -5,24 +5,22 @@
   import { isTruthy } from '#lib/tiny/utils/array.js';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { pluralize } from '#lib/tiny/utils/string.js';
+  import { useDashboardContext } from './dashboard.svelte.js';
 
   let props: {
     date: Temporal.PlainDate;
-    files: {
-      createdAt: Temporal.ZonedDateTime;
-      id: string;
-      name: string;
-    }[];
   } = $props();
 
-  let filtered = $derived(props.files.filter((file) => file.createdAt.toPlainDate().equals(props.date)));
+  let context = useDashboardContext();
+  let date = $derived(context.createDate(props.date));
 
   let files = $derived.by(() => {
-    if (filtered.length) {
+    let files = date.files.length;
+    if (files) {
       return createRenderable({
         component: Label,
         props: {
-          label: getter(() => `Uploaded ${filtered.length} ${pluralize(filtered.length, 'file', 'files')}`),
+          label: getter(() => `Uploaded ${files} ${pluralize(files, 'file', 'files')}`),
         },
       });
     }

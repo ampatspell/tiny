@@ -10,7 +10,7 @@
     navigation,
     accessories: _accessories,
   }: {
-    label: string;
+    label: string | undefined;
     isBusy?: boolean;
     children: Snippet;
     navigation?: Snippet;

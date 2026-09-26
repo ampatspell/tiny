@@ -1,8 +1,10 @@
 <script lang="ts">
-  let { label }: { label: string } = $props();
+  let { label }: { label: string | undefined } = $props();
 </script>
 
-<div class="title">{label}</div>
+{#if label}
+  <div class="title">{label}</div>
+{/if}
 
 <style lang="scss">
   .title {
