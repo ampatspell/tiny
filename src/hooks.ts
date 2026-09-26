@@ -1,1 +1,3 @@
-import 'temporal-polyfill/global';
+import { setupPolyfills } from '#lib/tiny/polyfills.js';
+
+setupPolyfills();
