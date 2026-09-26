@@ -1,3 +1,4 @@
+import 'temporal-polyfill/global';
 import { building } from '$app/env';
 import { defineEnvVars } from '@sveltejs/kit/env';
 import * as v from 'valibot';
