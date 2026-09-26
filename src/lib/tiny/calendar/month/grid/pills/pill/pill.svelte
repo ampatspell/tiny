@@ -32,10 +32,10 @@
   .pill {
     --base: var(--tiny-accent-color-1);
     --background: hwb(from var(--base) calc(h + var(--deg)) w b);
-    font-size: var(--tiny-font-size-medium);
+    font-size: var(--tiny-font-size-small);
     background: var(--background);
     color: contrast-color(var(--background));
-    padding: 0 4px;
+    padding: 0 5px;
     height: var(--height);
     border-radius: 3px;
     display: flex;

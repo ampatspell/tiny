@@ -1,9 +1,7 @@
 <script lang="ts" module>
   import { options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
-  import type { Any } from '#lib/tiny/utils/utils.js';
+  import type { Any, InferPropsFromComponent } from '#lib/tiny/utils/utils.js';
   import type { Component } from 'svelte';
-
-  export type InferPropsFromComponent<C> = C extends Component<infer P> ? P : never;
 
   export class Renderable<C extends Component<Any> = Component<Any>> {
     readonly component: C;
