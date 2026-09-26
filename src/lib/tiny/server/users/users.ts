@@ -2,7 +2,6 @@ import { error } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import { pbkdf2, randomBytes } from 'node:crypto';
 import { hasValues, omit } from '../../utils/object.ts';
-import { run } from '../../utils/utils.ts';
 import type { Database } from '../database/database.ts';
 import type { DB } from '../database/schema.js';
 import { uid } from '../utils.ts';
@@ -24,40 +23,187 @@ export type CreateUsersOptions = {
   };
 };
 
-export const createUsers = async (opts: CreateUsersOptions) => {
-  const { db, secret, roles } = opts;
+class UsersCryptoService {
+  async sync(opts: { password: string; salt: string }) {
+    return new Promise<string>((resolve, reject) => {
+      pbkdf2(opts.password, opts.salt, 300000, 32, `sha512`, (err, buff) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(buff.toString(`hex`));
+      });
+    });
+  }
 
-  const crypto = run(() => {
-    const sync = async (opts: { password: string; salt: string }) => {
-      return new Promise<string>((resolve, reject) => {
-        pbkdf2(opts.password, opts.salt, 300000, 32, `sha512`, (err, buff) => {
-          if (err) {
-            return reject(err);
-          }
-          return resolve(buff.toString(`hex`));
+  async create({ password }: { password: string }) {
+    const salt = randomBytes(16).toString('hex');
+    const hash = await this.sync({ password, salt });
+    return { salt, hash };
+  }
+
+  async verify({ password, salt, hash }: { hash: string; salt: string; password: string }) {
+    const existing = await this.sync({ password, salt });
+    return existing === hash;
+  }
+}
+
+type VerifyTokenResponse =
+  | {
+      status: 'success';
+      token: TokenPayload;
+    }
+  | {
+      status: 'error';
+      reason: string;
+    };
+
+type VerifyUserAndRoleResponse =
+  | {
+      status: 'success';
+    }
+  | {
+      status: 'error';
+      reason: string;
+    };
+
+class UsersTokenService {
+  private readonly users: UsersService;
+
+  private get db() {
+    return this.users['db'];
+  }
+
+  private get secret() {
+    return this.users['secret'];
+  }
+
+  constructor(users: UsersService) {
+    this.users = users;
+  }
+
+  private async sign(data: TokenPayload) {
+    const { secret } = this;
+    return await new Promise<string>((resolve, reject) => {
+      if (!secret) {
+        return reject(new Error('Secret missing'));
+      }
+      jwt.sign(data, secret, { expiresIn: '1y' }, (err, token) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(token!);
+      });
+    });
+  }
+
+  async create({ email, password }: { email: string; password: string }) {
+    const data = await this.users.verify({ email, password });
+    if (data) {
+      return this.sign(data);
+    }
+  }
+
+  private async verifyToken(token: string) {
+    const { secret } = this;
+    return new Promise<VerifyTokenResponse>((resolve, reject) => {
+      if (!secret) {
+        return reject(new Error('Secret missing'));
+      }
+      jwt.verify(token, secret, (error, payload) => {
+        if (error instanceof JsonWebTokenError) {
+          return resolve({
+            status: 'error',
+            reason: error.message,
+          });
+        } else if (error) {
+          return reject(error);
+        }
+        resolve({
+          status: 'success',
+          token: payload as TokenPayload,
         });
       });
-    };
-    const create = async ({ password }: { password: string }) => {
-      const salt = randomBytes(16).toString('hex');
-      const hash = await sync({ password, salt });
-      return { salt, hash };
-    };
-    const verify = async ({ password, salt, hash }: { hash: string; salt: string; password: string }) => {
-      const existing = await sync({ password, salt });
-      return existing === hash;
-    };
-    return {
-      sync,
-      create,
-      verify,
-    };
-  });
+    });
+  }
 
-  const create = async ({ email, password, role }: { email: string; password: string; role?: Tiny.Role }) => {
-    email = email.toLowerCase().trim();
+  private async verifyUser(token: TokenPayload) {
+    const record = await this.db
+      .selectFrom('users')
+      .select('role')
+      .where('email', '==', token.email)
+      .executeTakeFirst();
+
+    if (record) {
+      if (record.role === token.role) {
+        return {
+          status: 'success' as const,
+        };
+      } else {
+        return {
+          status: 'error' as const,
+          reason: 'role',
+        };
+      }
+    } else {
+      return {
+        status: 'error' as const,
+        reason: 'user',
+      };
+    }
+  }
+
+  async verify(payload: string) {
+    const tokenRes = await this.verifyToken(payload);
+    if (tokenRes.status === 'success') {
+      const token = tokenRes.token;
+      const userRes = await this.verifyUser(token);
+      if (userRes.status === 'success') {
+        return {
+          status: 'success' as const,
+          token,
+        };
+      } else {
+        return userRes;
+      }
+    } else {
+      return tokenRes;
+    }
+  }
+}
+
+export class UsersService {
+  private readonly opts: CreateUsersOptions;
+  private readonly crypto: UsersCryptoService;
+  readonly token: UsersTokenService;
+
+  private get db() {
+    return this.opts.db;
+  }
+
+  private get secret() {
+    return this.opts.secret;
+  }
+
+  private get roles() {
+    return this.opts.roles;
+  }
+
+  constructor(opts: CreateUsersOptions) {
+    this.opts = opts;
+    this.crypto = new UsersCryptoService();
+    this.token = new UsersTokenService(this);
+  }
+
+  private normalizeEmail(email: string) {
+    return email.toLowerCase().trim();
+  }
+
+  async create({ email, password, role }: { email: string; password: string; role?: Tiny.Role }) {
+    const { crypto, db, roles } = this;
+    email = this.normalizeEmail(email);
 
     const { salt, hash } = await crypto.create({ password });
+
     if (!role) {
       const { count } = await db.selectFrom('users').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
       if (!roles) {
@@ -77,10 +223,11 @@ export const createUsers = async (opts: CreateUsersOptions) => {
       .executeTakeFirstOrThrow();
 
     return omit(result, ['hash', 'salt']);
-  };
+  }
 
-  const verify = async ({ email, password }: { email: string; password: string }) => {
-    email = email.toLowerCase().trim();
+  async verify({ email, password }: { email: string; password: string }) {
+    const { db, crypto } = this;
+    email = this.normalizeEmail(email);
 
     const record = await db.selectFrom('users').where('email', '==', email).selectAll().executeTakeFirst();
     if (record) {
@@ -89,85 +236,18 @@ export const createUsers = async (opts: CreateUsersOptions) => {
         return {
           id,
           email,
-          role,
-        } as {
-          id: string;
-          email: string;
-          role: Tiny.Role;
+          role: role as Tiny.Role,
         };
       }
     }
-  };
+  }
 
-  const _verify = verify;
+  async update({ id, email, role, password }: { id: string; email?: string; role?: string; password?: string }) {
+    const { db, crypto } = this;
+    if (email) {
+      email = this.normalizeEmail(email);
+    }
 
-  const token = run(() => {
-    const create = async ({ email, password }: { email: string; password: string }) => {
-      const data = await _verify({ email, password });
-      if (data) {
-        return await new Promise<string>((resolve, reject) => {
-          if (!secret) {
-            return reject(new Error('Secret missing'));
-          }
-          jwt.sign(data satisfies TokenPayload, secret, { expiresIn: '7d' }, (err, token) => {
-            if (err) {
-              return reject(err);
-            }
-            return resolve(token!);
-          });
-        });
-      }
-    };
-
-    const verifyToken = async (token: string) => {
-      return new Promise<TokenPayload | undefined>((resolve, reject) => {
-        if (!secret) {
-          return reject(new Error('Secret missing'));
-        }
-        jwt.verify(token, secret, (err, payload) => {
-          if (err instanceof JsonWebTokenError) {
-            return resolve(undefined);
-          } else if (err) {
-            return reject(err);
-          }
-          resolve(payload as TokenPayload);
-        });
-      });
-    };
-
-    const verifyUserAndRole = async (token: TokenPayload) => {
-      const record = await db
-        .selectFrom('users')
-        .select('id')
-        .where((eb) => eb.and([eb('email', '=', token.email), eb('role', '=', token.role)]))
-        .executeTakeFirst();
-      return !!record;
-    };
-
-    const verify = async (payload: string) => {
-      const token = await verifyToken(payload);
-      if (token && (await verifyUserAndRole(token))) {
-        return token;
-      }
-    };
-
-    return {
-      create,
-      verify,
-    };
-  });
-
-  const update = async ({
-    id,
-    email,
-    role,
-    password,
-  }: {
-    id: string;
-    email?: string;
-    role?: string;
-    password?: string;
-  }) => {
     let data: Partial<{
       email: string;
       role: string;
@@ -179,21 +259,16 @@ export const createUsers = async (opts: CreateUsersOptions) => {
     };
 
     if (password) {
-      const rec = await crypto.create({ password });
-      data = { ...data, ...rec };
+      const hs = await crypto.create({ password });
+      data = { ...data, ...hs };
     }
 
     if (hasValues(data)) {
       await db.updateTable('users').set(data).where('id', '==', id).executeTakeFirstOrThrow();
     }
-  };
+  }
+}
 
-  return {
-    create,
-    verify,
-    token,
-    update,
-  };
-};
+export const createUsers = async (opts: CreateUsersOptions) => new UsersService(opts);
 
 export type Users = Awaited<ReturnType<typeof createUsers>>;
