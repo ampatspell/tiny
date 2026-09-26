@@ -119,7 +119,7 @@ export const createUsers = async (opts: CreateUsersOptions) => {
       }
     };
 
-    const verify = async (token: string) => {
+    const verifyToken = async (token: string) => {
       return new Promise<TokenPayload | undefined>((resolve, reject) => {
         if (!secret) {
           return reject(new Error('Secret missing'));
@@ -133,6 +133,22 @@ export const createUsers = async (opts: CreateUsersOptions) => {
           resolve(payload as TokenPayload);
         });
       });
+    };
+
+    const verifyUserAndRole = async (token: TokenPayload) => {
+      const record = await db
+        .selectFrom('users')
+        .select('id')
+        .where((eb) => eb.and([eb('email', '=', token.email), eb('role', '=', token.role)]))
+        .executeTakeFirst();
+      return !!record;
+    };
+
+    const verify = async (payload: string) => {
+      const token = await verifyToken(payload);
+      if (token && (await verifyUserAndRole(token))) {
+        return token;
+      }
     };
 
     return {
