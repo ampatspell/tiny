@@ -8,7 +8,7 @@
     "build:cli": "vite build -c vite.cli.config.ts --mode production && chmod +x ./.cli/cli.js",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
-    "prepack": "svelte-kit sync && npm run build:cli && svelte-package && publint",
+    "prepack": "npm run exports && svelte-kit sync && npm run build:cli && svelte-package && publint",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check . && eslint .",
@@ -22,8 +22,7 @@
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage",
     "test": "npm run test:unit -- --run",
-    "exports": "tsx ./src/lib/tiny/tools/exports.ts && npm run format",
-    "db": "litecli ./.local/tiny.db"
+    "exports": "tsx ./src/lib/tiny/tools/exports.ts && npm run format"
   },
   "bin": {
     "tiny": ".cli/cli.js"

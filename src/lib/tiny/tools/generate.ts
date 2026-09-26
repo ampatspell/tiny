@@ -498,8 +498,8 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { optionalPassword, requiredEmail } from '@ampatspell/tiny/fields/models/validator';
       import { getter, options, type OptionsInput } from '@ampatspell/tiny/utils/options';
       import { sentenceCase } from '@ampatspell/tiny/utils/string';
-      import { roles } from '../../env.ts';
       import { updateUser, type UserData } from './users.remote.ts';
+      import { roles } from '../../hooks.ts';
 
       export type UseUserModelOptions = {
         data: UserData;
