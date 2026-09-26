@@ -1,12 +1,9 @@
 <script lang="ts" generics="T extends ItemData">
   import Item from './item.svelte';
   import type { ItemData } from './items.svelte';
-  import { useFloaters } from '#lib/tiny/floating/floaters/model.svelte.js';
-  import { basic } from '#lib/tiny/floating/position.js';
-  import Icon from '../content/icon.svelte';
-  import TablerChevronUp from '#lib/tiny/icons/tabler--chevron-up.svelte';
-  import TablerChevronDown from '#lib/tiny/icons/tabler--chevron-down.svelte';
   import Content from './content.svelte';
+  import Chevron from '../content/chevron.svelte';
+  import Clickable from '../content/clickable.svelte';
 
   let {
     items: _items,
@@ -19,30 +16,6 @@
     onSelect: (choice: T | undefined) => void;
     isRequired?: boolean;
   } = $props();
-
-  let floaters = useFloaters();
-  let reference = $state<HTMLDivElement>();
-  let isOpen = $state(false);
-
-  let onOpen = async () => {
-    isOpen = true;
-    try {
-      await floaters.open({
-        reference,
-        position: basic({
-          offset: {
-            crossAxis: -4,
-            mainAxis: 3,
-          },
-        }),
-        request: null,
-        snippet,
-        close: null,
-      }).response;
-    } finally {
-      isOpen = false;
-    }
-  };
 
   let blank = {} as T;
   let selected = $derived(_selected ?? blank);
@@ -60,12 +33,13 @@
   };
 </script>
 
-{#snippet snippet({ close }: { close: () => void })}
-  <Content {items} {selected} onSelect={onSelect(close)} />
-{/snippet}
-
-<div bind:this={reference}>
-  <Item item={selected} onSelect={onOpen} variant="bordered">
-    <Icon icon={isOpen ? TablerChevronUp : TablerChevronDown} />
-  </Item>
-</div>
+<Clickable>
+  {#snippet content({ close })}
+    <Content {items} {selected} onSelect={onSelect(close)} />
+  {/snippet}
+  {#snippet children({ isOpen, open })}
+    <Item item={selected} onSelect={open} variant="bordered">
+      <Chevron {isOpen} />
+    </Item>
+  {/snippet}
+</Clickable>

@@ -14,7 +14,7 @@
 - [ ] Light button states
 - [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
-- [ ] Dropdown field can't be ValueField. Validation is against string representation.
+- [ ] Dropdown field can't be ValueField. Validation is against string representation. Same goes for Temporal.PlainDate
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [x] Textarea

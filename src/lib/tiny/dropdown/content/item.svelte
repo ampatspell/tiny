@@ -31,7 +31,7 @@
 
 <style lang="scss">
   .item {
-    --height: 26px;
+    --height: 24px;
     &.variant-regular {
       --border: none;
       --padding: 10px;
@@ -41,7 +41,7 @@
       --padding: 6px;
     }
     &.state-critical {
-      --hover-color: var(--tiny-critical);
+      --hover-color: var(--tiny-critical-color);
     }
     display: flex;
     flex-direction: row;

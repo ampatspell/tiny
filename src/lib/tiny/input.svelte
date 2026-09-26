@@ -66,6 +66,8 @@
   let disabled = $derived(isDisabled);
   let element = $state<HTMLTextAreaElement | HTMLInputElement>();
 
+  let id = $props.id();
+
   $effect(() => {
     if (autofocus) {
       element?.focus();
@@ -76,6 +78,7 @@
 {#if multiline}
   <textarea
     bind:this={element}
+    {id}
     class="input textarea"
     {rows}
     {placeholder}
@@ -88,6 +91,7 @@
 {:else}
   <input
     bind:this={element}
+    {id}
     {type}
     class="input"
     {placeholder}

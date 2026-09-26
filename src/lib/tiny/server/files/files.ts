@@ -15,6 +15,8 @@ export type CreateFilesServicesOptions = {
   db: Database<DB>;
   storage: Storage;
   thumbnails?: FileThumbnails;
+  onDropped?: (id: string) => void;
+  onStored?: (id: string) => void;
 };
 
 export type FileThumbnailOptions = {
@@ -91,12 +93,15 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
 
     const variantId = uid();
 
+    const createdAt = Temporal.Now.zonedDateTimeISO().withTimeZone('UTC').toPlainDateTime().toString();
+
     await Promise.all([
       db
         .insertInto('files')
         .values({
           id,
           name,
+          createdAt,
         })
         .execute(),
       db
@@ -168,6 +173,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
       const meta = await resolveOriginalMetadata({ file });
       await storeOriginal({ id, meta, file });
       await createVariants({ id });
+      opts.onStored?.(id);
       return id;
     };
 
@@ -195,6 +201,7 @@ export const createFiles = async (opts: CreateFilesServicesOptions) => {
             );
           }),
         ]);
+        opts.onDropped?.(id);
       }
     };
 

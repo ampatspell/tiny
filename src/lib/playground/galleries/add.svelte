@@ -22,7 +22,6 @@
   };
 
   let onCancel = () => {
-    console.log('cancel');
     onDone(undefined);
   };
 </script>

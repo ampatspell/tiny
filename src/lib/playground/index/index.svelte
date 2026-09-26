@@ -59,6 +59,9 @@
     }
     > .galleries {
       padding: 10px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       > .gallery {
         color: var(--text-color);
         text-decoration: none;

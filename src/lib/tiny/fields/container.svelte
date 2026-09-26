@@ -72,7 +72,7 @@
       }
       > .error {
         white-space: nowrap;
-        color: var(--tiny-accent-color-2);
+        color: var(--tiny-critical-color);
       }
     }
   }
