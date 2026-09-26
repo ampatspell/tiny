@@ -1,8 +1,10 @@
 <script lang="ts">
-  import '@fontsource/raleway';
-
   let { children } = $props();
 </script>
+
+<svelte:head>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet" />
+</svelte:head>
 
 <div class="pub">
   {@render children()}

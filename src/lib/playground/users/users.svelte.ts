@@ -3,8 +3,8 @@ import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { optionalPassword, requiredEmail, valibot } from '#lib/tiny/fields/models/validator.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { sentenceCase } from 'text-sentence-case';
-import { roles, ValidRoleSchema } from '../../../env.ts';
 import { updateUser, type UserData } from './users.remote.ts';
+import { roles, ValidRoleSchema } from '../../../hooks.ts';
 
 export type UseUserModelOptions = {
   data: UserData;

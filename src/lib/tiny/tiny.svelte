@@ -1,6 +1,4 @@
 <script lang="ts">
-  import '@fontsource/ubuntu-mono/400.css';
-  import '@fontsource/ubuntu-mono/700.css';
   import type { Snippet } from 'svelte';
 
   let { children }: { children?: Snippet } = $props();
