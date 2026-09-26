@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Figure out a place to put `Temporal` polyfill
 - [ ] Add new could be disabled in list layout and have a reason for that
 - [ ] Busy state for fields while saving
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
@@ -17,6 +16,7 @@
 - [ ] Dropdown field can't be ValueField. Validation is against string representation. Same goes for Temporal.PlainDate
 - [ ] Add isDisabled for users. Validate token against that
 - [ ] Max age for JWT is 7 days, needs token renews.
+- [x] Figure out a place to put `Temporal` polyfill
 - [x] Calendar component
 - [x] Textarea
 - [x] `<Select />` component

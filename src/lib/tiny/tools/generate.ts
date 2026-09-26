@@ -864,6 +864,15 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
   });
 
   await write({
+    filename: 'src/hooks.ts',
+    content: dedent`
+      import { setupPolyfills } from '@ampatspell/tiny/polyfills';
+
+      setupPolyfills();
+    `,
+  });
+
+  await write({
     filename: 'src/app.d.ts',
     content: dedent`
       // See https://svelte.dev/docs/kit/types#app.d.ts
