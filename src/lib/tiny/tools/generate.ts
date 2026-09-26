@@ -140,8 +140,6 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { defineEnvVars } from '@sveltejs/kit/env';
       import { building } from '$app/env';
 
-      export const roles = ['admin', 'subscriber'] as const;
-
       const string = () => {
         return building ? v.optional(v.string()) : v.string();
       };
@@ -869,6 +867,8 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { setupPolyfills } from '@ampatspell/tiny/polyfills';
 
       setupPolyfills();
+
+      export const roles = ['admin', 'subscriber'] as const;
     `,
   });
 
