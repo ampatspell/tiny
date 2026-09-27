@@ -3,6 +3,7 @@
   import type { Snippet } from 'svelte';
   import Guard from '../auth/guard/guard.svelte';
   import { useTiny } from './tiny.svelte.ts';
+  import Fonts from '../fonts.svelte';
 
   let { children }: { children: Snippet } = $props();
 
@@ -10,16 +11,14 @@
   let validate = $derived(tiny.validate);
 </script>
 
-<svelte:head>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap"
-    rel="preload"
-    as="style"
-  />
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet" />
-</svelte:head>
+<Fonts
+  fonts={{
+    families: {
+      'Ubuntu Mono': { wght: [400, 700] },
+    },
+    display: 'swap',
+  }}
+/>
 
 <Guard {validate}>
   {@render children()}

@@ -13,14 +13,12 @@
 
   let resolution = $derived.by(() => {
     if (validate) {
+      let token;
       if (res.status === 'success') {
-        let token = res.token;
-        let url = page.url;
-        return validate({ url, token });
-      } else if (res.status === 'error') {
-        return 'sign-in';
+        token = res.token;
       }
-      return 'denied';
+      let url = page.url;
+      return validate({ url, token });
     } else {
       return 'allowed';
     }

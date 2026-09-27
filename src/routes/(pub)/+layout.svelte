@@ -1,20 +1,25 @@
 <script lang="ts">
+  import Fonts from '#lib/tiny/fonts.svelte';
+
   let { children } = $props();
 </script>
 
-<svelte:head>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet" />
-</svelte:head>
+<Fonts
+  fonts={{
+    families: { Raleway: { wght: '100..900' } },
+    display: 'swap',
+  }}
+/>
 
-<div class="pub">
+<div class="public">
   {@render children()}
 </div>
 
 <style lang="scss">
-  .pub {
+  .public {
     flex: 1;
     display: flex;
     flex-direction: column;
-    font-family: Raleway;
+    font-family: Raleway, sans-serif;
   }
 </style>
