@@ -3,24 +3,29 @@
   import Icon from '#lib/tiny/button/icon.svelte';
   import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import TablerSun from '#lib/tiny/icons/tabler--sun.svelte';
+  import { Action } from '#lib/tiny/utils/action.svelte.js';
   import type { ResolvedPathname } from '$app/types';
 
   let {
     route,
   }: {
-    route: ResolvedPathname | undefined | null;
+    route: Action<ResolvedPathname | undefined> | undefined;
   } = $props();
 
+  let resolved = $derived(route?.action);
+  let isDisabled = $derived(route?.isDisabled);
+  let isHidden = $derived(route?.isHidden);
+
   let label = $derived.by(() => {
-    if (route) {
-      return `Go to ${route}`;
+    if (resolved) {
+      return `Go to ${resolved}`;
     }
   });
 </script>
 
-{#if route !== undefined}
-  <Tooltip {label} placement="right">
-    <Button type="link" variant="light" route={route ?? undefined} isDisabled={!route}>
+{#if route && !isHidden}
+  <Tooltip {label} placement="right" {isDisabled}>
+    <Button type="link" variant="light" route={resolved} {isDisabled}>
       <Icon icon={TablerSun} />
     </Button>
   </Tooltip>

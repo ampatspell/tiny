@@ -2,11 +2,12 @@ import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { notBlank, optionalPermalink } from '#lib/tiny/fields/models/validator.svelte.js';
 import { useFiles, type LocalFile } from '#lib/tiny/files.svelte.js';
+import { useAction } from '#lib/tiny/utils/action.svelte.js';
 import { hasKeys, omit } from '#lib/tiny/utils/object.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { runner } from '#lib/tiny/utils/promise.js';
 import { slug } from '#lib/tiny/utils/string.js';
-import { images, type OptionalId } from '#lib/tiny/utils/utils.js';
+import { images, run, type OptionalId } from '#lib/tiny/utils/utils.js';
 import { resolve } from '$app/paths';
 import {
   addFile,
@@ -153,12 +154,16 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
     });
   };
 
-  const route = $derived.by(() => {
+  const route = run(() => {
     const permalink = fields.record.permalink;
-    if (!fields.record.permalink.isDirty) {
-      return resolve('/(pub)/galleries/[permalink]', { permalink: permalink.value });
-    }
-    return null;
+    return useAction({
+      isDisabled: getter(() => permalink.isDirty || !permalink.value),
+      action: getter(() => {
+        if (permalink.value) {
+          return resolve('/(pub)/galleries/[permalink]', { permalink: permalink.value });
+        }
+      }),
+    });
   });
 
   const accept = images;

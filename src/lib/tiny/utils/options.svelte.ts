@@ -91,3 +91,11 @@ export const options = <T extends object>(
 
   return obj;
 };
+
+export class Model<O extends object = object> {
+  protected readonly opts: O;
+
+  constructor(opts: OptionsInput<O>) {
+    this.opts = options(opts);
+  }
+}

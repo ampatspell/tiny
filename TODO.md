@@ -1,7 +1,5 @@
 ## TODO
 
-- [ ] Make sure user with current JWT token actually exists
-- [ ] Auto-refresh token if role has changed
 - [ ] "Add new" could be disabled in list layout and have a reason for that (daily pics)
 - [ ] Busy state for fields while saving
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
@@ -14,8 +12,10 @@
 - [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation. Same goes for Temporal.PlainDate
+- [ ] Auto-refresh token if role has changed
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [ ] Add isDisabled for users. Validate token against that
+- [x] Make sure user with current JWT token actually exists
 - [x] Defaults for `handleError`
 - [x] Update generate for env.ts → hooks.ts changes
 - [x] Find a place to declare roles array, type and schema (do src/tiny.ts?)

@@ -28,11 +28,13 @@
     }
   };
 
+  let action = $derived(layout.add?.action);
+
   let button = $state<Button>();
   let onClick = async () => {
-    if (add?.type === 'function') {
-      await add.value();
-    } else if (add?.type === 'snippet') {
+    if (action?.type === 'function') {
+      await action.value();
+    } else if (action?.type === 'snippet') {
       let reference = button?.element;
       if (reference) {
         onAdd(reference);
@@ -41,17 +43,19 @@
   };
 
   let add = $derived(layout.add);
+  let isHidden = $derived(add?.isHidden);
+  let isDisabled = $derived(add?.isDisabled);
 </script>
 
 {#snippet snippet({ resolve }: { resolve: (id: string | undefined) => void })}
-  {#if add?.type === 'snippet'}
-    {@render add.value(resolve)}
+  {#if action?.type === 'snippet'}
+    {@render action.value(resolve)}
   {/if}
 {/snippet}
 
-{#if add}
-  <Tooltip label="Add new" placement="right">
-    <Button bind:this={button} variant="light" {onClick}>
+{#if add && !isHidden}
+  <Tooltip label="Add new" placement="right" {isDisabled}>
+    <Button bind:this={button} variant="light" {onClick} {isDisabled}>
       <Icon icon={TablerSquareRoundedPlus} />
     </Button>
   </Tooltip>

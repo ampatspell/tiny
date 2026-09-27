@@ -1,5 +1,6 @@
 import { useBackend } from '#lib/tiny/backend/context.svelte.js';
-import type { MarkedFunction, MarkedSnippet } from '#lib/tiny/utils/mark.js';
+import type { Action } from '#lib/tiny/utils/action.svelte.js';
+import { type MarkedFunction, type MarkedSnippet } from '#lib/tiny/utils/mark.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { ResolvedPathname } from '$app/types';
 import type { Snippet } from 'svelte';
@@ -9,13 +10,14 @@ export type Model = {
 };
 
 type AddSnippet = Snippet<[onDone: (id: string | undefined) => void]>;
+type Add = MarkedSnippet<AddSnippet> | MarkedFunction<() => Promise<unknown>>;
 
 export type UseListLayoutOptions<M extends Model> = {
   selected: string | undefined;
   models: M[];
   item: Snippet<[model: M]>;
-  add?: MarkedSnippet<AddSnippet> | MarkedFunction<() => Promise<unknown>>;
-  route?: ResolvedPathname | null;
+  add?: Action<Add>;
+  route?: Action<ResolvedPathname | undefined>;
 };
 
 export const useListLayout = <M extends Model>(_opts: OptionsInput<UseListLayoutOptions<M>>) => {

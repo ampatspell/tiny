@@ -17,12 +17,14 @@
     offset,
     placement = 'top',
     variant = 'regular',
+    isDisabled = false,
   }: {
     children?: Snippet;
     label?: string;
     offset?: OffsetOptions;
     placement?: Placement;
     variant?: 'regular' | 'fill';
+    isDisabled?: boolean;
   } = $props();
 
   let reference = $state<HTMLDivElement>();
@@ -30,9 +32,7 @@
   let arrow = $state<HTMLDivElement>();
 
   let show = $state({ reference: false, tooltip: false });
-  // let _isShown = new Debounced(() => label && (show.reference || show.tooltip), 100);
-  let _isShown = $derived(label && (show.reference || show.tooltip));
-  let isShown = $derived(_isShown);
+  let isShown = $derived(label && (show.reference || show.tooltip) && !isDisabled);
 
   let tooltipStyle = $state<string>();
   let arrowStyle = $state<string>();

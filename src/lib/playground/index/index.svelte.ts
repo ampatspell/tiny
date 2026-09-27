@@ -1,6 +1,7 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { useFiles } from '#lib/tiny/files.svelte.js';
+import { asAction } from '#lib/tiny/utils/action.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import { images } from '#lib/tiny/utils/utils.js';
 import { resolve } from '$app/paths';
@@ -52,7 +53,7 @@ export const useIndexModel = (_opts: OptionsInput<UseIndexModelOptions>) => {
   return fields.asEditable(
     {
       title: getter(() => title),
-      route: resolve('/(pub)'),
+      route: asAction(resolve('/(pub)')),
       save,
     },
     { name: 'IndexModel', serialized: ['isDirty'] },

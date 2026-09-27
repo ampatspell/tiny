@@ -1,11 +1,12 @@
 import { useBackend } from '#lib/tiny/backend/context.svelte.js';
+import type { Action } from '#lib/tiny/utils/action.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { ResolvedPathname } from '$app/types';
 
 export type Model = {
   title: string;
   isDirty: boolean;
-  route?: ResolvedPathname | undefined | null;
+  route?: Action<ResolvedPathname | undefined>;
   save: () => Promise<string | void | undefined>;
   rollback: () => void;
   destroy?: () => Promise<void>;
