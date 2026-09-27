@@ -9,14 +9,22 @@
 
   let { children, validate }: { children: Snippet; validate?: ValidateFunction } = $props();
 
-  let token = $derived(await getToken());
+  let response = $derived(await getToken());
 
   let resolution = $derived.by(() => {
-    if (validate) {
+    if (!validate) {
+      return 'allowed';
+    }
+    if (response.status === 'success') {
+      let token = response.token;
       let url = page.url;
       return validate({ url, token });
+    } else if (response.status === 'anonymous') {
+      return 'sign-in';
+    } else if (response.status == 'needs-refresh') {
+      getToken().refresh();
     }
-    return 'allowed';
+    return 'denied';
   });
 </script>
 
