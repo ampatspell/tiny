@@ -19,6 +19,7 @@ export const createHandle = (opts: Omit<CreateServicesOptions, 'dir'> & { dir: s
       storage: services.storage,
       files: services.files,
       users: services.users,
+      token: undefined,
     };
 
     return await resolve(event);

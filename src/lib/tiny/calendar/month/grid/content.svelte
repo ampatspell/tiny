@@ -115,7 +115,7 @@
             border-bottom: none;
           }
           &:hover {
-            background: rgb(from var(--tiny-selected-background-color-1) r g b / 2%);
+            background: rgb(from var(--tiny-selected-background-color-1) r g b / 1.5%);
           }
           > .header {
             width: 100%;

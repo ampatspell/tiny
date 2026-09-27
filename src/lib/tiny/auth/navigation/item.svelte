@@ -9,7 +9,14 @@
   import Card from './card.svelte';
 
   let floaters = useFloaters();
-  let token = $derived(await getToken());
+
+  let resp = $derived(await getToken());
+  let token = $derived.by(() => {
+    if (resp.status === 'success') {
+      return resp.token;
+    }
+  });
+
   let item = $state<NavigationItem>();
 
   let onClick = async () => {
