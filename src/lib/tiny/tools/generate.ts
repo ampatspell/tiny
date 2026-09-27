@@ -316,6 +316,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
       import { withDataFields } from '@ampatspell/tiny/fields/index';
       import { notBlank } from '@ampatspell/tiny/fields/models/validator';
       import { resolve } from '$app/paths';
+      import { asAction } from '@ampatspell/tiny/utils/action';
 
       export type MessageModelOptions = Readonly<{
         data: MessageData;
@@ -349,7 +350,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
         };
 
         const title = 'Message';
-        const route = resolve('/(pub)');
+        const route = asAction(resolve('/(pub)'));
 
         return fields.asEditable({
           save,
@@ -831,8 +832,11 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     filename: 'src/routes/(pub)/+layout.svelte',
     content: dedent`
       <script lang="ts">
+        import Fonts from '@ampatspell/tiny/fonts';
         let { children } = $props();
       </script>
+
+      <Fonts fonts={{ families: { 'Azeret Mono': [400] }, display: 'swap' }} />
 
       <div class="pub">
         {@render children()}
@@ -844,7 +848,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
           display: flex;
           flex-direction: column;
           font-family:
-            Menlo,
+            'Azeret Mono',
             Ubuntu Mono,
             monospace;
         }
