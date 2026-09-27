@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Label flashes while dropping files on file component
 - [ ] Disable autocomplete for input fields except sign-in
 - [ ] Get `better-sqlite3` out of deps
 - [ ] Move kysely and valibot to peer dependencies

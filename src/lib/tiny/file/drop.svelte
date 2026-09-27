@@ -6,4 +6,4 @@
   let { type }: { type: string } = $props();
 </script>
 
-<Overlay icon={TablerPhoto} label="Drop {aan(type)} {type} here" />
+<Overlay icon={TablerPhoto} label="Drop {aan(type)} {type} here" isBusy={true} />

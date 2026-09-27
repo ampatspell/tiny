@@ -107,13 +107,15 @@
     multiple: false,
     onDrop,
   });
+
+  let isBusy = $derived(isOpen || drop.isOver);
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="file" {@attach fileDrop(drop)} style:--height={px(height)} bind:clientWidth {onclick}>
   {#if file}
-    <Content {file} {variant} isBusy={isOpen} />
+    <Content {file} {variant} {isBusy} />
   {:else if drop.isOver}
     <Drop {type} />
   {:else}
