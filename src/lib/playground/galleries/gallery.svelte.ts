@@ -157,10 +157,11 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const route = run(() => {
     const permalink = fields.record.permalink;
     return useAction({
-      isDisabled: getter(() => permalink.isDirty || !permalink.value),
+      isDisabled: getter(() => permalink.isDirty),
       action: getter(() => {
-        if (permalink.value) {
-          return resolve('/(pub)/galleries/[permalink]', { permalink: permalink.value });
+        const value = permalink.value;
+        if (value) {
+          return resolve('/(pub)/galleries/[permalink]', { permalink: value });
         }
       }),
     });

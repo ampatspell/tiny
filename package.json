@@ -126,6 +126,10 @@
       "types": "./dist/tiny/tiny.svelte.d.ts",
       "svelte": "./dist/tiny/tiny.svelte"
     },
+    "./utils/action": {
+      "types": "./dist/tiny/utils/action.svelte.d.ts",
+      "svelte": "./dist/tiny/utils/action.svelte.js"
+    },
     "./utils/array": {
       "types": "./dist/tiny/utils/array.d.ts",
       "svelte": "./dist/tiny/utils/array.js"

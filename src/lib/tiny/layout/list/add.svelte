@@ -5,6 +5,7 @@
   import { basic } from '#lib/tiny/floating/position.js';
   import Tooltip from '#lib/tiny/floating/tooltip.svelte';
   import TablerSquareRoundedPlus from '#lib/tiny/icons/tabler--square-rounded-plus.svelte';
+  import { fromOptional } from '#lib/tiny/utils/action.svelte.js';
   import { getter } from '#lib/tiny/utils/options.svelte.js';
   import { goto } from '$app/navigation';
   import type { ListLayout, Model } from './layout.svelte.ts';
@@ -28,7 +29,10 @@
     }
   };
 
-  let action = $derived(layout.add?.action);
+  let add = $derived(fromOptional(layout.add, 'hides', 'disables'));
+  let action = $derived(add.action);
+  let isHidden = $derived(add.isHidden);
+  let isDisabled = $derived(add.isDisabled);
 
   let button = $state<Button>();
   let onClick = async () => {
@@ -41,10 +45,6 @@
       }
     }
   };
-
-  let add = $derived(layout.add);
-  let isHidden = $derived(add?.isHidden);
-  let isDisabled = $derived(add?.isDisabled);
 </script>
 
 {#snippet snippet({ resolve }: { resolve: (id: string | undefined) => void })}
