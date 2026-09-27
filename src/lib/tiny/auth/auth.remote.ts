@@ -41,5 +41,11 @@ export const signOut = command(async () => {
 
 export const getToken = query(async () => {
   const users = getUsersForRequestEvent();
-  return users.getToken();
+  return await users.getToken();
+});
+
+export const renewToken = command(async () => {
+  const users = getUsersForRequestEvent();
+  await users.renewToken();
+  getToken().refresh();
 });

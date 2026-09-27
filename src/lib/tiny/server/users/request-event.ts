@@ -9,10 +9,7 @@ export type GetTokenResponse =
       token: TokenPayload;
     }
   | {
-      status: 'anonymous';
-    }
-  | {
-      status: 'needs-refresh';
+      status: 'error';
     };
 
 export class UsersForRequestEventService {
@@ -23,17 +20,35 @@ export class UsersForRequestEventService {
     },
   };
 
-  async signIn({ email, password }: { email: string; password: string }) {
+  private setTokenCookie(payload: string) {
+    const {
+      cookie: { name, opts },
+    } = this;
+    const event = getRequestEvent();
+
+    // 1 year
+    event.cookies.set(name, payload, { ...opts, maxAge: 60 * 60 * 24 * 365, sameSite: 'strict' });
+  }
+
+  private getTokenCookie() {
+    const event = getRequestEvent();
+    return event.cookies.get(this.cookie.name);
+  }
+
+  private deleteTokenCookie() {
     const {
       cookie: { name, opts },
     } = this;
 
     const event = getRequestEvent();
+    event.cookies.delete(name, opts);
+  }
+
+  async signIn({ email, password }: { email: string; password: string }) {
     const users = getUsers();
     const payload = await users.token.create({ email, password });
     if (payload) {
-      // 1 year
-      event.cookies.set(name, payload, { ...opts, maxAge: 60 * 60 * 24 * 365, sameSite: 'strict' });
+      this.setTokenCookie(payload);
       return payload;
     }
   }
@@ -46,12 +61,7 @@ export class UsersForRequestEventService {
   }
 
   async signOut() {
-    const {
-      cookie: { name, opts },
-    } = this;
-
-    const event = getRequestEvent();
-    event.cookies.delete(name, opts);
+    this.deleteTokenCookie();
   }
 
   async getToken(): Promise<GetTokenResponse> {
@@ -66,7 +76,7 @@ export class UsersForRequestEventService {
       return res;
     };
 
-    const payload = event.cookies.get(this.cookie.name);
+    const payload = this.getTokenCookie();
     if (payload) {
       const users = getUsers();
       const res = await users.token.verify(payload);
@@ -79,12 +89,21 @@ export class UsersForRequestEventService {
         });
       } else if (res.status === 'error') {
         console.log('[jwt]', res.reason);
-        if (res.reason === 'role') {
-          return set({ status: 'needs-refresh' });
-        }
       }
     }
-    return set({ status: 'anonymous' });
+    return set({ status: 'error' });
+  }
+
+  async renewToken() {
+    const payload = this.getTokenCookie();
+    if (payload) {
+      const next = await getUsers().renewToken(payload);
+      if (next.status === 'success') {
+        this.setTokenCookie(next.payload);
+      } else {
+        this.deleteTokenCookie();
+      }
+    }
   }
 }
 

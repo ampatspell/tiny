@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { tick, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import { getToken } from '../auth.remote.ts';
   import Denied from './denied.svelte';
   import SignIn from './sign-in.svelte';
@@ -11,21 +11,14 @@
 
   let res = $derived(await getToken());
 
-  let refresh = async () => {
-    await tick();
-    getToken().refresh();
-  };
-
   let resolution = $derived.by(() => {
     if (validate) {
       if (res.status === 'success') {
         let token = res.token;
         let url = page.url;
         return validate({ url, token });
-      } else if (res.status === 'anonymous') {
+      } else if (res.status === 'error') {
         return 'sign-in';
-      } else if (res.status == 'needs-refresh') {
-        refresh();
       }
       return 'denied';
     } else {

@@ -57,15 +57,6 @@ type VerifyTokenResponse =
       reason: string;
     };
 
-type VerifyUserAndRoleResponse =
-  | {
-      status: 'success';
-    }
-  | {
-      status: 'error';
-      reason: string;
-    };
-
 class UsersTokenService {
   private readonly users: UsersService;
 
@@ -81,7 +72,7 @@ class UsersTokenService {
     this.users = users;
   }
 
-  private async sign(data: TokenPayload) {
+  async sign(data: TokenPayload) {
     const { secret } = this;
     return await new Promise<string>((resolve, reject) => {
       if (!secret) {
@@ -129,25 +120,17 @@ class UsersTokenService {
   private async verifyUser(token: TokenPayload) {
     const record = await this.db
       .selectFrom('users')
-      .select('role')
-      .where('email', '==', token.email)
+      .select('id')
+      .where((qb) => qb.and([qb('email', '==', token.email), qb('role', '==', token.role)]))
       .executeTakeFirst();
 
     if (record) {
-      if (record.role === token.role) {
-        return {
-          status: 'success' as const,
-        };
-      } else {
-        return {
-          status: 'error' as const,
-          reason: 'role',
-        };
-      }
+      return {
+        status: 'success' as const,
+      };
     } else {
       return {
         status: 'error' as const,
-        reason: 'user',
       };
     }
   }
@@ -163,7 +146,10 @@ class UsersTokenService {
           token,
         };
       } else {
-        return userRes;
+        return {
+          status: 'error' as const,
+          reason: 'user' as const,
+        };
       }
     } else {
       return tokenRes;
@@ -225,19 +211,29 @@ export class UsersService {
     return omit(result, ['hash', 'salt']);
   }
 
+  private async getUserByEmail(email: string) {
+    const { db } = this;
+    return await db.selectFrom('users').where('email', '==', email).selectAll().executeTakeFirst();
+  }
+
+  private buildTokenDataFromRecord(record: NonNullable<Awaited<ReturnType<typeof this.getUserByEmail>>>) {
+    const { id, email, role } = record;
+    return {
+      id,
+      email,
+      role: role as Tiny.Role,
+    };
+  }
+
   async verify({ email, password }: { email: string; password: string }) {
-    const { db, crypto } = this;
+    const { crypto } = this;
     email = this.normalizeEmail(email);
 
-    const record = await db.selectFrom('users').where('email', '==', email).selectAll().executeTakeFirst();
+    const record = await this.getUserByEmail(email);
     if (record) {
-      const { id, role, salt, hash } = record;
+      const { salt, hash } = record;
       if (hash && salt && (await crypto.verify({ hash, salt, password }))) {
-        return {
-          id,
-          email,
-          role: role as Tiny.Role,
-        };
+        return this.buildTokenDataFromRecord(record);
       }
     }
   }
@@ -265,6 +261,28 @@ export class UsersService {
 
     if (hasValues(data)) {
       await db.updateTable('users').set(data).where('id', '==', id).executeTakeFirstOrThrow();
+    }
+  }
+
+  async renewToken(payload: string) {
+    const res = await this.token.verify(payload);
+    if (res.status === 'success') {
+      const record = await this.getUserByEmail(res.token.email);
+      if (record) {
+        const data = this.buildTokenDataFromRecord(record);
+        const payload = await this.token.sign(data);
+        return {
+          status: 'success' as const,
+          payload,
+        };
+      } else {
+        return {
+          status: 'error' as const,
+          reason: 'user',
+        };
+      }
+    } else {
+      return res;
     }
   }
 }

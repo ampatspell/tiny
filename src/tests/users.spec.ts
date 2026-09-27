@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { withServices } from './helpers/utils.ts';
+import type { Any } from '../lib/tiny/utils/utils.ts';
 
 describe('users', () => {
   it('creates user', async () => {
@@ -53,13 +54,16 @@ describe('users', () => {
       });
       expect(token).toBeTruthy();
 
-      const data = await services.users.token.verify(token!);
+      const data: Any = await services.users.token.verify(token!);
       expect(data).toStrictEqual({
-        email: 'zeeba@gmail.com',
-        exp: (data as Record<string, unknown>).exp,
-        iat: (data as Record<string, unknown>).iat,
-        id: data!.id,
-        role: 'admin',
+        status: 'success',
+        token: {
+          email: 'zeeba@gmail.com',
+          exp: data.token.exp,
+          iat: data.token.iat,
+          id: data.token.id,
+          role: 'admin',
+        },
       });
     });
   });
