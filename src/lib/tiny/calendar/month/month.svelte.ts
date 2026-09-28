@@ -99,7 +99,7 @@ export class MonthModel {
         month: this.month,
         day: 1,
       }).add({
-        months: months,
+        months,
       });
 
       this.year = year;
