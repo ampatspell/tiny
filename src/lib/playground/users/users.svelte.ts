@@ -38,6 +38,7 @@ export const useUserModel = (_opts: OptionsInput<UseUserModelOptions>) => {
         description: 'Leave blank to keep the current one',
         validator: optionalPassword,
         type: 'password',
+        autocomplete: 'new-password',
       }),
     };
   });

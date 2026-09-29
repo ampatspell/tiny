@@ -12,10 +12,11 @@
   let rows = $derived(field.rows);
   let value = $derived(field.value);
   let autofocus = $derived(field.autofocus);
+  let autocomplete = $derived(field.autocomplete);
   let onInput = $derived(field.onInput);
   let isBusy = $derived(busy.isBusy);
 </script>
 
 <Container {field}>
-  <Input {type} {rows} {value} {onInput} {autofocus} {isBusy} />
+  <Input {type} {rows} {value} {onInput} {autofocus} {autocomplete} {isBusy} />
 </Container>
