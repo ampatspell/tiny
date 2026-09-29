@@ -2,6 +2,7 @@ import { createContext } from 'svelte';
 
 export class Busy {
   private count = $state(0);
+
   readonly isBusy = $derived(this.count > 0);
 
   private readonly inc = () => {
