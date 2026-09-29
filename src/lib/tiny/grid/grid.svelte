@@ -11,6 +11,7 @@
   import { createFileDropModel, fileDrop } from '../file-drop.svelte.ts';
   import { useFiles, type LocalFile } from '../files.svelte.ts';
   import { isAcceptingImages } from '../utils/utils.ts';
+  import { useBusy } from '../busy.svelte.ts';
 
   let {
     accept,
@@ -34,6 +35,7 @@
     children: Snippet<[{ model: T; isSelected: boolean }]>;
   } = $props();
 
+  let busy = useBusy();
   let width = $state<number>();
 
   let context = setGridContext<T>({
@@ -48,10 +50,16 @@
   let size = $derived(context.size);
 
   let onClickOutside = () => {
+    if (busy.isBusy) {
+      return;
+    }
     onSelect?.(undefined);
   };
 
   let onKey = (e: KeyboardEvent) => {
+    if (busy.isBusy) {
+      return;
+    }
     if (!getActiveInputElement()) {
       if (e.key === 'Escape') {
         onSelect?.(undefined);
@@ -80,6 +88,9 @@
 
   let files = useFiles();
   let onDrop = (selected: File[]) => {
+    if (busy.isBusy) {
+      return;
+    }
     let local = selected.map((file) => files.create.local({ file }));
     _onDrop?.(local);
   };
@@ -103,6 +114,7 @@
 
 <div
   class="grid"
+  class:busy={busy.isBusy}
   style:--gap={px(context.gap)}
   style:--padding={px(context.padding)}
   {@attach fileDrop(drop)}
@@ -149,6 +161,9 @@
         flex-wrap: wrap;
         gap: var(--gap);
       }
+    }
+    &.busy {
+      pointer-events: none;
     }
   }
 </style>

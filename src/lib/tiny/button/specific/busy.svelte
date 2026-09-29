@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { useBusy } from '#lib/tiny/busy.svelte.js';
   import TablerCloudFilled from '#lib/tiny/icons/tabler--cloud-filled.svelte';
   import TablerCloud from '#lib/tiny/icons/tabler--cloud.svelte';
   import Button, { type ButtonType } from '../button.svelte';
@@ -8,15 +9,15 @@
   let {
     label,
     type,
-    isBusy,
     onClick,
   }: {
     label: string;
     type?: ButtonType;
-    isBusy: boolean;
     onClick: () => void;
   } = $props();
 
+  let busy = useBusy();
+  let isBusy = $derived(busy.isBusy);
   let icon = $derived(isBusy ? TablerCloudFilled : TablerCloud);
 </script>
 

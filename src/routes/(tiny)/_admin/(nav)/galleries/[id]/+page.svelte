@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getGalleryById } from '#lib/playground/galleries/galleries.remote.js';
   import { useGalleryModel } from '#lib/playground/galleries/gallery.svelte.js';
+  import { useBusy } from '#lib/tiny/busy.svelte.js';
   import Fields from '#lib/tiny/form/content/fields.svelte';
   import File from '#lib/tiny/grid/file.svelte';
   import FilesGrid from '#lib/tiny/layout/array-grid/array-grid.svelte';
@@ -9,6 +10,7 @@
   import { page } from '$app/state';
 
   let id = $derived(page.params.id!);
+  useBusy();
   let gallery = $derived(await getGalleryById({ id }));
   let model = useGalleryModel({ isNew: false, data: getter(() => gallery) });
   let layout = useArrayGridEditingLayout({

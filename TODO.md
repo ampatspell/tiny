@@ -4,7 +4,6 @@
 - [ ] Disable autocomplete for input fields except sign-in
 - [ ] Get `better-sqlite3` out of deps
 - [ ] Move kysely and valibot to peer dependencies
-- [ ] Busy state for fields while saving
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Server validation errors in forms / fields
 - [ ] resend.com integration
@@ -18,6 +17,7 @@
 - [ ] Auto-refresh token if role has changed
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [ ] Add isDisabled for users. Validate token against that
+- [x] Busy state for fields while saving
 - [x] "Add new" could be disabled in list layout and have a reason for that (daily pics)
 - [x] Make sure user with current JWT token actually exists
 - [x] Defaults for `handleError`
