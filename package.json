@@ -58,6 +58,10 @@
       "types": "./dist/tiny/broadcast.svelte.d.ts",
       "svelte": "./dist/tiny/broadcast.svelte.js"
     },
+    "./busy": {
+      "types": "./dist/tiny/busy.svelte.d.ts",
+      "svelte": "./dist/tiny/busy.svelte.js"
+    },
     "./file-drop": {
       "types": "./dist/tiny/file-drop.svelte.d.ts",
       "svelte": "./dist/tiny/file-drop.svelte.js"
