@@ -1,5 +1,14 @@
 <script lang="ts">
-  import Placeholder from '#lib/tiny/layout/placeholder/placeholder.svelte';
+  import Duck from './cat.svelte';
 </script>
 
-<Placeholder />
+<div class="page">
+  <Duck />
+</div>
+
+<style lang="scss">
+  .page {
+    flex: 1;
+    // background: #333;
+  }
+</style>
