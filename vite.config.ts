@@ -16,18 +16,11 @@ export default defineConfig({
       experimental: { remoteFunctions: true },
     }),
   ],
-  ssr: {
-    target: 'node',
-  },
-  define: {
-    'import.meta.vitest': 'undefined',
-  },
   build: {
     rolldownOptions: {
       external: [
         '@clack/prompts',
         'better-sqlite3',
-        'bindings',
         'dedent',
         'fs-extra',
         'jsonwebtoken',
