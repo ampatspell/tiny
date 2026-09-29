@@ -1,5 +1,4 @@
 import { useBroadcastChannel } from '#lib/tiny/broadcast.svelte.js';
-import { useBusy } from '#lib/tiny/busy.svelte.js';
 import { withDataFields } from '#lib/tiny/fields/index.svelte.js';
 import { notBlank, optionalPermalink } from '#lib/tiny/fields/models/validator.svelte.js';
 import { useFiles, type LocalFile } from '#lib/tiny/files.svelte.js';
@@ -34,7 +33,6 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
   const opts = options(_opts);
   const isNew = $derived(opts.isNew);
   const files = useFiles();
-  const busy = useBusy();
   const broadcast = useBroadcastChannel();
 
   const data = $derived.by(() => {
@@ -92,49 +90,47 @@ export const useGalleryModel = (_opts: OptionsInput<UseGalleryModelOptions>) => 
 
   const save = async () => {
     if (fields.touch()) {
-      return busy.with(async () => {
-        let id: string;
-        if (opts.isNew) {
-          const data = fields.serialized.all;
-          id = await addGallery(data);
-          broadcast.notifyDidSave();
-        } else {
-          id = opts.data.id!;
-          const data = fields.serialized.dirty;
-          if (data) {
-            id = opts.data.id;
-            {
-              const props = omit(data, ['files']);
-              if (hasKeys(props)) {
-                await updateGallery({ id, ...props });
-              }
+      let id: string;
+      if (opts.isNew) {
+        const data = fields.serialized.all;
+        id = await addGallery(data);
+        broadcast.notifyDidSave();
+      } else {
+        id = opts.data.id!;
+        const data = fields.serialized.dirty;
+        if (data) {
+          id = opts.data.id;
+          {
+            const props = omit(data, ['files']);
+            if (hasKeys(props)) {
+              await updateGallery({ id, ...props });
             }
-            {
-              const files = data.files;
-              if (files) {
-                const tasks = runner();
-                for (const entry of files) {
-                  if (entry.state === 'deleted') {
-                    tasks.push(() => deleteFile({ id: entry.id }));
-                  } else if (entry.state === 'added') {
-                    const { name, position } = entry;
-                    const file = entry.file?.file;
-                    if (file) {
-                      tasks.push(() => addFile({ id, file, name: name!, position: position! }));
-                    }
-                  } else if (entry.state === 'updated') {
-                    const { id, file, name, position } = entry;
-                    tasks.push(() => updateFile({ id, file, name, position }));
-                  }
-                }
-                await tasks.run();
-              }
-            }
-            broadcast.notifyDidSave();
           }
+          {
+            const files = data.files;
+            if (files) {
+              const tasks = runner();
+              for (const entry of files) {
+                if (entry.state === 'deleted') {
+                  tasks.push(() => deleteFile({ id: entry.id }));
+                } else if (entry.state === 'added') {
+                  const { name, position } = entry;
+                  const file = entry.file?.file;
+                  if (file) {
+                    tasks.push(() => addFile({ id, file, name: name!, position: position! }));
+                  }
+                } else if (entry.state === 'updated') {
+                  const { id, file, name, position } = entry;
+                  tasks.push(() => updateFile({ id, file, name, position }));
+                }
+              }
+              await tasks.run();
+            }
+          }
+          broadcast.notifyDidSave();
         }
-        return id;
-      });
+      }
+      return id;
     }
   };
 

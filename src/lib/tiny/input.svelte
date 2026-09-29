@@ -5,6 +5,7 @@
 <script lang="ts">
   let {
     isDisabled,
+    isBusy,
     type = 'text',
     rows = 6,
     value,
@@ -15,6 +16,7 @@
     onBlur,
   }: {
     isDisabled?: boolean;
+    isBusy?: boolean;
     type?: InputType;
     rows?: number;
     value: string | undefined;
@@ -80,6 +82,7 @@
     bind:this={element}
     {id}
     class="input textarea"
+    class:busy={isBusy}
     {rows}
     {placeholder}
     {disabled}
@@ -94,6 +97,7 @@
     {id}
     {type}
     class="input"
+    class:busy={isBusy}
     {placeholder}
     {disabled}
     {value}
@@ -117,6 +121,9 @@
     }
     &.textarea {
       resize: vertical;
+    }
+    &.busy {
+      pointer-events: none;
     }
   }
 </style>

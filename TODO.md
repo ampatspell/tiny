@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Busy state for fields while saving
 - [ ] Label flashes while dropping files on file component
 - [ ] Disable autocomplete for input fields except sign-in
 - [ ] Get `better-sqlite3` out of deps
@@ -18,6 +17,7 @@
 - [ ] Auto-refresh token if role has changed
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [ ] Add isDisabled for users. Validate token against that
+- [x] Busy state for fields while saving
 - [x] "Add new" could be disabled in list layout and have a reason for that (daily pics)
 - [x] Make sure user with current JWT token actually exists
 - [x] Defaults for `handleError`

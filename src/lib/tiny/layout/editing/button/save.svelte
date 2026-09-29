@@ -20,5 +20,5 @@
 <svelte:document {onkeydown} />
 
 {#if layout.isDirty || isBusy}
-  <Busy label="Save" {onClick} {isBusy} />
+  <Busy label="Save" {onClick} />
 {/if}

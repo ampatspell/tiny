@@ -39,11 +39,14 @@
   import type { ResolvedPathname } from '$app/types';
   import { createContext, type Snippet } from 'svelte';
   import Label from './label.svelte';
+  import { useBusy } from '../busy.svelte.ts';
 
   let props: ButtonProps = $props();
+
+  let busy = useBusy();
   let label = $derived(props.label);
   let children = $derived(props.children);
-  let isBusy = $derived(props.isBusy ?? false);
+  let isBusy = $derived((props.isBusy ?? false) || busy.isBusy);
   let isDisabled = $derived(props.isDisabled ?? false);
   let isBusyOrDisabled = $derived(isBusy || isDisabled);
   let variant = $derived(props.variant ?? 'regular');
@@ -131,7 +134,7 @@
       0.15s ease-in-out opacity,
       0.1s ease-in-out background-color;
     &.busy {
-      background-color: #000;
+      pointer-events: none;
     }
     &.disabled {
       opacity: 0.25;

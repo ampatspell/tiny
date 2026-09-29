@@ -1,4 +1,5 @@
 import { useBackend } from '#lib/tiny/backend/context.svelte.js';
+import { useBusy } from '#lib/tiny/busy.svelte.js';
 import type { Action } from '#lib/tiny/utils/action.svelte.js';
 import { getter, options, type OptionsInput } from '#lib/tiny/utils/options.svelte.js';
 import type { ResolvedPathname } from '$app/types';
@@ -19,6 +20,7 @@ export type EditingLayoutOptions<M extends Model> = {
 export const useEditingLayout = <P extends Model>(_opts: OptionsInput<EditingLayoutOptions<P>>) => {
   const opts = options(_opts);
   const backend = useBackend();
+  const busy = useBusy();
 
   const item = $derived(backend.item);
   const admin = $derived(item.route);
@@ -36,20 +38,24 @@ export const useEditingLayout = <P extends Model>(_opts: OptionsInput<EditingLay
     if (isSaving) {
       return;
     }
-    try {
-      isSaving = true;
-      await model.save();
-    } finally {
-      isSaving = false;
-    }
+    await busy.with(async () => {
+      try {
+        isSaving = true;
+        await model.save();
+      } finally {
+        isSaving = false;
+      }
+    });
   };
 
   const destroy = $derived.by(() => {
     const fn = opts.model.destroy;
     if (fn) {
       return async () => {
-        await fn();
-        isDestroyed = true;
+        await busy.with(async () => {
+          await fn();
+          isDestroyed = true;
+        });
       };
     }
   });
