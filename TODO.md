@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Get `better-sqlite3` out of deps
 - [ ] Input field accessories (show password, search icons)
 - [ ] Textarea accessories (remaining characters)
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
@@ -17,6 +16,7 @@
 - [ ] Auto-refresh token if role has changed
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [ ] Add isDisabled for users. Validate token against that
+- [x] Get `better-sqlite3` out of deps
 - [x] Move kysely and valibot to peer dependencies
 - [x] Disable autocomplete for input fields except sign-in
 - [x] Label flashes while dropping files on file component
