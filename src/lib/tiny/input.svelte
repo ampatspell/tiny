@@ -1,5 +1,6 @@
 <script module lang="ts">
   export type InputType = 'text' | 'textarea' | 'password';
+  export type InputAutocomplete = 'off' | 'email' | 'current-password' | 'new-password';
 </script>
 
 <script lang="ts">
@@ -11,6 +12,7 @@
     value,
     placeholder,
     autofocus,
+    autocomplete = 'off',
     onEnter,
     onInput,
     onBlur,
@@ -22,6 +24,7 @@
     value: string | undefined;
     placeholder?: string;
     autofocus?: boolean;
+    autocomplete?: InputAutocomplete;
     onEnter?: (value: string) => void;
     onInput?: (value: string) => void;
     onBlur?: (value: string) => void;
@@ -101,6 +104,8 @@
     {placeholder}
     {disabled}
     {value}
+    {autocomplete}
+    autocorrect="off"
     {oninput}
     {onkeyup}
     {onfocus}

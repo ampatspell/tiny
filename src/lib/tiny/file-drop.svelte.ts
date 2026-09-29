@@ -8,7 +8,9 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
   const fileItemsFromEvent = (e: DragEvent) => {
     const items = e.dataTransfer?.items ?? [];
     const all = [...items].filter((item) => item.kind === 'file') ?? [];
-    const accepted = all.filter((item) => model.accept?.includes(item.type));
+    const accepted = all.filter((item) => {
+      return model.accept?.includes(item.type);
+    });
     let isValid;
     if (model.multiple) {
       isValid = accepted.length > 0;
@@ -19,44 +21,23 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
   };
 
   return (element) => {
-    const onDragOver = (e: DragEvent) => {
-      if (!model.isEnabled) {
-        return;
-      }
-      const { all, isValid } = fileItemsFromEvent(e);
-      if (all.length > 0) {
-        e.preventDefault();
-        if (e.dataTransfer) {
-          if (isValid) {
-            e.dataTransfer.dropEffect = 'copy';
-            model.setOver(true);
-          } else {
-            e.dataTransfer.dropEffect = 'none';
-          }
-        }
-      }
-    };
-
     const onWindowDragOver = (e: DragEvent) => {
       if (!model.isEnabled) {
         return;
       }
-      const { all } = fileItemsFromEvent(e);
-      if (all.length > 0) {
+      const { all, isValid } = fileItemsFromEvent(e);
+      if (all.length) {
         e.preventDefault();
-        if (!elementContainsEventTarget(element, e)) {
-          if (e.dataTransfer) {
+        if (e.dataTransfer) {
+          if (elementContainsEventTarget(element, e)) {
+            e.dataTransfer.dropEffect = isValid ? 'copy' : 'none';
+            model.setOver(true);
+          } else {
             e.dataTransfer.dropEffect = 'none';
+            model.setOver(false);
           }
         }
       }
-    };
-
-    const onDragLeave = () => {
-      if (!model.isEnabled) {
-        return;
-      }
-      model.setOver(false);
     };
 
     const onDrop = (e: DragEvent) => {
@@ -74,12 +55,7 @@ export const fileDrop = (model: FileDropModel): Attachment<HTMLElement> => {
       model.setOver(false);
     };
 
-    const cancel = [
-      on(element, 'dragover', onDragOver),
-      on(element, 'dragleave', onDragLeave),
-      on(element, 'drop', onDrop),
-      on(window, 'dragover', onWindowDragOver),
-    ];
+    const cancel = [on(element, 'drop', onDrop), on(window, 'dragover', onWindowDragOver)];
 
     return () => {
       cancel.forEach((c) => c());
