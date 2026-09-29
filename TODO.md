@@ -1,10 +1,10 @@
 ## TODO
 
+- [ ] Busy state for fields while saving
 - [ ] Label flashes while dropping files on file component
 - [ ] Disable autocomplete for input fields except sign-in
 - [ ] Get `better-sqlite3` out of deps
 - [ ] Move kysely and valibot to peer dependencies
-- [ ] Busy state for fields while saving
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Server validation errors in forms / fields
 - [ ] resend.com integration
