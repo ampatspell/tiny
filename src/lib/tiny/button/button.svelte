@@ -119,6 +119,7 @@
     line-height: 1;
     padding: var(--padding);
     border-radius: 3px;
+    user-select: none;
     display: flex;
     flex-direction: row;
     align-items: center;
