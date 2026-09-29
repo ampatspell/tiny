@@ -21,6 +21,7 @@ export default defineConfig({
       external: [
         '@clack/prompts',
         'better-sqlite3',
+        'bindings',
         'dedent',
         'fs-extra',
         'jsonwebtoken',
