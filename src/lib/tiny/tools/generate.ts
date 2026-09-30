@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import dedent from 'dedent';
 import launchEditor from 'launch-editor';
 import crypto from 'node:crypto';
-import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, parse } from 'node:path';
 import { x } from 'tinyexec';
 import { isTruthy } from '../utils/array.ts';
@@ -44,6 +44,10 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     json.scripts.flc = 'npm run format && npm run check && npm run lint';
     json.scripts.start = 'tiny migrate-to-latest && node build';
     await writeFile(path, JSON.stringify(json, null, 2));
+  }
+  {
+    log.step('Delete src/routes/+page.svelte');
+    await rm(join(root, 'src/routes/+page.svelte'), { force: true });
   }
 
   const write = async ({ filename, content }: { filename: string; content: string }) => {
