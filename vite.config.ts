@@ -29,7 +29,6 @@ export default defineConfig({
         'launch-editor',
         'sharp',
         'tinyexec',
-        'temporal-polyfill',
       ],
     },
   },
