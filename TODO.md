@@ -1,16 +1,16 @@
 ## TODO
 
+- [ ] Button state which looks like a link
+- [ ] Drag and drop reordering in grid and list
+- [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Input field accessories (show password, search icons)
 - [ ] Textarea accessories (remaining characters)
-- [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Server validation errors in forms / fields
 - [ ] render email templates from svelte components (just mount components)
 - [ ] resend.com integration
-- [ ] Drag and drop reordering in grid and list
 - [ ] Carousel for public side
 - [ ] Picture grid for public side
 - [ ] Light button states
-- [ ] Button state which looks like a link
 - [ ] Markdown field (MDsveX maybe?)
 - [ ] Dropdown field can't be ValueField. Validation is against string representation. Same goes for Temporal.PlainDate
 - [ ] Auto-refresh token if role has changed
