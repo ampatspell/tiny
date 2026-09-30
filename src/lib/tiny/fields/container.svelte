@@ -62,7 +62,7 @@
         flex: 1;
         display: flex;
         flex-direction: row;
-        gap: 3px;
+        gap: 2px;
         min-width: 0;
         > .label {
           white-space: nowrap;
