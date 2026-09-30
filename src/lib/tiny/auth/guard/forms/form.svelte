@@ -29,22 +29,9 @@
       <Fields field={model.fields.email} />
       <Fields field={model.fields.password} />
     </Content>
-    <Actions>
-      <!-- svelte-ignore a11y_click_events_have_key_events -->
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="secondary" onclick={secondary.onClick}>{secondary.label}</div>
-      <Button type="submit" label={title} />
+    <Actions alignment="space-between">
+      <Button size="small" variant="link" label={secondary.label} onClick={secondary.onClick} />
+      <Button size="small" type="submit" label={title} />
     </Actions>
   </TinyForm>
 </Center>
-
-<style lang="scss">
-  .secondary {
-    flex: 1;
-    font-size: var(--tiny-font-size-small);
-    cursor: pointer;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-</style>

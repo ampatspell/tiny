@@ -1,6 +1,7 @@
 <script lang="ts" module>
   export type ButtonType = 'button' | 'submit';
-  export type ButtonVariant = 'regular' | 'light';
+  export type ButtonVariant = 'regular' | 'light' | 'link';
+  export type ButtonSize = 'regular' | 'small';
 
   class ButtonContext {
     label = $state(false);
@@ -17,6 +18,7 @@
     label?: string;
     children?: Snippet;
     variant?: ButtonVariant;
+    size?: ButtonSize;
   };
 
   export type ButtonProps = BaseButtonProps &
@@ -50,6 +52,7 @@
   let isDisabled = $derived(props.isDisabled ?? false);
   let isBusyOrDisabled = $derived(isBusy || isDisabled);
   let variant = $derived(props.variant ?? 'regular');
+  let size = $derived(props.size ?? 'regular');
 
   let context = setButtonContext(new ButtonContext());
   let element = $state<HTMLButtonElement | HTMLAnchorElement>();
@@ -65,6 +68,7 @@
   let classes = $derived([
     'button',
     `variant-${variant}`,
+    `size-${size}`,
     context.label && 'has-label',
     isDisabled && 'disabled',
     isBusy && 'busy',
@@ -91,6 +95,24 @@
 
 <style lang="scss">
   .button {
+    --font-weight: 700;
+    --color: var(--tiny-color);
+    --hover-text-decoration: none;
+    --hover-cursor: default;
+
+    --padding: 5px;
+    &.has-label {
+      --padding: 4px 8px;
+    }
+
+    &.size-regular {
+      --font-size: var(--tiny-font-size);
+    }
+    &.size-small {
+      --font-weight: 500;
+      --font-size: var(--tiny-font-size-small);
+    }
+
     &.variant-regular {
       --background: var(--tiny-color);
       --color: var(--tiny-white-color);
@@ -98,13 +120,15 @@
     }
     &.variant-light {
       --background: var(--tiny-white-color);
-      --color: var(--tiny-color);
       --outline: var(--tiny-border-color-1);
     }
-
-    --padding: 5px;
-    &.has-label {
-      --padding: 4px 8px;
+    &.variant-link {
+      --background: transparent;
+      --outline: transparent;
+      --font-weight: 500;
+      --hover-text-decoration: underline;
+      --hover-cursor: pointer;
+      --padding: 0;
     }
 
     appearance: none;
@@ -113,12 +137,12 @@
     background: var(--background);
     color: var(--color);
     font-family: var(--tiny-font-family);
-    font-size: var(--tiny-font-size);
+    font-size: var(--font-size);
     text-decoration: none;
     outline: 1px solid var(--outline);
     outline-offset: -1px;
     width: 100%;
-    font-weight: 700;
+    font-weight: var(--font-weight);
     line-height: 1;
     padding: var(--padding);
     border-radius: 3px;
@@ -133,6 +157,10 @@
     transition:
       0.15s ease-in-out opacity,
       0.1s ease-in-out background-color;
+    &:hover {
+      text-decoration: var(--hover-text-decoration);
+      cursor: var(--hover-cursor);
+    }
     &.busy {
       pointer-events: none;
     }

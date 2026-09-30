@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { children }: { children?: Snippet } = $props();
+  let { children, alignment = 'right' }: { children?: Snippet; alignment?: 'right' | 'space-between' } = $props();
 </script>
 
-<div class="actions">
+<div class={['actions', `alignment-${alignment}`]}>
   {@render children?.()}
 </div>
 
@@ -13,7 +13,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
     gap: 5px;
+    &.alignment-right {
+      justify-content: flex-end;
+    }
+    &.alignment-space-between {
+      justify-content: space-between;
+    }
   }
 </style>

@@ -1,6 +1,5 @@
 ## TODO
 
-- [ ] Button state which looks like a link
 - [ ] Drag and drop reordering in grid and list
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Input field accessories (show password, search icons)
@@ -16,6 +15,7 @@
 - [ ] Auto-refresh token if role has changed
 - [ ] Max age for JWT is 7 days, needs token renews.
 - [ ] Add isDisabled for users. Validate token against that
+- [x] Button state which looks like a link
 - [x] Get `better-sqlite3` out of deps
 - [x] Move kysely and valibot to peer dependencies
 - [x] Disable autocomplete for input fields except sign-in
