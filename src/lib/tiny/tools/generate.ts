@@ -23,8 +23,8 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
     await x('npm', ['install', 'valibot', 'kysely', '--save']);
   }
   {
-    log.step('Install sass-embedded and @sveltejs/adapter-node');
-    await x('npm', ['install', 'sass-embedded', '@sveltejs/adapter-node@next', '--save-dev']);
+    log.step('Install sass-embedded, @sveltejs/adapter-node and temporal-polyfill');
+    await x('npm', ['install', 'sass-embedded', '@sveltejs/adapter-node@next', 'temporal-polyfill', '--save-dev']);
   }
   {
     log.step('Uninstall @sveltejs/adapter-auto');
@@ -878,9 +878,7 @@ export const bootstrapProject = async (project: Project, tiny: Project) => {
   await write({
     filename: 'src/hooks.ts',
     content: dedent`
-      import { setupPolyfills } from '@ampatspell/tiny/polyfills';
-
-      setupPolyfills();
+      import 'temporal-polyfill/global';
 
       export const roles = ['admin', 'subscriber'] as const;
     `,
