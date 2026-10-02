@@ -1,5 +1,6 @@
 ## TODO
 
+- [ ] Direct file upload w/o base64 enc-dec
 - [ ] Drag and drop reordering in grid and list
 - [ ] Image (file) previews as an overlay for grids and possibly other representations.
 - [ ] Input field accessories (show password, search icons)
