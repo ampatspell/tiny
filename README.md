@@ -13,8 +13,7 @@ npx sv@latest create
 # SvelteKit minimal
 # Yes, using TypeScript syntax
 # prettier, eslint, experimental
-# @sveltejs/kit@next
-# async, remote functions, explicit environment variables, rendering error boundaries
+# async, remote functions
 # npm
 ```
 
